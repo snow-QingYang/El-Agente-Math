@@ -1,0 +1,13 @@
+[project]
+name = "el-agente-math"
+version = "0.1.0"
+description = "Extract and analyze mathematical formulas from arXiv papers"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "arxiv>=2.2.0",
+    "pylatexenc",
+]
+
+[tool.uv.sources]
+pylatexenc = { git = "https://github.com/phfaist/pylatexenc.git" }
