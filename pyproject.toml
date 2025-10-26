@@ -9,6 +9,7 @@ dependencies = [
     "pylatexenc",
     "sympy>=1.14.0",
     "typer>=0.20.0",
+    "openai>=1.0.0",
 ]
 
 [tool.uv.sources]
