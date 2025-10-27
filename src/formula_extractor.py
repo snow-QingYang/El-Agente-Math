@@ -153,7 +153,6 @@ def extract_formulas(tex_file: Path) -> List[MathFormula]:
 
     formulas: List[MathFormula] = []
     seen_ranges: set[Tuple[int, int]] = set()
-    seen_formulas: set[Tuple[str, str]] = set()
 
     for entry in inline_entries + display_entries:
         start = entry["start"]
@@ -162,12 +161,8 @@ def extract_formulas(tex_file: Path) -> List[MathFormula]:
             continue
         if _is_trivial_formula(entry["formula"]):
             continue
-        key = (entry["formula"], entry["environment"])
-        if key in seen_formulas:
-            continue
 
         seen_ranges.add((start, end))
-        seen_formulas.add(key)
 
         formulas.append(
             MathFormula(
@@ -183,6 +178,129 @@ def extract_formulas(tex_file: Path) -> List[MathFormula]:
 
     formulas.sort(key=lambda f: (f.line_number, f.start_pos))
     return formulas
+
+
+def generate_formula_label(index: int) -> str:
+    """
+    Generate a unique label for a formula.
+
+    Args:
+        index: Zero-based index of the formula
+
+    Returns:
+        Label string like <<FORMULA_0001>>
+
+    Examples:
+        >>> generate_formula_label(0)
+        '<<FORMULA_0001>>'
+        >>> generate_formula_label(42)
+        '<<FORMULA_0043>>'
+    """
+    # Use 1-based indexing for human readability
+    return f"<<FORMULA_{index + 1:04d}>>"
+
+
+def extract_and_label_formulas(
+    tex_file: Path,
+    output_dir: Optional[Path] = None
+) -> Tuple[Path, Path]:
+    """
+    Extract formulas and generate labeled output files.
+
+    This function creates two output files:
+    1. A JSON file mapping labels to formula metadata (no context stored)
+    2. A modified .tex file with formulas replaced by labels
+
+    Args:
+        tex_file: Path to the consolidated .tex file
+        output_dir: Directory for output files (default: same as input file)
+
+    Returns:
+        Tuple of (json_path, labeled_tex_path)
+
+    Examples:
+        >>> json_path, tex_path = extract_and_label_formulas(
+        ...     Path("paper_consolidated.tex"),
+        ...     Path("./output")
+        ... )
+    """
+    import json
+
+    tex_file = Path(tex_file)
+    if not tex_file.exists():
+        raise FileNotFoundError(f"LaTeX file not found: {tex_file}")
+
+    # Determine output directory
+    if output_dir is None:
+        output_dir = tex_file.parent
+    else:
+        output_dir = Path(output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Generate output file names based on input file
+    base_name = tex_file.stem  # e.g., "1706.03762_consolidated"
+    json_path = output_dir / f"{base_name}_formulas.json"
+    labeled_tex_path = output_dir / f"{base_name}_labeled.tex"
+
+    print(f"\n{'='*70}")
+    print(f"Extracting and Labeling Formulas")
+    print(f"{'='*70}")
+    print(f"Input:  {tex_file}")
+    print(f"Output: {json_path}")
+    print(f"        {labeled_tex_path}")
+
+    # Extract formulas
+    formulas = extract_formulas(tex_file)
+    print(f"\nExtracted {len(formulas)} formulas")
+
+    # Read original content
+    tex_content = tex_file.read_text(encoding="utf-8", errors="ignore")
+
+    # Create label mapping
+    label_to_metadata: Dict[str, Dict[str, Any]] = {}
+
+    # Sort formulas by position (reverse order for safe replacement)
+    formulas_sorted = sorted(formulas, key=lambda f: f.start_pos, reverse=True)
+
+    # Replace formulas with labels (from end to start)
+    labeled_content = tex_content
+    for i, formula in enumerate(formulas_sorted):
+        # Generate label (use original index from sorted list)
+        original_index = len(formulas) - 1 - i
+        label = generate_formula_label(original_index)
+
+        # Store metadata
+        label_to_metadata[label] = {
+            "formula": formula.formula,
+            "raw_latex": formula.raw_latex,
+            "formula_type": formula.formula_type,
+            "line_number": formula.line_number,
+            "start_pos": formula.start_pos,
+            "end_pos": formula.end_pos,
+        }
+
+        # Replace in content
+        labeled_content = (
+            labeled_content[:formula.start_pos] +
+            label +
+            labeled_content[formula.end_pos:]
+        )
+
+    # Write JSON file
+    with open(json_path, 'w', encoding='utf-8') as f:
+        json.dump(label_to_metadata, f, indent=2, ensure_ascii=False)
+
+    # Write labeled tex file
+    labeled_tex_path.write_text(labeled_content, encoding='utf-8')
+
+    print(f"\n{'='*70}")
+    print(f"Output Files Created:")
+    print(f"{'='*70}")
+    print(f"JSON:        {json_path} ({json_path.stat().st_size / 1024:.1f} KB)")
+    print(f"Labeled TEX: {labeled_tex_path} ({labeled_tex_path.stat().st_size / 1024:.1f} KB)")
+    print(f"{'='*70}\n")
+
+    return json_path, labeled_tex_path
 
 
 def extract_inline_math(tex_content: str) -> List[Dict[str, Any]]:
