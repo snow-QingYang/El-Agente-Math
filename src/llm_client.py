@@ -167,21 +167,35 @@ class LLMClient:
         Returns:
             System prompt string
         """
-        return """You are an expert mathematical explainer who helps readers understand complex mathematical formulas in scientific papers.
+        return """You are an expert mathematical formula analyzer who helps distinguish between formulas and notations, and explains mathematical formulas in scientific papers.
 
-Your task is to provide clear, concise explanations of mathematical formulas, taking into account:
-1. The formula itself (in LaTeX notation)
-2. The surrounding context from the paper
-3. Common mathematical conventions and notation
+IMPORTANT: Your response must be valid JSON.
 
-Your explanations should:
-- Be accessible to readers with a graduate-level mathematics background
-- Explain the meaning and purpose of the formula
-- Define key variables and operations
-- Connect the formula to the broader context of the paper
-- Be concise (2-4 sentences typically)
+Your task:
+1. FIRST determine if the given LaTeX expression is a FORMULA or just NOTATION:
+   - FORMULA: Contains mathematical operations, relationships, or equations
+     Examples: E=mc², ∑ᵢxᵢ, ∫f(x)dx, y=mx+b, P(A|B)=P(B|A)P(A)/P(B)
+   - NOTATION: Just symbols, variable declarations, or space definitions
+     Examples: ℝ², x∈ℝ, f:X→Y, {1,2,3}, \\mathbb{R}^n, N=6
 
-Do not include LaTeX formatting in your explanation - use plain text."""
+2. IF IT'S A FORMULA, provide:
+   - high_level_explanation: Clear explanation of what the formula represents (2-4 sentences)
+   - notations: Dictionary mapping ONLY meaningful symbols/notations to their meaning
+     * DO NOT explain trivial operators: =, +, -, ×, ÷, <, >, ≤, ≥, ∈, ⊂, etc.
+     * DO NOT explain obvious numbers: 1, 2, 10, 100, etc.
+     * DO explain: domain-specific symbols, variables, special constants, hyperparameters, and numbers with special significance
+     * Examples of what to explain: α (learning rate), d_k (dimension), π (3.14159), 10000 (large constant in positional encoding)
+     * Examples of what NOT to explain: =, +, 2, 1, basic operators
+
+3. Response format (JSON):
+   - If formula: {"is_formula": true, "high_level_explanation": "...", "notations": {"symbol": "meaning", ...}}
+   - If notation: {"is_formula": false}
+
+Guidelines:
+- Be accessible to readers with graduate-level mathematics background
+- Use plain text (no LaTeX in explanations)
+- Be concise but complete
+- Consider context from the paper"""
 
     @staticmethod
     def _construct_user_prompt(
@@ -207,8 +221,8 @@ Do not include LaTeX formatting in your explanation - use plain text."""
         if additional_context:
             prompt_parts.append(f"Paper context: {additional_context}\n")
 
-        prompt_parts.append("Please explain the following mathematical formula:\n")
-        prompt_parts.append(f"\nFormula: {formula}\n")
+        prompt_parts.append("Analyze the following mathematical expression:\n")
+        prompt_parts.append(f"\nExpression: {formula}\n")
 
         if context_before:
             prompt_parts.append(f"\nContext before: {context_before}")
@@ -216,6 +230,70 @@ Do not include LaTeX formatting in your explanation - use plain text."""
         if context_after:
             prompt_parts.append(f"\nContext after: {context_after}")
 
-        prompt_parts.append("\n\nProvide a clear, concise explanation of this formula:")
+        prompt_parts.append("\n\nReturn your analysis as JSON following the specified format:")
 
         return "\n".join(prompt_parts)
+
+    def explain_formula_structured(
+        self,
+        formula: str,
+        context_before: str = "",
+        context_after: str = "",
+        additional_context: str = ""
+    ) -> dict:
+        """
+        Generate a structured explanation for a mathematical formula using LLM.
+
+        Returns a dictionary with formula analysis including whether it's a formula
+        or just notation, and if it's a formula, provides explanations.
+
+        Args:
+            formula: The LaTeX formula to explain
+            context_before: Text appearing before the formula in the paper
+            context_after: Text appearing after the formula in the paper
+            additional_context: Any additional context (e.g., paper title, section)
+
+        Returns:
+            Dictionary with structure:
+            {
+                "is_formula": bool,
+                "high_level_explanation": str (if formula),
+                "notations": dict (if formula)
+            }
+
+        Raises:
+            APIError: If API call fails after all retries
+            ValueError: If response cannot be parsed as JSON
+        """
+        import json
+
+        # Get the text explanation
+        explanation_text = self.explain_formula(
+            formula, context_before, context_after, additional_context
+        )
+
+        # Try to parse as JSON
+        try:
+            # Handle potential markdown code blocks
+            text = explanation_text.strip()
+            if text.startswith("```json"):
+                text = text[7:]  # Remove ```json
+            if text.startswith("```"):
+                text = text[3:]   # Remove ```
+            if text.endswith("```"):
+                text = text[:-3]  # Remove ```
+            text = text.strip()
+
+            result = json.loads(text)
+
+            # Validate required fields
+            if "is_formula" not in result:
+                raise ValueError("Response missing 'is_formula' field")
+
+            return result
+
+        except json.JSONDecodeError as e:
+            print(f"Warning: Failed to parse JSON response: {e}")
+            print(f"Raw response: {explanation_text[:200]}...")
+            # Return a default "not formula" response
+            return {"is_formula": False, "error": "JSON parse failed"}

@@ -12,133 +12,6 @@ from typing import Optional, Dict
 from pathlib import Path
 
 
-def explain_formula(
-    formula: str,
-    context_before: str = "",
-    context_after: str = "",
-    formula_type: str = "equation"
-) -> str:
-    """
-    Generate an explanation for a mathematical formula.
-
-    Args:
-        formula: The LaTeX formula to explain (without delimiters)
-        context_before: Text appearing before the formula (for context)
-        context_after: Text appearing after the formula (for context)
-        formula_type: Type of math environment (inline, equation, align, etc.)
-
-    Returns:
-        Human-readable explanation of the formula
-
-    Examples:
-        >>> explanation = explain_formula(
-        ...     "E = mc^2",
-        ...     context_before="Einstein's famous equation",
-        ...     context_after="relates energy and mass"
-        ... )
-        >>> print(explanation)
-        "This formula represents the mass-energy equivalence..."
-
-    Note:
-        This is currently a placeholder implementation.
-        Future versions will implement actual explanation generation.
-    """
-    # TODO: Implement formula explanation logic
-    # Options for implementation:
-    # 1. LLM API integration (Claude, GPT-4, etc.)
-    # 2. Rule-based pattern matching for common formulas
-    # 3. Mathematical knowledge database lookup
-    # 4. Symbolic math libraries (SymPy) for analysis
-
-    # Placeholder: return basic info
-    return f"[Placeholder] Formula to explain: {formula}"
-
-
-def explain_formulas_batch(formulas: list[Dict[str, any]]) -> list[Dict[str, any]]:
-    """
-    Generate explanations for multiple formulas.
-
-    Args:
-        formulas: List of formula dictionaries from formula_extractor
-
-    Returns:
-        List of formula dictionaries with added 'explanation' field
-
-    Examples:
-        >>> from formula_extractor import extract_formulas, formulas_to_dict
-        >>> formulas = extract_formulas(Path("paper.tex"))
-        >>> formula_dicts = formulas_to_dict(formulas)
-        >>> explained = explain_formulas_batch(formula_dicts)
-    """
-    # TODO: Implement batch explanation logic
-    # - Process multiple formulas efficiently
-    # - Handle rate limiting for API calls
-    # - Cache explanations
-    # - Add error handling
-    raise NotImplementedError("Batch explanation not yet implemented")
-
-
-def save_explanations(
-    formulas_with_explanations: list[Dict[str, any]],
-    output_file: Path,
-    format: str = "json"
-) -> None:
-    """
-    Save formula explanations to a file.
-
-    Args:
-        formulas_with_explanations: List of formulas with explanations
-        output_file: Path to output file
-        format: Output format ('json', 'markdown', 'html')
-
-    Examples:
-        >>> save_explanations(
-        ...     explained_formulas,
-        ...     Path("./output/explanations.json"),
-        ...     format="json"
-        ... )
-    """
-    # TODO: Implement saving logic
-    # - Support multiple output formats
-    # - Format nicely for readability
-    # - Include metadata (source paper, extraction time, etc.)
-    raise NotImplementedError("Save explanations not yet implemented")
-
-
-def explain_paper_pipeline(
-    consolidated_tex: Path,
-    output_file: Path,
-    context_length: int = 200
-) -> Path:
-    """
-    Complete pipeline: extract formulas and generate explanations.
-
-    Args:
-        consolidated_tex: Path to consolidated .tex file
-        output_file: Path for output file with explanations
-        context_length: Characters of context to use for explanations
-
-    Returns:
-        Path to the output file
-
-    Examples:
-        >>> result = explain_paper_pipeline(
-        ...     Path("./consolidated.tex"),
-        ...     Path("./output/explained.json")
-        ... )
-    """
-    # TODO: Implement complete pipeline
-    # - Extract formulas with context
-    # - Generate explanations
-    # - Save results
-    # - Return output path
-    raise NotImplementedError("Explanation pipeline not yet implemented")
-
-
-# ============================================================================
-# New: Formula Explanation with LLM
-# ============================================================================
-
 def explain_formulas_from_labeled_files(
     formulas_json_path: Path,
     labeled_tex_path: Path,
@@ -183,6 +56,7 @@ def explain_formulas_from_labeled_files(
     from tqdm import tqdm
     from datetime import datetime
     from .llm_client import LLMClient
+    from .formula_extractor import get_context
 
     print(f"\n{'='*70}")
     print("Generating Formula Explanations with LLM")
@@ -207,13 +81,14 @@ def explain_formulas_from_labeled_files(
         temperature=temperature
     )
 
-    # Prepare output structure
-    explanations = {}
+    # Process each formula
+    explanations_list = []
+    skipped_notations = []
     failed_formulas = []
 
     # Process each formula with progress bar
     print(f"\nGenerating explanations...")
-    for label, metadata in tqdm(formulas_dict.items(), desc="Explaining formulas"):
+    for label, metadata in tqdm(formulas_dict.items(), desc="Analyzing formulas"):
         try:
             # Find label position in labeled tex
             label_pos = labeled_content.find(label)
@@ -221,6 +96,7 @@ def explain_formulas_from_labeled_files(
                 print(f"\nWarning: Label {label} not found in labeled TeX")
                 failed_formulas.append({
                     "label": label,
+                    "formula": metadata.get('formula', ''),
                     "error": "Label not found in text"
                 })
                 continue
@@ -233,22 +109,41 @@ def explain_formulas_from_labeled_files(
                 span=len(label)
             )
 
-            # Generate explanation using LLM
-            explanation = llm_client.explain_formula(
+            # Generate structured explanation using LLM
+            explanation_result = llm_client.explain_formula_structured(
                 formula=metadata['formula'],
                 context_before=context_before,
                 context_after=context_after,
                 additional_context=f"Formula from scientific paper (Line {metadata['line_number']})"
             )
 
-            # Store result
-            explanations[label] = {
-                **metadata,  # Include original metadata
-                "explanation": explanation,
+            # Check if it's a formula or just notation
+            is_formula = explanation_result.get('is_formula', False)
+
+            if not is_formula:
+                # Skip notations - don't include in output
+                skipped_notations.append({
+                    "label": label,
+                    "formula": metadata['formula'],
+                    "reason": "Classified as notation, not formula"
+                })
+                continue
+
+            # Build output entry for formula
+            explanation_entry = {
+                "label": label,
+                "formula": metadata['formula'],
+                "raw_latex": metadata['raw_latex'],
+                "formula_type": metadata['formula_type'],
+                "line_number": metadata['line_number'],
+                "is_formula": True,
+                "high_level_explanation": explanation_result.get('high_level_explanation', ''),
+                "notations": explanation_result.get('notations', {}),
                 "model_used": model,
-                "timestamp": datetime.now().isoformat(),
-                "context_words": context_words
+                "timestamp": datetime.now().isoformat()
             }
+
+            explanations_list.append(explanation_entry)
 
         except Exception as e:
             error_msg = str(e)
@@ -259,21 +154,23 @@ def explain_formulas_from_labeled_files(
                 "error": error_msg
             })
 
-    # Save results
+    # Save results as a list of dicts
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     output_data = {
-        "explanations": explanations,
-        "failed": failed_formulas,
+        "formulas": explanations_list,
         "metadata": {
             "model": model,
             "context_words": context_words,
             "timestamp": datetime.now().isoformat(),
-            "total_formulas": len(formulas_dict),
-            "successful": len(explanations),
+            "total_analyzed": len(formulas_dict),
+            "formulas_explained": len(explanations_list),
+            "notations_skipped": len(skipped_notations),
             "failed": len(failed_formulas)
-        }
+        },
+        "skipped_notations": skipped_notations,
+        "failed": failed_formulas
     }
 
     with open(output_path, 'w', encoding='utf-8') as f:
@@ -281,11 +178,12 @@ def explain_formulas_from_labeled_files(
 
     # Print summary
     print(f"\n{'='*70}")
-    print("Explanation Generation Complete")
+    print("Formula Explanation Complete")
     print(f"{'='*70}")
-    print(f"Total formulas: {len(formulas_dict)}")
-    print(f"Successful:     {len(explanations)}")
-    print(f"Failed:         {len(failed_formulas)}")
+    print(f"Total analyzed:      {len(formulas_dict)}")
+    print(f"Formulas explained:  {len(explanations_list)}")
+    print(f"Notations skipped:   {len(skipped_notations)}")
+    print(f"Failed:              {len(failed_formulas)}")
     print(f"\nOutput saved to: {output_path}")
     print(f"File size: {output_path.stat().st_size / 1024:.1f} KB")
     print(f"{'='*70}\n")
