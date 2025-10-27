@@ -19,17 +19,20 @@ def explain_formulas_from_labeled_files(
     model: str = "gpt-5",
     context_words: int = 500,
     api_key: Optional[str] = None,
-    temperature: float = 0.7
+    temperature: float = 0.7,
+    max_workers: int = 10,
+    max_formulas: int = 50
 ) -> Path:
     """
-    Generate explanations for all formulas using LLM.
+    Generate explanations for all formulas using LLM with concurrent processing.
 
     This function:
     1. Loads the formula mapping from JSON
-    2. Reads the labeled TeX file
-    3. For each formula, extracts context dynamically
-    4. Calls LLM to generate explanation
-    5. Saves results with progress tracking
+    2. Sorts and filters formulas by length (longest first, up to max_formulas)
+    3. Reads the labeled TeX file
+    4. For each formula, extracts context dynamically (replacing labels with original formulas)
+    5. Calls LLM to generate explanation (concurrently using ThreadPoolExecutor)
+    6. Saves results with progress tracking
 
     Args:
         formulas_json_path: Path to formulas JSON (label -> metadata mapping)
@@ -39,6 +42,8 @@ def explain_formulas_from_labeled_files(
         context_words: Number of words of context to extract (default: 500)
         api_key: OpenAI API key (optional, uses environment if not provided)
         temperature: Temperature for generation (ignored for GPT-5)
+        max_workers: Maximum number of concurrent API calls (default: 10)
+        max_formulas: Maximum number of formulas to explain (default: 50, prioritizes longest formulas)
 
     Returns:
         Path to the output file with explanations
@@ -49,12 +54,15 @@ def explain_formulas_from_labeled_files(
         ...     Path("paper_labeled.tex"),
         ...     Path("paper_explained.json"),
         ...     model="gpt-5",
-        ...     context_words=500
+        ...     context_words=500,
+        ...     max_workers=10,
+        ...     max_formulas=50
         ... )
     """
     import json
     from tqdm import tqdm
     from datetime import datetime
+    from concurrent.futures import ThreadPoolExecutor, as_completed
     from .llm_client import LLMClient
     from .formula_extractor import get_context
 
@@ -65,9 +73,27 @@ def explain_formulas_from_labeled_files(
     # Load formula mapping
     print(f"\nLoading formulas from: {formulas_json_path}")
     with open(formulas_json_path, 'r', encoding='utf-8') as f:
-        formulas_dict = json.load(f)
+        all_formulas_dict = json.load(f)
 
-    print(f"Loaded {len(formulas_dict)} formulas")
+    print(f"Loaded {len(all_formulas_dict)} formulas")
+
+    # Sort formulas by length (descending - longest first) and limit to max_formulas
+    sorted_formulas = sorted(
+        all_formulas_dict.items(),
+        key=lambda x: len(x[1].get('formula', '')),
+        reverse=True
+    )
+
+    # Take only top max_formulas
+    if len(sorted_formulas) > max_formulas:
+        print(f"Limiting to {max_formulas} longest formulas (out of {len(sorted_formulas)} total)")
+        formulas_to_process = dict(sorted_formulas[:max_formulas])
+        skipped_by_limit = len(sorted_formulas) - max_formulas
+    else:
+        formulas_to_process = all_formulas_dict
+        skipped_by_limit = 0
+
+    print(f"Processing {len(formulas_to_process)} formulas")
 
     # Load labeled TeX content
     print(f"Loading labeled TeX from: {labeled_tex_path}")
@@ -81,25 +107,36 @@ def explain_formulas_from_labeled_files(
         temperature=temperature
     )
 
-    # Process each formula
-    explanations_list = []
-    skipped_notations = []
-    failed_formulas = []
+    # Helper function to replace labels with original formulas in context
+    def replace_labels_in_context(text: str) -> str:
+        """Replace all formula labels in text with their original formulas."""
+        import re
+        # Find all labels like <<FORMULA_0001>>
+        label_pattern = r'<<FORMULA_\d+>>'
+        labels_in_text = re.findall(label_pattern, text)
 
-    # Process each formula with progress bar
-    print(f"\nGenerating explanations...")
-    for label, metadata in tqdm(formulas_dict.items(), desc="Analyzing formulas"):
+        result = text
+        for label in labels_in_text:
+            if label in all_formulas_dict:
+                # Replace label with original raw LaTeX
+                original_formula = all_formulas_dict[label].get('raw_latex', label)
+                result = result.replace(label, original_formula)
+
+        return result
+
+    # Define worker function for processing a single formula
+    def process_formula(label: str, metadata: dict) -> dict:
+        """Process a single formula and return result dict."""
         try:
             # Find label position in labeled tex
             label_pos = labeled_content.find(label)
             if label_pos == -1:
-                print(f"\nWarning: Label {label} not found in labeled TeX")
-                failed_formulas.append({
+                return {
+                    "status": "failed",
                     "label": label,
                     "formula": metadata.get('formula', ''),
                     "error": "Label not found in text"
-                })
-                continue
+                }
 
             # Extract context around the label
             context_before, context_after = get_context(
@@ -108,6 +145,10 @@ def explain_formulas_from_labeled_files(
                 words=context_words,
                 span=len(label)
             )
+
+            # Replace formula labels in context with original formulas
+            context_before = replace_labels_in_context(context_before)
+            context_after = replace_labels_in_context(context_after)
 
             # Generate structured explanation using LLM
             explanation_result = llm_client.explain_formula_structured(
@@ -122,37 +163,75 @@ def explain_formulas_from_labeled_files(
 
             if not is_formula:
                 # Skip notations - don't include in output
-                skipped_notations.append({
+                return {
+                    "status": "skipped",
                     "label": label,
                     "formula": metadata['formula'],
                     "reason": "Classified as notation, not formula"
-                })
-                continue
+                }
 
             # Build output entry for formula
-            explanation_entry = {
-                "label": label,
-                "formula": metadata['formula'],
-                "raw_latex": metadata['raw_latex'],
-                "formula_type": metadata['formula_type'],
-                "line_number": metadata['line_number'],
-                "is_formula": True,
-                "high_level_explanation": explanation_result.get('high_level_explanation', ''),
-                "notations": explanation_result.get('notations', {}),
-                "model_used": model,
-                "timestamp": datetime.now().isoformat()
+            return {
+                "status": "success",
+                "data": {
+                    "label": label,
+                    "formula": metadata['formula'],
+                    "raw_latex": metadata['raw_latex'],
+                    "formula_type": metadata['formula_type'],
+                    "line_number": metadata['line_number'],
+                    "is_formula": True,
+                    "high_level_explanation": explanation_result.get('high_level_explanation', ''),
+                    "notations": explanation_result.get('notations', {}),
+                    "model_used": model,
+                    "timestamp": datetime.now().isoformat()
+                }
             }
 
-            explanations_list.append(explanation_entry)
-
         except Exception as e:
-            error_msg = str(e)
-            print(f"\nError explaining {label}: {error_msg}")
-            failed_formulas.append({
+            return {
+                "status": "failed",
                 "label": label,
                 "formula": metadata.get('formula', ''),
-                "error": error_msg
-            })
+                "error": str(e)
+            }
+
+    # Process formulas concurrently
+    explanations_list = []
+    skipped_notations = []
+    failed_formulas = []
+
+    print(f"\nGenerating explanations with {max_workers} concurrent workers...")
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        # Submit all formulas for processing
+        future_to_label = {
+            executor.submit(process_formula, label, metadata): label
+            for label, metadata in formulas_to_process.items()
+        }
+
+        # Process completed futures with progress bar
+        for future in tqdm(as_completed(future_to_label), total=len(formulas_to_process), desc="Analyzing formulas"):
+            result = future.result()
+
+            if result["status"] == "success":
+                explanations_list.append(result["data"])
+            elif result["status"] == "skipped":
+                skipped_notations.append({
+                    "label": result["label"],
+                    "formula": result["formula"],
+                    "reason": result["reason"]
+                })
+            elif result["status"] == "failed":
+                print(f"\nError explaining {result['label']}: {result['error']}")
+                failed_formulas.append({
+                    "label": result["label"],
+                    "formula": result["formula"],
+                    "error": result["error"]
+                })
+
+    # Sort results by line number (ascending order)
+    explanations_list.sort(key=lambda x: x.get('line_number', 0))
+    skipped_notations.sort(key=lambda x: all_formulas_dict.get(x['label'], {}).get('line_number', 0))
+    failed_formulas.sort(key=lambda x: all_formulas_dict.get(x['label'], {}).get('line_number', 0))
 
     # Save results as a list of dicts
     output_path = Path(output_path)
@@ -163,8 +242,11 @@ def explain_formulas_from_labeled_files(
         "metadata": {
             "model": model,
             "context_words": context_words,
+            "max_formulas": max_formulas,
             "timestamp": datetime.now().isoformat(),
-            "total_analyzed": len(formulas_dict),
+            "total_formulas_in_paper": len(all_formulas_dict),
+            "formulas_selected_for_analysis": len(formulas_to_process),
+            "skipped_by_length_limit": skipped_by_limit,
             "formulas_explained": len(explanations_list),
             "notations_skipped": len(skipped_notations),
             "failed": len(failed_formulas)
@@ -180,10 +262,13 @@ def explain_formulas_from_labeled_files(
     print(f"\n{'='*70}")
     print("Formula Explanation Complete")
     print(f"{'='*70}")
-    print(f"Total analyzed:      {len(formulas_dict)}")
-    print(f"Formulas explained:  {len(explanations_list)}")
-    print(f"Notations skipped:   {len(skipped_notations)}")
-    print(f"Failed:              {len(failed_formulas)}")
+    print(f"Total formulas in paper:     {len(all_formulas_dict)}")
+    print(f"Formulas selected (longest): {len(formulas_to_process)}")
+    if skipped_by_limit > 0:
+        print(f"Skipped by length limit:     {skipped_by_limit}")
+    print(f"Formulas explained:          {len(explanations_list)}")
+    print(f"Notations skipped:           {len(skipped_notations)}")
+    print(f"Failed:                      {len(failed_formulas)}")
     print(f"\nOutput saved to: {output_path}")
     print(f"File size: {output_path.stat().st_size / 1024:.1f} KB")
     print(f"{'='*70}\n")

@@ -187,6 +187,15 @@ Your task:
      * Examples of what to explain: α (learning rate), d_k (dimension), π (3.14159), 10000 (large constant in positional encoding)
      * Examples of what NOT to explain: =, +, 2, 1, basic operators
 
+     IMPORTANT - For each notation you explain:
+     * FIRST check if the meaning is defined in the provided context (text before/after the formula)
+     * If the notation is defined in context, use that definition
+     * If the notation is NOT defined in context AND is not trivial/universally known, set its value to "NOT MENTIONED"
+     * Trivial/universally known: standard math constants (e, π), common operations (sin, cos, log, exp, max, min, softmax)
+     * NOT trivial: domain-specific variables (Q, K, V in attention), hyperparameters (α, β, learning rates), paper-specific symbols
+     * Example: If context doesn't define what "d_k" means, use: {"d_k": "NOT MENTIONED"}
+     * Example: If context says "where α is the learning rate", use: {"α": "learning rate"}
+
 3. Response format (JSON):
    - If formula: {"is_formula": true, "high_level_explanation": "...", "notations": {"symbol": "meaning", ...}}
    - If notation: {"is_formula": false}
@@ -195,7 +204,7 @@ Guidelines:
 - Be accessible to readers with graduate-level mathematics background
 - Use plain text (no LaTeX in explanations)
 - Be concise but complete
-- Consider context from the paper"""
+- Base notation explanations ONLY on the provided context - do not infer or assume meanings not stated in the context"""
 
     @staticmethod
     def _construct_user_prompt(

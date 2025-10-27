@@ -253,6 +253,30 @@ def extract_and_label_formulas(
     formulas = extract_formulas(tex_file)
     print(f"\nExtracted {len(formulas)} formulas")
 
+    # Filter out overlapping/nested formulas (keep outermost ones only)
+    # Sort by start position first
+    formulas_by_start = sorted(formulas, key=lambda f: f.start_pos)
+
+    non_overlapping_formulas = []
+    max_end_pos = -1
+
+    for formula in formulas_by_start:
+        # If this formula starts before the previous one ended, it's nested/overlapping
+        if formula.start_pos < max_end_pos:
+            # Skip nested formula
+            continue
+
+        # This formula doesn't overlap, keep it
+        non_overlapping_formulas.append(formula)
+        max_end_pos = formula.end_pos
+
+    skipped_count = len(formulas) - len(non_overlapping_formulas)
+    if skipped_count > 0:
+        print(f"Filtered out {skipped_count} nested/overlapping formulas")
+
+    formulas = non_overlapping_formulas
+    print(f"Processing {len(formulas)} non-overlapping formulas")
+
     # Read original content
     tex_content = tex_file.read_text(encoding="utf-8", errors="ignore")
 
