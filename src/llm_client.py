@@ -187,6 +187,14 @@ Your task:
      * Examples of what to explain: α (learning rate), d_k (dimension), π (3.14159), 10000 (large constant in positional encoding)
      * Examples of what NOT to explain: =, +, 2, 1, basic operators
 
+     CRITICAL - Use EXACT LaTeX format for notation keys:
+     * Keys must use the EXACT LaTeX syntax as it appears in the formula
+     * DO NOT simplify or convert to plain text
+     * Preserve all LaTeX commands: \\mathrm{}, ^{}, _{}, \\vec{}, etc.
+     * Example: Use "f^*_{\\mathrm{NL}}" NOT "f*_{NL}" or "f_NL*"
+     * Example: Use "\\mathbf{Q}" NOT "Q" (if formula has \\mathbf{Q})
+     * Example: Use "d_k" if formula has "d_k", use "d_{model}" if formula has "d_{model}"
+
      IMPORTANT - For each notation you explain:
      * FIRST check if the meaning is defined in the provided context (text before/after the formula)
      * If the notation is defined in context, use that definition
@@ -194,11 +202,20 @@ Your task:
      * Trivial/universally known: standard math constants (e, π), common operations (sin, cos, log, exp, max, min, softmax)
      * NOT trivial: domain-specific variables (Q, K, V in attention), hyperparameters (α, β, learning rates), paper-specific symbols
      * Example: If context doesn't define what "d_k" means, use: {"d_k": "NOT MENTIONED"}
-     * Example: If context says "where α is the learning rate", use: {"α": "learning rate"}
+     * Example: If context says "where α is the learning rate", use: {"\\alpha": "learning rate"}
 
 3. Response format (JSON):
    - If formula: {"is_formula": true, "high_level_explanation": "...", "notations": {"symbol": "meaning", ...}}
    - If notation: {"is_formula": false}
+
+   Example notation dictionary for formula "\\Var(J_1) = \\sum f^*_{\\mathrm{NL}}(\\vx_i)":
+   {
+     "J_1": "Sum over i ≠ j of ...",
+     "\\vx_i": "i-th input vector",
+     "f^*_{\\mathrm{NL}}": "Nonlinear component of target function",
+     "n": "Number of samples"
+   }
+   NOTE: Keys use exact LaTeX (e.g., "f^*_{\\mathrm{NL}}" with \\mathrm{}, not simplified "f*_NL")
 
 Guidelines:
 - Be accessible to readers with graduate-level mathematics background

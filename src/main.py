@@ -101,6 +101,16 @@ def process(
         50,
         "--max-formulas", "-f",
         help="Maximum number of formulas to explain, prioritizing longest formulas (default: 50)"
+    ),
+    add_error: bool = typer.Option(
+        False,
+        "--add-error",
+        help="Inject errors into formulas before explanation for testing/evaluation"
+    ),
+    error_rate: float = typer.Option(
+        0.5,
+        "--error-rate",
+        help="Probability (0.0-1.0) of injecting error into each formula (default: 0.5)"
     )
 ):
     """
@@ -125,6 +135,8 @@ def process(
     typer.echo(f"Context: {context_words} words")
     typer.echo(f"Max workers: {max_workers}")
     typer.echo(f"Max formulas: {max_formulas} (longest first)")
+    if add_error:
+        typer.echo(f"Error injection: ENABLED (rate: {error_rate:.0%})")
     typer.echo(f"Output directory: {output_dir}")
     typer.echo(f"Keep temp files: {keep_temp}\n")
 
@@ -190,11 +202,52 @@ def process(
             typer.echo(f"  ✓ Formulas JSON: {formulas_json_path.name}")
             typer.echo(f"  ✓ Labeled TeX: {labeled_tex_path.name}")
 
+            # Step 3.5: Inject errors (if enabled)
+            formulas_to_explain = formulas_json_path  # Default: use original formulas
+
+            if add_error:
+                typer.echo(f"\n[3.5/4] Injecting errors into formulas...")
+                from .error_injector import inject_errors_into_formulas
+
+                # Select top N formulas by length (same logic as in explainer)
+                sorted_formulas = sorted(
+                    formulas_dict.items(),
+                    key=lambda x: len(x[1].get('formula', '')),
+                    reverse=True
+                )
+                selected_formulas = dict(sorted_formulas[:max_formulas])
+
+                typer.echo(f"  Selected {len(selected_formulas)} longest formulas for error injection")
+
+                # Inject errors
+                modified_formulas, error_log = inject_errors_into_formulas(
+                    selected_formulas,
+                    error_rate=error_rate
+                )
+
+                # Save modified formulas
+                formulas_with_errors_path = paper_output_dir / f"{paper_id}_formulas_with_errors.json"
+                with open(formulas_with_errors_path, 'w', encoding='utf-8') as f:
+                    json.dump(modified_formulas, f, indent=2, ensure_ascii=False)
+
+                # Save error log
+                error_log_path = paper_output_dir / f"{paper_id}_error_log.json"
+                with open(error_log_path, 'w', encoding='utf-8') as f:
+                    json.dump(error_log, f, indent=2, ensure_ascii=False)
+
+                typer.echo(f"  ✓ Errors injected: {error_log['metadata']['formulas_modified']} formulas modified")
+                typer.echo(f"  ✓ Error log saved: {error_log_path.name}")
+                typer.echo(f"  ✓ Modified formulas saved: {formulas_with_errors_path.name}")
+
+                # Use modified formulas for explanation
+                formulas_to_explain = formulas_with_errors_path
+
             # Step 4: Explain formulas
-            typer.echo(f"\n[4/4] Generating explanations with {model}...")
+            step_num = "4/4" if not add_error else "4/4.5"
+            typer.echo(f"\n[{step_num}] Generating explanations with {model}...")
             explained_path = paper_output_dir / f"{paper_id}_explained.json"
             explain_formulas_from_labeled_files(
-                formulas_json_path=formulas_json_path,
+                formulas_json_path=formulas_to_explain,  # May be original or with errors
                 labeled_tex_path=labeled_tex_path,
                 output_path=explained_path,
                 model=model,
@@ -257,6 +310,74 @@ def process(
 
     # Exit with error code if any papers failed
     if results["failed"]:
+        raise typer.Exit(1)
+
+
+@app.command()
+def benchmark(
+    paper_dir: Path = typer.Argument(
+        ...,
+        help="Directory containing paper outputs (e.g., output/1706.03762)"
+    ),
+    model: str = typer.Option(
+        "gpt-5",
+        "--model", "-m",
+        help="LLM model to use for error detection (e.g., gpt-5, gpt-4o)"
+    ),
+    context_words: int = typer.Option(
+        300,
+        "--context-words", "-c",
+        help="Number of words of context to extract around each formula"
+    ),
+    max_workers: int = typer.Option(
+        10,
+        "--max-workers", "-w",
+        help="Number of concurrent API calls for error detection"
+    )
+):
+    """
+    Benchmark LLM's ability to detect mathematical errors in formulas.
+
+    This command evaluates how well an LLM can identify errors in mathematical
+    formulas by checking all formulas in the explained.json file. If an error_log.json
+    exists (from --add-error flag), it compares detections against ground truth and
+    calculates metrics.
+
+    The benchmark:
+    1. Loads all formulas from explained.json
+    2. For each formula, extracts context from consolidated_labeled.tex
+    3. Asks LLM to detect if the formula contains an error
+    4. Saves detection results to error_detection.json
+    5. If error_log.json exists, calculates metrics and saves benchmark_report.json
+
+    Examples:
+        mai benchmark output/1706.03762
+        mai benchmark output/1706.03762 --model gpt-4o
+        mai benchmark output/1706.03762 --max-workers 20
+    """
+    from .benchmarker import run_benchmark
+
+    try:
+        detection_path, report_path = run_benchmark(
+            paper_dir=paper_dir,
+            model=model,
+            context_words=context_words,
+            max_workers=max_workers
+        )
+
+        typer.echo(f"\n✓ Benchmark complete!")
+        typer.echo(f"  Detection results: {detection_path}")
+        if report_path:
+            typer.echo(f"  Benchmark report: {report_path}")
+
+    except FileNotFoundError as e:
+        typer.echo(f"\n✗ Error: {e}", err=True)
+        typer.echo(f"\nMake sure you've run 'mai process' on this paper first.", err=True)
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.echo(f"\n✗ Benchmark failed: {e}", err=True)
+        import traceback
+        traceback.print_exc()
         raise typer.Exit(1)
 
 
