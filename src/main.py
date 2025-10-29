@@ -315,14 +315,24 @@ def process(
 
 @app.command()
 def benchmark(
-    paper_dir: Path = typer.Argument(
-        ...,
-        help="Directory containing paper outputs (e.g., output/1706.03762)"
+    paper_dir: Optional[Path] = typer.Argument(
+        None,
+        help="Directory containing paper outputs (e.g., output/1706.03762). Not required if --all is used."
+    ),
+    all_papers: bool = typer.Option(
+        False,
+        "--all",
+        help="Benchmark all papers in the output directory"
+    ),
+    output_dir: Path = typer.Option(
+        Path("./output"),
+        "--output-dir", "-o",
+        help="Output directory containing papers (used with --all)"
     ),
     model: str = typer.Option(
-        "gpt-5",
+        "openai/gpt-5",
         "--model", "-m",
-        help="LLM model to use for error detection (e.g., gpt-5, gpt-4o)"
+        help="LLM model to use for error detection. Format: 'provider/model' (e.g., openai/gpt-5, openai/gpt-4o, openrouter/anthropic/claude-3.5-sonnet)"
     ),
     context_words: int = typer.Option(
         300,
@@ -343,32 +353,64 @@ def benchmark(
     exists (from --add-error flag), it compares detections against ground truth and
     calculates metrics.
 
-    The benchmark:
-    1. Loads all formulas from explained.json
-    2. For each formula, extracts context from consolidated_labeled.tex
-    3. Asks LLM to detect if the formula contains an error
-    4. Saves detection results to error_detection.json
-    5. If error_log.json exists, calculates metrics and saves benchmark_report.json
+    Single paper mode:
+        1. Loads all formulas from explained.json
+        2. For each formula, extracts context from consolidated_labeled.tex
+        3. Asks LLM to detect if the formula contains an error
+        4. Saves detection results to benchmarks/{model_name}/
+        5. If error_log.json exists, calculates metrics and saves benchmark_report.json
+
+    Batch mode (--all):
+        1. Finds all paper directories in output_dir
+        2. Runs benchmark on each paper
+        3. Generates aggregated report across all papers
+        4. Saves aggregate report to output_dir/aggregate_benchmarks/{model_name}/
 
     Examples:
+        # Single paper
         mai benchmark output/1706.03762
-        mai benchmark output/1706.03762 --model gpt-4o
-        mai benchmark output/1706.03762 --max-workers 20
+        mai benchmark output/1706.03762 --model openai/gpt-4o
+
+        # All papers
+        mai benchmark --all
+        mai benchmark --all --model openai/gpt-4o --max-workers 20
     """
-    from .benchmarker import run_benchmark
+    from .benchmarker import run_benchmark, run_batch_benchmark
+
+    # Validate arguments
+    if all_papers and paper_dir is not None:
+        typer.echo("Error: Cannot specify both paper_dir and --all", err=True)
+        raise typer.Exit(1)
+
+    if not all_papers and paper_dir is None:
+        typer.echo("Error: Must specify either paper_dir or --all", err=True)
+        raise typer.Exit(1)
 
     try:
-        detection_path, report_path = run_benchmark(
-            paper_dir=paper_dir,
-            model=model,
-            context_words=context_words,
-            max_workers=max_workers
-        )
+        if all_papers:
+            # Batch benchmark mode
+            aggregate_report_path = run_batch_benchmark(
+                output_dir=output_dir,
+                model=model,
+                context_words=context_words,
+                max_workers=max_workers
+            )
 
-        typer.echo(f"\n✓ Benchmark complete!")
-        typer.echo(f"  Detection results: {detection_path}")
-        if report_path:
-            typer.echo(f"  Benchmark report: {report_path}")
+            typer.echo(f"\n✓ Batch benchmark complete!")
+            typer.echo(f"  Aggregate report: {aggregate_report_path}")
+        else:
+            # Single paper benchmark mode
+            detection_path, report_path = run_benchmark(
+                paper_dir=paper_dir,
+                model=model,
+                context_words=context_words,
+                max_workers=max_workers
+            )
+
+            typer.echo(f"\n✓ Benchmark complete!")
+            typer.echo(f"  Detection results: {detection_path}")
+            if report_path:
+                typer.echo(f"  Benchmark report: {report_path}")
 
     except FileNotFoundError as e:
         typer.echo(f"\n✗ Error: {e}", err=True)

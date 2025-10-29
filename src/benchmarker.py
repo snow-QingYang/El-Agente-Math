@@ -13,7 +13,7 @@ from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 
-from .llm_client import LLMClient
+from .benchmark_providers import get_provider
 from .formula_extractor import get_context
 
 
@@ -39,11 +39,18 @@ def run_benchmark(
     paper_dir = Path(paper_dir)
     paper_id = paper_dir.name
 
+    # Create benchmark directory structure
+    # Convert model name to safe directory name (replace / with _)
+    model_dir_name = model.replace('/', '_')
+    benchmark_dir = paper_dir / "benchmarks" / model_dir_name
+    benchmark_dir.mkdir(parents=True, exist_ok=True)
+
     print(f"\n{'='*70}")
     print("Benchmarking LLM Error Detection")
     print(f"{'='*70}")
     print(f"Paper directory: {paper_dir}")
     print(f"Model: {model}")
+    print(f"Benchmark output: {benchmark_dir}")
     print(f"Context words: {context_words}")
     print(f"Max workers: {max_workers}")
 
@@ -92,9 +99,9 @@ def run_benchmark(
     else:
         print(f"  No error log found (benchmarking without ground truth)")
 
-    # Initialize LLM client
-    print(f"\nInitializing LLM client (model: {model})...")
-    llm_client = LLMClient(model=model)
+    # Initialize LLM provider
+    print(f"\nInitializing LLM provider (model: {model})...")
+    provider = get_provider(model=model)
 
     # Helper function to replace labels in context
     def replace_labels_in_context(text: str) -> str:
@@ -146,7 +153,7 @@ def run_benchmark(
                 formula,
                 context_before,
                 context_after,
-                llm_client
+                provider
             )
             response_time = time.time() - start_time
 
@@ -156,6 +163,9 @@ def run_benchmark(
                 "has_error": result.get('has_error', False),
                 "error_type": result.get('error_type', 'none'),
                 "error_description": result.get('error_description', ''),
+                "parse_success": result.get('parse_success', True),
+                "parse_strategy": result.get('parse_strategy', 'unknown'),
+                "raw_response": result.get('raw_response', ''),
                 "llm_response_time": round(response_time, 2)
             }
 
@@ -181,7 +191,35 @@ def run_benchmark(
             result = future.result()
             detections.append(result)
 
-    # Save detection results
+    # Separate detections for error_detection.json (without raw responses)
+    # and raw_responses.json (with raw responses)
+    detections_clean = []
+    raw_responses_data = []
+    parsing_failures = []
+
+    for detection in detections:
+        # Clean detection (without raw_response for main file)
+        clean_det = {k: v for k, v in detection.items() if k != 'raw_response'}
+        detections_clean.append(clean_det)
+
+        # Raw response data
+        raw_responses_data.append({
+            "label": detection.get('label'),
+            "raw_response": detection.get('raw_response', ''),
+            "response_length": len(detection.get('raw_response', '')),
+            "parse_strategy": detection.get('parse_strategy'),
+            "parse_success": detection.get('parse_success')
+        })
+
+        # Log parsing failures
+        if detection.get('parse_strategy') == 'failed':
+            parsing_failures.append({
+                "label": detection.get('label'),
+                "raw_response": detection.get('raw_response', ''),
+                "timestamp": datetime.now().isoformat()
+            })
+
+    # Save detection results (without raw responses)
     detection_results = {
         "metadata": {
             "paper_id": paper_id,
@@ -191,31 +229,106 @@ def run_benchmark(
             "timestamp": datetime.now().isoformat(),
             "benchmark_mode": True
         },
-        "detections": detections
+        "detections": detections_clean
     }
 
-    detection_path = paper_dir / f"{paper_id}_error_detection.json"
+    detection_path = benchmark_dir / "error_detection.json"
     with open(detection_path, 'w', encoding='utf-8') as f:
         json.dump(detection_results, f, indent=2, ensure_ascii=False)
 
-    print(f"\n✓ Detection results saved: {detection_path.name}")
+    # Save raw responses
+    raw_responses_file = {
+        "metadata": {
+            "paper_id": paper_id,
+            "model": model,
+            "total_responses": len(raw_responses_data),
+            "timestamp": datetime.now().isoformat()
+        },
+        "responses": raw_responses_data
+    }
+
+    raw_responses_path = benchmark_dir / "raw_responses.json"
+    with open(raw_responses_path, 'w', encoding='utf-8') as f:
+        json.dump(raw_responses_file, f, indent=2, ensure_ascii=False)
+
+    # Save parsing failures log
+    if parsing_failures:
+        failures_log_path = benchmark_dir / "parsing_failures.log"
+        with open(failures_log_path, 'w', encoding='utf-8') as f:
+            f.write(f"Parsing Failures Log\n")
+            f.write(f"Model: {model}\n")
+            f.write(f"Timestamp: {datetime.now().isoformat()}\n")
+            f.write(f"Total failures: {len(parsing_failures)}\n")
+            f.write("="*70 + "\n\n")
+
+            for i, failure in enumerate(parsing_failures, 1):
+                f.write(f"[Failure #{i}] {failure['label']}\n")
+                f.write(f"Timestamp: {failure['timestamp']}\n")
+                f.write(f"Raw response (first 500 chars):\n")
+                f.write(failure['raw_response'][:500] + "...\n" if len(failure['raw_response']) > 500 else failure['raw_response'] + "\n")
+                f.write("-"*70 + "\n\n")
+
+    # Calculate parsing statistics
+    parse_stats = _calculate_parse_statistics(detections)
+
+    print(f"\n✓ Detection results saved: {detection_path.relative_to(paper_dir)}")
+    print(f"✓ Raw responses saved: {raw_responses_path.relative_to(paper_dir)}")
+    if parsing_failures:
+        print(f"✓ Parsing failures logged: {failures_log_path.relative_to(paper_dir)} ({len(parsing_failures)} failures)")
     print(f"  Total formulas checked: {len(detections)}")
     errors_detected = sum(1 for d in detections if d.get('has_error'))
     print(f"  Errors detected by LLM: {errors_detected}")
+    print(f"\n📊 Instruction Following (JSON Format Compliance):")
+    print(f"  Perfect JSON responses: {parse_stats['perfect_json']}/{parse_stats['total']} ({parse_stats['perfect_json_rate']:.1%})")
+    print(f"  Required fallback parsing: {parse_stats['fallback_used']}/{parse_stats['total']} ({parse_stats['fallback_rate']:.1%})")
+    print(f"  Complete parsing failures: {parse_stats['failed']}/{parse_stats['total']} ({parse_stats['failure_rate']:.1%})")
 
     # Calculate metrics if error log exists
     benchmark_report_path = None
+    summary_lines = []  # Collect summary output for saving
+
     if error_log:
         print(f"\nCalculating benchmark metrics...")
         report = _calculate_metrics(detections, error_log, paper_id, model)
 
-        benchmark_report_path = paper_dir / f"{paper_id}_benchmark_report.json"
+        benchmark_report_path = benchmark_dir / "benchmark_report.json"
         with open(benchmark_report_path, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
-        print(f"\n✓ Benchmark report saved: {benchmark_report_path.name}")
-        _print_metrics_summary(report)
+        print(f"\n✓ Benchmark report saved: {benchmark_report_path.relative_to(paper_dir)}")
 
+        # Print and capture summary
+        summary_lines = _print_and_capture_metrics_summary(report)
+    else:
+        # No ground truth, just basic summary
+        summary_lines = [
+            "="*70,
+            "Benchmark Summary (No Ground Truth)",
+            "="*70,
+            f"Model: {model}",
+            f"Total formulas checked: {len(detections)}",
+            f"Errors detected: {sum(1 for d in detections if d.get('has_error'))}",
+            "",
+            "Instruction Following:",
+            f"  Perfect JSON: {parse_stats['perfect_json']}/{parse_stats['total']} ({parse_stats['perfect_json_rate']:.1%})",
+            f"  Fallback required: {parse_stats['fallback_used']}/{parse_stats['total']} ({parse_stats['fallback_rate']:.1%})",
+            f"  Parse failures: {parse_stats['failed']}/{parse_stats['total']} ({parse_stats['failure_rate']:.1%})",
+            "="*70
+        ]
+        for line in summary_lines:
+            print(line)
+
+    # Save summary to file
+    summary_path = benchmark_dir / "summary.txt"
+    with open(summary_path, 'w', encoding='utf-8') as f:
+        f.write(f"Benchmark Summary\n")
+        f.write(f"Model: {model}\n")
+        f.write(f"Paper: {paper_id}\n")
+        f.write(f"Timestamp: {datetime.now().isoformat()}\n")
+        f.write("\n")
+        f.write("\n".join(summary_lines))
+
+    print(f"✓ Summary saved: {summary_path.relative_to(paper_dir)}")
     print(f"\n{'='*70}\n")
     return detection_path, benchmark_report_path
 
@@ -224,7 +337,7 @@ def _check_formula_for_error(
     formula: str,
     context_before: str,
     context_after: str,
-    llm_client: LLMClient
+    provider
 ) -> Dict[str, Any]:
     """
     Use LLM to check if a formula contains mathematical errors.
@@ -233,94 +346,57 @@ def _check_formula_for_error(
         formula: The LaTeX formula to check
         context_before: Text before the formula
         context_after: Text after the formula
-        llm_client: LLM client for API calls
+        provider: LLM provider instance (from benchmark_providers)
 
     Returns:
         Dictionary with has_error, error_type, error_description
     """
-    system_prompt = """You are an expert at detecting mathematical errors in formulas.
+    # Use the provider's detect_error method
+    return provider.detect_error(formula, context_before, context_after)
 
-Your task is to check if a given formula contains any mathematical errors based on the surrounding context.
 
-Common error types to watch for:
-- sign_flip: Wrong sign (+ should be -, etc.)
-- operator_swap: Wrong operator (× should be +, etc.)
-- exponent_order: Exponent in wrong place (E(X)^2 vs E(X^2))
-- index_change: Wrong subscript/index (x_i should be x_j)
-- transpose_error: Missing or extra transpose (^T)
-- inequality_flip: Wrong inequality direction (<= vs >=)
-- fraction_inversion: Numerator and denominator swapped
-- sum_product_swap: Sum (∑) should be product (∏) or vice versa
-- missing_parentheses: Parentheses missing causing precedence error
-- function_swap: Wrong function (sin vs cos, max vs min, log vs ln)
+def _calculate_parse_statistics(detections: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    Calculate JSON parsing statistics to measure instruction following ability.
 
-Respond in JSON format:
-{
-  "has_error": true or false,
-  "error_type": "sign_flip" | "operator_swap" | ... | "none",
-  "error_description": "Detailed description of the error if found, or empty string if no error"
-}"""
+    Args:
+        detections: List of detection results
 
-    user_prompt = f"""Check if this formula contains a mathematical error:
+    Returns:
+        Dictionary with parsing statistics
+    """
+    total = len(detections)
+    perfect_json = 0  # Direct parse success
+    fallback_used = 0  # Required fallback strategy
+    failed = 0  # Complete failure
 
-Formula: {formula}
+    strategy_counts = {}
 
-Context before: {context_before}
+    for detection in detections:
+        parse_success = detection.get('parse_success', True)
+        parse_strategy = detection.get('parse_strategy', 'unknown')
 
-Context after: {context_after}
+        # Count by strategy
+        strategy_counts[parse_strategy] = strategy_counts.get(parse_strategy, 0) + 1
 
-Analyze the formula carefully. Does it contain any mathematical error? Respond in JSON format."""
+        # Categorize
+        if parse_strategy == 'direct':
+            perfect_json += 1
+        elif parse_strategy == 'failed':
+            failed += 1
+        else:
+            fallback_used += 1
 
-    # Call LLM
-    messages = [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": user_prompt}
-    ]
-
-    # Use the same approach as explain_formula
-    api_params = {
-        "model": llm_client.model,
-        "messages": messages,
+    return {
+        "total": total,
+        "perfect_json": perfect_json,
+        "fallback_used": fallback_used,
+        "failed": failed,
+        "perfect_json_rate": perfect_json / total if total > 0 else 0,
+        "fallback_rate": fallback_used / total if total > 0 else 0,
+        "failure_rate": failed / total if total > 0 else 0,
+        "strategy_breakdown": strategy_counts
     }
-
-    if not llm_client._is_gpt5:
-        api_params["temperature"] = llm_client.temperature
-
-    response = llm_client.client.chat.completions.create(**api_params)
-    response_text = response.choices[0].message.content.strip()
-
-    # Parse JSON response
-    try:
-        # Handle markdown code blocks
-        text = response_text
-        if text.startswith("```json"):
-            text = text[7:]
-        if text.startswith("```"):
-            text = text[3:]
-        if text.endswith("```"):
-            text = text[:-3]
-        text = text.strip()
-
-        result = json.loads(text)
-
-        # Validate required fields
-        if "has_error" not in result:
-            result["has_error"] = False
-        if "error_type" not in result:
-            result["error_type"] = "none"
-        if "error_description" not in result:
-            result["error_description"] = ""
-
-        return result
-
-    except json.JSONDecodeError:
-        # If parsing fails, return conservative response
-        return {
-            "has_error": False,
-            "error_type": "none",
-            "error_description": "",
-            "parse_error": response_text[:200]
-        }
 
 
 def _calculate_metrics(
@@ -374,8 +450,12 @@ def _calculate_metrics(
     for detection in detections:
         label = detection['label']
 
-        # Skip if error during detection
+        # Skip if error during detection or parsing failed
         if detection.get('error') or detection.get('has_error') is None:
+            continue
+
+        # Skip if parsing completely failed (no valid prediction)
+        if detection.get('parse_strategy') == 'failed':
             continue
 
         # Get ground truth for this formula
@@ -444,12 +524,22 @@ def _calculate_metrics(
             "recall": round(recall_for_type, 3)
         }
 
+    # Calculate parsing statistics
+    parse_stats = _calculate_parse_statistics(detections)
+
+    # Calculate total detections attempted and valid evaluations
+    total_detections = len(detections)
+    parsing_failures = parse_stats['failed']
+    valid_evaluations = total
+
     # Build report
     report = {
         "metadata": {
             "paper_id": paper_id,
             "model": model,
-            "total_formulas": total,
+            "total_detections_attempted": total_detections,
+            "parsing_failures": parsing_failures,
+            "valid_evaluations": valid_evaluations,
             "formulas_with_errors_injected": error_log['metadata']['formulas_modified'],
             "formulas_unmodified": error_log['metadata']['formulas_unmodified'],
             "timestamp": datetime.now().isoformat()
@@ -470,6 +560,15 @@ def _calculate_metrics(
             "incorrect_type_identified": type_incorrect,
             "type_accuracy": round(type_accuracy, 3)
         },
+        "instruction_following": {
+            "perfect_json_responses": parse_stats["perfect_json"],
+            "fallback_parsing_required": parse_stats["fallback_used"],
+            "parsing_failures": parse_stats["failed"],
+            "perfect_json_rate": round(parse_stats["perfect_json_rate"], 3),
+            "fallback_rate": round(parse_stats["fallback_rate"], 3),
+            "failure_rate": round(parse_stats["failure_rate"], 3),
+            "strategy_breakdown": parse_stats["strategy_breakdown"]
+        },
         "per_error_type_performance": per_type_performance,
         "detailed_results": detailed_results
     }
@@ -481,7 +580,7 @@ def _match_error_type(detected: str, actual: str) -> bool:
     """
     Check if detected error type matches actual error type.
 
-    Allows for some flexibility in naming.
+    Allows for some flexibility in naming (case, underscores, hyphens).
     """
     if detected == actual:
         return True
@@ -493,29 +592,396 @@ def _match_error_type(detected: str, actual: str) -> bool:
     return detected_norm == actual_norm
 
 
-def _print_metrics_summary(report: Dict[str, Any]) -> None:
-    """Print a summary of benchmark metrics to console."""
+def _print_and_capture_metrics_summary(report: Dict[str, Any]) -> List[str]:
+    """Print metrics summary to console and return as lines for saving."""
+    lines = []
+
     bc = report['binary_classification']
     et = report['error_type_matching']
+    meta = report['metadata']
 
-    print(f"\n{'='*70}")
-    print("Benchmark Metrics Summary")
-    print(f"{'='*70}")
+    # Print and capture
+    def add_line(text):
+        print(text)
+        lines.append(text)
 
-    print(f"\nBinary Classification:")
-    print(f"  Accuracy:  {bc['accuracy']:.1%}")
-    print(f"  Precision: {bc['precision']:.1%}")
-    print(f"  Recall:    {bc['recall']:.1%}")
-    print(f"  F1 Score:  {bc['f1_score']:.1%}")
+    add_line("")
+    add_line("="*70)
+    add_line("Benchmark Metrics Summary")
+    add_line("="*70)
 
-    print(f"\nConfusion Matrix:")
-    print(f"  TP: {bc['true_positives']:<4}  FP: {bc['false_positives']}")
-    print(f"  FN: {bc['false_negatives']:<4}  TN: {bc['true_negatives']}")
+    # Show evaluation coverage
+    if 'total_detections_attempted' in meta and 'parsing_failures' in meta:
+        add_line(f"\nEvaluation Coverage:")
+        add_line(f"  Total detections: {meta['total_detections_attempted']}")
+        add_line(f"  Parsing failures: {meta['parsing_failures']} (excluded from metrics)")
+        add_line(f"  Valid evaluations: {meta['valid_evaluations']}")
 
-    print(f"\nError Type Identification:")
-    print(f"  Correct types: {et['correct_type_identified']}/{et['total_errors_detected']} ({et['type_accuracy']:.1%})")
+    add_line(f"\nBinary Classification:")
+    add_line(f"  Accuracy:  {bc['accuracy']:.1%}")
+    add_line(f"  Precision: {bc['precision']:.1%}")
+    add_line(f"  Recall:    {bc['recall']:.1%}")
+    add_line(f"  F1 Score:  {bc['f1_score']:.1%}")
+
+    add_line(f"\nConfusion Matrix (n={meta.get('valid_evaluations', 'N/A')}):")
+    add_line(f"  TP: {bc['true_positives']:<4}  FP: {bc['false_positives']}")
+    add_line(f"  FN: {bc['false_negatives']:<4}  TN: {bc['true_negatives']}")
+
+    add_line(f"\nError Type Identification:")
+    add_line(f"  Correct types: {et['correct_type_identified']}/{et['total_errors_detected']} ({et['type_accuracy']:.1%})")
+
+    # Instruction following metrics
+    if 'instruction_following' in report:
+        inf = report['instruction_following']
+        add_line(f"\n📊 Instruction Following (JSON Format Compliance):")
+        add_line(f"  Perfect JSON:     {inf['perfect_json_responses']}/{inf['perfect_json_responses'] + inf['fallback_parsing_required'] + inf['parsing_failures']} ({inf['perfect_json_rate']:.1%})")
+        add_line(f"  Required fallback: {inf['fallback_parsing_required']}/{inf['perfect_json_responses'] + inf['fallback_parsing_required'] + inf['parsing_failures']} ({inf['fallback_rate']:.1%})")
+        add_line(f"  Parse failures:    {inf['parsing_failures']}/{inf['perfect_json_responses'] + inf['fallback_parsing_required'] + inf['parsing_failures']} ({inf['failure_rate']:.1%})")
 
     if report.get('per_error_type_performance'):
-        print(f"\nPer-Error-Type Recall:")
+        add_line(f"\nPer-Error-Type Recall:")
         for error_type, stats in sorted(report['per_error_type_performance'].items()):
-            print(f"  {error_type:<20} {stats['detected']}/{stats['total']} ({stats['recall']:.1%})")
+            add_line(f"  {error_type:<20} {stats['detected']}/{stats['total']} ({stats['recall']:.1%})")
+
+    return lines
+
+
+def run_batch_benchmark(
+    output_dir: Path,
+    model: str = "openai/gpt-5",
+    context_words: int = 300,
+    max_workers: int = 10
+) -> Path:
+    """
+    Benchmark LLM on all papers in output directory and generate aggregate report.
+
+    Args:
+        output_dir: Directory containing paper subdirectories
+        model: LLM model to use for detection
+        context_words: Number of words of context to extract
+        max_workers: Number of concurrent API calls
+
+    Returns:
+        Path to aggregate report JSON file
+    """
+    output_dir = Path(output_dir)
+
+    print(f"\n{'='*70}")
+    print("Batch Benchmarking - All Papers")
+    print(f"{'='*70}")
+    print(f"Output directory: {output_dir}")
+    print(f"Model: {model}")
+    print(f"Context words: {context_words}")
+    print(f"Max workers: {max_workers}")
+
+    # Find all paper directories (contain _explained.json)
+    print(f"\nScanning for processed papers...")
+    paper_dirs = []
+    for item in output_dir.iterdir():
+        if item.is_dir() and item.name != "aggregate_benchmarks":
+            # Check if this directory has an explained.json file
+            explained_file = item / f"{item.name}_explained.json"
+            if explained_file.exists():
+                paper_dirs.append(item)
+
+    if not paper_dirs:
+        raise FileNotFoundError(f"No processed papers found in {output_dir}")
+
+    print(f"  Found {len(paper_dirs)} paper(s) to benchmark:")
+    for paper_dir in paper_dirs:
+        print(f"    - {paper_dir.name}")
+
+    # Run benchmark on each paper
+    print(f"\n{'='*70}")
+    print("Running benchmarks on individual papers")
+    print(f"{'='*70}\n")
+
+    results = []
+    for i, paper_dir in enumerate(paper_dirs, 1):
+        print(f"\n[{i}/{len(paper_dirs)}] Benchmarking: {paper_dir.name}")
+        print(f"{'-'*70}")
+
+        try:
+            detection_path, report_path = run_benchmark(
+                paper_dir=paper_dir,
+                model=model,
+                context_words=context_words,
+                max_workers=max_workers
+            )
+
+            # Load the report for aggregation
+            if report_path and report_path.exists():
+                with open(report_path, 'r', encoding='utf-8') as f:
+                    report = json.load(f)
+
+                results.append({
+                    "paper_id": paper_dir.name,
+                    "paper_dir": str(paper_dir),
+                    "detection_path": str(detection_path),
+                    "report_path": str(report_path),
+                    "report": report,
+                    "status": "success"
+                })
+            else:
+                results.append({
+                    "paper_id": paper_dir.name,
+                    "paper_dir": str(paper_dir),
+                    "detection_path": str(detection_path),
+                    "status": "no_ground_truth"
+                })
+
+            print(f"  ✓ Completed: {paper_dir.name}")
+
+        except Exception as e:
+            print(f"  ✗ Failed: {paper_dir.name} - {e}")
+            results.append({
+                "paper_id": paper_dir.name,
+                "paper_dir": str(paper_dir),
+                "status": "failed",
+                "error": str(e)
+            })
+
+    # Generate aggregate report
+    print(f"\n{'='*70}")
+    print("Generating Aggregate Report")
+    print(f"{'='*70}\n")
+
+    aggregate_report = _generate_aggregate_report(results, model)
+
+    # Save aggregate report
+    model_dir_name = model.replace('/', '_')
+    aggregate_dir = output_dir / "aggregate_benchmarks" / model_dir_name
+    aggregate_dir.mkdir(parents=True, exist_ok=True)
+
+    # Save aggregate report JSON
+    aggregate_report_path = aggregate_dir / "aggregate_report.json"
+    with open(aggregate_report_path, 'w', encoding='utf-8') as f:
+        json.dump(aggregate_report, f, indent=2, ensure_ascii=False)
+    print(f"✓ Saved: {aggregate_report_path}")
+
+    # Save per-paper summary JSON
+    per_paper_summary_path = aggregate_dir / "per_paper_summary.json"
+    per_paper_data = {
+        "model": model,
+        "total_papers": len(paper_dirs),
+        "successful_benchmarks": len([r for r in results if r["status"] == "success"]),
+        "papers": [
+            {
+                "paper_id": r["paper_id"],
+                "status": r["status"],
+                "metrics": r.get("report", {}).get("binary_classification") if r.get("report") else None
+            }
+            for r in results
+        ]
+    }
+    with open(per_paper_summary_path, 'w', encoding='utf-8') as f:
+        json.dump(per_paper_data, f, indent=2, ensure_ascii=False)
+    print(f"✓ Saved: {per_paper_summary_path}")
+
+    # Save aggregate summary text
+    summary_lines = _format_aggregate_summary(aggregate_report, results)
+    summary_path = aggregate_dir / "aggregate_summary.txt"
+    with open(summary_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(summary_lines))
+    print(f"✓ Saved: {summary_path}")
+
+    # Print summary to console
+    print(f"\n{'-'*70}\n")
+    for line in summary_lines:
+        print(line)
+
+    return aggregate_report_path
+
+
+def _generate_aggregate_report(results: List[Dict[str, Any]], model: str) -> Dict[str, Any]:
+    """
+    Generate aggregate metrics across all benchmarked papers.
+
+    Args:
+        results: List of benchmark results from individual papers
+        model: Model name used
+
+    Returns:
+        Aggregate report dictionary
+    """
+    import statistics
+
+    # Filter successful benchmarks with ground truth
+    successful_results = [r for r in results if r["status"] == "success" and "report" in r]
+
+    if not successful_results:
+        return {
+            "model": model,
+            "timestamp": datetime.now().isoformat(),
+            "total_papers": len(results),
+            "successful_benchmarks": 0,
+            "error": "No successful benchmarks with ground truth available"
+        }
+
+    # Collect metrics from all papers
+    all_accuracies = []
+    all_precisions = []
+    all_recalls = []
+    all_f1_scores = []
+    all_type_accuracies = []
+
+    # Instruction following metrics
+    all_perfect_json_rates = []
+    all_fallback_rates = []
+    all_failure_rates = []
+
+    # Per-error-type performance (aggregate across all papers)
+    error_type_stats = {}
+
+    for result in successful_results:
+        report = result["report"]
+        bc = report.get("binary_classification", {})
+
+        all_accuracies.append(bc.get("accuracy", 0))
+        all_precisions.append(bc.get("precision", 0))
+        all_recalls.append(bc.get("recall", 0))
+        all_f1_scores.append(bc.get("f1_score", 0))
+
+        et = report.get("error_type_matching", {})
+        all_type_accuracies.append(et.get("type_accuracy", 0))
+
+        # Instruction following
+        inf = report.get("instruction_following", {})
+        if inf:
+            all_perfect_json_rates.append(inf.get("perfect_json_rate", 0))
+            all_fallback_rates.append(inf.get("fallback_rate", 0))
+            all_failure_rates.append(inf.get("failure_rate", 0))
+
+        # Aggregate per-error-type performance
+        per_type = report.get("per_error_type_performance", {})
+        for error_type, stats in per_type.items():
+            if error_type not in error_type_stats:
+                error_type_stats[error_type] = {"detected": 0, "total": 0}
+            error_type_stats[error_type]["detected"] += stats["detected"]
+            error_type_stats[error_type]["total"] += stats["total"]
+
+    # Calculate aggregate per-error-type recall
+    aggregate_per_type = {}
+    for error_type, stats in error_type_stats.items():
+        recall = stats["detected"] / stats["total"] if stats["total"] > 0 else 0
+        aggregate_per_type[error_type] = {
+            "detected": stats["detected"],
+            "total": stats["total"],
+            "recall": recall
+        }
+
+    # Build aggregate report
+    aggregate = {
+        "model": model,
+        "timestamp": datetime.now().isoformat(),
+        "metadata": {
+            "total_papers_in_directory": len(results),
+            "successful_benchmarks": len(successful_results),
+            "failed_benchmarks": len([r for r in results if r["status"] == "failed"]),
+            "no_ground_truth": len([r for r in results if r["status"] == "no_ground_truth"])
+        },
+        "aggregate_metrics": {
+            "binary_classification": {
+                "mean_accuracy": statistics.mean(all_accuracies) if all_accuracies else 0,
+                "mean_precision": statistics.mean(all_precisions) if all_precisions else 0,
+                "mean_recall": statistics.mean(all_recalls) if all_recalls else 0,
+                "mean_f1_score": statistics.mean(all_f1_scores) if all_f1_scores else 0,
+                "std_accuracy": statistics.stdev(all_accuracies) if len(all_accuracies) > 1 else 0,
+                "std_precision": statistics.stdev(all_precisions) if len(all_precisions) > 1 else 0,
+                "std_recall": statistics.stdev(all_recalls) if len(all_recalls) > 1 else 0,
+                "std_f1_score": statistics.stdev(all_f1_scores) if len(all_f1_scores) > 1 else 0,
+                "min_accuracy": min(all_accuracies) if all_accuracies else 0,
+                "max_accuracy": max(all_accuracies) if all_accuracies else 0
+            },
+            "error_type_matching": {
+                "mean_type_accuracy": statistics.mean(all_type_accuracies) if all_type_accuracies else 0,
+                "std_type_accuracy": statistics.stdev(all_type_accuracies) if len(all_type_accuracies) > 1 else 0
+            },
+            "instruction_following": {
+                "mean_perfect_json_rate": statistics.mean(all_perfect_json_rates) if all_perfect_json_rates else 0,
+                "mean_fallback_rate": statistics.mean(all_fallback_rates) if all_fallback_rates else 0,
+                "mean_failure_rate": statistics.mean(all_failure_rates) if all_failure_rates else 0
+            } if all_perfect_json_rates else None
+        },
+        "per_error_type_performance": aggregate_per_type,
+        "paper_ids": [r["paper_id"] for r in successful_results]
+    }
+
+    return aggregate
+
+
+def _format_aggregate_summary(aggregate: Dict[str, Any], all_results: List[Dict[str, Any]]) -> List[str]:
+    """
+    Format aggregate report as human-readable text lines.
+
+    Args:
+        aggregate: Aggregate report dictionary
+        all_results: All benchmark results
+
+    Returns:
+        List of text lines for summary
+    """
+    lines = []
+
+    lines.append("=" * 70)
+    lines.append("Aggregate Benchmark Report")
+    lines.append("=" * 70)
+    lines.append(f"\nModel: {aggregate['model']}")
+    lines.append(f"Timestamp: {aggregate['timestamp']}")
+
+    meta = aggregate['metadata']
+    lines.append(f"\nPapers Processed:")
+    lines.append(f"  Total papers: {meta['total_papers_in_directory']}")
+    lines.append(f"  Successful benchmarks: {meta['successful_benchmarks']}")
+    lines.append(f"  No ground truth: {meta['no_ground_truth']}")
+    lines.append(f"  Failed: {meta['failed_benchmarks']}")
+
+    if meta['successful_benchmarks'] > 0:
+        bc = aggregate['aggregate_metrics']['binary_classification']
+        lines.append(f"\nBinary Classification (Mean ± Std):")
+        lines.append(f"  Accuracy:  {bc['mean_accuracy']:.1%} ± {bc['std_accuracy']:.1%}")
+        lines.append(f"  Precision: {bc['mean_precision']:.1%} ± {bc['std_precision']:.1%}")
+        lines.append(f"  Recall:    {bc['mean_recall']:.1%} ± {bc['std_recall']:.1%}")
+        lines.append(f"  F1 Score:  {bc['mean_f1_score']:.1%} ± {bc['std_f1_score']:.1%}")
+
+        lines.append(f"\nAccuracy Range:")
+        lines.append(f"  Min: {bc['min_accuracy']:.1%}")
+        lines.append(f"  Max: {bc['max_accuracy']:.1%}")
+
+        et = aggregate['aggregate_metrics']['error_type_matching']
+        lines.append(f"\nError Type Identification:")
+        lines.append(f"  Mean type accuracy: {et['mean_type_accuracy']:.1%} ± {et['std_type_accuracy']:.1%}")
+
+        # Instruction following
+        inf = aggregate['aggregate_metrics'].get('instruction_following')
+        if inf:
+            lines.append(f"\n📊 Instruction Following (JSON Format Compliance):")
+            lines.append(f"  Mean perfect JSON rate: {inf['mean_perfect_json_rate']:.1%}")
+            lines.append(f"  Mean fallback rate: {inf['mean_fallback_rate']:.1%}")
+            lines.append(f"  Mean failure rate: {inf['mean_failure_rate']:.1%}")
+
+        # Per-error-type performance
+        per_type = aggregate.get('per_error_type_performance', {})
+        if per_type:
+            lines.append(f"\nAggregated Per-Error-Type Recall:")
+            for error_type, stats in sorted(per_type.items()):
+                lines.append(f"  {error_type:<20} {stats['detected']}/{stats['total']} ({stats['recall']:.1%})")
+
+        # Paper-by-paper summary
+        lines.append(f"\nPer-Paper Results:")
+        for result in all_results:
+            status = result['status']
+            paper_id = result['paper_id']
+
+            if status == 'success':
+                bc = result['report']['binary_classification']
+                lines.append(f"  ✓ {paper_id:<20} Acc: {bc['accuracy']:.1%}, F1: {bc['f1_score']:.1%}")
+            elif status == 'no_ground_truth':
+                lines.append(f"  ⊘ {paper_id:<20} (no ground truth)")
+            else:
+                lines.append(f"  ✗ {paper_id:<20} (failed)")
+
+    lines.append("")
+    lines.append("=" * 70)
+
+    return lines

@@ -82,7 +82,9 @@ class BaseLLMProvider(ABC):
             {
                 "has_error": bool,
                 "error_type": str (or "none"),
-                "error_description": str
+                "error_description": str,
+                "parse_success": bool (True if JSON parsed cleanly, False if fallback used),
+                "parse_strategy": str (which parsing strategy succeeded)
             }
 
         Raises:
@@ -101,6 +103,10 @@ class BaseLLMProvider(ABC):
 
                 # Parse response
                 result = self._parse_response(response_text)
+
+                # Add raw response to result
+                result["raw_response"] = response_text
+
                 return result
 
             except Exception as e:
@@ -269,7 +275,7 @@ REMEMBER: Output ONLY the JSON object. Start with { and end with }. No other tex
 
         text = response_text.strip()
 
-        # Strategy 1: Try direct JSON parsing (ideal case)
+        # Strategy 1: Try direct JSON parsing (ideal case - model followed instructions perfectly)
         try:
             result = json.loads(text)
             # Validate and return
@@ -279,24 +285,30 @@ REMEMBER: Output ONLY the JSON object. Start with { and end with }. No other tex
                 result["error_type"] = "none"
             if "error_description" not in result:
                 result["error_description"] = ""
+            # Mark successful parsing
+            result["parse_success"] = True
+            result["parse_strategy"] = "direct"
             return result
         except (json.JSONDecodeError, ValueError):
             pass
 
         # Strategy 2: Remove markdown code blocks
         if "```json" in text or "```" in text:
-            text = re.sub(r'^```json\s*', '', text)
-            text = re.sub(r'^```\s*', '', text)
-            text = re.sub(r'\s*```$', '', text)
-            text = text.strip()
+            text_cleaned = re.sub(r'^```json\s*', '', text)
+            text_cleaned = re.sub(r'^```\s*', '', text_cleaned)
+            text_cleaned = re.sub(r'\s*```$', '', text_cleaned)
+            text_cleaned = text_cleaned.strip()
             try:
-                result = json.loads(text)
+                result = json.loads(text_cleaned)
                 if "has_error" not in result:
                     raise ValueError("Response missing 'has_error' field")
                 if "error_type" not in result:
                     result["error_type"] = "none"
                 if "error_description" not in result:
                     result["error_description"] = ""
+                # Mark successful parsing with fallback
+                result["parse_success"] = False
+                result["parse_strategy"] = "markdown_removal"
                 return result
             except (json.JSONDecodeError, ValueError):
                 pass
@@ -318,6 +330,9 @@ REMEMBER: Output ONLY the JSON object. Start with { and end with }. No other tex
                     result["error_type"] = "none"
                 if "error_description" not in result:
                     result["error_description"] = ""
+                # Mark successful extraction with fallback
+                result["parse_success"] = False
+                result["parse_strategy"] = "extraction"
                 return result
         except (json.JSONDecodeError, ValueError):
             pass
@@ -330,5 +345,7 @@ REMEMBER: Output ONLY the JSON object. Start with { and end with }. No other tex
         return {
             "has_error": False,
             "error_type": "none",
-            "error_description": "Parse error - assuming no error"
+            "error_description": "Parse error - assuming no error",
+            "parse_success": False,
+            "parse_strategy": "failed"
         }

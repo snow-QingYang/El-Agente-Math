@@ -288,28 +288,97 @@ The `mai benchmark` command evaluates an LLM's ability to detect mathematical er
 
 #### Basic Usage
 
+**Single Paper Benchmarking:**
+
 ```bash
-# Benchmark a processed paper
+# Benchmark a processed paper (default: OpenAI GPT-5)
 mai benchmark output/1706.03762
 
-# Use different model
-mai benchmark output/1706.03762 --model gpt-4o
+# Use different OpenAI models
+mai benchmark output/1706.03762 --model openai/gpt-4o
+mai benchmark output/1706.03762 --model openai/gpt-4o-mini
+
+# Use OpenRouter models (requires OPENROUTER_API_KEY)
+mai benchmark output/1706.03762 --model openrouter/anthropic/claude-3.5-sonnet
+mai benchmark output/1706.03762 --model openrouter/google/gemini-pro
 
 # Use more workers for speed
 mai benchmark output/1706.03762 --max-workers 20
 ```
 
+**Batch Benchmarking (All Papers):**
+
+```bash
+# Benchmark ALL papers in output directory
+mai benchmark --all
+
+# Specify custom output directory
+mai benchmark --all --output-dir ./my_papers
+
+# Use different model for batch benchmark
+mai benchmark --all --model openai/gpt-4o
+
+# Combine options
+mai benchmark --all --model openrouter/anthropic/claude-3.5-sonnet --max-workers 20
+```
+
+**Model Format**: `provider/model`
+- OpenAI: `openai/gpt-5`, `openai/gpt-4o`, `openai/gpt-4o-mini`
+- OpenRouter: `openrouter/anthropic/claude-3.5-sonnet`, `openrouter/google/gemini-pro`, etc.
+- Backward compatibility: `gpt-5` defaults to `openai/gpt-5`
+
+**Environment Variables**:
+- OpenAI models: `OPENAI_API_KEY` (same as process command)
+- OpenRouter models: `OPENROUTER_API_KEY` (get your key at https://openrouter.ai/keys)
+
 #### How It Works
+
+**Single Paper Mode:**
 
 1. **Loads formulas** from `{paper_id}_explained.json`
 2. **Extracts context** (300 words before/after) from `consolidated_labeled.tex` for each formula
 3. **Asks LLM** to detect if each formula contains a mathematical error
-4. **Saves results** to `{paper_id}_error_detection.json`
-5. **Calculates metrics** (if `error_log.json` exists) and saves to `{paper_id}_benchmark_report.json`
+4. **Saves results** to `benchmarks/{model_name}/error_detection.json`
+5. **Calculates metrics** (if `error_log.json` exists) and saves to `benchmarks/{model_name}/benchmark_report.json`
+
+**Batch Mode (--all):**
+
+1. **Scans output directory** for all processed papers (papers with `_explained.json`)
+2. **Runs benchmark on each paper** sequentially (individual results saved in each paper's directory)
+3. **Aggregates metrics** across all papers (mean, std, min, max)
+4. **Saves aggregate report** to `output/aggregate_benchmarks/{model_name}/`
+
+#### Output Structure
+
+**Single Paper:**
+```
+output/{paper_id}/
+└── benchmarks/
+    └── {model_name}/
+        ├── error_detection.json      # Detection results (without raw responses)
+        ├── raw_responses.json         # All model raw outputs
+        ├── parsing_failures.log       # Detailed log of parsing failures
+        ├── benchmark_report.json      # Metrics report
+        └── summary.txt                # Human-readable summary
+```
+
+**Batch Benchmark:**
+```
+output/
+├── {paper_id_1}/
+│   └── benchmarks/{model_name}/...   # Individual paper results
+├── {paper_id_2}/
+│   └── benchmarks/{model_name}/...   # Individual paper results
+└── aggregate_benchmarks/
+    └── {model_name}/
+        ├── aggregate_report.json      # Combined metrics across all papers
+        ├── per_paper_summary.json     # Individual paper metrics
+        └── aggregate_summary.txt      # Human-readable aggregate summary
+```
 
 #### Metrics Reported
 
-When ground truth is available (from `--add-error`):
+**Single Paper Metrics** (when ground truth is available from `--add-error`):
 
 **Binary Classification:**
 - **Accuracy**: Overall correctness of error detection
@@ -326,11 +395,36 @@ When ground truth is available (from `--add-error`):
 **Error Type Matching:**
 - Accuracy of identifying the specific error type (sign_flip, operator_swap, etc.)
 
+**Instruction Following:**
+- **Perfect JSON Rate**: Percentage of responses that followed JSON format perfectly
+- **Fallback Rate**: Percentage requiring fallback parsing strategies
+- **Failure Rate**: Percentage of complete parsing failures
+
 **Per-Error-Type Performance:**
 - Detection recall for each error type separately
 - Identifies which types of errors are easiest/hardest to detect
 
-#### Example Workflow
+**Batch Aggregate Metrics** (across all papers):
+
+**Mean & Standard Deviation:**
+- Average performance metrics across all papers with std deviation
+- Shows consistency of model performance
+
+**Accuracy Range:**
+- Minimum and maximum accuracy observed across papers
+- Helps identify if model performs consistently
+
+**Aggregated Per-Error-Type Recall:**
+- Combined detection rates for each error type across all papers
+- Larger sample size for more reliable error type analysis
+
+**Per-Paper Summary:**
+- Individual accuracy and F1 scores for each paper
+- Quick overview of which papers were harder/easier
+
+#### Example Workflows
+
+**Single Paper Workflow:**
 
 ```bash
 # Step 1: Process paper with error injection
@@ -340,10 +434,30 @@ mai process 1706.03762 --add-error --error-rate 0.5
 mai benchmark output/1706.03762
 
 # Step 3: View results
-cat output/1706.03762/1706.03762_benchmark_report.json
+cat output/1706.03762/benchmarks/openai_gpt-5/summary.txt
+cat output/1706.03762/benchmarks/openai_gpt-5/benchmark_report.json
 ```
 
-#### Benchmark Report Example
+**Batch Benchmarking Workflow:**
+
+```bash
+# Step 1: Process multiple papers with error injection
+mai process 1706.03762 2010.11929 1508.06576 --add-error --error-rate 0.5
+
+# Step 2: Benchmark all papers at once
+mai benchmark --all --model openai/gpt-4o
+
+# Step 3: View aggregate results
+cat output/aggregate_benchmarks/openai_gpt-4o/aggregate_summary.txt
+
+# Optional: Compare different models
+mai benchmark --all --model openrouter/anthropic/claude-3.5-sonnet
+cat output/aggregate_benchmarks/openrouter_anthropic_claude-3.5-sonnet/aggregate_summary.txt
+```
+
+#### Benchmark Report Examples
+
+**Single Paper Report:**
 
 ```json
 {
@@ -351,10 +465,21 @@ cat output/1706.03762/1706.03762_benchmark_report.json
     "accuracy": 0.84,
     "precision": 0.857,
     "recall": 0.783,
-    "f1_score": 0.818
+    "f1_score": 0.818,
+    "true_positives": 5,
+    "false_positives": 0,
+    "true_negatives": 2,
+    "false_negatives": 12
   },
   "error_type_matching": {
-    "type_accuracy": 0.714
+    "type_accuracy": 0.714,
+    "correct_type_identified": 10,
+    "total_errors_detected": 14
+  },
+  "instruction_following": {
+    "perfect_json_rate": 0.895,
+    "fallback_rate": 0.105,
+    "failure_rate": 0.0
   },
   "per_error_type_performance": {
     "sign_flip": {"detected": 4, "total": 5, "recall": 0.8},
@@ -364,11 +489,48 @@ cat output/1706.03762/1706.03762_benchmark_report.json
 }
 ```
 
+**Aggregate Report (Batch):**
+
+```json
+{
+  "model": "openai/gpt-4o",
+  "metadata": {
+    "total_papers_in_directory": 3,
+    "successful_benchmarks": 3,
+    "failed_benchmarks": 0,
+    "no_ground_truth": 0
+  },
+  "aggregate_metrics": {
+    "binary_classification": {
+      "mean_accuracy": 0.823,
+      "std_accuracy": 0.045,
+      "mean_precision": 0.841,
+      "mean_recall": 0.795,
+      "mean_f1_score": 0.817,
+      "min_accuracy": 0.78,
+      "max_accuracy": 0.87
+    },
+    "instruction_following": {
+      "mean_perfect_json_rate": 0.913,
+      "mean_fallback_rate": 0.087,
+      "mean_failure_rate": 0.0
+    }
+  },
+  "per_error_type_performance": {
+    "sign_flip": {"detected": 12, "total": 15, "recall": 0.8},
+    "operator_swap": {"detected": 9, "total": 12, "recall": 0.75}
+  },
+  "paper_ids": ["1706.03762", "2010.11929", "1508.06576"]
+}
+```
+
 **Use cases:**
 - Evaluate different LLM models' error detection capabilities
 - Test if errors are being explained correctly
 - Identify which error types are most challenging to detect
 - Create datasets for mathematical reasoning research
+- Compare model performance across multiple papers for robust evaluation
+- Analyze consistency of model performance (via std deviation metrics)
 
 ### Other Commands
 
