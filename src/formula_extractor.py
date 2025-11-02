@@ -362,9 +362,12 @@ def extract_inline_math(tex_content: str) -> List[Dict[str, Any]]:
                         "line_number": line_number,
                     }
                 )
-        return entries
 
-    # Fallback to simple regex extraction
+        # If parser succeeded but found nothing, fall back to regex
+        if entries:
+            return entries
+
+    # Fallback to regex extraction when parser fails or returns empty results
     entries.extend(_extract_inline_with_regex(tex_content))
     return entries
 
@@ -426,8 +429,12 @@ def extract_display_math(tex_content: str) -> List[Dict[str, Any]]:
                         "line_number": line_number,
                     }
                 )
-        return entries
 
+        # If parser succeeded but found nothing, fall back to regex
+        if entries:
+            return entries
+
+    # Fallback to regex extraction when parser fails or returns empty results
     entries.extend(_extract_display_with_regex(tex_content))
     return entries
 

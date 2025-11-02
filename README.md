@@ -111,6 +111,16 @@ mai process 1706.03762 --add-error
 mai process 1706.03762 --add-error --error-rate 0.3
 ```
 
+**Complete workflow example - Process multiple papers to custom directory:**
+
+```bash
+# Process multiple papers with error injection to custom dataset directory
+mai process 2210.10000 2210.11111 2210.12222 --add-error --error-rate 0.5 -f 20 -o ./dataset/set1
+
+# Then benchmark all papers in that directory
+mai benchmark --all --output-dir ./dataset/set1 --model openai/gpt-4o
+```
+
 **Notes:**
 - Higher `--max-workers` values speed up processing but may hit API rate limits. Start with default (10) and increase if needed.
 - `--max-formulas` prioritizes longer formulas first (more complex). Use this to control costs and focus on important formulas.
@@ -309,18 +319,20 @@ mai benchmark output/1706.03762 --max-workers 20
 **Batch Benchmarking (All Papers):**
 
 ```bash
-# Benchmark ALL papers in output directory
+# Benchmark ALL papers in default output directory
 mai benchmark --all
 
-# Specify custom output directory
-mai benchmark --all --output-dir ./my_papers
+# Benchmark papers in custom directory (e.g., dataset/set1)
+mai benchmark --all --output-dir ./dataset/set1
 
 # Use different model for batch benchmark
 mai benchmark --all --model openai/gpt-4o
 
-# Combine options
-mai benchmark --all --model openrouter/anthropic/claude-3.5-sonnet --max-workers 20
+# Combine options - benchmark custom dataset with specific model
+mai benchmark --all --output-dir ./dataset/set1 --model openrouter/anthropic/claude-3.5-sonnet --max-workers 20
 ```
+
+**Note:** The `--output-dir` option works for both `process` and `benchmark --all` commands, allowing you to organize datasets in custom directories.
 
 **Model Format**: `provider/model`
 - OpenAI: `openai/gpt-5`, `openai/gpt-4o`, `openai/gpt-4o-mini`
@@ -453,6 +465,23 @@ cat output/aggregate_benchmarks/openai_gpt-4o/aggregate_summary.txt
 # Optional: Compare different models
 mai benchmark --all --model openrouter/anthropic/claude-3.5-sonnet
 cat output/aggregate_benchmarks/openrouter_anthropic_claude-3.5-sonnet/aggregate_summary.txt
+```
+
+**Custom Dataset Workflow (Organized Directory Structure):**
+
+```bash
+# Step 1: Create dataset in custom directory with specific settings
+mai process 2210.10000 2210.11111 2210.12222 2210.13333 \
+  --add-error --error-rate 0.5 -f 20 -o ./dataset/set1
+
+# Step 2: Benchmark the entire dataset
+mai benchmark --all --output-dir ./dataset/set1 --model openai/gpt-4o
+
+# Step 3: View results
+cat dataset/set1/aggregate_benchmarks/openai_gpt-4o/aggregate_summary.txt
+
+# Optional: Test with different model on same dataset
+mai benchmark --all --output-dir ./dataset/set1 --model openai/gpt-4o-mini
 ```
 
 #### Benchmark Report Examples
