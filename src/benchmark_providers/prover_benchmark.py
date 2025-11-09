@@ -15,8 +15,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 from dataclasses import dataclass, asdict
 
-from .base import BaseLLMProvider
-from . import get_provider
+from .deepseek import DeepseekAgent
+import asyncio
 
 
 @dataclass
@@ -61,7 +61,7 @@ class ProverBenchmark:
         self.model = model
         self.temperature = temperature
         self.max_workers = max_workers
-        self.provider = get_provider(model, temperature=temperature)
+        self.agent = DeepseekAgent()
     
     def check_formula(self, formula_input: FormulaInput) -> ProverResult:
         """
@@ -76,31 +76,28 @@ class ProverBenchmark:
         start_time = time.time()
         
         try:
-            # Build prompt for the prover
-            system_prompt = """You are a mathematical proof verification system. Your task is to determine if a mathematical formula is correct or contains errors.
+            # Use DeepseekAgent
+            prompt = f"""Analyze this formula for correctness:
 
-Analyze the given formula and determine if it is mathematically correct. Consider:
+{formula_input.formula}
+
+{"Context: " + formula_input.context if formula_input.context else ""}
+
+Consider:
 1. Mathematical syntax and notation
 2. Logical consistency
 3. Mathematical validity of operations
 4. Common mathematical errors (sign errors, incorrect indices, wrong operators, etc.)
 
 Respond in JSON format with the following structure:
-{
+{{
     "is_correct": boolean,
     "confidence": float (0.0 to 1.0),
     "reasoning": "Brief explanation of your analysis"
-}
-
-Focus on mathematical correctness, not formatting issues."""
+}}"""
             
-            user_prompt = f"Analyze this formula for correctness:\n\n{formula_input.formula}"
-            
-            if formula_input.context:
-                user_prompt += f"\n\nContext: {formula_input.context}"
-            
-            # Call the prover model
-            response = self.provider._call_api(system_prompt, user_prompt)
+            # Run async code in sync context
+            response = asyncio.run(self.agent.run(prompt))
             response_time = time.time() - start_time
             
             # Parse the response
@@ -161,19 +158,15 @@ Focus on mathematical correctness, not formatting issues."""
         print(f"Altered formulas: {sum(1 for f in formulas if f.is_altered)}")
         print(f"Correct formulas: {sum(1 for f in formulas if not f.is_altered)}")
         
-        # Process formulas concurrently
+        # Process formulas
         results = []
-        with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
-            future_to_formula = {
-                executor.submit(self.check_formula, formula): formula
-                for formula in formulas
-            }
-            
-            for future in tqdm(as_completed(future_to_formula), 
-                             total=len(formulas), 
-                             desc="Checking formulas"):
-                result = future.result()
-                results.append(result)
+        
+        # Process sequentially for DeepseekAgent (since it maintains conversation history)
+        for formula in tqdm(formulas, desc="Checking formulas"):
+            result = self.check_formula(formula)
+            results.append(result)
+            # Clear history after each formula to ensure independence
+            self.agent.clear_history()
         
         # Calculate metrics
         metrics = self._calculate_metrics(results)
