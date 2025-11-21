@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "paper_id": "2411.00161",
+    "model": "openrouter/deepseek/deepseek-r1-0528",
+    "total_responses": 19,
+    "timestamp": "2025-11-01T16:24:44.295285"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0128>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The product operator was used instead of the sum operator for the summation over k\"\n}",
+      "response_length": 168,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0034>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0012>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0037>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0074>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"The function should be \\Phi_{\\nu,\\kappa} but is written as \\P^Thi_{\\nu,\\kappa}\"\n}",
+      "response_length": 161,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0089>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0165>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the last eigenfunction term, subscript index should be j to match λ_j, but is written as l (ϕ_l instead of ϕ_j)\"\n}",
+      "response_length": 196,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0080>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0082>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0139>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0147>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0015>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"Mismatched parentheses in the expression for finite nu: extra opening parenthesis in the base and extra closing parenthesis in the exponent\"\n}",
+      "response_length": 228,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0040>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"The expectation uses p (prior distribution) but should use q (variational distribution) for F_θ(x_i)\"\n}",
+      "response_length": 183,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0150>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Spherical harmonic indices Y_{l,m} have |m|>l (e.g., Y_{2,3} and Y_{1,2}), which is invalid as |m| must be ≤ l.\"\n}",
+      "response_length": 193,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0179>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0168>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0169>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0132>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

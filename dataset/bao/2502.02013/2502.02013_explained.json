@@ -1,0 +1,388 @@
+{
+  "formulas": [
+    {
+      "label": "<<FORMULA_0018>>",
+      "formula": "\\label{eq:matrix-based-entropy}\n    S_\\alpha(\\mathbf{Z}) \\;=\\; \\frac{1}{1-\\alpha} \\,\\log \\!\\biggl(\\,\\sum_{i=1}^{r}\\!\\Bigl(\\tfrac{\\lambda_i(\\mathbf{K})}{\\mathrm{tr}(\\mathbf{K})}\\Bigr)^\\alpha\\biggr),",
+      "raw_latex": "\\begin{equation}\n\\label{eq:matrix-based-entropy}\n    S_\\alpha(\\mathbf{Z}) \\;=\\; \\frac{1}{1-\\alpha} \\,\\log \\!\\biggl(\\,\\sum_{i=1}^{r}\\!\\Bigl(\\tfrac{\\lambda_i(\\mathbf{K})}{\\mathrm{tr}(\\mathbf{K})}\\Bigr)^\\alpha\\biggr),\n\\end{equation}",
+      "formula_type": "equation",
+      "line_number": 392,
+      "is_formula": true,
+      "high_level_explanation": "This defines the alpha-order matrix-based (Rényi) entropy of the representation matrix Z using the eigenvalue spectrum of its Gram matrix K. The eigenvalues are normalized by the trace of K, making the quantity invariant to uniform rescaling, and the log-sum structure measures how concentrated versus spread the spectrum is. If a few eigenvalues dominate, the entropy is small (compressed representation); if eigenvalues are more evenly distributed, the entropy is large.",
+      "notations": {
+        "S_\\alpha(\\mathbf{Z})": "Alpha-order matrix-based entropy of the representation matrix Z",
+        "\\mathbf{Z}": "Matrix of N data samples (tokens) in D dimensions (hidden states)",
+        "\\alpha": "Order parameter controlling the Rényi entropy family",
+        "\\lambda_i(\\mathbf{K})": "i-th largest eigenvalue of \\mathbf{K} (nonnegative)",
+        "\\mathbf{K}": "Gram matrix constructed from \\mathbf{Z}",
+        "\\mathrm{tr}(\\mathbf{K})": "Trace of \\mathbf{K} (sum of its eigenvalues)",
+        "r": "NOT MENTIONED"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:46:21.714131"
+    },
+    {
+      "label": "<<FORMULA_0029>>",
+      "formula": "\\label{eq:matrix + based-entropy}\nS_\\alpha(\\mathbf{Z}) \n\\;=\\; \n\\frac{1}{1-\\alpha}\\,\\log \\Biggl(\\,\\sum_{i=1}^{r} \\Bigl(\\tfrac{\\lambda_i(\\mathbf{K})}{\\mathrm{tr}(\\mathbf{K})}\\Bigr)^\\alpha \\Biggr),",
+      "raw_latex": "\\begin{equation}\n\\label{eq:matrix + based-entropy}\nS_\\alpha(\\mathbf{Z}) \n\\;=\\; \n\\frac{1}{1-\\alpha}\\,\\log \\Biggl(\\,\\sum_{i=1}^{r} \\Bigl(\\tfrac{\\lambda_i(\\mathbf{K})}{\\mathrm{tr}(\\mathbf{K})}\\Bigr)^\\alpha \\Biggr),\n\\end{equation}",
+      "formula_type": "equation",
+      "line_number": 409,
+      "is_formula": true,
+      "high_level_explanation": "This equation defines the alpha-order matrix-based entropy of the representation matrix Z. It computes the logarithm of the sum of the alpha-powers of the Gram matrix K’s eigenvalues after normalizing them by the trace so they behave like a distribution. Small values indicate that energy is concentrated in a few principal directions (compressed representation), while large values indicate a spread across many directions; varying alpha smoothly changes the emphasis of this measure.",
+      "notations": {
+        "S_\\alpha(\\mathbf{Z})": "Alpha-order matrix-based entropy of \\mathbf{Z}",
+        "\\mathbf{Z}": "Matrix of N data samples embedded in a D-dimensional space",
+        "\\alpha": "Order parameter controlling the entropy family",
+        "r": "NOT MENTIONED",
+        "\\lambda_i(\\mathbf{K})": "i-th largest eigenvalue of \\mathbf{K}",
+        "\\mathbf{K}": "Gram matrix computed from \\mathbf{Z}",
+        "\\mathrm{tr}(\\mathbf{K})": "Trace of \\mathbf{K} (sum of its diagonal entries)"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:46:23.452664"
+    },
+    {
+      "label": "<<FORMULA_0053>>",
+      "formula": "\\bar{C} \n    = \\frac{1}{L-2}\\sum_{k=1}^{L-2}\n      \\arccos\\!\\Bigl(\\tfrac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}\n                           {\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_j\\|}\\Bigr).",
+      "raw_latex": "\\[\n    \\bar{C} \n    = \\frac{1}{L-2}\\sum_{k=1}^{L-2}\n      \\arccos\\!\\Bigl(\\tfrac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}\n                           {\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_j\\|}\\Bigr).\n\\]",
+      "formula_type": "display",
+      "line_number": 509,
+      "is_formula": true,
+      "high_level_explanation": "This formula computes the average curvature of a token-embedding trajectory by averaging the angles between consecutive difference vectors along the sequence. Each angle is obtained via the arccosine of the cosine similarity between successive vectors, capturing how sharply the direction changes from step to step. Higher values indicate abrupt directional changes (less smooth representations), while lower values indicate smoother, more globally consistent trajectories.",
+      "notations": {
+        "\\bar{C}": "Average curvature of the token-embedding trajectory over a prompt",
+        "L": "Prompt length (number of tokens)",
+        "\\mathbf{v}_k": "Difference between consecutive token embeddings at position k",
+        "\\mathbf{v}_{k+1}": "Difference between consecutive token embeddings at position k+1",
+        "\\mathbf{v}_j": "NOT MENTIONED",
+        "k": "Index over token positions in the summation (from 1 to L-2)"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:46:12.765253"
+    },
+    {
+      "label": "<<FORMULA_0056>>",
+      "formula": "\\bar{C} \\;=\\; \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos \\ \\!\\Bigl( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_k\\|} \\Bigr).",
+      "raw_latex": "\\begin{equation}\n    \\bar{C} \\;=\\; \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos \\ \\!\\Bigl( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_k\\|} \\Bigr).\n\\end{equation}",
+      "formula_type": "equation",
+      "line_number": 520,
+      "is_formula": true,
+      "high_level_explanation": "This formula computes the average curvature of a token-embedding trajectory by averaging the turning angles between consecutive displacement vectors. At each step k, it takes the angle between successive difference vectors via the arccosine of their cosine similarity, then averages these angles over all interior positions. Small values indicate a smoother, more gradually changing trajectory, while larger values indicate sharper, more abrupt changes.",
+      "notations": {
+        "\\bar{C}": "Average curvature over the token sequence",
+        "L": "Prompt length (number of tokens)",
+        "k": "Index over interior positions from 1 to L-2",
+        "\\mathbf{v}_k": "Difference vector between consecutive token embeddings at positions k and k+1",
+        "\\mathbf{v}_{k+1}": "Difference vector between consecutive token embeddings at positions k+1 and k+2"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:46:39.286559"
+    },
+    {
+      "label": "<<FORMULA_0088>>",
+      "formula": "\\label{eq:matrix-based-entropy}\n    S_{\\alpha}(\\mathbf{Z}) \\;=\\; \\frac{1 - \\alpha}{1} \\log \\Biggl(\\sum_{i=1}^{r} \\Bigl(\\frac{\\lambda_i(\\mathbf{K_Z})}{\\operatorname{tr}(\\mathbf{K_Z})}\\Bigr)^\\alpha \\Biggr)",
+      "raw_latex": "\\begin{equation}\n\\label{eq:matrix-based-entropy}\n    S_{\\alpha}(\\mathbf{Z}) \\;=\\; \\frac{1 - \\alpha}{1} \\log \\Biggl(\\sum_{i=1}^{r} \\Bigl(\\frac{\\lambda_i(\\mathbf{K_Z})}{\\operatorname{tr}(\\mathbf{K_Z})}\\Bigr)^\\alpha \\Biggr)\n\\end{equation}",
+      "formula_type": "equation",
+      "line_number": 706,
+      "is_formula": true,
+      "high_level_explanation": "This equation defines the alpha-order matrix-based entropy of a representation matrix Z. It computes a Renyi-type entropy from the normalized eigenvalues of the Gram matrix K_Z (each eigenvalue divided by the trace), aggregates them with a power alpha and a logarithm, and scales by a factor depending on alpha. As alpha varies, it interpolates among related entropy measures, and in the limit alpha → 1 it recovers the Shannon/von Neumann entropy.",
+      "notations": {
+        "S_{\\alpha}(\\mathbf{Z})": "Alpha-order matrix-based entropy of the representation matrix \\mathbf{Z}",
+        "\\mathbf{Z}": "Internal representation matrix whose rows are token or sequence embeddings",
+        "\\alpha": "Order parameter controlling the entropy family (Renyi order)",
+        "\\lambda_i(\\mathbf{K_Z})": "i-th eigenvalue of \\mathbf{K_Z}",
+        "\\mathbf{K_Z}": "Gram matrix constructed from \\mathbf{Z}",
+        "\\operatorname{tr}(\\mathbf{K_Z})": "Trace of \\mathbf{K_Z}",
+        "r": "NOT MENTIONED"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:46:19.770321"
+    },
+    {
+      "label": "<<FORMULA_0102>>",
+      "formula": "\\bar{C} \\;=\\; \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos\\!\\Bigl( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_k\\|} \\Bigr).",
+      "raw_latex": "\\begin{equation}\n    \\bar{C} \\;=\\; \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos\\!\\Bigl( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_k\\|} \\Bigr).\n\\end{equation}",
+      "formula_type": "equation",
+      "line_number": 753,
+      "is_formula": true,
+      "high_level_explanation": "This formula computes the average curvature of a sequence of vectors by averaging the angles between successive vectors. Each angle is obtained via the cosine formula using the dot product normalized by the vectors’ magnitudes (i.e., the arccos of the cosine similarity). The average is taken over the L−2 interior pairs, producing a scalar (in radians) that quantifies how abruptly directions change across the sequence; higher values indicate less smooth trajectories in the embedding space.",
+      "notations": {
+        "\\bar{C}": "Average curvature over the prompt (scalar metric)",
+        "L": "Number of tokens in the prompt",
+        "k": "Index over consecutive vector pairs",
+        "\\mathbf{v}_k": "NOT MENTIONED"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:47:11.914087"
+    },
+    {
+      "label": "<<FORMULA_0110>>",
+      "formula": "\\label{eq:matrix-based-entropy}\n    S_{\\alpha}(\\mathbf{Z}) = \\frac{1}{1 - \\alpha} \\log \\left( \\sum_{i=1}^{L} \\left( \\frac{\\lambda_i(\\mathbf{K_Z})}{\\operatorname{tr}(\\mathbf{K_Z})} \\right)^{\\alpha} \\right).",
+      "raw_latex": "\\begin{equation}\n\\label{eq:matrix-based-entropy}\n    S_{\\alpha}(\\mathbf{Z}) = \\frac{1}{1 - \\alpha} \\log \\left( \\sum_{i=1}^{L} \\left( \\frac{\\lambda_i(\\mathbf{K_Z})}{\\operatorname{tr}(\\mathbf{K_Z})} \\right)^{\\alpha} \\right).\n\\end{equation}",
+      "formula_type": "equation",
+      "line_number": 830,
+      "is_formula": true,
+      "high_level_explanation": "This formula defines the α-order matrix-based entropy of a set of token representations. It computes the eigenvalues of the Gram (kernel) matrix of those representations, normalizes them by the trace to form a spectrum that sums to one, and then applies the Rényi-entropy-of-order-α functional to that spectrum. Higher values indicate a more dispersed (less concentrated) eigenvalue distribution, corresponding to more diverse token embeddings.",
+      "notations": {
+        "S_{\\alpha}(\\mathbf{Z})": "α-order matrix-based entropy of the token representations \\mathbf{Z}",
+        "\\alpha": "Order parameter of the Rényi entropy",
+        "\\mathbf{Z}": "Token representations within a single prompt",
+        "L": "Number of tokens in the prompt (size of the Gram matrix)",
+        "\\lambda_i(\\mathbf{K_Z})": "i-th eigenvalue of the Gram (kernel) matrix of \\mathbf{Z}",
+        "\\mathbf{K_Z}": "Gram (kernel) matrix constructed from \\mathbf{Z}"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:46:19.940332"
+    },
+    {
+      "label": "<<FORMULA_0113>>",
+      "formula": "\\bar{C} = \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos\\left( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k - 1}\\| \\|\\mathbf{v}_k\\|} \\right).",
+      "raw_latex": "\\begin{equation}\n    \\bar{C} = \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos\\left( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k - 1}\\| \\|\\mathbf{v}_k\\|} \\right).\n\\end{equation}",
+      "formula_type": "equation",
+      "line_number": 850,
+      "is_formula": true,
+      "high_level_explanation": "This formula computes the average curvature of a prompt by measuring how the direction of adjacent token-embedding difference vectors changes along the sequence. At each interior position k, it takes the arccosine of a normalized dot product between neighboring difference vectors, yielding an angle that quantifies the local turning of the representation trajectory. The result is averaged across positions to summarize the overall smoothness or zig-zag behavior of the token embedding path. Larger values indicate sharper or more frequent directional changes; smaller values indicate smoother transitions.",
+      "notations": {
+        "\\bar{C}": "Average curvature of the prompt",
+        "L": "Number of tokens in the sequence (sequence length)",
+        "\\mathbf{v}_k": "Difference vector between adjacent token embeddings at position k (defined in the text as the difference between neighboring token representations)"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:47:07.793950"
+    },
+    {
+      "label": "<<FORMULA_0123>>",
+      "formula": "\\mathbf{Q} = \\mathbf{x}\\mathbf{W}_Q, \\quad \\mathbf{K} = \\mathbf{x}\\mathbf{W}_K^T, \\quad \\mathbf{V} = \\mathbf{x}\\mathbf{W}_V,",
+      "raw_latex": "\\begin{equation}\n    \\mathbf{Q} = \\mathbf{x}\\mathbf{W}_Q, \\quad \\mathbf{K} = \\mathbf{x}\\mathbf{W}_K^T, \\quad \\mathbf{V} = \\mathbf{x}\\mathbf{W}_V,\n\\end{equation}",
+      "formula_type": "equation",
+      "line_number": 1665,
+      "is_formula": true,
+      "high_level_explanation": "These equations define the query (Q), key (K), and value (V) matrices used in transformer self-attention as linear projections of the input x. Each is obtained by multiplying x with a corresponding learned weight matrix; the key projection is written with a transpose on its weight. These projections prepare the input representations for the attention computation that follows.",
+      "notations": {
+        "\\mathbf{Q}": "Query matrix computed from the input",
+        "\\mathbf{K}": "Key matrix computed from the input",
+        "\\mathbf{V}": "Value matrix computed from the input",
+        "\\mathbf{x}": "Input to the transformer (as defined: the given input)",
+        "\\mathbf{W}_Q": "Learned projection matrix for queries",
+        "\\mathbf{W}_K^T": "Transpose of the learned projection matrix for keys",
+        "\\mathbf{W}_V": "Learned projection matrix for values"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:47:05.283339"
+    },
+    {
+      "label": "<<FORMULA_0128>>",
+      "formula": "\\mathbf{h}_t &= \\mathbf{A}\\mathbf{h}_{t-1} \\\\times \\mathbf{B}\\mathbf{x}_t, \\\\\n    \\mathbf{y}_t &= \\mathbf{C}\\mathbf{h}_t + \\mathbf{D}\\mathbf{x}_t,",
+      "raw_latex": "\\begin{align}\n    \\mathbf{h}_t &= \\mathbf{A}\\mathbf{h}_{t-1} \\\\times \\mathbf{B}\\mathbf{x}_t, \\\\\n    \\mathbf{y}_t &= \\mathbf{C}\\mathbf{h}_t + \\mathbf{D}\\mathbf{x}_t,\n\\end{align}",
+      "formula_type": "align",
+      "line_number": 1690,
+      "is_formula": true,
+      "high_level_explanation": "These equations specify a state-space update used in state space models (SSMs) for sequence modeling. The hidden state at time t is obtained by transforming the previous hidden state with A and the current input with B, then combining those transformed terms as indicated, and the output is a linear combination of the hidden state and the input via C and D. The matrices A, B, C, and D are learned parameters of the model.",
+      "notations": {
+        "\\mathbf{h}_t": "hidden state at time t",
+        "\\mathbf{A}": "learned parameter matrix",
+        "\\mathbf{h}_{t-1}": "hidden state at time t−1",
+        "\\mathbf{B}": "learned parameter matrix",
+        "\\mathbf{x}_t": "NOT MENTIONED",
+        "\\mathbf{y}_t": "output at time t",
+        "\\mathbf{C}": "learned parameter matrix",
+        "\\mathbf{D}": "learned parameter matrix"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:47:27.193234"
+    },
+    {
+      "label": "<<FORMULA_0153>>",
+      "formula": "\\label{eqn:attention}\n%    \\mathbf{A} = softmax\\\\geft(\\frac{\\mathbf{Q}\\mathbf{K}^\\top}{\\sqrt{d_k}}\\right),\n%",
+      "raw_latex": "\\begin{equation}\\label{eqn:attention}\n%    \\mathbf{A} = softmax\\\\geft(\\frac{\\mathbf{Q}\\mathbf{K}^\\top}{\\sqrt{d_k}}\\right),\n%\\end{equation}",
+      "formula_type": "equation",
+      "line_number": 1725,
+      "is_formula": true,
+      "high_level_explanation": "This is the scaled dot‑product attention formula: it computes attention weights by taking the dot products between queries and keys, scaling them by the square root of d_k to control magnitude, and applying a softmax to obtain a probability distribution. The result is a matrix of attention weights whose rows sum to one. In the provided context, the attention weight matrix is lower‑triangular (e.g., due to causal masking) so that each position only attends to permitted positions.",
+      "notations": {
+        "\\mathbf{A}": "Attention weight matrix; lower-triangular as stated in the context",
+        "\\mathbf{Q}": "NOT MENTIONED",
+        "\\mathbf{K}": "NOT MENTIONED",
+        "d_k": "NOT MENTIONED"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:47:25.299872"
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "formula": "%     \\mathbf{h}_t &= \\mathbf{A}\\mathbf{h}_{t-1} + \\mathbf{B}\\mathbf{x}_t, \\\\\n%     \\mathbf{y}_t &= \\mathbf{C}\\mathbf{h}_t + \\mathbf{D}\\mathbf{x}_t,\n%",
+      "raw_latex": "\\begin{align}\n%     \\mathbf{h}_t &= \\mathbf{A}\\mathbf{h}_{t-1} + \\mathbf{B}\\mathbf{x}_t, \\\\\n%     \\mathbf{y}_t &= \\mathbf{C}\\mathbf{h}_t + \\mathbf{D}\\mathbf{x}_t,\n% \\end{align}",
+      "formula_type": "align",
+      "line_number": 1741,
+      "is_formula": true,
+      "high_level_explanation": "These are linear state-space equations defining a recurrent dynamical system (state space model). The hidden state at time t is updated from the previous hidden state and the current input via linear transformations, and the output is a linear function of the current hidden state with an optional direct contribution from the input. In the paper’s context, the matrices are learned parameters of the model.",
+      "notations": {
+        "\\mathbf{h}_t": "Hidden (latent) state at time t",
+        "\\mathbf{h}_{t-1}": "Hidden (latent) state at the previous time step t-1",
+        "\\mathbf{x}_t": "Input at time t",
+        "\\mathbf{y}_t": "Output at time t",
+        "\\mathbf{A}": "Learned state transition matrix",
+        "\\mathbf{B}": "Learned input-to-state matrix",
+        "\\mathbf{C}": "Learned state-to-output matrix",
+        "\\mathbf{D}": "Learned input-to-output (feedthrough) matrix"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:46:44.031801"
+    },
+    {
+      "label": "<<FORMULA_0210>>",
+      "formula": "\\mathbb P(|\\langle \\mathbf{v_i} , \\mathbf{v_j} \\rangle | < \\epsilon) \\leq \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}",
+      "raw_latex": "\\[\n    \\mathbb P(|\\langle \\mathbf{v_i} , \\mathbf{v_j} \\rangle | < \\epsilon) \\leq \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}\n    \\]",
+      "formula_type": "display",
+      "line_number": 2055,
+      "is_formula": true,
+      "high_level_explanation": "This inequality gives a concentration bound for the inner product of random unit vectors on the D-dimensional sphere. It states that the probability that the absolute inner product between two unit vectors \\mathbf{v_i} and \\mathbf{v_j} is below a threshold \\epsilon is at most a Gaussian-tail term proportional to exp(-D\\epsilon^2/2). The bound reflects concentration of measure on high-dimensional spheres.",
+      "notations": {
+        "\\mathbb P": "Probability with respect to the uniform distribution on the unit hypersphere",
+        "\\mathbf{v_i}": "i-th unit vector in \\mathbb{R}^D sampled uniformly from the unit hypersphere",
+        "\\mathbf{v_j}": "j-th unit vector in \\mathbb{R}^D sampled uniformly from the unit hypersphere",
+        "D": "Ambient dimension of the space \\mathbb{R}^D",
+        "\\epsilon": "Threshold controlling the tolerance for near-orthogonality"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:47:15.907578"
+    },
+    {
+      "label": "<<FORMULA_0212>>",
+      "formula": "\\mathbb{P}(\\exists i,j : \\langle |\\mathbf{v_i}, \\mathbf{v_j} \\rangle|>\\epsilon) &\\leq \\sum_{i\\not= j}\\mathbb{P}(|\\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle|>\\epsilon)\\\\ &\\leq m^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}.",
+      "raw_latex": "\\begin{align*}\n\t\t\\mathbb{P}(\\exists i,j : \\langle |\\mathbf{v_i}, \\mathbf{v_j} \\rangle|>\\epsilon) &\\leq \\sum_{i\\not= j}\\mathbb{P}(|\\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle|>\\epsilon)\\\\ &\\leq m^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}.    \n\t\\end{align*}",
+      "formula_type": "align*",
+      "line_number": 2059,
+      "is_formula": true,
+      "high_level_explanation": "This inequality bounds the probability that any pair among m random unit vectors has an absolute inner product exceeding a threshold epsilon. The first step applies the union bound, replacing the event \"there exists a violating pair\" by the sum over all pairwise violations. The second step uses a tail bound for the inner product of two independent random unit vectors in D dimensions, yielding an exponentially small probability in D. Overall, it shows that in high dimensions, random unit vectors are nearly orthogonal with high probability, up to a factor accounting for the number of pairs.",
+      "notations": {
+        "\\mathbb{P}": "Probability with respect to the random draw of the unit vectors (uniform on the unit sphere)",
+        "\\mathbf{v_i}": "i-th unit vector in R^D sampled uniformly from the unit sphere",
+        "\\mathbf{v_j}": "j-th unit vector in R^D sampled uniformly from the unit sphere",
+        "\\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle": "Inner product between the i-th and j-th vectors",
+        "i": "Index over vectors (from 1 to m)",
+        "j": "Index over vectors (from 1 to m)",
+        "m": "Number of unit vectors",
+        "D": "Ambient dimension of the vectors",
+        "\\epsilon": "Threshold for the absolute inner product",
+        "\\sqrt{2\\pi}": "Constant factor from a Gaussian-tail bound used in the inequality"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:46:34.474574"
+    },
+    {
+      "label": "<<FORMULA_0233>>",
+      "formula": "\\|\\bar Z\\bar Z^\\top \\|_F^2 &= \\frac1{L^2}\\| L \\bar Z\\bar Z^\\top \\|_F^2\\\\ &= \\frac{1}{L^2} (\\sum_{i=1}^N \\|\\sqrt L q_i\\|^2 + \\sum_{i\\not= j}\\langle \\sqrt L q_m, \\sqrt L q_j \\rangle ).",
+      "raw_latex": "\\begin{align*}\n\t    \t\\|\\bar Z\\bar Z^\\top \\|_F^2 &= \\frac1{L^2}\\| L \\bar Z\\bar Z^\\top \\|_F^2\\\\ &= \\frac{1}{L^2} (\\sum_{i=1}^N \\|\\sqrt L q_i\\|^2 + \\sum_{i\\not= j}\\langle \\sqrt L q_m, \\sqrt L q_j \\rangle ).\n\t\\end{align*}",
+      "formula_type": "align*",
+      "line_number": 2081,
+      "is_formula": true,
+      "high_level_explanation": "The equation rewrites the squared Frobenius norm of the Gram matrix \\bar Z\\bar Z^\\top by factoring out a scalar L, showing the 1/L^2 scaling of the norm. It then expands this quantity into a sum of diagonal contributions (the squared Euclidean norms of the scaled rows \\sqrt{L} q_i) and off-diagonal contributions (pairwise inner products between distinct scaled rows). This decomposition isolates the cross terms, which can later be bounded using concentration properties of random nearly-orthogonal vectors.",
+      "notations": {
+        "\\bar Z": "NOT MENTIONED",
+        "L": "Sequence length",
+        "N": "Number of samples",
+        "q_i": "NOT MENTIONED",
+        "q_j": "NOT MENTIONED",
+        "q_m": "NOT MENTIONED"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:46:41.369962"
+    },
+    {
+      "label": "<<FORMULA_0235>>",
+      "formula": "\\|\\bar Z\\bar Z^\\top \\|_F^2  = \\frac{1}{L^2} (N + \\\\prod_{i\\not= j}\\langle \\sqrt L q_i, \\sqrt L q_j \\rangle ).",
+      "raw_latex": "\\[\n\t\\|\\bar Z\\bar Z^\\top \\|_F^2  = \\frac{1}{L^2} (N + \\\\prod_{i\\not= j}\\langle \\sqrt L q_i, \\sqrt L q_j \\rangle ).\n\t\\]",
+      "formula_type": "display",
+      "line_number": 2085,
+      "is_formula": true,
+      "high_level_explanation": "This equation expresses the squared Frobenius norm of the Gram matrix of the dataset-average representation matrix. The right-hand side equals 1/L^2 times a diagonal contribution N (from the unit-length rows after scaling by sqrt(L)) plus an aggregate over all distinct pairs i ≠ j given by the product of their pairwise inner products ⟨sqrt(L) q_i, sqrt(L) q_j⟩. Under the stated assumptions, the first term is N and the off-diagonal interactions are controlled probabilistically in the surrounding analysis.",
+      "notations": {
+        "\\bar Z": "Dataset-average representation matrix across sequences of length L and N samples (defined as the dataset matrix in the context).",
+        "L": "Sequence length.",
+        "N": "Number of samples.",
+        "q_i": "NOT MENTIONED",
+        "\\sqrt L q_i": "Scaled row vector whose norm is 1 under the stated assumptions (rows uniformly distributed on the unit sphere)."
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:47:53.745205"
+    },
+    {
+      "label": "<<FORMULA_0238>>",
+      "formula": "\\mathbb P(\\forall i\\not= j : |\\langle \\sqrt D q_i, \\sqrt D q_j \\rangle| \\leq \\frac{\\epsilon}{N^2}) \\geq 1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2N^2}}.",
+      "raw_latex": "\\[\n\t\\mathbb P(\\forall i\\not= j : |\\langle \\sqrt D q_i, \\sqrt D q_j \\rangle| \\leq \\frac{\\epsilon}{N^2}) \\geq 1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2N^2}}.\n\t\\]",
+      "formula_type": "display",
+      "line_number": 2093,
+      "is_formula": true,
+      "high_level_explanation": "This bound states that, with high probability, all pairwise inner products between the scaled vectors sqrt(D) q_i are at most ε/N^2 in magnitude. The right-hand side shows a failure probability at most N^2 times a Gaussian-tail term, reflecting a union bound over all pairs. Intuitively, random unit vectors in high dimensions are nearly orthogonal, and scaling by sqrt(D) normalizes the inner-product fluctuations. Thus, as D grows, the probability that every pair is almost orthogonal increases rapidly.",
+      "notations": {
+        "\\mathbb P": "Probability of the event",
+        "q_i": "i-th random unit vector on the hypersphere (a row from the dataset matrix), uniformly distributed",
+        "q_j": "j-th random unit vector on the hypersphere (a row from the dataset matrix), uniformly distributed",
+        "D": "NOT MENTIONED",
+        "N": "Number of samples",
+        "\\epsilon": "Threshold (tolerance) for the magnitude of pairwise inner products",
+        "\\langle \\sqrt D q_i, \\sqrt D q_j \\rangle": "Inner product between the scaled vectors sqrt(D) q_i and sqrt(D) q_j (measures their correlation after scaling)"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:46:33.868568"
+    },
+    {
+      "label": "<<FORMULA_0255>>",
+      "formula": "\\|\\bar Z\\bar Z^\\top\\|_F^2 &= \\\\prod_{i=1}^N \\| \\mathbf q_i\\|^2 + \\sum_{i\\not= j}\\langle \\mathbf q_i,\\mathbf q_j \\rangle \\\\\n\t\t&= \\sum_{i=1}^N \\frac{N^2}{L^2}\\|\\mathbf v_i\\|^2 + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle\\mathbf v_i, \\mathbf v_j \\rangle \\\\\n\t\t&= \\frac{N^3}{L^2} + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle \\mathbf v_i, \\mathbf v_j \\rangle.",
+      "raw_latex": "\\begin{align*}\n\t\t\\|\\bar Z\\bar Z^\\top\\|_F^2 &= \\\\prod_{i=1}^N \\| \\mathbf q_i\\|^2 + \\sum_{i\\not= j}\\langle \\mathbf q_i,\\mathbf q_j \\rangle \\\\\n\t\t&= \\sum_{i=1}^N \\frac{N^2}{L^2}\\|\\mathbf v_i\\|^2 + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle\\mathbf v_i, \\mathbf v_j \\rangle \\\\\n\t\t&= \\frac{N^3}{L^2} + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle \\mathbf v_i, \\mathbf v_j \\rangle.\n\t\\end{align*}",
+      "formula_type": "align*",
+      "line_number": 2125,
+      "is_formula": true,
+      "high_level_explanation": "The expression expands the squared Frobenius norm of the Gram matrix \\bar Z \\bar Z^\\top into diagonal and off-diagonal contributions formed from norms and pairwise inner products of row vectors. It shows an equivalent scaling in terms of vectors \\mathbf q_i and a rescaled set \\mathbf v_i, yielding that the diagonal part contributes N^3/L^2 when the rows are unit length. The remaining terms are the cross-inner products, scaled by N^2/L^2, which can be controlled by near-orthogonality of different rows. This decomposition is used to bound \\|\\bar Z \\bar Z^\\top\\|_F^2 around N^3/L^2 under concentration assumptions.",
+      "notations": {
+        "\\|\\bar Z\\bar Z^\\top\\|_F^2": "Squared Frobenius norm of the Gram matrix of the dataset-average representation matrix \\bar Z",
+        "\\bar Z": "Dataset-average representation matrix (defined earlier in the paper)",
+        "\\mathbf q_i": "i-th row vector used in the decomposition; stated to be unit length in the context",
+        "\\mathbf v_i": "NOT MENTIONED",
+        "N": "Number of samples",
+        "L": "Sequence length (length parameter for each sample)"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:46:38.053922"
+    },
+    {
+      "label": "<<FORMULA_0259>>",
+      "formula": "|\\|\\bar Z\\bar Z^\\top\\|_F^2  - \\frac{N^3}{L^2}| \\leq \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle |\\mathbf v_i, \\mathbf v_j \\rangle| \\leq \\frac1{L^2}\\sum_{i\\not= j}\\epsilon \\leq \\epsilon.",
+      "raw_latex": "\\[\n    |\\|\\bar Z\\bar Z^\\top\\|_F^2  - \\frac{N^3}{L^2}| \\leq \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle |\\mathbf v_i, \\mathbf v_j \\rangle| \\leq \\frac1{L^2}\\sum_{i\\not= j}\\epsilon \\leq \\epsilon. \n    \\]",
+      "formula_type": "display",
+      "line_number": 2135,
+      "is_formula": true,
+      "high_level_explanation": "The inequality chain bounds how far the squared Frobenius norm of the Gram matrix \\bar Z\\bar Z^\\top deviates from N^3/L^2. The deviation is controlled by the sum of off-diagonal inner products, which are themselves bounded termwise, leading to an overall bound by epsilon. Intuitively, when pairwise correlations between the vectors \\mathbf v_i are small, the norm of \\bar Z\\bar Z^\\top concentrates near N^3/L^2.",
+      "notations": {
+        "\\bar Z": "NOT MENTIONED",
+        "\\|\\bar Z\\bar Z^\\top\\|_F^2": "Squared Frobenius norm of the matrix product \\bar Z\\bar Z^\\top",
+        "N": "NOT MENTIONED",
+        "L": "NOT MENTIONED",
+        "\\mathbf v_i": "NOT MENTIONED",
+        "\\epsilon": "NOT MENTIONED"
+      },
+      "model_used": "gpt-5",
+      "timestamp": "2025-10-31T16:46:38.506997"
+    }
+  ],
+  "metadata": {
+    "model": "gpt-5",
+    "context_words": 300,
+    "max_formulas": 20,
+    "timestamp": "2025-10-31T16:47:53.747984",
+    "total_formulas_in_paper": 20,
+    "formulas_selected_for_analysis": 20,
+    "skipped_by_length_limit": 0,
+    "formulas_explained": 19,
+    "notations_skipped": 1,
+    "failed": 0
+  },
+  "skipped_notations": [
+    {
+      "label": "<<FORMULA_0126>>",
+      "formula": "\\mathbf{A} = \\operatorname{softmax}\\left(\\frac{\\mathbf{Q}\\mathbf{K}^\\top}{\\sqrt{d_k}} + \\mathbf{M}\\right),",
+      "reason": "Classified as notation, not formula"
+    }
+  ],
+  "failed": []
+}

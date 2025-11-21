@@ -1,0 +1,162 @@
+{
+  "<<FORMULA_0215>>": {
+    "formula": "\\begin{split}\\label{eq:gap}\n        \\gL^\\theta - \\gL^\\star &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) + \\frac{\\partial s_t}{\\partial t}  +\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n                        &- \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s^\\star_t, t) + \\frac{\\partial  s^\\star_t}{\\partial t}  +\\Delta  s^\\star_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{\\sigma^2}{2}\\int \\oint  s^\\star_t \\langle p_{t|0,1}, d\\rvn\\rangle\\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial s_t}{\\partial t}p_{t|0,1} \\mathrm{d}x\\mathrm{d}t +\\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1]}_{ - \\int_0^1 \\int_{\\sR^d} \\frac{\\partial p_{t|0,1}}{\\partial t}s_t \\mathrm{d}x \\mathrm{d}t} \\\\ \n                        &- \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial  s^\\star_t}{\\partial t}p_{t|0,1} \\mathrm{d}x\\mathrm{d}t +\\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1]}_{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial p_{t|0,1}}{\\partial t} s^\\star_t \\mathrm{d}x \\mathrm{d}t} \n                        + \\underbrace{\\int_0^1 \\int_{\\sR^d} \\Delta s_t p_{t|0,1} \\mathrm{d}x \\mathrm{d}t - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle}_{\\int_0^1 \\int_{\\sR^d} \\Delta p_{t|0,1} s_t \\mathrm{d}x \\mathrm{d}t} \\\\\n                        &- \\underbrace{\\int_0^1 \\int_{\\sR^d} \\Delta  s^\\star_t p_{t|0,1} \\mathrm{d}x \\mathrm{d}t - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle}_{\\int_0^1 \\int_{\\sR^d} \\Delta p_{t|0,1}  s^\\star_t \\mathrm{d}x \\mathrm{d}t} \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} (s_t -  s^\\star_t) (-\\frac{\\partial p_{t|0,1}}{\\partial t}+\\Delta p_{t|0,1})\\mathrm{d}x\\mathrm{d}t \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} (s_t -  s^\\star_t) (\\nabla\\cdot(p_{t|0,1} u^\\star_{t|0,1})) \\mathrm{d}x\\mathrm{d}t \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) - \\langle \\nabla(s_t -  s^\\star_t), u^\\star_{t|0,1} \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:gap}\n        \\gL^\\theta - \\gL^\\star &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) + \\frac{\\partial s_t}{\\partial t}  +\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n                        &- \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s^\\star_t, t) + \\frac{\\partial  s^\\star_t}{\\partial t}  +\\Delta  s^\\star_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{\\sigma^2}{2}\\int \\oint  s^\\star_t \\langle p_{t|0,1}, d\\rvn\\rangle\\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial s_t}{\\partial t}p_{t|0,1} \\mathrm{d}x\\mathrm{d}t +\\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1]}_{ - \\int_0^1 \\int_{\\sR^d} \\frac{\\partial p_{t|0,1}}{\\partial t}s_t \\mathrm{d}x \\mathrm{d}t} \\\\ \n                        &- \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial  s^\\star_t}{\\partial t}p_{t|0,1} \\mathrm{d}x\\mathrm{d}t +\\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1]}_{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial p_{t|0,1}}{\\partial t} s^\\star_t \\mathrm{d}x \\mathrm{d}t} \n                        + \\underbrace{\\int_0^1 \\int_{\\sR^d} \\Delta s_t p_{t|0,1} \\mathrm{d}x \\mathrm{d}t - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle}_{\\int_0^1 \\int_{\\sR^d} \\Delta p_{t|0,1} s_t \\mathrm{d}x \\mathrm{d}t} \\\\\n                        &- \\underbrace{\\int_0^1 \\int_{\\sR^d} \\Delta  s^\\star_t p_{t|0,1} \\mathrm{d}x \\mathrm{d}t - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle}_{\\int_0^1 \\int_{\\sR^d} \\Delta p_{t|0,1}  s^\\star_t \\mathrm{d}x \\mathrm{d}t} \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} (s_t -  s^\\star_t) (-\\frac{\\partial p_{t|0,1}}{\\partial t}+\\Delta p_{t|0,1})\\mathrm{d}x\\mathrm{d}t \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} (s_t -  s^\\star_t) (\\nabla\\cdot(p_{t|0,1} u^\\star_{t|0,1})) \\mathrm{d}x\\mathrm{d}t \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) - \\langle \\nabla(s_t -  s^\\star_t), u^\\star_{t|0,1} \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2126,
+    "start_pos": 117287,
+    "end_pos": 119837
+  },
+  "<<FORMULA_0207>>": {
+    "formula": "\\label{eq:Lagr.integration_by_parts}\n    \\begin{split}\n        \\gL(\\theta) &= \\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t,\\ \\ \\text{ subj.: } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla\\cdot(p_{t|0,1} u_{t|0,1}) + \\frac{1}{2}\\sigma^2\\Delta p_{t|0,1} \\\\\n                    &=  \\sup_{s_t}\\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} s_t( \\frac{\\partial p_{t|0,1}}{\\partial t} + \\nabla\\cdot(p_{t|0,1} u_{t|0,1}) - \\frac{1}{2}\\sigma^2\\Delta p_{t|0,1}) \\mathrm{d}x\\mathrm{d}t \\\\\n                    &= \n                    \\sup_{s_t}\\min_{u_{t|0,1}} \n                    \\underbrace{\\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t}_{I_1}\n                    +\\underbrace{\\int_0^1 \\int_{\\sR^d} s_t \\frac{\\partial p_{t|0,1}}{\\partial t} \\mathrm{d}x\\mathrm{d}t}_{I_2} \\\\\n                    &+\\underbrace{\\int_0^1 \\int_{\\sR^d} s_t \\nabla\\cdot(p_{t|0,1} u_{t|0,1})\\mathrm{d}x\\mathrm{d}t}_{I_3}\n                    - \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{s_t}{2}\\sigma^2\\Delta p_{t|0,1}\\mathrm{d}x\\mathrm{d}t}_{I_4}\n    \\end{split}",
+    "raw_latex": "\\begin{align}\\label{eq:Lagr.integration_by_parts}\n    \\begin{split}\n        \\gL(\\theta) &= \\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t,\\ \\ \\text{ subj.: } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla\\cdot(p_{t|0,1} u_{t|0,1}) + \\frac{1}{2}\\sigma^2\\Delta p_{t|0,1} \\\\\n                    &=  \\sup_{s_t}\\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} s_t( \\frac{\\partial p_{t|0,1}}{\\partial t} + \\nabla\\cdot(p_{t|0,1} u_{t|0,1}) - \\frac{1}{2}\\sigma^2\\Delta p_{t|0,1}) \\mathrm{d}x\\mathrm{d}t \\\\\n                    &= \n                    \\sup_{s_t}\\min_{u_{t|0,1}} \n                    \\underbrace{\\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t}_{I_1}\n                    +\\underbrace{\\int_0^1 \\int_{\\sR^d} s_t \\frac{\\partial p_{t|0,1}}{\\partial t} \\mathrm{d}x\\mathrm{d}t}_{I_2} \\\\\n                    &+\\underbrace{\\int_0^1 \\int_{\\sR^d} s_t \\nabla\\cdot(p_{t|0,1} u_{t|0,1})\\mathrm{d}x\\mathrm{d}t}_{I_3}\n                    - \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{s_t}{2}\\sigma^2\\Delta p_{t|0,1}\\mathrm{d}x\\mathrm{d}t}_{I_4}\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2091,
+    "start_pos": 113715,
+    "end_pos": 114911
+  },
+  "<<FORMULA_0211>>": {
+    "formula": "\\begin{split}\n\\gL =&\\sup_{s_t}\\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d}  (L(x_t, u_{t|0,1}, t) - \\frac{\\partial s_t}{\\partial t} - \\langle  \\nabla s_t, u\\rangle -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] \\\\ \n    &+ \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\sup_{s_t} \\int_0^1 \\int_{\\sR^d}  ( - H(x_t,  \\nabla s_t, t) - \\frac{\\partial s_t}{\\partial t}  -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] + \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\min_{s_t} \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) + \\frac{\\partial s_t}{\\partial t}  +\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{2}{\\sigma^2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle\n\\end{split}",
+    "raw_latex": "\\begin{align}\n\\begin{split}\n\\gL =&\\sup_{s_t}\\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d}  (L(x_t, u_{t|0,1}, t) - \\frac{\\partial s_t}{\\partial t} - \\langle  \\nabla s_t, u\\rangle -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] \\\\ \n    &+ \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\sup_{s_t} \\int_0^1 \\int_{\\sR^d}  ( - H(x_t,  \\nabla s_t, t) - \\frac{\\partial s_t}{\\partial t}  -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] + \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\min_{s_t} \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) + \\frac{\\partial s_t}{\\partial t}  +\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{2}{\\sigma^2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle\n\\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2114,
+    "start_pos": 115951,
+    "end_pos": 116855
+  },
+  "<<FORMULA_0238>>": {
+    "formula": "\\begin{split}\\label{eq:OG3}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 + \\lambda {u_{t|0,1}^\\star}^\\intercal\\nabla G_t -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta + \\lambda \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{2}{1}\\| a_t^\\theta - \\lambda \\nabla G_t - u_{t|0,1}^\\star|^2) p_t dxdt\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:OG3}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 + \\lambda {u_{t|0,1}^\\star}^\\intercal\\nabla G_t -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta + \\lambda \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{2}{1}\\| a_t^\\theta - \\lambda \\nabla G_t - u_{t|0,1}^\\star|^2) p_t dxdt\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2182,
+    "start_pos": 123808,
+    "end_pos": 124650
+  },
+  "<<FORMULA_0185>>": {
+    "formula": "\\begin{cases}\n        u_t^\\intercal\\nabla G_t > 0 : u_t = a_t  - (\\nabla G_t)\\Rightarrow (a_t  - (\\nabla G_t))^\\intercal\\nabla G_t \\geq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\geq \\|\\nabla G_t\\|^2 \\geq 0 \\\\\n        u_t^\\intercal\\nabla G_t < 0 : u_t = a_t  + (\\nabla G_t)\\Rightarrow (a_t  \\\\times (\\nabla G_t))^\\intercal\\nabla G_t \\leq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\leq -\\|\\nabla G_t\\|^2 \\leq 0\\\\\n        u_t^\\intercal\\nabla G_t = 0 : \\partial(u_t^\\intercal\\nabla G_t) = [-1,1], \\text{ from which we infer } a_t^\\intercal\\nabla G_t = \\alpha \\|\\nabla G_t\\|^2, \\text{ for } \\alpha \\in [-1,1].\n     \\end{cases}",
+    "raw_latex": "\\[\n    \\begin{cases}\n        u_t^\\intercal\\nabla G_t > 0 : u_t = a_t  - (\\nabla G_t)\\Rightarrow (a_t  - (\\nabla G_t))^\\intercal\\nabla G_t \\geq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\geq \\|\\nabla G_t\\|^2 \\geq 0 \\\\\n        u_t^\\intercal\\nabla G_t < 0 : u_t = a_t  + (\\nabla G_t)\\Rightarrow (a_t  \\\\times (\\nabla G_t))^\\intercal\\nabla G_t \\leq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\leq -\\|\\nabla G_t\\|^2 \\leq 0\\\\\n        u_t^\\intercal\\nabla G_t = 0 : \\partial(u_t^\\intercal\\nabla G_t) = [-1,1], \\text{ from which we infer } a_t^\\intercal\\nabla G_t = \\alpha \\|\\nabla G_t\\|^2, \\text{ for } \\alpha \\in [-1,1].\n     \\end{cases}\n\\]",
+    "formula_type": "display",
+    "line_number": 2024,
+    "start_pos": 108550,
+    "end_pos": 109168
+  },
+  "<<FORMULA_0234>>": {
+    "formula": "\\begin{split}\\label{eq:OG2}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta + \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  {u_{t|0,1}^\\star}^\\intercal \\nabla G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta + \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta + \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta + \\nabla G_t - u_{t|0,1}^\\star\\|^2) p_t dxdt\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:OG2}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta + \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  {u_{t|0,1}^\\star}^\\intercal \\nabla G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta + \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta + \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta + \\nabla G_t - u_{t|0,1}^\\star\\|^2) p_t dxdt\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2173,
+    "start_pos": 123057,
+    "end_pos": 123688
+  },
+  "<<FORMULA_0231>>": {
+    "formula": "\\begin{split}\\label{eq:OG1}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 +  {u_{t|0,1}^\\star}^\\intercal\\nabla G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta - \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta - \\nabla G_t - u_{t|0,1}^\\star\\|^2 ) p_t dxdt\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:OG1}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 +  {u_{t|0,1}^\\star}^\\intercal\\nabla G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta - \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta - \\nabla G_t - u_{t|0,1}^\\star\\|^2 ) p_t dxdt\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2164,
+    "start_pos": 122312,
+    "end_pos": 122943
+  },
+  "<<FORMULA_0155>>": {
+    "formula": "\\begin{split}\n            \\sum_{i=0}^{N-1} \\bigg| \\mathbb{E}\\Bigr[ u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) )\\Delta t \\Bigr] \\bigg|\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ \\bigr| (u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_m})) ) \\bigr| \\Delta t \\Bigr]\\\\\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ (\\bigr| u_t^\\intercal\\nabla G \\bigr| + \\bigr|\\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) \\Delta t  \\Bigr] \n        \\end{split}",
+    "raw_latex": "\\begin{align}\n        \\begin{split}\n            \\sum_{i=0}^{N-1} \\bigg| \\mathbb{E}\\Bigr[ u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) )\\Delta t \\Bigr] \\bigg|\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ \\bigr| (u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_m})) ) \\bigr| \\Delta t \\Bigr]\\\\\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ (\\bigr| u_t^\\intercal\\nabla G \\bigr| + \\bigr|\\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) \\Delta t  \\Bigr] \n        \\end{split}\n    \\end{align}",
+    "formula_type": "align",
+    "line_number": 1934,
+    "start_pos": 100940,
+    "end_pos": 101485
+  },
+  "<<FORMULA_0037>>": {
+    "formula": "\\label{eq:lagrangian}\n    \\begin{split}\n        &\\min_{p_{t},u_t} \\int_{\\sR^d\\times [0,1]} \\Bigr( \\frac{1}{2}\\|u_t\\|^2 +  \\mathbb{E}_{p_{0|t}}\\bigr[|u_t^\\intercal \\nabla G_{t,0}| + \\frac{\\sigma^2}{2}\\Delta G_{t,0}\\bigr]\\B^Tigr) p_t \\mathrm{d}x \\mathrm{d}t, \\\\\n        \\text{ s.t. }  &\\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\text{ and } p_0 = \\pi_0, p_1 = \\pi_1\n    \\end{split}",
+    "raw_latex": "\\begin{align}\\label{eq:lagrangian}\n    \\begin{split}\n        &\\min_{p_{t},u_t} \\int_{\\sR^d\\times [0,1]} \\Bigr( \\frac{1}{2}\\|u_t\\|^2 +  \\mathbb{E}_{p_{0|t}}\\bigr[|u_t^\\intercal \\nabla G_{t,0}| + \\frac{\\sigma^2}{2}\\Delta G_{t,0}\\bigr]\\B^Tigr) p_t \\mathrm{d}x \\mathrm{d}t, \\\\\n        \\text{ s.t. }  &\\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\text{ and } p_0 = \\pi_0, p_1 = \\pi_1\n    \\end{split}\n    \\end{align}",
+    "formula_type": "align",
+    "line_number": 1438,
+    "start_pos": 62968,
+    "end_pos": 63429
+  },
+  "<<FORMULA_0105>>": {
+    "formula": "\\label{eq:lagrangian_app}\n    \\begin{split}\n        &\\min_{p_{t},u_t} \\int_{\\sR^d\\times [0,1]} \\Bigr( \\frac{1}{2}\\|u_t\\|^2 +  \\mathbb{E}_{p_{0|t}}\\bigr[|u_t^\\intercal G_{t,0}| + \\frac{\\sigma^2}{2}\\Delta G_{t,0}\\bigr]\\Bigr) p_t \\mathrm{d}x \\mathrm{d}t, \\\\\n        \\text{ s.t. }  &\\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\text{ and } p_0 = \\pi_0, p_1 = \\pi_1\n    \\end{split}",
+    "raw_latex": "\\begin{align}\\label{eq:lagrangian_app}\n    \\begin{split}\n        &\\min_{p_{t},u_t} \\int_{\\sR^d\\times [0,1]} \\Bigr( \\frac{1}{2}\\|u_t\\|^2 +  \\mathbb{E}_{p_{0|t}}\\bigr[|u_t^\\intercal G_{t,0}| + \\frac{\\sigma^2}{2}\\Delta G_{t,0}\\bigr]\\Bigr) p_t \\mathrm{d}x \\mathrm{d}t, \\\\\n        \\text{ s.t. }  &\\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\text{ and } p_0 = \\pi_0, p_1 = \\pi_1\n    \\end{split}\n    \\end{align}",
+    "formula_type": "align",
+    "line_number": 1816,
+    "start_pos": 90773,
+    "end_pos": 91231
+  },
+  "<<FORMULA_0042>>": {
+    "formula": "\\begin{split}\\label{eq:cond.lagrang.}\n        \\min_{p_{t|0,1}} \\int_{\\sR^d\\times [0,1]} (\\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr|u_{t|0,1}^\\intercal \\nabla G(X_t, x_0)\\bigr| + \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0) \\ p_{t|0,1} \\mathrm{d}x \\mathrm{d}t, \\quad \\\\ \\text{ s.t. } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla \\cdot (p_{t|0,1} u_{t}) + \\frac{1}{2} \\sigma^2 \\Delta p_{t|0,1}, \\quad X_0=x_0, \\quad X_1=x_1\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:cond.lagrang.}\n        \\min_{p_{t|0,1}} \\int_{\\sR^d\\times [0,1]} (\\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr|u_{t|0,1}^\\intercal \\nabla G(X_t, x_0)\\bigr| + \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0) \\ p_{t|0,1} \\mathrm{d}x \\mathrm{d}t, \\quad \\\\ \\text{ s.t. } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla \\cdot (p_{t|0,1} u_{t}) + \\frac{1}{2} \\sigma^2 \\Delta p_{t|0,1}, \\quad X_0=x_0, \\quad X_1=x_1\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1455,
+    "start_pos": 64991,
+    "end_pos": 65446
+  },
+  "<<FORMULA_0165>>": {
+    "formula": "\\begin{split}\\label{eq:cond.lagrang.app.}\n        \\min_{p_{t|0,1}} \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr|u_{t|0,1}^\\intercal \\nabla G(X_t, x_0)\\bigr| + \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0) \\ p_{t|0,1} \\mathrm{d}x \\mathrm{d}t, \\quad \\\\ \\text{ s.t. } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla \\cdot (p_{t|0,1} u_{t}) + \\frac{1}{2} \\sigma^2 \\Delta p_{t|0,1}\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:cond.lagrang.app.}\n        \\min_{p_{t|0,1}} \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr|u_{t|0,1}^\\intercal \\nabla G(X_t, x_0)\\bigr| + \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0) \\ p_{t|0,1} \\mathrm{d}x \\mathrm{d}t, \\quad \\\\ \\text{ s.t. } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla \\cdot (p_{t|0,1} u_{t}) + \\frac{1}{2} \\sigma^2 \\Delta p_{t|0,1}\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1960,
+    "start_pos": 103309,
+    "end_pos": 103735
+  },
+  "<<FORMULA_0228>>": {
+    "formula": "\\begin{split}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star] &= \\int_0^1 \\int_{\\sR^d}  \\Bigr(\\frac{1}{2}|| a_t^\\theta - g_t\\cdot\\nabla G_t||^2 - \\frac{\\sigma^2}{2}\\Delta G_t \\\\ &+ \\frac{2}{1}\\|u_{t|0,1}^\\star\\|^2 +  |{u_{t|0,1}^\\star}^\\intercal\\nabla G_t| + \\frac{\\sigma^2}{2}\\Delta G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle\\Bigr) p_{t|0,1} \\pi_{0,1} dxdt \\\\\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star] &= \\int_0^1 \\int_{\\sR^d}  \\Bigr(\\frac{1}{2}|| a_t^\\theta - g_t\\cdot\\nabla G_t||^2 - \\frac{\\sigma^2}{2}\\Delta G_t \\\\ &+ \\frac{2}{1}\\|u_{t|0,1}^\\star\\|^2 +  |{u_{t|0,1}^\\star}^\\intercal\\nabla G_t| + \\frac{\\sigma^2}{2}\\Delta G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle\\Bigr) p_{t|0,1} \\pi_{0,1} dxdt \\\\\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2157,
+    "start_pos": 121691,
+    "end_pos": 122112
+  },
+  "<<FORMULA_0191>>": {
+    "formula": "\\begin{cases}\n        \\partial(u_t^\\intercal\\nabla G_t) = sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{      for         }  \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n        \\partial(u_t^\\intercal\\nabla G_t) = \\frac{\\nabla \\|G_t\\|^2}{a_t^\\intercal\\nabla G_t}, \\quad  \\text{    for     } \\quad |a_t^\\intercal\\nabla G_t| \\leq \\|\\nabla G_t\\|^2\n     \\end{cases}",
+    "raw_latex": "\\[\n    \\begin{cases}\n        \\partial(u_t^\\intercal\\nabla G_t) = sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{      for         }  \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n        \\partial(u_t^\\intercal\\nabla G_t) = \\frac{\\nabla \\|G_t\\|^2}{a_t^\\intercal\\nabla G_t}, \\quad  \\text{    for     } \\quad |a_t^\\intercal\\nabla G_t| \\leq \\|\\nabla G_t\\|^2\n     \\end{cases}\n\\]",
+    "formula_type": "display",
+    "line_number": 2032,
+    "start_pos": 109470,
+    "end_pos": 109850
+  },
+  "<<FORMULA_0210>>": {
+    "formula": "I_4 = \\oint s_t\\langle \\nabla p_{t|0,1}, d\\rvn\\rangle \\mathrm{d}t - \\int_0^1 \\int_{\\sR^d} s_t\\Delta p_{t|0,1} \\mathrm{d}t \\mathrm{d}x = \\int_0^1 \\int_{\\sR^d} \\langle  \\nabla s_t, \\nabla p_{t|0,1}\\rangle \\mathrm{d}x = - \\int_0^1 \\int_{\\sR^d} \\Delta s_t \\ p_{t|0,1} \\mathrm{d}x + \\frac{\\sigma^2}{2}\\oint s_t \\langle p_{t|0,1}, d\\rvn\\rangle",
+    "raw_latex": "$I_4 = \\oint s_t\\langle \\nabla p_{t|0,1}, d\\rvn\\rangle \\mathrm{d}t - \\int_0^1 \\int_{\\sR^d} s_t\\Delta p_{t|0,1} \\mathrm{d}t \\mathrm{d}x = \\int_0^1 \\int_{\\sR^d} \\langle  \\nabla s_t, \\nabla p_{t|0,1}\\rangle \\mathrm{d}x = - \\int_0^1 \\int_{\\sR^d} \\Delta s_t \\ p_{t|0,1} \\mathrm{d}x + \\frac{\\sigma^2}{2}\\oint s_t \\langle p_{t|0,1}, d\\rvn\\rangle$",
+    "formula_type": "inline",
+    "line_number": 2110,
+    "start_pos": 115524,
+    "end_pos": 115863
+  },
+  "<<FORMULA_0175>>": {
+    "formula": "\\begin{split}\n   \\min_{p_{t|0,1}} \\int \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 &+ \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr],\\\\ \\text{  s.t.  } &\\frac{\\partial p_{t|0,1}}{\\partial t} = - \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) + \\frac{\\sigma^2}{2}\\Delta p_{t|0,1}\n\\end{split}",
+    "raw_latex": "\\begin{align}\n\\begin{split}\n   \\min_{p_{t|0,1}} \\int \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 &+ \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr],\\\\ \\text{  s.t.  } &\\frac{\\partial p_{t|0,1}}{\\partial t} = - \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) + \\frac{\\sigma^2}{2}\\Delta p_{t|0,1}\n\\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1989,
+    "start_pos": 106244,
+    "end_pos": 106605
+  },
+  "<<FORMULA_0218>>": {
+    "formula": "\\begin{split}\n        \\gL^\\theta - \\gL^\\star &= \\int_0^1 \\int_{\\sR^d}  H(x_t,  a_t, t) + L(x_t, u_{t|0,1}^\\star, t) ) - \\langle  a_t , u^\\star_{t|0,1} \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t \\\\\n        &= \\int_0^1 \\int_{\\sR^d} D_{L,H}[ a_t:u^\\star_{t|0,1}] p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\n        \\gL^\\theta - \\gL^\\star &= \\int_0^1 \\int_{\\sR^d}  H(x_t,  a_t, t) + L(x_t, u_{t|0,1}^\\star, t) ) - \\langle  a_t , u^\\star_{t|0,1} \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t \\\\\n        &= \\int_0^1 \\int_{\\sR^d} D_{L,H}[ a_t:u^\\star_{t|0,1}] p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2140,
+    "start_pos": 119984,
+    "end_pos": 120320
+  },
+  "<<FORMULA_0120>>": {
+    "formula": "\\min_{p_{t|0,1}} \\int \\mathbb{E^T}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr],\\\\ \\text{  s.t.  } \\frac{\\partial p_{t|0,1}}{\\partial t} = - \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) + \\frac{\\sigma^2}{2}\\Delta p_{t|0,1}",
+    "raw_latex": "$$\n   \\min_{p_{t|0,1}} \\int \\mathbb{E^T}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr],\\\\ \\text{  s.t.  } \\frac{\\partial p_{t|0,1}}{\\partial t} = - \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) + \\frac{\\sigma^2}{2}\\Delta p_{t|0,1}\n$$",
+    "formula_type": "display",
+    "line_number": 1849,
+    "start_pos": 93948,
+    "end_pos": 94261
+  },
+  "<<FORMULA_0226>>": {
+    "formula": "\\begin{split}\n        \\min_\\theta \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]  &= \\min_\\theta  \\mathbb{E}_{\\pi_{0,1}}\\Bigr[ \\int_0^1 \\int_{\\sR^d}  H(x_t,  a_t^\\theta, t) + L(x_t, u_{t|0,1}^\\star, t)  - \\langle  a_t^\\theta , u^\\star_t \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\\Bigr]\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\n        \\min_\\theta \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]  &= \\min_\\theta  \\mathbb{E}_{\\pi_{0,1}}\\Bigr[ \\int_0^1 \\int_{\\sR^d}  H(x_t,  a_t^\\theta, t) + L(x_t, u_{t|0,1}^\\star, t)  - \\langle  a_t^\\theta , u^\\star_t \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\\Bigr]\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2150,
+    "start_pos": 121270,
+    "end_pos": 121599
+  },
+  "<<FORMULA_0193>>": {
+    "formula": "g(a_t^\\intercal\\nabla G_t) = \\begin{cases} sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{   for     } \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n\\frac{a_t^\\intercal\\nabla G_t}{\\nabla \\|G_t\\|^2}, \\quad \\text{ for } \\quad  \n|a_t^\\intercal\\nabla G_t| \\\\geq \\|\\nabla G_t\\|^2\n\\end{cases}",
+    "raw_latex": "$$g(a_t^\\intercal\\nabla G_t) = \\begin{cases} sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{   for     } \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n\\frac{a_t^\\intercal\\nabla G_t}{\\nabla \\|G_t\\|^2}, \\quad \\text{ for } \\quad  \n|a_t^\\intercal\\nabla G_t| \\\\geq \\|\\nabla G_t\\|^2\n\\end{cases}$$",
+    "formula_type": "display",
+    "line_number": 2039,
+    "start_pos": 109910,
+    "end_pos": 110206
+  }
+}

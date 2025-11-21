@@ -1,0 +1,241 @@
+{
+  "metadata": {
+    "paper_id": "2503.03025",
+    "model": "openrouter/deepseek/deepseek-r1-0528",
+    "total_detections_attempted": 20,
+    "parsing_failures": 2,
+    "valid_evaluations": 18,
+    "formulas_with_errors_injected": 11,
+    "formulas_unmodified": 9,
+    "timestamp": "2025-11-01T17:06:48.745134"
+  },
+  "binary_classification": {
+    "true_positives": 10,
+    "false_positives": 4,
+    "true_negatives": 4,
+    "false_negatives": 0,
+    "accuracy": 0.778,
+    "precision": 0.714,
+    "recall": 1.0,
+    "f1_score": 0.833
+  },
+  "error_type_matching": {
+    "total_errors_detected": 10,
+    "correct_type_identified": 8,
+    "incorrect_type_identified": 2,
+    "type_accuracy": 0.8
+  },
+  "instruction_following": {
+    "perfect_json_responses": 18,
+    "fallback_parsing_required": 0,
+    "parsing_failures": 2,
+    "perfect_json_rate": 0.9,
+    "fallback_rate": 0.0,
+    "failure_rate": 0.1,
+    "strategy_breakdown": {
+      "direct": 18,
+      "failed": 2
+    }
+  },
+  "per_error_type_performance": {
+    "sign_flip": {
+      "detected": 2,
+      "total": 2,
+      "recall": 1.0
+    },
+    "transpose_error": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    },
+    "index_change": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    },
+    "sum_product_swap": {
+      "detected": 2,
+      "total": 2,
+      "recall": 1.0
+    },
+    "operator_swap": {
+      "detected": 2,
+      "total": 2,
+      "recall": 1.0
+    },
+    "function_swap": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    },
+    "inequality_flip": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    }
+  },
+  "detailed_results": [
+    {
+      "label": "<<FORMULA_0066>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0339>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "transpose_error",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0446>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "exponent_order",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0436>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0443>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "index_change",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0453>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "transpose_error",
+      "detected_has_error": true,
+      "detected_error_type": "transpose_error",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0441>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "index_change",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0520>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "index_change",
+      "detected_has_error": true,
+      "detected_error_type": "index_change",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0545>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sum_product_swap",
+      "detected_has_error": true,
+      "detected_error_type": "sum_product_swap",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0539>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0457>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": true,
+      "detected_error_type": "index_change",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0438>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "operator_swap",
+      "detected_has_error": true,
+      "detected_error_type": "index_change",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0447>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "function_swap",
+      "detected_has_error": true,
+      "detected_error_type": "function_swap",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0460>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "operator_swap",
+      "detected_has_error": true,
+      "detected_error_type": "operator_swap",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0452>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0540>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sum_product_swap",
+      "detected_has_error": true,
+      "detected_error_type": "sum_product_swap",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0454>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0445>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "inequality_flip",
+      "detected_has_error": true,
+      "detected_error_type": "inequality_flip",
+      "result": "TP",
+      "type_match": true
+    }
+  ]
+}

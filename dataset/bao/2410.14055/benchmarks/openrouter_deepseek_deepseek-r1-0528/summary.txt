@@ -1,0 +1,39 @@
+Benchmark Summary
+Model: openrouter/deepseek/deepseek-r1-0528
+Paper: 2410.14055
+Timestamp: 2025-11-01T16:19:56.518437
+
+
+======================================================================
+Benchmark Metrics Summary
+======================================================================
+
+Evaluation Coverage:
+  Total detections: 19
+  Parsing failures: 0 (excluded from metrics)
+  Valid evaluations: 19
+
+Binary Classification:
+  Accuracy:  68.4%
+  Precision: 60.0%
+  Recall:    100.0%
+  F1 Score:  75.0%
+
+Confusion Matrix (n=19):
+  TP: 9     FP: 6
+  FN: 0     TN: 4
+
+Error Type Identification:
+  Correct types: 7/9 (77.8%)
+
+📊 Instruction Following (JSON Format Compliance):
+  Perfect JSON:     19/19 (100.0%)
+  Required fallback: 0/19 (0.0%)
+  Parse failures:    0/19 (0.0%)
+
+Per-Error-Type Recall:
+  fraction_inversion   4/4 (100.0%)
+  index_change         1/1 (100.0%)
+  inequality_flip      1/1 (100.0%)
+  operator_swap        1/1 (100.0%)
+  transpose_error      2/2 (100.0%)

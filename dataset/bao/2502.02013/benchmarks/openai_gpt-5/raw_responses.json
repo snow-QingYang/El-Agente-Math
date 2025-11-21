@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "paper_id": "2502.02013",
+    "model": "openai/gpt-5",
+    "total_responses": 19,
+    "timestamp": "2025-10-31T17:56:35.951109"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0053>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The denominator uses ||v_j|| instead of ||v_k||; the subscript should match the summation index in v_k.\"\n}",
+      "response_length": 185,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0128>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"In the state update, the combination of A h_{t-1} and B x_t uses multiplication (×) but should use addition: h_t = A h_{t-1} + B x_t.\"\n}",
+      "response_length": 216,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0113>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Denominator uses ||v_{k-1}|| instead of ||v_{k+1}||, making k=1 undefined. For curvature between adjacent differences, it should be (v_{k+1}^T v_k)/(||v_{k+1}|| ||v_k||).\"\n}",
+      "response_length": 252,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0123>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"transpose_error\",\n  \"error_description\": \"The key projection uses a transposed weight (K = x W_K^T) while Q and V use untransposed weights; all three should use consistent orientation (e.g., K = x W_K).\"\n}",
+      "response_length": 245,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0029>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0056>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0018>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0088>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The prefactor is inverted: it should be 1/(1−α) rather than (1−α)/1 for the matrix-based Rényi entropy.\"\n}",
+      "response_length": 191,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0110>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0102>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The summation limits/denominator (L-2, k=1..L-2) are inconsistent with comparing consecutive embeddings v_{k+1} and v_k, which yields L-1 pairs. Either the bounds should be k=1..L-1 with 1/(L-1), or the terms should use consecutive difference vectors (e.g., (v_{k+2}-v_{k+1}) vs (v_{k+1}-v_k)) to match L-2.\"\n}",
+      "response_length": 389,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0233>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the second summation, the inner product uses q_m instead of q_i: ∑_{i≠j} ⟨√L q_m, √L q_j⟩. The index should match the summation variable, i.e., ⟨√L q_i, √L q_j⟩.\"\n}",
+      "response_length": 246,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0210>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The bound is stated for P(|<v_i, v_j>| < ε), but the concentration inequality should bound the tail probability: P(|<v_i, v_j>| > ε) ≤ √(2π) e^{-Dε^2/2}, consistent with the subsequent union bound.\"\n}",
+      "response_length": 282,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0153>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0212>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"Absolute value bars are misplaced in the first event; it should be |\\\\langle \\\\mathbf{v_i}, \\\\mathbf{v_j} \\\\rangle| > \\\\epsilon, not \\\\langle |\\\\mathbf{v_i}, \\\\mathbf{v_j} \\\\rangle| > \\\\epsilon.\"\n}",
+      "response_length": 283,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0235>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The cross terms over i≠j should be a sum, not a product; ∏ should be ∑ in the expression.\"\n}",
+      "response_length": 175,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0255>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The term ∏_{i=1}^N ||q_i||^2 should be a sum ∑_{i=1}^N ||q_i||^2 in the expansion of ||\\\\bar Z \\\\bar Z^\\\\top||_F^2; a product is incorrect.\"\n}",
+      "response_length": 225,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0238>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"The exponential term has N^2 in the denominator, but with threshold ε/N^2 the bound should be e^{-D ε^2/(2 N^4)}; the square on N^2 is missing.\"\n}",
+      "response_length": 227,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0259>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"Absolute value is incorrectly placed inside the inner product as ⟨|v_i, v_j⟩|; it should be applied to the whole inner product: |⟨v_i, v_j⟩|.\"\n}",
+      "response_length": 230,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

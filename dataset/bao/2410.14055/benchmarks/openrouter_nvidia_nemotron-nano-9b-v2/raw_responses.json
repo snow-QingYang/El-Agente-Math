@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "paper_id": "2410.14055",
+    "model": "openrouter/nvidia/nemotron-nano-9b-v2",
+    "total_responses": 19,
+    "timestamp": "2025-10-31T17:18:49.263423"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0185>>",
+      "raw_response": "Okay, let's take a look at this formula. The user provided a piecewise function with three cases based on the sign of u_t transpose times the gradient of G_t. The error types to check include sign_flip, operator_swap, etc.\n\nFirst, I need to check each case for possible errors. Let's start with the first case: u_t^\\intercal\\nabla G_t > 0. The formula says u_t = a_t - (∇G_t), then substitutes into the inequality. The next step is (a_t - ∇G_t)^\\intercal∇G_t ≥ 0. Expanding this, it should be a_t^\\intercal∇G_t - ||∇G_t||^2 ≥ 0, which leads to a_t^\\intercal∇G_t ≥ ||∇G_t||^2. That seems correct. The implication here is logical, so no error here.\n\nNext case: u_t^\\intercal\\nabla G_t < 0. The formula states u_t = a_t + (∇G_t). Then, the next step is (a_t × ∇G_t)^\\intercal∇G_t ≤ 0. Wait, here the operator between a_t and ∇G_t is a multiplication (×) instead of addition. In the first case, it was subtraction, here it's addition, but the operator here is a cross product? That seems odd. In the context of vectors, the cross product (×) would result in a vector, but then taking the transpose of that and multiplying by ∇G_t (a vector) would be a scalar. However, in the first case, the operator was subtraction (a_t - ∇G_t), which is vector subtraction. Here, using a cross product instead of addition is a mistake. The operator should be addition, not cross product. So this is an operator_swap error because they swapped the addition operator with a cross product. \n\nThird case: u_t^\\intercal\\nabla G_t = 0. The formula mentions ∂(u_t^\\intercal∇G_t) = [-1,1], which might relate to a subgradient. Then they infer a_t^\\intercal∇G_t = α ||∇G_t||^2 with α in [-1,1]. This seems plausible if the subgradient is considered, but I need to check if the notation is correct. The use of ∂ here might be okay in the context of subgradients. However, the main error seems to be in the second case where the operator is a cross product instead of addition. \n\nSo the key error is in the second case where instead of a_t + ∇G_t, they have a_t × ∇G_t. That's an operator_swap because they replaced the correct operator (+) with a cross product (×). Therefore, the error_type should be operator_swap.\n{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"The addition operator was incorrectly replaced with a cross product operator (×) in the second case of the piecewise function\"\n}",
+      "response_length": 2397,
+      "parse_strategy": "extraction",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0165>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0175>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0120>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0042>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0105>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0207>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"sign_flip\", \"error_description\": \"The subtraction of I4 in the original formula may incorrectly flip the sign of terms derived from integration by parts, leading to inconsistent sign handling in the substituted expression.\"}",
+      "response_length": 259,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0193>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"missing_parentheses\", \"error_description\": \"The denominator in the second case is ∇ ||G_t||² (a vector) instead of ||∇G_t||² (a scalar), likely due to missing parentheses.\"}",
+      "response_length": 208,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"missing_parentheses\", \"error_description\": \"The Δt multiplier is not enclosed in parentheses with the terms inside the absolute value, leading to incorrect operator precedence.\"}",
+      "response_length": 213,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0226>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0228>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"fraction_inversion\", \"error_description\": \"The coefficient 2/1 in the term ||u_{t|0,1}^∗||^2 appears to be an inversion of the expected 1/2 coefficient, which is inconsistent with standard Lagrangian formulations.\"}",
+      "response_length": 250,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0215>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0210>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"The gradient operator ∇p was incorrectly replaced with p in the line integral term, leading to an invalid boundary term in the integration by parts derivation.\"\n}",
+      "response_length": 242,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0234>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0211>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0238>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"sign_flip\", \"error_description\": \"The cross terms in the squared norm expansion have incorrect signs compared to the original expression. The original terms include +λ⟨u, ∇G⟩ - ⟨a, u⟩, but the expansion of ||a - λ∇G - u||² introduces -2⟨a, u⟩ + 2λ⟨∇G, u⟩, leading to a sign flip in the coefficients.\"}",
+      "response_length": 336,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0231>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0037>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"operator_swap\", \"error_description\": \"The transpose operator is applied to a scalar result of the expectation, which is invalid.\"}",
+      "response_length": 165,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0191>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

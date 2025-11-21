@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "paper_id": "2502.02013",
+    "model": "openrouter/deepseek/deepseek-r1-0528",
+    "total_responses": 19,
+    "timestamp": "2025-11-01T16:28:43.992424"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0123>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"transpose_error\",\n  \"error_description\": \"The formula for K incorrectly includes a transpose on W_K; standard transformer architecture uses K = xW_K without transpose\"\n}",
+      "response_length": 209,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0113>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The denominator uses ||v_{k-1}|| but should be ||v_{k+1}|| to correspond with the numerator vectors v_{k+1} and v_k.\"\n}",
+      "response_length": 198,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0056>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0053>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the denominator, the index should be k (v_k) but is written as j (v_j)\"\n}",
+      "response_length": 155,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0029>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0018>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0128>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"The operator between A h_{t-1} and B x_t should be '+' instead of '×' for standard state-space model equations\"\n}",
+      "response_length": 193,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0110>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0210>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The event inside the probability should be |<v_i, v_j>| > epsilon instead of |<v_i, v_j>| < epsilon\"\n}",
+      "response_length": 184,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0238>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"The exponent denominator should be N^4 instead of N^2; it should be exp(-Dε²/(2N⁴)) based on the union bound applied to the inner product threshold ε/(N²).\"\n}",
+      "response_length": 239,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0088>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The prefactor fraction should be 1/(1-α) but is written as (1-α)/1, swapping numerator and denominator\"\n}",
+      "response_length": 190,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0102>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The formula uses consecutive token embeddings v_k and v_{k+1} but should use displacement vectors d_k = v_{k+1} - v_k and d_{k+1} = v_{k+2} - v_{k+1} for curvature calculation, requiring v_{k+2}.\"\n}",
+      "response_length": 277,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0153>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"The function name is incorrectly written as 'softmax\\\\geft' instead of 'softmax'\"\n}",
+      "response_length": 163,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0235>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The sum operator for off-diagonal inner products was incorrectly swapped to a product operator\"\n}",
+      "response_length": 180,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0255>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The product operator ∏ was used where a sum operator ∑ is required for the diagonal term\"\n}",
+      "response_length": 174,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0233>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"The Frobenius norm squared requires squaring each matrix entry, but the formula uses inner products without squaring, particularly in the off-diagonal sum and diagonal terms.\"\n}",
+      "response_length": 258,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0259>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"Absolute value bars should encompass the entire inner product expression, not just the first vector; correct form is |⟨v_i, v_j⟩|\"\n}",
+      "response_length": 218,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0212>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"Absolute value bars in the event expression are misplaced; should encompass the entire inner product to form |⟨v_i, v_j⟩|\"\n}",
+      "response_length": 210,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

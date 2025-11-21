@@ -1,0 +1,1962 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc} %
+\usepackage[T1]{fontenc}    %
+\usepackage{fullpage}
+
+\usepackage[round]{natbib}
+\renewcommand{\bibname}{References}
+\renewcommand{\bibsection}{\subsubsection*{\bibname}}
+
+\usepackage[margin = 1in]{geometry}
+
+
+
+% BEGIN INCLUDE: _packages
+\usepackage{url}            %
+\usepackage{booktabs}       %
+\usepackage{amsfonts}       %
+\usepackage{wrapfig}
+\usepackage[mathscr]{euscript}
+\usepackage{float}
+\usepackage[nodisplayskipstretch]{setspace}
+
+
+\usepackage{times}
+\usepackage{adjustbox}
+\usepackage{dsfont}
+\usepackage{amsmath, amssymb}
+\usepackage{amsthm, thmtools, thm-restate}
+\usepackage{bbm}
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{paralist}
+\usepackage{minitoc} %
+\renewcommand \thepart{} %
+\renewcommand \partname{} %
+\usepackage{xspace}
+\usepackage{enumitem}
+\usepackage{mdframed}
+
+
+
+
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}[definition]{Assumption}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{fact}[remark]{Fact}
+\newtheorem{property}[remark]{Property}
+\newtheorem{problem}[remark]{Problem}
+\newtheorem{example}[remark]{Example}
+
+
+\newcommand{\myparagraph}[1]{\paragraph{#1.}\hspace{-0.8em}}  %
+\newcommand{\myparagraphsmall}[1]{\par\noindent\textit{{#1}.}}
+
+
+\usepackage[dvipsnames]{xcolor} %
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{patterns}
+\usetikzlibrary{intersections,shapes.arrows}
+\usetikzlibrary{pgfplots.fillbetween}
+\definecolor{darkpink}{rgb}{0.91, 0.33, 0.5}
+
+\definecolor{puorange}{rgb}{0.80,0.40,0}
+\definecolor{bluegray}{rgb}{0.04,0,0.7}
+\definecolor{greengray}{rgb}{0.05,0.50,0.15}
+\definecolor{darkbrown}{rgb}{0.40,0.2,0.05}
+\definecolor{darkcyan}{rgb}{0,0.4,1}
+\definecolor{black}{rgb}{0,0,0}
+\definecolor{grey}{rgb}{0.93,0.93,0.93}
+\definecolor{royalazure}{rgb}{0.0, 0.22, 0.66}
+\definecolor{myyellow}{rgb}{0.70, 0.52, 0.01}
+\definecolor{mypurple}{rgb}{0.38, 0.01, 0.70}
+
+\newcommand{\red}[1]{{\color{purple}#1}}
+\newcommand{\green}[1]{{\color{greengray}#1}}
+\newcommand{\blue}[1]{{\color{royalazure}#1}}
+\newcommand{\orange}[1]{{\color{puorange}#1}}
+\newcommand{\purple}[1]{{\color{violet}#1}}
+
+\newcommand{\tabemph}[1]{\cellcolor{grey!30}\textcolor{black!50!royalazure}{#1}}%
+
+\usepackage[colorlinks,citecolor=bluegray,linkcolor=darkbrown,urlcolor=blue,breaklinks]{hyperref}
+
+\usepackage[capitalize,noabbrev]{cleveref}
+
+\crefname{section}{Sec.}{Sections}
+
+\crefname{theorem}{Thm.}{Thms.}
+\crefname{lemma}{Lem.}{Lems.}
+\crefname{corollary}{Cor.}{Cors.}
+\crefname{proposition}{Prop.}{Props.}
+\crefname{assumption}{Asm.}{Asms.}
+\crefname{property}{Propt.}{Propts.}
+\crefname{algorithm}{Alg.}{Algs.}
+\crefname{appendix}{Appx.}{Appxs.}
+
+\crefname{figure}{Fig.}{Figs.}
+\crefname{table}{Tab.}{Tabs.}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+
+% END INCLUDE: _packages
+ %
+
+% BEGIN INCLUDE: _notation
+\newcommand{\reals}{{\mathbb R}}
+\newcommand{\spacex}{(\mathsf{X}, \mathcal{X})}
+\newcommand{\spacey}{(\mathsf{Y}, \mathcal{Y})}
+\newcommand{\spacez}{(\mathsf{Z}, \mathcal{Z})}
+
+\newcommand \D {\mathrm{d}}
+
+\newcommand{\abs}[1]{\left| #1 \right|}
+
+\newcommand{\ones}{\mathbf 1}
+\newcommand{\zeros}{\operatorname{\mathbf 0}}
+\newcommand{\id}{\operatorname{I}}
+\newcommand{\Null}{\operatorname{null}}
+\newcommand{\Range}{\operatorname{range}}
+\newcommand{\Dom}{\operatorname{dom}}
+\newcommand{\Dim}{\operatorname{dim}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\Rank}{\operatorname{\bf Rank}}
+\newcommand{\Tr}{\operatorname{\bf Tr}}
+\newcommand{\Cl}{\operatorname{cl}}
+\newcommand{\Diag}{\operatorname{\bf Diag}}
+\newcommand{\Vect}{\operatorname{Vec}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\Proj}{\operatorname{Proj}}
+\newcommand{\ip}[1]{{\left\langle #1 \right\rangle}}
+\newcommand{\ipsmall}[1]{{\langle #1 \rangle}}
+\newcommand{\lone}{\mathbf{L}^1}
+\newcommand{\ltwo}{\mathbf{L}^2}
+\newcommand{\linf}{\mathbf{L}^\infty}
+
+\newcommand{\Expect}{\operatorname{\mathbb E}}
+\newcommand{\Var}{\operatorname{\mathbb{V}ar}}
+\newcommand{\Std}{\operatorname{\mathbb{S}td}}
+\newcommand{\Cov}{\operatorname{\mathbb{C}ov}}
+\newcommand{\Prob}{\operatorname{\mathbb P}}
+\newcommand{\Ent}{\operatorname{Ent}}
+\newcommand{\Supp}[1]{\operatorname{Supp}(#1)}
+\newcommand{\wass}{\mathsf{W}}
+\newcommand{\pspace}{\mathcal{M}_1}
+\newcommand{\kl}{\operatorname{KL}}
+\newcommand{\tv}{\operatorname{TV}}
+\newcommand{\cs}{\chi^2}
+\newcommand{\cstext}{\texorpdfstring{$\chi^2$}{Chi-Squared}}
+
+\newcommand{\hnull}{\mathbf{H}_0}
+\newcommand{\halt}{\mathbf{H}_1}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\prox}{\operatorname{prox}}
+\newcommand{\relint}{\operatorname{relint}}
+\newcommand{\bigO}{\mathcal{O}}
+
+\newcommand{\rkhs}{{\mathcal{H}}}
+\newcommand{\fmap}{\phi}
+\newcommand{\hnorm}[1]{\left\lVert #1 \right\rVert_{\mathcal{H}}}
+\newcommand{\hip}[1]{{\langle #1 \rangle_{\mathcal{H}}}}
+\newcommand{\kmap}[1]{{k(#1, \cdot)}}
+
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\calI}{\mathcal{I}}
+\newcommand{\calJ}{\mathcal{J}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calW}{\mathcal{W}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calY}{\mathcal{Y}}
+\newcommand{\calZ}{\mathcal{Z}}
+
+\newcommand{\sfX}{\mathsf{X}}
+\newcommand{\sfY}{\mathsf{Y}}
+\newcommand{\sfZ}{\mathsf{Z}}
+
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbH}{\mathbb{H}}
+\newcommand{\bbN}{{\mathbb N}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\bbW}{\mathbb{W}}
+\newcommand{\bbX}{\mathbb{X}}
+\newcommand{\bbY}{\mathbb{Y}}
+\newcommand{\bbZ}{\mathbb{Z}}
+
+\newcommand{\ind}{\mathds{1}}
+
+\newcommand{\ie}{{\em i.e.,~}}
+\newcommand{\wlg}{{\em w.l.o.g.,~}}
+\newcommand{\eg}{{\em e.g.,~}}
+\newcommand{\etal}{{\em et al.~}}
+\newcommand{\wrt}{{\em w.r.t.~}}
+\newcommand{\st}{{s.t.~}}
+\newcommand{\iid}{{\em i.i.d.~}}
+
+
+\newcommand{\bluegray}[1]{\textcolor{bluegray}{#1}}
+
+\newcommand{\txtover}[2]{\overset{\mbox{\scriptsize #1}}{#2}}
+
+\newcommand{\todog}[1]{{\color{greengray} [{\bf TODO (low uncertainty)}: #1]}}
+\newcommand{\todoy}[1]{{\color{orange} [{\bf TODO (medium uncertainty)}: #1]}}
+\newcommand{\todor}[1]{{\color{purple} [{\bf TODO (high uncertainty)}: #1]}}
+\newcommand{\inprogress}{{\color{bluegray} This statement is proven, and the write-up is in progress.}}
+
+\newcommand{\ceil}[1]{\ensuremath{\left\lceil#1\right\rceil}}
+\newcommand{\floor}[1]{\ensuremath{\left\lfloor#1\right\rfloor}}
+\newcommand{\br}[1]{\ensuremath{\left\{#1\right\}}}
+\renewcommand{\P}[2]{\ensuremath{{\mathbb P}_{#1}\left[#2\right]}}
+\newcommand{\Ind}[2]{\ensuremath{{\mathbbm 1}_{#1}\left(#2\right)}}
+\newcommand{\mbb}[1]{\ensuremath{\mathbb{#1}}}
+\newcommand{\msc}[1]{\ensuremath{\mathscr{#1}}}
+\newcommand{\prob}{\mathbb{P}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\sse}{\subseteq}
+\newcommand \grad {\nabla}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ex}{\mathbb{E}}
+\newcommand{\E}[2]{\ensuremath{{\mathbb E}_{#1}\left[#2\right]}}
+\newcommand{\sbr}[1]{\ensuremath{\left[#1\right]}}
+\newcommand{\p}[1]{\ensuremath{\left(#1\right)}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\indep}{\perp\!\!\!\!\perp} 
+
+\newcommand{\edit}[1]{\green{#1}}
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+\newcommand{\risk}{\msc{R}}
+\newcommand{\loss}{\msc{L}}
+\newcommand{\X}{\msc{X}}
+\newcommand{\Y}{\msc{Y}}
+\newcommand{\Z}{\msc{Z}}
+\newcommand{\w}{\boldsymbol{w}}
+\newcommand{\x}{\boldsymbol{x}}
+\newcommand{\y}{\boldsymbol{y}}
+\newcommand{\z}{\boldsymbol{z}}
+\newcommand{\e}{\boldsymbol{e}}
+\renewcommand{\u}{\boldsymbol{u}}
+\renewcommand{\v}{\boldsymbol{v}}
+\newcommand{\A}{\mathbf{A}}
+\newcommand{\B}{\mathbf{B}}
+\newcommand{\J}{\mathbf{J}}
+
+\newcommand{\I}{\mathbf{I}}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\bmu}{\boldsymbol{\mu}}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\hR}{\hat{\mathbf{R}}}
+\newcommand{\hC}{\widehat{\mathbf{C}}}
+\newcommand{\hS}{\hat{\mathbf{\Sigma}}}
+\newcommand{\bS}{\bar{\mathbf{\Sigma}}}
+\newcommand{\bSigma}{\mathbf{\Sigma}}
+\newcommand{\hA}{\hat{\mathbf{A}}}
+\newcommand{\hB}{\hat{\mathbf{B}}}
+\newcommand{\hmu}{\hat{\mu}}
+\newcommand{\abold}{\boldsymbol{a}}
+\newcommand{\bbold}{\boldsymbol{b}}
+\newcommand{\balpha}{\boldsymbol{\alpha}}
+\newcommand{\halpha}{\hat{\alpha}}
+\newcommand{\hbalpha}{\hat{\boldsymbol{\alpha}}}
+\newcommand{\bbeta}{\boldsymbol{\beta}}
+\newcommand{\hbeta}{\hat{\beta}}
+\newcommand{\ger}{g^{\mathrm{R}}}
+\newcommand{\gev}{g^{\mathrm{V}}}
+\newcommand{\hh}{\hat{h}}
+\renewcommand{\S}{\mathsf{S}}
+\newcommand{\heta}{\hat{\eta}}
+\newcommand{\teta}{\tilde{\eta}}
+\newcommand{\tZ}{\tilde{Z}}
+\newcommand{\hphi}{\hat{\phi}}
+\newcommand{\hpsi}{\hat{\psi}}
+\newcommand{\bphi}{\bar{\phi}}
+\newcommand{\bpsi}{\bar{\psi}}
+\newcommand{\incomplete}{\red{[{\bf Incomplete}]}}
+\newcommand{\pow}[1]{^{\scriptscriptstyle(#1)}}
+\newcommand{\bh}{\bar{h}}
+\newcommand{\bg}{\bar{g}}
+\newcommand{\etab}{\bar{\eta}}
+
+
+\newcommand{\hg}{\hat{g}}
+\newcommand{\hrho}{\hat{\rho}}
+\newcommand{\iidsim}{\overset{\text{\tiny i.i.d}}{\sim}}
+\newcommand{\kmax}{k_{\max{}}}
+\newcommand{\lmax}{l_{\max{}}}
+\newcommand{\mmax}{m_{\max{}}}
+\newcommand{\CLIP}{\mathrm{CLIP}}
+\newcommand{\NCE}{\mathrm{NCE}}
+\newcommand{\Lclip}{\mathcal{L}_{\mathrm{CLIP}}}
+\newcommand{\Lvic}{\mathcal{L}_{\mathrm{VICReg}}}
+\newcommand{\hLBT}{\hat{\mathcal{L}}_{\mathrm{BT}}}
+\newcommand{\hLSC}{\hat{\mathcal{L}}_{\mathrm{SC}}}
+\newcommand{\hLclip}{\hat{\mathcal{L}}_{\mathrm{CLIP}}}
+\newcommand{\hLvic}{\hat{\mathcal{L}}_{\mathrm{VICReg}}}
+\newcommand{\VR}{R_{\mathrm{Var}}}
+\newcommand{\HS}{\mathrm{HS}}
+\newcommand{\MMD}{\operatorname{MMD}}
+\newcommand{\df}{\operatorname{df}}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\bignorm}[1]{\big{\lVert} #1 \big{\rVert}}
+\newcommand{\hugenorm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\prodmeas}[2]{#1 \otimes #2}
+\renewcommand{\L}{\mathbf{L}}
+\newcommand{\bH}{\bar{H}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\V}{\mathbf{V}}
+\newcommand{\hV}{\widehat{\mathbf{V}}}
+\newcommand{\U}{\mathbf{U}}
+
+\newcommand{\scA}{\mathscr{A}}
+\newcommand{\scB}{\mathscr{B}}
+\newcommand{\Esans}{\mathsf{E}}
+\newcommand{\Rsans}{\mathsf{R}}
+\newcommand{\M}{\mathbf{M}}
+\newcommand{\hM}{\widehat{\mathbf{M}}}
+\newcommand{\Ssans}{\mathsf{S}}
+\newcommand{\Tsans}{\mathsf{T}}
+\newcommand{\Rhat}{\widehat{\mathsf{R}}}
+\newcommand{\Fhat}{\widehat{F}}
+\newcommand{\Lsans}{\mathsf{L}^2}
+\newcommand{\bP}{\mathbf{P}}
+\newcommand{\defeq}{:=}
+
+\newcommand{\mmse}{\operatorname{mmse}}
+\newcommand{\dec}{\operatorname{dec}}
+
+\newcommand{\Iop}{\mathbf{I}}
+\newcommand{\Sop}{\mathbf{S}}
+\newcommand{\Cop}{\mathbf{C}}
+\newcommand{\Top}{\mathbf{T}}
+
+\newcommand{\Np}{N_{\mathrm{p}}}
+\newcommand{\Nu}{N_{\mathrm{u}}}
+\newcommand{\hCopp}{\widehat{\mathbf{C}}_{\mathrm{p}}}
+\newcommand{\hCopu}{\widehat{\mathbf{C}}_{\mathrm{u}}}
+
+\newcommand{\bigOtil}{\tilde{\mathcal{O}}}
+\newcommand{\op}{\operatorname{op}}
+\newcommand{\polylog}{\operatorname{plog}}
+\newcommand{\fstar}{r}
+\newcommand{\etastar}{\eta_\star}
+\newcommand{\fstarbound}{B_r}
+\newcommand{\chibound}{B_{\chi^2}(\Z)}
+
+\newif\ifcomments
+\newcommand{\displaycomments}{\commentstrue}
+
+\newcommand{\ZH}[1]{
+\ifcomments
+{\color{orange} [{\bf ZH}: #1]}
+\fi
+}
+\newcommand{\RM}[1]{
+\ifcomments
+{\color{greengray} [{\bf RM}: #1]}
+\fi
+}
+
+
+% END INCLUDE: _notation
+  %
+
+\doparttoc
+\faketableofcontents
+
+
+\title{A Generalization Theory for Zero-Shot Prediction}
+\author{Ronak Mehta \qquad Zaid Harchaoui \vspace{0.3cm} \\
+{
+\small University of Washington, Seattle
+}
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+% BEGIN INCLUDE: sections/0_abstract
+A modern paradigm for generalization in machine learning and AI consists of pre-training a task-agnostic foundation model, generally obtained using self-supervised and multimodal contrastive learning. The resulting representations can be used for prediction on a downstream task for which no labeled data is available. We present a theoretical framework to better understand this approach, called zero-shot prediction. We identify the target quantities that zero-shot prediction aims to learn, or learns in passing, and the key conditional independence relationships that enable its generalization ability.
+
+% END INCLUDE: sections/0_abstract
+
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+% BEGIN INCLUDE: sections/1a_intro
+In 2021, OpenAI shocked the world by improving the zero-shot classification accuracy on ImageNet from 11.5\%  to 76.2\% via the CLIP series of models \citep{radford2021learning}. This event redefined the goal of zero-shot prediction from producing models that generalized to \emph{unseen classes} to those that generalized to \emph{unseen tasks} entirely. Two fundamental drivers of CLIP's success were 1) the use of natural language as a medium for representing arbitrary classes (as in the previous state-of-the-art Visual N-grams \citep{li2017learning}), and 2) a massive, yet carefully designed pre-training set which significantly impacted downstream performance \citep{radford2021learning,fang2023data,xu2024demystifying}. Despite the remarkable success of these foundation model-based pipelines~\citep{bommasani2021opportunities}, there are unique components of zero-shot prediction that warrant investigation from a theoretical point of view.
+
+To clarify these gaps, we contrast zero-shot prediction (ZSP) with the related setting of few-shot learning (FSL). Let <<FORMULA_0001>> denote an input (often an image) that accompanies a discrete value <<FORMULA_0002>> (often a class label).
+Common to both ZSP and FSL is a pre-training procedure in which a large unlabeled dataset <<FORMULA_0003>> is used to produce an \emph{encoder} <<FORMULA_0004>>. The \emph{embedding} <<FORMULA_0005>> is thought to contain information that is relevant for predicting $\y$ from $\x$. Pre-training typically occurs through the process of self-supervised learning (SSL), using a \emph{pretext task} that can be solved with only instances of $\x$ (e.g.~filling in a blank image patch).
+In FSL, the user may then access a labeled dataset <<FORMULA_0006>> from which a predictor can be trained inexpensively. This often takes the form of a linear classifier <<FORMULA_0007>> for <<FORMULA_0008>> and <<FORMULA_0009>>. Where ZSP departs from FSL is the additional challenge of being given \emph{no directly labeled training data}. 
+
+At first glance, ZSP seems impossible. Yet, the ingenuity of practitioners has yielded the following solution; if 1) each pre-training example $\x_i$ is paired with another ``view'' <<FORMULA_0010>> (e.g.~a caption in natural language) and 2) if each label <<FORMULA_0011>> can intelligently be embedded into $\Z$, then the relationship between each $\x_i$ and $\z_i$ could provide the means to perform prediction. Concretely, one learns a complementary encoder <<FORMULA_0012>> during pre-training and designs \emph{prompts} $\z_k^y$ for <<FORMULA_0013>> and <<FORMULA_0014>>. Then,
+<<FORMULA_0015>>
+is employed for prediction. An example of a prompt is the template text ``photo of a \underline{\hspace{0.5cm}}.'', where the blank can be filled by the textual representation of the class (e.g.~``cat'' or ``dog''). The ZSP pipeline, from pre-training to prompt selection, is clearly a wild departure from what is explained by statistical learning theory. Moreover, while some components of these systems have been studied in the context of FSL (such as the reasons why various pre-training objectives result in encoders that provably accelerate learning), unique aspects of ZSP, such as the role of prompting and the cost of ``translating'' modalities, have not yet received theoretical treatment. Herein lies our question.
+
+\begin{mdframed}[userdefinedwidth=0.95\columnwidth, align=center, innerleftmargin=6pt, innerrightmargin=6pt]
+{\it Through what decomposition of downstream task performance can we compare zero-shot prediction to the direct supervised learner, with a transparent dependence on the 1) pre-training distribution, 2) evaluation distribution, and 3) prompting strategy?}
+\end{mdframed}
+
+
+\myparagraph{Contributions}
+In \Cref{sec:framework}, we present a learning theoretic framework for the pre-training/evaluation/prompting data and propose two expressions for the population counterpart of~\eqref{eq:proxy}. 
+These expressions, while equivalent at the population level, reflect two classes of learning methods which we call the ``conditional mean'' and the ``information density'' approaches.
+In \Cref{sec:theory}, we prove a generic decomposition of the prediction error on the downstream task, which furnishes three components: \emph{prompt bias} measures the compatibility of the prompt strategy with the pre-training and evaluation distributions, \emph{residual dependence} measures the information-theoretic cost of using one modality to make predictions on another, and \emph{estimation error} quantifies the effect of the finite number of pre-training examples and prompts. The estimation error decomposes further depending on whether the conditional mean or information density approaches are taken. To provide insight and demonstrate the usefulness of the decomposition, we analyze the performance of nonparametric regression methods for each approach by way of finite-sample bounds in high probability. Our framework arms practitioners with a means to imbue existing SSL-to-ZSP pipelines with theoretical guarantees, depending on the approach with which they best align.
+In \Cref{sec:experiments}, we illustrate our theoretical claims by empirically evaluating prompt bias and residual dependence on zero-shot prediction tasks with simulated and image data. 
+
+
+% END INCLUDE: sections/1a_intro
+
+
+\myparagraph{Related Work}
+
+% BEGIN INCLUDE: sections/1b_related_work
+One can argue that precursors to both FSL and ZSP in 
+machine learning can be found in the literature of meta-learning, or ``learning to learn'' \citep{thrun1998learning, andrychowicz2016learning, finn2017model}. There, the downstream evaluation tasks are given to the user upfront, so that pre-training an encoder and training a predictor for all of the evaluation tasks can be performed in one step.
+On the other hand, FSL and ZSP both involve fully task-agnostic pre-training phases. 
+Seminal work in computer vision on matching words and pictures is also worth mentioning \citep{barnard2003matching,forsyth2009words}. 
+
+Two complementary bodies of work studied phenomena common to FSL and ZSP. The first considers which properties of learned encoders can provably improve downstream performance \citep{wang2020understanding, haochen2021provable, atzmon2020acausal, wang2024desiderata, du2024lowrank}. The other is dedicated to explaining how otherwise mysterious SSL objectives achieve these properties \citep{wen2021toward, li2021selfsupervised, pokle2022constrasting, kiani2022jointembeddings, johnson2023contrastive, schwarz-ziv2023aninformation}. In particular, \citet{balestriero2022constrastive} and \citet{tan2024contrastive} relate various SSL objectives to spectral clustering.
+One FSL-specific line of work studies when linear mappings of pre-trained encoders can achieve optimal downstream performance \citep{saunshi2019atheoretical, haochen2021provable, tosh2021contrastive, lee2021predicting}.
+
+While informative representations are essential, the core of ZSP is the remarkable ability of models to make predictions without \emph{any} task-specific data, a challenge even for the perfect encoder. For context, we avoid the historical term ``zero-shot learning'' \citep{larochelle2008zerodata, akata2015label}, which refers to a setting in which pre-training data is not only \emph{labeled}, but contains metadata-based features associated with each class. In general, this only handles unseen classes, and only if the same features are observed at inference time. 
+To our knowledge, the only work studying ZSP based on self-supervised pre-training is \citet{chen2024understanding}. In particular, \citet[Theorem 4.2 and Corollary 5.1]{chen2024understanding} provides bounds on the top-$k$ accuracy of ZSP for CLIP-based encoders. However, the bound \emph{increases} with the batch size, may not decay to zero even if the pre-training loss is fully optimized and upstream and downstream data distributions are the same, and does not seem to explicitly depend on the prompt quality. 
+The independent and concurrent work of \citet{oko2025statistical} develops a statistical analysis based on sufficiency notions, with the aim of capturing the predictive performance in the downstream task. 
+Their work is complementary to ours, in that they determine the distributional parameter learned by the CLIP objective, but also assume that the prompting strategy and downstream data distribution are ``idealized'', in that the prompt bias and residual dependence quantities alluded to in the contributions are zero.
+
+On the applied side, we are inspired by the number of works that use diverse, class-specific prompts generated using large language models (LLMs) for enhancing ZSP performance \citep{pratt2023what, yang2023language, maniparambil2023enhancing} and interpretability \citep{menon2023visual, esfandiarpoor2024ifclip}. While these empirical methods, such as the customized prompts via language models method~(CuPL, \citet{pratt2023what}), are often designed using intuition from human understanding of natural language, we aim to offer a theoretical explanation for their success from a statistical learning theory and probabilistic graphical modeling perspective. Despite this particular application of LLMs, we also acknowledge that ``prompting'' in ZSP has a different meaning than in the growing field of prompt engineering, in which inputs are designed for large language models \citep{pryzant2023automatic, wang2024promptagent, guo2024connecting, sclar2024quantifying}.
+
+
+
+
+% END INCLUDE: sections/1b_related_work
+
+
+\section{Theoretical Framework}\label{sec:framework}
+
+% BEGIN INCLUDE: sections/2_framework
+We introduce the mathematical objects that connect the empirically-motivated predictor~\eqref{eq:proxy} to its theoretical counterpart analyzed in \Cref{sec:theory}. For the reader's convenience, a global notation table is provided in \Cref{sec:a:notation}.
+
+\begin{figure*}[t!]
+    \centering
+    \includegraphics[width=\linewidth]{figures/dag_v2_drawio.pdf}
+    \caption{{\bf Graphical Models of Prediction Paths.} Each directed graphical model corresponds to the data types and dependence structures for various SSL pre-training approaches. The variable $C$ represents an unobserved context that determines the observed data-generating distribution. Dotted lines indicate the possibility of presence or absence of the arrow. 
+    Methods {\color{myyellow}{\bf compatible with ZSP}} may learn the relationship between $X$ and $Z$ directly, whereas the relationship between $Z$ and $Y$ is learned via prompting.
+    Methods that are {\color{mypurple}{\bf compatible with FSL}} learn the label $Y$ as a latent variable in the process of solving the pretext task. 
+    }
+    \label{fig:dag}
+\end{figure*}
+
+
+\myparagraph{Prediction Setups}
+Consider random variables $X$, $Y$, and $Z$ observed in $\X$, $\Y$, and $\Z$, respectively. We interpret $\X$ as the space of images, $\Y$ as the (not necessarily discrete) space of labels, and $\Z$ as the space of text captions. 
+
+Consider a probability measure $P_{X, Y}$ on <<FORMULA_0016>>, called the \emph{evaluation distribution}. We specify a collection of downstream tasks, with which we may evaluate predictors on data drawn from $P_{X, Y}$ (e.g.~CIFAR-10). Consider a function <<FORMULA_0017>>, and the least squares prediction problem
+<<FORMULA_0018>>
+The function $\fstar$ serves only to handle multiple task formats such as regression (<<FORMULA_0019>>) or binary classification (<<FORMULA_0020>>) in a unified manner. We discuss formulations of multi-class classification and structured prediction in \Cref{sec:theory}. The optimizer of~\eqref{eq:mmse} over <<FORMULA_0021>>\footnote{In the appendix, we carefully construct $\ltwo$-spaces as sets of equivalence classes of functions (see \Cref{sec:a:background:l2}) for explicitness and rigor. We do not belabor this distinction in the main text.}, or all measurable, square-integrable functions on $\X$, is
+<<FORMULA_0022>>
+We will call this the \emph{direct predictor} throughout this paper, which will contrast our viewpoint of ZSP as an indirect, multi-stage prediction procedure. Indeed, the prompting step in~\eqref{eq:proxy} resembles an empirical average of draws from a probability distribution on $\Z$ based on the class label <<FORMULA_0023>> (especially when considering the LLM-based generation methods mentioned in \Cref{sec:intro}), whereas the encoders capture a dependence relation between $X$ and $Z$. Accordingly, we introduce a probability measure  $Q_{X, Z}$ on <<FORMULA_0024>>, called the \emph{pre-training distribution}, and the \emph{prompt distribution} $\rho_{Y, Z}$ on <<FORMULA_0025>> which represents the user-defined strategy for generating prompts. As a theoretical model for ZSP, we propose the function
+<<FORMULA_0026>>
+called the \emph{indirect predictor}, where
+<<FORMULA_0027>>
+Notice that $\etastar$ relies only on $P_{X, Y}$ while $\eta_\rho$ is a two-stage predictor relying only on the pair <<FORMULA_0028>>. The pre-training, evaluation, and prompt distributions represent pairwise dependencies between the random variables $X$, $Y$, and $Z$, as well as the observable data of the problem. Intuitively, our analysis of the performance gap between the direct and indirect predictors will quantify the ``compatibility'' of these three fundamental distributions as a possible joint distribution on <<FORMULA_0029>>. 
+
+\myparagraph{Prediction Paths of FSL and ZSP} 
+For context, we contrast our setup with previous theoretical analyses of FSL, aiming to 1) highlight the fundamental differences between SSL-for-FSL and SSL-for-ZSP, 2) describe assumptions we make (and do not make) to best align with applications.
+First, we consider two common SSL tasks that precede FSL. In unimodal contrastive learning, $X$ and $Z$ are augmented/corrupted images, and the pretext task is to identify examples derived from the same (``$+$'') or different (``$-$'') underlying image \citep{Chen2020ASimple}. In reconstructive SSL, the encoder is pre-trained to predict a hidden portion of the raw/embedded image \citep{assran2023self}. 
+Foundational works such as \citet{saunshi2019atheoretical} and \citet{wang2020understanding} explain the success of these SSL-for-FSL pipelines by the following mechanism: the labels $\Y$ used in the downstream task form a latent variable mixture model for the pre-training set, i.e.~<<FORMULA_0030>>. Thus, generalization guarantees hinge upon the fact that learning parameters of the pre-training distribution must inherently capture its latent variables (the downstream labels). This theory is visualized in \Cref{fig:dag} (left \& center); observe that if the dotted arrows were absent, the only path to solve the pretext task is \emph{through} the label.
+This FSL ``prediction path'' motivates another prevalent assumption of exact/approximate conditional independence of $X$ and $Z$ given $Y$ (e.g., as in \citet{lee2021predicting}). We avoid this assumption, which is unrealistic in the multimodal context as the dependence between an image and its caption is unlikely to be fully explained by a coarse label such as ``cat''. Moreover, this \emph{latent label model} assumes equality of the marginals <<FORMULA_0031>> on $\X$. As a concrete example, this amounts to assuming that the marginal distribution of images on the Internet ($Q_X$) is equal to that of CIFAR-10 images ($P_X$). We explicitly track this mismatch in our generalization bounds.
+
+For ZSP, the prevailing SSL pretext task is multimodal contrastive learning (\Cref{fig:dag}, right), wherein the foundation model learns a similarity function <<FORMULA_0032>>. To discuss a joint distribution <<FORMULA_0033>>, we adopt a \emph{latent caption model} that associates <<FORMULA_0034>> with an unobserved $\Z$-valued latent variable $Z$ (i.e.~an unobserved caption). Because pre-training connects $X$ to $Z$ and prompting then connects $Y$ to $Z$, the ideal dependence structure for ZSP is fundamentally different from FSL; if $X$ and $Y$ are conditionally independent given $Z$, the direct and indirect predictors are in fact equivalent. Indeed, the tower property of conditional expectation gives the identity
+<<FORMULA_0035>>
+The final expression is not equal to~\eqref{eq:est:ts} because of the difference between <<FORMULA_0036>> and <<FORMULA_0037>>. Additionally, $X$ and $Y$ are not necessarily conditionally independent given $Z$. 
+These discrepancies are precisely exposed in our analysis via a measure of distribution mismatch and a measure of the conditional dependence of $X$ and $Y$ given $Z$. The latter formalizes the information-theoretic cost of using natural language as a proxy for image classification.
+
+
+\myparagraph{Representations of the Indirect Predictor}
+We establish several central identities involving the indirect predictor~\eqref{eq:est:ts}. These expressions will strengthen the justification for $\eta_\rho$ as the target function of ZSP and naturally lead to two classes of learning methods that we analyze in \Cref{sec:theory}.
+As a preview, consider the example of balanced binary classification (<<FORMULA_0038>>) and the classifier that returns $1$ when <<FORMULA_0039>> and $0$ otherwise. We will show that there exist encoders <<FORMULA_0040>> and <<FORMULA_0041>>, and a sequence of scalars <<FORMULA_0042>> such that if <<FORMULA_0043>> and $d$ is sufficiently large, then this classifier is equivalent to
+<<FORMULA_0044>>
+where <<FORMULA_0045>>. This expression mirrors~\eqref{eq:proxy} down to a rescaling of the inner product. We now present the expressions that are used to derive~\eqref{eq:proxy_classifier}.
+
+For the first, let $Q_X$ and $Q_Z$ be the marginals of $Q_{X, Z}$ on $\X$ and $\Z$, respectively. We introduce the fundamental \emph{conditional mean operator} <<FORMULA_0046>>, which assigns to any <<FORMULA_0047>> the function <<FORMULA_0048>>. Then, it holds by definition that
+<<FORMULA_0049>>
+For the second, 
+consider the case in which <<FORMULA_0050>>\footnote{A distribution $\mu$ on $\msc{U}$ is \emph{absolute continuous} with respect to another distribution $\nu$ (denoted <<FORMULA_0051>>) if <<FORMULA_0052>> for every measurable set <<FORMULA_0053>>. If so, there exists a \emph{Radon-Nikodym derivative} <<FORMULA_0054>> such that for every measurable set <<FORMULA_0055>>, it holds that <<FORMULA_0056>>.}, where <<FORMULA_0057>> denotes the probability distribution of the pair <<FORMULA_0058>> drawn independently as <<FORMULA_0059>> and <<FORMULA_0060>>. 
+Then, we define the Radon-Nikodym derivative <<FORMULA_0061>>. 
+The function $\Rsans$, called the \emph{information density}\footnote{This term actually refers to <<FORMULA_0062>>, but for simplicity, we use it for $\Rsans$---see \citet[Eq. (11)]{dytso2023meta}.} has a long history in statistics and information theory. Using $\Rsans$ (\Cref{lem:info_density2}, \Cref{sec:a:background:buja}), the indirect predictor writes as
+<<FORMULA_0063>>
+where <<FORMULA_0064>> term measures the discrepancy between the marginal distributions of the captions generated during pre-training and prompting, respectively. The expressions~\eqref{eq:framework:cond_mean} and~\eqref{eq:framework:rnd}, while equal at the population level, motivate two categories of approaches for learning/estimation that have different statistical properties. The ``conditional mean'' approach uses pre-training data to learn the operator $\M_{Z|X}$ and prompts to approximate the function <<FORMULA_0065>>. On the other hand, the ``information density'' approach learns the function $\Rsans$ during pre-training, and approximates the expectation over $\rho_{Y, Z}$ using prompts. 
+The information density approach is particularly reflective of the prompting aspect of~\eqref{eq:proxy}, as one may perceive $\z_k^{\y}$ for <<FORMULA_0066>> and <<FORMULA_0067>> as <<FORMULA_0068>> as samples from $\rho_{Y, Z}$ with $\rho_Y$ chosen to be uniform on $\Y$. These are then used to replace the expectation in~\eqref{eq:framework:rnd}.
+
+Finally, we tie back to~\eqref{eq:proxy_classifier} and describe the formal connection between $\M_{Z|X}$ and $\Rsans$. 
+In \Cref{prop:lancaster} (\Cref{sec:a:background:buja}), we prove the decomposition of the form
+<<FORMULA_0069>>
+where <<FORMULA_0070>> as <<FORMULA_0071>>. Then,~\eqref{eq:proxy_classifier} follows under the given conditions by plugging~\eqref{eq:lancaster} into~\eqref{eq:framework:rnd}.
+
+The encoders <<FORMULA_0072>> and <<FORMULA_0073>>, and constants $(\sigma_i)_{i=1}^d$ are none other than the components of the truncated singular value decomposition (SVD) of $\M_{Z|X}$ (\Cref{prop:svd}, \Cref{sec:a:background:buja}). The SVD of $\M_{Z|X}$ and the information density $\Rsans$ characterize the full dependence structure of $Q_{X, Z}$; because $\Rsans$ is identically $1$ when <<FORMULA_0074>>, we may define the (squared) \emph{mean square contingency} dependence measure
+<<FORMULA_0075>>
+where <<FORMULA_0076>> denotes the Hilbert-Schmidt norm (see \Cref{def:trace_hs}, \Cref{sec:a:background:compact}), and the identities are proven in \Cref{prop:lancaster}. The right-hand side of~\eqref{eq:msc} can also be interpreted as the $\chi^2$-divergence <<FORMULA_0077>> between the joint distribution and the product of the marginals (see \Cref{def:msc}).
+
+
+
+
+
+
+
+
+% END INCLUDE: sections/2_framework
+
+
+\section{Generalization Guarantees for ZSP}\label{sec:theory}
+
+% BEGIN INCLUDE: sections/3_theory_arxiv
+
+In this section, we prove generalization guarantees for ZSP methods by comparing $\etastar$ to $\eta_\rho$ and $\eta_\rho$ to an estimator $\heta_\rho$, based on an $N$-sized pre-training set and $M$-sized prompt set (recall that <<FORMULA_0078>> in~\eqref{eq:proxy}). While there are some subtleties in the sampling models between various methods, one can consider  <<FORMULA_0079>> and <<FORMULA_0080>> for intuition purposes (see \Cref{sec:a:complexity:sampling} for a detailed description).
+We consider specific instances of both the conditional mean and information density approaches, based on learning theory in reproducing kernel Hilbert space (RKHS); our arguments do not intend to interpret foundation modeling as a kernel method, but to use the detailed analysis of the statistical errors in kernel methods to gain insight. In particular, we aim to expose two key dependences for the random triple <<FORMULA_0081>>: the dependence between $X$ and $Z$ (which governs pre-training) and the conditional dependence between $X$ and $Y$ given $Z$ (which governs downstream prediction). Similar statistical guarantees for other function classes (reviewed in \Cref{sec:a:objectives}) can be plugged into our framework, which intends to capture the end-to-end performance from pre-training to downstream prediction. 
+
+For <<FORMULA_0082>>, we define the norm <<FORMULA_0083>>, using analogous notation for other probability distributions. We will assume throughout the paper that $\fstar$ is bounded by $\fstarbound$ with probability one under $P_Y$ and $\rho_Y$, so that <<FORMULA_0084>>. Given a square-integrable $\heta_\rho$, we first control the mean squared error (MSE) via <<FORMULA_0085>>
+<<FORMULA_0086>>
+The information-theoretic error captures the prompt bias and residual dependence that differentiates indirect and direct prediction, whereas the estimation error is a familiar term in statistical analysis. We discuss in \Cref{sec:a:complexity:classification} how to convert the MSE bounds to risk bounds for classification.
+
+\myparagraph{Prompt Bias and Residual Dependence}
+Here, we control the information-theoretic error term in~\eqref{eq:theory:decomp1}. We state our assumptions regarding conditional probability informally and defer the formal descriptions using the language of regular conditional distributions to \Cref{sec:a:dependence}. We work within the latent caption model from \Cref{sec:framework}, for which we consider a joint distribution $P_{X, Y, Z}$ on <<FORMULA_0087>> which equals the evaluation distribution $P_{X, Y}$ when marginalized over $\Z$.
+Similar to the information density $\Rsans$ from \Cref{sec:framework}, we introduce the conditional information density
+<<FORMULA_0088>>
+where $P_{X, Y|\z}$ denotes the conditional distribution of <<FORMULA_0089>> given <<FORMULA_0090>>, and <<FORMULA_0091>> is defined analogously. 
+This naturally motivates the conditional dependence measure given by
+<<FORMULA_0092>>
+called the \emph{conditional mean square contingency}.
+Finally, consider the following regularity assumption on the joint distribution $P_{X, Y, Z}$, also discussed in \Cref{sec:a:dependence}.
+\begin{assumption}\label{asm:rcd1}
+    $P_{X, Y, Z}$ on <<FORMULA_0093>> satisfies the following: \emph{1) Agreement of caption distribution:} $P_X$-almost all <<FORMULA_0094>>,~$P_{Z|\x}$ exists and <<FORMULA_0095>>. \emph{2) Regularity of conditional distributions:} For $P_Z$-almost all <<FORMULA_0096>>,~$P_{X, Y|\z}$ exists, <<FORMULA_0097>>, and the conditional information density~\eqref{eq:theory:rnd0} satisfies <<FORMULA_0098>> and <<FORMULA_0099>>.
+\end{assumption}
+To measure the bias of the prompt distribution $\rho_{Y, Z}$, we denote the analog of~\eqref{eq:g_rho} under $P_{Y, Z}$ as
+<<FORMULA_0100>>
+We may now state the main result, proved in \Cref{sec:a:dependence}.
+\begin{theorem}\label{thm:res_dep1}
+    Under \Cref{asm:rcd1},
+    <<FORMULA_0101>>
+\end{theorem}
+To give context to \Cref{thm:res_dep1}, conditional independence relations have previously been used to describe the performance of multimodal contrastive SSL for FSL. We are particularly inspired by the \emph{multi-view redundancy} theory of \citet{tosh2021contrastive}, which states informally that the population FSL predictor can approach the performance of the idealized direct predictor that is given \emph{both} $X$ and $Z$ at test time, if <<FORMULA_0102>> and <<FORMULA_0103>> approximately hold. However, the theory of graphical models \citep[Proposition 3.1]{lauritzen1996graphical} asserts that both conditional independence relations hold only if <<FORMULA_0104>>, that is, neither view has information predictive of the label. This can be seen intuitively from \Cref{fig:dag} by breaking the arrows <<FORMULA_0105>> and <<FORMULA_0106>>. Notice that we compare only to the direct predictor~\eqref{eq:est:bayes} given $X$ (which is reflective of practice), so that we need only that <<FORMULA_0107>> (i.e.~$X$ depends on $Y$ through $Z$) to close the gap. The prompt bias term~\eqref{eq:res_dep1} captures the possible incompatibility of the prompt distribution $\rho_{Y, Z}$ with <<FORMULA_0108>>---we call prompt strategies unbiased (see \Cref{sec:a:complexity:sampling}) when this term is zero.
+
+\myparagraph{Sample Complexity and Distribution Mismatch}
+The first step in our estimation error analysis is to pass the <<FORMULA_0109>>-norm term <<FORMULA_0110>> from~\eqref{eq:theory:decomp1} to the <<FORMULA_0111>>-norm counterpart <<FORMULA_0112>>. We then establish high-probability bounds on the <<FORMULA_0113>>-norm term, with respect to the random sampling of the pre-training and prompting data. Because this initial step follows from a standard distribution shift argument (based on either a bounded likelihood ratio assumption or an additive error in total variation distance), we defer it to \Cref{sec:a:complexity} (see \Cref{lem:distribution_shift}). Conceptually, the two examples below are derived from estimating the component of either~\eqref{eq:framework:cond_mean} or~\eqref{eq:framework:rnd} that involves $Q_{X, Z}$ using the pre-training set and the one that involves $\rho_{Y, Z}$ using the prompt strategy. In both cases, we discuss the convergence rates of state-of-the-art RKHS-based methods. As we review \Cref{sec:a:background:rkhs}, these rates are typically expressed in terms of two quantities: \emph{source condition} constants, which measure the smoothness of the target function being learned, and \emph{eigendecay exponents} of covariance operators, which measure the effective dimension of the data. It will serve our purposes to interpret the rates in terms of the dependence between $X$ and $Z$ under $Q_{X, Z}$, under the following assumption.
+\begin{assumption}
+    The pre-training distribution satisfies <<FORMULA_0114>>, and the information density $\Rsans$ is contained in <<FORMULA_0115>> (i.e.~<<FORMULA_0116>>  is well-defined).
+\end{assumption}
+Due to the technical overhead of each method (especially regarding mis-specified function classes), we provide high-level descriptions below and defer detailed descriptions of the specific estimation procedures and formal assumptions to \Cref{sec:a:complexity:conditional_mean} (conditional mean) and \Cref{sec:a:complexity:rn_derivative} (information density).
+We denote by <<FORMULA_0117>> a failure probability, and <<FORMULA_0118>> a term that is poly-logarithmic in its input. 
+
+\myparagraph{Example 1: Nonparametric Regression}
+This approach, based on~\eqref{eq:framework:cond_mean}, uses the pre-training set to produce an estimate $\hM_{Z|X}$ of the conditional mean operator and the prompts to produce an approximation <<FORMULA_0119>> of <<FORMULA_0120>>. For the former, we use as an example the spectral regularization learning method of \citet{meunier2024optimal}, which produces a conditional mean embedding function <<FORMULA_0121>>, for an RKHS $\calG$ of real-valued functions of $\Z$.  For any <<FORMULA_0122>>, we then define <<FORMULA_0123>>. Note that $\Fhat$ predicts a target that is itself a function--such methods are therefore referred to as ``vector-valued'' regression. By the Reisz representation theorem, a similar function <<FORMULA_0124>> can be constructed such that <<FORMULA_0125>>.
+For $\hg_\rho$, we consider standard kernel regularized least-squares (e.g.,~\citet{smale2007learning}) applied to $M$ i.i.d.~draws from $\rho_{Y, Z}$. Assuming that <<FORMULA_0126>>, one can then pass the problem to controlling <<FORMULA_0127>> and <<FORMULA_0128>>, where <<FORMULA_0129>> denotes a Bochner space (reviewed in \Cref{sec:a:background:rkhs}).
+
+To derive the convergence rates below, we show in \Cref{sec:a:complexity:conditional_mean} that the source condition on <<FORMULA_0130>> can be expressed in terms of the singular decay exponent of $\M_{Z|X}$ (i.e.~<<FORMULA_0131>> from~\eqref{eq:framework:spectrum}), and the eigendecay exponents $\gamma_X$ and $\gamma_Z$ of the covariance operators of $Q_X$ and $Q_Z$, respectively. Additionally, <<FORMULA_0132>> is a parameter controlling the convergence rate of the prompt-based estimate of <<FORMULA_0133>>. The parametrization below is chosen so that one may interpret $\omega_\rho$ as a similar source condition for the target function <<FORMULA_0134>>.
+In the well-specified case (when <<FORMULA_0135>> is contained in the hypothesis class), we describe the convergence rate with the aggregated exponent
+\ZH{The theorem statement needs to be double checked against the one updated in Appendix. Double check the pointers to Appendix for proofs.}
+<<FORMULA_0136>>
+where $t$ depends on <<FORMULA_0137>>. The result below corresponds to \Cref{thm:complexity:conditional_mean} in \Cref{sec:a:complexity:conditional_mean}, which relies on a basis alignment assumption to aggregate the singular/eigendecays.
+\begin{theorem}[Informal]\label{thm:complexity_vvkr}
+    For <<FORMULA_0138>>, there exist <<FORMULA_0139>> and <<FORMULA_0140>> (independent of <<FORMULA_0141>>) such that
+    <<FORMULA_0142>>
+    with probability at least <<FORMULA_0143>> for $N$ sufficiently large.
+\end{theorem}
+Let us interpret the constant <<FORMULA_0144>>. First, the dependence on $N$ ranges between <<FORMULA_0145>> and the parametric rate <<FORMULA_0146>>. Convergence is faster when <<FORMULA_0147>> or <<FORMULA_0148>>. The first case implies near-independence of $X$ and $Z$, for which learning is easy as <<FORMULA_0149>> is essentially constant over <<FORMULA_0150>>. The second case indicates that the $Z$ variable is near-finite dimensional, or that the vector-valued nature of the problem has been reduced to standard univariate regression. Convergence is slower if <<FORMULA_0151>>, or if the effective dimension of $\X$ is small relative to the effective dimension of $Z$. The balancing constant <<FORMULA_0152>> (shown explicitly in \Cref{thm:complexity:conditional_mean}) decays with $\gamma_{X, Z}$ and $\gamma_Z$, so as <<FORMULA_0153>> becomes more independent or $Z$ approaches finite dimensions, the variance from prompt sampling decreases. We also discuss the mis-specified case in \Cref{sec:a:complexity:conditional_mean}.
+
+\myparagraph{Example 2: Radon-Nikodym Derivative Estimation}
+This approach, based on~\eqref{eq:framework:rnd}, considers pre-training to return a learned information density <<FORMULA_0154>>. By approximating the prompt distribution $\rho_{Y, Z}$ with $\hrho_{Y, Z}$ (e.g.~the empirical measure in the result below), one may define the estimator <<FORMULA_0155>>. Similar in spirit to the previous example, we consider the kernel Radon-Nikodym derivative estimation with the spectral regularization procedure of \citet{nguyen2024onregularized}. The convergence rate of $\Rhat$ to $\Rsans$ is governed by a source condition constant <<FORMULA_0156>> associated to $\Rsans$ (see \Cref{sec:a:complexity:rn_derivative}). We interpret this constant analogously to <<FORMULA_0157>>, in that we prove a relationship to the singular decay exponent $\gamma_{X, Z}$, but is not directly expressible in terms of the latter. \ZH{The theorem statement needs to be double checked against the one updated in Appendix. Double check the pointers to Appendix for proofs. Remember to talk about the trade-off.}
+The following result corresponds to \Cref{thm:complexity:rn_derivative} in \Cref{sec:a:complexity:rn_derivative}.
+\begin{theorem}[Informal]\label{thm:complexity_rn_derivative}
+    For <<FORMULA_0158>>, and <<FORMULA_0159>>, there exists <<FORMULA_0160>> (independent of <<FORMULA_0161>>) such that
+    <<FORMULA_0162>>
+     with probability at least <<FORMULA_0163>> for all  $N$ sufficiently large.
+\end{theorem}
+Notice that the bound of \Cref{thm:complexity_rn_derivative}
+includes a divergence term between $\rho_Z$ (the captions generated by prompting) and $Q_Z$ (the captions of the pre-training set). This term comes precisely from the error term in~\eqref{eq:framework:rnd}. This elucidates the fact that the conditional mean approach and the information density are not equivalent representations of the pre-training distribution, as one needs \emph{both} $\Rsans$ and $Q_Z$ in order to identify the conditional mean. 
+The parametric rate $M^{-1}$ reflects that samples are used to learn a joint expectation over $\rho_{Y, Z}$, which is an easier statistical problem than estimating the regression function of $Y$ on $Z$ that appears in \Cref{thm:complexity_vvkr}. Thus, the information density approach may enjoy faster statistical convergence, at the expense of bias from the distribution mismatch on $\Z$. The constant <<FORMULA_0164>> relates to the <<FORMULA_0165>>-norm of the random function <<FORMULA_0166>> for <<FORMULA_0167>>; the error from finite prompts decays when this norm is light-tailed.
+
+In both \Cref{thm:complexity_vvkr} and \Cref{thm:complexity_rn_derivative}, we aim to highlight not particular convergence rates of the chosen methods, but the framework that leads to proving them. Similar results can also be leveraged in our framework. SSL procedures such as noise contrastive estimation have been related to the estimation of $\Rsans$ \citep{gutmann2012noise}. For example, \citet[Theorem 11]{tosh2021contrastive} upper bounds <<FORMULA_0168>> using the suboptimality of the population risk, allowing for empirical risk minimization-style analysis.
+
+
+% END INCLUDE: sections/3_theory_arxiv
+
+
+\section{Experiments}\label{sec:experiments}
+
+% BEGIN INCLUDE: sections/4_experiments_arxiv
+In \Cref{sec:intro}, we asked how the downstream task performance depends on the pre-training distribution $Q_{X, Z}$, evaluation distribution $P_{X, Y}$, and prompting strategy $\rho_{Y, Z}$. At the population level, we captured the dependence on $Q_{X, Z}$ and $P_{X, Y}$ using the residual dependence <<FORMULA_0169>> and incorporated $\rho_{Y, Z}$ via the prompt bias (\Cref{thm:res_dep1}). In the first experiment, we create a simulated setting in which the residual dependence can be controlled and investigate whether it is indeed a determining factor for the empirical performance of CLIP \citep{radford2021learning} and VICReg \citep{bardes2022vicreg} models in practice. In the second experiment, we solve an image classification task in which the images have both captions and labels (i.e.~we may sample from a true joint distribution $P_{X, Y, Z}$). This allows us to understand the effect of prompt bias by comparing template-based prompting strategies to the unbiased setting <<FORMULA_0170>>. To understand the dependence on $\rho_{Y, Z}$ at a sample level, we explore how downstream performance scales with the number of prompts $M$ in both the second experiment (unbiased prompting) and third experiment (LLM-based prompting). We are particularly interested in verifying the dependence on $M$ (which is the dominant error when <<FORMULA_0171>>) derived in \Cref{thm:complexity_rn_derivative}).
+\Cref{sec:a:experiments} contains further details of the experiments and code for reproduction can be found at \href{github.com/ronakdm/zeroshot}{\url{github.com/ronakdm/zeroshot}}.
+
+\myparagraph{Models, Datasets, and Evaluation}
+For foundation models, we use three publicly available CLIP models from the OpenCLIP repository \citep{ilharco2021openclip}: ResNet50 pre-trained on YFCC15M \citep{thomee2016yfcc}, NLLB-CLIP pre-trained on a subset of LAION COCO \citep{visheratin2023nllb}, and ViT-B/32 pre-trained on the DataComp medium pool \citep{gadre2023datacomp}. Our evaluation datasets include five standard benchmarks: the Describable Textures Dataset or DTD \citep{cimpoi14describing}, Flowers 102 \citep{nilsback2008automated}, FGVC Aircraft \citep{maji2013fine}, SUN397 \citep{xiao2010sun}, and ImageNet-1k \citep{deng2009imagenet}. For some experiments, we make use of the ImageNet-Captions dataset \citep{fang2023data}, which pairs a subset of ImageNet images collected from Flickr with their original captions. 
+Evaluation occurs via zero-shot classification top-$k$ accuracy, in which a test example is considered to be classified correctly if the true class is contained within the elements of $\Y$ with the $k$ largest scores as computed by~\eqref{eq:proxy}. Evaluation is done using tools from the \href{https://github.com/LAION-AI/CLIP_benchmark?tab=readme-ov-file}{CLIP Benchmark repository}. In \Cref{fig:ideal} and \Cref{fig:llm}, ``templates'' refers to using all \href{https://github.com/LAION-AI/CLIP_benchmark/blob/main/clip_benchmark/datasets/en_zeroshot_classification_templates.json}{default community-curated prompts} available in CLIP Benchmark. Finally, detailed descriptions of the prompt sampling schemes are collected and compared to the theory in \Cref{sec:a:complexity:sampling}.
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/simulation.pdf}
+    \caption{{\bf Results: Residual Dependence Simulation.} Simulation for <<FORMULA_0172>> described in \Cref{sec:a:experiments:simulation}. {\bf Left:} The $y$-axis is the accuracy of classifying $Y$ given $X$ and the $x$-axis is the parameter $\theta$ controlling the residual dependence <<FORMULA_0173>> as in~\eqref{eq:re:resid}. {\bf Right:} The $y$-axis shows <<FORMULA_0174>> as computed in \Cref{sec:a:experiments:simulation}. Error bars indicate standard errors from 10 seeds, which govern the data used for estimating expected values and randomness in the training procedures for CLIP and VICReg.}
+    \label{fig:simulation}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/ideal_prompting.pdf}
+    \caption{{\bf Results: Unbiased Prompting.} Pre-trained models are varied along the rows and sub-tasks (subsets of 50 ImageNet-1k class) are varied along columns. In all plots, the $x$-axis denotes the number of prompts sampled for each class embedding and the $y$-axis denotes top-$k$ zero-shot classification accuracy. Error bars indicate standard deviations across 10 seeds for prompt sampling.}
+    \label{fig:ideal}
+\end{figure}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/class_conditional_prompting.pdf}
+    \caption{{\bf Results: Class-Conditional Prompting.} Pre-trained models are varied along the rows and evaluation datasets are varied along columns. In all plots, the $x$-axis denotes the number of prompts sampled for each class embedding and the $y$-axis denotes top-$k$ zero-shot classification accuracy. Error bars indicate standard deviations across 10 seeds for prompt sampling.}
+    \label{fig:llm}
+\end{figure*}
+
+
+\myparagraph{Classification Accuracy and Residual Dependence}
+We consider a simulated binary classification task in which all distributions are compatible (i.e.~<<FORMULA_0175>> and <<FORMULA_0176>> for some $P_{X, Y, Z}$) and the predictors~\eqref{eq:est:bayes} and~\eqref{eq:est:ts} can be computed analytically.
+We also include the zero-shot predictor~\eqref{eq:proxy} learned by both the CLIP and VICReg objectives. Our goals are two-fold in this simulation: 1) to empirically observe that as <<FORMULA_0177>>, the predictive performance of the indirect predictor $\eta_\rho$ does indeed approach that of $\etastar$, and 2) that the predictors generated by common SSL methods used in practice have similar performance trends as $\eta_\rho$. As for the data-generating process, we consider <<FORMULA_0178>> and a pair of Gaussian distributions <<FORMULA_0179>>, where given <<FORMULA_0180>>,
+<<FORMULA_0181>>
+with class-conditional mean vectors <<FORMULA_0182>> and covariance matrices <<FORMULA_0183>>. In order to control the conditional dependence between $X$ and $Y$ given $Z$, we fix all parameters except for $\bmu_{Z|\y}$ and $\C_{ZX|\y}$ (for <<FORMULA_0184>>), and define them using a tunable parameter <<FORMULA_0185>> in a way such that the conditional distribution of $Y$ given <<FORMULA_0186>> stays constant. We make it so that as <<FORMULA_0187>>, 
+<<FORMULA_0188>>. Finally, to measure classification accuracy, we directly draw samples from $P_{Y, Z}$ to simulate unbiased prompting. The full mathematical details are given in \Cref{sec:a:experiments:simulation}. We observe both of the intended effects; the left panel of \Cref{fig:simulation} demonstrates that as $\theta$ approaches $1$, the indirect, CLIP, and VICReg predictors approach the performance of the direct predictor in terms of classification performance. The right panel confirms that $\theta$ indeed controls <<FORMULA_0189>> in an approximately monotonic fashion.
+
+\myparagraph{Prompting without Bias with Observations from $P_{Z, Y}$}
+Next, we illustrate the importance of the prompt bias term in \Cref{thm:res_dep1} by considering an  ImageNet-Captions dataset, in which we may observe the joint sample <<FORMULA_0190>>. 
+We compare the standard prompting technique using pre-defined templates to the unbiased strategy that draws samples directly from $P_{Y, Z}$. We design three sub-tasks by randomly selecting collections of 50 classes from each of 998 classes, reserving held-out prompting examples for which we can draw from $P_{Z|Y = \y}$ for each <<FORMULA_0191>> (see the additional details in \Cref{sec:a:experiments}). The zero-shot classification accuracy on a held-out evaluation set is plotted in \Cref{fig:ideal}.
+Observe that the threshold at which unbiased prompting outperforms the 18 default templates is approximately <<FORMULA_0192>> across tasks. However, the performance of the unbiased approach only saturates at <<FORMULA_0193>> and can have enormous benefits (almost 15\% absolute increase in top-1 accuracy for the ResNet50 on Sub-Task 1) in performance. Thus, for models that have not yet been saturated from pre-training, prompting can close surprisingly wide gaps in zero-shot classification accuracy.
+
+
+\myparagraph{Class-Conditional Prompting with Language Models}
+As mentioned in \Cref{sec:intro}, we investigate CuPL as a means to implement class-conditional prompting (sampling from $\rho_{Z|Y = \y}$ for each <<FORMULA_0194>>) with LLMs. Our experimental setup and scientific goals differ from those used in \citet{pratt2023what}: 1) we use lightweight encoders that have not saturated their performance during pre-training, as opposed to the large-scale ViT-L/14 architecture, 2) we quantify the variability of classification accuracy with respect to prompting by generating up to fifty times as many prompts per experiment, and 3) we employ LlaMA 3 \citep{grattafiori2024llama3herdmodels}, which is free and accessible to other, as opposed to GPT-3 \citep{brown2020language}.
+The results are shown in \Cref{fig:llm}, where we order the datasets in increasing number of classes per task: 47, 100, 102, 397, and 998. Similar phenomena as in \Cref{fig:ideal} are observed, although the approximate saturation threshold varies per dataset from 20 for Flowers 102 and FGVC Aircraft up to 60 for DTD. Note that the choice of defaults heavily influences the baseline performance. Surprisingly, the Flowers 102 dataset uses a single default: ``a photo of a \underline{\hspace{0.5cm}}, a type of flower'', and is often able to outperform the class-conditional LLM approach on average. On the other hand, the DTD templates of the form ``a photo of a \underline{\hspace{0.5cm}} \{texture, pattern, thing, object\}'' are dramatically outperformed by our LLM-generated captions 
+, with a nearly 20\% increase in top-5 accuracy on the ResNet50 and ViT-B/32 architectures. 
+
+
+
+
+
+
+
+
+% END INCLUDE: sections/4_experiments_arxiv
+
+
+\section{Conclusion}\label{sec:conclusion}
+
+% BEGIN INCLUDE: sections/5_conclusion
+We showed how zero-shot prediction (ZSP) can be theoretically understood 
+as an indirect prediction path from another modality to the label. We presented two viewpoints on categorizing ZSP methods---the conditional mean approach and the information density approach---and framed a decomposition formula for their generalization abilities.
+Our theoretical results and experiments highlighted the role of residual dependence and prompt bias in defining the fundamental limits of ZSP. Interesting venues for future work include the extension of our analysis 
+to classes of distribution shifts between the pre-training distribution and the downstream distribution, 
+and to causal generative modeling \citep{scetbon2024fixed,zhang2024towards}. 
+
+% END INCLUDE: sections/5_conclusion
+
+
+
+
+\section*{Acknowledgements}
+% BEGIN INCLUDE: sections/acknowledgements
+The authors are grateful to
+D. Hsu, 
+E. Perkovi\'{c}, and 
+N. Srebro
+for fruitful discussions related to this work. 
+The authors also thank the reviewers and the area chair
+for valuable comments. 
+This work was supported by NSF DMS-2023166, CCF-2019844, DMS-2134012, NIH, and IARPA 2022-22072200003. Part of this work was performed while R. Mehta and Z. Harchaoui were visiting the Simons Institute for the Theory of Computing. 
+
+% END INCLUDE: sections/acknowledgements
+
+\bibliographystyle{abbrvnat}
+\bibliography{bib}
+
+
+
+\clearpage
+\appendix
+\onecolumn
+\addcontentsline{toc}{section}{Appendix} 
+\part{Appendix} %
+\parttoc %
+
+
+\clearpage
+
+\section{Notation}\label{sec:a:notation}
+
+% BEGIN INCLUDE: appendix/1_notation
+\begin{table}[ht]
+    \centering
+
+    \begin{adjustbox}{max width=\linewidth}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{cc}
+    \toprule
+        {\bf Symbol} & {\bf Description}\\
+        \midrule
+        <<FORMULA_0195>>, <<FORMULA_0196>>, <<FORMULA_0197>>      & 
+        \begin{tabular}{c}
+            Instances and sample spaces for data modalities/views, \\
+            often images, labels, and captions.
+        \end{tabular}
+        \\
+        <<FORMULA_0198>>      & Encoders <<FORMULA_0199>> and <<FORMULA_0200>>.\\
+        <<FORMULA_0201>>      & Random variable realized in <<FORMULA_0202>>.\\
+        $P_{X, Y}$      & Evaluation distribution over <<FORMULA_0203>>.\\
+        $Q_{X, Z}$      & Pre-training distribution over <<FORMULA_0204>>.\\
+        $\rho_{Y, Z}$      & Prompting distribution over <<FORMULA_0205>>.\\
+        
+        \midrule
+
+        $\fstar$      & A function <<FORMULA_0206>>.\\
+        <<FORMULA_0207>> & Direct predictor <<FORMULA_0208>>.\\
+        <<FORMULA_0209>> & Prediction function <<FORMULA_0210>>.\\
+        <<FORMULA_0211>> & Indirect predictor <<FORMULA_0212>>.\\
+        $N$ & Sample size of pre-training set <<FORMULA_0213>>.\\
+        $M$ & Number of prompts <<FORMULA_0214>>.\\
+
+        \midrule
+        
+        <<FORMULA_0215>> & 
+        \begin{tabular}{c}
+             Set containing equivalence classes of measurable functions <<FORMULA_0216>> \\
+             satisfying <<FORMULA_0217>>.
+        \end{tabular}\\
+        $\M_{Z|X}$ & Conditional mean operator <<FORMULA_0218>>.\\
+        $\Rsans$ & Information density <<FORMULA_0219>>.\\
+        <<FORMULA_0220>> & $\chi^2$-divergence <<FORMULA_0221>>.\\
+        <<FORMULA_0222>> & Mean square contingency <<FORMULA_0223>>.\\
+        <<FORMULA_0224>> & Singular values of $\M_{Z|X}$.\\
+        <<FORMULA_0225>> & Left and right singular functions of $\M_{Z|X}$.\\
+        $\Ssans_{\z}$ & Conditional information density <<FORMULA_0226>>.\\
+        <<FORMULA_0227>> & Conditional mean square contingency <<FORMULA_0228>>.\\
+        <<FORMULA_0229>> & Hilbert-Schmidt norm of a linear operator from $\calG$ to $\calH$.\\
+
+        
+        
+        
+        
+        \bottomrule
+    \end{tabular}
+    \end{adjustbox}
+    \vspace{6pt}
+    \caption{Notation used throughout the main text.}
+    \label{tab:notation}
+\end{table}
+In the appendix, we use slightly more explicit notation. For example, the product measure of $Q_X$ and $Q_Z$ on <<FORMULA_0230>> is denoted <<FORMULA_0231>>. The bracket notation $[\cdot]_X$ and $[\cdot]_Z$ are used to indicate equivalence classes in <<FORMULA_0232>> and <<FORMULA_0233>>, respectively. Such changes are marked as they are introduced.
+
+% END INCLUDE: appendix/1_notation
+
+
+\clearpage
+
+\section{Technical Background}\label{sec:a:background}
+
+% BEGIN INCLUDE: appendix/2_background
+In this section, we review the necessary background and construct any theoretical tools used in our analyses in a self-contained manner. \Cref{sec:a:background:l2} describes the broadest function class we consider and gives a rigorous description of the conditional means that we employ in this work. \Cref{sec:a:background:compact} reviews the basic classes of linear operators (trace class, Hilbert-Schmidt, etc.) that we consider. \Cref{sec:a:background:buja} contains central tools regarding the structure of bivariate distributions. Finally, \Cref{sec:a:background:rkhs} contains a brief introduction to reproducing kernel Hilbert spaces and some recent statistical results used in the proofs of \Cref{thm:complexity_vvkr} and \Cref{thm:complexity_rn_derivative}.
+
+\subsection{Conditional Expectation and the Hilbert Space \texorpdfstring{$\ltwo$}{L2}}\label{sec:a:background:l2}
+
+% BEGIN INCLUDE: appendix/background/l2
+Consider a common probability space <<FORMULA_0234>> and a topological space $\X$ equipped with its Borel $\sigma$-algebra <<FORMULA_0235>>. Given a random variable <<FORMULA_0236>> representing some observable data, we consider $P_X$ to be the law of $X$, i.e.~<<FORMULA_0237>> for every Borel set <<FORMULA_0238>>. Our goal is to define <<FORMULA_0239>>, a Hilbert space containing equivalence classes of functions that are square integrable under $P_X$. As an intermediate step, we will also construct a Hilbert space <<FORMULA_0240>> for the $\sigma$-algebra <<FORMULA_0241>>, which contains equivalence classes of $\msc{G}$-measurable functions that are square integrable under $\prob$. Having both of these constructions will be helpful in working with conditional mean operators in a rigorous manner. 
+
+\myparagraph{Quotient Space}
+As a starting point, consider the set
+<<FORMULA_0242>>
+For any <<FORMULA_0243>>, consider the equivalence relation ``$\sim$'' defined by
+<<FORMULA_0244>>
+For any <<FORMULA_0245>>, we define <<FORMULA_0246>> as indexing the equivalence class containing all functions that differ from $u_+$ only on a set of $\prob$-measure zero.
+The global Hilbert space will be defined using the quotient of <<FORMULA_0247>> under this equivalence relation.
+\begin{lemma}\label{lem:hilbert_space}
+    The quotient space <<FORMULA_0248>> is a Hilbert space with the addition and scalar multiplication rules
+    <<FORMULA_0249>>
+    for scalars <<FORMULA_0250>> and the inner product
+    <<FORMULA_0251>>
+    where the definitions are independent of the choice of $u_+$ and $v_+$.
+\end{lemma}
+\begin{proof}
+    It is easy to verify that the addition, scalar multiplication, and inner product operations are well-defined (i.e.~are invariant to the choice of $u_+$ and $v_+$). Define the norm <<FORMULA_0252>>, and consider a Cauchy sequence <<FORMULA_0253>> in <<FORMULA_0254>>. To confirm completeness, we identify a limit of this sequence as an element of <<FORMULA_0255>>. First, consider an arbitrary sequence <<FORMULA_0256>> where <<FORMULA_0257>> for all <<FORMULA_0258>>. Then, we have by the Riesz-Fischer theorem \citep[Theorem 13.7]{schilling2017measures}, there exists a limit <<FORMULA_0259>> such that
+    <<FORMULA_0260>>
+    We then define <<FORMULA_0261>>, and see that
+    <<FORMULA_0262>>
+    where the last step follows by~\eqref{eq:thm:riesz_fischer} and completes the proof.
+\end{proof}
+Next, we construct closed subspaces of <<FORMULA_0263>> which contain random variables that are measurable functions of another random variable. Notice that for <<FORMULA_0264>>, the statement <<FORMULA_0265>> indicates equality of two partitions, namely collections of random variables that differ pairwise on sets of measure zero. 
+Letting <<FORMULA_0266>> denote the $\sigma$-algebra generated by $X$, define the set
+<<FORMULA_0267>>
+Then, using the equivalence relation~\eqref{eq:equivalence_relation}, we define the space
+<<FORMULA_0268>>
+In the upcoming \Cref{coro:closed_subspaces}, we will confirm that <<FORMULA_0269>> is indeed a closed subspace of <<FORMULA_0270>> for any random variable $X$. Before doing so, we consider the induced probability space <<FORMULA_0271>>. Then, we define the related linear space 
+<<FORMULA_0272>>
+We define an analogous equivalence relation ``$\sim_X$'' defined as
+<<FORMULA_0273>>
+and the quotient <<FORMULA_0274>>. These sets are related to one another in the following lemma.
+\begin{corollary}\label{coro:closed_subspaces}
+    The set <<FORMULA_0275>> is a Hilbert space with respect to the inner product used in \Cref{lem:hilbert_space}, whereas <<FORMULA_0276>> is a Hilbert space with respect to the analogous inner product for <<FORMULA_0277>>. Furthermore, <<FORMULA_0278>> is a closed subspace of <<FORMULA_0279>>, and it holds that
+    <<FORMULA_0280>>
+\end{corollary}
+\begin{proof}
+    That <<FORMULA_0281>> and <<FORMULA_0282>> are Hilbert spaces follows by identical arguments to \Cref{lem:hilbert_space}. Additionally, we may invoke \citet[Lemma 27.1]{schilling2017measures} to assert that <<FORMULA_0283>> is a closed subspace of <<FORMULA_0284>>. Finally, to show~\eqref{eq:composition}, we will show that
+    <<FORMULA_0285>>
+    and take the quotient with respect to ``$\sim$'' on either side to complete the proof. First, <<FORMULA_0286>> holds because <<FORMULA_0287>> is clearly <<FORMULA_0288>>-measurable and
+    <<FORMULA_0289>>
+    To show that <<FORMULA_0290>>, first note that for any <<FORMULA_0291>>-measurable random variable $U$, there exists a measurable function <<FORMULA_0292>> such that <<FORMULA_0293>> \citep[Exercise 1.3.8]{durrett2019probability}. Applying~\eqref{eq:equiv_norm} gives <<FORMULA_0294>>, which yields a contradiction as <<FORMULA_0295>>. Thus, <<FORMULA_0296>>, completing the proof.
+\end{proof}
+
+\myparagraph{Conditional Expectation}
+Using \Cref{coro:closed_subspaces}, for any collection of random variables <<FORMULA_0297>>, we can now construct the Hilbert subspaces <<FORMULA_0298>>, <<FORMULA_0299>>, <<FORMULA_0300>>. We can then identify them with conditional expectations, i.e.~projections onto <<FORMULA_0301>>, <<FORMULA_0302>>, <<FORMULA_0303>>, respectively. This is done in the definition below.
+\begin{definition}[Conditional Expectation]\label{def:conditional_expectation}
+    For any random variable <<FORMULA_0304>>, we define the \emph{conditional expectation} <<FORMULA_0305>> as the orthogonal projection of $U$ onto <<FORMULA_0306>>, or
+    <<FORMULA_0307>>
+    which uniquely exists due to the closedness of <<FORMULA_0308>> and the projection theorem \citep[Theorem 26.13]{schilling2017measures}. Owing to \Cref{coro:closed_subspaces}, we will also define the \emph{conditional expectation function}
+    <<FORMULA_0309>>
+    as any measurable function satisfying the conditions <<FORMULA_0310>> and <<FORMULA_0311>> for $\prob$-almost every <<FORMULA_0312>>. The specific function choice will not affect any of the forthcoming arguments.
+\end{definition}
+Here, we defined the conditional expectation as an element of <<FORMULA_0313>> and associated it with a function in <<FORMULA_0314>>. Without the squared-integrability requirement, the conditional expectation may also be defined using the familiar tower property. We include the tower property below for completeness.
+\begin{lemma}{\citep[Theorem 27.12]{schilling2017measures}}\label{lem:tower}
+    Consider <<FORMULA_0315>> and <<FORMULA_0316>>. Then, for every measurable set <<FORMULA_0317>>, it holds that
+    <<FORMULA_0318>>
+\end{lemma}
+We will make use of both the projection property and tower property throughout this manuscript. While conditional expectation may be defined for specific integrable functions, we may wish to define probability measures whose integrals can produce all conditional expectations simultaneously---this ideal is captured by \emph{regular conditional distributions (r.c.d.'s)} \citep{shorack2000probability}, which we recall below.
+
+\begin{definition}\label{def:rcd}
+    Consider random variables <<FORMULA_0319>>. Let <<FORMULA_0320>> denote the Borel $\sigma$-algebra on $\msc{U}$. A map: <<FORMULA_0321>> is called a \emph{regular conditional distribution (r.c.d.)} if the following two properties hold:
+    \begin{enumerate}
+        \item For each <<FORMULA_0322>> and <<FORMULA_0323>>, it holds that
+        <<FORMULA_0324>>
+        for the conditional expectation defined in \Cref{def:conditional_expectation}.
+        \item For $P_V$-almost every <<FORMULA_0325>>, <<FORMULA_0326>> is a probability measure on <<FORMULA_0327>>.
+    \end{enumerate}
+\end{definition}
+This will primarily be used for the conditional dependence arguments in \Cref{sec:a:dependence}.
+
+
+
+% END INCLUDE: appendix/background/l2
+
+
+\subsection{Compact Operators}\label{sec:a:background:compact}
+
+% BEGIN INCLUDE: appendix/background/compact
+We collect several generalities about Hilbert spaces and linear operators (hereafter, simply ``operators'') between them. Many computations will require expanding an element of a separable Hilbert space onto an orthonormal basis.
+\begin{definition}[Separability, Orthonormal Basis, Complete Orthonormal System]\label{def:orthonormal_basis}
+    For a Hilbert space <<FORMULA_0328>> over $\R$, the orthonormal system <<FORMULA_0329>> of vectors is called an \emph{orthonormal basis (ONB)} or \emph{complete orthonormal system (CONS)} of $\calH$ if any of the following properties hold, which are equivalent by \citet[Theorem 26.21]{schilling2017measures}.
+    \begin{enumerate}
+        \item For every <<FORMULA_0330>>, <<FORMULA_0331>> for all <<FORMULA_0332>> implies that <<FORMULA_0333>>.
+        \item <<FORMULA_0334>> is dense in $\calH$.
+        \item For every <<FORMULA_0335>>, it holds that  <<FORMULA_0336>>.
+        \item For every <<FORMULA_0337>>, it holds that <<FORMULA_0338>>.
+        \item For every <<FORMULA_0339>>, it holds that <<FORMULA_0340>>.
+    \end{enumerate}
+    If there exists a countable orthonormal basis, then $\calH$ is called \emph{separable} \citep[Definition 26.23 \& Theorem 26.24]{schilling2017measures}.
+\end{definition}
+When linear operators are compact, then we may decompose them in a way that generalizes the eigendecomposition and singular value decomposition for matrices.
+\begin{definition}[Compact Operator]
+    A linear operator <<FORMULA_0341>> between Hilbert spaces $\calG$ and $\calH$ is called \emph{compact} if for every totally bounded subset <<FORMULA_0342>>, the image <<FORMULA_0343>> is relatively compact (i.e.~the closure of <<FORMULA_0344>> is compact) in $\calH$.
+\end{definition}
+Compact operators are bounded, and every bounded linear operator $\M$ admits a unique \emph{adjoint operator} $\M^*$ satisfying <<FORMULA_0345>> for all <<FORMULA_0346>> and <<FORMULA_0347>>. An operator <<FORMULA_0348>> is called \emph{self-adjoint} if <<FORMULA_0349>>. Next, we collect two operator decompositions that will be used repeatedly. We refer the reader to \citet[Chapter IV]{gohberg2003classes} and \citet[Chapter X]{gohberg2003classes} for further discussion on these topics. Just as their analogs for matrices, we refer to them as the \emph{eigendecomposition} and \emph{singular value decomposition}, respectively.
+
+\begin{theorem}{\citep[Chapter IV, Theorem 5.1]{gohberg2003classes}}\label{thm:eigen}
+    Let <<FORMULA_0350>> be a compact, self-adjoint operator on a separable Hilbert space $\calH$ on $\R$. Then, there exists a countable orthonormal basis $\br{e_j}_{j \in J}$ of $\calH$ and a sequence of non-zero real numbers <<FORMULA_0351>> with <<FORMULA_0352>>, <<FORMULA_0353>>, and for all <<FORMULA_0354>>, we have that
+    <<FORMULA_0355>>
+    Furthermore, if <<FORMULA_0356>> for all <<FORMULA_0357>> (i.e.~$\Top$ is \emph{positive semidefinite}), then we may take <<FORMULA_0358>> for all <<FORMULA_0359>>, and order them in a non-increasing sequence.. We call <<FORMULA_0360>> the non-zero \emph{eigenvalues} of $\Top$.
+\end{theorem}
+\begin{theorem}{\citep[Chapter X, Theorem 4.2]{gohberg2003classes}}\label{thm:svd}
+    Let <<FORMULA_0361>> be a compact operator between separable Hilbert spaces $\calG$ and $\calH$ on $\R$. Then, there exists an orthonormal basis $\br{u_j}_{j \in J}$ of $\calH$, an orthonormal basis $\br{v_k}_{k \in K}$ of $\calG$, and a sequence of positive real numbers $\br{s_i}_{i \in I}$ with <<FORMULA_0362>> such that the following statements hold.
+    \begin{itemize}
+        \item All collections are at most countable, i.e.~<<FORMULA_0363>>, and <<FORMULA_0364>>.
+        \item For all <<FORMULA_0365>> and <<FORMULA_0366>>, we have that
+        <<FORMULA_0367>>
+    \end{itemize}
+     We call $\br{s_i}_{i \in I}$ the non-zero \emph{singular values} of $\M$, which can be ordered in a non-increasing sequence.
+\end{theorem}
+The sets $J$ and $K$ are used to index the bases of $\calH$ and $\calG$, so they may be larger in cardinality than $I$, which only indexes the non-zero eigenvalue and singular values, respectively. 
+We will also consider more specific classes of compact operators.
+\begin{definition}\label{def:trace_hs}
+    A compact operator $\M$ with singular values $\br{s_i}_{i \in I}$ (\Cref{thm:svd}) is called \emph{trace class} if <<FORMULA_0368>> (the singular values are summable) and \emph{Hilbert-Schmidt} if <<FORMULA_0369>> (the singular values are square summable).
+\end{definition}
+Using the singular value decomposition, we see that if $\M$ is Hilbert-Schmidt, then <<FORMULA_0370>> and <<FORMULA_0371>> are self-adjoint trace class operators.
+The set of all Hilbert-Schmidt operators <<FORMULA_0372>> between Hilbert spaces <<FORMULA_0373>> and <<FORMULA_0374>> will be denoted by <<FORMULA_0375>>. This is itself a Hilbert space with the inner product
+<<FORMULA_0376>>
+where $\br{g_j}_{j \in J}$ can be taken to be \emph{any} orthonormal basis of $\calG$. Similarly,  let $\br{h_k}_{k \in K}$ be an arbitrary orthonormal basis of $\calH$. Then, the Hilbert-Schmidt norm <<FORMULA_0377>> will be defined as
+<<FORMULA_0378>>
+Using the singular value decomposition, we see that~\eqref{eq:compact:hsnorm} is equal to the sum of the squared singular values referenced in \Cref{def:trace_hs}.
+For <<FORMULA_0379>> and <<FORMULA_0380>>, we define the rank-one operator <<FORMULA_0381>> via <<FORMULA_0382>> for all <<FORMULA_0383>>. For an operator <<FORMULA_0384>>, the following identity regarding rank-one operators will be useful for norm computations:
+<<FORMULA_0385>>
+Finally, we will often compute Hilbert-Schmidt norms using assumptions on the singular decays of the operator in question.
+
+
+\begin{lemma}\label{lem:singular_decay}
+    Let <<FORMULA_0386>> be a Hilbert-Schmidt operator with singular values $\br{s_i}_{i \in I}$ (\Cref{thm:svd}). Assume that <<FORMULA_0387>> and that there exist constants <<FORMULA_0388>> such that <<FORMULA_0389>> for all <<FORMULA_0390>>. Then, <<FORMULA_0391>>, and it holds that
+    <<FORMULA_0392>>
+\end{lemma}
+\begin{proof}
+    The requirement that <<FORMULA_0393>> follows from the square summability of $\br{s_i}_{i=1}^\infty$ and the bound <<FORMULA_0394>>.
+    For the upper bound, write
+    <<FORMULA_0395>>
+    For the lower bound, write
+    <<FORMULA_0396>>
+    the result as desired.
+\end{proof}
+
+% END INCLUDE: appendix/background/compact
+
+
+\subsection{The Conditional Mean Operator}\label{sec:a:background:buja}
+
+% BEGIN INCLUDE: appendix/background/buja
+This section contains key properties of the conditional mean operator $\M_{Z|X}$ and the information density $\Rsans$ from \Cref{sec:framework}, based on the foundations of \Cref{sec:a:background:l2} and \Cref{sec:a:background:compact}. As we shall show, owing to a particular \emph{Lancaster decomposition} (\Cref{prop:lancaster}), both operators enjoy convenient spectral representations and relate to a measure of dependence---the mean-squared contingency.  
+
+Recall the probability space <<FORMULA_0397>>. Consider Borel measurable spaces <<FORMULA_0398>> and <<FORMULA_0399>>, and a random variable <<FORMULA_0400>>. We denote by $Q_{X, Z}$ the law of <<FORMULA_0401>>, i.e.~<<FORMULA_0402>> for every <<FORMULA_0403>>). Note that by \citet[Corollary 27.24]{schilling2017measures}, the Hilbert spaces <<FORMULA_0404>>, <<FORMULA_0405>>, <<FORMULA_0406>>, and <<FORMULA_0407>> are separable, a fact we will maintain in this section. We use the notation $[\cdot]_X$ and $[\cdot]_Z$ to index equivalence classes in <<FORMULA_0408>> and <<FORMULA_0409>>, respectively. In other words, for a measurable function <<FORMULA_0410>>, we will write <<FORMULA_0411>> to indicate that <<FORMULA_0412>>. Recall the conditional mean function introduced in \Cref{def:conditional_expectation}. We define the conditional mean operator
+<<FORMULA_0413>>
+The specific function <<FORMULA_0414>> chosen for the output conditional expectation is not relevant, as all choices will result in the same equivalence class. We define $\M_{X|Z}$ as the analogous operator for the conditional mean of <<FORMULA_0415>> given $Z$ for <<FORMULA_0416>>.
+
+\myparagraph{Spectral Representation}
+In the case that $\M_{Z|X}$ is compact, the conditional mean operator admits a singular value decomposition, which will be instrumental in obtaining several important properties.
+
+
+\begin{proposition}[Singular Value Decomposition of the Conditional Mean Operator]\label{prop:svd}
+    Let <<FORMULA_0417>> be compact. There exists a countable orthonormal basis <<FORMULA_0418>> of <<FORMULA_0419>>, a countable orthonormal basis <<FORMULA_0420>> of <<FORMULA_0421>>, and a countable sequence of positive real numbers <<FORMULA_0422>> satisfying <<FORMULA_0423>>, <<FORMULA_0424>>, and the following statements in addition:
+    \begin{itemize}
+        \item We may take <<FORMULA_0425>>, <<FORMULA_0426>>, and <<FORMULA_0427>>, where $\ones_\X$ is identically $1$ on $\X$ and $\ones_\Z$ is identically $1$ on $\Z$.
+        \item For all <<FORMULA_0428>> and <<FORMULA_0429>>, we have that
+        <<FORMULA_0430>>
+    \end{itemize}
+\end{proposition}
+\begin{proof}
+    Beyond the direct application of \Cref{thm:svd}, we must prove the statement regarding <<FORMULA_0431>> and that <<FORMULA_0432>> (which relates~\eqref{eq:operators:svd} to~\eqref{eq:operators:svd_cond_mean}) to achieve the desired result. For the first, we appeal to the variational representation of the first singular value $\sigma_1$ \citep[Section IV.1, Eq. (2)]{gohberg1990classes}, which states that
+    <<FORMULA_0433>>
+    We will show that <<FORMULA_0434>> achieves the supremum. Then, it will hold that <<FORMULA_0435>> and <<FORMULA_0436>>, because any version of the conditional expectation <<FORMULA_0437>> is $Q_X$-almost surely equal to $1$. Consider any <<FORMULA_0438>> satisfying <<FORMULA_0439>>. Then, we apply Jensen's inequality and the tower property (\Cref{lem:tower}) to achieve
+    <<FORMULA_0440>>
+    Setting <<FORMULA_0441>> achieves the upper bound, hence also achieving the supremum in~\eqref{eq:cond_mean:max_singular_value}. Next, to prove that <<FORMULA_0442>>, we similarly consider <<FORMULA_0443>> and write
+    <<FORMULA_0444>>
+    which satisfies the adjoint relationship and completes the proof.
+\end{proof}
+
+\myparagraph{Lancaster Decomposition}
+In the remaining proofs of this section, we do not differentiate an equivalence class in an $\ltwo$-space with its component functions, as the distinction will be clear from context. First, using the orthonormal bases defined in \Cref{prop:svd}, we may form a convenient orthonormal basis of <<FORMULA_0445>>.
+\begin{lemma}\label{lem:bivariate:onb}
+    The collection <<FORMULA_0446>> from \Cref{prop:svd}, where <<FORMULA_0447>> is a countable orthonormal basis of <<FORMULA_0448>> and <<FORMULA_0449>> is a countable orthonormal basis of <<FORMULA_0450>>, forms an orthonormal basis of <<FORMULA_0451>>.
+\end{lemma}
+\begin{proof}
+    We first show that <<FORMULA_0452>> is an orthonormal system. For any indices <<FORMULA_0453>> and <<FORMULA_0454>>, it holds via independence that
+    <<FORMULA_0455>>
+    To establish that this orthonormal system is now complete, we use the first equivalent condition in \Cref{def:orthonormal_basis}. Consider <<FORMULA_0456>> such that <<FORMULA_0457>> for all <<FORMULA_0458>> and <<FORMULA_0459>>. Then, via Fubini's theorem \citep[Corollary 14.9]{schilling2017measures}, it holds that
+    <<FORMULA_0460>>
+    Because <<FORMULA_0461>> forms an ONB, it holds that the equivalence class of $g_j$ is the zero element in <<FORMULA_0462>>, or in other words, <<FORMULA_0463>> for $Q_Z$-almost all <<FORMULA_0464>>. Due to the fact that $J$ is countable, we have that 
+    <<FORMULA_0465>>
+    is a probability one set under $Q_Z$. Because <<FORMULA_0466>> is an ONB of <<FORMULA_0467>>, it also holds that
+    <<FORMULA_0468>>
+    indicating that the right-hand side is also a probability one set under $Q_Z$.
+    Then, applying again the iterated integral,
+    <<FORMULA_0469>>
+    indicating the <<FORMULA_0470>> for <<FORMULA_0471>>-almost all <<FORMULA_0472>>. This completes the proof.
+\end{proof}
+
+This basis allows us to relate the conditional mean operator to a particular Radon-Nikodym derivative. As a result, both can be used to measure the dependence between $X$ and $Z$ \citep{lancaster1958thestructure}.
+
+\begin{proposition}[Lancaster Decomposition]\label{prop:lancaster}
+    Assume that <<FORMULA_0473>>, in which case there exists a Radon-Nikodym derivative <<FORMULA_0474>>. Then, the following identity holds:
+    <<FORMULA_0475>>
+    In particular, the operator $\M_{Z|X}$ is Hilbert-Schmidt if and only if <<FORMULA_0476>>, with the equality
+    <<FORMULA_0477>>
+\end{proposition}
+\begin{proof}
+    Using \Cref{lem:bivariate:onb}, we represent $\Rsans$ on the ONB <<FORMULA_0478>>. For any <<FORMULA_0479>> and <<FORMULA_0480>>, use the definition of the Radon-Nikodym derivative \citep[Theorem 20.2]{schilling2017measures} to write
+    <<FORMULA_0481>>
+    where we recall $I$ as the set indexing the non-zero singular values of $\M_{Z|X}$ (see \Cref{prop:svd}). This proves~\eqref{eq:bivariate:lancaster}, the first claim. For the second claim, we use the orthonormality of <<FORMULA_0482>> in <<FORMULA_0483>>, so that
+    <<FORMULA_0484>>
+    so that square-summability of <<FORMULA_0485>> implies finiteness and equality of the left-hand and right-hand sides above.
+\end{proof}
+
+The formulas in \Cref{sec:framework} simply equated <<FORMULA_0486>> for ease of presentation. For completeness, the $\varepsilon_d$ term in~\eqref{eq:lancaster} represents the tail of~\eqref{eq:bivariate:lancaster}, i.e.,
+<<FORMULA_0487>>
+which vanishes as <<FORMULA_0488>> because <<FORMULA_0489>> and <<FORMULA_0490>> is unit-norm in <<FORMULA_0491>>.
+
+The Radon-Nikodym derivative <<FORMULA_0492>> is also useful for converting conditional expectation computations into marginal expectation computations. In this sense, we may say that $\Rsans$ acts as a kernel for an integral operator representation of $\M_{Z|X}$, where the integral is taken with respect to $Q_Z$. The following identity is referenced by \citet[Section 3]{buja1990remarks} and \citet[Lemma 1, Eq.~(14)]{dytso2023meta}. We provide a self-contained proof below.
+\begin{lemma}\label{lem:info_density}
+    Adopt the setting of \Cref{prop:lancaster}. Then, for all <<FORMULA_0493>> and <<FORMULA_0494>>, it holds that
+    <<FORMULA_0495>>
+\end{lemma}
+\begin{proof}
+    We prove the first identity, whereas the second follows by a symmetric argument.
+    To confirm that the two functions are equal almost surely, it is sufficient to prove that for any measurable set <<FORMULA_0496>> (the $\sigma$-algebra generated by $X$), the relation 
+    <<FORMULA_0497>>
+    By the definition of conditional expectation, we have that
+    <<FORMULA_0498>>
+    where the last step follows from the Radon-Nikodym theorem \citep[Theorem 20.2]{schilling2017measures}. Next, we compute the expectation, taken under the product measure, using Fubini's theorem \citep[Corollary 14.9]{schilling2017measures}. That is,
+    <<FORMULA_0499>>
+    This achieves~\eqref{eq:zsp:almost_surely_equal} and completes the proof.
+\end{proof}
+
+While \Cref{lem:info_density} applies for a general function $g$, the function <<FORMULA_0500>> from~\eqref{eq:g_rho} is itself a conditional mean. This can be leveraged to produce yet another identity, which acts as a technical lemma for the proof of \Cref{thm:complexity_rn_derivative}.
+\begin{lemma}\label{lem:info_density2}
+    Recall that <<FORMULA_0501>> for <<FORMULA_0502>>. Assume in addition that <<FORMULA_0503>>. Then,
+    <<FORMULA_0504>>
+    for $Q_X$ almost all <<FORMULA_0505>>.
+\end{lemma}
+\begin{proof}
+    By \Cref{lem:info_density}, we already have that for $Q_X$-almost all <<FORMULA_0506>>, the identity
+    <<FORMULA_0507>>
+    Now, unpacking the first term on the right-hand side above, we recognize that for fixed <<FORMULA_0508>>, the random variable <<FORMULA_0509>> is <<FORMULA_0510>>-measurable, so via the properties of conditional expectation \citep[Theorem 27.11 (vii)]{schilling2017measures} in <<FORMULA_0511>>, we may write
+    <<FORMULA_0512>>
+    Using the expression above and the tower property of the conditional expectation (\Cref{lem:tower}), we write
+    <<FORMULA_0513>>
+    completing the proof.
+\end{proof}
+
+
+\myparagraph{Mean Square Contingency}
+Both singular value decomposition from \Cref{prop:svd} and the Radon-Nikodym derivative $\Rsans$ from \Cref{prop:lancaster} can be used to calculate a dependence measure between $X$ and $Z$ \citep{buja1990remarks}. This dependence measure arises in nonlinear canonical correlation analysis and alternating conditional expectations~\cite{breiman1985estimating,bickel1993efficient}. 
+
+\begin{definition}[Mean Square Contingency]\label{def:msc}
+    Assume that $\M_{Z|X}$ is Hilbert-Schmidt. Assume that <<FORMULA_0514>> (\Cref{prop:svd}), where we may append zeros if $I$ is finite. Recalling that <<FORMULA_0515>>, define the \emph{mean square contingency} <<FORMULA_0516>> as any of the expressions
+    <<FORMULA_0517>>
+\end{definition}
+Our definition of the mean square contingency is in fact the square of the quantity that was originally introduced as such by \citet{renyi1959onmeasures}, which is shown below.
+\begin{definition}\label{def:msc2}
+    Assume that <<FORMULA_0518>>, so that $\Rsans$ exists, and that <<FORMULA_0519>>. Define the \emph{R\'enyi mean squared contingency} \citet[Eq. (13)]{renyi1959onmeasures} as
+    <<FORMULA_0520>>
+    If $Q_{X,Z}$ is absolutely continuous with respect to a measure $\nu$ on <<FORMULA_0521>>, with joint density $q_{X, Z}$ and marginal densities <<FORMULA_0522>>, we have that
+    <<FORMULA_0523>>
+    Written in the form above, <<FORMULA_0524>> may also be called the \emph{$\chi^2$-functional} \citep{buja1990remarks}.
+\end{definition}
+We apply <<FORMULA_0525>> to achieve the sequence of identities following~\eqref{eq:msc}.
+Using the singular decay computations from \Cref{lem:singular_decay} with <<FORMULA_0526>>, we have that if <<FORMULA_0527>>, then
+<<FORMULA_0528>>
+For simplicity, we will use the upper bounds to describe the order of the quantities, that is,
+<<FORMULA_0529>>
+We employ this relation in the sample complexity calculations in \Cref{sec:a:complexity}. 
+
+
+
+
+
+
+
+% END INCLUDE: appendix/background/buja
+
+
+\subsection{Reproducing Kernel Hilbert Spaces}\label{sec:a:background:rkhs}
+
+% BEGIN INCLUDE: appendix/background/rkhs
+In this section, we review facts about the interplay between reproducing kernel Hilbert spaces (RKHSs), the $\ltwo$-spaces defined in \Cref{sec:a:background:l2}, the Hilbert-Schmidt spaces from \Cref{sec:a:background:compact}, and Bochner spaces (introduced below). The goal is to provide the necessary background in order to understand the results regarding kernel-based estimation methods that are used in other parts of the manuscript. The analyses in \Cref{sec:a:complexity} rely on being able to decompose some target function (related to the dependence between $X$ and $Z$) so that it may be estimated in multiple ways. One method involves estimating the Radon-Nikodym derivative $\Rsans$ introduced in \Cref{prop:lancaster}. The second technique relies on vector-valued regression, with a target function denoted by <<FORMULA_0530>>. Most of the setup below is in service of the vector-valued regression estimation portion.
+
+We maintain the Borel spaces <<FORMULA_0531>> and <<FORMULA_0532>> from \Cref{sec:a:background:buja}, with the topological assumption that $\X$ and $\Z$ are second countable, locally compact, and Hausdorff. In addition, $\calH$ and $\calG$ each denote a separable reproducing kernel Hilbert space (RKHS) containing real-valued functions of $\X$ and real-valued functions of $\Z$, respectively. We let <<FORMULA_0533>> and <<FORMULA_0534>> be the canonical feature maps and let <<FORMULA_0535>> and <<FORMULA_0536>> be the reproducing kernels for $\calH$ and $\calG$. The boundedness assumptions  <<FORMULA_0537>> and  <<FORMULA_0538>> are maintained throughout the paper. 
+
+\myparagraph{Bochner Space}
+We will adopt the equivalence class notation first introduced in \Cref{sec:a:background:l2}, with respect to probability measures $Q_X$ and $Q_Z$. That is, for any two real-valued measurable functions <<FORMULA_0539>> and <<FORMULA_0540>>, we say that <<FORMULA_0541>> if
+<<FORMULA_0542>>
+The notation $[f]_X$ denotes an equivalence class with respect to the equivalence relation $\sim_X$, with representative $f$. We say that <<FORMULA_0543>> if
+<<FORMULA_0544>>
+We define $\sim_Z$, $[\cdot]_Z$, and <<FORMULA_0545>> similarly. 
+We introduce a similar construction to <<FORMULA_0546>> for \emph{vector-valued} functions, i.e., those whose outputs lie in a Hilbert space. For measurable functions <<FORMULA_0547>> and <<FORMULA_0548>>, we will define the equivalence relation <<FORMULA_0549>> via <<FORMULA_0550>>, and corresponding equivalence classes will be denoted $[F]_X$. We define the \emph{Bochner space} <<FORMULA_0551>> via <<FORMULA_0552>> if
+<<FORMULA_0553>>
+Analogous to <<FORMULA_0554>>, this is a set of equivalence classes of vector-valued functions. Recall from \Cref{sec:a:background:compact} and \Cref{sec:a:background:buja} that we use <<FORMULA_0555>> to denote the space of Hilbert-Schmidt operators mapping from a Hilbert space $\mc{U}$ to another Hilbert space $\mc{V}$. The following result allows us to relate elements of the Bochner space <<FORMULA_0556>> to elements of a space of Hilbert-Schmidt operators <<FORMULA_0557>>. For <<FORMULA_0558>> and <<FORMULA_0559>>, the notation <<FORMULA_0560>> refers to the function mapping <<FORMULA_0561>> to <<FORMULA_0562>>.
+\begin{theorem}{\citep[Theorem 12.6.1]{aubin2000applied}}\label{thm:aubin:isomorphism}
+    There exists a function <<FORMULA_0563>> that is a bijective linear transformation satisfying
+    <<FORMULA_0564>>
+    and for every <<FORMULA_0565>> and <<FORMULA_0566>>, associates
+    <<FORMULA_0567>>
+    for the rank-one operator <<FORMULA_0568>>.
+\end{theorem}
+Based on the definition of the Hilbert-Schmidt norm in~\eqref{eq:compact:hsnorm} (\Cref{sec:a:background:compact}, \Cref{thm:aubin:isomorphism} will make computation of <<FORMULA_0569>>-norms more convenient by relating them to <<FORMULA_0570>>-norms. The following technical lemma can be used to simplify computations regarding the inverse of this isomorphism.
+\begin{lemma}\label{lem:main:estimation:technical}
+    Let $(g_j)_{j \in J}$ be any countable orthonormal basis of $\calG$, and let <<FORMULA_0571>> for some <<FORMULA_0572>> such that <<FORMULA_0573>>. Define the functions $(f_j)_{j \in J}$ via <<FORMULA_0574>>. Then, <<FORMULA_0575>> for all <<FORMULA_0576>>, and we have the identity
+    <<FORMULA_0577>>
+    where the convergence is interpreted in terms of <<FORMULA_0578>>.
+\end{lemma}
+\begin{proof}
+    First, consider the case in which we can write the equivalence class of $F$ in <<FORMULA_0579>> in the form
+    <<FORMULA_0580>>
+    for some sequence of functions <<FORMULA_0581>>. Then, because $\Phi^{-1}$ is a linear isometry, it is a bounded (hence continuous) operator with respect to the norm on <<FORMULA_0582>>. This implies via continuity
+    <<FORMULA_0583>>
+    where the last step follows because $\Phi^{-1}$ satisfies the relation~\eqref{eq:main:rankone}. To achieve the identity~\eqref{eq:main:hsnorm3}, we fix any <<FORMULA_0584>>, we expand <<FORMULA_0585>> onto the basis $(g_j)_{j \in J}$ to write
+    <<FORMULA_0586>>
+    To pass this pointwise equality to~\eqref{eq:main:hsnorm3}, consider any sequence of $\calG$-valued functions $(H_j)_{j \in J}$ such that <<FORMULA_0587>> for all <<FORMULA_0588>>, where <<FORMULA_0589>>. Similarly, consider <<FORMULA_0590>> such that <<FORMULA_0591>> for all <<FORMULA_0592>> with <<FORMULA_0593>>. Thus, we have that
+    <<FORMULA_0594>>
+    and because $J$ is countable, this implies that <<FORMULA_0595>> for $Q_X$-almost all <<FORMULA_0596>>, granting~\eqref{eq:main:hsnorm3}.
+    It remains to be shown that <<FORMULA_0597>>. This follows by the Bochner-square integrability of $F$, as
+    <<FORMULA_0598>>
+    which completes the proof.
+\end{proof}
+In the sequel, we will define a statistical learning problem in which the target function <<FORMULA_0599>> is an element of <<FORMULA_0600>>. For the kernel-based estimation approach, the estimation function <<FORMULA_0601>> (where $\lambda$ is a to-be-specified regularization parameter) will live in a particular vector-valued RKHS that will be isometrically isomorphic to <<FORMULA_0602>>. Using \Cref{thm:aubin:isomorphism}, <<FORMULA_0603>> will be associated to en element <<FORMULA_0604>> via an isometric isomorphism. We introduce the concept of embeddings and interpolation spaces to describe exactly where $\C_\star$ lies in between <<FORMULA_0605>> and <<FORMULA_0606>> (via a \emph{source condition}).
+
+\myparagraph{Embedding Operator}
+See \Cref{sec:a:background:compact} for a review of the terminology surrounding compact operators.
+Consider the \emph{embedding operator} <<FORMULA_0607>>, which identifies a function <<FORMULA_0608>> with its equivalence class <<FORMULA_0609>>. Under the bounded kernel assumption, we have that $\Iop_X$ is compact, and moreover Hilbert-Schmidt, with norm bounded as <<FORMULA_0610>> \citep[Lemma 2.3]{steinwart2012mercers}. We denote its adjoint by <<FORMULA_0611>>, and finally, construct the self-adjoint, trace class operator
+<<FORMULA_0612>>
+Applying the eigendecomposition \Cref{thm:eigen}, there exists an orthonormal basis of <<FORMULA_0613>>, denoted $([e_{X, i}]_X)_{i \in I}$, and a sequence of positive, non-increasing eigenvalues $(\mu_{X, i})_{i \in I}$ such that
+<<FORMULA_0614>>
+Note that we have only used the index set $I$ from \Cref{thm:eigen}, as opposed to the larger set $J$ for which we can define an ONB for the entirety of <<FORMULA_0615>>, not only <<FORMULA_0616>>. Analogous to $\Top_X$, we can also define the uncentered covariance operator
+<<FORMULA_0617>>
+Similar to~\eqref{eq:main:eigendecomposition}, $\C_X$ enjoys an eigendecomposition
+<<FORMULA_0618>>
+The equation above implicitly contains another fact, which is that the equivalence classes in~\eqref{eq:main:eigendecomposition} all contain representatives that are in $\calH$. This defines the collection $\br{e_{X, i}}_{i \in I}$, which forms an ONB of <<FORMULA_0619>>. Combining~\eqref{eq:main:eigendecomposition} and~\eqref{eq:main:covariance}, the embedding can be described using a singular value decomposition
+<<FORMULA_0620>>
+Lastly, we define <<FORMULA_0621>> as the analogous operators for <<FORMULA_0622>> and $\calG$. 
+
+
+\myparagraph{Interpolation Spaces and the Inclusion Map}
+For any <<FORMULA_0623>>, we define the operator
+<<FORMULA_0624>>
+which is considered to be well-defined when <<FORMULA_0625>>. Then, we define the \emph{$\alpha$-interpolation space} <<FORMULA_0626>> via
+<<FORMULA_0627>>
+where <<FORMULA_0628>> indicates that <<FORMULA_0629>>. When <<FORMULA_0630>>, we recover <<FORMULA_0631>>, whereas for <<FORMULA_0632>>, $[\calH]^1$ is isometrically isomorphic to <<FORMULA_0633>> \citep{fischer2020sobolev}. Thus, for <<FORMULA_0634>>, we interpret <<FORMULA_0635>> as an ``interpolation'' between the well-behaved functions in the RKHS $\calH$ and the elements of <<FORMULA_0636>>.
+Associated to each <<FORMULA_0637>> is the \emph{inclusion map} $\I_X^{\alpha, \infty}$, which simply views an element <<FORMULA_0638>> as an element of <<FORMULA_0639>> (this requires the boundedness of the kernel). Here, <<FORMULA_0640>> denotes equivalence classes of real-valued functions on $\X$ that have a finite essential supremum under $Q_X$.
+We write <<FORMULA_0641>> when the inclusion map is continuous (see \Cref{asm:rkhs:source}).
+
+We use the standard generalization of these notions onto spaces of vector-valued functions \citep{li2024towards, meunier2024optimal}: for any <<FORMULA_0642>>, we define the \emph{$\beta$-interpolation norm} for <<FORMULA_0643>> via the formula
+<<FORMULA_0644>>
+This norm, when finite, will be used to define the source condition of the target function <<FORMULA_0645>> alluded to in \Cref{sec:theory}, as we may compute <<FORMULA_0646>> for <<FORMULA_0647>> (see \Cref{thm:aubin:isomorphism}). While we phrase the condition in terms of the constant $\beta$ above in order to relate it to the kernel methods and inverse problem literature below, we will use the constructions of \Cref{sec:a:background:buja} to phrase the finiteness of~\eqref{eq:rkhs:interpolation} for $\C_\star$ in terms of the mean square contingency (\Cref{def:msc}) in \Cref{sec:a:complexity}. 
+
+
+\myparagraph{Vector-Valued Spectral Regularization Learning}
+We may now describe estimation techniques for an <<FORMULA_0648>>-valued target function that fall into the category of vector-valued spectral regularization learning. We give only a brief overview in order to state the statistical convergence guarantees; see \citet{meunier2024optimal} for a detailed description, including computational properties of the estimator.
+As we prove in \Cref{lem:main:construction}, there exists a function <<FORMULA_0649>> such that <<FORMULA_0650>> and for every <<FORMULA_0651>>,
+<<FORMULA_0652>>
+For each <<FORMULA_0653>>, we also refer to <<FORMULA_0654>> as the conditional mean embedding of $Z$ given <<FORMULA_0655>>. Note that for a fixed <<FORMULA_0656>>, we do not assume that <<FORMULA_0657>> is an element of an RKHS $\calH$. This avoids some of the technical challenges raised, for instance, in \citet{klebanov2020arigorous, klebanov2021thelinear}, where this requirement places strong implicit restrictions on the chosen kernel and RKHS. Instead, the mis-specified case is handled using vector-valued interpolation spaces.
+
+Next, using \Cref{thm:aubin:isomorphism}, we associate to <<FORMULA_0658>> the element <<FORMULA_0659>>.
+Given independent and identically distributed pre-training data <<FORMULA_0660>>  drawn from $Q_{X, Z}$, define the empirical (uncentered) auto-covariance and cross-covariance operator
+<<FORMULA_0661>>
+Let <<FORMULA_0662>> denote the spectral cutoff function
+<<FORMULA_0663>>
+We can interpret <<FORMULA_0664>> as a regularized inverse that behaves in a reasonable manner near <<FORMULA_0665>>. A similar function corresponding to the more familiar Tikhonov regularization is <<FORMULA_0666>>.
+While other options for <<FORMULA_0667>> (i.e.~filter functions) exist owing to the tools of regularization theory \citep{bauer2007onregularization}, the spectral cutoff function will be sufficient for our purposes, as it allows for the simplest statement of the upcoming results.
+For a self-adjoint positive semidefinite operator $\C$, we define <<FORMULA_0668>> as replacing each eigenvalue <<FORMULA_0669>> of $\C$ with <<FORMULA_0670>> in the eigendecomposition (see \Cref{thm:eigen}). For regularization parameter <<FORMULA_0671>>, we define the estimator
+<<FORMULA_0672>>
+Now, consider the following assumptions, which include the source condition.
+\begin{assumption}{\citep[Assumptions (SRC), (MOM), (EVD), (EMB)]{meunier2024optimal}}\label{asm:rkhs:source}
+    \begin{enumerate}
+        \item There exist positive constants <<FORMULA_0673>> and <<FORMULA_0674>> such that <<FORMULA_0675>>.
+        \item For positive constants <<FORMULA_0676>> the Bernstein moment condition
+        <<FORMULA_0677>>
+        is satisfied for $Q_X$-almost all <<FORMULA_0678>> and all <<FORMULA_0679>>. 
+        \item There exist constants <<FORMULA_0680>> and <<FORMULA_0681>> such that
+        <<FORMULA_0682>>
+        \item For <<FORMULA_0683>>, the inclusion map <<FORMULA_0684>> is bounded, with operator norm <<FORMULA_0685>>.
+    \end{enumerate}
+\end{assumption}
+Note that the first assumption is always satisfied for <<FORMULA_0686>>, due to boundedness of the kernel (as the $[\calH]^1$ norm can be associated to the RKHS norm of an element of $\calH$). We pay particular attention to the constant $\beta$ which defines the aforementioned source condition. In \Cref{sec:a:complexity:conditional_mean}, we translate this condition into one regarding the dependence between $X$ and $Z$, using the tools from \Cref{sec:a:background:buja}. We refer to the case when <<FORMULA_0687>> as the \emph{well-specified} case.  We also employ one additional assumption to state the result.
+\begin{assumption}[Sub-Gaussian Tail]\label{asm:rkhs:tail}
+    There exists a positive constant <<FORMULA_0688>> such that the following holds:
+    <<FORMULA_0689>>
+\end{assumption}
+\Cref{asm:rkhs:tail} is only used to replace a statement of the form ``for <<FORMULA_0690>> sufficiently large'' from \citet[Theorem 4]{meunier2024optimal} with a quantitative condition on $N$. It is used to control the probability that <<FORMULA_0691>> for any <<FORMULA_0692>> for the choices of $t$ specified in the proof of \citet[Theorem 8]{meunier2024optimal}.
+
+
+\begin{theorem}{\citep[Theorem 4]{meunier2024optimal}}\label{thm:vvkr}
+    Consider a failure probability <<FORMULA_0693>>, the estimate $\Fhat_{\lambda}$ defined in~\eqref{eq:background:rkhs:estimate}, and the target function <<FORMULA_0694>> defined in~\eqref{eq:background:rkhs:target}. Under \Cref{asm:rkhs:source} and \Cref{asm:rkhs:tail}, there exists a constant <<FORMULA_0695>> (independent of $N$ and $\delta$) such that the following statements hold.
+    \begin{itemize}
+        \item {\bf Case 1: <<FORMULA_0696>>.} If <<FORMULA_0697>> and <<FORMULA_0698>>, then
+        <<FORMULA_0699>>
+        with probability at least <<FORMULA_0700>>.
+        \item {\bf Case 2: <<FORMULA_0701>>.} If <<FORMULA_0702>> and <<FORMULA_0703>>, then
+        <<FORMULA_0704>>
+        with probability at least <<FORMULA_0705>>.
+    \end{itemize}
+\end{theorem}
+This result is applied in \Cref{sec:a:complexity:conditional_mean} and provides an example of the ``conditional mean'' approach outlined in \Cref{sec:framework} and \Cref{sec:theory}. Regarding the setting of $\lambda$ in \Cref{thm:vvkr}, the argument follows the typical recipe of defining an element <<FORMULA_0706>> which represents the population version of the regularized predictor. Let <<FORMULA_0707>> denote the $\gamma$-interpolation norm for <<FORMULA_0708>>, which is equal to <<FORMULA_0709>> when <<FORMULA_0710>>. Then, the approximation error <<FORMULA_0711>> decays according to $\lambda^{\beta - \gamma}$ when using the spectral cutoff regularizer, which reflects the classical analyses of \citet{smale2007learning}. In the well-specified case, the estimation error, <<FORMULA_0712>> decomposes into multiple terms which include irreducible noise terms of order <<FORMULA_0713>> and additional approximation terms of order <<FORMULA_0714>>. By using <<FORMULA_0715>> and the condition <<FORMULA_0716>> from Case 1, the irreducible noise error converges at rate $N^{-1/2}$ whereas the approximation term converges at rate $N^{-\beta/2(\beta + p)}$. Note that these rates will be squared in \Cref{thm:vvkr}. The argument for Case 2 follows similarly.
+
+\myparagraph{Radon-Nikodym Derivative Estimation}
+To set the stage for this technique, we describe a function class in which <<FORMULA_0717>> will live. Let $\calS$ denote a separable reproducing kernel Hilbert space (RKHS) of real-valued functions on <<FORMULA_0718>>, with canonical feature map <<FORMULA_0719>> and reproducing kernel <<FORMULA_0720>>. As before, we first assume boundedness of the kernel, i.e., <<FORMULA_0721>>.
+
+Let us describe the estimation procedure, which relies on a similar spectral regularization technique as the one described for vector-valued regression. Because the Radon-Nikodym derivative being estimated is <<FORMULA_0722>>, we consider having samples from both distributions available. In particular, we observe $\Np$ paired examples <<FORMULA_0723>> and $\Nu$ unpaired examples <<FORMULA_0724>>. Define the uncentered covariance operators
+<<FORMULA_0725>>
+representing the paired and unpaired examples, respectively. Then, using the spectral cutoff function <<FORMULA_0726>> (see~\eqref{eq:background:rkhs:cutoff}), we define the estimate
+<<FORMULA_0727>>
+where <<FORMULA_0728>> for all <<FORMULA_0729>>. Because <<FORMULA_0730>> can be viewed as a regularized inverse, $\Rhat$ can readily be interpreted as the ``ratio'' of the covariance operator of the paired sample over that of the unpaired sample.
+
+To state the assumptions for the analysis, we require an analogous operator to $\Iop_X$ and $\Iop_Z$ introduced earlier in this section. 
+We then define the \emph{embedding operator} <<FORMULA_0731>>, which takes an element <<FORMULA_0732>> and indexes its equivalence class in <<FORMULA_0733>>. We will not need to define an explicit notation for the equivalence class for this discussion, but will do so in \Cref{sec:a:complexity:rn_derivative}. Due to \citet[Lemma 2.3]{steinwart2012mercers}, the bounded kernel assumption implies  that $\Iop_{X,Z}$ is Hilbert-Schmidt with norm bounded as <<FORMULA_0734>>. 
+
+Recall the powers of operators introduced in~\eqref{eq:background:rkhs:power}. We will use a similar construction for this technique as well.
+Define the (compact) adjoint operator <<FORMULA_0735>>. Via \Cref{thm:eigen}, let $(\mu_i)_{i \in I}$ denote the non-zero eigenvalues of the compact, trace class operator <<FORMULA_0736>>, where we consider <<FORMULA_0737>> for simplicity. Let the degrees of freedom function be defined as
+<<FORMULA_0738>>
+Consider the following assumption.
+\begin{assumption}{\citep[Eq. (9) and Remark 13]{nguyen2024onregularized}}\label{asm:main:estimation:rn:source}
+    There exists an absolute constant $C_{\df}$ and a constant <<FORMULA_0739>> such that <<FORMULA_0740>>.
+    There exists a <<FORMULA_0741>>, along with an element <<FORMULA_0742>>, such that 
+    <<FORMULA_0743>>
+\end{assumption}
+The upper bound on <<FORMULA_0744>> reflects a polynomial eigendecay of order <<FORMULA_0745>> (see \citet[Section 7.6.6]{bach2024learning}).
+\Cref{asm:main:estimation:rn:source} is more specific than the one stated in the referenced work, in that we use the specific index function <<FORMULA_0746>>, growing at least linearly. Furthermore, their result may achieve faster convergence rates than the one stated in \Cref{coro:background:rn} using an additional source condition on the feature map $\varphi$. However, our intention is not necessarily to provide convergence rates that are optimal in a particular parameter regime, but ones that are informative with regard to the dependence structure of $Q_{X, Z}$. To this end, we do not incorporate the additional condition.
+
+To state the result, we define $\lambda_\star$ as the solution of
+<<FORMULA_0747>>
+which is guaranteed to exist as <<FORMULA_0748>> is decreasing from <<FORMULA_0749>> to $0$ on the interval <<FORMULA_0750>>. Observe the following.
+\begin{theorem}{\citep[Proposition 10 and Lemma 11]{nguyen2024onregularized}}\label{thm:background:rn2}
+    Consider a failure probability <<FORMULA_0751>> and constant $\beta$ from \Cref{asm:main:estimation:rn:source}.
+    Consider the estimate <<FORMULA_0752>> defined in~\eqref{eq:background:rkhs:rn_estimate} and the target function $\Rsans$ defined in~\eqref{prop:lancaster}. Finally, define
+    <<FORMULA_0753>>
+    There exists a constant <<FORMULA_0754>> (independent of $N$ and $\delta$) such that for all <<FORMULA_0755>>,
+    <<FORMULA_0756>>
+    with probability at least <<FORMULA_0757>>.
+\end{theorem}
+By optimizing the bound appearing in \eqref{eq:main:estimation:rn:sample_complexity2} in $\lambda$, we get that
+<<FORMULA_0758>>
+If the expression from~\eqref{eq:rkhs:rn:lambda} falls within <<FORMULA_0759>>, this yields the upper bound 
+<<FORMULA_0760>>
+The condition <<FORMULA_0761>> can be satisfied by taking <<FORMULA_0762>> sufficiently large.  For the condition that <<FORMULA_0763>>, we find an upper bound on $\lambda_\star$ by first deriving an upper bound on <<FORMULA_0764>>, and then solving the resulting equation in $\lambda$. By \Cref{asm:main:estimation:rn:source}, we have that
+<<FORMULA_0765>>
+Viewing the dependence of~\eqref{eq:rkhs:rn:lambda} on $\Nu$, we see that if <<FORMULA_0766>>, then there exists $\Nu$ large enough such that~\eqref{eq:rkhs:rn:lambda} is greater than the right-hand side of~\eqref{eq:background:rnd:lambda_star}. This is always satisfied, as <<FORMULA_0767>> is required for <<FORMULA_0768>> to be trace class. Thus, we have the following convergence rate.
+\begin{corollary}\label{coro:background:rn}
+    Adopt the setting of \Cref{thm:background:rn2}. Let $\Nu$ be large enough such that~\eqref{eq:rkhs:rn:lambda} is upper bounded by $\kappa_{\max{}}$ and lower bounded by the right-hand side of~\eqref{eq:background:rnd:lambda_star}. Then, for the choice~\eqref{eq:rkhs:rn:lambda}, it holds that
+    <<FORMULA_0769>>
+\end{corollary}
+
+
+This result is applied in \Cref{sec:a:complexity:rn_derivative} and provides an example of the ``information density'' approach outlined in \Cref{sec:framework} and \Cref{sec:theory}. In the sequel, we will simply assume that <<FORMULA_0770>> to simplify the statement of the result. Finally, note that the source condition \Cref{asm:main:estimation:rn:source} does not have any implications for the mis-specified case (<<FORMULA_0771>>). This aspect of Radon-Nikodym estimation methodology is still an active area of research in statistical learning.
+
+
+
+% END INCLUDE: appendix/background/rkhs
+
+
+% END INCLUDE: appendix/2_background
+
+
+\section{Prompt Bias and Residual Dependence}\label{sec:a:dependence}
+
+% BEGIN INCLUDE: appendix/3_dependence
+This appendix is dedicated to the proof of \Cref{thm:res_dep1}, which controls the population quantity <<FORMULA_0772>>. The result will follows from \Cref{thm:res_dep}, which is a more mathematically precise version of \Cref{thm:res_dep1} from the main text.
+
+We recall the problem setting of \Cref{sec:theory}. We consider the three central probability measures $P_{X, Y}$ (evaluation distribution), $Q_{X, Z}$ (pre-training distribution), and $\rho_{Y, Z}$ (prompt distribution). We notice that $\etastar$ (from~\eqref{eq:est:bayes}) depends on $P_{X, Y}$, while $\eta_\rho$ (from~\eqref{eq:est:ts}) depends on the pair <<FORMULA_0773>>. Neither component of this term depends on a joint probability over <<FORMULA_0774>>. Thus, in order to relate them on common ground, we consider a joint probability measure $P_{X, Y, Z}$, which satisfies certain constraints that make it compatible with the distributions that have observable data. We call this the \emph{latent caption model}.
+
+
+To proceed, we will need to make several mild regularity conditions on $P_{X, Y, Z}$. We use the notion of regular conditional distribution, or r.c.d. (\Cref{def:rcd}), introduced in \Cref{sec:a:background:l2}. We use more explicit notation in this section (e.g.~<<FORMULA_0775>>) as compared to \Cref{sec:theory} to emphasize the random variable being conditioned on. The assumption below provides a more formal description of \Cref{asm:rcd1} from \Cref{sec:theory}.
+\begin{assumption}\label{asm:rcd}
+    The joint probability $P_{X, Y, Z}$ on <<FORMULA_0776>> satisfies the following constraints.
+    \begin{itemize}
+        \item {\bf Agrees jointly with the evaluation distribution:} For all measurable sets  <<FORMULA_0777>>, we have that <<FORMULA_0778>> (i.e.~$P_{X, Y, Z}$ agrees with the given marginal $P_{X, Y}$).
+        \item {\bf Agrees conditionally with the pre-training distribution:} There exists a measurable set <<FORMULA_0779>> with <<FORMULA_0780>> such that the regular conditional distributions $Q_{Z|X = \x}$ and $P_{Z|X = \x}$ on $\Z$ exist. Furthermore, these satisfy <<FORMULA_0781>> for all <<FORMULA_0782>>.
+        \item {\bf Regularity of conditional distributions:} There exists a measurable set <<FORMULA_0783>> with <<FORMULA_0784>> such that the regular conditional distributions $P_{X, Y|Z = \z}$ on <<FORMULA_0785>> exists for all <<FORMULA_0786>>. Furthermore, we have the absolute continuity relation <<FORMULA_0787>> with Radon-Nikodym derivative 
+        <<FORMULA_0788>>
+        that satisfies <<FORMULA_0789>> for each <<FORMULA_0790>> and <<FORMULA_0791>>.
+    \end{itemize}
+\end{assumption}
+That $P_{X, Y, Z}$ marginalizes to $P_{X, Y}$ is more of an axiomatic property than an assumption, but we phrase it as so to emphasize that $P_{X, Y, Z}$ is meant to describe the evaluation distribution. The assumption that the conditionals $Q_{Z|X}$ and $P_{Z|X}$ match almost surely represents the viewpoint that, after fixing an image $\x$, the latent caption <<FORMULA_0792>> follows the same relationship to $\x$ as seen during pre-training. Importantly, this does not require or imply that <<FORMULA_0793>> or that <<FORMULA_0794>>. The marginal distribution $P_X$ is supplied entirely by the evaluation distribution $P_{X, Y}$, as for any measurable set <<FORMULA_0795>>, we have by definition that <<FORMULA_0796>>. On the other hand, the marginal $P_Z$ can be defined using the Markov kernel $P_{Z|X = \x}$, in that for any measurable <<FORMULA_0797>>, it holds that
+<<FORMULA_0798>>
+Finally, the absolute continuity condition, i.e., the existence of~\eqref{eq:main:dependence:rnd}, rules out degeneracies such as $Y$ being a deterministic function of $X$ given <<FORMULA_0799>> (outside of a set of $P_Z$-measure zero). 
+It is also worth pointing out that the first two conditions \Cref{asm:rcd} do not contradict one another. For example, one can consider $P_{X, Y, Z}$ that satisfies the Markov chain <<FORMULA_0800>>, where <<FORMULA_0801>> is drawn according to $P_{X, Y}$, and $Z$ and $Y$ are conditionally independent given $X$. Then, informally, we have that <<FORMULA_0802>>, so $P_{X, Y, Z}$ is uniquely determined. While this example implies the existence of a valid joint probability measure $P_{X, Y, Z}$, it is also, in a sense, showcasing the ``least desirable'' distribution for zero-shot prediction, as the dependence between $X$ and $Z$ does not provide any additional information about $Y$.
+
+We recall some notation from \Cref{sec:theory}. Let
+<<FORMULA_0803>>
+Note that $g_{P_{Y, Z}}$ is simply a conditional expectation constructed via \Cref{def:conditional_expectation}, and does not require the existence of an r.c.d.~$P_{Y|Z =\z}$. In the bound, we will encounter a prompt bias term that compares $g_{P_{Y, Z}}$ to <<FORMULA_0804>> from~\eqref{eq:g_rho}. This reflects the notion that if $P_{X, Y, Z}$ agrees with two of the three fundamental distributions governing the problem, it will not be able to agree with the prompt distribution $\rho_{Y, Z}$ in general. Finally, the r.c.d.~$P_{X, Y|Z = \z}$ allows us to measure conditional dependence using the \emph{conditional mean squared contingency}, defined by the formula
+<<FORMULA_0805>>
+As is shown in the proof, <<FORMULA_0806>> and its expectation over $P_Z$ are well-defined under \Cref{asm:rcd}. We are now ready to state the result.
+\begin{theorem}\label{thm:res_dep}
+    Assume that $\fstar$ is bounded in absolute value by $\fstarbound$. Under \Cref{asm:rcd}, it holds that
+    Then, it holds that
+    <<FORMULA_0807>>
+\end{theorem}
+\begin{proof}
+    We first establish a useful representation of the conditional mean of <<FORMULA_0808>> given <<FORMULA_0809>>, in terms of the (conditional) information density from \Cref{lem:info_density}. Fix <<FORMULA_0810>> and <<FORMULA_0811>>, the sets on which the regular conditional distributions $P_{Z|X=\x}$ and $P_{X, Y|Z = \z}$ are defined (see \Cref{asm:rcd}). Because of the existence the Radon-Nikodym derivative $\Ssans_{\z}$ from~\eqref{eq:main:dependence:rnd}, we may apply~\Cref{lem:info_density} with <<FORMULA_0812>>, <<FORMULA_0813>>, and <<FORMULA_0814>> to write
+    <<FORMULA_0815>>
+    The chosen notation <<FORMULA_0816>> indicates that after fixing the probability measure $P_{X, Y|Z = \z}$, we take the conditional expectation of the function <<FORMULA_0817>> via \Cref{def:conditional_expectation}, which does not necessarily posit the existence of the r.c.d.~$P_{Y|X = \x, Z = \z}$.\footnote{This is why we do not write, for instance, <<FORMULA_0818>>. This consideration is purely technical, and the reader may make this substitution for conceptual understanding of the proof.} 
+    We have denoted the right-hand side by the function <<FORMULA_0819>>.
+    Integrate both sides over $P_{Z|X = \x}$, then use the tower property of conditional expectation (\Cref{lem:tower}) to achieve
+    <<FORMULA_0820>>
+    Using the identity~\eqref{eq:main:dependence:rnd:info_dens} and <<FORMULA_0821>> on <<FORMULA_0822>> (\Cref{asm:rcd}), we write
+    <<FORMULA_0823>>
+    Taking the integral over $P_X$, we have by the decomposition above that
+    <<FORMULA_0824>>
+    To handle~\eqref{eq:main:dependence:rnd1}, we apply Jensen's inequality for each r.c.d.~$P_{Z|X = \x}$ to achieve
+    <<FORMULA_0825>>
+    It remains to control~\eqref{eq:main:dependence:rnd2}. Applying Jensen's inequality for each r.c.d.~$P_{Z|X = \x}$ once again, we have that
+    <<FORMULA_0826>>
+    where the last step follows due to the existence of the r.c.d.~$P_{X|Z=\z}$ for <<FORMULA_0827>>, as <<FORMULA_0828>> for every measurable <<FORMULA_0829>>, and the latter exists by assumption. Using the definition of $g_{P_{Y,Z}}$, write
+    <<FORMULA_0830>>
+    We may substitute this expression into the integrand of~\eqref{eq:main:dependence:rnd3} and apply Jensen's inequality to $P_{Y|Z = \z}$ to achieve
+    <<FORMULA_0831>>
+    where the final step follows by applying Fubini's theorem \citep[Corollary 14.9]{schilling2017measures} to the product measure <<FORMULA_0832>> for fixed <<FORMULA_0833>>. By the definition of mean squared contingency (\Cref{def:msc}), it holds that
+    <<FORMULA_0834>>
+    After confirming that~\eqref{eq:main:dependence:cmsc} is $P_Z$-integrable, substituting this expression back into~\eqref{eq:main:dependence:rnd3} achieves the desired result. Expand the quadratic term and apply the Radon-Nikodym theorem \citep[Theorem 20.1]{schilling2017measures} to achieve
+    <<FORMULA_0835>>
+    Thus, by integrating against $P_Z$, we see that
+    <<FORMULA_0836>>
+    where the expectation term is finite by \Cref{asm:rcd}. The proof is complete.
+\end{proof}
+
+% END INCLUDE: appendix/3_dependence
+
+
+\section{Sample Complexity and Distribution Mismatch}\label{sec:a:complexity}
+
+% BEGIN INCLUDE: appendix/4_complexity
+This appendix provides the proofs of \Cref{thm:complexity_vvkr} and \Cref{thm:complexity_rn_derivative} by way of \Cref{thm:complexity:conditional_mean} and \Cref{thm:complexity:rn_derivative}, respectively. To recall the bigger picture, we first applied the decomposition~\eqref{eq:theory:decomp1}, which exposed the estimation error term
+<<FORMULA_0837>>
+where $P_X$ is the $\X$-marginal of the evaluation distribution $P_{X, Y}$, $\eta_\rho$ is defined by <<FORMULA_0838>> (see~\eqref{eq:g_rho}), and $\heta_\rho$ is one of two estimation procedures that is based on either~\eqref{eq:framework:cond_mean} or~\eqref{eq:framework:rnd}.
+By using standard change of measure arguments (collected in \Cref{sec:a:complexity:shift}), we pass the problem of controlling~\eqref{eq:main:estimation:l2_error} in high probability to controlling <<FORMULA_0839>> (i.e.~the mean squared error with respect to the pre-training marginal $Q_X$). Thus, the format of both \Cref{thm:complexity:conditional_mean} and \Cref{thm:complexity:rn_derivative} will be an upper bound on <<FORMULA_0840>> that holds with an arbitrary failure probability <<FORMULA_0841>>.
+
+
+The identities~\eqref{eq:framework:cond_mean} and~\eqref{eq:framework:rnd} from \Cref{sec:framework} can be summarized with the equality
+<<FORMULA_0842>>
+where the <<FORMULA_0843>> is elaborated on in \Cref{sec:a:complexity:rn_derivative}. In \Cref{sec:a:complexity:conditional_mean}, we consider the left-hand side of~\eqref{eq:est:ts2}, and define $\heta_\rho$ by constructing an estimate $\hM_{Z|X}$ of $\M_{Z|X}$ using pre-training data and $\hg_\rho$ of <<FORMULA_0844>> using prompts. This will be referred to as the conditional mean approach. In \Cref{sec:a:complexity:rn_derivative}, we consider the right-hand side of~\eqref{eq:est:ts2} and define $\heta_\rho$ by using an estimate $\Rhat$ of $\Rsans$ using pre-training data and $\hrho_{Y,Z}$ of $\rho_{Y,Z}$ using prompts. This will be referred to as the information density approach. For both approaches, we adopt a parallel structure and break the analysis into the following steps.
+
+
+
+\begin{enumerate}
+    \item {\bf Decomposing the Global Error:} We first provide a generic upper bound on the mean squared error
+    <<FORMULA_0845>>
+    in terms of the individual estimators defined by the pre-training and prompting data. While some additional structure may be employed in these bounds (e.g.~the estimate lives in a reproducing kernel Hilbert space), the decomposition is generally agnostic to the choice of method and can accommodate multiple estimation/learning strategies.
+    \item {\bf Interpreting the Source Condition:} The error term related to the pre-training data refers to the distance between the conditional mean operators $\hM_{Z|X}$ and $\M_{Z|X}$ or the information densities $\Rhat$ and $\Rsans$ measured in an appropriate sense. This is initially controlled by substituting a particular estimation method among those reviewed in \Cref{sec:a:background}. As mentioned in \Cref{sec:theory}, the convergence rates of these methods rely on \emph{source conditions} that describe the regularity of the target function. We derive expressions that relate the source conditions to measures of dependence between $X$ and $Z$, so that, in turn, the rate can also be expressed in terms of these fundamental quantities.
+    \item {\bf Controlling the Prompting Term:} The error term related to the prompting data will have a high probability bound, which is stated in the form of an assumption. This generality is maintained because the estimation based on the prompting data usually relies on simple primitives such as real-valued regression or finite-dimensional parameter estimation. Statistically, these problems are easier than the vector-valued regression or Radon-Nikodym derivative estimation problems that arise in the pre-training step. Thus, many possible methods can be used, and we provide examples in each case.
+    \item {\bf Completing the Proof:} We combine the steps above to state the final bounds on~\eqref{eq:complexity:mse_qx}. They are stated in \Cref{thm:complexity:conditional_mean} and \Cref{thm:complexity:rn_derivative}, respectively.
+\end{enumerate}
+The steps above comprise the subsections of \Cref{sec:a:complexity:conditional_mean} and \Cref{sec:a:complexity:rn_derivative} below.
+The bounds on mean square error on $Q_X$ are tied to misclassification risk on $P_{X, Y}$ via \Cref{sec:a:complexity:shift} and \Cref{sec:a:complexity:classification} to produce end-to-end performance guarantees. We compare the sampling schemes used for prompting that are employed in the theoretical analysis to the sampling schemes used empirically in \Cref{sec:a:complexity:sampling}.
+
+\subsection{Conditional Mean Approach}\label{sec:a:complexity:conditional_mean}
+
+% BEGIN INCLUDE: appendix/complexity/conditional_mean
+This approach is based on the LHS of~\eqref{eq:est:ts2} yielding the result of \Cref{thm:complexity_vvkr}. The exposition relies heavily on the background introduced in \Cref{sec:a:background:rkhs}. In particular, we maintain the reproducing kernel Hilbert spaces $\calH$ and $\calG$ containing real-valued functions on $\X$ and $\Z$, respectively. We denote by <<FORMULA_0846>> the Bochner space containing equivalence classes of functions mapping from $\X$ to $\calG$. We also use the the bracket notation $[\cdot]_X$ to index a functions equivalence class in <<FORMULA_0847>> (or <<FORMULA_0848>> for $\calG$-valued functions). 
+
+\myparagraph{Setup}
+We first introduce an element <<FORMULA_0849>> of <<FORMULA_0850>> which can be used to represent the function <<FORMULA_0851>>. We then describe how an estimator $\Fhat$ of <<FORMULA_0852>> and an approximation $\hg_\rho$ of <<FORMULA_0853>> can be used to define an estimated predictor $\heta_\rho$. 
+Recall the boundedness assumptions  <<FORMULA_0854>> and  <<FORMULA_0855>>.
+
+\begin{lemma}\label{lem:main:construction}
+    It holds that 1) <<FORMULA_0856>>, and 2) there exists a function <<FORMULA_0857>> such that <<FORMULA_0858>> and
+    <<FORMULA_0859>>
+    In particular, <<FORMULA_0860>>.
+\end{lemma}
+\begin{proof}
+    Using the notation from \Cref{sec:a:background:l2}, if we show that the random variable <<FORMULA_0861>> is contained in <<FORMULA_0862>>, then the first claim holds by the definition of conditional expectation in <<FORMULA_0863>> (see \Cref{def:conditional_expectation}). Using the reproducing property of the RKHS $\calG$, we have that
+    <<FORMULA_0864>>
+    granting the claim that <<FORMULA_0865>>. Next, fix any <<FORMULA_0866>>, and define the map
+    <<FORMULA_0867>>
+    By the same argument as~\eqref{eq:main:bounded}, we have that <<FORMULA_0868>>, indicating that $T_{\x}$ is a bounded linear functional. By the Riesz representation theorem, there exists an element of $\calG$, denoted as <<FORMULA_0869>>, that satisfies
+    <<FORMULA_0870>>
+    Next, given the collection of Riesz representers <<FORMULA_0871>>, one may construct the mapping
+    <<FORMULA_0872>>
+    It only remains to show that <<FORMULA_0873>>. By Jensen's inequality and the tower property (\Cref{lem:tower}), we have that
+    <<FORMULA_0874>>
+    completing the proof.
+\end{proof}
+
+Now that we have identified the vector-valued function of interest, <<FORMULA_0875>>, we can consider an estimation procedure that will return <<FORMULA_0876>>, with <<FORMULA_0877>> and regularization parameter <<FORMULA_0878>>. 
+Then, we may define the estimator $\heta_\rho$ of $\eta_\rho$ via the inner product
+<<FORMULA_0879>>
+where $\hg_\rho$ satisfies some approximation bound with respect to <<FORMULA_0880>>. Our decomposition will expose an error term for which we can apply \Cref{thm:vvkr}, which describes the convergence rate of spectral regularization learning.
+
+\subsubsection{Decomposing the Global Error}
+Returning to the original quantity we wish to control from~\eqref{eq:main:estimation:l2_error}, we apply the following decomposition.
+\begin{lemma}[Error Decomposition]\label{lem:complexity:conditional_mean:decomp}
+    For any choice of <<FORMULA_0881>> it holds that
+    <<FORMULA_0882>>
+\end{lemma}
+\begin{proof}
+    Using the reproducing property of the RKHS $\calG$ and Young's inequality we have that
+    <<FORMULA_0883>>
+    Then, applying the Cauchy-Schwarz inequality in $\calG$, we have that
+    <<FORMULA_0884>>
+    the result as desired.
+\end{proof}
+In the decomposition of \Cref{lem:complexity:conditional_mean:decomp}, we observe the dominating terms <<FORMULA_0885>> and <<FORMULA_0886>>, along with the higher order term <<FORMULA_0887>>. We consider estimators $\Fhat$ and $\hg_\rho$ based on kernel regularized learning techniques in order to bound the dominating terms, as a function of $N$ and $M$. The bounds are optimized individually with respect to the regularization parameters of each learning objective.
+
+
+
+\subsubsection{Interpreting the Source Condition}\label{sec:a:complexity:conditional_mean:source}
+To approach this, we associate our function of interest <<FORMULA_0888>> to an object <<FORMULA_0889>> by way of an isometric isomorphism introduced in \Cref{thm:aubin:isomorphism}. 
+This then allows us to derive a convenient formula for the quantity $\norm{F_\star}_\beta$, which appears in \Cref{asm:rkhs:source}, and relies on the interplay between $\calH$ and <<FORMULA_0890>> described in \Cref{sec:a:background:rkhs}.
+\begin{lemma}\label{lem:main:hsnorm}
+    Let $(g_j)_{j \in J}$ be any orthonormal basis (ONB) of $\calG$ and recall the eigenfunctions $([e_{X, i}]_X)_{i \in I}$ from~\eqref{eq:main:eigendecomposition}. Assuming that $\norm{F_\star}_\beta$ is finite, it holds that
+    <<FORMULA_0891>>
+\end{lemma}
+\begin{proof}
+    By the definition of <<FORMULA_0892>>, we have that
+    <<FORMULA_0893>>
+    Then, notice that by the eigendecomposition~\eqref{eq:main:eigendecomposition}, we have that
+    <<FORMULA_0894>>
+    Thus, when computing the ~\eqref{eq:main:hsnorm1}, we may restrict <<FORMULA_0895>> to <<FORMULA_0896>>. This allows us to employ the eigenvectors $([e_{X, i}]_X)_{i \in I}$ as a basis of <<FORMULA_0897>> when computing the norm.
+    We have that
+    <<FORMULA_0898>>
+    where <<FORMULA_0899>>. Phrased in terms of the conditional mean operator <<FORMULA_0900>>, we have that
+    <<FORMULA_0901>>
+    Plugging this into the display above, we have that
+    <<FORMULA_0902>>
+    where the last step follows from the fact that <<FORMULA_0903>> is an ONB of $\calG$. This completes the proof.
+\end{proof}
+
+It remains to select a choice of the collection $(g_j)_{j \in J}$. Note that $([g_j]_Z)_{j \in J}$ does not form an orthonormal system in <<FORMULA_0904>>, due to the distortion of the embedding. However, by explicitly writing the embedding $\Iop_Z$ (analogous to $\Iop_X$ introduced in~\eqref{eq:background:Tx}), we can derive one. Consider the singular value decomposition 
+<<FORMULA_0905>>
+which is analogous to the one introduced for $\Iop_X$ in~\eqref{eq:main:estimation:basis:H}. The index set $K$ is smaller in cardinality that $J$, as the collection $(e_{Z, k})_{k \in K}$ forms an ONB of <<FORMULA_0906>>, whereas $(g_j)_{j \in J}$ should be an ONB for all of $\calG$. Thus, we can expand the embedding <<FORMULA_0907>> into
+<<FORMULA_0908>>
+This decomposition allows us to simplify the equality in~\Cref{lem:main:hsnorm} further.
+\begin{proposition}\label{prop:complexity:hsnorm}
+    In the setting of \Cref{lem:main:hsnorm}, it holds that
+    <<FORMULA_0909>>
+    In particular, <<FORMULA_0910>>.
+\end{proposition}
+\begin{proof}
+    The sequence of functions <<FORMULA_0911>> form an ONB of <<FORMULA_0912>>. Because $J$ indexes a basis of $\calG$, we have that <<FORMULA_0913>>. Then, we may complete <<FORMULA_0914>> to form the basis $(g_j)_{j \in J}$ of $\calG$, where <<FORMULA_0915>> for all <<FORMULA_0916>> and $g_j$ is defined arbitrarily for <<FORMULA_0917>>. Plug $(g_j)_{j \in J}$ into the right-hand side of the formula given in \Cref{lem:main:hsnorm} gives~\eqref{eq:main:hsnorm_onb}, the first part of the claim.
+
+    For the second equality, we note that $([e_{X, i}]_X)_{i \in I}$ and $([e_{Z, j}]_Z)_{j \in J}$ form orthonormal bases of <<FORMULA_0918>> and <<FORMULA_0919>>, respectively. We complete them (using the index sets $\bar{I}$ and $\bar{J}$) to form (possibly uncountable) orthonomal bases of <<FORMULA_0920>> and <<FORMULA_0921>>. Then, by the definition of the Hilbert-Schmidt norm, it holds that 
+    <<FORMULA_0922>>
+    where we used in the second line that <<FORMULA_0923>> for <<FORMULA_0924>> and <<FORMULA_0925>> for <<FORMULA_0926>>.
+    This gives the~\eqref{eq:main:hsnorm_onb2} and completes the proof.
+\end{proof}
+It remains to interpret the equality in \Cref{prop:complexity:hsnorm} to complete the analysis.
+
+\subsubsection{Controlling the Prompting Term}
+From the decomposition given in \Cref{lem:complexity:conditional_mean:decomp}, the estimate $\hg_{\rho}$ will be designed as to control the RKHS-norm error <<FORMULA_0927>>. We phrase the assumption generically, but in a way that is reflective of the convergence rates seen in real-valued nonparametric regression. Recall the probability space <<FORMULA_0928>> introduced in \Cref{sec:a:background:l2}.
+
+\begin{assumption}\label{asm:vvkrr:downstream}
+    For constants <<FORMULA_0929>>, <<FORMULA_0930>>, and <<FORMULA_0931>>, there is an event <<FORMULA_0932>> that is independent of the pre-training data <<FORMULA_0933>>, such that on <<FORMULA_0934>>, 
+    <<FORMULA_0935>>
+    for a constant $C$ independent of $\delta$ and $M$.
+    On <<FORMULA_0936>>, the event <<FORMULA_0937>> occurs with probability at least <<FORMULA_0938>>.
+\end{assumption}
+
+The notation $\omega_\rho$ is chosen for the constant that determines the convergence rate, because it can be interpreted itself as a source condition constant for a real-valued nonparametric regression framework. Indeed, consider the case in which $\hg_{\rho}$ is computed using kernel ridge regression with parameter $\lambda$. Via the proof of their Theorem 2, \citet{smale2007learning} show that with probability at least <<FORMULA_0939>>,
+<<FORMULA_0940>>
+where <<FORMULA_0941>> is a constant that depends on the prompting measure $\rho_{Y, Z}$ and the choice of kernel. Optimizing the bound yields <<FORMULA_0942>>, which ultimately leads to the convergence rate (notice the square) in~\eqref{eq:complexity:conditional_mean:prompt}. We comment that the choice to control the error in $\hg_\rho$ in $\calG$-norm comes from the vector-valued regression framework, in which the output space of the target function always lies in <<FORMULA_0943>>. In isolation, the mean squared error of $\hg_\rho$ can be controlled both in <<FORMULA_0944>>-norm as well as interpolation norms in between <<FORMULA_0945>> and $\calG$ (see \citet{fischer2020sobolev}, for instance). Indeed, when applying the decomposition~\eqref{eq:complexity:conditional_mean:prompt_decomp} in <<FORMULA_0946>>-norm, \citet[Lemma 3]{smale2007learning} show that the approximation error decays as $\lambda^{\omega_\rho}$ (instead of $\lambda^{\omega_\rho - 1/2}$). In this case, the optimum is achieved at <<FORMULA_0947>>, so that <<FORMULA_0948>> enjoys a convergence rate of $M^{-\omega_\rho / (\omega_\rho + 1)}$.
+
+
+\subsubsection{Completing the Proof}\label{sec:a:complexity:conditional_mean:final}
+We may now prove \Cref{thm:complexity_vvkr}. 
+Next, we place the requisite conditions on $\beta$, given eigendecay assumptions on $\Top_X$ and $\Top_Z$, and singular decay assumptions on $\M_{Z|X}$ (see \Cref{sec:a:background:compact} for a review of these operator decompositions). Under these assumptions, we will have that all operators will have a countably infinite number of non-zero eigenvalues/singular values.
+\begin{assumption}[Eigendecay and Singular Decay]\label{asm:eigendecay}
+    Let the eigenvalues of $\Top_X$, eigenvalues of $\Top_Z$, and singular values of $\M_{Z|X}$ be given by <<FORMULA_0949>>, <<FORMULA_0950>>, and <<FORMULA_0951>>, respectively. There exist positive constants <<FORMULA_0952>>, and $\gamma_{X, Z}$ such that for all <<FORMULA_0953>>, we have the inclusions
+    <<FORMULA_0954>>
+\end{assumption}
+\begin{assumption}[Basis Alignment]\label{asm:alignment}
+    There exists a finite index <<FORMULA_0955>> and a permutation <<FORMULA_0956>> such that the operator $\M_{Z|X}$ admits the singular value decomposition
+    <<FORMULA_0957>>
+\end{assumption}
+\Cref{asm:alignment} allows us to reason about the finiteness of the Hilbert-Schmidt norm <<FORMULA_0958>> based on the eigendecays of the various operators introduced in \Cref{asm:eigendecay}. These will imply a maximal value of the source condition constant $\beta$.
+\begin{lemma}\label{lem:eigendecay}
+    Under \Cref{asm:eigendecay} and \Cref{asm:alignment}, it holds that <<FORMULA_0959>> if and only if
+    <<FORMULA_0960>>
+\end{lemma}
+\begin{proof}
+    For ease of presentation, we extend the permutation $\pi$ from \Cref{asm:alignment} so that <<FORMULA_0961>> for all <<FORMULA_0962>>. Applying the result from \Cref{prop:complexity:hsnorm}, and using the eigenbases of $\Top_X$ and $\Top_Z$, we see that
+    <<FORMULA_0963>>
+    where the rightmost term is finite only if~\eqref{eq:source_eigendecay} holds. Arguing similarly for the upper bound, we have that
+    <<FORMULA_0964>>
+    where we may claim that <<FORMULA_0965>> if~\eqref{eq:source_eigendecay} holds.
+\end{proof}
+We can now wrap together the results of this section. Recalling the estimator <<FORMULA_0966>> based on vector-valued spectral regularization learning, described in \Cref{sec:a:background:rkhs}. The well-specified case refers to the condition that <<FORMULA_0967>>, indicating that the RKHS in which $\Fhat$ is learned does indeed contain <<FORMULA_0968>>. When <<FORMULA_0969>>, we require more sophisticated tools, namely, vector-valued interpolation spaces. In both cases, after establishing the results above, we capture the sample complexity via \Cref{thm:vvkr} from \Cref{sec:a:background:rkhs}.
+
+\myparagraph{Well-Specified Case}
+Under \Cref{asm:eigendecay} and \Cref{asm:alignment}, this implies via \Cref{lem:eigendecay} that
+<<FORMULA_0970>>
+Thus, we may use the parameter <<FORMULA_0971>> to measure the degree to which the upper bound is saturated. This yields the following result, which reflects \Cref{thm:complexity_vvkr} from the main text. To state the result, define the quantity
+<<FORMULA_0972>>
+and observe the following, which is an immediate consequence of \Cref{lem:complexity:conditional_mean:decomp}, \Cref{thm:vvkr}, and the formula~\eqref{eq:complexity_q_alpha1}. Note that the constant $p$ in \Cref{thm:vvkr} refers to <<FORMULA_0973>> in the notation of this section.
+\begin{theorem}\label{thm:complexity:conditional_mean}
+    Consider failure probability <<FORMULA_0974>>. Let \Cref{asm:vvkrr:downstream}, \Cref{asm:eigendecay}, \Cref{asm:alignment}, and the conditions of \Cref{thm:vvkr} hold with <<FORMULA_0975>>. Then, for $\heta_\rho$ defined via~\eqref{eq:complexity:conditonal_mean:estimator}, there exist a constants <<FORMULA_0976>> and <<FORMULA_0977>> such that with probability at least <<FORMULA_0978>>, 
+    <<FORMULA_0979>>
+    for all <<FORMULA_0980>>. where <<FORMULA_0981>>.
+\end{theorem}
+The term <<FORMULA_0982>> is equal (via \Cref{prop:complexity:hsnorm}) to the $\norm{F_\star}^2_{\ltwo(Q_X; \calG)}$ term from \Cref{lem:complexity:conditional_mean:decomp}, and is rendered (along with $\fstarbound^2$ as the constant <<FORMULA_0983>> in \Cref{thm:complexity_vvkr}. 
+
+\myparagraph{Mis-Specified Case}
+The first inequality of~\eqref{eq:complexity_q_alpha1} holds only when <<FORMULA_0984>> is well-specified, or contained in the vector-valued RKHS used in the estimation procedure that defines~\eqref{eq:background:rkhs:estimate}. We may employ the interpolation space machinery from \Cref{sec:a:background:rkhs} to achieve a convergence guarantee in this setting. Recall the constant <<FORMULA_0985>> shown in \Cref{asm:rkhs:source}, which is associated to the continuous embedding <<FORMULA_0986>>. This constant describes the RKHS itself, and not the specific target function <<FORMULA_0987>>. The rate of \Cref{thm:complexity:conditional_mean} may still be achieved for function classes that are ``not too mis-specified'' in the sense of Case 1 from \Cref{thm:vvkr}. The inequality~\eqref{eq:source_eigendecay} provides a sufficient condition for Case 2, that is, when <<FORMULA_0988>>. Indeed, 
+<<FORMULA_0989>>
+The left-hand side may also be phrased differently as <<FORMULA_0990>>. Thus, we may interpret <<FORMULA_0991>> as a parameter that controls the mis-specification threshold. Concretely, it becomes easier for <<FORMULA_0992>> to be mis-specified when: $\gamma_{X, Z}$ is low (<<FORMULA_0993>> are highly dependent), $\gamma_Z$ is low (the effective dimension of $Z$ is large), or $\gamma_X$ is high (the effective dimension of the input $X$ is small). Under the sufficient condition~\eqref{eq:misspecified}, along with \Cref{asm:eigendecay} and \Cref{asm:alignment}, the best upper bound on the convergence rate in the current mis-specification model (see \Cref{thm:vvkr}, Case 2), is then
+<<FORMULA_0994>>
+for $N$ sufficiently large.
+
+
+
+
+
+% END INCLUDE: appendix/complexity/conditional_mean
+
+
+\subsection{Information Density Approach}\label{sec:a:complexity:rn_derivative}
+
+% BEGIN INCLUDE: appendix/complexity/rn_derivative
+This approach is based on the RHS of~\eqref{eq:est:ts2} and yields the result of \Cref{thm:complexity_rn_derivative}. 
+Here, we assume that during the pre-training phase, the user produces an estimated function $\Rhat$, which is an element of a reproducing kernel Hilbert space (RKHS). Unlike in \Cref{sec:a:complexity:conditional_mean}, where we approximated <<FORMULA_0995>> using a function $\hg_\rho$ (which aligns with the conditional mean viewpoint), the information density viewpoint in this section warrants estimating the mean of a function under $\rho_{Y, Z}$ directly, using samples <<FORMULA_0996>>. It is also important to point out a slight difference in the sampling model for the pre-training data. In order to define the estimate~\eqref{eq:background:rkhs:rn_estimate} for our method of choice (and similar Radon-Nikodym derivative estimation techniques), it is typically assumed that we observe data from both distributions in the ratio. In the case of $Q_{X, Z}$ and <<FORMULA_0997>>, this corresponds to observing $\Np$ paired examples and $\Nu$ unpaired examples such that <<FORMULA_0998>>. For simplicity, we assume that <<FORMULA_0999>>, but remark that the regime in which <<FORMULA_1000>> is an interesting and practically relevant model for future investigations.
+
+\myparagraph{Setup}
+Let $\calS$ denote a separable reproducing kernel Hilbert space (RKHS) of real-valued functions on <<FORMULA_1001>>, with canonical feature map <<FORMULA_1002>> and reproducing kernel <<FORMULA_1003>>. 
+We will express the error in terms of the RKHS norm difference <<FORMULA_1004>>, among other terms that capture a notion of ``distribution mismatch'' between the prompting marginal $\rho_Z$ and the pre-training marginal $Q_Z$. This may also be interpreted as another instance of prompt bias. This error occurs because at prompting time, the user does not necessarily have any data drawn from $Q_Z$. As before, we maintain <<FORMULA_1005>>.
+
+
+Recall that the true $\Rsans$ is a kernel for the conditional mean operator when integrated under $Q_Z$ (see \Cref{lem:info_density}), but can also be related via \Cref{lem:info_density2} to the marginal distribution $\rho_Z$:
+<<FORMULA_1006>>
+This motivates the approximation $\hrho_{Y, Z}$ expressed directly in terms of the prompt distribution, and the estimator
+<<FORMULA_1007>>
+Below, we consider the empirical measure
+<<FORMULA_1008>>
+so that for fixed <<FORMULA_1009>>,~\eqref{eq:complexity:rn_derivative:estimate} reduces to a sample mean.
+
+\subsubsection{Decomposing the Global Error}
+The estimation error decomposition below will take the two differences into account: between the marginal distributions $Q_Z$ and $\rho_Z$ and between the joint distribution $\hrho_{Y, Z}$ and $\rho_{Y, Z}$. For the latter, we will define random variables that take values in a Hilbert space (specifically, <<FORMULA_1010>>). This will allow for controlling deviations between $\hrho_{Y, Z}$ and $\rho_{Y, Z}$ directly for the test functions being integrated. Define the independent and identically random variables <<FORMULA_1011>> by
+<<FORMULA_1012>>
+and the element of <<FORMULA_1013>> (interpreted as the expectation) <<FORMULA_1014>>. 
+\begin{lemma}[Error Decomposition]\label{lem:est:rhat}
+    Assume the following conditions.
+    \begin{itemize}
+        \item <<FORMULA_1015>> with $Q_Z$-square integrable Radon-Nikodym derivative (i.e.~<<FORMULA_1016>>).
+        \item $\Rsans$ is contained in <<FORMULA_1017>> and <<FORMULA_1018>>.
+    \end{itemize}
+    Then, it holds that
+    <<FORMULA_1019>>
+\end{lemma}
+\begin{proof}
+    Using \Cref{lem:info_density2}, we have that for $Q_X$-almost all <<FORMULA_1020>>,
+    <<FORMULA_1021>>
+    Then, we have that
+    <<FORMULA_1022>>
+    To control~\eqref{eq:complexity:rn_decomp1}, apply boundedness to achieve
+    <<FORMULA_1023>>
+    For~\eqref{eq:complexity:rn_decomp2}, the term is equal to <<FORMULA_1024>> by definition of <<FORMULA_1025>>.
+    For \eqref{eq:complexity:rn_decomp3}, we use that <<FORMULA_1026>> and <<FORMULA_1027>> and apply the Cauchy-Schwarz inequality on <<FORMULA_1028>> so that
+    <<FORMULA_1029>>
+    Taking the expectation over $Q_X$ gives <<FORMULA_1030>> and completes the proof.
+\end{proof}
+
+
+
+Given the decomposition shown in \Cref{lem:est:rhat}, it remains to bound both the error term <<FORMULA_1031>> regarding the estimated Radon-Nikodym derivative $\Rhat$, and the approximation term <<FORMULA_1032>>. We will employ \Cref{coro:background:rn} to this end. Unlike the arguments of \Cref{sec:a:complexity:conditional_mean}, there is only a single kernel regularized learning algorithm at play, that is, for the estimation of $\Rhat$.
+We proceed to interpret the source condition \Cref{asm:main:estimation:rn:source}.
+
+\subsubsection{Interpreting the Source Condition}\label{sec:a:complexity:rn_derivative:source}
+To proceed, we introduce some notation related to <<FORMULA_1033>> and the RKHS $\calS$. These objects are also introduced in \Cref{sec:a:background:rkhs}, so we review their properties briefly. Let <<FORMULA_1034>> index the equivalence class in <<FORMULA_1035>> for a square-integrable function <<FORMULA_1036>>. This indexing can also be identified with an \emph{embedding operator} <<FORMULA_1037>>, which is Hilbert-Schmidt under the boundedness of the kernel $\kappa$ by $\kappa_{\max{}}$. Letting <<FORMULA_1038>> be its adjoint, we have that <<FORMULA_1039>> and <<FORMULA_1040>> are compact, trace class operators. These form the analogs of <<FORMULA_1041>> and <<FORMULA_1042>>, respectively, from \Cref{sec:a:background:rkhs}.
+Via \Cref{thm:eigen}, we write the eigendecomposition
+<<FORMULA_1043>>
+where we may take each representative $e_i$ as an element of $\calS$ \citep[Lemma 2.12]{steinwart2012mercers}. Then, we also have that
+<<FORMULA_1044>>
+These constructions (along with \Cref{prop:lancaster}) give us the following relationship between the Hilbert-Schmidt norm of the conditional mean operator $\M_{Z|X}$ and the Radon-Nikodym derivative under the condition \Cref{asm:main:estimation:rn:source}. In fact, finiteness follows from the source condition itself and boundedness of the kernel.
+\begin{lemma}\label{lem:main:estimation:source}
+    Under \Cref{asm:main:estimation:rn:source}, it holds that
+    <<FORMULA_1045>>
+\end{lemma}
+\begin{proof}
+    Without loss of generality, assume that <<FORMULA_1046>> (as the component in <<FORMULA_1047>> will be excluded from the norm calculation anyway). We expand the expression for $\Rsans$ appearing in \Cref{asm:main:estimation:rn:source} on an ONB of <<FORMULA_1048>>. To do so, combine~\eqref{eq:main:estimation:rn:Top} and~\eqref{eq:main:estimation:rn:Cop} to introduce the singular value decomposition
+    <<FORMULA_1049>>
+    Then, it holds under \Cref{asm:main:estimation:rn:source} that
+    <<FORMULA_1050>>
+    Using that <<FORMULA_1051>> is an orthonormal system, we may use the second expression to perform the computation.
+\end{proof}
+
+To make use of \Cref{lem:main:estimation:source}, we now interpret $\beta$ in terms of eigendecay exponents of the operators in question. 
+\begin{assumption}[Eigendecay and Singular Decay]\label{asm:rn:eigendecay}
+    Let the eigenvalues of <<FORMULA_1052>> and singular values of $\M_{Z|X}$ be given by <<FORMULA_1053>> and <<FORMULA_1054>>, respectively. There exist positive constants $c$, $C$, <<FORMULA_1055>>, and <<FORMULA_1056>> such that for all <<FORMULA_1057>>, we have the inclusions
+    <<FORMULA_1058>>
+\end{assumption}
+The following relationship holds over an interval in $\beta$. We explicitly account for the dependence of $\Ssans_{Q_{X, Z}}$ on $\beta$ when it comes to satisfying \Cref{asm:main:estimation:rn:source}.
+\begin{proposition}\label{prop:complexity:rn:eigendecay}
+    Let \Cref{asm:rn:eigendecay} be satisfied. Let \Cref{asm:main:estimation:rn:source} be satisfied for all <<FORMULA_1059>>, where <<FORMULA_1060>> is bounded in $\calS$-norm by $\bar{B}$ for all <<FORMULA_1061>>. Then, we have that
+    <<FORMULA_1062>>
+\end{proposition}
+\begin{proof}
+    Write
+    <<FORMULA_1063>>
+    The right-hand side is finite, for all <<FORMULA_1064>>, as the <<FORMULA_1065>> sequence is associated to a trace class operator. Next, using that <<FORMULA_1066>>, we use \Cref{lem:singular_decay} to upper bound~\eqref{eq:complexity:rn:eigendecay1} via
+    <<FORMULA_1067>>
+    On the other hand, using \Cref{def:msc} and \Cref{lem:singular_decay}, the Hilbert-Schmidt norm is lower bounded via
+    <<FORMULA_1068>>
+    Combining both bounds, we have
+    <<FORMULA_1069>>
+    Inverting the bound gives the condition
+    <<FORMULA_1070>>
+    the result as desired.
+\end{proof}
+From \Cref{prop:complexity:rn:eigendecay}, we consider the case in which <<FORMULA_1071>> (the data is finite-rank under independence), and derive the singular decay condition
+<<FORMULA_1072>>
+for <<FORMULA_1073>>. While the relationship is not as direct as in the case of~\eqref{eq:complexity_q_alpha1}, we may still observe some regimes in which a ``maximally smooth'' target function boils down to an independence assumption. This holds intuitively as well, in the sense that <<FORMULA_1074>> holds <<FORMULA_1075>>-almost surely if and only if $X$ and $Z$ are independent.
+
+\subsubsection{Controlling the Prompting Term}
+The term that relates $\hrho_{Y, Z}$ to $\rho_{Y, Z}$ is simply a measurement of the deviation of a sample mean from its population counterpart, within a Hilbert space. Thus, it is reasonable to assume an <<FORMULA_1076>> scaling on this term. Below, we use the notation <<FORMULA_1077>> to indicate a sample drawn from <<FORMULA_1078>>, i.e., an unpaired example.
+\begin{assumption}\label{asm:complexity:rn_derivative:ps}
+    For constants <<FORMULA_1079>> and <<FORMULA_1080>>, there is an event <<FORMULA_1081>>, which is independent of the pre-training data <<FORMULA_1082>>, such that on <<FORMULA_1083>>, 
+    <<FORMULA_1084>>
+    where <<FORMULA_1085>> depends only on its arguments and $\fstar$, and is independent of $M$ and $\delta$. On <<FORMULA_1086>>, the event <<FORMULA_1087>> occurs with probability at least <<FORMULA_1088>>.
+\end{assumption}
+The scaling shown in \Cref{asm:complexity:rn_derivative:ps} can be satisfied by placing a Bernstein-type condition on the random variable $W_1$ and applying, for instance, the Pinelis-Sahanenko inequality \citep{pinelis1986remarks}. Specifically, consider the case in which there are positive constants <<FORMULA_1089>> such that
+<<FORMULA_1090>>
+for all <<FORMULA_1091>>. Then,~\eqref{eq:complexity:rn_derivative:ps_inequality} is satisfied, wherein the scalars  $\sigma$ and $c$ will scale as <<FORMULA_1092>>, and have additional constants that depend on $\fstar$, $\Rsans$, $\rho_{Y, Z}$, and $Q_X$ (but not $Q_Z$ or $Q_{X, Z}$). This generates the constant <<FORMULA_1093>> above.
+
+\subsubsection{Completing the Proof}\label{sec:a:complexity:rn_derivative:final}
+
+\myparagraph{Well-Specified Case}
+Because \Cref{prop:complexity:rn:eigendecay} yields an inexact relationship between the singular decay exponent $\gamma_{X, Z}$ and the source condition constant $\beta$, we maintain the statement of the result in terms of this constant. The following result comes as an immediate consequence of \Cref{lem:est:rhat} and \Cref{coro:background:rn}.
+\begin{theorem}\label{thm:complexity:rn_derivative}
+    Consider failure probability <<FORMULA_1094>>. Assume that the conditions of \Cref{lem:est:rhat} are satisfied and that $N$ is large enough such that the conditions of \Cref{coro:background:rn} are satisfied, in addition to \Cref{asm:complexity:rn_derivative:ps}. Define
+    <<FORMULA_1095>>
+    Then, with probability at least <<FORMULA_1096>>, it holds that
+    <<FORMULA_1097>>
+    where <<FORMULA_1098>> depends only on its arguments and $\fstar$, and not $M$ or $\delta$.
+\end{theorem}
+The constant <<FORMULA_1099>> appears directly from \Cref{asm:complexity:rn_derivative:ps}.
+
+\myparagraph{Mis-Specified Case}
+As mentioned in \Cref{sec:a:background:rkhs}, the mis-specified case (<<FORMULA_1100>>) for Radon-Nikodym derivative estimation problems is less understood than the mis-specified case for real-valued and vector-valued nonparametric regression. We intend here to highlight the overall decomposition of error, for which such results could be plugged in as well.
+
+% END INCLUDE: appendix/complexity/rn_derivative
+
+
+\subsection{Distribution Shift}\label{sec:a:complexity:shift}
+
+% BEGIN INCLUDE: appendix/complexity/distribution_shift
+The results of the previous two subsections provided bounds in high probability on the term <<FORMULA_1101>>. Returning to the original error decomposition of~\eqref{eq:theory:decomp1}, we would like to relate this to a similar bound on <<FORMULA_1102>>. We collect two general techniques for performing this change of measure, which lead to either a multiplicative or additive error depending on the assumptions the user is willing to make.
+\begin{lemma}[Distribution Shift]\label{lem:distribution_shift}
+    Assume that $P_X$ and $Q_X$ have densities $p_X$ and $q_X$ with respect to a common dominating measure $\nu_X$ on the measurable space <<FORMULA_1103>>, and define the \emph{total variation} metric
+    <<FORMULA_1104>>
+    Then, for any <<FORMULA_1105>> such that <<FORMULA_1106>> (see \Cref{sec:a:background:l2}), the following holds.
+    \begin{itemize}
+        \item If the essential supremum <<FORMULA_1107>> is finite, then we have the additive relation
+        <<FORMULA_1108>>
+        \item If <<FORMULA_1109>>, and <<FORMULA_1110>> for $P_X$-almost all <<FORMULA_1111>>, then we have the multiplicative relation
+        <<FORMULA_1112>>
+    \end{itemize}
+\end{lemma}
+\begin{proof}
+    In the case of~\eqref{eq:main:class:add}, we apply H\"older's inequality to achieve
+    <<FORMULA_1113>>
+   which proves the first claim. For~\eqref{eq:main:class:multi}, on the other hand, write
+    <<FORMULA_1114>>
+    proving the second claim and completing the proof.
+\end{proof}
+From \Cref{lem:distribution_shift} and the boundedness assumption <<FORMULA_1115>>, we alter~\eqref{eq:theory:decomp1} slightly to read
+<<FORMULA_1116>>
+and plug in the previous bounds on the <<FORMULA_1117>> term for an overall result.
+
+% END INCLUDE: appendix/complexity/distribution_shift
+
+
+\subsection{From Regression to Classification}\label{sec:a:complexity:classification}
+
+% BEGIN INCLUDE: appendix/complexity/classification
+Throughout this appendix, we evaluated the quality of an estimated map <<FORMULA_1118>> via its <<FORMULA_1119>> distance to some target predictor $\eta_\rho$. This goal was based on the error decomposition~\eqref{eq:complexity:error2}, which feeds into ultimate upper bound for <<FORMULA_1120>>,
+where each term was controlled using the techniques of \Cref{sec:a:dependence}, \Cref{sec:a:complexity:conditional_mean}, and \Cref{sec:a:complexity:rn_derivative}.
+In the case that <<FORMULA_1121>> represents a classification or structured prediction problem (e.g.~<<FORMULA_1122>> for class <<FORMULA_1123>>), it is of clear interest whether the control of mean squared error translates to risk guarantees for classification error. Establishing these guarantees, using the notion of a \emph{structure encoding loss function (SELF)} described in \citet[Section 13.2]{bach2024learning}, is the subject of this section.
+
+Assume that $\Y$ is discrete, or that <<FORMULA_1124>>. We consider a loss function <<FORMULA_1125>> and a regular conditional distribution <<FORMULA_1126>> (see \Cref{def:rcd}), under which <<FORMULA_1127>> is integrable for all <<FORMULA_1128>>. The corresponding risk of any map <<FORMULA_1129>> will be denoted
+<<FORMULA_1130>>
+There are a number of assumptions that mark the SELF framework.
+\begin{assumption}[SELF Loss for Structured Prediction]\label{asm:self}
+     Consider the existence of a Hilbert space $\calF$, and two mappings <<FORMULA_1131>> and <<FORMULA_1132>> which act as embeddings of objects in $\Y$. Then, assume that $\ell$ satisfies the equality
+    <<FORMULA_1133>>
+\end{assumption}
+As of yet, no assumptions (such as being an RKHS) have been placed on $\calF$. 
+Under \Cref{asm:self}, the Bayes optimal predictor (with respect to~\eqref{eq:main:misclass}, and not mean squared error) is given by
+<<FORMULA_1134>>
+where ties can be broken arbitrarily. In other words, <<FORMULA_1135>>. Additionally, because $\Y$ is finite, we may take the expectation
+<<FORMULA_1136>>
+which is only based on finite sums of vectors in $\calF$.
+Next, we define the notation of a surrogate loss. To construct a predictor (e.g.~classifier), we consider a function <<FORMULA_1137>> called the \emph{score function} and a map <<FORMULA_1138>> known as a \emph{decoder}. We will then define an integrable surrogate loss <<FORMULA_1139>>, for which we can define the risk
+<<FORMULA_1140>>
+We can then define the Bayes surrogate risk\footnote{We assume the map <<FORMULA_1141>> to be measurable as a technical consideration.} as 
+<<FORMULA_1142>>
+The relationship between the surrogate risk~\eqref{eq:main:surrogate} and the true risk~\eqref{eq:main:misclass} for squared surrogates is given in the following result.
+\begin{proposition}{\citep[Section 13.4.2]{bach2024learning}}\label{prop:decoding}
+    Consider the surrogate loss and decoder given by
+    <<FORMULA_1143>>
+    Then, for any score function <<FORMULA_1144>>, it holds that
+    <<FORMULA_1145>>
+\end{proposition}
+
+We stated \Cref{prop:decoding} generally; we now map it to classification, the prototypical task associated with zero-shot prediction. 
+Let <<FORMULA_1146>>, where $C$ denotes the number of classes (in contrast to the absolute constants in \Cref{thm:complexity_vvkr} and \Cref{thm:complexity_rn_derivative}). Then, we have that <<FORMULA_1147>> is the one-hot encoding in $\R^C$, whereas <<FORMULA_1148>> is the complement, that is, <<FORMULA_1149>> for <<FORMULA_1150>>. Thus, their inner product generates the 0-1 loss
+<<FORMULA_1151>>
+Then, we immediately have that <<FORMULA_1152>>. It remains to determine the score function <<FORMULA_1153>>. Note that we used a function $\fstar$ to define~\eqref{eq:est:bayes} and~\eqref{eq:est:ts}; we will now use $C$ such functions <<FORMULA_1154>> each defined by
+<<FORMULA_1155>>
+which in turn gives us the individual mean squared error minimizers
+<<FORMULA_1156>>
+Finally, we may use any of the estimation strategies developed in \Cref{sec:a:complexity:conditional_mean} or \Cref{sec:a:complexity:rn_derivative} to produce estimators <<FORMULA_1157>> (i.e.~the predicted probability per class) to give the score function
+<<FORMULA_1158>>
+Each <<FORMULA_1159>> is then associated to the conditional mean given by the prompt distribution, which we denote <<FORMULA_1160>>.
+As a final step, we use the classical relationship between mean squared prediction error and mean squared integrated error, as seen below.
+\begin{corollary}\label{coro:main:classification}
+    For the score function given in~\eqref{eq:main:class:score} and decoder given in \Cref{prop:decoding}, it holds that
+    <<FORMULA_1161>>
+\end{corollary}
+\begin{proof}
+    Given \Cref{prop:decoding}, we need only show that
+    <<FORMULA_1162>>
+    First, note that for the score function $s$ given in~\eqref{eq:main:class:score}, it holds by~\eqref{eq:class:xi_encoding} that
+    <<FORMULA_1163>>
+    and after taking the expectation over $P_{X, Y}$,
+    <<FORMULA_1164>>
+    Then, by the bias-variance decomposition for each <<FORMULA_1165>>, it holds that
+    <<FORMULA_1166>>
+    Rearranging terms gives~\eqref{eq:main:class:wts} and completes the proof.
+\end{proof}
+In particular, when applying the bound above to results of \Cref{thm:res_dep1}, \Cref{thm:complexity_vvkr}, and \Cref{thm:complexity_rn_derivative}, we derive a bound of the form
+<<FORMULA_1167>>
+which holds with probability at least <<FORMULA_1168>>. While generalization bounds for classification and structured prediction can have sharper dependences on the number of examples and number of classes for supervised learning (e.g.,~via the techniques of~\citet{cabannes2021fast} and references therein), the conversion from regression to classification is a remarkably general way to account for the residual dependence, prompt bias, and multiple stages of estimation that mark our problem.
+
+% END INCLUDE: appendix/complexity/classification
+
+
+\subsection{Prompting Strategies}\label{sec:a:complexity:sampling}
+
+% BEGIN INCLUDE: appendix/complexity/sampling
+\begin{figure*}[t!]
+    \centering
+    \includegraphics[width=\linewidth]{figures/prompt_explain.pdf}
+    \caption{{\bf Illustration of Prompting Strategies.} A hypothetical distribution of embeddings <<FORMULA_1169>> parametrized by two classes (``cat'' and ``dog''). Three prompting strategies (template-based, class-conditional, and unbiased) are shown with example text and resulting embeddings in $\R^d$. Colors represent the probability of each class given the embedding.}
+    \label{fig:prompt}
+\end{figure*}
+
+We have stated upper bounds on the statistical error in this section that depend on the size of the pre-training set $N$ and the number of prompts $M$. To state them more precisely, however, we must also specify the sampling schemes that lead to these examples/prompts. Sampling of the pre-training data falls into fixed and well-understood categories, boiling down to whether only paired examples or a combination of paired and unpaired examples are available. We describe these as part of the background (\Cref{sec:a:background:rkhs}), alongside the method to which they apply. However, the interpretation of prompting (the empirical procedure used in~\eqref{eq:proxy}) formally as a sampling scheme from a probability measure $\rho_{Y, Z}$ is itself a contribution of this paper. In the results of \Cref{sec:a:complexity:conditional_mean} and \Cref{sec:a:complexity:rn_derivative}, we considered simple random sampling <<FORMULA_1170>> i.i.d.~to provide examples of scenarios in which \Cref{asm:vvkrr:downstream} and \Cref{asm:complexity:rn_derivative:ps} can be satisfied. However, multiple practical and idealized strategies exist for prompting (such as the ones explored in \Cref{sec:experiments}). Below, we represent them in our framework below, as ways to define $\rho_{Y, Z}$ and approximate it with $\hrho_{Y, Z}$. 
+\begin{itemize}
+    \item {\bf Template-Based:} This technique reflects the earlier iterations of representing labels in natural language. Examples include ``photo of a \underline{\hspace{0.5cm}}'', ``realistic photo of a \underline{\hspace{0.5cm}}'', ``drawing of a \underline{\hspace{0.5cm}}'', etc. Notice that the prompt templates have no relationship with the class label. 
+    One way this can be understood is by representing the caption via the structural equation <<FORMULA_1171>>, where $U$ represents the text of the caption with the label left blank (drawn according to a probability measure $\rho_U$), and $f$ represents the action of inserting the natural language label. Then, we have that under the template-based prompting distribution, <<FORMULA_1172>>. This does not imply that <<FORMULA_1173>>, but instead that the dependence is governed fully by the function $f$. To sample, a fixed number of $m$ examples <<FORMULA_1174>> are drawn directly from $\rho_U$. We then use the empirical measure <<FORMULA_1175>>, where $\rho_Y$ is fixed as the uniform distribution on the discrete set $\Y$. Here, <<FORMULA_1176>>.
+    \item {\bf Class Conditional:} This technique reflects the modern LLM-based techniques, such as CuPL \citep{pratt2023what}. We parameterize the joint distribution using the conditional distributions <<FORMULA_1177>> for each class <<FORMULA_1178>>. Sampling from each $\rho_{Z|Y = \y}$ occurs by meta-prompting the LLM (such as the one we use in \Cref{sec:a:experiments}), which generates samples <<FORMULA_1179>> and empirical measures <<FORMULA_1180>>. Our final approximation is <<FORMULA_1181>>, with <<FORMULA_1182>>.
+    \item {\bf Unbiased:} This techniques reflects the setting of \Cref{fig:ideal}, where the user may drawn samples from a joint distribution $P_{X, Y, Z}$, where the marginal $P_{X, Y}$ is in fact the data on which the zero-shot classifier will be evaluated. Then, the prompt distribution can be constructed, as we do, by drawing samples <<FORMULA_1183>> directly from $P_{Y, Z}$, and defining <<FORMULA_1184>>. We call this ``unbiased'', because the prompt bias term in \Cref{thm:res_dep1} is zero for this example. It is worth pointing out that even if $P_{Y|Z = \z}$ can be matched by the prompt distribution, the distribution mismatch term from \Cref{thm:complexity_rn_derivative} will be zero if and only if <<FORMULA_1185>> (or the prompt captions match the pre-training captions in distribution). In this sense, $P_{Y, Z}$ may not be the ideal prompting distribution, but instead, <<FORMULA_1186>>.
+\end{itemize}
+
+% END INCLUDE: appendix/complexity/sampling
+
+
+% END INCLUDE: appendix/4_complexity
+
+
+\section{Self-Supervised Objectives and Cross Covariance Operators}\label{sec:a:objectives}
+
+% BEGIN INCLUDE: appendix/5_objectives
+
+
+In \Cref{sec:theory}, we considered specific instances of both the conditional mean and information density approaches based on nonparametric regression in reproducing kernel Hilbert space (RKHS). This reflected the statistical goals of \Cref{thm:complexity_vvkr} and \Cref{thm:complexity_rn_derivative}. In this appendix, we aim to draw relationships with other approaches based on optimizing self-supervised learning (SSL) objectives, in order to align with practice. In particular, we focus on the relationship between such objectives and the mean square contingency <<FORMULA_1187>> introduced in \Cref{sec:framework}. To do so, we make explicit the intuition that SSL objectives (such as CLIP and VICReg) are implicit forms of dependence maximization between the representations <<FORMULA_1188>> and <<FORMULA_1189>>. Some of the arguments below have previously appeared in the literature---we do not claim originality for them, but instead aim to consolidate them together in a single vignette.
+
+When it comes to specific SSL objectives, we describe here their properties as functions acting on a batch of encoded data <<FORMULA_1190>>. This abstract description is agnostic to the function class used for the encoder. %
+Reproducing kernel Hilbert space theory has been frequently used, in the recent literature, to define the function classes involved in contrastive and non-contrastive self-supervised foundation modeling~\cite{ li2021selfsupervised, balestriero2022constrastive, kiani2022jointembeddings, johnson2023contrastive, tan2024contrastive}. We also mention that the precise characterization of the function classes of various deep neural networks is an active area of research~\cite{schmidt-hieber2020rejoinder,scetbon2020harmonic,pahri2021banach,wu2022aspectral,bartolucci2023understanding, unser2023ridges, siegel2023characterization, schwarz-ziv2023aninformation,devore2025weighted}. However, these exciting yet still burgeoning theories of deep neural networks have not yet reached a maturity level comparable to the one of RKHS theory~\cite{wahba1990spline,cucker2007learning,christmann2008support,bach2024learning} needed for the theoretical analysis we develop in this paper. For more practical details on self-supervised learning, we point the reader to the recent survey~\cite{balestriero2023cookbook}.
+
+
+\myparagraph{Covariance Operators}
+To relate our theory (which centers around the mean square contingency measure of dependence) to SSL objectives, we first draw the relationship to covariance operators of $Q_{X, Z}$ on particular function spaces. Let $\calH$ be an RKHS of real-valued functions $\X$ and $\calG$ be an RKHS of real-valued functions on $\Z$. Then, define the cross-covariance operator <<FORMULA_1191>> by
+<<FORMULA_1192>>
+and the analogously defined auto-covariance operators <<FORMULA_1193>> and <<FORMULA_1194>>. 
+When $\C_{XX}$ and $\C_{ZZ}$ are compact, we define the powers $\C_{XX}^{1/2}$ and $\C_{ZZ}^{1/2}$ in the sense of~\eqref{eq:background:rkhs:power}. It then holds by \citet[Theorem 1]{baker1973joint} that there exists a unique bounded linear operator <<FORMULA_1195>>, so that
+<<FORMULA_1196>>
+The operator $\V_{XZ}$ is called the \emph{normalized cross-covariance operator}, or NOCCO for short \citep{fukumizu2005statistical}. As an abuse of notation, the NOCCO~\eqref{eq:baker} is sometimes communicated as <<FORMULA_1197>>, though it is uniquely defined without necessarily constructing the square-root inverses. To rigorously use the formula <<FORMULA_1198>> with a well-defined adjoint, we must make assumptions on the closure of the range of $\C_{XZ}$ and $\C_{ZX}$ being contained within the closure of the range of $\C_{XX}$ and $\C_{ZZ}$, respectively. The Hilbert-Schmidt norm of the population NOCCO, when finite, is equal to the mean square contingency
+<<FORMULA_1199>>
+as shown in \citet[Theorem 4]{fukumizu2007kernel}. The relation~\eqref{eq:fukumizu_msc} requires a few additional technical conditions, such as <<FORMULA_1200>> being dense in <<FORMULA_1201>> and $Q_{X, Z}$ having joint and marginal densities\footnote{Recall that our definition of <<FORMULA_1202>> does not include the square root that is usually used in the definition of mean square contingency.}. 
+
+
+\myparagraph{Variational Characterization of the Hilbert-Schmidt Norm}
+This operator is an essential component of the kernel canonical correlations analysis (CCA) problem, which (with \eqref{eq:fukumizu_msc}) will be the common bridge that ties together SSL and the mean square contingency. From the nonparametric CCA perspective, the singular values <<FORMULA_1203>> refer precisely to the canonical correlations and the singular functions <<FORMULA_1204>> refer to the canonical variates \citep{lancaster1958thestructure, buja1990remarks, michaeli2016nonparametric}. Returning to~\eqref{eq:fukumizu_msc}, this operator is estimated with a regularization scheme, i.e.
+<<FORMULA_1205>>
+where $\hC_{XX}$, $\hC_{XZ}$, and $\hC_{ZZ}$ are the standard empirical covariance estimates (see \Cref{sec:a:background:rkhs}) and <<FORMULA_1206>> is a regularization parameter. Then, one solves the empirical CCA problem
+<<FORMULA_1207>>
+where o.n.b denotes an orthonormal basis. 
+Setting aside matters of estimation, we consider how the norm quantity <<FORMULA_1208>> relates to the actual encoders returned by the CCA problem~\eqref{eq:cca_empirical} (assuming that <<FORMULA_1209>>).
+Let <<FORMULA_1210>> be ordered singular values of the Hilbert-Schmidt operator $\V_{X, Z}$. In this case, denoting <<FORMULA_1211>> and <<FORMULA_1212>> the orthonormal bases of $\calH$ and $\calG$ resp. maximizing the criterion (\eqref{eq:cca_empirical}), we have
+<<FORMULA_1213>>
+The two orthonormal bases maximizing the criterion~\eqref{eq:cca_empirical}
+are actually the left and right singular functions of $\V_{XY}$ associated to the leading $d$ singular values (see \Cref{thm:svd}). The larger the truncation level $d$, the closer the quantity is to the mean-square contingency, up to the truncation level factor $d$. 
+
+In either the population~\eqref{eq:cca_population} or empirical~\eqref{eq:cca_empirical} problems, the functions are maximizing an objective that is a measure of covariance with a constraint on variance. The constraint on variance is imposed by the norm condition on <<FORMULA_1214>> and <<FORMULA_1215>>, respectively); see~\cite{fukumizu2007statistical}. This norm condition is relaxed into a penalization term in popular SSL objectives. 
+
+Indeed, several SSL objectives can be written in an analogous \emph{variance-regularized covariance} form. This may offer one intuitive viewpoint as to why estimators based on these objectives might exhibit similar statistical properties to those analyzed in \Cref{sec:theory}. We first describe a format for these variance-regularized covariance objectives and show that a number of popular SSL objectives can be expressed in this form.
+
+\myparagraph{Variance-Regularized Covariance Objectives}
+Recall that <<FORMULA_1216>> and <<FORMULA_1217>> denote encoders for $\X$-valued and $\Z$-valued objects (often images and text, respectively). We denote the standard Euclidean inner product by <<FORMULA_1218>> in $\R^d$. 
+In either case, we consider a batch of data points <<FORMULA_1219>> which are thought to be $n$ independent and identically distributed realizations of <<FORMULA_1220>> from the probability distribution $Q_{X, Z}$ over <<FORMULA_1221>>. 
+Let us then define the design matrices induced by the embeddings, written as
+<<FORMULA_1222>>
+Let <<FORMULA_1223>> be the centering matrix and construct the empirical auto-covariance and cross-covariance matrices 
+<<FORMULA_1224>>
+We aim to write the upcoming objectives in the form
+<<FORMULA_1225>>
+for hyperparameter <<FORMULA_1226>>, matrix $\bS_{AB}$ (which is $\hS_{AB}$ with its diagonal components set to zero), and variance-regularization term <<FORMULA_1227>>. The term <<FORMULA_1228>> may explicitly include the regularized inverses of $\hS_{XX}$ and $\hS_{ZZ}$, or may penalize variance or non-smoothness more implicitly.
+
+\myparagraph{Example 1: Multimodal InfoNCE (CLIP)}
+Consider the empirical objective for the contrastive language-image pre-training (CLIP) model \citep{radford2021learning} with batch size $n$,
+<<FORMULA_1229>>
+where the <<FORMULA_1230>> factor is appended to normalize the sums in the logarithmic terms and does not change the minimizer. Following arguments used (e.g.~by \citet{li2021selfsupervised}) for the SimCLR objective---the single-modality counterpart to CLIP---we analyze the logarithmic terms via Tayler expansion. To simplify the analysis, take the large-sample limit to define the population objective
+<<FORMULA_1231>>
+Next, define the quantity <<FORMULA_1232>> and apply a second-order Taylor expansion for every <<FORMULA_1233>>, the approximation
+<<FORMULA_1234>>
+Plugging this approximation into the first term of~\eqref{eq:clip:normalization} yields
+<<FORMULA_1235>>
+Using the Taylor expansion <<FORMULA_1236>> centered at <<FORMULA_1237>>, and evaluate the first-order approximation at <<FORMULA_1238>>, we finally have that
+<<FORMULA_1239>>
+Applying an identical argument to the second term of~\eqref{eq:clip:normalization} gives
+<<FORMULA_1240>>
+which is the desired form for the population. Now, to rewrite the empirical version, we have
+<<FORMULA_1241>>
+where <<FORMULA_1242>> denotes the variance with respect to the empirical measure <<FORMULA_1243>>.
+
+
+\myparagraph{Example 2: BarlowTwins} The BarlowTwins objective \citep{zbontar2021barlow} has already been interpreted as an instance of kernel canonical correlations analysis (CCA) by previous work (e.g.~by \citet{balestriero2022constrastive}). This objective is usually defined in terms of the cross-correlation and auto-correlation matrices. To be consistent with other objectives in this section, we handle this by enforcing a constraint on the variance. Let <<FORMULA_1244>> denote the convex analytic indicator function such that <<FORMULA_1245>> if <<FORMULA_1246>> and equals <<FORMULA_1247>> otherwise. Let $\I$ be the identity matrix in $\R^{d \times d}$.
+Given hyperparameter <<FORMULA_1248>>, the objective can be written
+<<FORMULA_1249>>
+Thus, this objective falls into the class as well, as the penalties enforce a particular variance structure akin to the regularizers above.
+
+
+\myparagraph{Example 3: Spectral Contrastive Loss}
+Finally, we consider the spectral contrastive loss from the pioneering work of \citet{haochen2021provable}. This relates to similar viewpoints of contrastive learning as spectral methods found in the literature, such as the Laplacian eigenmap viewpoint of VICReg \citep[Section 3]{balestriero2022constrastive}, the multidimensional scaling viewpoint of InfoNCE \citep[Section 4]{balestriero2022constrastive}, or the recent spectral clustering viewpoint of SimCLR/CLIP \citep[Sections 3 and 4]{tan2024contrastive}. Recall that <<FORMULA_1250>> and <<FORMULA_1251>>. In the multimodal setting, this loss \citep[Eq.~(6)]{haochen2021provable} can be written as
+<<FORMULA_1252>>
+where we set <<FORMULA_1253>> to complete the argument.
+
+\myparagraph{Example 4: Multimodal VICReg}
+We use a variant of the VICReg objective shown in \citet[Equation 1]{schwarz-ziv2023aninformation}. Note that this method is typically designed for one encoder being applied to two augmentations of the same object; however, it naturally generalizes to the multimodal case. The similarity graph simply connects paired observations, leading to the invariance term below. The multimodal VICReg objective has hyperparameters <<FORMULA_1254>>. To state it, define the real-valued function <<FORMULA_1255>> for <<FORMULA_1256>>. We will also apply $r$ to a matrix, which returns the matrix of element-wise applications of the function. The objective is written
+<<FORMULA_1257>>
+While usually thought of as capturing a separate property, we will incorporate the invariance term into the other two terms, which crucially relies on having an extra degree of freedom via the second encoder (as opposed to the single-modality setting). Define <<FORMULA_1258>> and <<FORMULA_1259>>, then write
+<<FORMULA_1260>>
+The final term <<FORMULA_1261>> can harmlessly be dropped in the objective, as all other terms do not depend on the individual means. Thus, we can redefine our VICReg objective as
+<<FORMULA_1262>>
+as intended.
+
+% END INCLUDE: appendix/5_objectives
+
+
+\section{Experimental Details}\label{sec:a:experiments}
+
+% BEGIN INCLUDE: appendix/6_experiments
+This appendix accompanies \Cref{sec:experiments} with further details of the study. Before describing the experiments, we comment one quantity appearing in the risk bounds that is not analyzed experimentally is the distribution shift error that passes <<FORMULA_1263>>-norm to the <<FORMULA_1264>>-norm from \Cref{sec:theory}. For this, we refer the reader to the host of empirical work at the intersection of FSL, attribute-based and prompting-based ZSP, and distribution shift (see \citet{recht2019doimage, hendrycks2018benchmarking, goyal2023finetune} and references therein). 
+
+
+\subsection{Compute Environment}
+Experiments were run on a CPU/GPU workstation with 12 virtual cores, 126G of memory, and four NVIDIA TITAN Xp GPUs with 12G memory each. The code was written in Python 3.10 with the environment given by the YAML file in the supplement. The \href{https://github.com/mlfoundations/open_clip}{OpenCLIP} and \href{https://github.com/LAION-AI/CLIP_benchmark}{CLIP Benchmark} repositories were either used directly or adapted in our codebase.
+
+\subsection{Evaluation Datasets}
+We use the following datasets as evaluation benchmarks for zero-shot image classification. Note that the following standard statistics describe their \emph{test} sets.
+\begin{itemize}
+    \item {\bf Describable Textures Dataset (DTD):} 1,880 examples labeled with 47 classes \citep{cimpoi14describing}.
+    \item {\bf Flowers 102:} 6,149 examples labeled with 102 classes. \citep{nilsback2008automated}.
+    \item {\bf FGVC Aircraft:} 3,333 examples labeled with 100 classes \citep{maji2013fine}.
+    \item {\bf SUN397:} 21,750 examples labeled with 397 classes \citep{xiao2010sun}.
+    \item {\bf ImageNet-1k:} 100,000 examples labeled with 998 classes. \citep{deng2009imagenet}.
+\end{itemize}
+The {\bf ImageNet-Captions} dataset \citep{fang2023data} is also used for evaluation using a subset of 134,593 examples, whereas a 40,000 held-out subset is used to estimate the conditional means of the text embeddings. For the subsets of ImageNet-Captions, the exact filenames of the ImageNet-1k subsets are provided along with their captions. Image preprocessing for evaluation was done using the transformations in the PyTorch \texttt{transforms} module that were associated with each OpenCLIP model.
+
+For the experiment behind \Cref{fig:ideal}, we design three in-distribution sub-tasks by randomly selecting collections of 50 classes <<FORMULA_1265>> from each of 998 classes, reserving held-out prompting examples <<FORMULA_1266>>, 100 for each of 150 classes. Then, for task $i$, using $M$ examples <<FORMULA_1267>> selected randomly without replacement for <<FORMULA_1268>>, we use the vector <<FORMULA_1269>> as the class embedding (projected to unit norm). Using an evaluation set of approximately 25,000 examples from each sub-task, we compute the classification accuracy of this approach.
+
+\subsection{Model Specification and Hyperparameters}
+
+\paragraph{CLIP Architectures}
+First, we specify which OpenCLIP models and pre-training sets were used. These models were chosen due to their range of top-1 zero-shot accuracies on the ImageNet-1k benchmark (as shown below). As opposed to already highly performant models ($\geq$50\% on ImageNet-1k), these models benefited more from optimized prompting techniques in our initial experiments. 
+\begin{center}
+\begin{tabular}{c|ccc}
+     {\bf Model } & {\bf OpenCLIP Model Tag } &  {\bf Pre-Training Set Tag} &  {\bf ImageNet-1k Top-1 Acc.}\\
+     \hline
+     ResNet-50 & \texttt{RN50} & \texttt{yfcc15m} & 28.11\%\\
+     NLLB-CLIP & \texttt{nllb-clip-base} & \texttt{v1} & 33.51\%\\
+     ViT-B/32 & \texttt{ViT-B-32} & \texttt{datacomp\_m\_s128m\_b4k} & 32.81\%
+\end{tabular}
+\end{center}
+
+\paragraph{Prompt-Generating Model}
+We employed the \texttt{meta-llama/Llama-3.2-1B-Instruct} model publicly available on \href{https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct}{HuggingFace}. For the purpose of generation, we used a {\bf top-$p$} hyperparameter of {\bf 0.9} and {\bf temperature} hyperparameter of {\bf 0.99} for more diverse responses. Meta-prompting was based on the following instructions per dataset, which are slight variations of those used in \citet{pratt2023what}:
+\begin{itemize}
+    \item {\bf Describable Textures Dataset (DTD):}
+    \begin{itemize}
+        \item {\it ``What does \underline{\hspace{0.5cm}} material look like?''},
+        \item {\it ``What does a \underline{\hspace{0.5cm}} surface look like?''},
+        \item {\it ``What does a \underline{\hspace{0.5cm}} texture look like?''},
+        \item {\it ``What does a \underline{\hspace{0.5cm}} object look like?''},
+        \item {\it ``What does a \underline{\hspace{0.5cm}} pattern look like?''}
+    \end{itemize}
+    \item {\bf Flowers 102:}
+    \begin{itemize}
+        \item {\it ``Describe how to identify a(n) \underline{\hspace{0.5cm}}, a type of flower.''},
+        \item {\it ``What does a(n) \underline{\hspace{0.5cm}} flower looks like?''}
+    \end{itemize}
+    \item {\bf FGVC Aircraft:}
+    \begin{itemize}
+        \item {\it ``Describe a(n) \underline{\hspace{0.5cm}} aircraft.''},
+        \item {\it ``Describe the \underline{\hspace{0.5cm}} aircraft.''}
+    \end{itemize}
+    \item {\bf SUN397:}
+    \begin{itemize}
+        \item  {\it ``Describe what a(n) \underline{\hspace{0.5cm}} looks like.''},
+        \item {\it ``How can you identify a(n) \underline{\hspace{0.5cm}}?''},
+        \item {\it ``Describe a photo of a(n) \underline{\hspace{0.5cm}}.''},
+        \item {\it ``Describe the scene of a(n) \underline{\hspace{0.5cm}}.''}
+    \end{itemize}
+    \item {\bf ImageNet-1k:}
+    \begin{itemize}
+        \item {\it ``Describe what a(n) \underline{\hspace{0.5cm}} looks like.''},
+        \item {\it ``How can you identify a(n) \underline{\hspace{0.5cm}}?''},
+        \item {\it ``What does a(n) \underline{\hspace{0.5cm}} look like?''},
+        \item {\it ``Describe an image from the Internet of a(n) \underline{\hspace{0.5cm}}.''},
+        \item {\it ``Write a caption of an image of a(n) \underline{\hspace{0.5cm}}.''}
+    \end{itemize}
+\end{itemize}
+The following additional instruction was appended for better-formatted responses: {\it ``Please format your response as one that contains only lower case letters and no special characters (including new lines, bold, and any markdown artifacts) other than a period (`.') or commas (`,'). The response should be a single sentence ending in a period that is directed toward the final instruction in this message. Your sentence should be a minimum of three words and a maximum of thirty.''}. 
+
+Our reproducibility effort includes not only the full list of all 164,400 prompts generated from LlaMA 3, but the subset of prompts used for each class and each seed used to generate the figures in \Cref{sec:experiments}. 
+
+\subsection{Derivation of Simulation Setting}
+\label{sec:a:experiments:simulation}
+
+The data-generating process for <<FORMULA_1270>> in the simulation from \Cref{sec:experiments} is as follows. Because we isolate the effect residual dependence in this simulation, we construct a joint distribution $P_{X, Y, Z}$ that satisfies \Cref{asm:rcd1}, and moreover, such that <<FORMULA_1271>> and <<FORMULA_1272>>.
+Let <<FORMULA_1273>>, indicating binary classification. We consider <<FORMULA_1274>> and a pair of Gaussian distributions <<FORMULA_1275>>, where
+<<FORMULA_1276>>
+Then, the distribution is fully specified by mean vectors and covariance matrices along with the parameter <<FORMULA_1277>>. Letting <<FORMULA_1278>> indicate the density function of the <<FORMULA_1279>> distribution, the \emph{direct} predictor is equal to
+<<FORMULA_1280>>
+Similarly, the \emph{indirect predictor} is given by
+<<FORMULA_1281>>
+The expectation in~\eqref{eq:re:twostage} over $Z$ given <<FORMULA_1282>> can be evaluated via simulation based on the mixture model <<FORMULA_1283>> and the exact calculation
+<<FORMULA_1284>>
+Finally, the \emph{residual dependence} <<FORMULA_1285>> can be computed by the following steps. 
+First, notice that the conditional distribution of $X$ given <<FORMULA_1286>> and <<FORMULA_1287>> is given by
+<<FORMULA_1288>>
+The likelihood ratio $\Ssans_{\z}$ from~\eqref{eq:theory:rnd0} can be computed (where the evaluation at $\x$ refers to the density) via
+<<FORMULA_1289>>
+To simulate from the marginal $P_Z$, we use the mixture <<FORMULA_1290>>, after which~\eqref{eq:cond_msc} can be directly applied.
+
+To interpolate between the setting in which <<FORMULA_1291>> (the indirect predictor performs at chance) and <<FORMULA_1292>> (the indirect predictor is equivalent to the direct one), we use the setting 
+<<FORMULA_1293>>
+Let <<FORMULA_1294>> be constants and let <<FORMULA_1295>> be a parameter. Then, we define
+<<FORMULA_1296>>
+and finally <<FORMULA_1297>> and <<FORMULA_1298>>. Due to Gaussianity, it is clear that
+<<FORMULA_1299>>
+On the other hand, using the distribution of $X$ given <<FORMULA_1300>>, that is,
+<<FORMULA_1301>>
+we have that
+<<FORMULA_1302>>
+as the distribution of $X$ remains the same given either <<FORMULA_1303>> or <<FORMULA_1304>>. Thus, in the simulation, we interpolate between $0$ and $1$ for the value of $\theta$. We set the parameters <<FORMULA_1305>> and <<FORMULA_1306>> simply to be different numbers for which <<FORMULA_1307>> can be computed in a numerically stable manner. We set <<FORMULA_1308>> and <<FORMULA_1309>>. 
+
+Finally, the lines labeled \emph{CLIP} and \emph{VICReg} in \Cref{fig:simulation} indicate the predictors generated by training two MLP encoders using the corresponding objective on observations <<FORMULA_1310>> for <<FORMULA_1311>> pre-training observations. The encoder had a single hidden layer of $16$ units and an output dimension of $d$. When performing classification, the prompting distribution used for the methods based on self-supervised learning is the true distribution of <<FORMULA_1312>> with <<FORMULA_1313>> samples, allowing us to isolate residual dependence while incurring no prompt bias and negligible prompt variance. Each model was trained for 30 epochs with the AdamW optimizer at a learning rate of $0.01$. In the case of the VICReg objective, we used the parameterization of the original paper \citep{bardes2022vicreg} with the settings <<FORMULA_1314>> as per the authors' recommendations (see their Eq.~(6)).
+
+
+% END INCLUDE: appendix/6_experiments
+
+
+\end{document}

@@ -1,0 +1,162 @@
+{
+  "<<FORMULA_0206>>": {
+    "formula": "\\E [X \\mid \\tilde X = \\tilde x] \n%  & = \n%  \\frac{\\sigma_\\alpha^2}\n%     {\\sigma_\\alpha^2 + \\sigma_\\eta^2} \\, \\tilde{x}\n%    + \n%\\frac{\\sigma_\\eta^2}\n%     {\\sigma_\\alpha^2 + \\sigma_\\eta^2}\n%  \\frac\n%   {\\sum_{\\alpha} w_{\\alpha} \\mu_{\\alpha} \\int \\exp(g_{\\alpha}) \\,dx}\n%   {\\sum_{\\alpha} w_{\\alpha} \\int \\exp(g_{\\alpha}) \\,dx} \\\\\n = \n  \\frac{\\sigma_0^2}\n     {\\sigma_0^2 + \\sigma_Z^2} \\, \\tilde{x}\n    + \n\\frac{\\sigma_Z^2}\n     {\\sigma_0^2 + \\sigma_Z^2}\n  \\frac\n   {\\sum_{a} w_{a} \\mu_{a} \n            \\exp\\left( \\frac{\\langle \\tilde{x}, \\mu_a \\rangle}{\\sigma_Z^2 + \\sigma_0^2} \\right)\n     }\n   {\\sum_{a} w_{a} \n            \\exp\\left( \\frac{\\langle \\tilde{x}, \\mu_a \\rangle}{\\sigma_Z^2 + \\sigma_0^2} \\right)\n            %e^{\\frac{\\langle \\tilde{x}, \\mu_\\alpha \\rangle}{(\\sigma_\\eta^2 + \\sigma_\\alpha^2)}}\n     }.",
+    "raw_latex": "\\begin{equation*}\n  \\E [X \\mid \\tilde X = \\tilde x] \n%  & = \n%  \\frac{\\sigma_\\alpha^2}\n%     {\\sigma_\\alpha^2 + \\sigma_\\eta^2} \\, \\tilde{x}\n%    + \n%\\frac{\\sigma_\\eta^2}\n%     {\\sigma_\\alpha^2 + \\sigma_\\eta^2}\n%  \\frac\n%   {\\sum_{\\alpha} w_{\\alpha} \\mu_{\\alpha} \\int \\exp(g_{\\alpha}) \\,dx}\n%   {\\sum_{\\alpha} w_{\\alpha} \\int \\exp(g_{\\alpha}) \\,dx} \\\\\n = \n  \\frac{\\sigma_0^2}\n     {\\sigma_0^2 + \\sigma_Z^2} \\, \\tilde{x}\n    + \n\\frac{\\sigma_Z^2}\n     {\\sigma_0^2 + \\sigma_Z^2}\n  \\frac\n   {\\sum_{a} w_{a} \\mu_{a} \n            \\exp\\left( \\frac{\\langle \\tilde{x}, \\mu_a \\rangle}{\\sigma_Z^2 + \\sigma_0^2} \\right)\n     }\n   {\\sum_{a} w_{a} \n            \\exp\\left( \\frac{\\langle \\tilde{x}, \\mu_a \\rangle}{\\sigma_Z^2 + \\sigma_0^2} \\right)\n            %e^{\\frac{\\langle \\tilde{x}, \\mu_\\alpha \\rangle}{(\\sigma_\\eta^2 + \\sigma_\\alpha^2)}}\n     }.\n\\end{equation*}",
+    "formula_type": "equation*",
+    "line_number": 1711,
+    "start_pos": 91303,
+    "end_pos": 92153
+  },
+  "<<FORMULA_0174>>": {
+    "formula": "\\begin{aligned}\n  \\E \\left[ \\Vert X - f(\\tilde X) \\rVert^2 \\right] \n  & = \\E_{\\tilde X} \\left[ \n        \\E_{X \\mid \\tilde X} \\bigl[ \\lVert X - f(\\tilde X) \\rVert^2 \\mid \\tilde X \\bigr] \n      \\right] \\\\ \n  & = \\E_{\\tilde X} \\Bigl[ \n        \\E_{X\\mid \\tilde X} \\bigl[ \\lVert X - \\E [X \\mid \\tilde X] \\rVert^2 \\mid \\tilde X \\bigr]  \\\\\n         & \\:\\:\\:\\:\\:\\:\\:\\:\\:\\:\\:\\: + \\lVert \\E [X \\mid \\tilde X] - f(\\tilde X) \\rVert^2 \\Bigr] \\\\\n  & \\ge \\E_{\\tilde X} \\\\geft[ \n        \\E_{X\\mid \\tilde X} \\bigl[ \\lVert X - \\E [X \\mid \\tilde X] \\rVert^2 \\mid \\tilde X \\bigr]\n    \\right] \\\\\n  & = \\E_{\\tilde X} \\left[ \\Tr{ \\Cov (X \\mid \\tilde X)} \\right].\n\\end{aligned}",
+    "raw_latex": "\\begin{equation*}\n\\begin{aligned}\n  \\E \\left[ \\Vert X - f(\\tilde X) \\rVert^2 \\right] \n  & = \\E_{\\tilde X} \\left[ \n        \\E_{X \\mid \\tilde X} \\bigl[ \\lVert X - f(\\tilde X) \\rVert^2 \\mid \\tilde X \\bigr] \n      \\right] \\\\ \n  & = \\E_{\\tilde X} \\Bigl[ \n        \\E_{X\\mid \\tilde X} \\bigl[ \\lVert X - \\E [X \\mid \\tilde X] \\rVert^2 \\mid \\tilde X \\bigr]  \\\\\n         & \\:\\:\\:\\:\\:\\:\\:\\:\\:\\:\\:\\: + \\lVert \\E [X \\mid \\tilde X] - f(\\tilde X) \\rVert^2 \\Bigr] \\\\\n  & \\ge \\E_{\\tilde X} \\\\geft[ \n        \\E_{X\\mid \\tilde X} \\bigl[ \\lVert X - \\E [X \\mid \\tilde X] \\rVert^2 \\mid \\tilde X \\bigr]\n    \\right] \\\\\n  & = \\E_{\\tilde X} \\left[ \\Tr{ \\Cov (X \\mid \\tilde X)} \\right].\n\\end{aligned}\n\\end{equation*}",
+    "formula_type": "equation*",
+    "line_number": 1542,
+    "start_pos": 83516,
+    "end_pos": 84202
+  },
+  "<<FORMULA_0193>>": {
+    "formula": "\\begin{aligned}\n  \\frac{\\int_0^{\\pi} e^{R \\lVert \\tilde x_{\\paral} \\rVert \\cos \\theta / \\sigma_{Z}^2} \\: \\cos \\theta \\sin^{(d - 1)} \\theta \\: d\\theta}\n       {\\int_0^{\\pi} e^{R \\lVert \\tilde x_{\\paral} \\rVert \\cos \\theta / \\sigma_{Z}^2} \\: \\sin^{(d - 1)} \\theta \\: d\\theta}\n  R \\frac{\\tilde x_{\\paral}}{\\lVert \\tilde x_{\\paral} \\rVert} \\\\\n  = \n  \\frac{I_\\frac{d+1}{2} \\left(R \\frac{\\lVert \\tilde x_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)}\n       {I_\\frac{d-1}{2} \\left(R \\frac{\\lVert \\tilde x_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)} \n  R \\frac{\\tilde x_{\\paral}}{\\lVert \\tilde x_{\\paral} \\rVert},\n\\end{aligned}",
+    "raw_latex": "\\begin{equation*}\n\\begin{aligned}\n  \\frac{\\int_0^{\\pi} e^{R \\lVert \\tilde x_{\\paral} \\rVert \\cos \\theta / \\sigma_{Z}^2} \\: \\cos \\theta \\sin^{(d - 1)} \\theta \\: d\\theta}\n       {\\int_0^{\\pi} e^{R \\lVert \\tilde x_{\\paral} \\rVert \\cos \\theta / \\sigma_{Z}^2} \\: \\sin^{(d - 1)} \\theta \\: d\\theta}\n  R \\frac{\\tilde x_{\\paral}}{\\lVert \\tilde x_{\\paral} \\rVert} \\\\\n  = \n  \\frac{I_\\frac{d+1}{2} \\left(R \\frac{\\lVert \\tilde x_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)}\n       {I_\\frac{d-1}{2} \\left(R \\frac{\\lVert \\tilde x_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)} \n  R \\frac{\\tilde x_{\\paral}}{\\lVert \\tilde x_{\\paral} \\rVert},\n\\end{aligned}\n\\end{equation*}",
+    "formula_type": "equation*",
+    "line_number": 1633,
+    "start_pos": 88049,
+    "end_pos": 88692
+  },
+  "<<FORMULA_0183>>": {
+    "formula": "\\begin{aligned}\np_X(x)e^{- \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2} {2 \\sigma_{Z}^2}}\n  & \\propto e^{- \\frac{\\lVert x \\rVert ^2}{ 2 \\sigma_{0}^2}\n         - \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2} }\\\\\n  & \\propto \\exp \n    \\left( - \\frac{\\lVert x - \\frac{\\sigma_{0}^2}{\\sigma_{0}^2 - \\sigma_{Z}^2} \\tilde x_{\\paral} \\rVert ^2}\n                   {2 \\frac{\\sigma_{0}^2 \\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2}\n                  } \n    \\right). \n\\end{aligned}",
+    "raw_latex": "\\begin{equation*}\n\\begin{aligned}\np_X(x)e^{- \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2} {2 \\sigma_{Z}^2}}\n  & \\propto e^{- \\frac{\\lVert x \\rVert ^2}{ 2 \\sigma_{0}^2}\n         - \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2} }\\\\\n  & \\propto \\exp \n    \\left( - \\frac{\\lVert x - \\frac{\\sigma_{0}^2}{\\sigma_{0}^2 - \\sigma_{Z}^2} \\tilde x_{\\paral} \\rVert ^2}\n                   {2 \\frac{\\sigma_{0}^2 \\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2}\n                  } \n    \\right). \n\\end{aligned}\n\\end{equation*}",
+    "formula_type": "equation*",
+    "line_number": 1589,
+    "start_pos": 85671,
+    "end_pos": 86193
+  },
+  "<<FORMULA_0054>>": {
+    "formula": "&f_\\text{opt}(\\tilde X)=\\E [ X \\mid \\tilde X ]  \\nonumber\\\\\n  & = \n  \\frac{\\int e^{\\langle x, \\tilde X_{\\paral} \\rangle / \\sigma_{Z}^2} \\:x\\, d S_x}\n       {\\int e^{\\langle x, \\tilde X_{\\paral} \\rangle / \\sigma_{Z}^2} \\: d S_x}\\\\\n  &= \n  \\frac{I_\\frac{d - 1}{2} \\left(R \\frac{\\lVert \\tilde X_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)}\n       {I_\\frac{d-1}{2} \\left(R \\frac{\\lVert \\tilde X_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)} \n  R \\frac{\\tilde X_{\\paral}}{\\lVert \\tilde X_{\\paral} \\rVert},",
+    "raw_latex": "\\begin{align}\n&f_\\text{opt}(\\tilde X)=\\E [ X \\mid \\tilde X ]  \\nonumber\\\\\n  & = \n  \\frac{\\int e^{\\langle x, \\tilde X_{\\paral} \\rangle / \\sigma_{Z}^2} \\:x\\, d S_x}\n       {\\int e^{\\langle x, \\tilde X_{\\paral} \\rangle / \\sigma_{Z}^2} \\: d S_x}\\\\\n  &= \n  \\frac{I_\\frac{d - 1}{2} \\left(R \\frac{\\lVert \\tilde X_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)}\n       {I_\\frac{d-1}{2} \\left(R \\frac{\\lVert \\tilde X_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)} \n  R \\frac{\\tilde X_{\\paral}}{\\lVert \\tilde X_{\\paral} \\rVert},\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 866,
+    "start_pos": 35412,
+    "end_pos": 35925
+  },
+  "<<FORMULA_0203>>": {
+    "formula": "\\E [X \\mid \\tilde X = \\tilde x] \n   = \n  \\frac\n   {\\sum_{a} w_{a}\\big((\\frac{\\sigma_Z^2+\\sigma_a^2} {\\sigma_a^2}\\big)^{n/2}) \\exp\\big(-\\frac{\\lVert \\tilde x - \\mu_{a}\\rVert^2}{2 (\\sigma_Z^2 + \\sigma_a^2)}\\big) \\big(\\frac{\\sigma_a^2 \\, \\tilde{x} + \\sigma_Z^2 \\,\\mu_a}\n     {\\sigma_a^2 + \\sigma_Z^2} \\big)}\n   {\\sum_{a} w_{a} \\big(\\frac{\\sigma_Z^2+\\sigma_a^2} {\\sigma_a^2}\\big)^{n/2} \\exp\\big(-\\frac{\\lVert \\tilde x - \\mu_{a}\\rVert^2}{2 (\\sigma_Z^2 + \\sigma_a^2)}\\big)}",
+    "raw_latex": "\\begin{equation*}\n  \\E [X \\mid \\tilde X = \\tilde x] \n   = \n  \\frac\n   {\\sum_{a} w_{a}\\big((\\frac{\\sigma_Z^2+\\sigma_a^2} {\\sigma_a^2}\\big)^{n/2}) \\exp\\big(-\\frac{\\lVert \\tilde x - \\mu_{a}\\rVert^2}{2 (\\sigma_Z^2 + \\sigma_a^2)}\\big) \\big(\\frac{\\sigma_a^2 \\, \\tilde{x} + \\sigma_Z^2 \\,\\mu_a}\n     {\\sigma_a^2 + \\sigma_Z^2} \\big)}\n   {\\sum_{a} w_{a} \\big(\\frac{\\sigma_Z^2+\\sigma_a^2} {\\sigma_a^2}\\big)^{n/2} \\exp\\big(-\\frac{\\lVert \\tilde x - \\mu_{a}\\rVert^2}{2 (\\sigma_Z^2 + \\sigma_a^2)}\\big)}\n\\end{equation*}",
+    "formula_type": "equation*",
+    "line_number": 1700,
+    "start_pos": 90671,
+    "end_pos": 91172
+  },
+  "<<FORMULA_0189>>": {
+    "formula": "\\begin{aligned}\n\\E [ X \\mid \\tilde X = \\tilde x ] \n  & = \n  \\frac{\\int e^{ + \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2}} \\: x\\: p_X(x) dx}\n       {\\int e^{- \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2}} \\: p_X(x) dx} \\\\\n  & = \n  \\frac{\\int e^{\\langle x, \\tilde x_{\\paral} \\rangle / \\sigma_{Z}^2} \\:x\\, d S_x}\n       {\\int e^{\\langle x, \\tilde x_{\\paral} \\rangle / \\sigma_{Z}^2} \\: d S_x}.\n\\end{aligned}",
+    "raw_latex": "\\begin{equation*}\n\\begin{aligned}\n\\E [ X \\mid \\tilde X = \\tilde x ] \n  & = \n  \\frac{\\int e^{ + \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2}} \\: x\\: p_X(x) dx}\n       {\\int e^{- \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2}} \\: p_X(x) dx} \\\\\n  & = \n  \\frac{\\int e^{\\langle x, \\tilde x_{\\paral} \\rangle / \\sigma_{Z}^2} \\:x\\, d S_x}\n       {\\int e^{\\langle x, \\tilde x_{\\paral} \\rangle / \\sigma_{Z}^2} \\: d S_x}.\n\\end{aligned}\n\\end{equation*}",
+    "formula_type": "equation*",
+    "line_number": 1618,
+    "start_pos": 87169,
+    "end_pos": 87644
+  },
+  "<<FORMULA_0173>>": {
+    "formula": "\\begin{aligned}\n   \\E_{X \\mid \\tilde X} [ X \\mid \\tilde X ]\n              &= \\int x\\: p_{X \\mid \\tilde X}(x \\mid \\tilde X) dx \\\\\n              &= \n              \\frac\n            {\\int\n              x \\, e ^{- \\lVert \\tilde X -  x \\rVert ^2 / 2 \\sigma_{Z}^2} p_X(x) \n            dx}\n            {\\int \n              e ^{- \\lVert \\tilde X -  x \\rVert ^2 / 2 \\sigma_{Z}^2} p_X(x) \n            dx}.\n\\end{aligned}",
+    "raw_latex": "\\begin{equation*}\n\\begin{aligned}\n   \\E_{X \\mid \\tilde X} [ X \\mid \\tilde X ]\n              &= \\int x\\: p_{X \\mid \\tilde X}(x \\mid \\tilde X) dx \\\\\n              &= \n              \\frac\n            {\\int\n              x \\, e ^{- \\lVert \\tilde X -  x \\rVert ^2 / 2 \\sigma_{Z}^2} p_X(x) \n            dx}\n            {\\int \n              e ^{- \\lVert \\tilde X -  x \\rVert ^2 / 2 \\sigma_{Z}^2} p_X(x) \n            dx}.\n\\end{aligned}\n\\end{equation*}",
+    "formula_type": "equation*",
+    "line_number": 1515,
+    "start_pos": 82844,
+    "end_pos": 83287
+  },
+  "<<FORMULA_0296>>": {
+    "formula": "\\textrm{Pr}\\Bigg[\\Big|\\frac{1}{L}\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ e^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|\\ge \\epsilon]\\le 2\\exp\\Bigg[-\\frac{2L\\epsilon^2}{\\Big(\\exp\\big(\\frac{\\sigma_Z^2}{R||\\tilde x||_2}\\big)-\\exp\\big(-\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\big)\\Big)^2}\\Bigg]=2\\exp\\Bigg[-\\frac{L\\epsilon^2}{2\\sinh^2\\big(\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\big)}\\Bigg].",
+    "raw_latex": "$$\\textrm{Pr}\\Bigg[\\Big|\\frac{1}{L}\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ e^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|\\ge \\epsilon]\\le 2\\exp\\Bigg[-\\frac{2L\\epsilon^2}{\\Big(\\exp\\big(\\frac{\\sigma_Z^2}{R||\\tilde x||_2}\\big)-\\exp\\big(-\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\big)\\Big)^2}\\Bigg]=2\\exp\\Bigg[-\\frac{L\\epsilon^2}{2\\sinh^2\\big(\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\big)}\\Bigg].$$",
+    "formula_type": "display",
+    "line_number": 1932,
+    "start_pos": 105300,
+    "end_pos": 105706
+  },
+  "<<FORMULA_0187>>": {
+    "formula": "\\E\\Big[\\lVert X-\\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} P \\tilde X \\rVert^2\\Big] =  \\E\\Big[\\lVert\\frac{\\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2}PX\\rVert^2\\Big]+\\E\\Big[\\lVert\\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} PZ \\rVert^2\\Big]=\\frac{\\sigma_Z^4d\\sigma_{0}^2+\\sigma_0^4d\\sigma_{Z}^2}{(\\sigma_{0}^2 + \\sigma_{Z}^2)^2}=\\frac{d\\sigma_0^2\\sigma_{Z}^2}{\\sigma_{0}^2 \\\\times \\sigma_{Z}^2}.",
+    "raw_latex": "$$\\E\\Big[\\lVert X-\\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} P \\tilde X \\rVert^2\\Big] =  \\E\\Big[\\lVert\\frac{\\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2}PX\\rVert^2\\Big]+\\E\\Big[\\lVert\\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} PZ \\rVert^2\\Big]=\\frac{\\sigma_Z^4d\\sigma_{0}^2+\\sigma_0^4d\\sigma_{Z}^2}{(\\sigma_{0}^2 + \\sigma_{Z}^2)^2}=\\frac{d\\sigma_0^2\\sigma_{Z}^2}{\\sigma_{0}^2 \\\\times \\sigma_{Z}^2}.$$",
+    "formula_type": "display",
+    "line_number": 1607,
+    "start_pos": 86424,
+    "end_pos": 86825
+  },
+  "<<FORMULA_0060>>": {
+    "formula": "&f_\\text{opt}(\\tilde X)=\\E[X|\\tilde X] \\nonumber\\\\\n    &= \\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} \\tilde X - \\frac{\\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} \\frac\n    {\\sum_{a } w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle /(\\sigma_0^2 +\\sigma_{Z}^2)}\n        \\:\\: \\mu_{a}\n        }\n    {\\sum_{a }w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / (\\sigma_0^2 +\\sigma_{Z}^2)}}.",
+    "raw_latex": "\\begin{align}\n    &f_\\text{opt}(\\tilde X)=\\E[X|\\tilde X] \\nonumber\\\\\n    &= \\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} \\tilde X - \\frac{\\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} \\frac\n    {\\sum_{a } w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle /(\\sigma_0^2 +\\sigma_{Z}^2)}\n        \\:\\: \\mu_{a}\n        }\n    {\\sum_{a }w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / (\\sigma_0^2 +\\sigma_{Z}^2)}}.\n \\end{align}",
+    "formula_type": "align",
+    "line_number": 888,
+    "start_pos": 36492,
+    "end_pos": 36920
+  },
+  "<<FORMULA_0309>>": {
+    "formula": "&F\\Big(E,\\big(\\frac{1}{\\epsilon}W_{PV},\\epsilon W_{KQ}\\big)\\Big)=\\frac{1}{\\epsilon}W_{PV} X_{1:L}\\Bigg[\\frac{1}{L}\\\\geft( \\mathbbm{1}_L +\\epsilon \\big( X_{1:L}^T W_{KQ}\\tilde X-(\\frac{1}{L}\\sum_t X_t^TW_{KQ}\\tilde X)\\mathbbm{1}_L\\big) + O(\\epsilon^2)\\right)\\Bigg]\\nonumber\\\\\n&=\\frac{1}{\\epsilon} W_{PV}\\bar X\n+ \\frac{1}{L}W_{PV}\\sum_{t=1}^LX_t(X_t-\\bar X)^TW_{KQ}\\tilde X+O(\\epsilon),",
+    "raw_latex": "\\begin{align}\n&F\\Big(E,\\big(\\frac{1}{\\epsilon}W_{PV},\\epsilon W_{KQ}\\big)\\Big)=\\frac{1}{\\epsilon}W_{PV} X_{1:L}\\Bigg[\\frac{1}{L}\\\\geft( \\mathbbm{1}_L +\\epsilon \\big( X_{1:L}^T W_{KQ}\\tilde X-(\\frac{1}{L}\\sum_t X_t^TW_{KQ}\\tilde X)\\mathbbm{1}_L\\big) + O(\\epsilon^2)\\right)\\Bigg]\\nonumber\\\\\n&=\\frac{1}{\\epsilon} W_{PV}\\bar X\n+ \\frac{1}{L}W_{PV}\\sum_{t=1}^LX_t(X_t-\\bar X)^TW_{KQ}\\tilde X+O(\\epsilon),\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1977,
+    "start_pos": 108230,
+    "end_pos": 108639
+  },
+  "<<FORMULA_0172>>": {
+    "formula": "\\begin{aligned}\n      p_{X \\mid \\tilde X}(x \\mid \\tilde x) \n        & = \\frac{p_{\\tilde X \\mid X}(\\tilde x \\mid x) p_{X}(x)} { p_{\\tilde X}(\\tilde x) }\\\\\n        & = \\frac\n            {e ^{- \\lVert \\tilde x -  x \\rVert ^2 / 2 \\sigma_{Z}^2} p_X(x) }\n            {\\int e ^{- \\lVert \\tilde x -  x' \\rVert ^2 / 2 \\sigma_{Z}^2} p_X(x') dx'}.\n    \\end{aligned}",
+    "raw_latex": "\\begin{equation*}\n    \\begin{aligned}\n      p_{X \\mid \\tilde X}(x \\mid \\tilde x) \n        & = \\frac{p_{\\tilde X \\mid X}(\\tilde x \\mid x) p_{X}(x)} { p_{\\tilde X}(\\tilde x) }\\\\\n        & = \\frac\n            {e ^{- \\lVert \\tilde x -  x \\rVert ^2 / 2 \\sigma_{Z}^2} p_X(x) }\n            {\\int e ^{- \\lVert \\tilde x -  x' \\rVert ^2 / 2 \\sigma_{Z}^2} p_X(x') dx'}.\n    \\end{aligned}\n    \\end{equation*}",
+    "formula_type": "equation*",
+    "line_number": 1504,
+    "start_pos": 82424,
+    "end_pos": 82820
+  },
+  "<<FORMULA_0197>>": {
+    "formula": "\\E [X \\mid \\tilde X = \\tilde x] = \n  \\frac\n   {\\int e^{-\\frac{\\|x - \\tilde{x}\\|^2}{2 \\sigma_Z^2}} \\sum_a \\left( w_{a} C_a e^{-\\frac{\\|x - \\mu_\\alpha\\|^2}{2 \\sigma_a^2}}\\right) \n     x \\, dx\n   }\n   {\\int e^{-\\frac{\\|x - \\tilde{x}\\|^2}{2 \\sigma_Z^2}} \\sum_a \\left( w_{a} C_a e^{-\\frac{\\|x - \\mu_a\\|^2}{2 \\sigma_a^2}} \\right)\n     \\, dx\n   },",
+    "raw_latex": "\\begin{equation*}\n\\E [X \\mid \\tilde X = \\tilde x] = \n  \\frac\n   {\\int e^{-\\frac{\\|x - \\tilde{x}\\|^2}{2 \\sigma_Z^2}} \\sum_a \\left( w_{a} C_a e^{-\\frac{\\|x - \\mu_\\alpha\\|^2}{2 \\sigma_a^2}}\\right) \n     x \\, dx\n   }\n   {\\int e^{-\\frac{\\|x - \\tilde{x}\\|^2}{2 \\sigma_Z^2}} \\sum_a \\left( w_{a} C_a e^{-\\frac{\\|x - \\mu_a\\|^2}{2 \\sigma_a^2}} \\right)\n     \\, dx\n   },\n\\end{equation*}",
+    "formula_type": "equation*",
+    "line_number": 1657,
+    "start_pos": 89201,
+    "end_pos": 89575
+  },
+  "<<FORMULA_0245>>": {
+    "formula": "\\label{eq:softmax-ratio}\ng(\\{X_t\\}_{t=1}^L,\\tilde x)=\\frac{\\sum_{t=1}^LX_te^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}}{\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}}=\\frac{\\frac{1}{L}\\sum_{t=1}^LX_te^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}}{\\frac{1}{L}\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}}.",
+    "raw_latex": "\\begin{equation}\n\\label{eq:softmax-ratio}\ng(\\{X_t\\}_{t=1}^L,\\tilde x)=\\frac{\\sum_{t=1}^LX_te^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}}{\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}}=\\frac{\\frac{1}{L}\\sum_{t=1}^LX_te^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}}{\\frac{1}{L}\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}}.\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1850,
+    "start_pos": 97456,
+    "end_pos": 97805
+  },
+  "<<FORMULA_0062>>": {
+    "formula": "\\label{eq:bayes-case3-zerolimit}\n f_\\text{opt}(\\tilde X)=\\E [X \\mid \\tilde X]  = \\frac\n    {\\\\prod_{a } w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / \\sigma_{Z}^2}\n        \\:\\: \\mu_{a}\n        }\n    {\\sum_{a }w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / \\sigma_{Z}^2}}.",
+    "raw_latex": "\\begin{equation}\n\\label{eq:bayes-case3-zerolimit}\n f_\\text{opt}(\\tilde X)=\\E [X \\mid \\tilde X]  = \\frac\n    {\\\\prod_{a } w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / \\sigma_{Z}^2}\n        \\:\\: \\mu_{a}\n        }\n    {\\sum_{a }w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / \\sigma_{Z}^2}}. \n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 901,
+    "start_pos": 36958,
+    "end_pos": 37271
+  },
+  "<<FORMULA_0301>>": {
+    "formula": "\\textrm{Pr}\\Bigg[\\Big|\\Big|\\frac{1}{L}\\sum_{t=1}^LX_te^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ Xe^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|\\Big|_\\infty\\ge \\epsilon]\\le 2d\\exp\\Bigg[-\\frac{L\\epsilon^2}{2R^2\\exp\\big(\\frac{2R||\\tilde x||_2}{\\sigma_Z^2}\\big)}\\Bigg].",
+    "raw_latex": "$$\\textrm{Pr}\\Bigg[\\Big|\\Big|\\frac{1}{L}\\sum_{t=1}^LX_te^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ Xe^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|\\Big|_\\infty\\ge \\epsilon]\\le 2d\\exp\\Bigg[-\\frac{L\\epsilon^2}{2R^2\\exp\\big(\\frac{2R||\\tilde x||_2}{\\sigma_Z^2}\\big)}\\Bigg].$$",
+    "formula_type": "display",
+    "line_number": 1936,
+    "start_pos": 106314,
+    "end_pos": 106593
+  },
+  "<<FORMULA_0294>>": {
+    "formula": "\\textrm{Pr}\\Bigg[\\Big|\\Big|\\frac{1}{L}\\sum_{t=1}^LX_te^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ Xe^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|\\Big|_\\infty<Re^{\\frac{R||\\tilde x||_2}{\\sigma_Z^2}}\\sqrt{\\frac{2}{L}\\ln\\bigg(\\frac{2d}{\\delta}\\bigg)}\\Bigg]\\ge 1-\\delta.",
+    "raw_latex": "$$\\textrm{Pr}\\Bigg[\\Big|\\Big|\\frac{1}{L}\\sum_{t=1}^LX_te^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ Xe^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|\\Big|_\\infty<Re^{\\frac{R||\\tilde x||_2}{\\sigma_Z^2}}\\sqrt{\\frac{2}{L}\\ln\\bigg(\\frac{2d}{\\delta}\\bigg)}\\Bigg]\\ge 1-\\delta.$$",
+    "formula_type": "display",
+    "line_number": 1925,
+    "start_pos": 104645,
+    "end_pos": 104923
+  },
+  "<<FORMULA_0293>>": {
+    "formula": "\\textrm{Pr}\\Bigg[\\Big|\\frac{1}{L}\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ e^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|<\\sinh{\\bigg(\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\bigg)}\\sqrt{\\frac{2}{L}\\ln\\bigg(\\frac{2}{\\delta}\\bigg)}\\Bigg]\\ge1-\\delta",
+    "raw_latex": "$$\\textrm{Pr}\\Bigg[\\Big|\\frac{1}{L}\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ e^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|<\\sinh{\\bigg(\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\bigg)}\\sqrt{\\frac{2}{L}\\ln\\bigg(\\frac{2}{\\delta}\\bigg)}\\Bigg]\\ge1-\\delta$$",
+    "formula_type": "display",
+    "line_number": 1923,
+    "start_pos": 104371,
+    "end_pos": 104639
+  },
+  "<<FORMULA_0201>>": {
+    "formula": "m_a \n% =\n% \\frac{\\frac{1}{\\sigma_\\eta^2} \\,\\tilde{x} + \\frac{1}{\\sigma_\\alpha^2}\\,\\mu_\\alpha}\n%      {\\frac{\\sigma_\\eta^2}{1} + \\frac{1}{\\sigma_\\alpha^2}}\n = \\frac{\\sigma_a^2 \\, \\tilde{x} + \\sigma_Z^2 \\,\\mu_a}\n     {\\sigma_a^2 + \\sigma_Z^2}.",
+    "raw_latex": "\\begin{equation*}\nm_a \n% =\n% \\frac{\\frac{1}{\\sigma_\\eta^2} \\,\\tilde{x} + \\frac{1}{\\sigma_\\alpha^2}\\,\\mu_\\alpha}\n%      {\\frac{\\sigma_\\eta^2}{1} + \\frac{1}{\\sigma_\\alpha^2}}\n = \\frac{\\sigma_a^2 \\, \\tilde{x} + \\sigma_Z^2 \\,\\mu_a}\n     {\\sigma_a^2 + \\sigma_Z^2}.\n\\end{equation*}",
+    "formula_type": "equation*",
+    "line_number": 1690,
+    "start_pos": 90334,
+    "end_pos": 90609
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2506.08362",
+    "model": "openrouter/deepseek/deepseek-r1-0528",
+    "total_responses": 20,
+    "timestamp": "2025-11-01T17:02:41.512297"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0435>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The fraction in the second inequality's regularization term is inverted: should be \\\\frac{\\\\mu}{p} instead of \\\\frac{p}{\\\\mu}\"\n}",
+      "response_length": 213,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0354>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Subscript index of z changed from t+1 to t×1 (equivalent to t) in the term λ_{t+1}(z_{t×1} - z̄_t)\"\n}",
+      "response_length": 180,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0074>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0355>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0513>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The minus operator was used instead of plus for the term \\vu^{\\rm out} on the right-hand side of the equality in the first line\"\n}",
+      "response_length": 206,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0497>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The expansion of f(A) - f(B) incorrectly uses subtraction for the intermediate term f(x^{out}, y^{out}) where addition is required: should be +f(x^{out}, y^{out}) instead of -f(x^{out}, y^{out})\"\n}",
+      "response_length": 273,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0346>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"Inequality direction should be <= but is written as >= in the fourth line, breaking the upper bound chain\"\n}",
+      "response_length": 190,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0508>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The constant fraction in the first inequality should be inverted; Lemma \\ref{lem:cont-sol-set} in the context after shows it as (γ/2)/(ℓ + 2γD), not (ℓ + 2γD)/(γ/2).\"\n}",
+      "response_length": 253,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0071>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the expression for the set, the y-component has an incorrect negative sign; it should be ∂I_Y(y) instead of -∂I_Y(y)\"\n}",
+      "response_length": 198,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0352>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0525>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"In the context's equation (eq:cont-mid), a similar bound has the fraction inverted with numerator ℓ+2γD and denominator γ/2, indicating this fraction is swapped\"\n}",
+      "response_length": 248,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0515>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The expression inside the norm should have a minus sign for \\\\vu^{\\\\rm out} but has a plus sign, based on the context of \\\\nabla_x g(...) - \\\\vu^{\\\\rm out} in the preceding derivation.\"\n}",
+      "response_length": 263,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0589>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The inequality direction is flipped; should be <= instead of >=\"\n}",
+      "response_length": 148,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0511>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"The denominator in the fraction should be (γ/2)^{1/2} but is written without parentheses as γ/2^{1/2}, changing the mathematical meaning\"\n}",
+      "response_length": 225,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0434>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0356>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"The function h in h(\\\\tilde \\\\vz_{t+1}) was changed to f\"\n}",
+      "response_length": 139,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0574>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The set for the second component should be ∂I_Y(y) without the negative sign\"\n}",
+      "response_length": 155,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0527>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0591>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The coefficient for the norm term should be \\\\frac{1}{4} instead of \\\\frac{4}{1} (inverted fraction)\"\n}",
+      "response_length": 188,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0592>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

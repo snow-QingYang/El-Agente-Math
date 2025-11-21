@@ -1,0 +1,114 @@
+{
+  "metadata": {
+    "error_rate": 0.5,
+    "random_seed": null,
+    "total_formulas_processed": 20,
+    "formulas_modified": 10,
+    "formulas_unmodified": 10,
+    "timestamp": "2025-10-31T16:45:47.612415"
+  },
+  "errors": [
+    {
+      "label": "<<FORMULA_0255>>",
+      "original_formula": "\\|\\bar Z\\bar Z^\\top\\|_F^2 &= \\sum_{i=1}^N \\| \\mathbf q_i\\|^2 + \\sum_{i\\not= j}\\langle \\mathbf q_i,\\mathbf q_j \\rangle \\\\\n\t\t&= \\sum_{i=1}^N \\frac{N^2}{L^2}\\|\\mathbf v_i\\|^2 + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle\\mathbf v_i, \\mathbf v_j \\rangle \\\\\n\t\t&= \\frac{N^3}{L^2} + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle \\mathbf v_i, \\mathbf v_j \\rangle.",
+      "modified_formula": "\\|\\bar Z\\bar Z^\\top\\|_F^2 &= \\\\prod_{i=1}^N \\| \\mathbf q_i\\|^2 + \\sum_{i\\not= j}\\langle \\mathbf q_i,\\mathbf q_j \\rangle \\\\\n\t\t&= \\sum_{i=1}^N \\frac{N^2}{L^2}\\|\\mathbf v_i\\|^2 + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle\\mathbf v_i, \\mathbf v_j \\rangle \\\\\n\t\t&= \\frac{N^3}{L^2} + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle \\mathbf v_i, \\mathbf v_j \\rangle.",
+      "error_type": "sum_product_swap",
+      "error_description": "Changed '∑' to '∏'",
+      "line_number": 2125,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_0088>>",
+      "original_formula": "\\label{eq:matrix-based-entropy}\n    S_{\\alpha}(\\mathbf{Z}) \\;=\\; \\frac{1}{1 - \\alpha} \\log \\Biggl(\\sum_{i=1}^{r} \\Bigl(\\frac{\\lambda_i(\\mathbf{K_Z})}{\\operatorname{tr}(\\mathbf{K_Z})}\\Bigr)^\\alpha \\Biggr)",
+      "modified_formula": "\\label{eq:matrix-based-entropy}\n    S_{\\alpha}(\\mathbf{Z}) \\;=\\; \\frac{1 - \\alpha}{1} \\log \\Biggl(\\sum_{i=1}^{r} \\Bigl(\\frac{\\lambda_i(\\mathbf{K_Z})}{\\operatorname{tr}(\\mathbf{K_Z})}\\Bigr)^\\alpha \\Biggr)",
+      "error_type": "fraction_inversion",
+      "error_description": "Inverted fraction (swapped numerator and denominator)",
+      "line_number": 706,
+      "formula_type": "equation"
+    },
+    {
+      "label": "<<FORMULA_0029>>",
+      "original_formula": "\\label{eq:matrix-based-entropy}\nS_\\alpha(\\mathbf{Z}) \n\\;=\\; \n\\frac{1}{1-\\alpha}\\,\\log \\Biggl(\\,\\sum_{i=1}^{r} \\Bigl(\\tfrac{\\lambda_i(\\mathbf{K})}{\\mathrm{tr}(\\mathbf{K})}\\Bigr)^\\alpha \\Biggr),",
+      "modified_formula": "\\label{eq:matrix + based-entropy}\nS_\\alpha(\\mathbf{Z}) \n\\;=\\; \n\\frac{1}{1-\\alpha}\\,\\log \\Biggl(\\,\\sum_{i=1}^{r} \\Bigl(\\tfrac{\\lambda_i(\\mathbf{K})}{\\mathrm{tr}(\\mathbf{K})}\\Bigr)^\\alpha \\Biggr),",
+      "error_type": "sign_flip",
+      "error_description": "Changed '-' to '+'",
+      "line_number": 409,
+      "formula_type": "equation"
+    },
+    {
+      "label": "<<FORMULA_0233>>",
+      "original_formula": "\\|\\bar Z\\bar Z^\\top \\|_F^2 &= \\frac1{L^2}\\| L \\bar Z\\bar Z^\\top \\|_F^2\\\\ &= \\frac{1}{L^2} (\\sum_{i=1}^N \\|\\sqrt L q_i\\|^2 + \\sum_{i\\not= j}\\langle \\sqrt L q_i, \\sqrt L q_j \\rangle ).",
+      "modified_formula": "\\|\\bar Z\\bar Z^\\top \\|_F^2 &= \\frac1{L^2}\\| L \\bar Z\\bar Z^\\top \\|_F^2\\\\ &= \\frac{1}{L^2} (\\sum_{i=1}^N \\|\\sqrt L q_i\\|^2 + \\sum_{i\\not= j}\\langle \\sqrt L q_m, \\sqrt L q_j \\rangle ).",
+      "error_type": "index_change",
+      "error_description": "Changed subscript 'i' to 'm'",
+      "line_number": 2081,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_0053>>",
+      "original_formula": "\\bar{C} \n    = \\frac{1}{L-2}\\sum_{k=1}^{L-2}\n      \\arccos\\!\\Bigl(\\tfrac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}\n                           {\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_k\\|}\\Bigr).",
+      "modified_formula": "\\bar{C} \n    = \\frac{1}{L-2}\\sum_{k=1}^{L-2}\n      \\arccos\\!\\Bigl(\\tfrac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}\n                           {\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_j\\|}\\Bigr).",
+      "error_type": "index_change",
+      "error_description": "Changed subscript 'k' to 'j'",
+      "line_number": 509,
+      "formula_type": "display"
+    },
+    {
+      "label": "<<FORMULA_0113>>",
+      "original_formula": "\\bar{C} = \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos\\left( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k+1}\\| \\|\\mathbf{v}_k\\|} \\right).",
+      "modified_formula": "\\bar{C} = \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos\\left( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k - 1}\\| \\|\\mathbf{v}_k\\|} \\right).",
+      "error_type": "sign_flip",
+      "error_description": "Changed '+' to '-'",
+      "line_number": 850,
+      "formula_type": "equation"
+    },
+    {
+      "label": "<<FORMULA_0128>>",
+      "original_formula": "\\mathbf{h}_t &= \\mathbf{A}\\mathbf{h}_{t-1} + \\mathbf{B}\\mathbf{x}_t, \\\\\n    \\mathbf{y}_t &= \\mathbf{C}\\mathbf{h}_t + \\mathbf{D}\\mathbf{x}_t,",
+      "modified_formula": "\\mathbf{h}_t &= \\mathbf{A}\\mathbf{h}_{t-1} \\\\times \\mathbf{B}\\mathbf{x}_t, \\\\\n    \\mathbf{y}_t &= \\mathbf{C}\\mathbf{h}_t + \\mathbf{D}\\mathbf{x}_t,",
+      "error_type": "operator_swap",
+      "error_description": "Changed '+' to '×'",
+      "line_number": 1690,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0123>>",
+      "original_formula": "\\mathbf{Q} = \\mathbf{x}\\mathbf{W}_Q, \\quad \\mathbf{K} = \\mathbf{x}\\mathbf{W}_K, \\quad \\mathbf{V} = \\mathbf{x}\\mathbf{W}_V,",
+      "modified_formula": "\\mathbf{Q} = \\mathbf{x}\\mathbf{W}_Q, \\quad \\mathbf{K} = \\mathbf{x}\\mathbf{W}_K^T, \\quad \\mathbf{V} = \\mathbf{x}\\mathbf{W}_V,",
+      "error_type": "transpose_error",
+      "error_description": "Added transpose to K",
+      "line_number": 1665,
+      "formula_type": "equation"
+    },
+    {
+      "label": "<<FORMULA_0235>>",
+      "original_formula": "\\|\\bar Z\\bar Z^\\top \\|_F^2  = \\frac{1}{L^2} (N + \\sum_{i\\not= j}\\langle \\sqrt L q_i, \\sqrt L q_j \\rangle ).",
+      "modified_formula": "\\|\\bar Z\\bar Z^\\top \\|_F^2  = \\frac{1}{L^2} (N + \\\\prod_{i\\not= j}\\langle \\sqrt L q_i, \\sqrt L q_j \\rangle ).",
+      "error_type": "sum_product_swap",
+      "error_description": "Changed '∑' to '∏'",
+      "line_number": 2085,
+      "formula_type": "display"
+    },
+    {
+      "label": "<<FORMULA_0153>>",
+      "original_formula": "\\label{eqn:attention}\n%    \\mathbf{A} = softmax\\left(\\frac{\\mathbf{Q}\\mathbf{K}^\\top}{\\sqrt{d_k}}\\right),\n%",
+      "modified_formula": "\\label{eqn:attention}\n%    \\mathbf{A} = softmax\\\\geft(\\frac{\\mathbf{Q}\\mathbf{K}^\\top}{\\sqrt{d_k}}\\right),\n%",
+      "error_type": "inequality_flip",
+      "error_description": "Changed '≤' to '≥'",
+      "line_number": 1725,
+      "formula_type": "equation"
+    }
+  ],
+  "unmodified": [
+    "<<FORMULA_0212>>",
+    "<<FORMULA_0110>>",
+    "<<FORMULA_0018>>",
+    "<<FORMULA_0259>>",
+    "<<FORMULA_0238>>",
+    "<<FORMULA_0056>>",
+    "<<FORMULA_0155>>",
+    "<<FORMULA_0102>>",
+    "<<FORMULA_0210>>",
+    "<<FORMULA_0126>>"
+  ]
+}

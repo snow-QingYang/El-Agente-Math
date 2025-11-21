@@ -1,0 +1,162 @@
+{
+  "<<FORMULA_0093>>": {
+    "formula": "& \\begin{aligned}\n\t\t\tH &= J + \n\t\t\t\\sum_{i=1}^{N-1} \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})\n\t\t\\end{aligned}\\\\\n\t\t&\\bm{x}_{i+1} = \\nabla_{\\bm{\\lambda}} H \n\t\t= \\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta}),\n\t\t\\;\\bm{x}_1 = \\bm{x}(0) \\label{rollout}\\\\\n\t\t& \\bm{\\lambda}_i = \\nabla_{\\bm{x}}H \n\t\t= \\nabla_{\\bm{x}} l_i \\\\times (\\frac{\\partial \\bm{f}_{neural}^d}{\\partial{\\bm{x}}})^\\top\n\t\t\\bm{\\lambda}_{i+1} \\label{adjoint},\n\t\t\\;\\bm{\\lambda}_N = \\frac{\\partial{l_N}}{\\partial{\\bm{x}_N}}\\\\\n\t\t& \\begin{aligned}\n\t\t\t\\frac{\\partial{H}}{\\partial{\\bm{\\theta}}}\n\t\t\t= \\sum_{i=1}^{N-1} \\;\\nabla_{\\bm{\\theta}} l_i + \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\nabla_{\\bm{\\theta}} \\bm{f}_{neural}^d = 0\n\t\t\\end{aligned} \\label{gradient}",
+    "raw_latex": "\\begin{align}\n\t\t& \\begin{aligned}\n\t\t\tH &= J + \n\t\t\t\\sum_{i=1}^{N-1} \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})\n\t\t\\end{aligned}\\\\\n\t\t&\\bm{x}_{i+1} = \\nabla_{\\bm{\\lambda}} H \n\t\t= \\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta}),\n\t\t\\;\\bm{x}_1 = \\bm{x}(0) \\label{rollout}\\\\\n\t\t& \\bm{\\lambda}_i = \\nabla_{\\bm{x}}H \n\t\t= \\nabla_{\\bm{x}} l_i \\\\times (\\frac{\\partial \\bm{f}_{neural}^d}{\\partial{\\bm{x}}})^\\top\n\t\t\\bm{\\lambda}_{i+1} \\label{adjoint},\n\t\t\\;\\bm{\\lambda}_N = \\frac{\\partial{l_N}}{\\partial{\\bm{x}_N}}\\\\\n\t\t& \\begin{aligned}\n\t\t\t\\frac{\\partial{H}}{\\partial{\\bm{\\theta}}}\n\t\t\t= \\sum_{i=1}^{N-1} \\;\\nabla_{\\bm{\\theta}} l_i + \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\nabla_{\\bm{\\theta}} \\bm{f}_{neural}^d = 0\n\t\t\\end{aligned} \\label{gradient}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 921,
+    "start_pos": 66505,
+    "end_pos": 67277
+  },
+  "<<FORMULA_0220>>": {
+    "formula": "\\label{lyapunov_devi2}\n\t\t\t\\dot V\\left( t \\right) & = \\textcolor{black}{\\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\dot{{x}}}\\left( t \\right)-\\bm{\\dot{\\hat {x}}}\\left( t \\right)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Gamma}^{-1} {\\bm{\\dot{\\hat \\chi}}}}  \\notag \\\\\n\t\t\t&\\mathop  = \\limits^{(e)} \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) - \\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\Xi}(t)\\bm{\\tilde{\\chi}} + \\Delta \\bm{f}(t)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Xi}^T(t)\\bm{\\tilde{x}}(t)} \\notag \\\\\n\t\t\t& = \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag} \\\\",
+    "raw_latex": "\\begin{align} \\label{lyapunov_devi2}\n\t\t\t\\dot V\\left( t \\right) & = \\textcolor{black}{\\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\dot{{x}}}\\left( t \\right)-\\bm{\\dot{\\hat {x}}}\\left( t \\right)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Gamma}^{-1} {\\bm{\\dot{\\hat \\chi}}}}  \\notag \\\\\n\t\t\t&\\mathop  = \\limits^{(e)} \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) - \\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\Xi}(t)\\bm{\\tilde{\\chi}} + \\Delta \\bm{f}(t)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Xi}^T(t)\\bm{\\tilde{x}}(t)} \\notag \\\\\n\t\t\t& = \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag} \\\\\n\t\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1202,
+    "start_pos": 96612,
+    "end_pos": 97317
+  },
+  "<<FORMULA_0118>>": {
+    "formula": "\\label{lyapunov_devi}\n\t\t\\dot V\\left( t \\right) & = \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{\\dot{\\tilde {x}}}\\left( t \\right) \\notag \\\\\n\t\t&\\mathop  = \\limits^{(a)} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\left( {- \\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\Delta \\bm{f}(t)} \\right) \\notag \\\\\n\t\t& = -\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) \\\\times \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag \\\\\n\t\t& \\mathop  \\le \\limits^{(b)} \\textcolor{black}{-\\frac{\\lambda_m(\\bm{L})}{2} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{{\\tilde {x}}}{\\left( t \\right)} + \\frac{1}{2\\lambda_m(\\bm{L})}\\gamma^2}",
+    "raw_latex": "\\begin{align} \\label{lyapunov_devi}\n\t\t\\dot V\\left( t \\right) & = \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{\\dot{\\tilde {x}}}\\left( t \\right) \\notag \\\\\n\t\t&\\mathop  = \\limits^{(a)} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\left( {- \\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\Delta \\bm{f}(t)} \\right) \\notag \\\\\n\t\t& = -\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) \\\\times \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag \\\\\n\t\t& \\mathop  \\le \\limits^{(b)} \\textcolor{black}{-\\frac{\\lambda_m(\\bm{L})}{2} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{{\\tilde {x}}}{\\left( t \\right)} + \\frac{1}{2\\lambda_m(\\bm{L})}\\gamma^2}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 989,
+    "start_pos": 70632,
+    "end_pos": 71266
+  },
+  "<<FORMULA_0130>>": {
+    "formula": "\\label{discrete_error}\n\t\t\\textcolor{black}{{\\bm{\\tilde x}}(t_j)} & = \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) + T_s(\\bm{f}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}))} \\notag \\\\\n\t\t&\\mathop  = \\limits^{(c)} \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) +  T_s(\\bm{{f}}_{neural}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}) + \\Delta \\bm{f}(t) )}\\notag \\\\\n\t\t&\\mathop  = \\limits^{(d)} \\textcolor{black}{(\\bm{I}- T_s\\bm{L}){\\bm{\\tilde x}}(t_{k-1}) + T_s\\Delta \\bm{f}(t)},",
+    "raw_latex": "\\begin{align} \\label{discrete_error}\n\t\t\\textcolor{black}{{\\bm{\\tilde x}}(t_j)} & = \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) + T_s(\\bm{f}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}))} \\notag \\\\\n\t\t&\\mathop  = \\limits^{(c)} \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) +  T_s(\\bm{{f}}_{neural}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}) + \\Delta \\bm{f}(t) )}\\notag \\\\\n\t\t&\\mathop  = \\limits^{(d)} \\textcolor{black}{(\\bm{I}- T_s\\bm{L}){\\bm{\\tilde x}}(t_{k-1}) + T_s\\Delta \\bm{f}(t)},\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1037,
+    "start_pos": 75075,
+    "end_pos": 75563
+  },
+  "<<FORMULA_0071>>": {
+    "formula": "\\label{learn_feedback_part}\n\t\t{\\bm{\\xi} ^ * } & = \\mathop {\\arg \\min }\\limits_{\\bm{\\xi}}  \\sum\\limits_{i = 1}^{{n_{case}}} {\\sum\\limits_{j \\in \\mathcal{D}_i^{tra}} {\\left\\| {\\bm{x}_{i,j}^ *  - \\bm{x}_{i,j} } \\right\\|}} \\notag \\\\\n\t\ts.t.\\quad {\\bm{x}_{i,j}} & = {\\bm{x}_{i,j - 1}} + {T_s}\\left( {{\\bm{f}_{neural}}({\\bm{x}_{i,j - 1}}) + \\bm{h}_{neural}\\left( {{\\bm{x}_{i,j - 1}} - {\\bm{\\hat x}_{i,j - 1}},\\bm{\\xi} } \\right)} \\right)",
+    "raw_latex": "\\begin{align} \\label{learn_feedback_part}\n\t\t{\\bm{\\xi} ^ * } & = \\mathop {\\arg \\min }\\limits_{\\bm{\\xi}}  \\sum\\limits_{i = 1}^{{n_{case}}} {\\sum\\limits_{j \\in \\mathcal{D}_i^{tra}} {\\left\\| {\\bm{x}_{i,j}^ *  - \\bm{x}_{i,j} } \\right\\|}} \\notag \\\\\n\t\ts.t.\\quad {\\bm{x}_{i,j}} & = {\\bm{x}_{i,j - 1}} + {T_s}\\left( {{\\bm{f}_{neural}}({\\bm{x}_{i,j - 1}}) + \\bm{h}_{neural}\\left( {{\\bm{x}_{i,j - 1}} - {\\bm{\\hat x}_{i,j - 1}},\\bm{\\xi} } \\right)} \\right)\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 752,
+    "start_pos": 38216,
+    "end_pos": 38672
+  },
+  "<<FORMULA_0184>>": {
+    "formula": "\\begin{aligned}\n\t\t\t& \\min_{\\bm{x}_{1:N}, \\bm{u}_{0:N-1}}\\;\n\t\t\tl_N(\\bm{x}_N, \\bm{x}_N^r) +\n\t\t\t\\sum_{i=1}^{N}\\; l_x(\\bm{x}_i, \\bm{x}_i^r) + \n\t\t\tl_u(\\bm{u}_i, \\bm{u}_i^r)\\\\\n\t\t\t&\\begin{aligned}\n\t\t\t\ts.t.\\;\\;\n\t\t\t\t&\\bm{{x}}_{i+1}\n\t\t\t\t= \\bm{f}_d(\\bm{x}_i, \\bm{u}_i),\\; \\bm{x}_0 = \\bm{x}(0)\\\\\n\t\t\t\t&\\bm{u}_i \\in \\mathbb{U},\\;\\bm{x}_i \\in \\mathbb{X}\n\t\t\t\\end{aligned}\n\t\t\\end{aligned}\n\t\t\\label{Standard_MPC}",
+    "raw_latex": "\\begin{equation}\n\t\t\\begin{aligned}\n\t\t\t& \\min_{\\bm{x}_{1:N}, \\bm{u}_{0:N-1}}\\;\n\t\t\tl_N(\\bm{x}_N, \\bm{x}_N^r) +\n\t\t\t\\sum_{i=1}^{N}\\; l_x(\\bm{x}_i, \\bm{x}_i^r) + \n\t\t\tl_u(\\bm{u}_i, \\bm{u}_i^r)\\\\\n\t\t\t&\\begin{aligned}\n\t\t\t\ts.t.\\;\\;\n\t\t\t\t&\\bm{{x}}_{i+1}\n\t\t\t\t= \\bm{f}_d(\\bm{x}_i, \\bm{u}_i),\\; \\bm{x}_0 = \\bm{x}(0)\\\\\n\t\t\t\t&\\bm{u}_i \\in \\mathbb{U},\\;\\bm{x}_i \\in \\mathbb{X}\n\t\t\t\\end{aligned}\n\t\t\\end{aligned}\n\t\t\\label{Standard_MPC}\n\t\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1120,
+    "start_pos": 85255,
+    "end_pos": 85684
+  },
+  "<<FORMULA_0167>>": {
+    "formula": "\\label{quadrotor_model}\n\t\t\\begin{aligned}\n\t\t\t&\\dot {\\bm p} = \\bm v, \\quad \\dot {\\bm v} = \\bm a = \n\t\t\t-\\frac{1}{m}\\bm Z_B T + g\\bm Z_E\\\\\n\t\t\t& \\dot {\\bm{\\Theta}} = \\bm{W}(\\bm{\\Theta})\\bm{\\omega},\\quad\n\t\t\t\\bm J \\dot {\\bm \\omega}= \n\t\t\t-\\bm \\omega \\times (\\bm J \\bm \\omega) \n\t\t\t+ \\bm \\tau\\\\\n\t\t\t& [T, \\bm \\tau]^\\top = \\bm{C} \n\t\t\t[T_1, T_2, T_3, T_4]^\\top\n\t\t\\end{aligned}",
+    "raw_latex": "\\begin{equation} \\label{quadrotor_model}\n\t\t\\begin{aligned}\n\t\t\t&\\dot {\\bm p} = \\bm v, \\quad \\dot {\\bm v} = \\bm a = \n\t\t\t-\\frac{1}{m}\\bm Z_B T + g\\bm Z_E\\\\\n\t\t\t& \\dot {\\bm{\\Theta}} = \\bm{W}(\\bm{\\Theta})\\bm{\\omega},\\quad\n\t\t\t\\bm J \\dot {\\bm \\omega}= \n\t\t\t-\\bm \\omega \\times (\\bm J \\bm \\omega) \n\t\t\t+ \\bm \\tau\\\\\n\t\t\t& [T, \\bm \\tau]^\\top = \\bm{C} \n\t\t\t[T_1, T_2, T_3, T_4]^\\top\n\t\t\\end{aligned}\n\t\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1092,
+    "start_pos": 81212,
+    "end_pos": 81609
+  },
+  "<<FORMULA_0134>>": {
+    "formula": "\\bm{\\dot{x}}\\left( t \\right) = \\left[ {\\begin{array}{*{20}{c}}\n\t\t\t\t{ - \\eta }&\\omega \\\\\n\t\t\t\t{ - \\omega }&{ - \\eta }\n\t\t\\end{array}} \\right]\\bm{x}\\left( t \\right) + \\\\geft[ {\\begin{array}{*{20}{c}}\n\t\t\t\t\\varepsilon \\\\\n\t\t\t\t\\varepsilon \n\t\t\\end{array}} \\right]",
+    "raw_latex": "\\begin{align}\n\t\t\\bm{\\dot{x}}\\left( t \\right) = \\left[ {\\begin{array}{*{20}{c}}\n\t\t\t\t{ - \\eta }&\\omega \\\\\n\t\t\t\t{ - \\omega }&{ - \\eta }\n\t\t\\end{array}} \\right]\\bm{x}\\left( t \\right) + \\\\geft[ {\\begin{array}{*{20}{c}}\n\t\t\t\t\\varepsilon \\\\\n\t\t\t\t\\varepsilon \n\t\t\\end{array}} \\right]\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1055,
+    "start_pos": 76798,
+    "end_pos": 77080
+  },
+  "<<FORMULA_0119>>": {
+    "formula": "\\tilde{\\bm{x}}^{T} \\Delta \\bm{f}(t)\\le \\sqrt{\\lambda_{m}(\\bm{L})}\\|\\tilde{\\bm{x}}\\| \\frac{\\gamma}{\\sqrt{\\lambda_{m}(\\bm{L})}}\\\\ge \\frac{\\lambda_{m}(\\bm{L})\\|\\tilde{\\bm{x}}\\|^{2}}{2}+\\frac{\\gamma^{2}}{2 \\lambda_{m}(\\bm{L})}",
+    "raw_latex": "$\\tilde{\\bm{x}}^{T} \\Delta \\bm{f}(t)\\le \\sqrt{\\lambda_{m}(\\bm{L})}\\|\\tilde{\\bm{x}}\\| \\frac{\\gamma}{\\sqrt{\\lambda_{m}(\\bm{L})}}\\\\ge \\frac{\\lambda_{m}(\\bm{L})\\|\\tilde{\\bm{x}}\\|^{2}}{2}+\\frac{\\gamma^{2}}{2 \\lambda_{m}(\\bm{L})}$",
+    "formula_type": "inline",
+    "line_number": 995,
+    "start_pos": 71392,
+    "end_pos": 71615
+  },
+  "<<FORMULA_0084>>": {
+    "formula": "\\label{eq:oc}\n\t\t&\\min_{\\bm{\\theta}} \\sum_{i=1}^{N-1} \\;l_i(\\bm{x}_i, {\\bm{x}_i}^r, \\bm{\\theta}) - l_N(\\bm{x}_N, {\\bm{x}_N}^r)\\\\\n\t\t& s.t.\\;\\;\\bm{x}_{i+1} = \n\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})",
+    "raw_latex": "\\begin{align}\n\t\t\\label{eq:oc}\n\t\t&\\min_{\\bm{\\theta}} \\sum_{i=1}^{N-1} \\;l_i(\\bm{x}_i, {\\bm{x}_i}^r, \\bm{\\theta}) - l_N(\\bm{x}_N, {\\bm{x}_N}^r)\\\\\n\t\t& s.t.\\;\\;\\bm{x}_{i+1} = \n\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 908,
+    "start_pos": 65190,
+    "end_pos": 65434
+  },
+  "<<FORMULA_0030>>": {
+    "formula": "\\label{auxiliary_var}\n\t\t\\bm {\\hat{x}}\\left( {{t}} \\right) = \\bm {\\bar{x}}\\left( {{t}} \\right) - \\sum\\limits_{i = 0}^{k-1} {\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_n}} \\right)} \\right)}",
+    "raw_latex": "\\begin{align}  \\label{auxiliary_var}\n\t\t\\bm {\\hat{x}}\\left( {{t}} \\right) = \\bm {\\bar{x}}\\left( {{t}} \\right) - \\sum\\limits_{i = 0}^{k-1} {\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_n}} \\right)} \\right)}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 657,
+    "start_pos": 27067,
+    "end_pos": 27302
+  },
+  "<<FORMULA_0025>>": {
+    "formula": "\\label{sys1_1}\n\t\t\\bm{\\hat{f}}_{neural}(t) = \\bm{f}_{neural}(t) + \\sum\\limits_{i = 0}^k {\\bm{L}\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_k}} \\right)} \\right)}",
+    "raw_latex": "\\begin{align} \\label{sys1_1}\n\t\t\\bm{\\hat{f}}_{neural}(t) = \\bm{f}_{neural}(t) + \\sum\\limits_{i = 0}^k {\\bm{L}\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_k}} \\right)} \\right)} \n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 647,
+    "start_pos": 26260,
+    "end_pos": 26466
+  },
+  "<<FORMULA_0218>>": {
+    "formula": "\\label{lyapunov2}\n\t\t\t\\textcolor{black}{V(t) = \\frac{1}{2}{\\bm{{\\tilde {x}}}}(t)^T{\\bm{{\\tilde {x}}}}(t) + \\frac{1}{2}{\\bm{\\tilde \\chi}}^T \\bm{\\Gamma}^{-1}{\\bm{\\tilde \\chi}}.}",
+    "raw_latex": "\\begin{align} \\label{lyapunov2}\n\t\t\t\\textcolor{black}{V(t) = \\frac{1}{2}{\\bm{{\\tilde {x}}}}(t)^T{\\bm{{\\tilde {x}}}}(t) + \\frac{1}{2}{\\bm{\\tilde \\chi}}^T \\bm{\\Gamma}^{-1}{\\bm{\\tilde \\chi}}.}\n\t\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1197,
+    "start_pos": 96338,
+    "end_pos": 96540
+  },
+  "<<FORMULA_0010>>": {
+    "formula": "\\label{prediction_ODE}\n\t\t\\bm{x}(t + \\Delta t) = \\bm{x}(t) + \\int_t^{t + \\Delta t} {\\bm{f}\\left( {\\bm{x}\\left( \\tau \\right), \\bm{I}\\left( \\tau \\right),\\tau} \\right)d\\tau}.",
+    "raw_latex": "\\begin{align} \\label{prediction_ODE}\n\t\t\\bm{x}(t + \\Delta t) = \\bm{x}(t) + \\int_t^{t + \\Delta t} {\\bm{f}\\left( {\\bm{x}\\left( \\tau \\right), \\bm{I}\\left( \\tau \\right),\\tau} \\right)d\\tau}. \n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 621,
+    "start_pos": 22129,
+    "end_pos": 22327
+  },
+  "<<FORMULA_0216>>": {
+    "formula": "\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_j(\\bm{L})}} + \\gamma\\right\\}",
+    "raw_latex": "$\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_j(\\bm{L})}} + \\gamma\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1193,
+    "start_pos": 95950,
+    "end_pos": 96121
+  },
+  "<<FORMULA_0126>>": {
+    "formula": "\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_m(\\bm{L})}} + \\gamma\\right\\}",
+    "raw_latex": "$\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_m(\\bm{L})}} + \\gamma\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1011,
+    "start_pos": 72922,
+    "end_pos": 73093
+  },
+  "<<FORMULA_0050>>": {
+    "formula": "\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_m(\\bm{L})}} + \\gamma\\right\\}",
+    "raw_latex": "$\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_m(\\bm{L})}} + \\gamma\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 689,
+    "start_pos": 30021,
+    "end_pos": 30192
+  },
+  "<<FORMULA_0011>>": {
+    "formula": "\\label{pure_NN}\n\t\t\\bm{f}\\left( {\\bm{x}(t),\\bm{I}(t), t} \\right) = \\bm{f}_{neural}\\left( {\\bm{x}(t),\\bm{I}(t), t,\\bm{\\theta}} \\right) + \\Delta \\bm{f}(t)",
+    "raw_latex": "\\begin{align} \\label{pure_NN}\n\t\t\\bm{f}\\left( {\\bm{x}(t),\\bm{I}(t), t} \\right) = \\bm{f}_{neural}\\left( {\\bm{x}(t),\\bm{I}(t), t,\\bm{\\theta}} \\right) + \\Delta \\bm{f}(t) \n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 628,
+    "start_pos": 23749,
+    "end_pos": 23928
+  },
+  "<<FORMULA_0123>>": {
+    "formula": "\\label{bounded_converg}\n\t\t\\textcolor{black}{\\mathop {\\lim }\\limits_{t \\to \\infty }\\|\\bm{\\tilde{x}}(t)\\|\\le \\frac{\\gamma}{{\\lambda_m(\\bm{L})}}}",
+    "raw_latex": "\\begin{align} \\label{bounded_converg}\n\t\t\\textcolor{black}{\\mathop {\\lim }\\limits_{t \\to \\infty }\\|\\bm{\\tilde{x}}(t)\\|\\le \\frac{\\gamma}{{\\lambda_m(\\bm{L})}}}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1006,
+    "start_pos": 72191,
+    "end_pos": 72360
+  },
+  "<<FORMULA_0208>>": {
+    "formula": "\\label{feedback_N^TN2}\n\t\t\\textcolor{black}{\\bm{\\hat{f}}_{neural}(t) = \\bm{\\Xi}(t)\\bm{\\hat{\\chi}} + \\bm{L}(\\bm{x}(t)-\\bm{\\hat{x}}(t)),}",
+    "raw_latex": "\\begin{align} \\label{feedback_N^TN2}\n\t\t\\textcolor{black}{\\bm{\\hat{f}}_{neural}(t) = \\bm{\\Xi}(t)\\bm{\\hat{\\chi}} + \\bm{L}(\\bm{x}(t)-\\bm{\\hat{x}}(t)),}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1183,
+    "start_pos": 94935,
+    "end_pos": 95094
+  }
+}

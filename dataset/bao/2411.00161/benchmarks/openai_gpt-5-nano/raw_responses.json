@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "paper_id": "2411.00161",
+    "model": "openai/gpt-5-nano",
+    "total_responses": 19,
+    "timestamp": "2025-10-31T17:19:18.332431"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0037>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0128>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The formula uses a product ∏_{k=0}^{K} instead of a sum ∑_{k=0}^{K}; the addition theorem representation should sum over eigenmodes, not multiply terms.\"\n}",
+      "response_length": 238,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0012>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0080>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0034>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0089>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0082>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0150>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Spherical harmonic indices violate |m| ≤ l: Y_{2,3} and Y_{1,2} have m greater than l, which is invalid.\"\n}",
+      "response_length": 186,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0074>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"The term P^Thi_{ν,κ}(λ_j) uses an erroneous superscript 'Thi' that suggests incorrect exponent placement; likely intended to be P_{ν,κ}(λ_j) or Φ_{ν,κ}(λ_j).\"\n}",
+      "response_length": 241,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0165>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the definition of Psi_{i:j}(...), the sequence includes phi_i, ..., phi_l, but the range is i to j; the last term uses index l instead of phi_j, causing an inconsistency in the indexing.\"\n}",
+      "response_length": 271,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0015>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"The Phi_{nu,kappa}(lambda) term for nu < ∞ has mismatched parentheses in the exponent: ^{-ν-\\frac{d}){2}}, indicating an incorrectly formed exponent due to unbalanced parentheses.\"\n}",
+      "response_length": 268,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0147>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0040>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"The log-likelihood term should be inside the expectation as E[ln p(y_i|F(x_i))], but the brackets are missing, making the placement of the expectation ambiguous.\"\n}",
+      "response_length": 250,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0132>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0168>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the definition of Ψ_{i:j}, the last term uses φ_l(·) instead of φ_j(·), causing an index mismatch within the i…j range.\"\n}",
+      "response_length": 204,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0139>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0179>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0169>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

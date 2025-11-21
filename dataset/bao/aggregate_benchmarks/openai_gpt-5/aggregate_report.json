@@ -1,0 +1,92 @@
+{
+  "model": "openai/gpt-5",
+  "timestamp": "2025-10-31T18:06:15.406196",
+  "metadata": {
+    "total_papers_in_directory": 10,
+    "successful_benchmarks": 10,
+    "failed_benchmarks": 0,
+    "no_ground_truth": 0
+  },
+  "aggregate_metrics": {
+    "binary_classification": {
+      "mean_accuracy": 0.7858,
+      "mean_precision": 0.7599,
+      "mean_recall": 0.8896,
+      "mean_f1_score": 0.8089,
+      "std_accuracy": 0.11626483178980268,
+      "std_precision": 0.1482696117813012,
+      "std_recall": 0.11328155680035083,
+      "std_f1_score": 0.09453799941469745,
+      "min_accuracy": 0.579,
+      "max_accuracy": 0.947
+    },
+    "error_type_matching": {
+      "mean_type_accuracy": 0.7582,
+      "std_type_accuracy": 0.1504347773030632
+    },
+    "instruction_following": {
+      "mean_perfect_json_rate": 1.0,
+      "mean_fallback_rate": 0.0,
+      "mean_failure_rate": 0.0
+    }
+  },
+  "per_error_type_performance": {
+    "sign_flip": {
+      "detected": 23,
+      "total": 25,
+      "recall": 0.92
+    },
+    "index_change": {
+      "detected": 12,
+      "total": 13,
+      "recall": 0.9230769230769231
+    },
+    "inequality_flip": {
+      "detected": 13,
+      "total": 16,
+      "recall": 0.8125
+    },
+    "operator_swap": {
+      "detected": 12,
+      "total": 12,
+      "recall": 1.0
+    },
+    "transpose_error": {
+      "detected": 7,
+      "total": 9,
+      "recall": 0.7777777777777778
+    },
+    "fraction_inversion": {
+      "detected": 9,
+      "total": 10,
+      "recall": 0.9
+    },
+    "sum_product_swap": {
+      "detected": 8,
+      "total": 8,
+      "recall": 1.0
+    },
+    "exponent_order": {
+      "detected": 3,
+      "total": 3,
+      "recall": 1.0
+    },
+    "function_swap": {
+      "detected": 2,
+      "total": 3,
+      "recall": 0.6666666666666666
+    }
+  },
+  "paper_ids": [
+    "2410.10253",
+    "2506.04194",
+    "2410.14055",
+    "2411.00161",
+    "2502.02013",
+    "2411.12537",
+    "2507.09128",
+    "2502.05164",
+    "2506.08362",
+    "2503.03025"
+  ]
+}

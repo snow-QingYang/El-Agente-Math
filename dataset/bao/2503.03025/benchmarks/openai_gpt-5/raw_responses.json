@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2503.03025",
+    "model": "openai/gpt-5",
+    "total_responses": 20,
+    "timestamp": "2025-10-31T18:06:15.397265"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0443>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the second barycenter definition, the sum iterates over x but the term uses T(x_i); the summation index is inconsistent and should be either sum over x_i with T(x_i) or remove the subscript.\"\n}",
+      "response_length": 275,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0436>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The diameter uses the norm of a sum instead of a difference between two points; it should be ||(x_i, T(x_j)) − (x_k, T(x_l))||, not with a plus.\"\n}",
+      "response_length": 223,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0437>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"The subscript uses × instead of +: occurrences of \\\\rho_{t\\\\times1} (and limits like \\\\sum_{q'=1}^{\\\\rho_{t\\\\times1}}) should be \\\\rho_{t+1}.\"\n}",
+      "response_length": 224,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0446>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"After factoring out 1/r_{t+1}, the term s_{t+1}^2 r_{t+1} should contribute (s_{t+1} r_{t+1})^2 = |X_q^{(t)}|^2 = (n/rho_t)^2 inside the parentheses, but the formula uses n^2/rho_t, causing an incorrect coefficient and invalidating the final equality.\"\n}",
+      "response_length": 335,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0438>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The outer factor uses \\\\rho_{t\\\\times1}/n^2 instead of the correct \\\\rho_t/n^2 (or \\\\rho_{t+1}/n^2), indicating an incorrect subscript index.\"\n}",
+      "response_length": 223,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0447>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"Diameter should be defined using a maximum over pairwise distances, but the formula uses a minimum\"\n}",
+      "response_length": 181,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0303>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0445>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"By Jensen’s inequality for convex c, the average of c is at least c of the averages, so the sum over pairs should satisfy ≥ s_{t+1}^2 r_{t+1} c(\\\\bar{\\\\mathbf{x}}^{(t)}, \\\\bar{\\\\mathbf{y}}^{(t)}), not ≤.\"\n}",
+      "response_length": 288,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0066>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0441>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Child cluster indices are written as X_{q rho_t + z}^{(t+1)}; with r_{t+1} children per parent q, the contiguous indexing should be X_{(q-1) r_{t+1} + z}^{(t+1)}.\"\n}",
+      "response_length": 244,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0520>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the definition of Γ(𝓧), the set is written as {Γ_m(𝓧)} while indexing over j=0..J; it should be {Γ_j(𝓧)} to match the index j.\"\n}",
+      "response_length": 211,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0539>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0460>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"The integration domain is written as X / Y instead of the cartesian product X × Y.\"\n}",
+      "response_length": 165,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0457>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The term |X_q^{(t-1)}|^2 should be |X_q^{(t+1)}|^2; the subsequent substitution uses (n/ρ_{t+1})^2, indicating level t+1, not t-1.\"\n}",
+      "response_length": 212,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0545>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The OT cost is defined with a product over (k,k') of c(x_{j,k}, y_{j,k'}) π_j(x_{j,k}, y_{j,k'}), but it should be a sum over these indices.\"\n}",
+      "response_length": 226,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0452>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0540>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The denominator incorrectly uses a product over (x,y) instead of the sum of weights; for a weighted average it should be sum_{x,y} π_{j-1}^⋆(...), not ∏.\"\n}",
+      "response_length": 239,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0339>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"transpose_error\",\n  \"error_description\": \"Inconsistent transpose of R*: the first term uses Q* R* P^{\\\\dagger,\\\\top}, while subsequent lines use Q* R*^{\\\\top}. The missing/extra transpose on R* makes the equalities (and dimensions) inconsistent.\"\n}",
+      "response_length": 288,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0454>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0453>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"transpose_error\",\n  \"error_description\": \"The diameter term incorrectly uses G^Tamma_{t,q} instead of Gamma_{t,q}, inserting an unintended '^T' in the symbol; it should consistently be Gamma_{t,q}.\"\n}",
+      "response_length": 240,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

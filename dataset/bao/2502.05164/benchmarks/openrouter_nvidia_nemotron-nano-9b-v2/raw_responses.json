@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2502.05164",
+    "model": "openrouter/nvidia/nemotron-nano-9b-v2",
+    "total_responses": 20,
+    "timestamp": "2025-10-31T17:27:52.518639"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0062>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0172>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0173>>",
+      "raw_response": "Okay, let's take a look at this formula. The user wants me to check for any mathematical errors. The formula is part of a Bayesian posterior calculation, specifically the posterior mean E[X | ~X]. \n\nFirst, I need to understand the formula. The left side is the expectation of X given ~X. The right-hand side is a fraction where the numerator is the integral of x multiplied by some exponential term and p_X(x), and the denominator is the integral of the same exponential term times p_X(x). \n\nLooking at the denominator, the integral is over e^{-||~X - x||^2 / (2σ_Z²)} p_X(x) dx. The numerator is similar but has an extra x term. This structure looks correct for a posterior mean calculation in a Bayesian context. The denominator is the normalizing constant (marginal likelihood), and the numerator is the expectation of x under the posterior.\n\nNow, checking for possible errors. The error types listed include things like sign flip, operator swap, exponent order, etc. Let me go through each possibility.\n\nThe exponent in the exponential term is -||~X - x||²/(2σ_Z²). The placement here seems correct. If it were something like -||~X - x²||, that would be exponent_order error, but here the exponent is correctly applied to the squared norm. \n\nThe operator between the exponential and p_X(x) is multiplied, which is correct. There's no operator swap here. \n\nThe fraction inversion error would be if the numerator and denominator were swapped. But in this case, the numerator has x multiplied by the exponential and p_X(x), and the denominator is just the exponential and p_X(x). That's correct for a posterior mean. So no fraction inversion.\n\nMissing parentheses? The exponents are written with parentheses around the ||~X - x||² term, which is necessary. So that's okay. \n\nFunction swap? Not applicable here. The functions involved are exponential and the prior p_X(x), which are correctly used.\n\nLooking at the context, the formula is derived from Bayes' theorem, which matches the structure. The denominator is the marginal probability p_{~X}(~X), and the numerator is the joint probability p_{~X, X}(x, ~X). So the formula seems correctly structured.\n\nWait, in the numerator, the integral is x * e^{-||...||} p_X(x) dx. The x here is a scalar or vector? Depending on the context, if X is a vector, then the expectation would be a vector. But the formula as written is correct for that. \n\nAnother thing: the exponent has ~X and x. The double bars indicate the norm, which is correct. The notation ||~X - x||² is the squared Euclidean distance, which is standard. \n\nI don't see any sign flips. The operator between the terms in the exponent is minus, which is correct for a Gaussian kernel. \n\nNo exponent order issues. The exponent is applied correctly to the entire ||~X - x||² term. \n\nIndex change? There's no subscript indices here. \n\nTranspose error? Not applicable here. \n\nInequality flip? No inequalities in the formula. \n\nSum/product swap? The integrals are sums, not products. \n\nSo after checking all possible error types, I don't see any errors in the formula. The structure is correct for a Bayesian posterior mean. Therefore, the answer should be \"none\".\n{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 3237,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0174>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0060>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0193>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0203>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0183>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The denominator in the coefficient of tilde x_parallel has a minus sign (σ₀² - σ_Z²) instead of a plus sign (σ₀² + σ_Z²), which is mathematically inconsistent with the derivation of the optimal predictor.\"\n}",
+      "response_length": 283,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0245>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0054>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0187>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"The denominator in the final equality should be (σ₀² + σ_Z²) instead of σ₀² × σ_Z², omitting the required addition.\"\n}",
+      "response_length": 204,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0189>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"sign_flip\", \"error_description\": \"The negative sign in the denominator's exponent was changed to positive, altering the integral's validity.\"}",
+      "response_length": 177,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0206>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0296>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0294>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0301>>",
+      "raw_response": "Okay, let's take a look at this formula. The formula in question is the probability expression involving the maximum norm of a sum. The formula is:\n\nPr[ || (1/L)∑_{t=1}^L X_t e^{⟨X_t, \\tilde x⟩/σ_Z²} - E[X e^{⟨X, \\tilde x⟩/σ_Z²}] ||_∞ ≥ ε ] ≤ 2d exp[ -L ε² / (2 R² exp(2R||\\tilde x||_2 / σ_Z²)) ]\n\nFirst, I need to check for any of the specified error types. Let's go through each possible error type one by one.\n\nSign flip: The formula has a subtraction inside the probability. The original expression is Pr[ || A - B || ≥ ε ], where A is the average of X_t e^{...} and B is the expectation. There's no sign flip here because it's a norm of a difference, which is standard in such inequalities. So not a sign_flip.\n\nOperator swap: The operators here are sum, expectation, and the norm. The operators seem correctly placed. There's a sum over t, then expectation, and the norm is applied to the difference. No obvious operator swaps. For example, there's no + instead of × or vice versa. So operator_swap doesn't seem to apply.\n\nExponent_order: The exponent in e^{⟨X_t, \\tilde x⟩/σ_Z²} is ⟨X_t, \\tilde x⟩ divided by σ_Z². The order here is correct. If it were e^{⟨X_t, \\tilde x⟩/σ_Z²^2} or something else, that would be an exponent_order error. But as written, the exponent is correctly placed. So exponent_order isn't the issue.\n\nIndex_change: The subscripts here are t in the sum, which is correct. There's no mention of indices like i or j being swapped. So index_change doesn't apply.\n\nTranspose_error: The formula uses ⟨X_t, \\tilde x⟩, which is an inner product. If there was a transpose applied incorrectly, like (X_t)^T instead of X_t, that would be a transpose_error. But here, the inner product is correctly written. So transpose_error isn't present.\n\nInequality_flip: The inequality is ≥ ε. If it were ≤ ε, that would be a flip. But the formula uses ≥, which is correct for a lower bound on the probability. So no inequality_flip.\n\nFraction_inversion: The fraction here is in the exponent of the exponential term. The denominator is σ_Z² in the exponent. If it were σ_Z² in the numerator, that would be inversion. But as written, it's correct. So fraction_inversion isn't the case.\n\nSum_product_swap: The formula has a sum (∑) and there's no product operator (∏) involved. So sum_product_swap isn't applicable here.\n\nMissing_parentheses: The formula uses double vertical bars for the norm, which is correct. The parentheses around the difference are also properly placed. The exponents are enclosed in curly braces, which is standard. So missing_parentheses doesn't seem to be an issue.\n\nFunction_swap: The functions involved are Pr (probability), expectation (E), and the norm. There's no swapping of similar functions like sin and cos. So function_swap isn't relevant here.\n\nAfter checking all possible error types, I don't see any clear error. The formula seems correctly structured. The context mentions Hoeffding inequality and other probabilistic bounds, which align with the form of the formula. The exponents and operators are in the right places. The norm is correctly applied to the difference. Therefore, the formula doesn't have any of the specified errors.\n{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 3247,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0201>>",
+      "raw_response": "Okay, let's take a look at the formula provided. The user wants me to check for any mathematical errors based on the specified error types.\n\nThe formula in question is:\n\nm_a \n% =\n% \\frac{\\frac{1}{\\sigma_\\eta^2} \\,\\tilde{x} + \\frac{1}{\\sigma_\\alpha^2}\\,\\mu_\\alpha}\n%      {\\frac{\\sigma_\\eta^2}{1} + \\frac{1}{\\sigma_\\alpha^2}}\n = \\frac{\\sigma_a^2 \\, \\tilde{x} + \\sigma_Z^2 \\,\\mu_a}\n     {\\sigma_a^2 + \\sigma_Z^2}.\n\nFirst, I notice that the formula is presented with some formatting issues, like the percentage signs and the alignment of the equations. But the main part is the equation itself. \n\nLooking at the left-hand side (LHS) and right-hand side (RHS) of the equation. The LHS has fractions in both numerator and denominator. The numerator has terms 1/σ_η² and 1/σ_α² multiplied by ~x and μ_α respectively. The denominator has σ_η² and 1/σ_α². \n\nOn the RHS, the numerator is σ_a² * ~x + σ_Z² * μ_a, and the denominator is σ_a² + σ_Z². \n\nNow, comparing the LHS and RHS. The LHS seems to have a different structure. The denominator in LHS is σ_η² + (1/σ_α²), which is adding a variance term to the reciprocal of another variance. That seems odd because σ_η² and σ_α² are variances, so their units would be squared, but adding them to 1/σ_α² (which has units of 1/variance) would be dimensionally inconsistent. That's a possible error. \n\nWait, but maybe the original formula is correct in terms of the mathematical structure. Let me check the variables. The LHS has σ_η and σ_α, while the RHS has σ_a and σ_Z. Are these variables related? The context mentions \"Bayes optimal denoising baselines\" and talks about different cases like linear and manifold. In the linear case, maybe σ_η and σ_α are parameters related to the noise and the signal. However, the transition from σ_η and σ_α in the LHS to σ_a and σ_Z in the RHS might be a substitution or a simplification. \n\nBut the key point is whether the equation is mathematically correct. Let's see. Suppose that σ_η and σ_α are related to σ_a and σ_Z. For example, if σ_a² is σ_η² and σ_Z² is σ_α², then the LHS would be ( (1/σ_a²) * ~x + (1/σ_Z²)*μ_a ) / (σ_a² + 1/σ_Z²). But the RHS is (σ_a² * ~x + σ_Z² * μ_a ) / (σ_a² + σ_Z²). These are not the same unless there's some relationship between the parameters. \n\nAlternatively, maybe there's a mistake in the substitution. For instance, if in the LHS, the denominator should be (1/σ_η² + 1/σ_α²) instead of (σ_η² + 1/σ_α²), that would make the units consistent. Because 1/σ_η² and 1/σ_α² are both 1/variance terms. But as written, the denominator is σ_η² (variance) plus 1/σ_α² (1/variance), which is adding terms with different units. That's a dimensional inconsistency. \n\nAlternatively, maybe the LHS is supposed to be ( (1/σ_η²) * ~x + (1/σ_α²)*μ_α ) divided by ( (1/σ_η²) + (1/σ_α²) ), which would make sense as a weighted average. But in the given formula, the denominator is σ_η² + 1/σ_α², which is not the same. \n\nSo the error here could be in the denominator of the LHS. The denominator should be the sum of the weights, which are 1/σ_η² and 1/σ_α². But as written, it's σ_η² + 1/σ_α², which is incorrect. \n\nLooking at the error types, this would be a fraction_inversion if the numerator and denominator were swapped, but that's not the case. Alternatively, maybe it's a missing_parentheses if the denominator was supposed to have the sum of the reciprocals. \n\nWait, the error types include fraction_inversion (numerator and denominator swapped), but here the issue is the denominator's terms. Another possibility is missing_parentheses if the denominator was supposed to be (1/σ_η² + 1/σ_α²) but was written as σ_η² + 1/σ_α². \n\nAlternatively, maybe the error is in the numerator. The LHS numerator has 1/σ_η² * ~x + 1/σ_α² * μ_α. If the RHS is σ_a² * ~x + σ_Z² * μ_a, then perhaps σ_a² is 1/σ_η² and σ_Z² is 1/σ_α². But that would require σ_a² = 1/σ_η² and σ_Z² = 1/σ_α². If that's the case, then the LHS would be (σ_a² * ~x + σ_Z² * μ_a) / (1/σ_η² + 1/σ_α²), but the RHS denominator is σ_a² + σ_Z². That would not match unless 1/σ_η² + 1/σ_α² equals σ_a² + σ_Z², which would require specific relationships between the parameters. \n\nAlternatively, maybe there's a mistake in the variables. For example, if σ_a² is supposed to be σ_η² and σ_Z² is σ_α², then the LHS denominator would be σ_η² + 1/σ_α², which is not the same as the RHS denominator σ_a² + σ_Z². \n\nThis suggests that the formula as presented has an inconsistency in the denominator of the LHS. The correct denominator should be the sum of the weights (1/σ_η² + 1/σ_α²), but it's written as σ_η² + 1/σ_α². This is a clear error. \n\nLooking at the error types, this would be a fraction_inversion if the numerator and denominator were swapped, but that's not exactly the case. Alternatively, it's a missing_parentheses if the denominator was supposed to have the sum of the reciprocals. However, the exact error here is that the denominator in the LHS is incorrectly structured. \n\nAnother angle: the LHS is a weighted average where the weights are 1/σ_η² and 1/σ_α². The denominator should be the sum of these weights. But in the given formula, the denominator is σ_η² + 1/σ_α², which is not the sum of the weights. Therefore, this is an error in the formula. \n\nThe error type that fits here is fraction_inversion if the numerator and denominator were swapped, but in this case, the denominator is incorrect. Alternatively, it's a missing_parentheses if the denominator was supposed to be (1/σ_η² + 1/σ_α²). However, the exact error type isn't directly listed. \n\nWait, the error types include fraction_inversion (numerator and denominator swapped). But in this case, the problem is not swapping numerator and denominator, but rather the denominator is incorrect. \n\nAlternatively, maybe it's a sign_flip or operator_swap, but that doesn't seem to apply. \n\nAnother possibility is that the formula is correct in the context, but the variables are misnamed. For example, if σ_a² is 1/σ_η² and σ_Z² is 1/σ_α², then the LHS and RHS would match. But that would require specific relationships between the variables. However, without context confirming that, it's an assumption. \n\nGiven the context provided, the formula is part of a proof where the LHS is derived from the Bayes optimal denoising, and the RHS is the final expression. The inconsistency in the denominator suggests an error. \n\nThe most likely error here is that the denominator in the LHS should be (1/σ_η² + 1/σ_α²) instead of (σ_η² + 1/σ_α²). This would make the weights consistent. Therefore, the error is in the denominator's terms, which could be a missing_parentheses if the correct denominator was intended but not properly parenthesized. \n\nAlternatively, if the original formula had a different structure, but as presented, the denominator is incorrect. \n\nSince the error types don't include a specific one for incorrect denominator terms, but fraction_inversion is when numerator and denominator are swapped. However, in this case, the denominator is wrong, not swapped. \n\nAnother possible error is missing_parentheses if the denominator was supposed to have the sum of the reciprocals but was written without parentheses. For example, if it was supposed to be (1/σ_η² + 1/σ_α²) but was written as σ_η² + 1/σ_α². \n\nIn that case, the error would be missing_parentheses because the correct denominator requires parentheses around the sum of the reciprocals. \n\nTherefore, the error_type would be missing_parentheses.\n{\"has_error\": true, \"error_type\": \"missing_parentheses\", \"error_description\": \"The denominator in the left-hand side fraction should be \\\\(\\frac{1}{\\sigma_\\eta^2} + \\frac{1}{\\sigma_\\alpha^2}\\\\) instead of \\\\(\\sigma_\\eta^2 + \\frac{1}{\\sigma_\\alpha^2}\\\\) to maintain consistent weighting terms.\"}",
+      "response_length": 7744,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0309>>",
+      "raw_response": "Okay, let's take a look at the user's query. They provided a complex mathematical formula and some context, asking me to analyze it for errors. The formula is part of a proof or derivation related to attention mechanisms, possibly in machine learning. The context before and after seems to discuss softmax functions, Taylor expansions, and some probabilistic inequalities.\n\nFirst, I need to check the formula for any mathematical errors based on the predefined error types. The formula is quite involved, so I'll need to parse it carefully. Let me start by reading through the formula step by step.\n\nThe formula begins with a function &F applied to some parameters, and then there's an equality that expands this function into a series of terms. The left-hand side (LHS) has a big expression involving W_PV, X_1:L, and a big bracket with a fraction and some terms inside. The right-hand side (RHS) is a sum of terms involving W_PV, X_t, and other variables.\n\nLooking at the LHS: The structure seems to involve a term with 1/epsilon multiplied by W_PV and X_1:L, then a big bracket with a fraction (1/L) and some expression inside. The expression inside includes a 1 plus epsilon times a term involving X_1:L^T W_KQ tilde X minus another term, plus O(epsilon squared). The RHS is 1/epsilon W_PV bar X plus 1/L W_PV sum over t of X_t (X_t - bar X)^T W_KQ tilde X plus O(epsilon).\n\nNow, I need to check for any of the error types. Let's go through each possible error type one by one.\n\n1. **sign_flip**: Are there any additions turned into subtractions or vice versa? The formula has a plus between 1/epsilon W_PV bar X and the next term. The operator between them is a plus, which seems correct. The term inside the bracket has a plus between 1 and the epsilon term. No obvious sign flips here.\n\n2. **operator_swap**: Are operators like +, -, *, / swapped? The formula uses multiplication (×) and summation (∑). I don't see any obvious swaps. For example, if there was a × where a + should be, but that's not the case here.\n\n3. **exponent_order**: Are exponents misplaced? The formula doesn't have exponents in a way that would suggest this. The terms are linear in X_t and W_KQ, so exponent order doesn't seem to be an issue here.\n\n4. **index_change**: Are subscripts changed incorrectly? The formula uses X_1:L, which is a vector from 1 to L. The sum is over t=1 to L. The indices seem consistent. No index changes observed.\n\n5. **transpose_error**: Are transposes added or removed incorrectly? The term X_1:L^T W_KQ tilde X is present. The transpose of X_1:L is multiplied by W_KQ and tilde X. If the transpose was missing or added where it shouldn't be, that would be an error. But in the formula, it's correctly applied. No transpose errors here.\n\n6. **inequality_flip**: Are inequalities reversed? The context mentions probabilistic inequalities, but the formula itself doesn't have any inequalities. So this might not apply here.\n\n7. **fraction_inversion**: Are numerator and denominator swapped? The fraction 1/epsilon is present, and 1/L is also there. The terms inside the bracket have 1/L as a coefficient. No inversion of fractions observed.\n\n8. **sum_product_swap**: Are sum and product operators swapped? The formula has a sum over t from 1 to L. There's no product operator here, so this doesn't seem applicable.\n\n9. **missing_parentheses**: Are required parentheses missing? Looking at the LHS, the big bracket has a fraction (1/L) multiplied by an expression. The expression inside includes terms with epsilon. The parentheses around the terms inside the big bracket seem correctly placed. The RHS has a sum with parentheses around (X_t - bar X)^T. The parentheses are present where needed. No missing parentheses here.\n\n10. **function_swap**: Are similar functions swapped? The formula uses functions like expectation (E), softmax (though not explicitly written here), and summation. There's no indication of functions being swapped, like using sin instead of cos or something similar.\n\nAfter going through each error type, I don't see any clear errors. The formula's structure seems consistent. The context discusses expansions and probabilistic bounds, but the formula itself doesn't have any obvious mathematical inconsistencies. The terms are properly structured with correct operators and indices. The use of O(epsilon) and O(epsilon^2) terms is standard in asymptotic expansions. The presence of transpositions and summations seems correct based on the context provided.\n\nTherefore, the conclusion is that there are no errors in the formula as per the given error types. The \"has_error\" should be false, and \"error_type\" should be \"none\".\n{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 4728,
+      "parse_strategy": "extraction",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0293>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"function_swap\", \"error_description\": \"The sinh function was used instead of the exponential function in the right-hand side of the inequality\"}",
+      "response_length": 178,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0197>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

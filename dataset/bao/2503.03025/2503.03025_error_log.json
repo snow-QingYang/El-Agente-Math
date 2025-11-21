@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "error_rate": 0.5,
+    "random_seed": null,
+    "total_formulas_processed": 20,
+    "formulas_modified": 11,
+    "formulas_unmodified": 9,
+    "timestamp": "2025-10-31T16:48:08.626911"
+  },
+  "errors": [
+    {
+      "label": "<<FORMULA_0437>>",
+      "original_formula": "\\langle \\mathbf{C}, \n    \\mathbf{P}^{(t)}\n    \\rangle \n    - \n    \\langle \\mathbf{C}, \n    \\mathbf{P}^{(t + 1)}\n    \\rangle \n    &= \\frac{\\rho_t}{n^{2} } \n    \\sum_{i=1}^{n} \n    \\sum_{j=1}^{n} \n    c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\sum_{q=1}^{\\rho_t} \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\in \\Gamma_{t,q}} \n    - \\frac{\\rho_{t+1}}{n^{2}} \n    \\sum_{i=1}^{n}\n    \\sum_{j=1}^{n} c(x_{i}, y_{j}) \n    \\sum_{q=1}^{\\rho_{t+1}} \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t+1,q}}\\\\\n    &= \\frac{\\rho_t}{n^{2}}\n    \\left(\n     \\sum_{i=1}^{n} \n     \\sum_{j=1}^{n} \n     c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n     \\sum_{q=1}^{ \\rho_t} \n     \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t,q}} - r_{t+1} \n     \\sum_{i=1}^{n} \n     \\sum_{j=1}^{n} \n     c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n     \\sum_{q'=1}^{\\rho_{t+1}} \n     \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t+1,q'}} \n     \\right) \\\\\n    &= \n    \\frac{\\rho_t}{n^{2}}  \n    \\left(\n    \\sum_{q=1}^{ \\rho_t} \n    \\sum_{i=1}^{n} \n    \\sum_{j=1}^{n} \n    c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t,q}} \n    - r_{t+1} \n    \\sum_{q'=1}^{\\rho_{t+1}} \n    \\sum_{i=1}^{n} \n    \\sum_{j=1}^{n} c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t+1,q'}}\n    \\right)\\,.",
+      "modified_formula": "\\langle \\mathbf{C}, \n    \\mathbf{P}^{(t)}\n    \\rangle \n    - \n    \\langle \\mathbf{C}, \n    \\mathbf{P}^{(t + 1)}\n    \\rangle \n    &= \\frac{\\rho_t}{n^{2} } \n    \\sum_{i=1}^{n} \n    \\sum_{j=1}^{n} \n    c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\sum_{q=1}^{\\rho_t} \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\in \\Gamma_{t,q}} \n    - \\frac{\\rho_{t+1}}{n^{2}} \n    \\sum_{i=1}^{n}\n    \\sum_{j=1}^{n} c(x_{i}, y_{j}) \n    \\sum_{q=1}^{\\rho_{t+1}} \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t+1,q}}\\\\\n    &= \\frac{\\rho_t}{n^{2}}\n    \\left(\n     \\sum_{i=1}^{n} \n     \\sum_{j=1}^{n} \n     c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n     \\sum_{q=1}^{ \\rho_t} \n     \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t,q}} - r_{t+1} \n     \\sum_{i=1}^{n} \n     \\sum_{j=1}^{n} \n     c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n     \\sum_{q'=1}^{\\rho_{t\\\\times1}} \n     \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t+1,q'}} \n     \\right) \\\\\n    &= \n    \\frac{\\rho_t}{n^{2}}  \n    \\left(\n    \\sum_{q=1}^{ \\rho_t} \n    \\sum_{i=1}^{n} \n    \\sum_{j=1}^{n} \n    c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t,q}} \n    - r_{t+1} \n    \\sum_{q'=1}^{\\rho_{t+1}} \n    \\sum_{i=1}^{n} \n    \\sum_{j=1}^{n} c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t+1,q'}}\n    \\right)\\,.",
+      "error_type": "operator_swap",
+      "error_description": "Changed '+' to '×'",
+      "line_number": 1305,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_0460>>",
+      "original_formula": "& \\int_{\\mathsf{X} \\times \\mathsf{Y}} \\lVert T_{\\theta}(x) - y \\rVert_{2}^{p} (\\mathrm{id} \\times T)_{\\sharp} \\sum_{i=1}^{n} \\mu_{i} \\delta_{x_{i}} \\mathrm{d} x \\mathrm{d} y = \\int_{\\mathsf{X} \\times \\mathsf{Y}} \\lVert T_{\\theta}(x) - y \\rVert_{2}^{p} \\sum_{i=1}^{n} \\mu_{i} (\\mathrm{id} \\times T)_{\\sharp} \\delta_{x_{i}} \\mathrm{d}x \\mathrm{d}y  \\\\\n    &= \\sum_{i=1}^{n} \\mu_{i} \\int_{\\mathsf{X} \\times \\mathsf{Y}} \\lVert T_{\\theta}(x) - y \\rVert_{2}^{p} \\delta_{(x_{i}, T(x_{i}))} \\mathrm{d}y \\mathrm{d}x = \\sum_{i=1}^{n} \\mu_{i} \\lVert T_{\\theta}(x_{i}) - T(x_{i}) \\rVert_{2}^{p} \\, ,",
+      "modified_formula": "& \\int_{\\mathsf{X} \\times \\mathsf{Y}} \\lVert T_{\\theta}(x) - y \\rVert_{2}^{p} (\\mathrm{id} \\times T)_{\\sharp} \\sum_{i=1}^{n} \\mu_{i} \\delta_{x_{i}} \\mathrm{d} x \\mathrm{d} y = \\int_{\\mathsf{X} \\times \\mathsf{Y}} \\lVert T_{\\theta}(x) - y \\rVert_{2}^{p} \\sum_{i=1}^{n} \\mu_{i} (\\mathrm{id} \\times T)_{\\sharp} \\delta_{x_{i}} \\mathrm{d}x \\mathrm{d}y  \\\\\n    &= \\sum_{i=1}^{n} \\mu_{i} \\int_{\\mathsf{X} / \\mathsf{Y}} \\lVert T_{\\theta}(x) - y \\rVert_{2}^{p} \\delta_{(x_{i}, T(x_{i}))} \\mathrm{d}y \\mathrm{d}x = \\sum_{i=1}^{n} \\mu_{i} \\lVert T_{\\theta}(x_{i}) - T(x_{i}) \\rVert_{2}^{p} \\, ,",
+      "error_type": "operator_swap",
+      "error_description": "Changed '×' to '/'",
+      "line_number": 1542,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_0438>>",
+      "original_formula": "\\label{eq:full_term}\n= \\frac{\\rho_{t+1}}\n{n^{2}} \n\\left(\n\\sum_{q=1}^{\\rho_t}  \n\\left(\n\\underbrace{\n\\frac{1}{r_{t+1}} \n\\sum_{i \\in \\mathsf{X}_{q}^{(t)}} \n\\sum_{j \\in \\mathsf{X}_{q}^{(t)}} \nc( \\mathbf{x}_{i}, T( \\mathbf{x}_{j}))}\n_{\\text{average ``Monge distortion'' in } \\Gamma_{t,q} \\text{ over next scale}\n} \n-  \n\\underbrace{\n\\sum_{z=1}^{r_{t+1}}\n\\sum_{i \\in \n\\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n\\sum_{j \\in \n\\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \nc(\\mathbf{x}_{i}, T( \\mathbf{x}_{j}))}_\n{\\text{``Monge distortion'' at scale } {t+1}}\n\\right)\n\\right)",
+      "modified_formula": "\\label{eq:full_term}\n= \\frac{\\rho_{t\\\\times1}}\n{n^{2}} \n\\left(\n\\sum_{q=1}^{\\rho_t}  \n\\left(\n\\underbrace{\n\\frac{1}{r_{t+1}} \n\\sum_{i \\in \\mathsf{X}_{q}^{(t)}} \n\\sum_{j \\in \\mathsf{X}_{q}^{(t)}} \nc( \\mathbf{x}_{i}, T( \\mathbf{x}_{j}))}\n_{\\text{average ``Monge distortion'' in } \\Gamma_{t,q} \\text{ over next scale}\n} \n-  \n\\underbrace{\n\\sum_{z=1}^{r_{t+1}}\n\\sum_{i \\in \n\\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n\\sum_{j \\in \n\\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \nc(\\mathbf{x}_{i}, T( \\mathbf{x}_{j}))}_\n{\\text{``Monge distortion'' at scale } {t+1}}\n\\right)\n\\right)",
+      "error_type": "operator_swap",
+      "error_description": "Changed '+' to '×'",
+      "line_number": 1355,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0445>>",
+      "original_formula": "\\sum_{z=1}^{r_{t+1}}\n    \\sum_{\n    \\mathbf{x}_i \\in \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    \\sum_{ \\mathbf{x}_j \\in \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    c( \\mathbf{x}_{i}, T( \\mathbf{x}_{j})) \n    &= \n    s_{t+1}^{2} \n    \\sum_{z=1}^{r_{t+1}}\n    \\sum_{\\mathbf{x}_i \\in \\mathsf{X}_{q\\rho_t + z}^{(t+1)}} \n    \\frac{1}{s_{t+1}} \n    \\sum_{j \\in \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    \\frac{1}{s_{t+1}} \n    c(\\mathbf{x}_{i}, T(\\mathbf{x}_{j})) \\\\ \n    & \\geq s_{t+1}^{2} r_{t+1} c( \\bar{\\mathbf{x}}^{(t)}, \\bar{\\mathbf{y}}^{(t)} ),\\ \\quad",
+      "modified_formula": "\\sum_{z=1}^{r_{t+1}}\n    \\sum_{\n    \\mathbf{x}_i \\in \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    \\sum_{ \\mathbf{x}_j \\in \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    c( \\mathbf{x}_{i}, T( \\mathbf{x}_{j})) \n    &= \n    s_{t+1}^{2} \n    \\sum_{z=1}^{r_{t+1}}\n    \\sum_{\\mathbf{x}_i \\in \\mathsf{X}_{q\\rho_t + z}^{(t+1)}} \n    \\frac{1}{s_{t+1}} \n    \\sum_{j \\in \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    \\frac{1}{s_{t+1}} \n    c(\\mathbf{x}_{i}, T(\\mathbf{x}_{j})) \\\\ \n    & \\\\leq s_{t+1}^{2} r_{t+1} c( \\bar{\\mathbf{x}}^{(t)}, \\bar{\\mathbf{y}}^{(t)} ),\\ \\quad",
+      "error_type": "inequality_flip",
+      "error_description": "Changed '≥' to '≤'",
+      "line_number": 1422,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_0453>>",
+      "original_formula": "&\\leq \\frac{1}{r_{t+1}} \n    \\sum_{i \\in \\mathsf{X}_{q}^{(t)}} \n    \\sum_{j \\in \\mathsf{X}_{q}^{(t)}} \n    \\lVert \\nabla c \\rVert_{\\infty} \n    \\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\, , \\\\\n    &= \\frac{1}{r_{t+1}} | \\mathsf{X}_{q}^{(t)}|^{2} \\lVert \\nabla c \\rVert_{\\infty} \n    \\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr)  \\, ,\\\\\n    &= \\frac{1}{r_{t+1}} \\frac{n^{2} \\lVert \\nabla c \\rVert_{\\infty}}{\\rho_t^{2} } \n    \\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\,.",
+      "modified_formula": "&\\leq \\frac{1}{r_{t+1}} \n    \\sum_{i \\in \\mathsf{X}_{q}^{(t)}} \n    \\sum_{j \\in \\mathsf{X}_{q}^{(t)}} \n    \\lVert \\nabla c \\rVert_{\\infty} \n    \\mathrm{diam}\\bigl( \\G^Tamma_{t,q}\\bigr) \\, , \\\\\n    &= \\frac{1}{r_{t+1}} | \\mathsf{X}_{q}^{(t)}|^{2} \\lVert \\nabla c \\rVert_{\\infty} \n    \\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr)  \\, ,\\\\\n    &= \\frac{1}{r_{t+1}} \\frac{n^{2} \\lVert \\nabla c \\rVert_{\\infty}}{\\rho_t^{2} } \n    \\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\,.",
+      "error_type": "transpose_error",
+      "error_description": "Added transpose to G",
+      "line_number": 1494,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0540>>",
+      "original_formula": "\\mathsf{c}_j\n        ( \\, \n        x_{j,k} , \\, \n        y_{j, k'}\n        \\, ) := \n        \\frac{\n        \\sum_{\n        x \\in C_{j,k}(\\mathsf{X}), y \\in C_{j,k'}(\\mathsf{Y})  \n        }\n        \\mathsf{c}(x,y)\n        \\pi_{j-1}^\\star ( x_{j-1, k_1}, y_{j-1, k_1'} ) \n        }{\n        \\sum_{\n        x \\in C_{j,k}(\\mathsf{X}), y \\in C_{j,k'}(\\mathsf{Y})  \n        }\n        \\pi_{j-1}^\\star ( x_{j-1, k_1}, y_{j-1, k_1'} ) \n        } \\,,",
+      "modified_formula": "\\mathsf{c}_j\n        ( \\, \n        x_{j,k} , \\, \n        y_{j, k'}\n        \\, ) := \n        \\frac{\n        \\sum_{\n        x \\in C_{j,k}(\\mathsf{X}), y \\in C_{j,k'}(\\mathsf{Y})  \n        }\n        \\mathsf{c}(x,y)\n        \\pi_{j-1}^\\star ( x_{j-1, k_1}, y_{j-1, k_1'} ) \n        }{\n        \\\\prod_{\n        x \\in C_{j,k}(\\mathsf{X}), y \\in C_{j,k'}(\\mathsf{Y})  \n        }\n        \\pi_{j-1}^\\star ( x_{j-1, k_1}, y_{j-1, k_1'} ) \n        } \\,,",
+      "error_type": "sum_product_swap",
+      "error_description": "Changed '∑' to '∏'",
+      "line_number": 1704,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_0447>>",
+      "original_formula": "\\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\equiv \n        \\mathrm{diam}\\bigl(\n        \\mathsf{X}_q^{(t)} \\cup T(\\mathsf{X}_q^{(t)})\\bigr) \n    \\;:=\\;\n    \\max_{ \\mathbf{x}_i,\\, \\mathbf{x}_j,\\, \\mathbf{x}_k,\\, \\mathbf{x}_l \\in \\mathsf{X}_q^{(t)}}\\;\n    \\Bigl\\|\n    \\bigl( \\mathbf{x}_i,\\,T(\\mathbf{x}_j)\\bigr)\n    \\;-\\;\n    \\bigl(\\mathbf{x}_k,\\,T(\\mathbf{x}_l)\\bigr)\n    \\Bigr\\|,",
+      "modified_formula": "\\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\equiv \n        \\mathrm{diam}\\bigl(\n        \\mathsf{X}_q^{(t)} \\cup T(\\mathsf{X}_q^{(t)})\\bigr) \n    \\;:=\\;\n    \\\\min_{ \\mathbf{x}_i,\\, \\mathbf{x}_j,\\, \\mathbf{x}_k,\\, \\mathbf{x}_l \\in \\mathsf{X}_q^{(t)}}\\;\n    \\Bigl\\|\n    \\bigl( \\mathbf{x}_i,\\,T(\\mathbf{x}_j)\\bigr)\n    \\;-\\;\n    \\bigl(\\mathbf{x}_k,\\,T(\\mathbf{x}_l)\\bigr)\n    \\Bigr\\|,",
+      "error_type": "function_swap",
+      "error_description": "Changed 'max' to 'min'",
+      "line_number": 1466,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_0436>>",
+      "original_formula": "\\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\equiv \n        \\mathrm{diam}\\bigl(\n        \\mathsf{X}_q^{(t)} \\cup T(\\mathsf{X}_q^{(t)})\\bigr) \n    \\;:=\\;\n    \\max_{ \\mathbf{x}_i,\\, \\mathbf{x}_j,\\, \\mathbf{x}_k,\\, \\mathbf{x}_l \\in \\mathsf{X}_q^{(t)}}\\;\n    \\Bigl\\|\n    \\bigl( \\mathbf{x}_i,\\,T(\\mathbf{x}_j)\\bigr)\n    \\;-\\;\n    \\bigl(\\mathbf{x}_k,\\,T(\\mathbf{x}_l)\\bigr)\n    \\Bigr\\|.",
+      "modified_formula": "\\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\equiv \n        \\mathrm{diam}\\bigl(\n        \\mathsf{X}_q^{(t)} \\cup T(\\mathsf{X}_q^{(t)})\\bigr) \n    \\;:=\\;\n    \\max_{ \\mathbf{x}_i,\\, \\mathbf{x}_j,\\, \\mathbf{x}_k,\\, \\mathbf{x}_l \\in \\mathsf{X}_q^{(t)}}\\;\n    \\Bigl\\|\n    \\bigl( \\mathbf{x}_i,\\,T(\\mathbf{x}_j)\\bigr)\n    \\; + \\;\n    \\bigl(\\mathbf{x}_k,\\,T(\\mathbf{x}_l)\\bigr)\n    \\Bigr\\|.",
+      "error_type": "sign_flip",
+      "error_description": "Changed '-' to '+'",
+      "line_number": 1288,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_0520>>",
+      "original_formula": "\\Gamma({\\mathsf{X}})\n    &:= \n    \\{ \\Gamma_j(\\mathsf{X}) \\}_{j=0}^J\n    \\,,  \\quad \\Gamma_j(\\mathsf{X}) := \\{ C_{j,k}(\\mathsf{X}) \\}_{k=1}^{K_j(\\mathsf{X})}\n    \\\\ \n        \\Gamma({\\mathsf{Y}})\n    &:= \n    \\{ \\Gamma_j(\\mathsf{Y}) \\}_{j=0}^J\n    \\,,  \\quad \\Gamma_j(\\mathsf{Y}) := \\{ C_{j,k}(\\mathsf{Y}) \\}_{k=1}^{K_j(\\mathsf{Y})} \\,,",
+      "modified_formula": "\\Gamma({\\mathsf{X}})\n    &:= \n    \\{ \\Gamma_m(\\mathsf{X}) \\}_{j=0}^J\n    \\,,  \\quad \\Gamma_j(\\mathsf{X}) := \\{ C_{j,k}(\\mathsf{X}) \\}_{k=1}^{K_j(\\mathsf{X})}\n    \\\\ \n        \\Gamma({\\mathsf{Y}})\n    &:= \n    \\{ \\Gamma_j(\\mathsf{Y}) \\}_{j=0}^J\n    \\,,  \\quad \\Gamma_j(\\mathsf{Y}) := \\{ C_{j,k}(\\mathsf{Y}) \\}_{k=1}^{K_j(\\mathsf{Y})} \\,,",
+      "error_type": "index_change",
+      "error_description": "Changed subscript 'j' to 'm'",
+      "line_number": 1620,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_0457>>",
+      "original_formula": "\\leq \n    \\frac{\\rho_{t+1}}{n^{2}} \\sum_{q=1}^{\\rho_t} \n    \\left| \\gamma \\frac{| \\mathsf{X}_{q}^{(t)}|^{2}}{r_{t+1}} - \\gamma r_{t+1} | \\mathsf{X}_{q}^{(t+1)}|^{2}\n    \\right| = \\frac{\\rho_{t+1}}{n^{2}} \\sum_{q=1}^{\\rho_t} \n    \\left| \\gamma \\frac{(n/ \\rho_t )^{2}}{r_{t+1}} - \\gamma r_{t+1} (n/\\rho_{t+1})^{2}\n    \\right| = 0 \\,.",
+      "modified_formula": "\\leq \n    \\frac{\\rho_{t+1}}{n^{2}} \\sum_{q=1}^{\\rho_t} \n    \\left| \\gamma \\frac{| \\mathsf{X}_{q}^{(t)}|^{2}}{r_{t+1}} - \\gamma r_{t+1} | \\mathsf{X}_{q}^{(t - 1)}|^{2}\n    \\right| = \\frac{\\rho_{t+1}}{n^{2}} \\sum_{q=1}^{\\rho_t} \n    \\left| \\gamma \\frac{(n/ \\rho_t )^{2}}{r_{t+1}} - \\gamma r_{t+1} (n/\\rho_{t+1})^{2}\n    \\right| = 0 \\,.",
+      "error_type": "sign_flip",
+      "error_description": "Changed '+' to '-'",
+      "line_number": 1527,
+      "formula_type": "display"
+    },
+    {
+      "label": "<<FORMULA_0545>>",
+      "original_formula": "\\label{eq:supp_otscale_j}\n    \\begin{split}\n\\pi_j^\\star \n&:=\n\\argmin_{\n\\pi \\in \\Pi( \\mu_j, \\nu_j) \n}\n\\mathrm{cost}( \\pi_j )\\, , \\quad \\text{where:} \\\\\n\\mathrm{cost}( \\pi_j ) &: = \\sum_{\nk \\in [K_j(\\mathsf{X})], \\, \nk' \\in [K_j(\\mathsf{Y})]\n}\nc( x_{j,k}, y_{j,k'} )\n\\pi_j ( x_{j,k}, y_{j,k'} )\n    \\end{split}",
+      "modified_formula": "\\label{eq:supp_otscale_j}\n    \\begin{split}\n\\pi_j^\\star \n&:=\n\\argmin_{\n\\pi \\in \\Pi( \\mu_j, \\nu_j) \n}\n\\mathrm{cost}( \\pi_j )\\, , \\quad \\text{where:} \\\\\n\\mathrm{cost}( \\pi_j ) &: = \\\\prod_{\nk \\in [K_j(\\mathsf{X})], \\, \nk' \\in [K_j(\\mathsf{Y})]\n}\nc( x_{j,k}, y_{j,k'} )\n\\pi_j ( x_{j,k}, y_{j,k'} )\n    \\end{split}",
+      "error_type": "sum_product_swap",
+      "error_description": "Changed '∑' to '∏'",
+      "line_number": 1729,
+      "formula_type": "equation"
+    }
+  ],
+  "unmodified": [
+    "<<FORMULA_0446>>",
+    "<<FORMULA_0339>>",
+    "<<FORMULA_0066>>",
+    "<<FORMULA_0303>>",
+    "<<FORMULA_0441>>",
+    "<<FORMULA_0454>>",
+    "<<FORMULA_0452>>",
+    "<<FORMULA_0443>>",
+    "<<FORMULA_0539>>"
+  ]
+}

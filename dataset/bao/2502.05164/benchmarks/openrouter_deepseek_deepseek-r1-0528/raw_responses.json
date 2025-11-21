@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2502.05164",
+    "model": "openrouter/deepseek/deepseek-r1-0528",
+    "total_responses": 20,
+    "timestamp": "2025-11-01T16:56:53.745384"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0062>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The numerator uses product operator ∏ instead of sum operator ∑ for the weighted average calculation\"\n}",
+      "response_length": 186,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0054>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The denominator Bessel function index should be I_(d-3)/2 instead of I_(d-1)/2\"\n}",
+      "response_length": 160,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0197>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Inconsistent subscript: μ_α in numerator vs μ_a in denominator; both should use same index\"\n}",
+      "response_length": 172,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0189>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"Numerator exponent should be negative (e^{-...}) but is written as positive (e^{+...})\"\n}",
+      "response_length": 165,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0172>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0173>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0174>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"Missing left bracket in \\\\geft[ command for expectation operator in inequality line\"\n}",
+      "response_length": 172,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0187>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"In the final equality, the denominator should be σ₀² + σz² but is written as σ₀² × σz²\"\n}",
+      "response_length": 169,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0201>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0206>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0060>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The operator between the first and second terms should be plus (+) instead of minus (-)\"\n}",
+      "response_length": 166,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0245>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0309>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"Missing left parenthesis delimiter after \\\\frac{1}{L} due to misspelled '\\\\geft' command (should be '\\\\left')\"\n}",
+      "response_length": 198,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0183>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The denominator in the center term should be σ₀² + σ_Z² (plus) instead of σ₀² - σ_Z² (minus)\"\n}",
+      "response_length": 171,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0296>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The fraction in the first exponential of the denominator should be (R||x||_2)/σ_Z^2 but is written as σ_Z^2/(R||x||_2)\"\n}",
+      "response_length": 206,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0294>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0301>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0293>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0193>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0203>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The fraction ( (σ_Z^2 + σ_a^2) / σ_a^2 )^{n/2} should be inverted to ( σ_a^2 / (σ_Z^2 + σ_a^2) )^{n/2} in both numerator and denominator\"\n}",
+      "response_length": 224,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

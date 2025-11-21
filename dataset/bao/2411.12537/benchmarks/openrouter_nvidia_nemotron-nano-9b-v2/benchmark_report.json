@@ -1,0 +1,199 @@
+{
+  "metadata": {
+    "paper_id": "2411.12537",
+    "model": "openrouter/nvidia/nemotron-nano-9b-v2",
+    "total_detections_attempted": 20,
+    "parsing_failures": 5,
+    "valid_evaluations": 15,
+    "formulas_with_errors_injected": 12,
+    "formulas_unmodified": 8,
+    "timestamp": "2025-10-31T17:24:49.918031"
+  },
+  "binary_classification": {
+    "true_positives": 4,
+    "false_positives": 2,
+    "true_negatives": 5,
+    "false_negatives": 4,
+    "accuracy": 0.6,
+    "precision": 0.667,
+    "recall": 0.5,
+    "f1_score": 0.571
+  },
+  "error_type_matching": {
+    "total_errors_detected": 4,
+    "correct_type_identified": 2,
+    "incorrect_type_identified": 2,
+    "type_accuracy": 0.5
+  },
+  "instruction_following": {
+    "perfect_json_responses": 15,
+    "fallback_parsing_required": 0,
+    "parsing_failures": 5,
+    "perfect_json_rate": 0.75,
+    "fallback_rate": 0.0,
+    "failure_rate": 0.25,
+    "strategy_breakdown": {
+      "direct": 15,
+      "failed": 5
+    }
+  },
+  "per_error_type_performance": {
+    "inequality_flip": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    },
+    "sign_flip": {
+      "detected": 2,
+      "total": 5,
+      "recall": 0.4
+    },
+    "operator_swap": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    },
+    "index_change": {
+      "detected": 0,
+      "total": 1,
+      "recall": 0.0
+    }
+  },
+  "detailed_results": [
+    {
+      "label": "<<FORMULA_0215>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "inequality_flip",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0479>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0406>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0431>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0356>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0004>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "operator_swap",
+      "detected_has_error": true,
+      "detected_error_type": "operator_swap",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0647>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0125>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0457>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0681>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0507>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "index_change",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0696>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": true,
+      "detected_error_type": "function_swap",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0643>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0428>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "index_change",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0695>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "FP",
+      "type_match": null
+    }
+  ]
+}

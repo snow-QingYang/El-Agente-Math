@@ -1,0 +1,202 @@
+{
+  "metadata": {
+    "paper_id": "2502.02013",
+    "model": "openai/gpt-5-nano",
+    "context_words": 300,
+    "total_formulas_checked": 19,
+    "timestamp": "2025-10-31T17:20:19.676794",
+    "benchmark_mode": true
+  },
+  "detections": [
+    {
+      "label": "<<FORMULA_0053>>",
+      "formula": "\\bar{C} \n    = \\frac{1}{L-2}\\sum_{k=1}^{L-2}\n      \\arccos\\!\\Bigl(\\tfrac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}\n                           {\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_j\\|}\\Bigr).",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "In the cosine denominator, the norm uses ||v_j|| instead of ||v_k||, changing the index from k to j.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 7.96
+    },
+    {
+      "label": "<<FORMULA_0128>>",
+      "formula": "\\mathbf{h}_t &= \\mathbf{A}\\mathbf{h}_{t-1} \\\\times \\mathbf{B}\\mathbf{x}_t, \\\\\n    \\mathbf{y}_t &= \\mathbf{C}\\mathbf{h}_t + \\mathbf{D}\\mathbf{x}_t,",
+      "has_error": true,
+      "error_type": "operator_swap",
+      "error_description": "In the state update, the addition between A h_{t-1} and B x_t was replaced with multiplication (h_t = A h_{t-1} × B x_t) instead of h_t = A h_{t-1} + B x_t.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 9.24
+    },
+    {
+      "label": "<<FORMULA_0018>>",
+      "formula": "\\label{eq:matrix-based-entropy}\n    S_\\alpha(\\mathbf{Z}) \\;=\\; \\frac{1}{1-\\alpha} \\,\\log \\!\\biggl(\\,\\sum_{i=1}^{r}\\!\\Bigl(\\tfrac{\\lambda_i(\\mathbf{K})}{\\mathrm{tr}(\\mathbf{K})}\\Bigr)^\\alpha\\biggr),",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 10.4
+    },
+    {
+      "label": "<<FORMULA_0056>>",
+      "formula": "\\bar{C} \\;=\\; \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos \\ \\!\\Bigl( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_k\\|} \\Bigr).",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "The denominator uses ||v_j|| instead of ||v_k|| inside the arccos, altering the index and breaking the intended angle between consecutive vectors.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 12.89
+    },
+    {
+      "label": "<<FORMULA_0113>>",
+      "formula": "\\bar{C} = \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos\\left( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k - 1}\\| \\|\\mathbf{v}_k\\|} \\right).",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "The denominator uses ||v_{k-1}|| instead of ||v_{k+1}||, causing the cosine term to mix the wrong vector norms and misalign the angle between v_k and v_{k+1} (and may reference v_0 when indexing starts at 1).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 14.8
+    },
+    {
+      "label": "<<FORMULA_0029>>",
+      "formula": "\\label{eq:matrix + based-entropy}\nS_\\alpha(\\mathbf{Z}) \n\\;=\\; \n\\frac{1}{1-\\alpha}\\,\\log \\Biggl(\\,\\sum_{i=1}^{r} \\Bigl(\\tfrac{\\lambda_i(\\mathbf{K})}{\\mathrm{tr}(\\mathbf{K})}\\Bigr)^\\alpha \\Biggr),",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 15.94
+    },
+    {
+      "label": "<<FORMULA_0110>>",
+      "formula": "\\label{eq:matrix-based-entropy}\n    S_{\\alpha}(\\mathbf{Z}) = \\frac{1}{1 - \\alpha} \\log \\left( \\sum_{i=1}^{L} \\left( \\frac{\\lambda_i(\\mathbf{K_Z})}{\\operatorname{tr}(\\mathbf{K_Z})} \\right)^{\\alpha} \\right).",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 16.49
+    },
+    {
+      "label": "<<FORMULA_0088>>",
+      "formula": "\\label{eq:matrix-based-entropy}\n    S_{\\alpha}(\\mathbf{Z}) \\;=\\; \\frac{1 - \\alpha}{1} \\log \\Biggl(\\sum_{i=1}^{r} \\Bigl(\\frac{\\lambda_i(\\mathbf{K_Z})}{\\operatorname{tr}(\\mathbf{K_Z})}\\Bigr)^\\alpha \\Biggr)",
+      "has_error": true,
+      "error_type": "fraction_inversion",
+      "error_description": "The prefactor before the log is (1 - α)/1, which is equivalent to (1 - α). For the matrix-based entropy, the correct prefactor should be 1/(1 - α); thus the fraction appears inverted.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 16.91
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "formula": "%     \\mathbf{h}_t &= \\mathbf{A}\\mathbf{h}_{t-1} + \\mathbf{B}\\mathbf{x}_t, \\\\\n%     \\mathbf{y}_t &= \\mathbf{C}\\mathbf{h}_t + \\mathbf{D}\\mathbf{x}_t,\n%",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 10.28
+    },
+    {
+      "label": "<<FORMULA_0153>>",
+      "formula": "\\label{eqn:attention}\n%    \\mathbf{A} = softmax\\\\geft(\\frac{\\mathbf{Q}\\mathbf{K}^\\top}{\\sqrt{d_k}}\\right),\n%",
+      "has_error": true,
+      "error_type": "missing_parentheses",
+      "error_description": "The opening delimiter after softmax is garbled ('softmax\\\\geft(') instead of a proper left parenthesis; the expression should be A = softmax( Q K^T / sqrt(d_k) ).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 15.36
+    },
+    {
+      "label": "<<FORMULA_0102>>",
+      "formula": "\\bar{C} \\;=\\; \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos\\!\\Bigl( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_k\\|} \\Bigr).",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "Off-by-one indexing: with L tokens there are L-1 consecutive vector pairs (v_k, v_{k+1}), but the sum runs from k=1 to L-2 and the average divides by L-2. It should be k=1..L-1 and divide by L-1.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 24.7
+    },
+    {
+      "label": "<<FORMULA_0123>>",
+      "formula": "\\mathbf{Q} = \\mathbf{x}\\mathbf{W}_Q, \\quad \\mathbf{K} = \\mathbf{x}\\mathbf{W}_K^T, \\quad \\mathbf{V} = \\mathbf{x}\\mathbf{W}_V,",
+      "has_error": true,
+      "error_type": "transpose_error",
+      "error_description": "K is defined as x W_K^T while Q and V are defined with non-transposed weights; for standard attention, K should be x W_K (no transpose) to ensure Q K^T is valid and K has the same last dimension as Q. The extra transpose on W_K appears to be an error.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 26.29
+    },
+    {
+      "label": "<<FORMULA_0210>>",
+      "formula": "\\mathbb P(|\\langle \\mathbf{v_i} , \\mathbf{v_j} \\rangle | < \\epsilon) \\leq \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}",
+      "has_error": true,
+      "error_type": "inequality_flip",
+      "error_description": "The bound is stated for P(|<v_i, v_j>| < ε) but standard concentration gives a bound on P(|<v_i, v_j>| > ε); the inequality direction is reversed (and typically includes a factor for multiple pairs).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 21.32
+    },
+    {
+      "label": "<<FORMULA_0235>>",
+      "formula": "\\|\\bar Z\\bar Z^\\top \\|_F^2  = \\frac{1}{L^2} (N + \\\\prod_{i\\not= j}\\langle \\sqrt L q_i, \\sqrt L q_j \\rangle ).",
+      "has_error": true,
+      "error_type": "sum_product_swap",
+      "error_description": "The formula uses a product over inner products ∏_{i≠ j} ⟨√L q_i, √L q_j⟩, but the context derives a sum ∑_{i≠ j} ⟨√L q_i, √L q_j⟩; this is a sum-product swap error.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 21.82
+    },
+    {
+      "label": "<<FORMULA_0255>>",
+      "formula": "\\|\\bar Z\\bar Z^\\top\\|_F^2 &= \\\\prod_{i=1}^N \\| \\mathbf q_i\\|^2 + \\sum_{i\\not= j}\\langle \\mathbf q_i,\\mathbf q_j \\rangle \\\\\n\t\t&= \\sum_{i=1}^N \\frac{N^2}{L^2}\\|\\mathbf v_i\\|^2 + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle\\mathbf v_i, \\mathbf v_j \\rangle \\\\\n\t\t&= \\frac{N^3}{L^2} + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle \\mathbf v_i, \\mathbf v_j \\rangle.",
+      "has_error": true,
+      "error_type": "sum_product_swap",
+      "error_description": "The first line contains a product over i of ||q_i||^2, but the next line replaces it with a sum; sum and product are swapped, making the equality inconsistent.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 21.92
+    },
+    {
+      "label": "<<FORMULA_0233>>",
+      "formula": "\\|\\bar Z\\bar Z^\\top \\|_F^2 &= \\frac1{L^2}\\| L \\bar Z\\bar Z^\\top \\|_F^2\\\\ &= \\frac{1}{L^2} (\\sum_{i=1}^N \\|\\sqrt L q_i\\|^2 + \\sum_{i\\not= j}\\langle \\sqrt L q_m, \\sqrt L q_j \\rangle ).",
+      "has_error": true,
+      "error_type": "sum_product_swap",
+      "error_description": "A sum over i ≠ j of the inner products ⟨√L q_i, √L q_j⟩ is replaced by a product ∏_{i≠j} ⟨√L q_i, √L q_j⟩, which is incorrect.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 41.89
+    },
+    {
+      "label": "<<FORMULA_0238>>",
+      "formula": "\\mathbb P(\\forall i\\not= j : |\\langle \\sqrt D q_i, \\sqrt D q_j \\rangle| \\leq \\frac{\\epsilon}{N^2}) \\geq 1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2N^2}}.",
+      "has_error": true,
+      "error_type": "exponent_order",
+      "error_description": "The exponent in the bound is incorrect. After substituting the threshold on the inner product, |sqrt(D) q_i · sqrt(D) q_j| ≤ ε/N^2, one uses t = ε/(D N^2) for |<q_i,q_j>| and the bound P(|<q_i,q_j>| > t) ≤ sqrt(2π) exp(- D t^2 / 2) gives exp(- ε^2/(2 D N^4)). Therefore the correct bound should be P ≥ 1 - N^2 sqrt(2π) exp(- ε^2/(2 D N^4)). The given exp(- D ε^2 /(2 N^2)) is inconsistent.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 41.73
+    },
+    {
+      "label": "<<FORMULA_0259>>",
+      "formula": "|\\|\\bar Z\\bar Z^\\top\\|_F^2  - \\frac{N^3}{L^2}| \\leq \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle |\\mathbf v_i, \\mathbf v_j \\rangle| \\leq \\frac1{L^2}\\sum_{i\\not= j}\\epsilon \\leq \\epsilon.",
+      "has_error": true,
+      "error_type": "missing_parentheses",
+      "error_description": "An extraneous leading '|' introduces an unbalanced absolute-value structure; the left-hand side should be | ||\\bar Z\\bar Z^T||_F^2 - N^3/L^2 | with a single pair of outer bars around the inner Frobenius-norm term.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 40.41
+    },
+    {
+      "label": "<<FORMULA_0212>>",
+      "formula": "\\mathbb{P}(\\exists i,j : \\langle |\\mathbf{v_i}, \\mathbf{v_j} \\rangle|>\\epsilon) &\\leq \\sum_{i\\not= j}\\mathbb{P}(|\\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle|>\\epsilon)\\\\ &\\leq m^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}.",
+      "has_error": true,
+      "error_type": "inequality_flip",
+      "error_description": "In the Random Unit Vectors are Nearly Orthogonal section, the bound writes P(|<v_i, v_j>| < ε) ≤ sqrt{2π} e^{ - D ε^2 / 2 }. This is incorrect: the bound should apply to the tail probability P(|<v_i, v_j>| > ε) (the event that the inner product exceeds ε), not to the event that it lies within ε. The inequality direction/quantity is reversed.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 48.41
+    }
+  ]
+}

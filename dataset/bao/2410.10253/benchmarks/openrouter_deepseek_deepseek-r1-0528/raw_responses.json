@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2410.10253",
+    "model": "openrouter/deepseek/deepseek-r1-0528",
+    "total_responses": 20,
+    "timestamp": "2025-11-01T16:08:35.078581"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0118>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"The multiplication operator '×' incorrectly replaces the required addition operator between the terms -\\\\bm{{\\\\tilde {x}}}^T\\\\bm{L}\\\\bm{{\\\\tilde {x}}} and \\\\bm{{\\\\tilde {x}}}^T\\\\Delta \\\\bm{f}(t)\"\n}",
+      "response_length": 277,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0093>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"In the adjoint equation, multiplication operator (×) incorrectly used instead of addition (+) between gradient terms\"\n}",
+      "response_length": 199,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0010>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0084>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The minus operator before l_N should be plus to minimize all loss terms consistently\"\n}",
+      "response_length": 163,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0025>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The subscript index for the predicted state should be i (t_i) but is incorrectly set to k (t_k) in the feedback term\"\n}",
+      "response_length": 198,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0030>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The subscript index in \\\\bar{x}(t_n) should be k (t_k) to match the context of 'last evaluation moment', but it uses undefined index n.\"\n}",
+      "response_length": 217,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0011>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0126>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0119>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The second inequality operator should be '≤' but is incorrectly written as '≥'\"\n}",
+      "response_length": 163,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0123>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0167>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The gravity term should be negative: -g Z_E, but it is written as +g Z_E\"\n}",
+      "response_length": 151,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0071>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0184>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The input cost term l_u uses index i ranging from 1 to N, but inputs u_i are only defined for indices 0 to N-1\"\n}",
+      "response_length": 192,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0208>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The plus operator should be minus between the terms for the feedback gain to match the Lyapunov derivative proof\"\n}",
+      "response_length": 191,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0218>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0134>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"The command for the left bracket in the vector term is misspelled as '\\\\geft' instead of '\\\\left', causing incorrect grouping\"\n}",
+      "response_length": 214,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0220>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The sign of the term involving Δf(t) flips from negative in line 2 to positive in line 3 without mathematical justification\"\n}",
+      "response_length": 202,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0130>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The time index for Δf(t) uses continuous time t but should use discrete time index t_{k-1} to match other terms\"\n}",
+      "response_length": 193,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0216>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0050>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

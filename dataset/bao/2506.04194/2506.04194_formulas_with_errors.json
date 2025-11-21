@@ -1,0 +1,162 @@
+{
+  "<<FORMULA_1050>>": {
+    "formula": "&\\iint_{x\\in \\wh{S}_1}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\leq \\\\\n                    &\\quad \\iint_{x\\in \\wh{S}_1\\setminus B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    + \\iint_{x\\in \\wh{S}_1\\cap B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\,.\n                    \\yesnum\\label{eq:est:scenario3:bound1}",
+    "raw_latex": "\\begin{align*}\n                    &\\iint_{x\\in \\wh{S}_1}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\leq \\\\\n                    &\\quad \\iint_{x\\in \\wh{S}_1\\setminus B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    + \\iint_{x\\in \\wh{S}_1\\cap B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\,.\n                    \\yesnum\\label{eq:est:scenario3:bound1}\n                \\end{align*}",
+    "formula_type": "align*",
+    "line_number": 2765,
+    "start_pos": 211640,
+    "end_pos": 212760
+  },
+  "<<FORMULA_1046>>": {
+    "formula": "&\\iint_{x\\in \\wh{S}_1}\\abs{\n                        \\frac{\n                            \\wh{p}(x,y)\\cdot \\wh{\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        - \\cP(x,y)\n                    }\\d x\\d y\\\\\n                    &\\quad\\leq \n                    \\iint_{x\\in \\wh{S}_1}\n                    \\frac{1}{\\wh{e}(x)}\n                    \\cdot \\abs{\n                        \\wh{p}(x,y)\\cdot \\wh{\\cP}(x,y)\n                             - \n                             p(x,y)\\cdot \\cP(x,y)\n                    } \\d x\\d y  + \n                    \\iint_{x\\in \\wh{S}_1}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\\,.\n                    \\yesnum\\label{eq:est:scenario3:bound0}",
+    "raw_latex": "\\begin{align*}\n                    &\\iint_{x\\in \\wh{S}_1}\\abs{\n                        \\frac{\n                            \\wh{p}(x,y)\\cdot \\wh{\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        - \\cP(x,y)\n                    }\\d x\\d y\\\\\n                    &\\quad\\leq \n                    \\iint_{x\\in \\wh{S}_1}\n                    \\frac{1}{\\wh{e}(x)}\n                    \\cdot \\abs{\n                        \\wh{p}(x,y)\\cdot \\wh{\\cP}(x,y)\n                             - \n                             p(x,y)\\cdot \\cP(x,y)\n                    } \\d x\\d y  + \n                    \\iint_{x\\in \\wh{S}_1}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\\,.\n                    \\yesnum\\label{eq:est:scenario3:bound0}\n                \\end{align*}",
+    "formula_type": "align*",
+    "line_number": 2734,
+    "start_pos": 210244,
+    "end_pos": 211278
+  },
+  "<<FORMULA_1061>>": {
+    "formula": "\\iint_{x\\in \\wh{S}_1\\cap B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\leq \\frac{1}{c-\\sqrt{\\eps}}\\cP\\inparen{\\wh{S}_1\\cap B} - \\cP\\inparen{\\wh{S}_1\\cap B}\n                    \\leq \\frac{2 \\sqrt{\\eps}}{c-\\sqrt{\\eps}}\\,.\n                    \\yesnum\\label{eq:est:scenario3:bound3}",
+    "raw_latex": "\\[\n                    \\iint_{x\\in \\wh{S}_1\\cap B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\leq \\frac{1}{c-\\sqrt{\\eps}}\\cP\\inparen{\\wh{S}_1\\cap B} - \\cP\\inparen{\\wh{S}_1\\cap B}\n                    \\leq \\frac{2 \\sqrt{\\eps}}{c-\\sqrt{\\eps}}\\,.\n                    \\yesnum\\label{eq:est:scenario3:bound3}\n                \\]",
+    "formula_type": "display",
+    "line_number": 2815,
+    "start_pos": 213951,
+    "end_pos": 214540
+  },
+  "<<FORMULA_0932>>": {
+    "formula": "\\sabs{\n                        \\Ex[\\wh{\\tau}]\n                        -\n                        \\Ex[\\bar{\\tau}]\n                    }\n                    \\leq \\frac{\\eps}{2}\\,,\\quad \n                    \\Ex[\\bar{\\tau}] = \\tau\\,,\\quadand\n                    \\Pr\\insquare{\n                        \\sabs{\n                            \\wh{\\tau}\n                            - \n                            \\Ex[\\bar{\\tau}] \n                        }\n                        \\leq \\frac{\\eps}{2}\n                    }\n                    \\geq 1-\\delta\\,.",
+    "raw_latex": "\\[\n                    \\sabs{\n                        \\Ex[\\wh{\\tau}]\n                        -\n                        \\Ex[\\bar{\\tau}]\n                    }\n                    \\leq \\frac{\\eps}{2}\\,,\\quad \n                    \\Ex[\\bar{\\tau}] = \\tau\\,,\\quadand\n                    \\Pr\\insquare{\n                        \\sabs{\n                            \\wh{\\tau}\n                            - \n                            \\Ex[\\bar{\\tau}] \n                        }\n                        \\leq \\frac{\\eps}{2}\n                    }\n                    \\geq 1-\\delta\\,.\n                \\]",
+    "formula_type": "display",
+    "line_number": 2426,
+    "start_pos": 190856,
+    "end_pos": 191442
+  },
+  "<<FORMULA_1056>>": {
+    "formula": "\\iint_{x\\in \\wh{S}_1\\setminus B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\leq \n                    \\sqrt{\\eps}\n                    \\cdot \\iint_{x\\in \\wh{S}_1\\setminus B}\\abs{ \\cP(x,y) }\\d x\\d y\n                    \\\\geq \\sqrt{\\eps}\\,.\n                    \\yesnum\\label{eq:est:scenario3:bound2}",
+    "raw_latex": "\\begin{align*}\n                    \\iint_{x\\in \\wh{S}_1\\setminus B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\leq \n                    \\sqrt{\\eps}\n                    \\cdot \\iint_{x\\in \\wh{S}_1\\setminus B}\\abs{ \\cP(x,y) }\\d x\\d y\n                    \\\\geq \\sqrt{\\eps}\\,.\n                    \\yesnum\\label{eq:est:scenario3:bound2}\n                \\end{align*}",
+    "formula_type": "align*",
+    "line_number": 2798,
+    "start_pos": 213117,
+    "end_pos": 213724
+  },
+  "<<FORMULA_0829>>": {
+    "formula": "\\Ex\\nolimits_{\\cP}[y] &\\neq \\Ex\\nolimits_{\\cQ}[y]\\,,\\yesnum\\label{eq:iden:3:a}\\\\\n                        \\cP_X &= \\cQ_X\\,,\\yesnum\\label{eq:iden:3:b}\\\\\n                        \\forall_{x\\in \\supp(\\cP_X)}\\,,~~\n                        \\forall_{y\\in \\R}\\,,~~\\quad \n                            \\frac{\\cP(x,y)}{\\cQ(x,y)} &\\in \\inparen{\n                                \\frac{c}{1-c}, \n                                \\frac{1-c}{c}\n                            }\\,.\n                            \\yesnum\\label{eq:iden:3:c}",
+    "raw_latex": "\\begin{align*}\n                        \\Ex\\nolimits_{\\cP}[y] &\\neq \\Ex\\nolimits_{\\cQ}[y]\\,,\\yesnum\\label{eq:iden:3:a}\\\\\n                        \\cP_X &= \\cQ_X\\,,\\yesnum\\label{eq:iden:3:b}\\\\\n                        \\forall_{x\\in \\supp(\\cP_X)}\\,,~~\n                        \\forall_{y\\in \\R}\\,,~~\\quad \n                            \\frac{\\cP(x,y)}{\\cQ(x,y)} &\\in \\inparen{\n                                \\frac{c}{1-c}, \n                                \\frac{1-c}{c}\n                            }\\,.\n                            \\yesnum\\label{eq:iden:3:c}\n                    \\end{align*}",
+    "formula_type": "align*",
+    "line_number": 2285,
+    "start_pos": 179503,
+    "end_pos": 180086
+  },
+  "<<FORMULA_0417>>": {
+    "formula": "\\begin{split}\n                        \\snorm{p\\cP - p_0\\cD_{X,Y(0)}}_1\n                    &\\coloneqq \n                    \\iint \\abs{p(x,y)\\cP(x,y)-p_0(x,y)\\cD_{X,Y(0)}(x,y)}\\d x\\d y\n                     \\leq \\eps \\,,\\\\\n                    \\snorm{q\\cQ - p_1\\cD_{X,Y(1)}}_1\n                    &\\coloneqq \n                    \\iint \\abs{p(x,y)\\cP(x,y)-p_1(x,y)\\cD_{X,Y(1)}(x,y)}\\d x\\d y\n                     \\leq \\eps \\,.\n                    \\end{split}\n                    \\yesnum\\label{eq:techOverview:est:2}",
+    "raw_latex": "\\begin{align*}\n                    \\begin{split}\n                        \\snorm{p\\cP - p_0\\cD_{X,Y(0)}}_1\n                    &\\coloneqq \n                    \\iint \\abs{p(x,y)\\cP(x,y)-p_0(x,y)\\cD_{X,Y(0)}(x,y)}\\d x\\d y\n                     \\leq \\eps \\,,\\\\\n                    \\snorm{q\\cQ - p_1\\cD_{X,Y(1)}}_1\n                    &\\coloneqq \n                    \\iint \\abs{p(x,y)\\cP(x,y)-p_1(x,y)\\cD_{X,Y(1)}(x,y)}\\d x\\d y\n                     \\leq \\eps \\,.\n                    \\end{split}\n                    \\yesnum\\label{eq:techOverview:est:2}\n                \\end{align*}",
+    "formula_type": "align*",
+    "line_number": 1382,
+    "start_pos": 103924,
+    "end_pos": 104498
+  },
+  "<<FORMULA_1035>>": {
+    "formula": "\\iint_{x\\in \\wh{S^T}_1} \n                            \\abs{\n                                \\cP'(x,y)\n                                -\n                                \\frac{\n                                    \\wh{p}(x,y)\\wh{\\cP}(x,y)\n                                }{  \n                                    \\wh{e}(x)\n                                }\n                            }\\d x \\d y < O\\inparen{\\frac{\\sqrt{\\eps}}{c}}\\,.\n                            \\yesnum\\label{eq:est:scenario3:accuracyTruncated}",
+    "raw_latex": "\\[\n                        \\iint_{x\\in \\wh{S^T}_1} \n                            \\abs{\n                                \\cP'(x,y)\n                                -\n                                \\frac{\n                                    \\wh{p}(x,y)\\wh{\\cP}(x,y)\n                                }{  \n                                    \\wh{e}(x)\n                                }\n                            }\\d x \\d y < O\\inparen{\\frac{\\sqrt{\\eps}}{c}}\\,.\n                            \\yesnum\\label{eq:est:scenario3:accuracyTruncated}\n                    \\]",
+    "formula_type": "display",
+    "line_number": 2695,
+    "start_pos": 207608,
+    "end_pos": 208162
+  },
+  "<<FORMULA_0558>>": {
+    "formula": "\\hyPunconf(c) \\coloneqq \n                \\inbrace{\n                    p\\colon \\R^d\\times \\R\\to [0,1]\\given  \n                    \\begin{array}{c}\n                         ~\\forall_{x\\in \\R^d},~~\\forall_{y_1,y_2\\in \\R}\\,,\\quad \n                                p(x,y_1)=p(x,y_2)\\,,\\\\\n                                \\exists S~~\\text{with}~~\\vol(S)\\geq c ~~\\text{such that,}~~ \\forall_{(x,y)\\in S\\times \\R}\\,,~~ p(x,y) > c \n                    \\end{array}\n                }\\,.",
+    "raw_latex": "\\[\n                \\hyPunconf(c) \\coloneqq \n                \\inbrace{\n                    p\\colon \\R^d\\times \\R\\to [0,1]\\given  \n                    \\begin{array}{c}\n                         ~\\forall_{x\\in \\R^d},~~\\forall_{y_1,y_2\\in \\R}\\,,\\quad \n                                p(x,y_1)=p(x,y_2)\\,,\\\\\n                                \\exists S~~\\text{with}~~\\vol(S)\\geq c ~~\\text{such that,}~~ \\forall_{(x,y)\\in S\\times \\R}\\,,~~ p(x,y) > c \n                    \\end{array}\n                }\\,.\n            \\]",
+    "formula_type": "display",
+    "line_number": 1624,
+    "start_pos": 125695,
+    "end_pos": 126203
+  },
+  "<<FORMULA_0797>>": {
+    "formula": "\\Ex\\nolimits_{\\cP}[y] &\\neq \\Ex\\nolimits_{\\cQ}[y]\\,,\n                        \\yesnum\\label{eq:iden:sanity:negationa}\\\\\n                    \\cP_X &= \\cQ_X\\,,\n                        \\yesnum\\label{eq:iden:sanity:negationb}\\\\\n                    \\forall_{x\\in \\supp(\\cP_X)}\\,,~~\n                        \\forall_{y\\in\\R}\\,,~~\\quad \n                        p(x,y)&\\cdot \\cP(x,y) =  q(x,y)\\cdot \\cQ(x,y)\\,.\n                    \\yesnum\\label{eq:iden:sanity:negation2}",
+    "raw_latex": "\\begin{align*}\n                    \\Ex\\nolimits_{\\cP}[y] &\\neq \\Ex\\nolimits_{\\cQ}[y]\\,,\n                        \\yesnum\\label{eq:iden:sanity:negationa}\\\\\n                    \\cP_X &= \\cQ_X\\,,\n                        \\yesnum\\label{eq:iden:sanity:negationb}\\\\\n                    \\forall_{x\\in \\supp(\\cP_X)}\\,,~~\n                        \\forall_{y\\in\\R}\\,,~~\\quad \n                        p(x,y)&\\cdot \\cP(x,y) =  q(x,y)\\cdot \\cQ(x,y)\\,.\n                    \\yesnum\\label{eq:iden:sanity:negation2}\n                \\end{align*}",
+    "formula_type": "align*",
+    "line_number": 2220,
+    "start_pos": 175524,
+    "end_pos": 176048
+  },
+  "<<FORMULA_0959>>": {
+    "formula": "S_L\\coloneqq \n                        \\inbrace{\n                            (x,y)\\in S \\given \n                            \\frac{\\cD_{X,Y(1)}(x,y)}{\\cP(x,y)} < \\frac{c}{2(1-c)}\n                    }\n                    \\quadand\n                    S_R\\coloneqq  \\inbrace{\n                            (x,y)\\in S \\given \n                            \\frac{\\cD_{X,Y(1)}(x,y)}{\\cP(x,y)} > \\frac{2(1-c)}{c}\n                    }\n                    \\,.",
+    "raw_latex": "\\[  \n                    S_L\\coloneqq \n                        \\inbrace{\n                            (x,y)\\in S \\given \n                            \\frac{\\cD_{X,Y(1)}(x,y)}{\\cP(x,y)} < \\frac{c}{2(1-c)}\n                    }\n                    \\quadand\n                    S_R\\coloneqq  \\inbrace{\n                            (x,y)\\in S \\given \n                            \\frac{\\cD_{X,Y(1)}(x,y)}{\\cP(x,y)} > \\frac{2(1-c)}{c}\n                    }\n                    \\,.\n                \\]",
+    "formula_type": "display",
+    "line_number": 2503,
+    "start_pos": 195986,
+    "end_pos": 196476
+  },
+  "<<FORMULA_0855>>": {
+    "formula": "\\Ex\\nolimits_{\\cP}[y] &\\neq \\Ex\\nolimits_{\\cQ}[y]\\,,\n                            \\yesnum\\label{eq:iden:unconfoundedness:negationa}\\\\\n                        \\cP_X &= \\cQ_X\\,,\n                            \\yesnum\\label{eq:iden:unconfoundedness:negationb}\\\\\n                        \\forall_{x\\in \\supp(\\cP_X)}\\,,~~\n                            \\forall_{y\\in\\R}\\,,~~\\quad \n                            p(x,y)&\\cdot \\cP(x,y) =  q(x,y)\\cdot \\cQ(x,y)\\,.",
+    "raw_latex": "\\begin{align*}\n                        \\Ex\\nolimits_{\\cP}[y] &\\neq \\Ex\\nolimits_{\\cQ}[y]\\,,\n                            \\yesnum\\label{eq:iden:unconfoundedness:negationa}\\\\\n                        \\cP_X &= \\cQ_X\\,,\n                            \\yesnum\\label{eq:iden:unconfoundedness:negationb}\\\\\n                        \\forall_{x\\in \\supp(\\cP_X)}\\,,~~\n                            \\forall_{y\\in\\R}\\,,~~\\quad \n                            p(x,y)&\\cdot \\cP(x,y) =  q(x,y)\\cdot \\cQ(x,y)\\,.\n                    \\end{align*}",
+    "formula_type": "align*",
+    "line_number": 2328,
+    "start_pos": 182920,
+    "end_pos": 183436
+  },
+  "<<FORMULA_0706>>": {
+    "formula": "\\hyPunconf(c) \\coloneqq \n            \\inbrace{\n                p\\colon \\R^d\\times \\R\\to [0,1]\\given  \n                \\begin{array}{c}\n                     ~\\forall_{x\\in \\R^d},~~\\forall_{y_1,y_2\\in \\R}\\,,\\quad \n                            p(x,y_1)=p(x,y_2)\\,,\\\\\n                            \\exists S^T~~\\text{with}~~\\vol(S)\\geq c ~~\\text{such that,}~~ \\forall_{(x,y)\\in S\\times \\R}\\,,~~ p(x,y) > c \n                \\end{array}\n            }\\,.",
+    "raw_latex": "\\[\n            \\hyPunconf(c) \\coloneqq \n            \\inbrace{\n                p\\colon \\R^d\\times \\R\\to [0,1]\\given  \n                \\begin{array}{c}\n                     ~\\forall_{x\\in \\R^d},~~\\forall_{y_1,y_2\\in \\R}\\,,\\quad \n                            p(x,y_1)=p(x,y_2)\\,,\\\\\n                            \\exists S^T~~\\text{with}~~\\vol(S)\\geq c ~~\\text{such that,}~~ \\forall_{(x,y)\\in S\\times \\R}\\,,~~ p(x,y) > c \n                \\end{array}\n            }\\,.\n        \\]",
+    "formula_type": "display",
+    "line_number": 1920,
+    "start_pos": 150820,
+    "end_pos": 151288
+  },
+  "<<FORMULA_0654>>": {
+    "formula": "n = \n                O\\inparen{\n                    \\frac{1}{\\eta M(\\nfrac{\\eps}{2})^2}\n                    \\cdot \n                    \\inparen{\n                        \\mathrm{fat}_{\\eta c\\sigma M(\\nfrac{\\eps}{2})}(\\hyP)\\cdot \n                            \\log{\\frac{1}{\\eta {c}\\sigma M(\\nfrac{\\eps}{2})}}\n                        +\\log{\\frac{N_{\\eta {c}M(\\nfrac{\\eps}{2})}(\\hyD)}{\\delta}}\n                    }\n                }\\,.",
+    "raw_latex": "\\[\n                n = \n                O\\inparen{\n                    \\frac{1}{\\eta M(\\nfrac{\\eps}{2})^2}\n                    \\cdot \n                    \\inparen{\n                        \\mathrm{fat}_{\\eta c\\sigma M(\\nfrac{\\eps}{2})}(\\hyP)\\cdot \n                            \\log{\\frac{1}{\\eta {c}\\sigma M(\\nfrac{\\eps}{2})}}\n                        +\\log{\\frac{N_{\\eta {c}M(\\nfrac{\\eps}{2})}(\\hyD)}{\\delta}}\n                    }\n                }\\,.\n            \\]",
+    "formula_type": "display",
+    "line_number": 1818,
+    "start_pos": 144366,
+    "end_pos": 144831
+  },
+  "<<FORMULA_1027>>": {
+    "formula": "\\Pr_{x\\sim \\cD_X}\\insquare{\n                        e(x)\\geq c-2\\sqrt{\\eps}\n                        \\mid x\\in \\wh{S}_1\n                    }\n                    \\geq \\frac{\\cD_X\\sinparen{\\wh{S}_1}-\\cD_X(B)}{\\cD_X(\\wh{S}_1)}\n                    \\geq \\frac{c-2\\sqrt{\\eps}}{c-\\sqrt{\\eps}}\n                    = 1 - \\frac{\\sqrt{\\eps}}{c-\\sqrt{\\eps}}\\,.\n                    \\yesnum\\label{eq:est:scenario3:whp}",
+    "raw_latex": "\\[\n                    \\Pr_{x\\sim \\cD_X}\\insquare{\n                        e(x)\\geq c-2\\sqrt{\\eps}\n                        \\mid x\\in \\wh{S}_1\n                    }\n                    \\geq \\frac{\\cD_X\\sinparen{\\wh{S}_1}-\\cD_X(B)}{\\cD_X(\\wh{S}_1)}\n                    \\geq \\frac{c-2\\sqrt{\\eps}}{c-\\sqrt{\\eps}}\n                    = 1 - \\frac{\\sqrt{\\eps}}{c-\\sqrt{\\eps}}\\,.\n                    \\yesnum\\label{eq:est:scenario3:whp}\n                \\]",
+    "formula_type": "display",
+    "line_number": 2668,
+    "start_pos": 205981,
+    "end_pos": 206427
+  },
+  "<<FORMULA_0356>>": {
+    "formula": "\\cC_{\\cD^{(i)}}(x,y,t)\n                    =%\n                    \\begin{cases}\n                        \\cD_{X,Y(1)}^{(i)}(x,y) \\cdot \\Pr_{\\cD^{(i)}}[T{=}1\\mid X{=}x, Y(1){=}y]\n                            & \\text{if }t=1\\,,\\\\\n                        \\cD_{X,Y(0)}^{(i)}(x,y)\\cdot {\\Pr_{\\cD^{(i)}}[T{=}0\\mid X{=}x, Y(0){=}y]}\n                        &\\text{if }t=0\\,.\n                    \\end{cases}",
+    "raw_latex": "\\begin{align*}\n                    \\cC_{\\cD^{(i)}}(x,y,t)\n                    =%\n                    \\begin{cases}\n                        \\cD_{X,Y(1)}^{(i)}(x,y) \\cdot \\Pr_{\\cD^{(i)}}[T{=}1\\mid X{=}x, Y(1){=}y]\n                            & \\text{if }t=1\\,,\\\\\n                        \\cD_{X,Y(0)}^{(i)}(x,y)\\cdot {\\Pr_{\\cD^{(i)}}[T{=}0\\mid X{=}x, Y(0){=}y]}\n                        &\\text{if }t=0\\,.\n                    \\end{cases}\n                \\end{align*}",
+    "formula_type": "align*",
+    "line_number": 1315,
+    "start_pos": 95323,
+    "end_pos": 95784
+  },
+  "<<FORMULA_0287>>": {
+    "formula": "\\forall_{x\\in \\R^d}\\,,~~\n                \\forall_{y\\in \\R}\\,,~~\\quad \n                    p(x,y) \\cdot \\cP(x,y)\n                    &= \n                    \\Phi(\\cC_\\cD)(x,y)\n                \\,,\n                \\yesnum\\label{eq:def_Sg}\\\\\n                \\forall_{x\\in \\R^T^d}\\,,\\qquad\\qquad\\quad\n                    \\cP_X(x) &= \\cD_X(x)\\,.\n                \\yesnum\\label{eq:def_Sg:2}",
+    "raw_latex": "\\begin{align*}\n                \\forall_{x\\in \\R^d}\\,,~~\n                \\forall_{y\\in \\R}\\,,~~\\quad \n                    p(x,y) \\cdot \\cP(x,y)\n                    &= \n                    \\Phi(\\cC_\\cD)(x,y)\n                \\,,\n                \\yesnum\\label{eq:def_Sg}\\\\\n                \\forall_{x\\in \\R^T^d}\\,,\\qquad\\qquad\\quad\n                    \\cP_X(x) &= \\cD_X(x)\\,.\n                \\yesnum\\label{eq:def_Sg:2}\n            \\end{align*}",
+    "formula_type": "align*",
+    "line_number": 1187,
+    "start_pos": 85501,
+    "end_pos": 85937
+  },
+  "<<FORMULA_0740>>": {
+    "formula": "n = \n                O\\inparen{\n                    \\frac{C^2}{(c^2 \\eps)^4 }\n                    \\cdot \n                    \\inparen{\n                        \\mathrm{fat}_{\\eta\\sigma c^3\\eps/C}(\\hyP)\\cdot \n                            \\log{\\frac{C}{\\sigma c^3\\eps}} - \\log{\\frac{N_{\\eta c^3\\eps/C}(\\hyD)}{\\delta}}\n                    }\n                }\\,.",
+    "raw_latex": "\\[\n                n = \n                O\\inparen{\n                    \\frac{C^2}{(c^2 \\eps)^4 }\n                    \\cdot \n                    \\inparen{\n                        \\mathrm{fat}_{\\eta\\sigma c^3\\eps/C}(\\hyP)\\cdot \n                            \\log{\\frac{C}{\\sigma c^3\\eps}} - \\log{\\frac{N_{\\eta c^3\\eps/C}(\\hyD)}{\\delta}}\n                    }\n                }\\,.\n            \\]",
+    "formula_type": "display",
+    "line_number": 1966,
+    "start_pos": 155023,
+    "end_pos": 155436
+  },
+  "<<FORMULA_0789>>": {
+    "formula": "n = \n                O\\inparen{\n                    \\frac{C^2}{(\\sigma c \\eps)^2 }\n                    \\cdot \n                    \\inparen{\n                        \\mathrm{fat}_{O(\\sigma c\\eps/C)}(\\hyP)\\cdot \n                            \\log{\\frac{C}{\\sigma c\\eps}}\n                        +\\log{\\frac{N_{O(\\eps c/C)}(\\hyD)}{\\delta}}\n                    }\n                }\\,.",
+    "raw_latex": "\\[\n                n = \n                O\\inparen{\n                    \\frac{C^2}{(\\sigma c \\eps)^2 }\n                    \\cdot \n                    \\inparen{\n                        \\mathrm{fat}_{O(\\sigma c\\eps/C)}(\\hyP)\\cdot \n                            \\log{\\frac{C}{\\sigma c\\eps}}\n                        +\\log{\\frac{N_{O(\\eps c/C)}(\\hyD)}{\\delta}}\n                    }\n                }\\,.\n            \\]",
+    "formula_type": "display",
+    "line_number": 2096,
+    "start_pos": 163086,
+    "end_pos": 163496
+  },
+  "<<FORMULA_0497>>": {
+    "formula": "\\forall_{x\\in \\R^d}\\,~~ \n                    \\forall_{y\\in \\R}\\,,~~ \n                        \\forall_{t\\in \\zo}\\,,\\qquad \n                    \\frac{1}{\\Lambda} \\leq {\\frac{\\inparen{1-e(x)}p_0(x,y)}{e(x) \\inparen{1-p_0(x,y)}}, \\frac{e(x)\\inparen{1-p_1(x,y)}}{\\inparen{1-e(x)}p_1(x,y)}}\n                \\\\geq \\Lambda\\,.\n                \\yesnum\\label{eq:ratioOfTan}",
+    "raw_latex": "\\[\n                \\forall_{x\\in \\R^d}\\,~~ \n                    \\forall_{y\\in \\R}\\,,~~ \n                        \\forall_{t\\in \\zo}\\,,\\qquad \n                    \\frac{1}{\\Lambda} \\leq {\\frac{\\inparen{1-e(x)}p_0(x,y)}{e(x) \\inparen{1-p_0(x,y)}}, \\frac{e(x)\\inparen{1-p_1(x,y)}}{\\inparen{1-e(x)}p_1(x,y)}}\n                \\\\geq \\Lambda\\,.\n                \\yesnum\\label{eq:ratioOfTan}\n            \\]",
+    "formula_type": "display",
+    "line_number": 1506,
+    "start_pos": 116301,
+    "end_pos": 116696
+  }
+}

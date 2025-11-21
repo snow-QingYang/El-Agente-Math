@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2411.12537",
+    "model": "openai/gpt-5-nano",
+    "total_responses": 20,
+    "timestamp": "2025-10-31T17:21:40.917962"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0479>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The first factor should be I - 2 v1 v1^T; it is incorrectly written as I + 2 v1 v1^T, which prevents representing the rotation as a product of two reflections.\"\n}",
+      "response_length": 238,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0428>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Mismatched index: left-hand side uses \\\\widehat\\\\mC_l, but right-hand side defines it with k (\\\\widehat\\\\mC_l := ... in terms of k). The indices l and k are inconsistent.\"\n}",
+      "response_length": 252,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0457>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0004>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"In the recurrence, the two terms A(x_i) H_{i-1} and B(x_i) are multiplied together. The usual LRNN recurrence uses addition: H_i = A(x_i) H_{i-1} + B(x_i). The product leads to dimension/consistency issues.\"\n}",
+      "response_length": 289,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0378>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"index_change\", \"error_description\": \"In the (1,2) entry of J_i^k, the term uses λ_l^{k-1} instead of λ_i^{k-1}; a mismatched index (l vs i) should be λ_i^{k-1} to match the Jordan-block structure.\"}",
+      "response_length": 233,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0215>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The sign function has non-disjoint branches: 1 if x ≥ 0 and -1 if x > 0; the second condition should be x < 0 (with a separate case for x = 0) or the first should be x > 0 and the second x ≤ 0. As written, x > 0 is already covered by x ≥ 0, causing ambiguity.\"\n}",
+      "response_length": 344,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0356>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0431>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0643>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0125>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0406>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The piecewise definition of hat H_k and hat y_k uses a 2-period parity rule (even -> H1, odd -> H2), but the surrounding derivation later derives a 4-period pattern for H_k (via H_{2k} and H_{2k+1}) depending on k, making the two descriptions inconsistent.\"\n}",
+      "response_length": 338,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0694>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"The last relation contains a corrupted macro: '\\\\mH\\\\geft(\\\\gamma-\\\\alpha)' should be '\\\\mH(\\\\gamma-\\\\alpha)'. This appears to be a typographical/macro error in the function call.\"\n}",
+      "response_length": 262,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0652>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Line 2 uses y_t^{(s-1)} as the second component of dec^{(s)}(H_t, w_t^{(s)}), but dec^{(s)} should return (δ^{(s)}(q_0^{(s)}, v^{(s)}), w_t^{(s)}); this is an index/subscript inconsistency.\"\n}",
+      "response_length": 271,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0647>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The update term uses a subtraction before B^{(i)}(w_t^{(i)}); it should likely be addition: H_t^{(i)} = A^{(i)}(w_t^{(i)}) H_{t-1}^{(i)} + B^{(i)}(w_t^{(i)})\"\n}",
+      "response_length": 236,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0703>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0507>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0696>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the final step, the rotation angle is 2(i+j)π/m, which would map to v_{i+j mod m}, but it is equated to v_{i - j mod m}. This sign inconsistency indicates an addition-to-subtraction mismatch in the angle versus the resulting index.\"\n}",
+      "response_length": 313,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0695>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"The line R(θ(j,1) - θ(i,0)) is equated to R(-2(i+j)π/m) using inconsistent angle definitions; θ(i,0) and θ(j,1) are not defined compatibly across steps, causing an incorrect exponent for the rotation (the subsequent equality to vc_{i+j mod m} relies on this flawed angle accounting).\"\n}",
+      "response_length": 367,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0681>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"The 2D reflection matrix H(α) is incorrectly written: a reflection across a line with angle α should have entries involving cos 2α and sin 2α (i.e., H(α) = [cos 2α, sin 2α; sin 2α, -cos 2α]); the given matrix [cos α, sin α; sin α, -cos α] corresponds to a line angle α/2, which leads to incorrect composition identities (e.g., H(α)H(γ) = R(α−γ) instead of R(2(α−γ))).\"\n}",
+      "response_length": 451,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0706>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"Required parentheses around the sum before applying mod: (x_{i+1} + y_i) mod m; without parentheses it may be interpreted as x_{i+1} + (y_i mod m).\"\n}",
+      "response_length": 236,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

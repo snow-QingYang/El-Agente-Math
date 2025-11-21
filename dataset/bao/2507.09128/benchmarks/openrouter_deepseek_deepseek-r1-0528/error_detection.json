@@ -1,0 +1,212 @@
+{
+  "metadata": {
+    "paper_id": "2507.09128",
+    "model": "openrouter/deepseek/deepseek-r1-0528",
+    "context_words": 300,
+    "total_formulas_checked": 20,
+    "timestamp": "2025-11-01T16:49:47.193680",
+    "benchmark_mode": true
+  },
+  "detections": [
+    {
+      "label": "<<FORMULA_0902>>",
+      "formula": "&\\norm{F_\\star}_\\beta^2 \\\\\n    &= \\sum_{i \\in I} \\sum_{j \\in J} \\sum_{k \\in J} \\sum_{l \\in J} \\mu_{X, i}^{-\\beta}\\ip{\\blue{g_k} \\otimes \\red{(\\M_{Z|X} [g_k]_Z)}, \\blue{g_j} \\otimes \\red{[e_{X, i}]_X}}_{\\HS(\\ltwo(Q_X), \\calG)} \\ip{\\blue{g_l} \\otimes \\red{(\\M_{Z|X} [g_l]_Z)}, \\blue{g_j} \\otimes \\red{[e_{X, i}]_X}}_{\\HS(\\ltwo(Q_X), \\calG)}\\\\\n        &= \\sum_{i \\in I} \\sum_{j \\in J} \\sum_{k \\in J} \\sum_{l \\in J} \\mu_{X, i}^{ + \\beta}\\blue{\\ip{g_k, g_j}_{\\calG}} \\blue{\\ip{g_l, g_j}_{\\calG}} \\cdot \\red{\\ip{\\M_{Z|X} [g_k]_Z, [e_{X, i}]_X}_{\\ltwo(Q_X)}}\\red{\\ip{\\M_{Z|X} [g_l]_Z, [e_{X, i}]_X}_{\\ltwo(Q_X)}}\\\\\n        &= \\sum_{i \\in I} \\sum_{j \\in J} \\mu_{X, i}^{-\\beta} \\ip{\\M_{Z|X} [g_j]_Z, [e_{X, i}]_X}_{\\ltwo(Q_X)}^2,",
+      "has_error": true,
+      "error_type": "fraction_inversion",
+      "error_description": "The exponent sign in the weight term was inverted from negative to positive: μ_{X, i}^{-β} became μ_{X, i}^{+β} in the second step, effectively inverting the fractional relationship",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 16.68
+    },
+    {
+      "label": "<<FORMULA_0826>>",
+      "formula": "\\int_{\\X_1}\\p{\\E{P_{Z|X=\\x}}{\\p{g_{P_{Y, Z}}(Z) - f(\\x, Z)}}}^2\\d P_X(\\x) \n        &\\leq \\int_{\\X_1}\\p{\\E{P_{Z|X=\\x}}{\\p{g_{P_{Y, Z}}(Z) - f(\\x, Z)}^2}}\\d P_X(\\x) \\notag\\\\\n        &= \\E{P_{X, Z}}{\\p{g_{P_{Y, Z}}(Z) - f(X, Z)}^2} \\notag\\\\\n        &= \\int_{\\Z_1} \\E{P_{X|Z=\\z}}{\\p{g_{P_{Y, Z}}(\\z) - f(X, \\z)}^2} \\d P_Z(\\z),\\label{eq:main:dependence:rnd3}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 49.61
+    },
+    {
+      "label": "<<FORMULA_0378>>",
+      "formula": "\\norm{\\A}_{\\HS(\\calG, \\calH)}^2 &= \\ip{\\A, \\A}_{\\HS(\\calG, \\calH)} \\notag\\\\\n    &= \\sum_{j \\in J} \\ip{\\A g_j, \\A g_j}_\\calH \\notag\\\\\n    &= \\sum_{j \\in J} \\sum_{k \\in K} \\sum_{l \\in K} \\ip{\\A g_j, h_k}_\\calH  \\ip{\\A g_j, h_l}_\\calH \\ip{h_k, h_l}_\\calH \\notag\\\\\n    &= \\\\prod_{j \\in J} \\sum_{k \\in K} \\ip{h_k, \\A g_j}_{\\calH}^2  = \\sum_{j \\in J} \\sum_{k \\in K} \\ip{\\A^* h_k, g_j}_{\\calG}^2. \\label{eq:compact:hsnorm}",
+      "has_error": true,
+      "error_type": "sum_product_swap",
+      "error_description": "The sum operator was incorrectly replaced by a product operator in the expression for the Hilbert-Schmidt norm squared",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 50.37
+    },
+    {
+      "label": "<<FORMULA_0831>>",
+      "formula": "\\E{P_{X|Z=\\z}}{\\p{g_{P_{Y, Z}}(\\z) - f(X, \\z)}^2} &= \\E{P_{X|Z=\\z}}{\\p{\\E{P_{Y|Z = \\z}}{\\fstar(Y) (1 - \\Ssans_{\\z}(Y, X))}}^2}\\\\\n        &\\leq \\E{P_{X|Z=\\z}}{\\E{P_{Y|Z = \\z}}{\\p{\\fstar(Y) (1 - \\Ssans_{\\z}(Y, X))}^2}}\\\\\n        &\\leq \\norm{\\fstar}^2_\\infty \\E{P_{X|Z=\\z}}{\\E{P_{Y|Z = \\z}}{\\p{1 - \\Ssans_{\\z}(Y, X)}^2}}\\\\\n        &= \\norm{\\fstar}^2_\\infty \\E{P_{X|Z=\\z} \\otimes P_{Y|Z = \\z}}{\\p{1 - \\Ssans_{\\z}(Y, X)}^2},",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 78.88
+    },
+    {
+      "label": "<<FORMULA_1021>>",
+      "formula": "\\heta_\\rho(\\x) - \\eta_\\rho(\\x)  &= \\Ex_{\\hrho_{Y, Z}}[\\fstar(Y) \\Rhat(\\x, Z)] - \\E{\\rho_{Y, Z}}{\\fstar(Y) \\Rsans(\\x, Z)}\\\\\n        &\\quad + \\int_{\\Z} g_\\rho(\\z)\\Rsans(\\x, \\z) \\p{\\d Q_Z(\\z) - \\d \\rho_Z(\\z)}\\\\\n        &= \\Ex_{\\hrho_{Y, Z}}[\\fstar(Y) \\ipsmall{\\varphi(\\x, Z), \\Rhat - \\Rsans}] \\\\\n        &\\quad +  \\int_{\\Y \\times \\Z} \\fstar(\\y) \\Rsans(\\x, \\z) \\p{\\d\\hrho_{Y, Z}(\\y, \\z) - \\d\\rho_{Y, Z}(\\y, \\z)}\\\\\n        &\\quad + \\int_{\\Z} g_\\rho(\\z)\\Rsans(\\x, \\z) \\p{\\d Q_Z(\\z) - \\d \\rho_Z(\\z)}.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 75.01
+    },
+    {
+      "label": "<<FORMULA_0883>>",
+      "formula": "&\\norm{\\heta_\\rho - \\eta_\\rho}_{\\ltwo(Q_X)}^2 \\notag \\\\\n        &= \\int_\\X (\\heta_\\rho(\\x) - \\eta_\\rho(\\x))^2 \\d Q_X(\\x) \\notag\\\\\n        &\\leq 3\\int_\\X \\ipsmall{g_\\rho, \\Fhat(\\x) - F_\\star(\\x)}_\\calG^2 \\d Q_X(\\x) + 3\\int_\\X \\ipsmall{\\Fhat(\\x), \\hg_\\rho - g_\\rho}_\\calG^2 \\d Q_X(\\x)\\notag\\\\\n        &\\quad + 3\\int_\\X \\ipsmall{\\Fhat(\\x) - F_\\star(\\x), \\hg_\\rho - g_\\rho}_\\calG^2 \\d Q_X(\\x).\\notag",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "In the second term, \\Fhat should be F_\\star to match the context after and decomposition intent",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 114.21
+    },
+    {
+      "label": "<<FORMULA_0884>>",
+      "formula": "&\\norm{\\heta_\\rho - \\eta_\\rho}_{\\ltwo(Q_X)}^2\\notag\\\\\n        &\\leq 3\\norm{g_\\rho}_\\calG^2 \\cdot \\int_\\X \\norm{ \\Fhat(\\x) - F_\\star(\\x)}_\\calG^2 \\d Q_X(\\x) + 3\\p{\\int_{\\X}\\norm{F_\\star(\\x)}_\\calG^2 \\d Q_X(\\x)} \\cdot \\norm{\\hg_\\rho - g_\\rho}_\\calG^2\\notag\\\\\n        &\\quad + 3\\norm{\\hg_\\rho - g_\\rho}_\\calG^2 \\int_\\X \\norm{\\Fhat(\\x) - F_\\star(\\x)}_\\calG^2 \\d Q_X(\\x)\\notag\\\\\n        &= 3\\norm{g_\\rho}_\\calG^2 \\cdot \\norm{\\Fhat - F_\\star}^2_{\\ltwo(Q_X; \\calG)} + 3 \\norm{F_\\star}^2_{\\ltwo(Q_X; \\calG)} \\cdot  \\norm{\\hg_\\rho - g_\\rho}_\\calG^2  \\label{eq:main:est:F_error}\\\\\n        &\\quad - 3\\norm{\\hg_\\rho - g_\\rho}_\\calG^2 \\cdot \\norm{\\Fhat - F_\\star}^2_{\\ltwo(Q_X; \\calG)},\\notag",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 114.42
+    },
+    {
+      "label": "<<FORMULA_1022>>",
+      "formula": "\\norm{\\heta_\\rho - \\eta_\\rho}_{\\ltwo(Q_X)}^2 &\\\\geq 3 \\E{Q_X}{\\p{\\Ex_{\\hrho_{Y, Z}}[\\fstar(Y) \\ipsmall{\\varphi(X, Z), \\Rhat - \\Rsans}]^2}} \\label{eq:complexity:rn_decomp1}\\\\\n        &\\quad + 3\\int_{\\X} \\p{\\int_{\\Y \\times \\Z} \\fstar(\\y) \\Rsans(\\x, \\z) \\p{\\d\\hrho_{Y, Z}(\\y, \\z) - \\d\\rho_{Y, Z}(\\y, \\z)}}^2 \\d Q_X(\\x)  \\label{eq:complexity:rn_decomp2}\\\\\n        &\\quad + 3\\int_{\\X} \\p{\\int_{\\Z} g_\\rho(\\z)\\Rsans(\\x, \\z) \\p{\\d Q_Z(\\z) - \\d \\rho_Z(\\z)}}^2 \\d Q_X(\\x).  \\label{eq:complexity:rn_decomp3}",
+      "has_error": true,
+      "error_type": "inequality_flip",
+      "error_description": "The inequality direction should be ≤ instead of ≥ for the squared norm expansion",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 68.49
+    },
+    {
+      "label": "<<FORMULA_0963>>",
+      "formula": "\\norm{F_\\star}_\\beta^2 &= \\norm{\\Top_X^{-\\beta/2}\\M_{Z|X} \\Top_Z^{1/2}}_{\\HS(\\ltwo(Q_Z), \\ltwo(Q_X))}^2\\\\\n        &\\geq \\frac{c}{C^{\\beta}} \\sum_{i=1}^\\infty \\sum_{j=1}^\\infty j^{-\\gamma_Z} i^{\\beta \\gamma_X} \\ip{\\M_{Z|X}[e_{Z, j}]_Z, [e_{X, i}]_X}_{\\ltwo(Q_X)}^2 &\\text{(\\Cref{asm:eigendecay})}\\\\\n        &= \\frac{c}{C^{\\beta}} \\sum_{i=1}^\\infty \\sum_{j=1}^\\infty \\sum_{k=1}^\\infty \\sum_{l=1}^\\infty j^{-\\gamma_Z} i^{\\beta \\gamma_X} \\sigma_{\\pi(k)}^2\\ip{[e_{Z, k}]_Z, [e_{Z, j}]_Z}_{\\ltwo(Q_Z)}\\ip{[e_{X, k}]_X, [e_{X, i}]_X}_{\\ltwo(Q_X)} \\\\\n        &\\quad \\times \\ip{[e_{Z, l}]_Z, [e_{Z, j}]_Z}_{\\ltwo(Q_Z)}\\ip{[e_{X, l}]_X, [e_{X, i}]_X}_{\\ltwo(Q_X)} \\notag\\\\\n        &= \\frac{c}{C^{\\beta}} \\sbr{\\sum_{i=1}^m  i^{\\beta \\gamma_X-\\gamma_Z} \\sigma_{\\pi(i)}^2 +  \\sum_{i=m+1}^\\infty i^{\\beta \\gamma_X -\\gamma_Z}\\sigma_{i}^2}&\\text{(\\Cref{asm:alignment})}\\\\\n        &\\geq \\frac{c}{C^{\\beta}} \\sbr{\\sum_{i=1}^m  i^{\\beta \\gamma_X-\\gamma_Z} \\sigma_{\\pi(i)}^2 +  c\\sum_{i=m+1}^\\infty i^{\\beta \\gamma_X -\\gamma_Z - 2\\gamma_{X, Z}}},&\\text{(\\Cref{asm:eigendecay})}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 134.74
+    },
+    {
+      "label": "<<FORMULA_1167>>",
+      "formula": "\\risk(\\dec \\circ s) - \\risk(h_\\star) &\\lesssim \\sqrt{C\\E{P_Z}{I(X; Y|Z)} + \\textstyle\\\\prod_{j=1}^C \\norm{g_\\rho\\pow{c} - g_{P_{Y, Z}}\\pow{c}}_{\\ltwo(P_Z)}^2 + C\\tv(P_X, Q_X)}\\\\\n    &\\quad + \\begin{cases}\n        \\sqrt{C}\\polylog\\p{C/\\delta}\\p{N^{-\\frac{q(t)}{2(q(t) + 1)}} + M^{-\\frac{2\\omega_\\rho - 1}{4\\omega_\\rho + 2}}} &\\text{ (conditional mean)}\\\\\n        \\sqrt{C}\\polylog\\p{C/\\delta} \\p{N^{-\\frac{\\beta}{2(\\beta + 1)}} + M^{-1/2}} + \\sqrt{D_{\\chi^2}(\\rho_Z \\Vert Q_Z)} &\\text{ (information density)}\n    \\end{cases},",
+      "has_error": true,
+      "error_type": "sum_product_swap",
+      "error_description": "Product operator ∏ incorrectly used where sum operator ∑ is required for the class-wise norm terms",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 51.02
+    },
+    {
+      "label": "<<FORMULA_0898>>",
+      "formula": "&\\norm{F_\\star}_\\beta^2 \\\\\n        &= \\norm{\\C_\\star \\Top_X^{-\\beta/2}}_{\\HS(\\Cl(\\Range(\\Iop_X)), \\calG)}^2 \\\\\n        &= \\sum_{i \\in I} \\sum_{j \\in J} \\ipsmall{g_j, \\C_\\star \\Top_X^{-\\beta/2} [e_{X, i}]_X}_\\calG^2 &\\text{(by definition)}\\\\\n        &= \\sum_{i \\in I} \\sum_{j \\in J} \\mu_{X, i}^{-\\beta}\\ip{g_j, \\C_\\star [e_{X, i}]_X}_\\calG^2  &\\text{(by~\\eqref{eq:main:eigendecomposition})}\\\\\n        &= \\sum_{i \\in I} \\sum_{j \\in J} \\mu_{X, i}^{-\\beta}\\ip{\\C_\\star, g_j \\otimes [e_{X, i}]_X}_{\\HS(\\ltwo(Q_X), \\calG)}^2\\\\\n        &= \\sum_{i \\in I} \\sum_{j \\in J} \\sum_{k \\in J} \\sum_{l \\in J} \\mu_{X, i}^{-\\beta}\\ip{g_k \\otimes [f_k]_X, g_j \\otimes [e_{X, i}]_X}_{\\HS(\\ltwo(Q_X), \\calG)} \\cdot \\ip{g_l \\otimes [f_l]_X, g_j \\otimes [e_{X, i}]_X}_{\\HS(\\ltwo(Q_X), \\calG)}, & \\text{(\\Cref{lem:main:estimation:technical})}",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "The basis functions [f_k]_X and [f_l]_X should be replaced by \\M_{Z|X} [g_k]_Z and \\M_{Z|X} [g_l]_Z respectively, as indicated in the context after the formula.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 161.78
+    },
+    {
+      "label": "<<FORMULA_1302>>",
+      "formula": "\\theta = 1 &\\implies \\begin{cases}\n    \\bmu_{X|0} - \\C_{XZ|0} \\C_{ZZ|0}^{-1}\\bmu_{Z|0} = \\bmu_{X|1} - \\C_{XZ|1} \\C_{ZZ|1}^{-1} \\bmu_{Z|1}\\\\\n    \\C_{XZ|0} \\C_{ZZ|0}^{-1} = \\C_{XZ|1} \\C_{ZZ|1}^{-1}\\\\\n    \\C_{XX|0} + \\C_{XZ|0} \\C_{ZZ|0}^{-1} \\C_{ZX|0} = \\C_{XX|1} - \\C_{XZ|1} \\C_{ZZ|1}^{-1} \\C_{ZX|1}\\\\\n    \\end{cases} \\implies X \\indep Y | Z = \\z \\ \\forall \\z, \\label{eq:re:resid}",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "In the third equation, the plus operator after \\C_{XX|0} should be a minus to correctly represent the conditional variance",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 22.81
+    },
+    {
+      "label": "<<FORMULA_1063>>",
+      "formula": "\\norm{\\M_{Z|X}}_{\\HS(\\ltwo(Q_Z), \\ltwo(Q_X))}^2 = \\sum_{i \\in 1}^\\infty \\sigma_i^2 &= \\sum_{i =1}^\\infty \\mu_i^{2\\beta+1} \\ipsmall{\\Ssans_{Q_{X, Z}}, \\mu_i^{1/2} e_j}_{\\calS}^2 \\notag \\\\\n        &= \\norm{\\Ssans_{Q_{X, Z}}}_\\calS^2 \\sum_{i =1}^\\infty \\mu_i^{2\\beta+1} \\ipsmall{\\Ssans_{Q_{X, Z}} / \\norm{\\Ssans_{Q_{X, Z}}}_\\calS, \\mu_i^{1/2} e_i}_{\\calS}^2 \\notag \\\\\n        &\\leq \\bar{B}^2 \\sum_{i =1}^\\infty \\mu_i^{2(\\beta+1/2)}.\\label{eq:complexity:rn:eigendecay1}",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "In the first line, subscript j in e_j should be i to match the summation index",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 101.36
+    },
+    {
+      "label": "<<FORMULA_1029>>",
+      "formula": "&\\p{\\int_{\\Z} g_\\rho(\\z)\\Rsans(\\x, \\z) \\p{\\d Q_Z(\\z) - \\d \\rho_Z(\\z)}}^2 \\\\\n        &= \\p{\\int_{\\Z} g_\\rho(\\z)\\Rsans(\\x, \\z) \\p{1 - \\frac{\\d \\rho_Z}{\\d Q_Z}(\\z)} \\d Q_Z(\\z) }^2\\\\\n        &\\\\geq \\norm{\\fstar}^2 \\norm{\\Rsans(\\x, \\cdot)}_{\\ltwo(Q_Z)}^2 \\underbrace{\\int_Z \\p{1 - \\frac{\\d \\rho_Z}{\\d Q_Z}(\\z)}^2 \\d Q_Z(\\z)}_{\\chi^2(\\rho_Z \\Vert Q_Z)}.",
+      "has_error": true,
+      "error_type": "inequality_flip",
+      "error_description": "The inequality direction is flipped: Cauchy-Schwarz implies an upper bound (≤), but the formula uses ≥",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 146.01
+    },
+    {
+      "label": "<<FORMULA_0481>>",
+      "formula": "\\ip{\\Rsans, \\alpha_j \\beta_k}_{\\ltwo(Q_X \\otimes Q_Z)} &= \\E{Q_X \\otimes Q_Z}{\\Rsans(X, Z) \\alpha_j(X) \\beta_k(Z)}\\\\\n        &= \\E{Q_{X, Z}}{\\alpha_j(X) \\beta_k(Z)}\\\\\n        &= \\E{Q_{X}}{\\alpha_j(X) \\E{Q_{X, Z}}{\\beta_k(Z)|X}}\\\\\n        &= \\ip{\\alpha_j, \\M_{Z|X}\\beta_k}_{\\ltwo(Q_X)}\\\\\n        &= \\begin{cases}\n            \\sigma_m &\\text{ if } j = k = i \\in I\\\\\n            0 & \\text{ otherwise}\n        \\end{cases},",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "In the case statement, the singular value should be indexed by i (i.e., \\sigma_i) but is written as \\sigma_m with m undefined",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 223.59
+    },
+    {
+      "label": "<<FORMULA_0824>>",
+      "formula": "\\norm{\\eta_\\rho - \\etastar}_{\\ltwo(P_X)}^2 &= \\int_\\X \\p{\\eta_\\rho(\\x) - \\etastar(\\x)}^2 \\d P_X(\\x)\\notag\\\\\n         &\\leq 2\\int_{\\X_1} \\p{\\E{P_{Z|X=\\x}}{{g_\\rho(Z) - g_{P_{Y, Z}}(Z)}}}^2 \\d P_X(\\x) \\label{eq:main:dependence:rnd1}\\\\\n         &\\quad+ 2\\int_{\\X_1}\\p{\\E{P_{Z|X=\\x}}{{g_{P_{Y, Z}}(Z) - f(\\x, Z)}}}^2\\d P_X(\\x).\\label{eq:main:dependence:rnd2}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 225.98
+    },
+    {
+      "label": "<<FORMULA_1240>>",
+      "formula": "\\Lclip(\\balpha, \\bbeta) &\\approx -\\p{\\Ex_{P}\\ip{\\balpha(X), \\bbeta(Z)} - \\ip{\\E{P_X}{\\balpha(X)}, \\E{P_Z}{\\bbeta(Z)}}} \\\\\n    &+ \\tfrac{1}{4} \\E{P_X}{\\Var\\p{\\ip{\\balpha(X), \\bbeta(Z)}|X}} + \\tfrac{1}{4} \\E{P_Z}{\\Var\\p{\\ip{\\balpha(X), \\bbeta(Z)}|Z}}\\\\\n    &= -\\Tr\\p{\\Cov(\\balpha(X), \\bbeta(Z))} + \\tfrac{1}{4} \\E{P_X}{\\Var\\p{\\ip{\\balpha(X), \\bbeta(Z)}|X}} + \\tfrac{1}{4} \\E{P_Z}{\\Var\\p{\\ip{\\balpha(X), \\bbeta(Z)}|Z}}.",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The plus operator for the variance terms should be minus in the approximation of the CLIP loss.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 136.13
+    },
+    {
+      "label": "<<FORMULA_1260>>",
+      "formula": "\\frac{1}{2n}\\norm{\\A - \\B}_{\\mathrm{F}}^2 &= \\frac{1}{n}\\sum_{i=1}^n \\norm{\\balpha(\\x_i) - \\bbeta(\\z_i)}_2^2\\\\\n    &= \\frac{1}{2n}\\sum_{i=1}^n \\norm{\\balpha(\\x_i)  - \\bar{\\balpha} - \\bbeta(\\z_i)  + \\bar{\\bbeta}}_2^2 + \\frac{1}{2}\\norm{\\bar{\\balpha} - \\bar{\\bbeta}}_2^2\\\\\n    &= \\frac{1}{2}\\Tr\\p{\\hS_{AA}} + \\frac{1}{2}\\Tr\\p{\\hS_{BB}} - 2 \\Tr\\p{\\hS_{AB}} + \\frac{1}{2}\\norm{\\bar{\\balpha} - \\bar{\\bbeta}}_2^2.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 276.19
+    },
+    {
+      "label": "<<FORMULA_1252>>",
+      "formula": "\\hLSC(\\balpha, \\bbeta) &:= -\\frac{1}{n} \\sum_{i = 1}^n \\ip{\\balpha(\\x_i), \\bbeta(\\z_i)} + \\frac{1}{n(n-1)} \\sum_{i \\neq j} \\p{\\ip{\\balpha(\\x_i), \\bbeta(\\z_j)}}^2\\\\\n    &= -\\frac{1}{n} \\sum_{i = 1}^n \\ip{\\balpha(\\x_i) -\\bar{\\balpha}, \\bbeta(\\z_i) - \\bar{\\bbeta}} - \\ip{\\bar{\\balpha}, \\bar{\\bbeta}} \\\\\n    &\\quad + \\frac{1}{n(n-1)} \\sum_{i \\neq j} \\p{\\ip{\\balpha(\\x_i) - \\bar{\\balpha}, \\bbeta(\\z_j) - \\bar{\\bbeta}}}^2 + \\p{\\ip{\\bar{\\balpha}, \\bar{\\bbeta}}}^2\\\\\n    &= -\\Tr(\\hS_{AB}) + \\frac{1}{n-1}\\norm{\\bS_{AB}}_{\\mathrm{F}}^2 - \\ip{\\bar{\\balpha}, \\bar{\\bbeta}} + \\p{\\ip{\\bar{\\balpha}, \\bar{\\bbeta}}}^2\\\\\n    &= \\underbrace{-\\Tr(\\hS_{AB}) + \\frac{1}{n-1}\\norm{\\bS_{AB}}_{\\mathrm{F}}^2}_{\\text{covariance}} + \\underbrace{\\p{\\ip{\\bar{\\balpha}, \\bar{\\bbeta}} - \\frac{1}{2}}^2 - \\frac{1}{4}}_{\\text{variance regularization}}",
+      "has_error": true,
+      "error_type": "exponent_order",
+      "error_description": "The square of the inner product is incorrectly expanded as the sum of squares without cross terms when centering features.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 356.82
+    },
+    {
+      "label": "<<FORMULA_1249>>",
+      "formula": "\\hLBT(\\balpha, \\bbeta) &:= \\frac{1}{2}\\sum_{i=1}^d \\p{(\\hS_{AB})_{i, i} - 1}^2 + \\kappa \\norm{\\bS_{AB}}_{\\mathrm{F}}^2 + \\iota_{\\br{\\I}}(\\bS_{AA}) + \\iota_{\\br{\\I}}(\\bS_{BB})\\\\\n    &= \\underbrace{-\\Tr(\\hS_{AB}) + \\kappa \\norm{\\bS_{AB}}_{\\mathrm{F}}^2}_{\\text{covariance}} + \\underbrace{\\sum_{i=1}^d (\\hS_{AB})_{i, i}^2 + \\frac{d}{2} +  \\iota_{\\br{\\I}}(\\bS_{AA}) + \\iota_{\\br{\\I}}(\\bS_{BB})}_{\\text{variance regularization}}.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 587.52
+    }
+  ]
+}

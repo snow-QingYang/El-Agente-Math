@@ -1,0 +1,212 @@
+{
+  "metadata": {
+    "paper_id": "2506.04194",
+    "model": "openrouter/nvidia/nemotron-nano-9b-v2",
+    "context_words": 300,
+    "total_formulas_checked": 20,
+    "timestamp": "2025-10-31T17:17:01.420870",
+    "benchmark_mode": true
+  },
+  "detections": [
+    {
+      "label": "<<FORMULA_0797>>",
+      "formula": "\\Ex\\nolimits_{\\cP}[y] &\\neq \\Ex\\nolimits_{\\cQ}[y]\\,,\n                        \\yesnum\\label{eq:iden:sanity:negationa}\\\\\n                    \\cP_X &= \\cQ_X\\,,\n                        \\yesnum\\label{eq:iden:sanity:negationb}\\\\\n                    \\forall_{x\\in \\supp(\\cP_X)}\\,,~~\n                        \\forall_{y\\in\\R}\\,,~~\\quad \n                        p(x,y)&\\cdot \\cP(x,y) =  q(x,y)\\cdot \\cQ(x,y)\\,.\n                    \\yesnum\\label{eq:iden:sanity:negation2}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 7.92
+    },
+    {
+      "label": "<<FORMULA_0417>>",
+      "formula": "\\begin{split}\n                        \\snorm{p\\cP - p_0\\cD_{X,Y(0)}}_1\n                    &\\coloneqq \n                    \\iint \\abs{p(x,y)\\cP(x,y)-p_0(x,y)\\cD_{X,Y(0)}(x,y)}\\d x\\d y\n                     \\leq \\eps \\,,\\\\\n                    \\snorm{q\\cQ - p_1\\cD_{X,Y(1)}}_1\n                    &\\coloneqq \n                    \\iint \\abs{p(x,y)\\cP(x,y)-p_1(x,y)\\cD_{X,Y(1)}(x,y)}\\d x\\d y\n                     \\leq \\eps \\,.\n                    \\end{split}\n                    \\yesnum\\label{eq:techOverview:est:2}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 7.96
+    },
+    {
+      "label": "<<FORMULA_0740>>",
+      "formula": "n = \n                O\\inparen{\n                    \\frac{C^2}{(c^2 \\eps)^4 }\n                    \\cdot \n                    \\inparen{\n                        \\mathrm{fat}_{\\eta\\sigma c^3\\eps/C}(\\hyP)\\cdot \n                            \\log{\\frac{C}{\\sigma c^3\\eps}} - \\log{\\frac{N_{\\eta c^3\\eps/C}(\\hyD)}{\\delta}}\n                    }\n                }\\,.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 9.15
+    },
+    {
+      "label": "<<FORMULA_0497>>",
+      "formula": "\\forall_{x\\in \\R^d}\\,~~ \n                    \\forall_{y\\in \\R}\\,,~~ \n                        \\forall_{t\\in \\zo}\\,,\\qquad \n                    \\frac{1}{\\Lambda} \\leq {\\frac{\\inparen{1-e(x)}p_0(x,y)}{e(x) \\inparen{1-p_0(x,y)}}, \\frac{e(x)\\inparen{1-p_1(x,y)}}{\\inparen{1-e(x)}p_1(x,y)}}\n                \\\\geq \\Lambda\\,.\n                \\yesnum\\label{eq:ratioOfTan}",
+      "has_error": true,
+      "error_type": "operator_swap",
+      "error_description": "Comma used as separator between fractions instead of valid operator (e.g., multiplication or division)",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 10.18
+    },
+    {
+      "label": "<<FORMULA_0287>>",
+      "formula": "\\forall_{x\\in \\R^d}\\,,~~\n                \\forall_{y\\in \\R}\\,,~~\\quad \n                    p(x,y) \\cdot \\cP(x,y)\n                    &= \n                    \\Phi(\\cC_\\cD)(x,y)\n                \\,,\n                \\yesnum\\label{eq:def_Sg}\\\\\n                \\forall_{x\\in \\R^T^d}\\,,\\qquad\\qquad\\quad\n                    \\cP_X(x) &= \\cD_X(x)\\,.\n                \\yesnum\\label{eq:def_Sg:2}",
+      "has_error": true,
+      "error_type": "function_swap",
+      "error_description": "Phi is applied to cC_D instead of x and y, which may not align with the intended function application",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 11.49
+    },
+    {
+      "label": "<<FORMULA_0654>>",
+      "formula": "n = \n                O\\inparen{\n                    \\frac{1}{\\eta M(\\nfrac{\\eps}{2})^2}\n                    \\cdot \n                    \\inparen{\n                        \\mathrm{fat}_{\\eta c\\sigma M(\\nfrac{\\eps}{2})}(\\hyP)\\cdot \n                            \\log{\\frac{1}{\\eta {c}\\sigma M(\\nfrac{\\eps}{2})}}\n                        +\\log{\\frac{N_{\\eta {c}M(\\nfrac{\\eps}{2})}(\\hyD)}{\\delta}}\n                    }\n                }\\,.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 12.25
+    },
+    {
+      "label": "<<FORMULA_0706>>",
+      "formula": "\\hyPunconf(c) \\coloneqq \n            \\inbrace{\n                p\\colon \\R^d\\times \\R\\to [0,1]\\given  \n                \\begin{array}{c}\n                     ~\\forall_{x\\in \\R^d},~~\\forall_{y_1,y_2\\in \\R}\\,,\\quad \n                            p(x,y_1)=p(x,y_2)\\,,\\\\\n                            \\exists S^T~~\\text{with}~~\\vol(S)\\geq c ~~\\text{such that,}~~ \\forall_{(x,y)\\in S\\times \\R}\\,,~~ p(x,y) > c \n                \\end{array}\n            }\\,.",
+      "has_error": true,
+      "error_type": "transpose_error",
+      "error_description": "S^T is used where S (a set) is intended, as transpose operation does not apply to sets.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 12.65
+    },
+    {
+      "label": "<<FORMULA_0829>>",
+      "formula": "\\Ex\\nolimits_{\\cP}[y] &\\neq \\Ex\\nolimits_{\\cQ}[y]\\,,\\yesnum\\label{eq:iden:3:a}\\\\\n                        \\cP_X &= \\cQ_X\\,,\\yesnum\\label{eq:iden:3:b}\\\\\n                        \\forall_{x\\in \\supp(\\cP_X)}\\,,~~\n                        \\forall_{y\\in \\R}\\,,~~\\quad \n                            \\frac{\\cP(x,y)}{\\cQ(x,y)} &\\in \\inparen{\n                                \\frac{c}{1-c}, \n                                \\frac{1-c}{c}\n                            }\\,.\n                            \\yesnum\\label{eq:iden:3:c}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 6.39
+    },
+    {
+      "label": "<<FORMULA_0855>>",
+      "formula": "\\Ex\\nolimits_{\\cP}[y] &\\neq \\Ex\\nolimits_{\\cQ}[y]\\,,\n                            \\yesnum\\label{eq:iden:unconfoundedness:negationa}\\\\\n                        \\cP_X &= \\cQ_X\\,,\n                            \\yesnum\\label{eq:iden:unconfoundedness:negationb}\\\\\n                        \\forall_{x\\in \\supp(\\cP_X)}\\,,~~\n                            \\forall_{y\\in\\R}\\,,~~\\quad \n                            p(x,y)&\\cdot \\cP(x,y) =  q(x,y)\\cdot \\cQ(x,y)\\,.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 6.63
+    },
+    {
+      "label": "<<FORMULA_0789>>",
+      "formula": "n = \n                O\\inparen{\n                    \\frac{C^2}{(\\sigma c \\eps)^2 }\n                    \\cdot \n                    \\inparen{\n                        \\mathrm{fat}_{O(\\sigma c\\eps/C)}(\\hyP)\\cdot \n                            \\log{\\frac{C}{\\sigma c\\eps}}\n                        +\\log{\\frac{N_{O(\\eps c/C)}(\\hyD)}{\\delta}}\n                    }\n                }\\,.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 15.38
+    },
+    {
+      "label": "<<FORMULA_0932>>",
+      "formula": "\\sabs{\n                        \\Ex[\\wh{\\tau}]\n                        -\n                        \\Ex[\\bar{\\tau}]\n                    }\n                    \\leq \\frac{\\eps}{2}\\,,\\quad \n                    \\Ex[\\bar{\\tau}] = \\tau\\,,\\quadand\n                    \\Pr\\insquare{\n                        \\sabs{\n                            \\wh{\\tau}\n                            - \n                            \\Ex[\\bar{\\tau}] \n                        }\n                        \\leq \\frac{\\eps}{2}\n                    }\n                    \\geq 1-\\delta\\,.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 10.17
+    },
+    {
+      "label": "<<FORMULA_0959>>",
+      "formula": "S_L\\coloneqq \n                        \\inbrace{\n                            (x,y)\\in S \\given \n                            \\frac{\\cD_{X,Y(1)}(x,y)}{\\cP(x,y)} < \\frac{c}{2(1-c)}\n                    }\n                    \\quadand\n                    S_R\\coloneqq  \\inbrace{\n                            (x,y)\\in S \\given \n                            \\frac{\\cD_{X,Y(1)}(x,y)}{\\cP(x,y)} > \\frac{2(1-c)}{c}\n                    }\n                    \\,.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 9.77
+    },
+    {
+      "label": "<<FORMULA_1027>>",
+      "formula": "\\Pr_{x\\sim \\cD_X}\\insquare{\n                        e(x)\\geq c-2\\sqrt{\\eps}\n                        \\mid x\\in \\wh{S}_1\n                    }\n                    \\geq \\frac{\\cD_X\\sinparen{\\wh{S}_1}-\\cD_X(B)}{\\cD_X(\\wh{S}_1)}\n                    \\geq \\frac{c-2\\sqrt{\\eps}}{c-\\sqrt{\\eps}}\n                    = 1 - \\frac{\\sqrt{\\eps}}{c-\\sqrt{\\eps}}\\,.\n                    \\yesnum\\label{eq:est:scenario3:whp}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 13.23
+    },
+    {
+      "label": "<<FORMULA_1056>>",
+      "formula": "\\iint_{x\\in \\wh{S}_1\\setminus B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\leq \n                    \\sqrt{\\eps}\n                    \\cdot \\iint_{x\\in \\wh{S}_1\\setminus B}\\abs{ \\cP(x,y) }\\d x\\d y\n                    \\\\geq \\sqrt{\\eps}\\,.\n                    \\yesnum\\label{eq:est:scenario3:bound2}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 10.74
+    },
+    {
+      "label": "<<FORMULA_1035>>",
+      "formula": "\\iint_{x\\in \\wh{S^T}_1} \n                            \\abs{\n                                \\cP'(x,y)\n                                -\n                                \\frac{\n                                    \\wh{p}(x,y)\\wh{\\cP}(x,y)\n                                }{  \n                                    \\wh{e}(x)\n                                }\n                            }\\d x \\d y < O\\inparen{\\frac{\\sqrt{\\eps}}{c}}\\,.\n                            \\yesnum\\label{eq:est:scenario3:accuracyTruncated}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 15.8
+    },
+    {
+      "label": "<<FORMULA_1046>>",
+      "formula": "&\\iint_{x\\in \\wh{S}_1}\\abs{\n                        \\frac{\n                            \\wh{p}(x,y)\\cdot \\wh{\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        - \\cP(x,y)\n                    }\\d x\\d y\\\\\n                    &\\quad\\leq \n                    \\iint_{x\\in \\wh{S}_1}\n                    \\frac{1}{\\wh{e}(x)}\n                    \\cdot \\abs{\n                        \\wh{p}(x,y)\\cdot \\wh{\\cP}(x,y)\n                             - \n                             p(x,y)\\cdot \\cP(x,y)\n                    } \\d x\\d y  + \n                    \\iint_{x\\in \\wh{S}_1}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\\,.\n                    \\yesnum\\label{eq:est:scenario3:bound0}",
+      "has_error": true,
+      "error_type": "function_swap",
+      "error_description": "The term p(x,y) was used instead of p̂(x,y) in the first integral on the right-hand side, inconsistent with the use of p̂ in the left-hand side and other terms.",
+      "parse_success": false,
+      "parse_strategy": "extraction",
+      "llm_response_time": 15.44
+    },
+    {
+      "label": "<<FORMULA_1061>>",
+      "formula": "\\iint_{x\\in \\wh{S}_1\\cap B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\leq \\frac{1}{c-\\sqrt{\\eps}}\\cP\\inparen{\\wh{S}_1\\cap B} - \\cP\\inparen{\\wh{S}_1\\cap B}\n                    \\leq \\frac{2 \\sqrt{\\eps}}{c-\\sqrt{\\eps}}\\,.\n                    \\yesnum\\label{eq:est:scenario3:bound3}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 17.66
+    },
+    {
+      "label": "<<FORMULA_1050>>",
+      "formula": "&\\iint_{x\\in \\wh{S}_1}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\leq \\\\\n                    &\\quad \\iint_{x\\in \\wh{S}_1\\setminus B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    + \\iint_{x\\in \\wh{S}_1\\cap B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\,.\n                    \\yesnum\\label{eq:est:scenario3:bound1}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 19.27
+    },
+    {
+      "label": "<<FORMULA_0356>>",
+      "formula": "\\cC_{\\cD^{(i)}}(x,y,t)\n                    =%\n                    \\begin{cases}\n                        \\cD_{X,Y(1)}^{(i)}(x,y) \\cdot \\Pr_{\\cD^{(i)}}[T{=}1\\mid X{=}x, Y(1){=}y]\n                            & \\text{if }t=1\\,,\\\\\n                        \\cD_{X,Y(0)}^{(i)}(x,y)\\cdot {\\Pr_{\\cD^{(i)}}[T{=}0\\mid X{=}x, Y(0){=}y]}\n                        &\\text{if }t=0\\,.\n                    \\end{cases}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 85.19
+    },
+    {
+      "label": "<<FORMULA_0558>>",
+      "formula": "\\hyPunconf(c) \\coloneqq \n                \\inbrace{\n                    p\\colon \\R^d\\times \\R\\to [0,1]\\given  \n                    \\begin{array}{c}\n                         ~\\forall_{x\\in \\R^d},~~\\forall_{y_1,y_2\\in \\R}\\,,\\quad \n                                p(x,y_1)=p(x,y_2)\\,,\\\\\n                                \\exists S~~\\text{with}~~\\vol(S)\\geq c ~~\\text{such that,}~~ \\forall_{(x,y)\\in S\\times \\R}\\,,~~ p(x,y) > c \n                    \\end{array}\n                }\\,.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 102.55
+    }
+  ]
+}

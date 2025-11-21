@@ -1,0 +1,147 @@
+{
+  "model": "openrouter/nvidia/nemotron-nano-9b-v2",
+  "total_papers": 11,
+  "successful_benchmarks": 11,
+  "papers": [
+    {
+      "paper_id": "2410.10253",
+      "status": "success",
+      "metrics": {
+        "true_positives": 2,
+        "false_positives": 1,
+        "true_negatives": 5,
+        "false_negatives": 3,
+        "accuracy": 0.636,
+        "precision": 0.667,
+        "recall": 0.4,
+        "f1_score": 0.5
+      }
+    },
+    {
+      "paper_id": "2506.04194",
+      "status": "success",
+      "metrics": {
+        "true_positives": 3,
+        "false_positives": 1,
+        "true_negatives": 8,
+        "false_negatives": 3,
+        "accuracy": 0.733,
+        "precision": 0.75,
+        "recall": 0.5,
+        "f1_score": 0.6
+      }
+    },
+    {
+      "paper_id": "2410.14055",
+      "status": "success",
+      "metrics": {
+        "true_positives": 6,
+        "false_positives": 2,
+        "true_negatives": 8,
+        "false_negatives": 3,
+        "accuracy": 0.737,
+        "precision": 0.75,
+        "recall": 0.667,
+        "f1_score": 0.706
+      }
+    },
+    {
+      "paper_id": "2411.00161",
+      "status": "success",
+      "metrics": {
+        "true_positives": 3,
+        "false_positives": 5,
+        "true_negatives": 5,
+        "false_negatives": 3,
+        "accuracy": 0.5,
+        "precision": 0.375,
+        "recall": 0.5,
+        "f1_score": 0.429
+      }
+    },
+    {
+      "paper_id": "2502.02013",
+      "status": "success",
+      "metrics": {
+        "true_positives": 3,
+        "false_positives": 0,
+        "true_negatives": 7,
+        "false_negatives": 3,
+        "accuracy": 0.769,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1_score": 0.667
+      }
+    },
+    {
+      "paper_id": "2411.12537",
+      "status": "success",
+      "metrics": {
+        "true_positives": 4,
+        "false_positives": 2,
+        "true_negatives": 5,
+        "false_negatives": 4,
+        "accuracy": 0.6,
+        "precision": 0.667,
+        "recall": 0.5,
+        "f1_score": 0.571
+      }
+    },
+    {
+      "paper_id": "2507.09128",
+      "status": "success",
+      "metrics": {
+        "true_positives": 4,
+        "false_positives": 1,
+        "true_negatives": 5,
+        "false_negatives": 2,
+        "accuracy": 0.75,
+        "precision": 0.8,
+        "recall": 0.667,
+        "f1_score": 0.727
+      }
+    },
+    {
+      "paper_id": "2502.05164",
+      "status": "success",
+      "metrics": {
+        "true_positives": 3,
+        "false_positives": 1,
+        "true_negatives": 6,
+        "false_negatives": 7,
+        "accuracy": 0.529,
+        "precision": 0.75,
+        "recall": 0.3,
+        "f1_score": 0.429
+      }
+    },
+    {
+      "paper_id": "2506.08362",
+      "status": "success",
+      "metrics": {
+        "true_positives": 4,
+        "false_positives": 0,
+        "true_negatives": 5,
+        "false_negatives": 7,
+        "accuracy": 0.562,
+        "precision": 1.0,
+        "recall": 0.364,
+        "f1_score": 0.533
+      }
+    },
+    {
+      "paper_id": "2503.03025",
+      "status": "success",
+      "metrics": {
+        "true_positives": 4,
+        "false_positives": 2,
+        "true_negatives": 4,
+        "false_negatives": 5,
+        "accuracy": 0.533,
+        "precision": 0.667,
+        "recall": 0.444,
+        "f1_score": 0.533
+      }
+    }
+  ]
+}

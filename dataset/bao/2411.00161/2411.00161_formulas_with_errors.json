@@ -1,0 +1,162 @@
+{
+  "<<FORMULA_0168>>": {
+    "formula": "k(\\cdot, \\v{\\zeta})\\m{L}^{-\\top}\n    &=\n    \\left(\\phi_0(\\cdot), \\dots, \\phi_M(\\cdot)\\right)^\\top\\mathrm{diag}\\left(\\frac{1}{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{0})}, \\dots, \\frac{1}{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{M})}\\right)^{-1/2}\n    \\\\\n    &=\n    \\left(\\phi_0(\\cdot), \\dots, \\phi_M(\\cdot)\\right)^\\top\n    \\mathrm{diag}\\left(\\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{0})}, \\dots, \\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{M})}\\right)\n    \\\\\n    &=\n    \\m{\\Psi}_{0: M}(\\cdot)^{\\top},",
+    "raw_latex": "\\begin{align}\n    k(\\cdot, \\v{\\zeta})\\m{L}^{-\\top}\n    &=\n    \\left(\\phi_0(\\cdot), \\dots, \\phi_M(\\cdot)\\right)^\\top\\mathrm{diag}\\left(\\frac{1}{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{0})}, \\dots, \\frac{1}{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{M})}\\right)^{-1/2}\n    \\\\\n    &=\n    \\left(\\phi_0(\\cdot), \\dots, \\phi_M(\\cdot)\\right)^\\top\n    \\mathrm{diag}\\left(\\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{0})}, \\dots, \\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{M})}\\right)\n    \\\\\n    &=\n    \\m{\\Psi}_{0: M}(\\cdot)^{\\top},\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1055,
+    "start_pos": 77998,
+    "end_pos": 78610
+  },
+  "<<FORMULA_0139>>": {
+    "formula": "\\mu_{\\v{z}, \\v{m'}, \\v{S'}}(\\cdot)\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(\\m{L}\\v{m}'-\\mu(\\v{z}))\n\\\\\n\\label{eq:whitened_variational_posterior_mean}\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\n\\m{L}^{-\\top}\n(\\v{m}' - \\m{L}^{-1}\\mu(\\v{z}))\n,\n\\\\\nk_{\\v{z}, \\v{m}', \\v{S}'}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(k(\\v{z}, \\v{z}) - \\m{L}\\m{S}'\\m{L}^\\top)\nk(\\v{z}, \\v{z})^{-1}\nk(\\v{z}, \\cdot')\n\\\\\n\\label{eq:whitened_variational_posterior_kernel}\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\n\\m{L}^{-\\top}\n(\\m{I} - \\m{S'})\n\\m{L}^{-1}\nk(\\v{z}, \\cdot').",
+    "raw_latex": "\\begin{align}\n\\mu_{\\v{z}, \\v{m'}, \\v{S'}}(\\cdot)\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(\\m{L}\\v{m}'-\\mu(\\v{z}))\n\\\\\n\\label{eq:whitened_variational_posterior_mean}\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\n\\m{L}^{-\\top}\n(\\v{m}' - \\m{L}^{-1}\\mu(\\v{z}))\n,\n\\\\\nk_{\\v{z}, \\v{m}', \\v{S}'}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(k(\\v{z}, \\v{z}) - \\m{L}\\m{S}'\\m{L}^\\top)\nk(\\v{z}, \\v{z})^{-1}\nk(\\v{z}, \\cdot')\n\\\\\n\\label{eq:whitened_variational_posterior_kernel}\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\n\\m{L}^{-\\top}\n(\\m{I} - \\m{S'})\n\\m{L}^{-1}\nk(\\v{z}, \\cdot').\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 735,
+    "start_pos": 56145,
+    "end_pos": 56746
+  },
+  "<<FORMULA_0132>>": {
+    "formula": "\\v{k}^{\\mathrm{div}}_{\\nu, \\kappa, \\sigma^2}(x, x') &= \\frac{\\sigma^2}{C^{\\mathrm{div}}_{\\nu, \\kappa}} \\sum_{k=0}^{K} \\frac{\\Phi_{\\nu,\\kappa}(\\lambda_k)}{\\lambda_k} \\frac{k \\\\times \\alpha}{\\alpha}(\\nabla_x \\otimes \\nabla_{x'})C_k^{(\\alpha)}(x\\cdot x')  \\\\\n    \\v{k}^{\\mathrm{curl}}_{\\nu, \\kappa, \\sigma^2}(x, x') &= \\frac{\\sigma^2}{C^{\\mathrm{curl}}_{\\nu, \\kappa}} \\sum_{k=0}^{K} \\frac{\\Phi_{\\nu,\\kappa}(\\lambda_k)}{\\lambda_k} \\frac{k + \\alpha}{\\alpha}(\\star\\nabla_x \\otimes \\star\\nabla_{x'})C_k^{(\\alpha)}(x\\cdot x').",
+    "raw_latex": "\\begin{align}\n    \\v{k}^{\\mathrm{div}}_{\\nu, \\kappa, \\sigma^2}(x, x') &= \\frac{\\sigma^2}{C^{\\mathrm{div}}_{\\nu, \\kappa}} \\sum_{k=0}^{K} \\frac{\\Phi_{\\nu,\\kappa}(\\lambda_k)}{\\lambda_k} \\frac{k \\\\times \\alpha}{\\alpha}(\\nabla_x \\otimes \\nabla_{x'})C_k^{(\\alpha)}(x\\cdot x')  \\\\\n    \\v{k}^{\\mathrm{curl}}_{\\nu, \\kappa, \\sigma^2}(x, x') &= \\frac{\\sigma^2}{C^{\\mathrm{curl}}_{\\nu, \\kappa}} \\sum_{k=0}^{K} \\frac{\\Phi_{\\nu,\\kappa}(\\lambda_k)}{\\lambda_k} \\frac{k + \\alpha}{\\alpha}(\\star\\nabla_x \\otimes \\star\\nabla_{x'})C_k^{(\\alpha)}(x\\cdot x').\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 724,
+    "start_pos": 54554,
+    "end_pos": 55096
+  },
+  "<<FORMULA_0169>>": {
+    "formula": "k_{\\v{\\zeta}, \\v{m}', \\m{S}'}(\\cdot, \\cdot')\n    &=\n    k(\\cdot, \\cdot')\n    -\n    k(\\cdot, \\v{\\zeta})\n    \\m{L}^{-\\top}\n    (\\m{I} - \\m{S'})\n    \\m{L}^{-1}\n    k(\\v{\\zeta}, \\cdot').\n    \\\\\n    &=\n    \\m{\\Psi}_{0:K}^\\top(\\cdot)\\m{\\Psi}_{0:K}(\\cdot')\n    -\n    \\m{\\Psi}_{0:M}^\\top(\\cdot)\n    (\\m{I} - \\m{S'})\n    \\m{\\Psi}_{0:M}(\\cdot')\n    \\\\\n    &=\n    \\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')\n    +\n    \\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')",
+    "raw_latex": "\\begin{align}\n    k_{\\v{\\zeta}, \\v{m}', \\m{S}'}(\\cdot, \\cdot')\n    &=\n    k(\\cdot, \\cdot')\n    -\n    k(\\cdot, \\v{\\zeta})\n    \\m{L}^{-\\top}\n    (\\m{I} - \\m{S'})\n    \\m{L}^{-1}\n    k(\\v{\\zeta}, \\cdot').\n    \\\\\n    &=\n    \\m{\\Psi}_{0:K}^\\top(\\cdot)\\m{\\Psi}_{0:K}(\\cdot')\n    -\n    \\m{\\Psi}_{0:M}^\\top(\\cdot)\n    (\\m{I} - \\m{S'})\n    \\m{\\Psi}_{0:M}(\\cdot')\n    \\\\\n    &=\n    \\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')\n    +\n    \\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1068,
+    "start_pos": 78688,
+    "end_pos": 79188
+  },
+  "<<FORMULA_0015>>": {
+    "formula": "\\label{eq:matern_kernel_eigenvalues_sum}\n\\!\\!\\!\nk_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\sum_{j=0}^{\\infty} \\Phi_{\\nu,\\kappa}(\\lambda_j) \\phi_j(x)\\phi_j(x')\n,\n&&\n\\Phi_{\\nu, \\kappa}(\\lambda) = \\begin{cases}\n    \\left((\\frac{2\\nu}{\\kappa^2} + \\lambda\\right)^{-\\nu-\\frac{d}){2}} & \\nu < \\infty\\\\\ne^{-\\frac{\\kappa^2}{2}\\lambda} & \\nu = \\infty\n\\end{cases}",
+    "raw_latex": "\\[\n\\label{eq:matern_kernel_eigenvalues_sum}\n\\!\\!\\!\nk_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\sum_{j=0}^{\\infty} \\Phi_{\\nu,\\kappa}(\\lambda_j) \\phi_j(x)\\phi_j(x')\n,\n&&\n\\Phi_{\\nu, \\kappa}(\\lambda) = \\begin{cases}\n    \\left((\\frac{2\\nu}{\\kappa^2} + \\lambda\\right)^{-\\nu-\\frac{d}){2}} & \\nu < \\infty\\\\\ne^{-\\frac{\\kappa^2}{2}\\lambda} & \\nu = \\infty\n\\end{cases}\n\\]",
+    "formula_type": "display",
+    "line_number": 172,
+    "start_pos": 11667,
+    "end_pos": 12049
+  },
+  "<<FORMULA_0179>>": {
+    "formula": "&k_{\\v{\\zeta}, \\v{m}', \\m{S}'}(\\cdot, \\cdot')\n\\\\\n=&\\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')\n+\n\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')\n+ \\m{\\Psi}_{M+1:K}^\\top(\\cdot)(\\m{D'} - \\m{I})\\m{\\Psi}_{M+1:K}(\\cdot') \\\\\n=&\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot') + \\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{D'}\\m{\\Psi}_{M+1:K}(\\cdot').",
+    "raw_latex": "\\begin{align}\n&k_{\\v{\\zeta}, \\v{m}', \\m{S}'}(\\cdot, \\cdot')\n\\\\\n=&\\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')\n+\n\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')\n+ \\m{\\Psi}_{M+1:K}^\\top(\\cdot)(\\m{D'} - \\m{I})\\m{\\Psi}_{M+1:K}(\\cdot') \\\\\n=&\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot') + \\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{D'}\\m{\\Psi}_{M+1:K}(\\cdot').\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1103,
+    "start_pos": 81194,
+    "end_pos": 81573
+  },
+  "<<FORMULA_0034>>": {
+    "formula": "\\label{eq:variational_posterior_mean_and_kernel}\n\\mu_{\\v{z}, \\v{m}, \\v{S}}(\\cdot)\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(\\v{m}-\\mu(\\v{z}))\n,\n\\\\\nk_{\\v{z}, \\v{m}, \\v{S}}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(k(\\v{z}, \\v{z}) - \\m{S})\nk(\\v{z}, \\v{z})^{-1}\nk(\\v{z}, \\cdot')\n.",
+    "raw_latex": "\\[\n\\label{eq:variational_posterior_mean_and_kernel}\n\\mu_{\\v{z}, \\v{m}, \\v{S}}(\\cdot)\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(\\v{m}-\\mu(\\v{z}))\n,\n\\\\\nk_{\\v{z}, \\v{m}, \\v{S}}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(k(\\v{z}, \\v{z}) - \\m{S})\nk(\\v{z}, \\v{z})^{-1}\nk(\\v{z}, \\cdot')\n.\n\\]",
+    "formula_type": "display",
+    "line_number": 218,
+    "start_pos": 15319,
+    "end_pos": 15647
+  },
+  "<<FORMULA_0012>>": {
+    "formula": "\\label{eq:exact_posterior_mean_and_kernel}\n\\mu_{f \\given \\v{y}}(\\cdot)\n&=\n\\mu(\\cdot) +\nk(\\cdot, \\v{x})(k(\\v{x}, \\v{x}) + \\m{\\Sigma})^{-1}\\del{\\v{y} - \\mu(\\v{x})},\n\\\\\nk_{f \\given \\v{y}}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot') - k(\\cdot, \\v{x})(k(\\v{x}, \\v{x}) + \\m{\\Sigma})^{-1}k(\\v{x}, \\cdot').",
+    "raw_latex": "\\[\n\\label{eq:exact_posterior_mean_and_kernel}\n\\mu_{f \\given \\v{y}}(\\cdot)\n&=\n\\mu(\\cdot) +\nk(\\cdot, \\v{x})(k(\\v{x}, \\v{x}) + \\m{\\Sigma})^{-1}\\del{\\v{y} - \\mu(\\v{x})},\n\\\\\nk_{f \\given \\v{y}}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot') - k(\\cdot, \\v{x})(k(\\v{x}, \\v{x}) + \\m{\\Sigma})^{-1}k(\\v{x}, \\cdot').\n\\]",
+    "formula_type": "display",
+    "line_number": 150,
+    "start_pos": 9945,
+    "end_pos": 10240
+  },
+  "<<FORMULA_0150>>": {
+    "formula": "Y_{2,3}(\\theta, \\phi) &= \\sqrt{\\frac{105}{32\\pi}} \\sin^3\\theta \\sin(3\\phi),\n    \\\\\n    Y_{1,2}(\\theta, \\phi) &= \\sqrt{\\frac{15}{8\\pi}} \\\\cos\\theta \\sin(2\\phi)\n    \\\\\n    R(x) &= (x_1, -x_3, x_2)\n    \\\\\n    \\varphi(x) &= (\\operatorname{atan2}(x_2, x_1), \\arccos(x_3)),",
+    "raw_latex": "\\begin{align}\n    Y_{2,3}(\\theta, \\phi) &= \\sqrt{\\frac{105}{32\\pi}} \\sin^3\\theta \\sin(3\\phi),\n    \\\\\n    Y_{1,2}(\\theta, \\phi) &= \\sqrt{\\frac{15}{8\\pi}} \\\\cos\\theta \\sin(2\\phi)\n    \\\\\n    R(x) &= (x_1, -x_3, x_2)\n    \\\\\n    \\varphi(x) &= (\\operatorname{atan2}(x_2, x_1), \\arccos(x_3)),\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 825,
+    "start_pos": 60854,
+    "end_pos": 61150
+  },
+  "<<FORMULA_0165>>": {
+    "formula": "\\m{\\Psi}_{i:j}(\\cdot) = \\left(\\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{i})}\\phi_{i}(\\cdot), \\dots, \\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_j)}\\phi_l(\\cdot)\\right)^{\\top}\n,",
+    "raw_latex": "\\[\n\\m{\\Psi}_{i:j}(\\cdot) = \\left(\\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{i})}\\phi_{i}(\\cdot), \\dots, \\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_j)}\\phi_l(\\cdot)\\right)^{\\top}\n,\n\\]",
+    "formula_type": "display",
+    "line_number": 1049,
+    "start_pos": 77469,
+    "end_pos": 77694
+  },
+  "<<FORMULA_0089>>": {
+    "formula": "\\label{eqn:sequential_sampling}\n\\hat{F}(x_i) = \\hat{f}^{L}_i\n,\n&&\n\\hat{f}^{l}_i = \\exp_{\\hat{f}^{l-1}_i}(g_{\\v{z}^l, \\v{m}^l, \\m{S}^l}(\\hat{f}^{l-1}_i))\n\\t{~for~}\n1 \\leq l \\leq L\n,\n&&\n\\hat{f}^{0}_i = x_i\n,",
+    "raw_latex": "\\[ \\label{eqn:sequential_sampling}\n\\hat{F}(x_i) = \\hat{f}^{L}_i\n,\n&&\n\\hat{f}^{l}_i = \\exp_{\\hat{f}^{l-1}_i}(g_{\\v{z}^l, \\v{m}^l, \\m{S}^l}(\\hat{f}^{l-1}_i))\n\\t{~for~}\n1 \\leq l \\leq L\n,\n&&\n\\hat{f}^{0}_i = x_i\n,\n\\]",
+    "formula_type": "display",
+    "line_number": 441,
+    "start_pos": 29126,
+    "end_pos": 29337
+  },
+  "<<FORMULA_0128>>": {
+    "formula": "\\label{eq:scalar_matern_kernel_addition_theorem}\n    k_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\\\prod_{k=0}^{K} \\Phi_{\\nu,\\kappa}(\\lambda_k) c_{k, d} C_k^{(\\alpha)}(x\\cdot x').",
+    "raw_latex": "\\begin{equation}\\label{eq:scalar_matern_kernel_addition_theorem}\n    k_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\\\prod_{k=0}^{K} \\Phi_{\\nu,\\kappa}(\\lambda_k) c_{k, d} C_k^{(\\alpha)}(x\\cdot x').\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 718,
+    "start_pos": 53856,
+    "end_pos": 54087
+  },
+  "<<FORMULA_0037>>": {
+    "formula": "\\label{eqn:eucl_deep_gp_vf}\nF_{\\v{\\theta}}\n=\nf_{\\v{z}^L, \\v{m}^L, \\m{S}^L}\n\\circ\n\\ldots\n\\circ\nf_{\\v{z}^1, \\v{m}^1, \\m{S}^1}\n,\n&&\n\\v{\\theta}\n=\n\\cbr{\\v{z}^l, \\v{m}^l, \\m{S}^l}_{l=1}^L\n.",
+    "raw_latex": "\\[ \\label{eqn:eucl_deep_gp_vf}\nF_{\\v{\\theta}}\n=\nf_{\\v{z}^L, \\v{m}^L, \\m{S}^L}\n\\circ\n\\ldots\n\\circ\nf_{\\v{z}^1, \\v{m}^1, \\m{S}^1}\n,\n&&\n\\v{\\theta}\n=\n\\cbr{\\v{z}^l, \\v{m}^l, \\m{S}^l}_{l=1}^L\n.\n\\]",
+    "formula_type": "display",
+    "line_number": 243,
+    "start_pos": 15872,
+    "end_pos": 16061
+  },
+  "<<FORMULA_0040>>": {
+    "formula": "\\label{eq:euclidean_deep_gp_elbo}\n\\mathrm{ELBO}\n=\n{\\sum}_{i=1}^n\n{\\E}_{F(x_i) \\sim p(F_{\\v{\\theta}}(x_i))}\n\\\\ln p(y_i| F(x_i))\n-\n{\\sum}_{l=1}^L\n\\KL(q(\\v{u}^l) \\,\\Vert\\, p(\\v{u}^l)),",
+    "raw_latex": "\\begin{equation}\\label{eq:euclidean_deep_gp_elbo}\n\\mathrm{ELBO}\n=\n{\\sum}_{i=1}^n\n{\\E}_{F(x_i) \\sim p(F_{\\v{\\theta}}(x_i))}\n\\\\ln p(y_i| F(x_i))\n-\n{\\sum}_{l=1}^L\n\\KL(q(\\v{u}^l) \\,\\Vert\\, p(\\v{u}^l)),\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 259,
+    "start_pos": 16277,
+    "end_pos": 16489
+  },
+  "<<FORMULA_0155>>": {
+    "formula": "\\alpha_\\text{hodge} &= \\underbrace{(m^2 + m)/2}_{\\text{covariance}} + \\underbrace{m}_\\text{mean}\\\\\n    \\alpha_\\text{euclidean} = \\alpha_\\text{projected} &= 3\\cdot((m^2 + m)/2+m)",
+    "raw_latex": "\\begin{align}\n    \\alpha_\\text{hodge} &= \\underbrace{(m^2 + m)/2}_{\\text{covariance}} + \\underbrace{m}_\\text{mean}\\\\\n    \\alpha_\\text{euclidean} = \\alpha_\\text{projected} &= 3\\cdot((m^2 + m)/2+m)\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 842,
+    "start_pos": 62116,
+    "end_pos": 62323
+  },
+  "<<FORMULA_0074>>": {
+    "formula": "\\v{k}_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\sum_{j=0}^{\\infty} \\P^Thi_{\\nu,\\kappa}(\\lambda_j) s_j(x) \\otimes s_j(x')\\label{eq:hodge_matern_kernel}.",
+    "raw_latex": "\\begin{equation}\n    \\v{k}_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\sum_{j=0}^{\\infty} \\P^Thi_{\\nu,\\kappa}(\\lambda_j) s_j(x) \\otimes s_j(x')\\label{eq:hodge_matern_kernel}.\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 342,
+    "start_pos": 22776,
+    "end_pos": 22986
+  },
+  "<<FORMULA_0082>>": {
+    "formula": "\\v{m}^l = P_{\\v{z}^l} \\widetilde{\\v{m}}^l\n,\n&&\n\\m{S}^l = P_{\\v{z}^l} \\widetilde{\\m{S}}^l P_{\\v{z}^l}^{\\top}\n,\n&&\nP_{\\v{z}^l} = P_{z^l_1} \\oplus \\ldots \\oplus P_{z^l_m}\n,",
+    "raw_latex": "\\[\n\\v{m}^l = P_{\\v{z}^l} \\widetilde{\\v{m}}^l\n,\n&&\n\\m{S}^l = P_{\\v{z}^l} \\widetilde{\\m{S}}^l P_{\\v{z}^l}^{\\top}\n,\n&&\nP_{\\v{z}^l} = P_{z^l_1} \\oplus \\ldots \\oplus P_{z^l_m}\n,\n\\]",
+    "formula_type": "display",
+    "line_number": 422,
+    "start_pos": 27907,
+    "end_pos": 28082
+  },
+  "<<FORMULA_0147>>": {
+    "formula": "\\mathrm{colatitude} = \\arccos\\left(1 - \\frac{2i + 1}{n}\\right),\n    &&\n    \\mathrm{longitude} = \\frac{2\\pi i}{\\phi},\n    &&\n    \\phi = \\frac{1 + \\sqrt{5}}{2}.",
+    "raw_latex": "\\begin{align}\n    \\mathrm{colatitude} = \\arccos\\left(1 - \\frac{2i + 1}{n}\\right),\n    &&\n    \\mathrm{longitude} = \\frac{2\\pi i}{\\phi},\n    &&\n    \\phi = \\frac{1 + \\sqrt{5}}{2}.\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 812,
+    "start_pos": 60346,
+    "end_pos": 60534
+  },
+  "<<FORMULA_0080>>": {
+    "formula": "\\v{m}^l = (\\v{m}^l_1, \\ldots, \\v{m}^l_m)\n,\n&&\n\\v{m}^l_j \\in T_{z^l_j} X\n,\n&&\n\\operatorname{im}(\\m{S}^l) \\subseteq T_{z^l_1} X \\x \\ldots \\x T_{z^l_m} X\n,",
+    "raw_latex": "\\[\n\\v{m}^l = (\\v{m}^l_1, \\ldots, \\v{m}^l_m)\n,\n&&\n\\v{m}^l_j \\in T_{z^l_j} X\n,\n&&\n\\operatorname{im}(\\m{S}^l) \\subseteq T_{z^l_1} X \\x \\ldots \\x T_{z^l_m} X\n,\n\\]",
+    "formula_type": "display",
+    "line_number": 409,
+    "start_pos": 27417,
+    "end_pos": 27575
+  },
+  "<<FORMULA_0093>>": {
+    "formula": "p(g_{\\v{\\zeta}, \\v{m}, \\v{S}}(\\cdot))\n=\n{\\E}_{\\v{u} \\sim q(\\v{u})} \\, p(g(\\cdot) \\given \\v{u}, \\v{\\zeta}),\n&&\nq(\\v{u}) = \\mathcal{N}(\\v{m}, \\m{S}),",
+    "raw_latex": "\\[\np(g_{\\v{\\zeta}, \\v{m}, \\v{S}}(\\cdot))\n=\n{\\E}_{\\v{u} \\sim q(\\v{u})} \\, p(g(\\cdot) \\given \\v{u}, \\v{\\zeta}),\n&&\nq(\\v{u}) = \\mathcal{N}(\\v{m}, \\m{S}),\n\\]",
+    "formula_type": "display",
+    "line_number": 460,
+    "start_pos": 29943,
+    "end_pos": 30096
+  }
+}

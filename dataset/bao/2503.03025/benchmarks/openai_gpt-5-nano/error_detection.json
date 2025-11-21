@@ -1,0 +1,212 @@
+{
+  "metadata": {
+    "paper_id": "2503.03025",
+    "model": "openai/gpt-5-nano",
+    "context_words": 300,
+    "total_formulas_checked": 20,
+    "timestamp": "2025-10-31T17:26:44.551306",
+    "benchmark_mode": true
+  },
+  "detections": [
+    {
+      "label": "<<FORMULA_0436>>",
+      "formula": "\\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\equiv \n        \\mathrm{diam}\\bigl(\n        \\mathsf{X}_q^{(t)} \\cup T(\\mathsf{X}_q^{(t)})\\bigr) \n    \\;:=\\;\n    \\max_{ \\mathbf{x}_i,\\, \\mathbf{x}_j,\\, \\mathbf{x}_k,\\, \\mathbf{x}_l \\in \\mathsf{X}_q^{(t)}}\\;\n    \\Bigl\\|\n    \\bigl( \\mathbf{x}_i,\\,T(\\mathbf{x}_j)\\bigr)\n    \\; + \\;\n    \\bigl(\\mathbf{x}_k,\\,T(\\mathbf{x}_l)\\bigr)\n    \\Bigr\\|.",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The diameter should be defined using the distance between two points: ||(x_i, T(x_j)) - (x_k, T(x_l))||, not the sum ||(x_i, T(x_j)) + (x_k, T(x_l))||; i.e., the sign between the two terms is incorrect.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 15.18
+    },
+    {
+      "label": "<<FORMULA_0446>>",
+      "formula": "& \\leq  \n    \\frac{1}{r_{t+1}} \n    \\left(\n    \\sum_{\\mathbf{x}_i \\in \\mathsf{X}_{q}^{(t)}} \n    \\sum_{\\mathbf{x}_j \\in \\mathsf{X}_{q}^{(t)}} \n    c(\\mathbf{x}_{i}, T(\\mathbf{x}_{j})) \n    \\right)\n    -  \n    s_{t+1}^{2} r_{t+1} \n    c( \\bar{\\mathbf{x}}^{(t)}, \\bar{\\mathbf{y}}^{(t)} ) \\\\\n    & = \\frac{1}{r_{t+1}} \n    \\left( \n    \\left(\\sum_{ \\mathbf{x}_i \\in \\mathsf{X}_{q}^{(t)}} \n    \\sum_{ \\mathbf{x}_j \\in \\mathsf{X}_{q}^{(t)}} \n    c(\\mathbf{x}_{i}, T(\\mathbf{x}_{j}))\n    \\right)\n    - \\frac{n^{2}}{\\rho_t} \n    c( \\bar{\\mathbf{x}}^{(t)}, \\bar{\\mathbf{y}}^{(t)} ) \n    \\right) \\\\\n    & = \\frac{1}{r_{t+1}} \n    \\left( \\sum_{ \\mathbf{x}_i \\in \\mathsf{X}_{q}^{(t)}} \n    \\sum_{ \\mathbf{x}_j \\in \\mathsf{X}_{q}^{(t)}} \n    \\left( c( \\mathbf{x}_{i}, T( \\mathbf{x}_{j})) \n    -  c( \\bar{\\mathbf{x}}^{(t)}, \\bar{\\mathbf{y}}^{(t)} ) \\right) \\right)  \\,.",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "In the diameter definition, the norm term uses '+' in one place (|(x_i, T(x_j)) + (x_k, T(x_l))|) but later uses '-' (|(x_i, T(x_j)) - (x_k, T(x_l))|), i.e., an inconsistent sign (sign flip) in the diameter expression.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 16.38
+    },
+    {
+      "label": "<<FORMULA_0066>>",
+      "formula": "(\\mathbf{Q}^\\star, \\mathbf{R}^\\star)\n&= \\arg\\min_{(\\mathbf{Q}, \\mathbf{R})}\n \\left\\langle \\mathbf{C}, \\mathbf{Q} \\mathrm{diag}(1/ \\mathbf{g}) \\mathbf{R}^\\top\n\\right\\rangle_F \\, \\label{eq:lora_wass_variant}  \\\\\n\\text{s.t.} \\quad & \\mathbf{Q} \\in \\Pi_{\\mathbf{a}, \\mathbf{g}}, \\, \\mathbf{R} \\in \\Pi_{\\mathbf{b}, \\mathbf{g}},  \\,\n  \\mathbf{g} = (1/r)\\mathbf{1}_r  \\nonumber",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 18.12
+    },
+    {
+      "label": "<<FORMULA_0443>>",
+      "formula": "\\bar{\\mathbf{x}}^{(t)} := \\sum_{\n    \\mathbf{x}_i \\in \n    \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    \\frac{\\mathbf{x}_{i}}{s_{t+1}}, \n    \\quad \n    \\bar{\\mathbf{y}}^{(t)} := \n    \\sum_{\\mathbf{x} \\in \n    \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    \\frac{T(\\mathbf{x}_{i})}{s_{t+1}} \\,,",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "In the definition of \\bar{\\mathbf{y}}^{(t)}, the summand uses T(\\mathbf{x}_{i}) while the summation variable is \\mathbf{x}; it should be T(\\mathbf{x}) (the index i is undefined in that scope).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 21.81
+    },
+    {
+      "label": "<<FORMULA_0441>>",
+      "formula": "\\label{eq:summand_ugly}\n    \\left(\n\\frac{1}{r_{t+1}} \n\\sum_{i \\in \\mathsf{X}_{q}^{(t)}} \n\\sum_{j \\in \\mathsf{X}_{q}^{(t)}} \nc( \\mathbf{x}_{i}, T( \\mathbf{x}_{j}))\n-  \n\\sum_{z=1}^{r_{t+1}}\n\\sum_{i \\in \n\\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n\\sum_{j \\in \n\\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \nc(\\mathbf{x}_{i}, T( \\mathbf{x}_{j}))\n\\right) \\,.",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "In the definition of diam(Γ_{t,q}), the expression uses a plus inside the norm in one place ( (x_i, T(x_j)) + (x_k, T(x_l)) ) and a minus in another ( (x_i, T(x_j)) - (x_k, T(x_l)) ); this inconsistent change of sign constitutes a sign flip error.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 27.14
+    },
+    {
+      "label": "<<FORMULA_0447>>",
+      "formula": "\\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\equiv \n        \\mathrm{diam}\\bigl(\n        \\mathsf{X}_q^{(t)} \\cup T(\\mathsf{X}_q^{(t)})\\bigr) \n    \\;:=\\;\n    \\\\min_{ \\mathbf{x}_i,\\, \\mathbf{x}_j,\\, \\mathbf{x}_k,\\, \\mathbf{x}_l \\in \\mathsf{X}_q^{(t)}}\\;\n    \\Bigl\\|\n    \\bigl( \\mathbf{x}_i,\\,T(\\mathbf{x}_j)\\bigr)\n    \\;-\\;\n    \\bigl(\\mathbf{x}_k,\\,T(\\mathbf{x}_l)\\bigr)\n    \\Bigr\\|,",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The inner distance term changes from a difference to a sum between definitions: initially ||(x_i, T(x_j)) - (x_k, T(x_l))||, later ||(x_i, T(x_j)) + (x_k, T(x_l))||, indicating a sign flip inconsistency.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 13.09
+    },
+    {
+      "label": "<<FORMULA_0452>>",
+      "formula": "\\leq \\frac{1}{r_{t+1}} \n    \\sum_{\\mathbf{x}_i \\in \\mathsf{X}_{q}^{(t)}} \n    \\sum_{\\mathbf{x}_j \\in \\mathsf{X}_{q}^{(t)}} \n    \\lVert \\nabla c \\rVert_{\\infty} \n    \\Bigl\\| \\bigl( \\mathbf{x}_i,\\,T(\\mathbf{x}_j)\\bigr)\n    \\;-\\;\\bigl(\\bar{\\mathbf{x}}^{(t)},\\, \\bar{\\mathbf{y}}^{(t)} \\bigr)\n    \\Bigr\\|",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The diameter definition uses a plus inside the norm: ||(x_i, T(x_j)) + (x_k, T(x_l))||, which should be a difference ||(x_i, T(x_j)) - (x_k, T(x_l))|| to represent a distance. There are also inconsistent diameter definitions (plus vs minus, max vs min) in the excerpt.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 17.48
+    },
+    {
+      "label": "<<FORMULA_0303>>",
+      "formula": "\\label{eq:monge_reg_id}\n\\begin{split}\n    \\la \\mb{C}, \\mb{P} \\ra_F\n    &= \\Tr ( \\mb{C}^\\top \\mb{P} )  \\\\\n    &= \\Tr (\\tilde{\\mb{P}}^{-1} \\tilde{\\mb{P}}\\mb{C}^\\top \n     \\mb{P} ) \\\\\n    &=\n    \\Tr ( \\tilde{\\mb{P}} \\mb{C}^\\top \n    \\mb{P} \\tilde{\\mb{P}}^\\top )\n    =\n    \\la \\mb{C} \\tilde{\\mb{P}}^\\top \n    ,\\mb{P}  \\tilde{\\mb{P}}^\\top  \\ra_F. \n\\end{split}",
+      "has_error": true,
+      "error_type": "transpose_error",
+      "error_description": "From Tr( tilde{P}^{-1} tilde{P} C^T P ) to Tr( tilde{P} C^T P tilde{P}^T ), the derivation effectively uses tilde{P}^{-1} = tilde{P}^T (orthogonality) to move/insert factors, which is not generally valid. The transpose is introduced where the inverse should be used.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 37.34
+    },
+    {
+      "label": "<<FORMULA_0453>>",
+      "formula": "&\\leq \\frac{1}{r_{t+1}} \n    \\sum_{i \\in \\mathsf{X}_{q}^{(t)}} \n    \\sum_{j \\in \\mathsf{X}_{q}^{(t)}} \n    \\lVert \\nabla c \\rVert_{\\infty} \n    \\mathrm{diam}\\bigl( \\G^Tamma_{t,q}\\bigr) \\, , \\\\\n    &= \\frac{1}{r_{t+1}} | \\mathsf{X}_{q}^{(t)}|^{2} \\lVert \\nabla c \\rVert_{\\infty} \n    \\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr)  \\, ,\\\\\n    &= \\frac{1}{r_{t+1}} \\frac{n^{2} \\lVert \\nabla c \\rVert_{\\infty}}{\\rho_t^{2} } \n    \\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\,.",
+      "has_error": true,
+      "error_type": "transpose_error",
+      "error_description": "In the first line, the diameter term uses \\\\G^Tamma_{t,q} instead of \\\\Gamma_{t,q}, i.e., an extraneous transpose marker (the ^T) corrupts the symbol and creates inconsistency with the later \\\\Gamma_{t,q} term.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 22.55
+    },
+    {
+      "label": "<<FORMULA_0445>>",
+      "formula": "\\sum_{z=1}^{r_{t+1}}\n    \\sum_{\n    \\mathbf{x}_i \\in \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    \\sum_{ \\mathbf{x}_j \\in \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    c( \\mathbf{x}_{i}, T( \\mathbf{x}_{j})) \n    &= \n    s_{t+1}^{2} \n    \\sum_{z=1}^{r_{t+1}}\n    \\sum_{\\mathbf{x}_i \\in \\mathsf{X}_{q\\rho_t + z}^{(t+1)}} \n    \\frac{1}{s_{t+1}} \n    \\sum_{j \\in \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    \\frac{1}{s_{t+1}} \n    c(\\mathbf{x}_{i}, T(\\mathbf{x}_{j})) \\\\ \n    & \\\\leq s_{t+1}^{2} r_{t+1} c( \\bar{\\mathbf{x}}^{(t)}, \\bar{\\mathbf{y}}^{(t)} ),\\ \\quad",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "In the diameter definition, the norm switches from a sum to a difference between two paired terms (plus inside the norm in one place, minus in another), i.e., a sign-flip error.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 43.82
+    },
+    {
+      "label": "<<FORMULA_0339>>",
+      "formula": "\\la \\mb{C}^\\dagger, \\mb{Q}^\\star \\mb{R}^\\star \\mb{P}^{\\dagger, \\top} \\ra_F &= \\la \\mb{C} \\mb{P}^{\\dagger, \\top} , \\mb{Q}^\\star \\mb{R}^{\\star, \\top} \\mb{P}^{\\dagger, \\top} \\ra_F, \\\\\n    &= \\Tr ( \n    \\mb{P}^\\dagger \\mb{C}^\\top \\mb{Q}^\\star \\mb{R}^{\\star,\\top} \\mb{P}^{\\dagger, \\top} ), \\\\\n    &= \\Tr \\mb{C}^\\top \\mb{Q}^\\star \\mb{R}^{\\star, \\top} = \\la \\mb{C}, \\mb{Q}^\\star \\mb{R}^{\\star, \\top} \\ra_F.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 44.35
+    },
+    {
+      "label": "<<FORMULA_0438>>",
+      "formula": "\\label{eq:full_term}\n= \\frac{\\rho_{t\\\\times1}}\n{n^{2}} \n\\left(\n\\sum_{q=1}^{\\rho_t}  \n\\left(\n\\underbrace{\n\\frac{1}{r_{t+1}} \n\\sum_{i \\in \\mathsf{X}_{q}^{(t)}} \n\\sum_{j \\in \\mathsf{X}_{q}^{(t)}} \nc( \\mathbf{x}_{i}, T( \\mathbf{x}_{j}))}\n_{\\text{average ``Monge distortion'' in } \\Gamma_{t,q} \\text{ over next scale}\n} \n-  \n\\underbrace{\n\\sum_{z=1}^{r_{t+1}}\n\\sum_{i \\in \n\\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n\\sum_{j \\in \n\\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \nc(\\mathbf{x}_{i}, T( \\mathbf{x}_{j}))}_\n{\\text{``Monge distortion'' at scale } {t+1}}\n\\right)\n\\right)",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "Suspicious subscript ρ_{t×1} (written as ρ_{t\\times1}) instead of the intended ρ_t; this index change affects normalization.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 46.6
+    },
+    {
+      "label": "<<FORMULA_0457>>",
+      "formula": "\\leq \n    \\frac{\\rho_{t+1}}{n^{2}} \\sum_{q=1}^{\\rho_t} \n    \\left| \\gamma \\frac{| \\mathsf{X}_{q}^{(t)}|^{2}}{r_{t+1}} - \\gamma r_{t+1} | \\mathsf{X}_{q}^{(t - 1)}|^{2}\n    \\right| = \\frac{\\rho_{t+1}}{n^{2}} \\sum_{q=1}^{\\rho_t} \n    \\left| \\gamma \\frac{(n/ \\rho_t )^{2}}{r_{t+1}} - \\gamma r_{t+1} (n/\\rho_{t+1})^{2}\n    \\right| = 0 \\,.",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "The second equality incorrectly replaces |X_q^{(t)}|^2 and |X_q^{(t-1)}|^2 by (n/ρ_t)^2 and (n/ρ_{t+1})^2, mixing index subscripts and breaking the intended dependence on t. This change in indices makes the claimed equality to 0 invalid.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 21.19
+    },
+    {
+      "label": "<<FORMULA_0437>>",
+      "formula": "\\langle \\mathbf{C}, \n    \\mathbf{P}^{(t)}\n    \\rangle \n    - \n    \\langle \\mathbf{C}, \n    \\mathbf{P}^{(t + 1)}\n    \\rangle \n    &= \\frac{\\rho_t}{n^{2} } \n    \\sum_{i=1}^{n} \n    \\sum_{j=1}^{n} \n    c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\sum_{q=1}^{\\rho_t} \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\in \\Gamma_{t,q}} \n    - \\frac{\\rho_{t+1}}{n^{2}} \n    \\sum_{i=1}^{n}\n    \\sum_{j=1}^{n} c(x_{i}, y_{j}) \n    \\sum_{q=1}^{\\rho_{t+1}} \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t+1,q}}\\\\\n    &= \\frac{\\rho_t}{n^{2}}\n    \\left(\n     \\sum_{i=1}^{n} \n     \\sum_{j=1}^{n} \n     c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n     \\sum_{q=1}^{ \\rho_t} \n     \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t,q}} - r_{t+1} \n     \\sum_{i=1}^{n} \n     \\sum_{j=1}^{n} \n     c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n     \\sum_{q'=1}^{\\rho_{t\\\\times1}} \n     \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t+1,q'}} \n     \\right) \\\\\n    &= \n    \\frac{\\rho_t}{n^{2}}  \n    \\left(\n    \\sum_{q=1}^{ \\rho_t} \n    \\sum_{i=1}^{n} \n    \\sum_{j=1}^{n} \n    c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t,q}} \n    - r_{t+1} \n    \\sum_{q'=1}^{\\rho_{t+1}} \n    \\sum_{i=1}^{n} \n    \\sum_{j=1}^{n} c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t+1,q'}}\n    \\right)\\,.",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "In the definition of diam(Γ_{t,q}), the norm uses a sum of two vectors (x_i, T(x_j)) + (x_k, T(x_l)); this should be the difference to measure distance between points, i.e., (x_i, T(x_j)) - (x_k, T(x_l)).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 48.44
+    },
+    {
+      "label": "<<FORMULA_0539>>",
+      "formula": "\\mathsf{c}_j\n        ( \\, \n        x_{j,k} , \\, \n        y_{j, k'}\n        \\, ) := \n        \\frac{\n        \\sum_{x \\in C_{j,k}(\\mathsf{X}), y \\in C_{j,k'}(\\mathsf{Y})  }\n        \\mathsf{c}(x,y)\n        }{\n        | C_{j,k}(\\mathsf{X}) | \\, | C_{j,k'}(\\mathsf{Y}) | \n        }",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 11.95
+    },
+    {
+      "label": "<<FORMULA_0520>>",
+      "formula": "\\Gamma({\\mathsf{X}})\n    &:= \n    \\{ \\Gamma_m(\\mathsf{X}) \\}_{j=0}^J\n    \\,,  \\quad \\Gamma_j(\\mathsf{X}) := \\{ C_{j,k}(\\mathsf{X}) \\}_{k=1}^{K_j(\\mathsf{X})}\n    \\\\ \n        \\Gamma({\\mathsf{Y}})\n    &:= \n    \\{ \\Gamma_j(\\mathsf{Y}) \\}_{j=0}^J\n    \\,,  \\quad \\Gamma_j(\\mathsf{Y}) := \\{ C_{j,k}(\\mathsf{Y}) \\}_{k=1}^{K_j(\\mathsf{Y})} \\,,",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "Inconsistent subscript: the outer definition uses Γ_m(X) with index j=0..J, while the inner definition uses Γ_j(X); the indices m and j are mismatched (should be Γ_j(X)).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 17.37
+    },
+    {
+      "label": "<<FORMULA_0545>>",
+      "formula": "\\label{eq:supp_otscale_j}\n    \\begin{split}\n\\pi_j^\\star \n&:=\n\\argmin_{\n\\pi \\in \\Pi( \\mu_j, \\nu_j) \n}\n\\mathrm{cost}( \\pi_j )\\, , \\quad \\text{where:} \\\\\n\\mathrm{cost}( \\pi_j ) &: = \\\\prod_{\nk \\in [K_j(\\mathsf{X})], \\, \nk' \\in [K_j(\\mathsf{Y})]\n}\nc( x_{j,k}, y_{j,k'} )\n\\pi_j ( x_{j,k}, y_{j,k'} )\n    \\end{split}",
+      "has_error": true,
+      "error_type": "sum_product_swap",
+      "error_description": "The cost is defined as a product over all pairs (k,k') of c(x_{j,k}, y_{j,k'}) π_j(x_{j,k}, y_{j,k'}), but the OT cost should be a sum: cost(π_j) = sum_{k, k'} c(x_{j,k}, y_{j,k'}) π_j(x_{j,k}, y_{j,k'}).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 8.69
+    },
+    {
+      "label": "<<FORMULA_0460>>",
+      "formula": "& \\int_{\\mathsf{X} \\times \\mathsf{Y}} \\lVert T_{\\theta}(x) - y \\rVert_{2}^{p} (\\mathrm{id} \\times T)_{\\sharp} \\sum_{i=1}^{n} \\mu_{i} \\delta_{x_{i}} \\mathrm{d} x \\mathrm{d} y = \\int_{\\mathsf{X} \\times \\mathsf{Y}} \\lVert T_{\\theta}(x) - y \\rVert_{2}^{p} \\sum_{i=1}^{n} \\mu_{i} (\\mathrm{id} \\times T)_{\\sharp} \\delta_{x_{i}} \\mathrm{d}x \\mathrm{d}y  \\\\\n    &= \\sum_{i=1}^{n} \\mu_{i} \\int_{\\mathsf{X} / \\mathsf{Y}} \\lVert T_{\\theta}(x) - y \\rVert_{2}^{p} \\delta_{(x_{i}, T(x_{i}))} \\mathrm{d}y \\mathrm{d}x = \\sum_{i=1}^{n} \\mu_{i} \\lVert T_{\\theta}(x_{i}) - T(x_{i}) \\rVert_{2}^{p} \\, ,",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 27.77
+    },
+    {
+      "label": "<<FORMULA_0540>>",
+      "formula": "\\mathsf{c}_j\n        ( \\, \n        x_{j,k} , \\, \n        y_{j, k'}\n        \\, ) := \n        \\frac{\n        \\sum_{\n        x \\in C_{j,k}(\\mathsf{X}), y \\in C_{j,k'}(\\mathsf{Y})  \n        }\n        \\mathsf{c}(x,y)\n        \\pi_{j-1}^\\star ( x_{j-1, k_1}, y_{j-1, k_1'} ) \n        }{\n        \\\\prod_{\n        x \\in C_{j,k}(\\mathsf{X}), y \\in C_{j,k'}(\\mathsf{Y})  \n        }\n        \\pi_{j-1}^\\star ( x_{j-1, k_1}, y_{j-1, k_1'} ) \n        } \\,,",
+      "has_error": true,
+      "error_type": "sum_product_swap",
+      "error_description": "The denominator uses a product over pi terms (\\prod) instead of a sum, effectively swapping a sum with a product and yielding a non-normalized weighted average. It should be a sum (or proper normalization) of the weights π, not a product.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 23.64
+    },
+    {
+      "label": "<<FORMULA_0454>>",
+      "formula": "& =\\frac{\\rho_{t+1}}{n^{2}}  \n\\frac{1}{r_{t+1}} \\frac{n^{2} \n\\lVert \\nabla c \\rVert_{\\infty}}{\\rho_t^2 } \n\\sum_{q=1}^{\\rho_t} \n    \\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\\\\n    & =  \\lVert \\nabla c \\rVert_{\\infty} \n    \\frac{ 1}{ \\rho_t } \n    \\sum_{q=1}^{\\rho_t } \n    \\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) .",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "In the definition of diameter Γ_{t,q}, the expression toggles from using the norm of the sum ( (x_i, T(x_j)) + (x_k, T(x_l)) ) to using the norm of the difference ( (x_i, T(x_j)) - (x_k, T(x_l)) ), i.e., a sign flip in the diameter definition.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 43.68
+    }
+  ]
+}

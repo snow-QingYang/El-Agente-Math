@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "paper_id": "2502.02013",
+    "model": "openai/gpt-5-nano",
+    "total_responses": 19,
+    "timestamp": "2025-10-31T17:20:19.680305"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0053>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the cosine denominator, the norm uses ||v_j|| instead of ||v_k||, changing the index from k to j.\"\n}",
+      "response_length": 182,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0128>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"In the state update, the addition between A h_{t-1} and B x_t was replaced with multiplication (h_t = A h_{t-1} × B x_t) instead of h_t = A h_{t-1} + B x_t.\"\n}",
+      "response_length": 239,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0018>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0056>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The denominator uses ||v_j|| instead of ||v_k|| inside the arccos, altering the index and breaking the intended angle between consecutive vectors.\"\n}",
+      "response_length": 228,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0113>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The denominator uses ||v_{k-1}|| instead of ||v_{k+1}||, causing the cosine term to mix the wrong vector norms and misalign the angle between v_k and v_{k+1} (and may reference v_0 when indexing starts at 1).\"\n}",
+      "response_length": 290,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0029>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0110>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0088>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The prefactor before the log is (1 - α)/1, which is equivalent to (1 - α). For the matrix-based entropy, the correct prefactor should be 1/(1 - α); thus the fraction appears inverted.\"\n}",
+      "response_length": 271,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0153>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"The opening delimiter after softmax is garbled ('softmax\\\\\\\\geft(') instead of a proper left parenthesis; the expression should be A = softmax( Q K^T / sqrt(d_k) ).\"\n}",
+      "response_length": 253,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0102>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Off-by-one indexing: with L tokens there are L-1 consecutive vector pairs (v_k, v_{k+1}), but the sum runs from k=1 to L-2 and the average divides by L-2. It should be k=1..L-1 and divide by L-1.\"\n}",
+      "response_length": 277,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0123>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"transpose_error\",\n  \"error_description\": \"K is defined as x W_K^T while Q and V are defined with non-transposed weights; for standard attention, K should be x W_K (no transpose) to ensure Q K^T is valid and K has the same last dimension as Q. The extra transpose on W_K appears to be an error.\"\n}",
+      "response_length": 336,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0210>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The bound is stated for P(|<v_i, v_j>| < ε) but standard concentration gives a bound on P(|<v_i, v_j>| > ε); the inequality direction is reversed (and typically includes a factor for multiple pairs).\"\n}",
+      "response_length": 284,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0235>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The formula uses a product over inner products ∏_{i≠ j} ⟨√L q_i, √L q_j⟩, but the context derives a sum ∑_{i≠ j} ⟨√L q_i, √L q_j⟩; this is a sum-product swap error.\"\n}",
+      "response_length": 250,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0255>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The first line contains a product over i of ||q_i||^2, but the next line replaces it with a sum; sum and product are swapped, making the equality inconsistent.\"\n}",
+      "response_length": 245,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0233>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"A sum over i ≠ j of the inner products ⟨√L q_i, √L q_j⟩ is replaced by a product ∏_{i≠j} ⟨√L q_i, √L q_j⟩, which is incorrect.\"\n}",
+      "response_length": 212,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0238>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"The exponent in the bound is incorrect. After substituting the threshold on the inner product, |sqrt(D) q_i · sqrt(D) q_j| ≤ ε/N^2, one uses t = ε/(D N^2) for |<q_i,q_j>| and the bound P(|<q_i,q_j>| > t) ≤ sqrt(2π) exp(- D t^2 / 2) gives exp(- ε^2/(2 D N^4)). Therefore the correct bound should be P ≥ 1 - N^2 sqrt(2π) exp(- ε^2/(2 D N^4)). The given exp(- D ε^2 /(2 N^2)) is inconsistent.\"\n}",
+      "response_length": 473,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0259>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"An extraneous leading '|' introduces an unbalanced absolute-value structure; the left-hand side should be | ||\\\\bar Z\\\\bar Z^T||_F^2 - N^3/L^2 | with a single pair of outer bars around the inner Frobenius-norm term.\"\n}",
+      "response_length": 304,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0212>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"In the Random Unit Vectors are Nearly Orthogonal section, the bound writes P(|<v_i, v_j>| < ε) ≤ sqrt{2π} e^{ - D ε^2 / 2 }. This is incorrect: the bound should apply to the tail probability P(|<v_i, v_j>| > ε) (the event that the inner product exceeds ε), not to the event that it lies within ε. The inequality direction/quantity is reversed.\"\n}",
+      "response_length": 428,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

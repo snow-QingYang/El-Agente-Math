@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2411.12537",
+    "model": "openai/gpt-5",
+    "total_responses": 20,
+    "timestamp": "2025-10-31T17:58:45.527409"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0378>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the first row, second entry of the Jordan block, the eigenvalue is written as λ_l^{k-1} instead of λ_i^{k-1}; the subscript should be i consistently.\"\n}",
+      "response_length": 234,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0004>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"The recurrence uses multiplication (\\\\times) instead of addition: A(x_i)H_{i-1} \\\\times B(x_i) is dimensionally invalid for n×d matrices; it should be A(x_i)H_{i-1} + B(x_i).\"\n}",
+      "response_length": 257,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0215>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"In the definition of sign(x), the second case incorrectly uses x > 0; it should be x < 0 to avoid conflict with the first case.\"\n}",
+      "response_length": 212,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0428>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Inconsistent index variable: the definition uses \\\\widehat\\\\mC_l but the RHS and case conditions use k (and A(1)^k); it should consistently use the same index (e.g., \\\\widehat\\\\mC_k or cases in terms of l).\"\n}",
+      "response_length": 288,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0479>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The first reflection is written as I + 2 v1 v1^T, but a Householder reflection is I - 2 v v^T; it should be (I - 2 v1 v1^T)(I - 2 v2 v2^T).\"\n}",
+      "response_length": 218,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0125>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0457>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The odd-index subsequence is written as \\\\widehat{\\\\mH}^{(2)}_{2k-1} instead of the context-consistent \\\\widehat{\\\\mH}^{(2)}_{2k+1} used elsewhere for odd indices.\"\n}",
+      "response_length": 245,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0406>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0647>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The state update uses H_t = A(w_t) H_{t-1} - B(w_t); it should add B(w_t). With A=0 for reset transitions, subtraction yields -e_{q(w)} instead of the intended one-hot e_{q(w)}.\"\n}",
+      "response_length": 256,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0356>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0652>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the first line, dec^{(s)} is applied to H_t without the layer superscript; it should be H_t^{(s)} to match the s-th layer notation.\"\n}",
+      "response_length": 216,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0681>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The state update uses the future state h^{(2)}_{t+1} on the right-hand side (h^{(2)}_t = A^{(2)}(y^{(1)}_t) h^{(2)}_{t+1}), which reverses the time index. It should use the previous/current state, e.g., h^{(2)}_{t+1} = A^{(2)}(y^{(1)}_t) h^{(2)}_{t} (or equivalently h^{(2)}_t = A^{(2)}(y^{(1)}_t) h^{(2)}_{t-1}).\"\n}",
+      "response_length": 395,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0507>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0643>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the reset case (δ^{(i)}(·, w) ≡ q(w)), setting A=0 and B=1_{q'=q(w)} combined with the update H_t = A H_{t-1} - B yields H_t = -e_{q(w)} instead of e_{q(w)}; the sign should be flipped (use +B or set B = -1_{q'=q(w)}).\"\n}",
+      "response_length": 300,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0431>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0694>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"In the last identity, the command is misspelled as \\\\geft instead of \\\\left, creating a mismatched \\\\left/\\\\right pair: \\\\mH(\\\\gamma)\\\\mR(\\\\alpha)=\\\\mH\\\\geft(\\\\gamma-\\\\alpha\\\\right).\"\n}",
+      "response_length": 271,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0695>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0696>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the final step, R(2(i+j)π/m) applied to v_d0 should yield v_d_{i + j (mod m)}, but the formula states v_d_{i - j (mod m)}\"\n}",
+      "response_length": 203,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0706>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the even branch, d_{x_{i+1}+y_i \\\\bmod m} is incorrectly equated to d_{y_{i-1}} (should be d_{y_{i+1}}), and d_{s_i} should be d_{y_i}.\"\n}",
+      "response_length": 220,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0703>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the second equality chain, the index is updated as x1 - x2 mod m instead of x1 + x2 mod m, which is inconsistent with modular addition and the later inductive step using addition.\"\n}",
+      "response_length": 261,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

@@ -1,0 +1,1458 @@
+{
+  "<<FORMULA_0182>>": {
+    "formula": "\\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')",
+    "raw_latex": "$\\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')$",
+    "formula_type": "inline",
+    "line_number": 1117,
+    "start_pos": 82295,
+    "end_pos": 82349
+  },
+  "<<FORMULA_0181>>": {
+    "formula": "\\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{D'}\\m{\\Psi}_{M+1:K}(\\cdot')",
+    "raw_latex": "$\\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{D'}\\m{\\Psi}_{M+1:K}(\\cdot')$",
+    "formula_type": "inline",
+    "line_number": 1117,
+    "start_pos": 82208,
+    "end_pos": 82268
+  },
+  "<<FORMULA_0180>>": {
+    "formula": "K - M",
+    "raw_latex": "$K - M$",
+    "formula_type": "inline",
+    "line_number": 1114,
+    "start_pos": 81712,
+    "end_pos": 81719
+  },
+  "<<FORMULA_0179>>": {
+    "formula": "&k_{\\v{\\zeta}, \\v{m}', \\m{S}'}(\\cdot, \\cdot')\n\\\\\n=&\\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')\n+\n\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')\n+ \\m{\\Psi}_{M+1:K}^\\top(\\cdot)(\\m{D'} - \\m{I})\\m{\\Psi}_{M+1:K}(\\cdot') \\\\\n=&\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot') + \\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{D'}\\m{\\Psi}_{M+1:K}(\\cdot').",
+    "raw_latex": "\\begin{align}\n&k_{\\v{\\zeta}, \\v{m}', \\m{S}'}(\\cdot, \\cdot')\n\\\\\n=&\\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')\n+\n\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')\n+ \\m{\\Psi}_{M+1:K}^\\top(\\cdot)(\\m{D'} - \\m{I})\\m{\\Psi}_{M+1:K}(\\cdot') \\\\\n=&\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot') + \\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{D'}\\m{\\Psi}_{M+1:K}(\\cdot').\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1103,
+    "start_pos": 81194,
+    "end_pos": 81573
+  },
+  "<<FORMULA_0178>>": {
+    "formula": "K - M",
+    "raw_latex": "$K - M$",
+    "formula_type": "inline",
+    "line_number": 1102,
+    "start_pos": 81094,
+    "end_pos": 81101
+  },
+  "<<FORMULA_0177>>": {
+    "formula": "K = M",
+    "raw_latex": "$K = M$",
+    "formula_type": "inline",
+    "line_number": 1100,
+    "start_pos": 80716,
+    "end_pos": 80723
+  },
+  "<<FORMULA_0176>>": {
+    "formula": "K > M",
+    "raw_latex": "$K > M$",
+    "formula_type": "inline",
+    "line_number": 1098,
+    "start_pos": 80685,
+    "end_pos": 80692
+  },
+  "<<FORMULA_0175>>": {
+    "formula": "\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')",
+    "raw_latex": "$\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')$",
+    "formula_type": "inline",
+    "line_number": 1096,
+    "start_pos": 80361,
+    "end_pos": 80417
+  },
+  "<<FORMULA_0174>>": {
+    "formula": "\\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')",
+    "raw_latex": "$\\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')$",
+    "formula_type": "inline",
+    "line_number": 1096,
+    "start_pos": 80222,
+    "end_pos": 80276
+  },
+  "<<FORMULA_0173>>": {
+    "formula": "\\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')",
+    "raw_latex": "$\\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')$",
+    "formula_type": "inline",
+    "line_number": 1095,
+    "start_pos": 80106,
+    "end_pos": 80160
+  },
+  "<<FORMULA_0172>>": {
+    "formula": "\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')",
+    "raw_latex": "$\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')$",
+    "formula_type": "inline",
+    "line_number": 1095,
+    "start_pos": 79936,
+    "end_pos": 79992
+  },
+  "<<FORMULA_0171>>": {
+    "formula": "M > K",
+    "raw_latex": "$M > K$",
+    "formula_type": "inline",
+    "line_number": 1092,
+    "start_pos": 79358,
+    "end_pos": 79365
+  },
+  "<<FORMULA_0170>>": {
+    "formula": "K = M",
+    "raw_latex": "$K = M$",
+    "formula_type": "inline",
+    "line_number": 1091,
+    "start_pos": 79193,
+    "end_pos": 79200
+  },
+  "<<FORMULA_0169>>": {
+    "formula": "k_{\\v{\\zeta}, \\v{m}', \\m{S}'}(\\cdot, \\cdot')\n    &=\n    k(\\cdot, \\cdot')\n    -\n    k(\\cdot, \\v{\\zeta})\n    \\m{L}^{-\\top}\n    (\\m{I} - \\m{S'})\n    \\m{L}^{-1}\n    k(\\v{\\zeta}, \\cdot').\n    \\\\\n    &=\n    \\m{\\Psi}_{0:K}^\\top(\\cdot)\\m{\\Psi}_{0:K}(\\cdot')\n    -\n    \\m{\\Psi}_{0:M}^\\top(\\cdot)\n    (\\m{I} - \\m{S'})\n    \\m{\\Psi}_{0:M}(\\cdot')\n    \\\\\n    &=\n    \\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')\n    +\n    \\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')",
+    "raw_latex": "\\begin{align}\n    k_{\\v{\\zeta}, \\v{m}', \\m{S}'}(\\cdot, \\cdot')\n    &=\n    k(\\cdot, \\cdot')\n    -\n    k(\\cdot, \\v{\\zeta})\n    \\m{L}^{-\\top}\n    (\\m{I} - \\m{S'})\n    \\m{L}^{-1}\n    k(\\v{\\zeta}, \\cdot').\n    \\\\\n    &=\n    \\m{\\Psi}_{0:K}^\\top(\\cdot)\\m{\\Psi}_{0:K}(\\cdot')\n    -\n    \\m{\\Psi}_{0:M}^\\top(\\cdot)\n    (\\m{I} - \\m{S'})\n    \\m{\\Psi}_{0:M}(\\cdot')\n    \\\\\n    &=\n    \\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')\n    +\n    \\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1068,
+    "start_pos": 78688,
+    "end_pos": 79188
+  },
+  "<<FORMULA_0168>>": {
+    "formula": "k(\\cdot, \\v{\\zeta})\\m{L}^{-\\top}\n    &=\n    \\left(\\phi_0(\\cdot), \\dots, \\phi_M(\\cdot)\\right)^\\top\\mathrm{diag}\\left(\\frac{1}{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{0})}, \\dots, \\frac{1}{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{M})}\\right)^{-1/2}\n    \\\\\n    &=\n    \\left(\\phi_0(\\cdot), \\dots, \\phi_M(\\cdot)\\right)^\\top\n    \\mathrm{diag}\\left(\\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{0})}, \\dots, \\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{M})}\\right)\n    \\\\\n    &=\n    \\m{\\Psi}_{0: M}(\\cdot)^{\\top},",
+    "raw_latex": "\\begin{align}\n    k(\\cdot, \\v{\\zeta})\\m{L}^{-\\top}\n    &=\n    \\left(\\phi_0(\\cdot), \\dots, \\phi_M(\\cdot)\\right)^\\top\\mathrm{diag}\\left(\\frac{1}{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{0})}, \\dots, \\frac{1}{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{M})}\\right)^{-1/2}\n    \\\\\n    &=\n    \\left(\\phi_0(\\cdot), \\dots, \\phi_M(\\cdot)\\right)^\\top\n    \\mathrm{diag}\\left(\\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{0})}, \\dots, \\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{M})}\\right)\n    \\\\\n    &=\n    \\m{\\Psi}_{0: M}(\\cdot)^{\\top},\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1055,
+    "start_pos": 77998,
+    "end_pos": 78610
+  },
+  "<<FORMULA_0167>>": {
+    "formula": "k_{\\nu, \\kappa, \\sigma}(\\cdot, \\cdot') = \\m{\\Psi}_{0:K}(\\cdot)^\\top\\m{\\Psi}_{0:K}(\\cdot')",
+    "raw_latex": "$k_{\\nu, \\kappa, \\sigma}(\\cdot, \\cdot') = \\m{\\Psi}_{0:K}(\\cdot)^\\top\\m{\\Psi}_{0:K}(\\cdot')$",
+    "formula_type": "inline",
+    "line_number": 1053,
+    "start_pos": 77782,
+    "end_pos": 77873
+  },
+  "<<FORMULA_0166>>": {
+    "formula": "K+1",
+    "raw_latex": "$K+1$",
+    "formula_type": "inline",
+    "line_number": 1053,
+    "start_pos": 77758,
+    "end_pos": 77763
+  },
+  "<<FORMULA_0165>>": {
+    "formula": "\\m{\\Psi}_{i:j}(\\cdot) = \\left(\\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{i})}\\phi_{i}(\\cdot), \\dots, \\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_j)}\\phi_j(\\cdot)\\right)^{\\top}\n,",
+    "raw_latex": "\\[\n\\m{\\Psi}_{i:j}(\\cdot) = \\left(\\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{i})}\\phi_{i}(\\cdot), \\dots, \\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_j)}\\phi_j(\\cdot)\\right)^{\\top}\n,\n\\]",
+    "formula_type": "display",
+    "line_number": 1049,
+    "start_pos": 77469,
+    "end_pos": 77694
+  },
+  "<<FORMULA_0164>>": {
+    "formula": "f\\sim\\mathcal{GP}(\\mu, k)",
+    "raw_latex": "$f\\sim\\mathcal{GP}(\\mu, k)$",
+    "formula_type": "inline",
+    "line_number": 1047,
+    "start_pos": 77284,
+    "end_pos": 77311
+  },
+  "<<FORMULA_0163>>": {
+    "formula": "x \\mapsto (x, b)/\\Vert(x, b)\\Vert",
+    "raw_latex": "$x \\mapsto (x, b)/\\Vert(x, b)\\Vert$",
+    "formula_type": "inline",
+    "line_number": 1022,
+    "start_pos": 75381,
+    "end_pos": 75416
+  },
+  "<<FORMULA_0162>>": {
+    "formula": "\\Vert \\cdot \\Vert",
+    "raw_latex": "$\\Vert \\cdot \\Vert$",
+    "formula_type": "inline",
+    "line_number": 964,
+    "start_pos": 72292,
+    "end_pos": 72311
+  },
+  "<<FORMULA_0161>>": {
+    "formula": "\\frac{1}{10}\\sum_{n=1}^{10} \\Vert \\m{S}^n_i \\Vert",
+    "raw_latex": "$\\frac{1}{10}\\sum_{n=1}^{10} \\Vert \\m{S}^n_i \\Vert$",
+    "formula_type": "inline",
+    "line_number": 964,
+    "start_pos": 72112,
+    "end_pos": 72163
+  },
+  "<<FORMULA_0160>>": {
+    "formula": "f^\\ast(x) = (Y_{2,3} \\circ \\varphi)(x) \\cdot (x_3 + 1) \\cdot (1 - \\arccos(x_3)),",
+    "raw_latex": "\\begin{equation}\n    f^\\ast(x) = (Y_{2,3} \\circ \\varphi)(x) \\cdot (x_3 + 1) \\cdot (1 - \\arccos(x_3)),\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 897,
+    "start_pos": 65996,
+    "end_pos": 66112
+  },
+  "<<FORMULA_0159>>": {
+    "formula": "f^\\ast",
+    "raw_latex": "$f^\\ast$",
+    "formula_type": "inline",
+    "line_number": 896,
+    "start_pos": 65972,
+    "end_pos": 65980
+  },
+  "<<FORMULA_0158>>": {
+    "formula": "f^\\ast",
+    "raw_latex": "$f^\\ast$",
+    "formula_type": "inline",
+    "line_number": 895,
+    "start_pos": 65800,
+    "end_pos": 65808
+  },
+  "<<FORMULA_0157>>": {
+    "formula": "\\pm \\sigma",
+    "raw_latex": "$\\pm \\sigma$",
+    "formula_type": "inline",
+    "line_number": 877,
+    "start_pos": 65060,
+    "end_pos": 65072
+  },
+  "<<FORMULA_0156>>": {
+    "formula": "\\pm \\sigma",
+    "raw_latex": "$\\pm \\sigma$",
+    "formula_type": "inline",
+    "line_number": 865,
+    "start_pos": 64406,
+    "end_pos": 64418
+  },
+  "<<FORMULA_0155>>": {
+    "formula": "\\alpha_\\text{hodge} &= \\underbrace{(m^2 + m)/2}_{\\text{covariance}} + \\underbrace{m}_\\text{mean}\\\\\n    \\alpha_\\text{euclidean} = \\alpha_\\text{projected} &= 3\\cdot((m^2 + m)/2+m)",
+    "raw_latex": "\\begin{align}\n    \\alpha_\\text{hodge} &= \\underbrace{(m^2 + m)/2}_{\\text{covariance}} + \\underbrace{m}_\\text{mean}\\\\\n    \\alpha_\\text{euclidean} = \\alpha_\\text{projected} &= 3\\cdot((m^2 + m)/2+m)\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 842,
+    "start_pos": 62116,
+    "end_pos": 62323
+  },
+  "<<FORMULA_0154>>": {
+    "formula": "Y_{1, 2} \\circ \\varphi \\circ R",
+    "raw_latex": "$Y_{1, 2} \\circ \\varphi \\circ R$",
+    "formula_type": "inline",
+    "line_number": 837,
+    "start_pos": 61644,
+    "end_pos": 61676
+  },
+  "<<FORMULA_0153>>": {
+    "formula": "Y_{2, 3} \\circ \\varphi",
+    "raw_latex": "$Y_{2, 3} \\circ \\varphi$",
+    "formula_type": "inline",
+    "line_number": 837,
+    "start_pos": 61568,
+    "end_pos": 61592
+  },
+  "<<FORMULA_0152>>": {
+    "formula": "f^\\ast",
+    "raw_latex": "$f^\\ast$",
+    "formula_type": "inline",
+    "line_number": 836,
+    "start_pos": 61367,
+    "end_pos": 61375
+  },
+  "<<FORMULA_0151>>": {
+    "formula": "Y_{2, 3}, Y_{1, 2}",
+    "raw_latex": "$Y_{2, 3}, Y_{1, 2}$",
+    "formula_type": "inline",
+    "line_number": 835,
+    "start_pos": 61266,
+    "end_pos": 61286
+  },
+  "<<FORMULA_0150>>": {
+    "formula": "Y_{2,3}(\\theta, \\phi) &= \\sqrt{\\frac{105}{32\\pi}} \\sin^3\\theta \\sin(3\\phi),\n    \\\\\n    Y_{1,2}(\\theta, \\phi) &= \\sqrt{\\frac{15}{8\\pi}} \\sin\\theta \\sin(2\\phi)\n    \\\\\n    R(x) &= (x_1, -x_3, x_2)\n    \\\\\n    \\varphi(x) &= (\\operatorname{atan2}(x_2, x_1), \\arccos(x_3)),",
+    "raw_latex": "\\begin{align}\n    Y_{2,3}(\\theta, \\phi) &= \\sqrt{\\frac{105}{32\\pi}} \\sin^3\\theta \\sin(3\\phi),\n    \\\\\n    Y_{1,2}(\\theta, \\phi) &= \\sqrt{\\frac{15}{8\\pi}} \\sin\\theta \\sin(2\\phi)\n    \\\\\n    R(x) &= (x_1, -x_3, x_2)\n    \\\\\n    \\varphi(x) &= (\\operatorname{atan2}(x_2, x_1), \\arccos(x_3)),\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 825,
+    "start_pos": 60854,
+    "end_pos": 61150
+  },
+  "<<FORMULA_0149>>": {
+    "formula": "f^\\ast(x) = (Y_{2,3} \\circ \\varphi)(x) + (Y_{1, 2} \\circ \\varphi \\circ R)(x),",
+    "raw_latex": "\\begin{equation}\n    f^\\ast(x) = (Y_{2,3} \\circ \\varphi)(x) + (Y_{1, 2} \\circ \\varphi \\circ R)(x),\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 821,
+    "start_pos": 60734,
+    "end_pos": 60847
+  },
+  "<<FORMULA_0148>>": {
+    "formula": "f^\\ast\\colon \\mathbb{S}_2 \\to \\mathbb{R}",
+    "raw_latex": "$f^\\ast\\colon \\mathbb{S}_2 \\to \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 820,
+    "start_pos": 60688,
+    "end_pos": 60730
+  },
+  "<<FORMULA_0147>>": {
+    "formula": "\\mathrm{colatitude} = \\arccos\\left(1 - \\frac{2i + 1}{n}\\right),\n    &&\n    \\mathrm{longitude} = \\frac{2\\pi i}{\\phi},\n    &&\n    \\phi = \\frac{1 + \\sqrt{5}}{2}.",
+    "raw_latex": "\\begin{align}\n    \\mathrm{colatitude} = \\arccos\\left(1 - \\frac{2i + 1}{n}\\right),\n    &&\n    \\mathrm{longitude} = \\frac{2\\pi i}{\\phi},\n    &&\n    \\phi = \\frac{1 + \\sqrt{5}}{2}.\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 812,
+    "start_pos": 60346,
+    "end_pos": 60534
+  },
+  "<<FORMULA_0146>>": {
+    "formula": "\\pm \\sigma",
+    "raw_latex": "$\\pm \\sigma$",
+    "formula_type": "inline",
+    "line_number": 804,
+    "start_pos": 59785,
+    "end_pos": 59797
+  },
+  "<<FORMULA_0145>>": {
+    "formula": "\\nu, \\kappa, \\sigma^2",
+    "raw_latex": "$\\nu, \\kappa, \\sigma^2$",
+    "formula_type": "inline",
+    "line_number": 780,
+    "start_pos": 57844,
+    "end_pos": 57867
+  },
+  "<<FORMULA_0144>>": {
+    "formula": "\\nu=\\frac{5}{2}",
+    "raw_latex": "$\\nu=\\frac{5}{2}$",
+    "formula_type": "inline",
+    "line_number": 778,
+    "start_pos": 57431,
+    "end_pos": 57448
+  },
+  "<<FORMULA_0143>>": {
+    "formula": "\\nu=\\frac{3}{2}",
+    "raw_latex": "$\\nu=\\frac{3}{2}$",
+    "formula_type": "inline",
+    "line_number": 778,
+    "start_pos": 57335,
+    "end_pos": 57352
+  },
+  "<<FORMULA_0142>>": {
+    "formula": "\\sigma^2 = \\frac{10^{-4}}{L - 1}",
+    "raw_latex": "$\\sigma^2 = \\frac{10^{-4}}{L - 1}$",
+    "formula_type": "inline",
+    "line_number": 777,
+    "start_pos": 57090,
+    "end_pos": 57124
+  },
+  "<<FORMULA_0141>>": {
+    "formula": "\\sigma^2 = 1.0",
+    "raw_latex": "$\\sigma^2 = 1.0$",
+    "formula_type": "inline",
+    "line_number": 777,
+    "start_pos": 57005,
+    "end_pos": 57021
+  },
+  "<<FORMULA_0140>>": {
+    "formula": "\\kappa = 1",
+    "raw_latex": "$\\kappa = 1$",
+    "formula_type": "inline",
+    "line_number": 776,
+    "start_pos": 56932,
+    "end_pos": 56944
+  },
+  "<<FORMULA_0139>>": {
+    "formula": "\\mu_{\\v{z}, \\v{m'}, \\v{S'}}(\\cdot)\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(\\m{L}\\v{m}'-\\mu(\\v{z}))\n\\\\\n\\label{eq:whitened_variational_posterior_mean}\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\n\\m{L}^{-\\top}\n(\\v{m}' - \\m{L}^{-1}\\mu(\\v{z}))\n,\n\\\\\nk_{\\v{z}, \\v{m}', \\v{S}'}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(k(\\v{z}, \\v{z}) - \\m{L}\\m{S}'\\m{L}^\\top)\nk(\\v{z}, \\v{z})^{-1}\nk(\\v{z}, \\cdot')\n\\\\\n\\label{eq:whitened_variational_posterior_kernel}\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\n\\m{L}^{-\\top}\n(\\m{I} - \\m{S'})\n\\m{L}^{-1}\nk(\\v{z}, \\cdot').",
+    "raw_latex": "\\begin{align}\n\\mu_{\\v{z}, \\v{m'}, \\v{S'}}(\\cdot)\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(\\m{L}\\v{m}'-\\mu(\\v{z}))\n\\\\\n\\label{eq:whitened_variational_posterior_mean}\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\n\\m{L}^{-\\top}\n(\\v{m}' - \\m{L}^{-1}\\mu(\\v{z}))\n,\n\\\\\nk_{\\v{z}, \\v{m}', \\v{S}'}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(k(\\v{z}, \\v{z}) - \\m{L}\\m{S}'\\m{L}^\\top)\nk(\\v{z}, \\v{z})^{-1}\nk(\\v{z}, \\cdot')\n\\\\\n\\label{eq:whitened_variational_posterior_kernel}\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\n\\m{L}^{-\\top}\n(\\m{I} - \\m{S'})\n\\m{L}^{-1}\nk(\\v{z}, \\cdot').\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 735,
+    "start_pos": 56145,
+    "end_pos": 56746
+  },
+  "<<FORMULA_0138>>": {
+    "formula": "q(\\v{u}')",
+    "raw_latex": "$q(\\v{u}')$",
+    "formula_type": "inline",
+    "line_number": 734,
+    "start_pos": 56029,
+    "end_pos": 56040
+  },
+  "<<FORMULA_0137>>": {
+    "formula": "k(\\v{\\zeta}, \\v{\\zeta})",
+    "raw_latex": "$k(\\v{\\zeta}, \\v{\\zeta})$",
+    "formula_type": "inline",
+    "line_number": 733,
+    "start_pos": 55906,
+    "end_pos": 55931
+  },
+  "<<FORMULA_0136>>": {
+    "formula": "k(\\v{z}, \\v{z})",
+    "raw_latex": "$k(\\v{z}, \\v{z})$",
+    "formula_type": "inline",
+    "line_number": 733,
+    "start_pos": 55885,
+    "end_pos": 55902
+  },
+  "<<FORMULA_0135>>": {
+    "formula": "\\v{u}' = \\m{L}^{-1}\\v{u}",
+    "raw_latex": "$\\v{u}' = \\m{L}^{-1}\\v{u}$",
+    "formula_type": "inline",
+    "line_number": 733,
+    "start_pos": 55811,
+    "end_pos": 55837
+  },
+  "<<FORMULA_0134>>": {
+    "formula": "q(\\v{u}) = \\mathcal{N}(\\v{m}, \\m{S})",
+    "raw_latex": "$q(\\v{u}) = \\mathcal{N}(\\v{m}, \\m{S})$",
+    "formula_type": "inline",
+    "line_number": 732,
+    "start_pos": 55490,
+    "end_pos": 55528
+  },
+  "<<FORMULA_0133>>": {
+    "formula": "\\v{k}^{\\mathrm{div}}_{\\nu, \\kappa_1, \\sigma_1^2} + \\v{k}^{\\mathrm{curl}}_{\\nu, \\kappa_2, \\sigma_2^2}",
+    "raw_latex": "$\\v{k}^{\\mathrm{div}}_{\\nu, \\kappa_1, \\sigma_1^2} + \\v{k}^{\\mathrm{curl}}_{\\nu, \\kappa_2, \\sigma_2^2}$",
+    "formula_type": "inline",
+    "line_number": 729,
+    "start_pos": 55165,
+    "end_pos": 55267
+  },
+  "<<FORMULA_0132>>": {
+    "formula": "\\v{k}^{\\mathrm{div}}_{\\nu, \\kappa, \\sigma^2}(x, x') &= \\frac{\\sigma^2}{C^{\\mathrm{div}}_{\\nu, \\kappa}} \\sum_{k=0}^{K} \\frac{\\Phi_{\\nu,\\kappa}(\\lambda_k)}{\\lambda_k} \\frac{k + \\alpha}{\\alpha}(\\nabla_x \\otimes \\nabla_{x'})C_k^{(\\alpha)}(x\\cdot x')  \\\\\n    \\v{k}^{\\mathrm{curl}}_{\\nu, \\kappa, \\sigma^2}(x, x') &= \\frac{\\sigma^2}{C^{\\mathrm{curl}}_{\\nu, \\kappa}} \\sum_{k=0}^{K} \\frac{\\Phi_{\\nu,\\kappa}(\\lambda_k)}{\\lambda_k} \\frac{k + \\alpha}{\\alpha}(\\star\\nabla_x \\otimes \\star\\nabla_{x'})C_k^{(\\alpha)}(x\\cdot x').",
+    "raw_latex": "\\begin{align}\n    \\v{k}^{\\mathrm{div}}_{\\nu, \\kappa, \\sigma^2}(x, x') &= \\frac{\\sigma^2}{C^{\\mathrm{div}}_{\\nu, \\kappa}} \\sum_{k=0}^{K} \\frac{\\Phi_{\\nu,\\kappa}(\\lambda_k)}{\\lambda_k} \\frac{k + \\alpha}{\\alpha}(\\nabla_x \\otimes \\nabla_{x'})C_k^{(\\alpha)}(x\\cdot x')  \\\\\n    \\v{k}^{\\mathrm{curl}}_{\\nu, \\kappa, \\sigma^2}(x, x') &= \\frac{\\sigma^2}{C^{\\mathrm{curl}}_{\\nu, \\kappa}} \\sum_{k=0}^{K} \\frac{\\Phi_{\\nu,\\kappa}(\\lambda_k)}{\\lambda_k} \\frac{k + \\alpha}{\\alpha}(\\star\\nabla_x \\otimes \\star\\nabla_{x'})C_k^{(\\alpha)}(x\\cdot x').\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 724,
+    "start_pos": 54554,
+    "end_pos": 55096
+  },
+  "<<FORMULA_0131>>": {
+    "formula": "c_{k, d} = \\frac{k+\\alpha}{\\alpha}",
+    "raw_latex": "$c_{k, d} = \\frac{k+\\alpha}{\\alpha}$",
+    "formula_type": "inline",
+    "line_number": 722,
+    "start_pos": 54510,
+    "end_pos": 54546
+  },
+  "<<FORMULA_0130>>": {
+    "formula": "\\frac{\\star\\nabla \\phi_{k, j}}{\\sqrt{\\lambda_k}}",
+    "raw_latex": "$\\frac{\\star\\nabla \\phi_{k, j}}{\\sqrt{\\lambda_k}}$",
+    "formula_type": "inline",
+    "line_number": 721,
+    "start_pos": 54353,
+    "end_pos": 54403
+  },
+  "<<FORMULA_0129>>": {
+    "formula": "\\frac{\\nabla \\phi_{k, j}}{\\sqrt{\\lambda_k}}",
+    "raw_latex": "$\\frac{\\nabla \\phi_{k, j}}{\\sqrt{\\lambda_k}}$",
+    "formula_type": "inline",
+    "line_number": 721,
+    "start_pos": 54271,
+    "end_pos": 54316
+  },
+  "<<FORMULA_0128>>": {
+    "formula": "\\label{eq:scalar_matern_kernel_addition_theorem}\n    k_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\sum_{k=0}^{K} \\Phi_{\\nu,\\kappa}(\\lambda_k) c_{k, d} C_k^{(\\alpha)}(x\\cdot x').",
+    "raw_latex": "\\begin{equation}\\label{eq:scalar_matern_kernel_addition_theorem}\n    k_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\sum_{k=0}^{K} \\Phi_{\\nu,\\kappa}(\\lambda_k) c_{k, d} C_k^{(\\alpha)}(x\\cdot x').\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 718,
+    "start_pos": 53856,
+    "end_pos": 54087
+  },
+  "<<FORMULA_0127>>": {
+    "formula": "(K+1)",
+    "raw_latex": "$(K+1)$",
+    "formula_type": "inline",
+    "line_number": 716,
+    "start_pos": 53762,
+    "end_pos": 53769
+  },
+  "<<FORMULA_0126>>": {
+    "formula": "\\alpha = \\frac{d-1}{2}",
+    "raw_latex": "$\\alpha = \\frac{d-1}{2}$",
+    "formula_type": "inline",
+    "line_number": 715,
+    "start_pos": 53508,
+    "end_pos": 53532
+  },
+  "<<FORMULA_0125>>": {
+    "formula": "\\label{eq:addition_theorem}\n    \\sum_{j = 1}^J \\phi_{k, j}(x)\\phi_{k, j}(x') = c_{k, d} C_k^{(\\alpha)}(x\\cdot x')",
+    "raw_latex": "\\begin{equation}\\label{eq:addition_theorem}\n    \\sum_{j = 1}^J \\phi_{k, j}(x)\\phi_{k, j}(x') = c_{k, d} C_k^{(\\alpha)}(x\\cdot x')\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 712,
+    "start_pos": 53238,
+    "end_pos": 53382
+  },
+  "<<FORMULA_0124>>": {
+    "formula": "\\{\\phi_{k, j}\\}_{j=1}^J",
+    "raw_latex": "$\\{\\phi_{k, j}\\}_{j=1}^J$",
+    "formula_type": "inline",
+    "line_number": 711,
+    "start_pos": 53141,
+    "end_pos": 53166
+  },
+  "<<FORMULA_0123>>": {
+    "formula": "-\\Delta",
+    "raw_latex": "$-\\Delta$",
+    "formula_type": "inline",
+    "line_number": 711,
+    "start_pos": 53122,
+    "end_pos": 53131
+  },
+  "<<FORMULA_0122>>": {
+    "formula": "(k+1)",
+    "raw_latex": "$(k+1)$",
+    "formula_type": "inline",
+    "line_number": 711,
+    "start_pos": 53049,
+    "end_pos": 53056
+  },
+  "<<FORMULA_0121>>": {
+    "formula": "\\v{x} = (x_1, .., x_d)",
+    "raw_latex": "$\\v{x} = (x_1, .., x_d)$",
+    "formula_type": "inline",
+    "line_number": 659,
+    "start_pos": 48076,
+    "end_pos": 48100
+  },
+  "<<FORMULA_0120>>": {
+    "formula": "b \\in \\mathbb{R}",
+    "raw_latex": "$b \\in \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 659,
+    "start_pos": 48034,
+    "end_pos": 48052
+  },
+  "<<FORMULA_0119>>": {
+    "formula": "\\R^d \\ni \\v{x} \\mapsto (x_1, .., x_d, b) / \\norm{(x_1, .., x_d, b)} \\in \\mathbb{S}_{d}",
+    "raw_latex": "$\\R^d \\ni \\v{x} \\mapsto (x_1, .., x_d, b) / \\norm{(x_1, .., x_d, b)} \\in \\mathbb{S}_{d}$",
+    "formula_type": "inline",
+    "line_number": 659,
+    "start_pos": 47938,
+    "end_pos": 48026
+  },
+  "<<FORMULA_0118>>": {
+    "formula": "X \\to \\R^3",
+    "raw_latex": "$X \\to \\R^3$",
+    "formula_type": "inline",
+    "line_number": 531,
+    "start_pos": 36043,
+    "end_pos": 36055
+  },
+  "<<FORMULA_0117>>": {
+    "formula": "\\v{\\varepsilon}",
+    "raw_latex": "$\\v{\\varepsilon}$",
+    "formula_type": "inline",
+    "line_number": 527,
+    "start_pos": 35844,
+    "end_pos": 35861
+  },
+  "<<FORMULA_0116>>": {
+    "formula": "\\v{\\varepsilon} \\sim \\mathcal{N}(\\v{0}, 10^{-4} \\m{I})",
+    "raw_latex": "$\\v{\\varepsilon} \\sim \\mathcal{N}(\\v{0}, 10^{-4} \\m{I})$",
+    "formula_type": "inline",
+    "line_number": 524,
+    "start_pos": 35376,
+    "end_pos": 35432
+  },
+  "<<FORMULA_0115>>": {
+    "formula": "\\v{y} = f^*(\\v{x}) + \\v{\\varepsilon}",
+    "raw_latex": "$\\v{y} = f^*(\\v{x}) + \\v{\\varepsilon}$",
+    "formula_type": "inline",
+    "line_number": 524,
+    "start_pos": 35336,
+    "end_pos": 35374
+  },
+  "<<FORMULA_0114>>": {
+    "formula": "N \\in \\cbr{100, 200, 400, 800, 1600}",
+    "raw_latex": "$N \\in \\cbr{100, 200, 400, 800, 1600}$",
+    "formula_type": "inline",
+    "line_number": 524,
+    "start_pos": 35224,
+    "end_pos": 35262
+  },
+  "<<FORMULA_0113>>": {
+    "formula": "F_{\\v{\\theta}}(\\cdot)",
+    "raw_latex": "$F_{\\v{\\theta}}(\\cdot)$",
+    "formula_type": "inline",
+    "line_number": 497,
+    "start_pos": 32529,
+    "end_pos": 32552
+  },
+  "<<FORMULA_0112>>": {
+    "formula": "\\Var F_{\\v{\\theta}}(x)",
+    "raw_latex": "$\\Var F_{\\v{\\theta}}(x)$",
+    "formula_type": "inline",
+    "line_number": 496,
+    "start_pos": 32397,
+    "end_pos": 32421
+  },
+  "<<FORMULA_0111>>": {
+    "formula": "\\E F_{\\v{\\theta}}(x)",
+    "raw_latex": "$\\E F_{\\v{\\theta}}(x)$",
+    "formula_type": "inline",
+    "line_number": 496,
+    "start_pos": 32370,
+    "end_pos": 32392
+  },
+  "<<FORMULA_0110>>": {
+    "formula": "F_{\\v{\\theta}}(x')",
+    "raw_latex": "$F_{\\v{\\theta}}(x')$",
+    "formula_type": "inline",
+    "line_number": 495,
+    "start_pos": 32263,
+    "end_pos": 32283
+  },
+  "<<FORMULA_0109>>": {
+    "formula": "F_{\\v{\\theta}}(x)",
+    "raw_latex": "$F_{\\v{\\theta}}(x)$",
+    "formula_type": "inline",
+    "line_number": 495,
+    "start_pos": 32239,
+    "end_pos": 32258
+  },
+  "<<FORMULA_0108>>": {
+    "formula": "F_{\\v{\\theta}}(x)",
+    "raw_latex": "$F_{\\v{\\theta}}(x)$",
+    "formula_type": "inline",
+    "line_number": 494,
+    "start_pos": 32156,
+    "end_pos": 32175
+  },
+  "<<FORMULA_0107>>": {
+    "formula": "\\Var F_{\\v{\\theta}}(x)",
+    "raw_latex": "$\\Var F_{\\v{\\theta}}(x)$",
+    "formula_type": "inline",
+    "line_number": 493,
+    "start_pos": 31927,
+    "end_pos": 31951
+  },
+  "<<FORMULA_0106>>": {
+    "formula": "\\E F_{\\v{\\theta}}(x)",
+    "raw_latex": "$\\E F_{\\v{\\theta}}(x)$",
+    "formula_type": "inline",
+    "line_number": 493,
+    "start_pos": 31890,
+    "end_pos": 31912
+  },
+  "<<FORMULA_0105>>": {
+    "formula": "k(\\v{\\zeta}, \\v{\\zeta})",
+    "raw_latex": "$k(\\v{\\zeta}, \\v{\\zeta})$",
+    "formula_type": "inline",
+    "line_number": 487,
+    "start_pos": 31387,
+    "end_pos": 31412
+  },
+  "<<FORMULA_0104>>": {
+    "formula": "\\label{eq:interdomain_covariances}\nk(\\zeta_j, \\cdot) = \\phi_j(\\cdot)\n,\n&&\nk(\\zeta_i, \\zeta_j) = \\delta_{i, j}/a_i\n.",
+    "raw_latex": "\\[\\label{eq:interdomain_covariances}\nk(\\zeta_j, \\cdot) = \\phi_j(\\cdot)\n,\n&&\nk(\\zeta_i, \\zeta_j) = \\delta_{i, j}/a_i\n.\n\\]",
+    "formula_type": "display",
+    "line_number": 480,
+    "start_pos": 31251,
+    "end_pos": 31371
+  },
+  "<<FORMULA_0103>>": {
+    "formula": "\\zeta_j(\\cdot) = \\innerprod{\\cdot}{ \\phi_j}_{L^2} / a_j",
+    "raw_latex": "$\\zeta_j(\\cdot) = \\innerprod{\\cdot}{ \\phi_j}_{L^2} / a_j$",
+    "formula_type": "inline",
+    "line_number": 479,
+    "start_pos": 31155,
+    "end_pos": 31212
+  },
+  "<<FORMULA_0102>>": {
+    "formula": "\\cbr{\\phi_j}",
+    "raw_latex": "$\\cbr{\\phi_j}$",
+    "formula_type": "inline",
+    "line_number": 479,
+    "start_pos": 30987,
+    "end_pos": 31001
+  },
+  "<<FORMULA_0101>>": {
+    "formula": "\\sum a_j \\phi_j(x) \\otimes \\phi_j(x')",
+    "raw_latex": "$\\sum a_j \\phi_j(x) \\otimes \\phi_j(x')$",
+    "formula_type": "inline",
+    "line_number": 479,
+    "start_pos": 30941,
+    "end_pos": 30980
+  },
+  "<<FORMULA_0100>>": {
+    "formula": "k(\\v{\\zeta}, \\cdot) =  \\Cov\\del{\\v{\\zeta}(g), g(\\cdot)}\n    ,\n    &&\n    k(\\v{\\zeta}, \\v{\\zeta}') = \\Cov\\del{\\v{\\zeta}(g), \\v{\\zeta}(g)},",
+    "raw_latex": "\\begin{align}\n    k(\\v{\\zeta}, \\cdot) =  \\Cov\\del{\\v{\\zeta}(g), g(\\cdot)}\n    ,\n    &&\n    k(\\v{\\zeta}, \\v{\\zeta}') = \\Cov\\del{\\v{\\zeta}(g), \\v{\\zeta}(g)},\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 471,
+    "start_pos": 30661,
+    "end_pos": 30828
+  },
+  "<<FORMULA_0099>>": {
+    "formula": "\\v{\\zeta}",
+    "raw_latex": "$\\v{\\zeta}$",
+    "formula_type": "inline",
+    "line_number": 470,
+    "start_pos": 30645,
+    "end_pos": 30656
+  },
+  "<<FORMULA_0098>>": {
+    "formula": "\\{e_i\\}_{i=1}^d",
+    "raw_latex": "$\\{e_i\\}_{i=1}^d$",
+    "formula_type": "inline",
+    "line_number": 468,
+    "start_pos": 30367,
+    "end_pos": 30384
+  },
+  "<<FORMULA_0097>>": {
+    "formula": "\\zeta(g) \\!\\!\\!=\\!\\!\\! \\innerprod{g(z)}{e_i(z)}_{T_{z} X}",
+    "raw_latex": "$\\zeta(g) \\!\\!\\!=\\!\\!\\! \\innerprod{g(z)}{e_i(z)}_{T_{z} X}$",
+    "formula_type": "inline",
+    "line_number": 468,
+    "start_pos": 30299,
+    "end_pos": 30358
+  },
+  "<<FORMULA_0096>>": {
+    "formula": "\\v{\\zeta}(g) = (\\zeta_1(g), \\ldots, \\zeta_m(g))",
+    "raw_latex": "$ \\v{\\zeta}(g) = (\\zeta_1(g), \\ldots, \\zeta_m(g))$",
+    "formula_type": "inline",
+    "line_number": 467,
+    "start_pos": 30203,
+    "end_pos": 30253
+  },
+  "<<FORMULA_0095>>": {
+    "formula": "\\v{\\zeta}(g) = \\v{u}",
+    "raw_latex": "$\\v{\\zeta}(g) = \\v{u}$",
+    "formula_type": "inline",
+    "line_number": 467,
+    "start_pos": 30173,
+    "end_pos": 30195
+  },
+  "<<FORMULA_0094>>": {
+    "formula": "p(g(\\cdot) \\given \\v{u}, \\v{\\zeta})",
+    "raw_latex": "$p(g(\\cdot) \\given \\v{u}, \\v{\\zeta})$",
+    "formula_type": "inline",
+    "line_number": 467,
+    "start_pos": 30103,
+    "end_pos": 30140
+  },
+  "<<FORMULA_0093>>": {
+    "formula": "p(g_{\\v{\\zeta}, \\v{m}, \\v{S}}(\\cdot))\n=\n{\\E}_{\\v{u} \\sim q(\\v{u})} \\, p(g(\\cdot) \\given \\v{u}, \\v{\\zeta}),\n&&\nq(\\v{u}) = \\mathcal{N}(\\v{m}, \\m{S}),",
+    "raw_latex": "\\[\np(g_{\\v{\\zeta}, \\v{m}, \\v{S}}(\\cdot))\n=\n{\\E}_{\\v{u} \\sim q(\\v{u})} \\, p(g(\\cdot) \\given \\v{u}, \\v{\\zeta}),\n&&\nq(\\v{u}) = \\mathcal{N}(\\v{m}, \\m{S}),\n\\]",
+    "formula_type": "display",
+    "line_number": 460,
+    "start_pos": 29943,
+    "end_pos": 30096
+  },
+  "<<FORMULA_0092>>": {
+    "formula": "\\v{\\zeta}",
+    "raw_latex": "$\\v{\\zeta}$",
+    "formula_type": "inline",
+    "line_number": 459,
+    "start_pos": 29903,
+    "end_pos": 29914
+  },
+  "<<FORMULA_0091>>": {
+    "formula": "\\v{\\zeta} \\!=\\! (\\zeta_{1}, \\dots, \\zeta_{m})",
+    "raw_latex": "$\\v{\\zeta} \\!=\\! (\\zeta_{1}, \\dots, \\zeta_{m})$",
+    "formula_type": "inline",
+    "line_number": 457,
+    "start_pos": 29776,
+    "end_pos": 29823
+  },
+  "<<FORMULA_0090>>": {
+    "formula": "g_{\\v{z}^l, \\v{m}^l, \\m{S}^l}(\\hat{f}^{l-1}_i)",
+    "raw_latex": "$g_{\\v{z}^l, \\v{m}^l, \\m{S}^l}(\\hat{f}^{l-1}_i)$",
+    "formula_type": "inline",
+    "line_number": 453,
+    "start_pos": 29384,
+    "end_pos": 29432
+  },
+  "<<FORMULA_0089>>": {
+    "formula": "\\label{eqn:sequential_sampling}\n\\hat{F}(x_i) = \\hat{f}^{L}_i\n,\n&&\n\\hat{f}^{l}_i = \\exp_{\\hat{f}^{l-1}_i}(g_{\\v{z}^l, \\v{m}^l, \\m{S}^l}(\\hat{f}^{l-1}_i))\n\\t{~for~}\n1 \\leq l \\leq L\n,\n&&\n\\hat{f}^{0}_i = x_i\n,",
+    "raw_latex": "\\[ \\label{eqn:sequential_sampling}\n\\hat{F}(x_i) = \\hat{f}^{L}_i\n,\n&&\n\\hat{f}^{l}_i = \\exp_{\\hat{f}^{l-1}_i}(g_{\\v{z}^l, \\v{m}^l, \\m{S}^l}(\\hat{f}^{l-1}_i))\n\\t{~for~}\n1 \\leq l \\leq L\n,\n&&\n\\hat{f}^{0}_i = x_i\n,\n\\]",
+    "formula_type": "display",
+    "line_number": 441,
+    "start_pos": 29126,
+    "end_pos": 29337
+  },
+  "<<FORMULA_0088>>": {
+    "formula": "\\hat{F}(x_i)",
+    "raw_latex": "$\\hat{F}(x_i)$",
+    "formula_type": "inline",
+    "line_number": 440,
+    "start_pos": 29078,
+    "end_pos": 29092
+  },
+  "<<FORMULA_0087>>": {
+    "formula": "F(x_i) \\sim p(F_{\\v{\\theta}}(x_i))",
+    "raw_latex": "$F(x_i) \\sim p(F_{\\v{\\theta}}(x_i))$",
+    "formula_type": "inline",
+    "line_number": 438,
+    "start_pos": 28960,
+    "end_pos": 28996
+  },
+  "<<FORMULA_0086>>": {
+    "formula": "T_{z} X",
+    "raw_latex": "$T_{z} X$",
+    "formula_type": "inline",
+    "line_number": 432,
+    "start_pos": 28313,
+    "end_pos": 28322
+  },
+  "<<FORMULA_0085>>": {
+    "formula": "P_{z}\\colon \\R^D \\to T_{z} X",
+    "raw_latex": "$P_{z}\\colon \\R^D \\to T_{z} X$",
+    "formula_type": "inline",
+    "line_number": 432,
+    "start_pos": 28214,
+    "end_pos": 28244
+  },
+  "<<FORMULA_0084>>": {
+    "formula": "\\widetilde{\\m{S}}^l \\in \\R^{m D \\x m D}",
+    "raw_latex": "$\\widetilde{\\m{S}}^l \\in \\R^{m D \\x m D}$",
+    "formula_type": "inline",
+    "line_number": 432,
+    "start_pos": 28167,
+    "end_pos": 28208
+  },
+  "<<FORMULA_0083>>": {
+    "formula": "\\widetilde{\\v{m}}^l \\in \\R^{m D}",
+    "raw_latex": "$\\widetilde{\\v{m}}^l \\in \\R^{m D}$",
+    "formula_type": "inline",
+    "line_number": 432,
+    "start_pos": 28098,
+    "end_pos": 28132
+  },
+  "<<FORMULA_0082>>": {
+    "formula": "\\v{m}^l = P_{\\v{z}^l} \\widetilde{\\v{m}}^l\n,\n&&\n\\m{S}^l = P_{\\v{z}^l} \\widetilde{\\m{S}}^l P_{\\v{z}^l}^{\\top}\n,\n&&\nP_{\\v{z}^l} = P_{z^l_1} \\oplus \\ldots \\oplus P_{z^l_m}\n,",
+    "raw_latex": "\\[\n\\v{m}^l = P_{\\v{z}^l} \\widetilde{\\v{m}}^l\n,\n&&\n\\m{S}^l = P_{\\v{z}^l} \\widetilde{\\m{S}}^l P_{\\v{z}^l}^{\\top}\n,\n&&\nP_{\\v{z}^l} = P_{z^l_1} \\oplus \\ldots \\oplus P_{z^l_m}\n,\n\\]",
+    "formula_type": "display",
+    "line_number": 422,
+    "start_pos": 27907,
+    "end_pos": 28082
+  },
+  "<<FORMULA_0081>>": {
+    "formula": "\\v{u} \\sim \\mathcal{N}(\\v{m}, \\m{S})",
+    "raw_latex": "$\\v{u} \\sim \\mathcal{N}(\\v{m}, \\m{S})$",
+    "formula_type": "inline",
+    "line_number": 419,
+    "start_pos": 27721,
+    "end_pos": 27759
+  },
+  "<<FORMULA_0080>>": {
+    "formula": "\\v{m}^l = (\\v{m}^l_1, \\ldots, \\v{m}^l_m)\n,\n&&\n\\v{m}^l_j \\in T_{z^l_j} X\n,\n&&\n\\operatorname{im}(\\m{S}^l) \\subseteq T_{z^l_1} X \\x \\ldots \\x T_{z^l_m} X\n,",
+    "raw_latex": "\\[\n\\v{m}^l = (\\v{m}^l_1, \\ldots, \\v{m}^l_m)\n,\n&&\n\\v{m}^l_j \\in T_{z^l_j} X\n,\n&&\n\\operatorname{im}(\\m{S}^l) \\subseteq T_{z^l_1} X \\x \\ldots \\x T_{z^l_m} X\n,\n\\]",
+    "formula_type": "display",
+    "line_number": 409,
+    "start_pos": 27417,
+    "end_pos": 27575
+  },
+  "<<FORMULA_0079>>": {
+    "formula": "z^l_j \\in X",
+    "raw_latex": "$z^l_j \\in X$",
+    "formula_type": "inline",
+    "line_number": 408,
+    "start_pos": 27398,
+    "end_pos": 27411
+  },
+  "<<FORMULA_0078>>": {
+    "formula": "\\v{z}^l = (z^l_1, \\ldots, z^l_m)",
+    "raw_latex": "$\\v{z}^l = (z^l_1, \\ldots, z^l_m)$",
+    "formula_type": "inline",
+    "line_number": 408,
+    "start_pos": 27339,
+    "end_pos": 27373
+  },
+  "<<FORMULA_0077>>": {
+    "formula": "f_{\\v{z}^l, \\v{m}^l, \\m{S}^l}(\\cdot) = \\exp_{(\\cdot)}\\del{g_{\\v{z}^l, \\v{m}^l, \\m{S}^l}(\\cdot)}\n,",
+    "raw_latex": "\\[\nf_{\\v{z}^l, \\v{m}^l, \\m{S}^l}(\\cdot) = \\exp_{(\\cdot)}\\del{g_{\\v{z}^l, \\v{m}^l, \\m{S}^l}(\\cdot)}\n,\n\\]",
+    "formula_type": "display",
+    "line_number": 402,
+    "start_pos": 26938,
+    "end_pos": 27041
+  },
+  "<<FORMULA_0076>>": {
+    "formula": "p(F_{\\v{\\theta}})",
+    "raw_latex": "$p(F_{\\v{\\theta}})$",
+    "formula_type": "inline",
+    "line_number": 401,
+    "start_pos": 26818,
+    "end_pos": 26837
+  },
+  "<<FORMULA_0075>>": {
+    "formula": "-\\lambda_j",
+    "raw_latex": "$-\\lambda_j$",
+    "formula_type": "inline",
+    "line_number": 345,
+    "start_pos": 23084,
+    "end_pos": 23096
+  },
+  "<<FORMULA_0074>>": {
+    "formula": "\\v{k}_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\sum_{j=0}^{\\infty} \\Phi_{\\nu,\\kappa}(\\lambda_j) s_j(x) \\otimes s_j(x')\\label{eq:hodge_matern_kernel}.",
+    "raw_latex": "\\begin{equation}\n    \\v{k}_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\sum_{j=0}^{\\infty} \\Phi_{\\nu,\\kappa}(\\lambda_j) s_j(x) \\otimes s_j(x')\\label{eq:hodge_matern_kernel}.\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 342,
+    "start_pos": 22776,
+    "end_pos": 22986
+  },
+  "<<FORMULA_0073>>": {
+    "formula": "g(x) \\!=\\! \\sum_{i=1}^d h_i(x) e_i(x)",
+    "raw_latex": "$g(x) \\!=\\! \\sum_{i=1}^d h_i(x) e_i(x)$",
+    "formula_type": "inline",
+    "line_number": 335,
+    "start_pos": 22060,
+    "end_pos": 22099
+  },
+  "<<FORMULA_0072>>": {
+    "formula": "h_i\\colon X \\to \\R",
+    "raw_latex": "$h_i\\colon X \\to \\R$",
+    "formula_type": "inline",
+    "line_number": 335,
+    "start_pos": 22025,
+    "end_pos": 22045
+  },
+  "<<FORMULA_0071>>": {
+    "formula": "\\v{h}\\colon X \\to \\R^d",
+    "raw_latex": "$\\v{h}\\colon X \\to \\R^d$",
+    "formula_type": "inline",
+    "line_number": 335,
+    "start_pos": 21984,
+    "end_pos": 22008
+  },
+  "<<FORMULA_0070>>": {
+    "formula": "T_{(\\cdot)}X",
+    "raw_latex": "$T_{(\\cdot)}X$",
+    "formula_type": "inline",
+    "line_number": 335,
+    "start_pos": 21944,
+    "end_pos": 21958
+  },
+  "<<FORMULA_0069>>": {
+    "formula": "\\{e_i(\\cdot)\\}_{i=1}^d",
+    "raw_latex": "$\\{e_i(\\cdot)\\}_{i=1}^d$",
+    "formula_type": "inline",
+    "line_number": 335,
+    "start_pos": 21898,
+    "end_pos": 21922
+  },
+  "<<FORMULA_0068>>": {
+    "formula": "\\{e_i\\}_{i=1}^d",
+    "raw_latex": "$\\{e_i\\}_{i=1}^d$",
+    "formula_type": "inline",
+    "line_number": 335,
+    "start_pos": 21840,
+    "end_pos": 21857
+  },
+  "<<FORMULA_0067>>": {
+    "formula": "g(x) = P_{x} \\v{h}(x)",
+    "raw_latex": "$g(x) = P_{x} \\v{h}(x)$",
+    "formula_type": "inline",
+    "line_number": 331,
+    "start_pos": 21604,
+    "end_pos": 21627
+  },
+  "<<FORMULA_0066>>": {
+    "formula": "T_{(\\cdot)}X",
+    "raw_latex": "$T_{(\\cdot)}X$",
+    "formula_type": "inline",
+    "line_number": 330,
+    "start_pos": 21531,
+    "end_pos": 21545
+  },
+  "<<FORMULA_0065>>": {
+    "formula": "P_{(\\cdot)}\\colon \\R^D \\to  T_{(\\cdot)}X",
+    "raw_latex": "$P_{(\\cdot)}\\colon \\R^D \\to  T_{(\\cdot)}X$",
+    "formula_type": "inline",
+    "line_number": 330,
+    "start_pos": 21414,
+    "end_pos": 21456
+  },
+  "<<FORMULA_0064>>": {
+    "formula": "\\v{h}\\colon X \\subset \\R^D \\to \\R^D",
+    "raw_latex": "$\\v{h}\\colon X \\subset \\R^D \\to \\R^D$",
+    "formula_type": "inline",
+    "line_number": 329,
+    "start_pos": 21288,
+    "end_pos": 21325
+  },
+  "<<FORMULA_0063>>": {
+    "formula": "x \\in X",
+    "raw_latex": "$x \\in X$",
+    "formula_type": "inline",
+    "line_number": 320,
+    "start_pos": 20502,
+    "end_pos": 20511
+  },
+  "<<FORMULA_0062>>": {
+    "formula": "D \\!\\in \\N",
+    "raw_latex": "$D \\!\\in \\N$",
+    "formula_type": "inline",
+    "line_number": 320,
+    "start_pos": 20267,
+    "end_pos": 20279
+  },
+  "<<FORMULA_0061>>": {
+    "formula": "T_x X",
+    "raw_latex": "$T_x X$",
+    "formula_type": "inline",
+    "line_number": 319,
+    "start_pos": 20111,
+    "end_pos": 20118
+  },
+  "<<FORMULA_0060>>": {
+    "formula": "x \\in X",
+    "raw_latex": "$x \\in X$",
+    "formula_type": "inline",
+    "line_number": 319,
+    "start_pos": 20066,
+    "end_pos": 20075
+  },
+  "<<FORMULA_0059>>": {
+    "formula": "T_x X",
+    "raw_latex": "$T_x X$",
+    "formula_type": "inline",
+    "line_number": 314,
+    "start_pos": 19725,
+    "end_pos": 19732
+  },
+  "<<FORMULA_0058>>": {
+    "formula": "g^l(x)",
+    "raw_latex": "$g^l(x)$",
+    "formula_type": "inline",
+    "line_number": 314,
+    "start_pos": 19683,
+    "end_pos": 19691
+  },
+  "<<FORMULA_0057>>": {
+    "formula": "g^l(x)",
+    "raw_latex": "$g^l(x)$",
+    "formula_type": "inline",
+    "line_number": 310,
+    "start_pos": 19320,
+    "end_pos": 19328
+  },
+  "<<FORMULA_0056>>": {
+    "formula": "x \\in X",
+    "raw_latex": "$x \\in X$",
+    "formula_type": "inline",
+    "line_number": 309,
+    "start_pos": 19170,
+    "end_pos": 19179
+  },
+  "<<FORMULA_0055>>": {
+    "formula": "T_x X",
+    "raw_latex": "$T_x X$",
+    "formula_type": "inline",
+    "line_number": 309,
+    "start_pos": 19159,
+    "end_pos": 19166
+  },
+  "<<FORMULA_0054>>": {
+    "formula": "\\exp_{x}\\colon T_x X \\to X",
+    "raw_latex": "$\\exp_{x}\\colon T_x X \\to X$",
+    "formula_type": "inline",
+    "line_number": 309,
+    "start_pos": 19049,
+    "end_pos": 19077
+  },
+  "<<FORMULA_0053>>": {
+    "formula": "\\label{eqn:geom-layer-form}\nf^l(x) = \\exp_{x}\\del{g^l(x)}.",
+    "raw_latex": "\\[ \\label{eqn:geom-layer-form}\nf^l(x) = \\exp_{x}\\del{g^l(x)}.\n\\]",
+    "formula_type": "display",
+    "line_number": 306,
+    "start_pos": 18978,
+    "end_pos": 19042
+  },
+  "<<FORMULA_0052>>": {
+    "formula": "f^l(x) = x + g^l(x)",
+    "raw_latex": "$f^l(x) = x + g^l(x)$",
+    "formula_type": "inline",
+    "line_number": 304,
+    "start_pos": 18898,
+    "end_pos": 18919
+  },
+  "<<FORMULA_0051>>": {
+    "formula": "g^l(x) \\in \\R^d",
+    "raw_latex": "$g^l(x) \\in \\R^d$",
+    "formula_type": "inline",
+    "line_number": 304,
+    "start_pos": 18853,
+    "end_pos": 18870
+  },
+  "<<FORMULA_0050>>": {
+    "formula": "x \\in X",
+    "raw_latex": "$x \\in X$",
+    "formula_type": "inline",
+    "line_number": 304,
+    "start_pos": 18839,
+    "end_pos": 18848
+  },
+  "<<FORMULA_0049>>": {
+    "formula": "X \\not= \\R^d",
+    "raw_latex": "$X \\not= \\R^d$",
+    "formula_type": "inline",
+    "line_number": 304,
+    "start_pos": 18818,
+    "end_pos": 18832
+  },
+  "<<FORMULA_0048>>": {
+    "formula": "g^l(x) = f^l(x) - x",
+    "raw_latex": "$g^l(x) = f^l(x) - x$",
+    "formula_type": "inline",
+    "line_number": 303,
+    "start_pos": 18646,
+    "end_pos": 18667
+  },
+  "<<FORMULA_0047>>": {
+    "formula": "\\label{eqn:euclidean-layer-form}\nf^l(x) = x + g^l(x)\n,",
+    "raw_latex": "\\[  \\label{eqn:euclidean-layer-form}\nf^l(x) = x + g^l(x)\n,\n\\]",
+    "formula_type": "display",
+    "line_number": 297,
+    "start_pos": 18475,
+    "end_pos": 18536
+  },
+  "<<FORMULA_0046>>": {
+    "formula": "f^l\\colon \\R^d \\to \\R^d",
+    "raw_latex": "$f^l\\colon \\R^d \\to \\R^d$",
+    "formula_type": "inline",
+    "line_number": 296,
+    "start_pos": 18434,
+    "end_pos": 18459
+  },
+  "<<FORMULA_0045>>": {
+    "formula": "{k\\colon X \\x X \\to \\R}",
+    "raw_latex": "${k\\colon X \\x X \\to \\R}$",
+    "formula_type": "inline",
+    "line_number": 293,
+    "start_pos": 18141,
+    "end_pos": 18166
+  },
+  "<<FORMULA_0044>>": {
+    "formula": "F = f^L \\circ f^{L-1} \\circ \\cdots \\circ f^2 \\circ f^1,\n    &&\n    f^l\\colon X \\to X\n    \\t{~for~}\n    1 \\leq l \\leq L-1\n    ,",
+    "raw_latex": "\\[\n    F = f^L \\circ f^{L-1} \\circ \\cdots \\circ f^2 \\circ f^1,\n    &&\n    f^l\\colon X \\to X\n    \\t{~for~}\n    1 \\leq l \\leq L-1\n    ,\n\\]",
+    "formula_type": "display",
+    "line_number": 283,
+    "start_pos": 17718,
+    "end_pos": 17854
+  },
+  "<<FORMULA_0043>>": {
+    "formula": "p(F_{\\v{\\theta}})",
+    "raw_latex": "$p(F_{\\v{\\theta}})$",
+    "formula_type": "inline",
+    "line_number": 271,
+    "start_pos": 16808,
+    "end_pos": 16827
+  },
+  "<<FORMULA_0042>>": {
+    "formula": "p(\\v{u}^l) \\sim \\mathcal{N}(\\mu^l(\\v{z}^l), k^l(\\v{z}^l, \\v{z}^l))",
+    "raw_latex": "$p(\\v{u}^l) \\sim \\mathcal{N}(\\mu^l(\\v{z}^l), k^l(\\v{z}^l, \\v{z}^l))$",
+    "formula_type": "inline",
+    "line_number": 269,
+    "start_pos": 16548,
+    "end_pos": 16616
+  },
+  "<<FORMULA_0041>>": {
+    "formula": "q(\\v{u}^l) \\sim \\mathcal{N}(\\v{m}^l, \\m{S}^l)",
+    "raw_latex": "$q(\\v{u}^l) \\sim \\mathcal{N}(\\v{m}^l, \\m{S}^l)$",
+    "formula_type": "inline",
+    "line_number": 269,
+    "start_pos": 16496,
+    "end_pos": 16543
+  },
+  "<<FORMULA_0040>>": {
+    "formula": "\\label{eq:euclidean_deep_gp_elbo}\n\\mathrm{ELBO}\n=\n{\\sum}_{i=1}^n\n{\\E}_{F(x_i) \\sim p(F_{\\v{\\theta}}(x_i))}\n\\log p(y_i| F(x_i))\n-\n{\\sum}_{l=1}^L\n\\KL(q(\\v{u}^l) \\,\\Vert\\, p(\\v{u}^l)),",
+    "raw_latex": "\\begin{equation}\\label{eq:euclidean_deep_gp_elbo}\n\\mathrm{ELBO}\n=\n{\\sum}_{i=1}^n\n{\\E}_{F(x_i) \\sim p(F_{\\v{\\theta}}(x_i))}\n\\log p(y_i| F(x_i))\n-\n{\\sum}_{l=1}^L\n\\KL(q(\\v{u}^l) \\,\\Vert\\, p(\\v{u}^l)),\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 259,
+    "start_pos": 16277,
+    "end_pos": 16489
+  },
+  "<<FORMULA_0039>>": {
+    "formula": "\\KL(p(F \\given \\v{y}) \\,\\Vert\\, p(F_{\\v{\\theta}}))",
+    "raw_latex": "$\\KL(p(F \\given \\v{y}) \\,\\Vert\\, p(F_{\\v{\\theta}}))$",
+    "formula_type": "inline",
+    "line_number": 258,
+    "start_pos": 16126,
+    "end_pos": 16178
+  },
+  "<<FORMULA_0038>>": {
+    "formula": "\\v{\\theta}",
+    "raw_latex": "$\\v{\\theta}$",
+    "formula_type": "inline",
+    "line_number": 258,
+    "start_pos": 16089,
+    "end_pos": 16101
+  },
+  "<<FORMULA_0037>>": {
+    "formula": "\\label{eqn:eucl_deep_gp_vf}\nF_{\\v{\\theta}}\n=\nf_{\\v{z}^L, \\v{m}^L, \\m{S}^L}\n\\circ\n\\ldots\n\\circ\nf_{\\v{z}^1, \\v{m}^1, \\m{S}^1}\n,\n&&\n\\v{\\theta}\n=\n\\cbr{\\v{z}^l, \\v{m}^l, \\m{S}^l}_{l=1}^L\n.",
+    "raw_latex": "\\[ \\label{eqn:eucl_deep_gp_vf}\nF_{\\v{\\theta}}\n=\nf_{\\v{z}^L, \\v{m}^L, \\m{S}^L}\n\\circ\n\\ldots\n\\circ\nf_{\\v{z}^1, \\v{m}^1, \\m{S}^1}\n,\n&&\n\\v{\\theta}\n=\n\\cbr{\\v{z}^l, \\v{m}^l, \\m{S}^l}_{l=1}^L\n.\n\\]",
+    "formula_type": "display",
+    "line_number": 243,
+    "start_pos": 15872,
+    "end_pos": 16061
+  },
+  "<<FORMULA_0036>>": {
+    "formula": "\\m{S} \\in \\R^{m d \\x m d}",
+    "raw_latex": "$\\m{S} \\in \\R^{m d \\x m d}$",
+    "formula_type": "inline",
+    "line_number": 240,
+    "start_pos": 15741,
+    "end_pos": 15768
+  },
+  "<<FORMULA_0035>>": {
+    "formula": "\\v{m} \\in \\R^{m d}",
+    "raw_latex": "$\\v{m} \\in \\R^{m d}$",
+    "formula_type": "inline",
+    "line_number": 240,
+    "start_pos": 15716,
+    "end_pos": 15736
+  },
+  "<<FORMULA_0034>>": {
+    "formula": "\\label{eq:variational_posterior_mean_and_kernel}\n\\mu_{\\v{z}, \\v{m}, \\v{S}}(\\cdot)\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(\\v{m}-\\mu(\\v{z}))\n,\n\\\\\nk_{\\v{z}, \\v{m}, \\v{S}}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(k(\\v{z}, \\v{z}) - \\m{S})\nk(\\v{z}, \\v{z})^{-1}\nk(\\v{z}, \\cdot')\n.",
+    "raw_latex": "\\[\n\\label{eq:variational_posterior_mean_and_kernel}\n\\mu_{\\v{z}, \\v{m}, \\v{S}}(\\cdot)\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(\\v{m}-\\mu(\\v{z}))\n,\n\\\\\nk_{\\v{z}, \\v{m}, \\v{S}}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(k(\\v{z}, \\v{z}) - \\m{S})\nk(\\v{z}, \\v{z})^{-1}\nk(\\v{z}, \\cdot')\n.\n\\]",
+    "formula_type": "display",
+    "line_number": 218,
+    "start_pos": 15319,
+    "end_pos": 15647
+  },
+  "<<FORMULA_0033>>": {
+    "formula": "p(f_{\\v{z}, \\v{m}, \\v{S}}(\\cdot))",
+    "raw_latex": "$p(f_{\\v{z}, \\v{m}, \\v{S}}(\\cdot))$",
+    "formula_type": "inline",
+    "line_number": 216,
+    "start_pos": 15236,
+    "end_pos": 15271
+  },
+  "<<FORMULA_0032>>": {
+    "formula": "f(\\v{z}) = \\v{u}",
+    "raw_latex": "$f(\\v{z}) = \\v{u}$",
+    "formula_type": "inline",
+    "line_number": 215,
+    "start_pos": 15128,
+    "end_pos": 15146
+  },
+  "<<FORMULA_0031>>": {
+    "formula": "p(f(\\cdot) \\given \\v{u}, \\v{z})",
+    "raw_latex": "$p(f(\\cdot) \\given \\v{u}, \\v{z})$",
+    "formula_type": "inline",
+    "line_number": 215,
+    "start_pos": 15062,
+    "end_pos": 15095
+  },
+  "<<FORMULA_0030>>": {
+    "formula": "p(f_{\\v{z}, \\v{m}, \\v{S}}(\\cdot))\n=\n{\\E}_{\\v{u} \\sim q(\\v{u})} \\, p(f(\\cdot) \\given \\v{u}, \\v{z}),\n&&\nq(\\v{u}) = \\mathcal{N}(\\v{m}, \\m{S}),",
+    "raw_latex": "\\[\np(f_{\\v{z}, \\v{m}, \\v{S}}(\\cdot))\n=\n{\\E}_{\\v{u} \\sim q(\\v{u})} \\, p(f(\\cdot) \\given \\v{u}, \\v{z}),\n&&\nq(\\v{u}) = \\mathcal{N}(\\v{m}, \\m{S}),\n\\]",
+    "formula_type": "display",
+    "line_number": 208,
+    "start_pos": 14910,
+    "end_pos": 15055
+  },
+  "<<FORMULA_0029>>": {
+    "formula": "q(\\v{u}) = \\mathcal{N}(\\v{m}, \\m{S})",
+    "raw_latex": "$q(\\v{u}) = \\mathcal{N}(\\v{m}, \\m{S})$",
+    "formula_type": "inline",
+    "line_number": 206,
+    "start_pos": 14856,
+    "end_pos": 14894
+  },
+  "<<FORMULA_0028>>": {
+    "formula": "\\m{S} \\in \\R^{m \\x m}",
+    "raw_latex": "$\\m{S} \\in \\R^{m \\x m}$",
+    "formula_type": "inline",
+    "line_number": 206,
+    "start_pos": 14760,
+    "end_pos": 14783
+  },
+  "<<FORMULA_0027>>": {
+    "formula": "\\v{m} \\in \\R^m",
+    "raw_latex": "$\\v{m} \\in \\R^m$",
+    "formula_type": "inline",
+    "line_number": 206,
+    "start_pos": 14719,
+    "end_pos": 14735
+  },
+  "<<FORMULA_0026>>": {
+    "formula": "\\v{z} \\subseteq X",
+    "raw_latex": "$\\v{z} \\subseteq X$",
+    "formula_type": "inline",
+    "line_number": 206,
+    "start_pos": 14673,
+    "end_pos": 14692
+  },
+  "<<FORMULA_0025>>": {
+    "formula": "f \\sim \\mathcal{GP}(\\mu, k)",
+    "raw_latex": "$f \\sim \\mathcal{GP}(\\mu, k)$",
+    "formula_type": "inline",
+    "line_number": 205,
+    "start_pos": 14529,
+    "end_pos": 14558
+  },
+  "<<FORMULA_0024>>": {
+    "formula": "F \\given \\v{y}",
+    "raw_latex": "$F \\given \\v{y}$",
+    "formula_type": "inline",
+    "line_number": 200,
+    "start_pos": 14038,
+    "end_pos": 14054
+  },
+  "<<FORMULA_0023>>": {
+    "formula": "F \\given \\v{y}",
+    "raw_latex": "$F \\given \\v{y}$",
+    "formula_type": "inline",
+    "line_number": 197,
+    "start_pos": 13784,
+    "end_pos": 13800
+  },
+  "<<FORMULA_0022>>": {
+    "formula": "p(\\v{y} \\given F(\\v{x}))",
+    "raw_latex": "$p(\\v{y} \\given F(\\v{x}))$",
+    "formula_type": "inline",
+    "line_number": 197,
+    "start_pos": 13742,
+    "end_pos": 13768
+  },
+  "<<FORMULA_0021>>": {
+    "formula": "f^l\\colon \\R^d \\to \\R^d",
+    "raw_latex": "$f^l\\colon \\R^d \\to \\R^d$",
+    "formula_type": "inline",
+    "line_number": 195,
+    "start_pos": 13511,
+    "end_pos": 13536
+  },
+  "<<FORMULA_0020>>": {
+    "formula": "1 \\leq l \\leq L-1",
+    "raw_latex": "$1 \\leq l \\leq L-1$",
+    "formula_type": "inline",
+    "line_number": 195,
+    "start_pos": 13451,
+    "end_pos": 13470
+  },
+  "<<FORMULA_0019>>": {
+    "formula": "F = f^L \\circ \\cdots \\circ f^1",
+    "raw_latex": "$F = f^L \\circ \\cdots \\circ f^1$",
+    "formula_type": "inline",
+    "line_number": 194,
+    "start_pos": 13300,
+    "end_pos": 13332
+  },
+  "<<FORMULA_0018>>": {
+    "formula": "\\Phi_{\\nu, \\kappa}(\\lambda_j)",
+    "raw_latex": "$\\Phi_{\\nu, \\kappa}(\\lambda_j)$",
+    "formula_type": "inline",
+    "line_number": 184,
+    "start_pos": 12424,
+    "end_pos": 12455
+  },
+  "<<FORMULA_0017>>": {
+    "formula": "\\frac{1}{\\mathrm{vol}X}\\int_X k_{\\nu, \\kappa, \\sigma^2}(x, x) \\d x = \\sigma^2",
+    "raw_latex": "$\\frac{1}{\\mathrm{vol}X}\\int_X k_{\\nu, \\kappa, \\sigma^2}(x, x) \\d x = \\sigma^2$",
+    "formula_type": "inline",
+    "line_number": 183,
+    "start_pos": 12226,
+    "end_pos": 12305
+  },
+  "<<FORMULA_0016>>": {
+    "formula": "-\\lambda_j, \\phi_j",
+    "raw_latex": "$-\\lambda_j, \\phi_j$",
+    "formula_type": "inline",
+    "line_number": 183,
+    "start_pos": 12056,
+    "end_pos": 12076
+  },
+  "<<FORMULA_0015>>": {
+    "formula": "\\label{eq:matern_kernel_eigenvalues_sum}\n\\!\\!\\!\nk_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\sum_{j=0}^{\\infty} \\Phi_{\\nu,\\kappa}(\\lambda_j) \\phi_j(x)\\phi_j(x')\n,\n&&\n\\Phi_{\\nu, \\kappa}(\\lambda) = \\begin{cases}\n    \\left(\\frac{2\\nu}{\\kappa^2} + \\lambda\\right)^{-\\nu-\\frac{d}{2}} & \\nu < \\infty\\\\\ne^{-\\frac{\\kappa^2}{2}\\lambda} & \\nu = \\infty\n\\end{cases}",
+    "raw_latex": "\\[\n\\label{eq:matern_kernel_eigenvalues_sum}\n\\!\\!\\!\nk_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\sum_{j=0}^{\\infty} \\Phi_{\\nu,\\kappa}(\\lambda_j) \\phi_j(x)\\phi_j(x')\n,\n&&\n\\Phi_{\\nu, \\kappa}(\\lambda) = \\begin{cases}\n    \\left(\\frac{2\\nu}{\\kappa^2} + \\lambda\\right)^{-\\nu-\\frac{d}{2}} & \\nu < \\infty\\\\\ne^{-\\frac{\\kappa^2}{2}\\lambda} & \\nu = \\infty\n\\end{cases}\n\\]",
+    "formula_type": "display",
+    "line_number": 172,
+    "start_pos": 11667,
+    "end_pos": 12049
+  },
+  "<<FORMULA_0014>>": {
+    "formula": "X = \\mathbb{R}^d",
+    "raw_latex": "$X = \\mathbb{R}^d$",
+    "formula_type": "inline",
+    "line_number": 164,
+    "start_pos": 10407,
+    "end_pos": 10425
+  },
+  "<<FORMULA_0013>>": {
+    "formula": "k\\colon X \\times X \\to \\mathbb{R}",
+    "raw_latex": "$k\\colon X \\times X \\to \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 163,
+    "start_pos": 10317,
+    "end_pos": 10352
+  },
+  "<<FORMULA_0012>>": {
+    "formula": "\\label{eq:exact_posterior_mean_and_kernel}\n\\mu_{f \\given \\v{y}}(\\cdot)\n&=\n\\mu(\\cdot) +\nk(\\cdot, \\v{x})(k(\\v{x}, \\v{x}) + \\m{\\Sigma})^{-1}\\del{\\v{y} - \\mu(\\v{x})},\n\\\\\nk_{f \\given \\v{y}}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot') - k(\\cdot, \\v{x})(k(\\v{x}, \\v{x}) + \\m{\\Sigma})^{-1}k(\\v{x}, \\cdot').",
+    "raw_latex": "\\[\n\\label{eq:exact_posterior_mean_and_kernel}\n\\mu_{f \\given \\v{y}}(\\cdot)\n&=\n\\mu(\\cdot) +\nk(\\cdot, \\v{x})(k(\\v{x}, \\v{x}) + \\m{\\Sigma})^{-1}\\del{\\v{y} - \\mu(\\v{x})},\n\\\\\nk_{f \\given \\v{y}}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot') - k(\\cdot, \\v{x})(k(\\v{x}, \\v{x}) + \\m{\\Sigma})^{-1}k(\\v{x}, \\cdot').\n\\]",
+    "formula_type": "display",
+    "line_number": 150,
+    "start_pos": 9945,
+    "end_pos": 10240
+  },
+  "<<FORMULA_0011>>": {
+    "formula": "\\v{y} \\given f(\\v{x}) \\sim \\mathcal{N}(f(\\v{x}), \\m{\\Sigma})",
+    "raw_latex": "$\\v{y} \\given f(\\v{x}) \\sim \\mathcal{N}(f(\\v{x}), \\m{\\Sigma})$",
+    "formula_type": "inline",
+    "line_number": 149,
+    "start_pos": 9828,
+    "end_pos": 9890
+  },
+  "<<FORMULA_0010>>": {
+    "formula": "{\\v{x} \\subseteq X}",
+    "raw_latex": "${\\v{x} \\subseteq X}$",
+    "formula_type": "inline",
+    "line_number": 148,
+    "start_pos": 9716,
+    "end_pos": 9737
+  },
+  "<<FORMULA_0009>>": {
+    "formula": "\\v{y} \\in \\R^n",
+    "raw_latex": "$\\v{y} \\in \\R^n$",
+    "formula_type": "inline",
+    "line_number": 148,
+    "start_pos": 9674,
+    "end_pos": 9690
+  },
+  "<<FORMULA_0008>>": {
+    "formula": "f \\sim \\mathcal{GP}(\\mu, k)",
+    "raw_latex": "$f \\sim \\mathcal{GP}(\\mu, k)$",
+    "formula_type": "inline",
+    "line_number": 146,
+    "start_pos": 9570,
+    "end_pos": 9599
+  },
+  "<<FORMULA_0007>>": {
+    "formula": "\\v{x} \\subseteq X",
+    "raw_latex": "$\\v{x} \\subseteq X$",
+    "formula_type": "inline",
+    "line_number": 145,
+    "start_pos": 9526,
+    "end_pos": 9545
+  },
+  "<<FORMULA_0006>>": {
+    "formula": "f(\\v{x}) \\sim \\mathcal{N}(\\mu(\\v{x}), k(\\v{x}, \\v{x}))",
+    "raw_latex": "$f(\\v{x}) \\sim \\mathcal{N}(\\mu(\\v{x}), k(\\v{x}, \\v{x}))$",
+    "formula_type": "inline",
+    "line_number": 145,
+    "start_pos": 9461,
+    "end_pos": 9517
+  },
+  "<<FORMULA_0005>>": {
+    "formula": "k\\colon X \\times X \\to \\R",
+    "raw_latex": "$k\\colon X \\times X \\to \\R$",
+    "formula_type": "inline",
+    "line_number": 145,
+    "start_pos": 9423,
+    "end_pos": 9450
+  },
+  "<<FORMULA_0004>>": {
+    "formula": "\\mu\\colon X \\to \\R",
+    "raw_latex": "$\\mu\\colon X \\to \\R$",
+    "formula_type": "inline",
+    "line_number": 145,
+    "start_pos": 9358,
+    "end_pos": 9378
+  },
+  "<<FORMULA_0003>>": {
+    "formula": "\\exp",
+    "raw_latex": "$\\exp$",
+    "formula_type": "inline",
+    "line_number": 128,
+    "start_pos": 7794,
+    "end_pos": 7800
+  },
+  "<<FORMULA_0002>>": {
+    "formula": "\\text{Hidden Layer}\\, \\times L",
+    "raw_latex": "$\\text{Hidden Layer}\\, \\times L$",
+    "formula_type": "inline",
+    "line_number": 124,
+    "start_pos": 7557,
+    "end_pos": 7589
+  },
+  "<<FORMULA_0001>>": {
+    "formula": "\\!\\!\\!",
+    "raw_latex": "$\\!\\!\\!$",
+    "formula_type": "inline",
+    "line_number": 59,
+    "start_pos": 1423,
+    "end_pos": 1431
+  }
+}

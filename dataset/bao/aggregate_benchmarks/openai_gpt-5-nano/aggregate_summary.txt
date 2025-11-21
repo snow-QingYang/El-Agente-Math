@@ -1,0 +1,55 @@
+======================================================================
+Aggregate Benchmark Report
+======================================================================
+
+Model: openai/gpt-5-nano
+Timestamp: 2025-10-31T17:26:44.568603
+
+Papers Processed:
+  Total papers: 11
+  Successful benchmarks: 11
+  No ground truth: 0
+  Failed: 0
+
+Binary Classification (Mean ± Std):
+  Accuracy:  63.1% ± 24.0%
+  Precision: 62.7% ± 24.0%
+  Recall:    72.6% ± 27.9%
+  F1 Score:  65.9% ± 23.8%
+
+Accuracy Range:
+  Min: 0.0%
+  Max: 89.5%
+
+Error Type Identification:
+  Mean type accuracy: 49.8% ± 28.5%
+
+📊 Instruction Following (JSON Format Compliance):
+  Mean perfect JSON rate: 89.5%
+  Mean fallback rate: 0.0%
+  Mean failure rate: 1.4%
+
+Aggregated Per-Error-Type Recall:
+  exponent_order       2/3 (66.7%)
+  fraction_inversion   8/10 (80.0%)
+  function_swap        3/3 (100.0%)
+  index_change         12/13 (92.3%)
+  inequality_flip      13/16 (81.2%)
+  operator_swap        9/12 (75.0%)
+  sign_flip            18/24 (75.0%)
+  sum_product_swap     7/8 (87.5%)
+  transpose_error      7/9 (77.8%)
+
+Per-Paper Results:
+  ✓ 2410.10253           Acc: 68.4%, F1: 72.7%
+  ✓ 2506.04194           Acc: 75.0%, F1: 54.5%
+  ✓ 2410.14055           Acc: 50.0%, F1: 64.0%
+  ✓ 2411.00161           Acc: 89.5%, F1: 85.7%
+  ✓ 2502.02013           Acc: 63.2%, F1: 72.0%
+  ✓ 2411.12537           Acc: 75.0%, F1: 80.0%
+  ✓ 2507.09128           Acc: 68.4%, F1: 72.7%
+  ✓ 2502.05164           Acc: 85.0%, F1: 85.7%
+  ✓ 2506.08362           Acc: 55.0%, F1: 64.0%
+  ✓ 2503.03025           Acc: 65.0%, F1: 74.1%
+
+======================================================================

@@ -1,0 +1,248 @@
+{
+  "metadata": {
+    "paper_id": "2506.08362",
+    "model": "openai/gpt-5",
+    "total_detections_attempted": 20,
+    "parsing_failures": 0,
+    "valid_evaluations": 20,
+    "formulas_with_errors_injected": 12,
+    "formulas_unmodified": 8,
+    "timestamp": "2025-10-31T18:04:57.865130"
+  },
+  "binary_classification": {
+    "true_positives": 12,
+    "false_positives": 5,
+    "true_negatives": 3,
+    "false_negatives": 0,
+    "accuracy": 0.75,
+    "precision": 0.706,
+    "recall": 1.0,
+    "f1_score": 0.828
+  },
+  "error_type_matching": {
+    "total_errors_detected": 12,
+    "correct_type_identified": 7,
+    "incorrect_type_identified": 5,
+    "type_accuracy": 0.583
+  },
+  "instruction_following": {
+    "perfect_json_responses": 20,
+    "fallback_parsing_required": 0,
+    "parsing_failures": 0,
+    "perfect_json_rate": 1.0,
+    "fallback_rate": 0.0,
+    "failure_rate": 0.0,
+    "strategy_breakdown": {
+      "direct": 20
+    }
+  },
+  "per_error_type_performance": {
+    "operator_swap": {
+      "detected": 2,
+      "total": 2,
+      "recall": 1.0
+    },
+    "sign_flip": {
+      "detected": 3,
+      "total": 3,
+      "recall": 1.0
+    },
+    "fraction_inversion": {
+      "detected": 3,
+      "total": 3,
+      "recall": 1.0
+    },
+    "inequality_flip": {
+      "detected": 3,
+      "total": 3,
+      "recall": 1.0
+    },
+    "exponent_order": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    }
+  },
+  "detailed_results": [
+    {
+      "label": "<<FORMULA_0354>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "operator_swap",
+      "detected_has_error": true,
+      "detected_error_type": "index_change",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0497>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0435>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "fraction_inversion",
+      "detected_has_error": true,
+      "detected_error_type": "fraction_inversion",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0434>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0071>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0356>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "operator_swap",
+      "detected_has_error": true,
+      "detected_error_type": "function_swap",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0346>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "inequality_flip",
+      "detected_has_error": true,
+      "detected_error_type": "inequality_flip",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0355>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0525>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "fraction_inversion",
+      "detected_has_error": true,
+      "detected_error_type": "fraction_inversion",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0074>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "index_change",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0508>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": true,
+      "detected_error_type": "exponent_order",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0511>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "exponent_order",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0352>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0513>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0515>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "inequality_flip",
+      "detected_has_error": true,
+      "detected_error_type": "inequality_flip",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0527>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "exponent_order",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0592>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0574>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0591>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "fraction_inversion",
+      "detected_has_error": true,
+      "detected_error_type": "inequality_flip",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0589>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "inequality_flip",
+      "detected_has_error": true,
+      "detected_error_type": "inequality_flip",
+      "result": "TP",
+      "type_match": true
+    }
+  ]
+}

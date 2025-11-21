@@ -1,0 +1,212 @@
+{
+  "metadata": {
+    "paper_id": "2502.05164",
+    "model": "openai/gpt-5",
+    "context_words": 300,
+    "total_formulas_checked": 20,
+    "timestamp": "2025-10-31T18:02:46.885593",
+    "benchmark_mode": true
+  },
+  "detections": [
+    {
+      "label": "<<FORMULA_0172>>",
+      "formula": "\\begin{aligned}\n      p_{X \\mid \\tilde X}(x \\mid \\tilde x) \n        & = \\frac{p_{\\tilde X \\mid X}(\\tilde x \\mid x) p_{X}(x)} { p_{\\tilde X}(\\tilde x) }\\\\\n        & = \\frac\n            {e ^{- \\lVert \\tilde x -  x \\rVert ^2 / 2 \\sigma_{Z}^2} p_X(x) }\n            {\\int e ^{- \\lVert \\tilde x -  x' \\rVert ^2 / 2 \\sigma_{Z}^2} p_X(x') dx'}.\n    \\end{aligned}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 13.08
+    },
+    {
+      "label": "<<FORMULA_0174>>",
+      "formula": "\\begin{aligned}\n  \\E \\left[ \\Vert X - f(\\tilde X) \\rVert^2 \\right] \n  & = \\E_{\\tilde X} \\left[ \n        \\E_{X \\mid \\tilde X} \\bigl[ \\lVert X - f(\\tilde X) \\rVert^2 \\mid \\tilde X \\bigr] \n      \\right] \\\\ \n  & = \\E_{\\tilde X} \\Bigl[ \n        \\E_{X\\mid \\tilde X} \\bigl[ \\lVert X - \\E [X \\mid \\tilde X] \\rVert^2 \\mid \\tilde X \\bigr]  \\\\\n         & \\:\\:\\:\\:\\:\\:\\:\\:\\:\\:\\:\\: + \\lVert \\E [X \\mid \\tilde X] - f(\\tilde X) \\rVert^2 \\Bigr] \\\\\n  & \\ge \\E_{\\tilde X} \\\\geft[ \n        \\E_{X\\mid \\tilde X} \\bigl[ \\lVert X - \\E [X \\mid \\tilde X] \\rVert^2 \\mid \\tilde X \\bigr]\n    \\right] \\\\\n  & = \\E_{\\tilde X} \\left[ \\Tr{ \\Cov (X \\mid \\tilde X)} \\right].\n\\end{aligned}",
+      "has_error": true,
+      "error_type": "missing_parentheses",
+      "error_description": "Typographical delimiter error: '\\geft[' should be '\\left[', causing a missing/mismatched opening bracket around the inner expectation.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 13.95
+    },
+    {
+      "label": "<<FORMULA_0189>>",
+      "formula": "\\begin{aligned}\n\\E [ X \\mid \\tilde X = \\tilde x ] \n  & = \n  \\frac{\\int e^{ + \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2}} \\: x\\: p_X(x) dx}\n       {\\int e^{- \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2}} \\: p_X(x) dx} \\\\\n  & = \n  \\frac{\\int e^{\\langle x, \\tilde x_{\\paral} \\rangle / \\sigma_{Z}^2} \\:x\\, d S_x}\n       {\\int e^{\\langle x, \\tilde x_{\\paral} \\rangle / \\sigma_{Z}^2} \\: d S_x}.\n\\end{aligned}",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "In the first fraction, the numerator’s exponential uses +||x - tilde x_parallel||^2/(2 sigma_Z^2) instead of the required negative sign; both numerator and denominator should have e^{-||x - tilde x_parallel||^2/(2 sigma_Z^2)}.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 16.06
+    },
+    {
+      "label": "<<FORMULA_0183>>",
+      "formula": "\\begin{aligned}\np_X(x)e^{- \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2} {2 \\sigma_{Z}^2}}\n  & \\propto e^{- \\frac{\\lVert x \\rVert ^2}{ 2 \\sigma_{0}^2}\n         - \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2} }\\\\\n  & \\propto \\exp \n    \\left( - \\frac{\\lVert x - \\frac{\\sigma_{0}^2}{\\sigma_{0}^2 - \\sigma_{Z}^2} \\tilde x_{\\paral} \\rVert ^2}\n                   {2 \\frac{\\sigma_{0}^2 \\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2}\n                  } \n    \\right). \n\\end{aligned}",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "When completing the square, the mean term uses σ0^2/(σ0^2 − σZ^2) but should be σ0^2/(σ0^2 + σZ^2); the plus was changed to minus in the denominator.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 18.21
+    },
+    {
+      "label": "<<FORMULA_0054>>",
+      "formula": "&f_\\text{opt}(\\tilde X)=\\E [ X \\mid \\tilde X ]  \\nonumber\\\\\n  & = \n  \\frac{\\int e^{\\langle x, \\tilde X_{\\paral} \\rangle / \\sigma_{Z}^2} \\:x\\, d S_x}\n       {\\int e^{\\langle x, \\tilde X_{\\paral} \\rangle / \\sigma_{Z}^2} \\: d S_x}\\\\\n  &= \n  \\frac{I_\\frac{d - 1}{2} \\left(R \\frac{\\lVert \\tilde X_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)}\n       {I_\\frac{d-1}{2} \\left(R \\frac{\\lVert \\tilde X_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)} \n  R \\frac{\\tilde X_{\\paral}}{\\lVert \\tilde X_{\\paral} \\rVert},",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "The orders of the modified Bessel functions in the ratio are identical; they should be different (e.g., I_{d/2}(·)/I_{d/2−1}(·)). As written, the ratio equals 1, contradicting the integral expression.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 20.73
+    },
+    {
+      "label": "<<FORMULA_0187>>",
+      "formula": "\\E\\Big[\\lVert X-\\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} P \\tilde X \\rVert^2\\Big] =  \\E\\Big[\\lVert\\frac{\\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2}PX\\rVert^2\\Big]+\\E\\Big[\\lVert\\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} PZ \\rVert^2\\Big]=\\frac{\\sigma_Z^4d\\sigma_{0}^2+\\sigma_0^4d\\sigma_{Z}^2}{(\\sigma_{0}^2 + \\sigma_{Z}^2)^2}=\\frac{d\\sigma_0^2\\sigma_{Z}^2}{\\sigma_{0}^2 \\\\times \\sigma_{Z}^2}.",
+      "has_error": true,
+      "error_type": "operator_swap",
+      "error_description": "In the final step, the denominator (σ0^2 + σZ^2) was incorrectly replaced by σ0^2 × σZ^2. The correct simplification is d σ0^2 σZ^2 / (σ0^2 + σZ^2), not divided by the product.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 21.08
+    },
+    {
+      "label": "<<FORMULA_0062>>",
+      "formula": "\\label{eq:bayes-case3-zerolimit}\n f_\\text{opt}(\\tilde X)=\\E [X \\mid \\tilde X]  = \\frac\n    {\\\\prod_{a } w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / \\sigma_{Z}^2}\n        \\:\\: \\mu_{a}\n        }\n    {\\sum_{a }w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / \\sigma_{Z}^2}}.",
+      "has_error": true,
+      "error_type": "sum_product_swap",
+      "error_description": "The numerator incorrectly uses a product over components instead of a sum; it should be a sum of w_a e^{<mu_a, \\tilde X>/\\sigma_Z^2} mu_a to form the posterior mean.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 21.71
+    },
+    {
+      "label": "<<FORMULA_0197>>",
+      "formula": "\\E [X \\mid \\tilde X = \\tilde x] = \n  \\frac\n   {\\int e^{-\\frac{\\|x - \\tilde{x}\\|^2}{2 \\sigma_Z^2}} \\sum_a \\left( w_{a} C_a e^{-\\frac{\\|x - \\mu_\\alpha\\|^2}{2 \\sigma_a^2}}\\right) \n     x \\, dx\n   }\n   {\\int e^{-\\frac{\\|x - \\tilde{x}\\|^2}{2 \\sigma_Z^2}} \\sum_a \\left( w_{a} C_a e^{-\\frac{\\|x - \\mu_a\\|^2}{2 \\sigma_a^2}} \\right)\n     \\, dx\n   },",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "In the numerator, the term uses μ_α inside the sum over a (e^{−||x−μ_α||^2/(2σ_a^2)}), which should be μ_a to match the summation index.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 9.85
+    },
+    {
+      "label": "<<FORMULA_0060>>",
+      "formula": "&f_\\text{opt}(\\tilde X)=\\E[X|\\tilde X] \\nonumber\\\\\n    &= \\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} \\tilde X - \\frac{\\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} \\frac\n    {\\sum_{a } w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle /(\\sigma_0^2 +\\sigma_{Z}^2)}\n        \\:\\: \\mu_{a}\n        }\n    {\\sum_{a }w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / (\\sigma_0^2 +\\sigma_{Z}^2)}}.",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The second term should be added, not subtracted; the correct posterior mean is (σ0^2/(σ0^2+σZ^2))·𝑋̃ + (σZ^2/(σ0^2+σZ^2))·E[μ_a | 𝑋̃]",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 23.35
+    },
+    {
+      "label": "<<FORMULA_0173>>",
+      "formula": "\\begin{aligned}\n   \\E_{X \\mid \\tilde X} [ X \\mid \\tilde X ]\n              &= \\int x\\: p_{X \\mid \\tilde X}(x \\mid \\tilde X) dx \\\\\n              &= \n              \\frac\n            {\\int\n              x \\, e ^{- \\lVert \\tilde X -  x \\rVert ^2 / 2 \\sigma_{Z}^2} p_X(x) \n            dx}\n            {\\int \n              e ^{- \\lVert \\tilde X -  x \\rVert ^2 / 2 \\sigma_{Z}^2} p_X(x) \n            dx}.\n\\end{aligned}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 23.53
+    },
+    {
+      "label": "<<FORMULA_0193>>",
+      "formula": "\\begin{aligned}\n  \\frac{\\int_0^{\\pi} e^{R \\lVert \\tilde x_{\\paral} \\rVert \\cos \\theta / \\sigma_{Z}^2} \\: \\cos \\theta \\sin^{(d - 1)} \\theta \\: d\\theta}\n       {\\int_0^{\\pi} e^{R \\lVert \\tilde x_{\\paral} \\rVert \\cos \\theta / \\sigma_{Z}^2} \\: \\sin^{(d - 1)} \\theta \\: d\\theta}\n  R \\frac{\\tilde x_{\\paral}}{\\lVert \\tilde x_{\\paral} \\rVert} \\\\\n  = \n  \\frac{I_\\frac{d+1}{2} \\left(R \\frac{\\lVert \\tilde x_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)}\n       {I_\\frac{d-1}{2} \\left(R \\frac{\\lVert \\tilde x_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)} \n  R \\frac{\\tilde x_{\\paral}}{\\lVert \\tilde x_{\\paral} \\rVert},\n\\end{aligned}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 28.41
+    },
+    {
+      "label": "<<FORMULA_0245>>",
+      "formula": "\\label{eq:softmax-ratio}\ng(\\{X_t\\}_{t=1}^L,\\tilde x)=\\frac{\\sum_{t=1}^LX_te^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}}{\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}}=\\frac{\\frac{1}{L}\\sum_{t=1}^LX_te^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}}{\\frac{1}{L}\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}}.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 13.24
+    },
+    {
+      "label": "<<FORMULA_0201>>",
+      "formula": "m_a \n% =\n% \\frac{\\frac{1}{\\sigma_\\eta^2} \\,\\tilde{x} + \\frac{1}{\\sigma_\\alpha^2}\\,\\mu_\\alpha}\n%      {\\frac{\\sigma_\\eta^2}{1} + \\frac{1}{\\sigma_\\alpha^2}}\n = \\frac{\\sigma_a^2 \\, \\tilde{x} + \\sigma_Z^2 \\,\\mu_a}\n     {\\sigma_a^2 + \\sigma_Z^2}.",
+      "has_error": true,
+      "error_type": "fraction_inversion",
+      "error_description": "In the commented precision-weighted formula, the denominator incorrectly uses \\sigma_\\eta^2/1 instead of 1/\\sigma_\\eta^2.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 20.44
+    },
+    {
+      "label": "<<FORMULA_0293>>",
+      "formula": "\\textrm{Pr}\\Bigg[\\Big|\\frac{1}{L}\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ e^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|<\\sinh{\\bigg(\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\bigg)}\\sqrt{\\frac{2}{L}\\ln\\bigg(\\frac{2}{\\delta}\\bigg)}\\Bigg]\\ge1-\\delta",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 16.27
+    },
+    {
+      "label": "<<FORMULA_0296>>",
+      "formula": "\\textrm{Pr}\\Bigg[\\Big|\\frac{1}{L}\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ e^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|\\ge \\epsilon]\\le 2\\exp\\Bigg[-\\frac{2L\\epsilon^2}{\\Big(\\exp\\big(\\frac{\\sigma_Z^2}{R||\\tilde x||_2}\\big)-\\exp\\big(-\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\big)\\Big)^2}\\Bigg]=2\\exp\\Bigg[-\\frac{L\\epsilon^2}{2\\sinh^2\\big(\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\big)}\\Bigg].",
+      "has_error": true,
+      "error_type": "fraction_inversion",
+      "error_description": "In the Hoeffding bound, the first exponential term uses exp(σ_Z^2/(R||\\tilde x||_2)) instead of exp(R||\\tilde x||_2/σ_Z^2); the numerator and denominator are swapped, making the equality to 2 sinh((R||\\tilde x||_2)/σ_Z^2) incorrect.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 18.85
+    },
+    {
+      "label": "<<FORMULA_0294>>",
+      "formula": "\\textrm{Pr}\\Bigg[\\Big|\\Big|\\frac{1}{L}\\sum_{t=1}^LX_te^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ Xe^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|\\Big|_\\infty<Re^{\\frac{R||\\tilde x||_2}{\\sigma_Z^2}}\\sqrt{\\frac{2}{L}\\ln\\bigg(\\frac{2d}{\\delta}\\bigg)}\\Bigg]\\ge 1-\\delta.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 32.74
+    },
+    {
+      "label": "<<FORMULA_0301>>",
+      "formula": "\\textrm{Pr}\\Bigg[\\Big|\\Big|\\frac{1}{L}\\sum_{t=1}^LX_te^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ Xe^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|\\Big|_\\infty\\ge \\epsilon]\\le 2d\\exp\\Bigg[-\\frac{L\\epsilon^2}{2R^2\\exp\\big(\\frac{2R||\\tilde x||_2}{\\sigma_Z^2}\\big)}\\Bigg].",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 37.11
+    },
+    {
+      "label": "<<FORMULA_0309>>",
+      "formula": "&F\\Big(E,\\big(\\frac{1}{\\epsilon}W_{PV},\\epsilon W_{KQ}\\big)\\Big)=\\frac{1}{\\epsilon}W_{PV} X_{1:L}\\Bigg[\\frac{1}{L}\\\\geft( \\mathbbm{1}_L +\\epsilon \\big( X_{1:L}^T W_{KQ}\\tilde X-(\\frac{1}{L}\\sum_t X_t^TW_{KQ}\\tilde X)\\mathbbm{1}_L\\big) + O(\\epsilon^2)\\right)\\Bigg]\\nonumber\\\\\n&=\\frac{1}{\\epsilon} W_{PV}\\bar X\n+ \\frac{1}{L}W_{PV}\\sum_{t=1}^LX_t(X_t-\\bar X)^TW_{KQ}\\tilde X+O(\\epsilon),",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 45.45
+    },
+    {
+      "label": "<<FORMULA_0206>>",
+      "formula": "\\E [X \\mid \\tilde X = \\tilde x] \n%  & = \n%  \\frac{\\sigma_\\alpha^2}\n%     {\\sigma_\\alpha^2 + \\sigma_\\eta^2} \\, \\tilde{x}\n%    + \n%\\frac{\\sigma_\\eta^2}\n%     {\\sigma_\\alpha^2 + \\sigma_\\eta^2}\n%  \\frac\n%   {\\sum_{\\alpha} w_{\\alpha} \\mu_{\\alpha} \\int \\exp(g_{\\alpha}) \\,dx}\n%   {\\sum_{\\alpha} w_{\\alpha} \\int \\exp(g_{\\alpha}) \\,dx} \\\\\n = \n  \\frac{\\sigma_0^2}\n     {\\sigma_0^2 + \\sigma_Z^2} \\, \\tilde{x}\n    + \n\\frac{\\sigma_Z^2}\n     {\\sigma_0^2 + \\sigma_Z^2}\n  \\frac\n   {\\sum_{a} w_{a} \\mu_{a} \n            \\exp\\left( \\frac{\\langle \\tilde{x}, \\mu_a \\rangle}{\\sigma_Z^2 + \\sigma_0^2} \\right)\n     }\n   {\\sum_{a} w_{a} \n            \\exp\\left( \\frac{\\langle \\tilde{x}, \\mu_a \\rangle}{\\sigma_Z^2 + \\sigma_0^2} \\right)\n            %e^{\\frac{\\langle \\tilde{x}, \\mu_\\alpha \\rangle}{(\\sigma_\\eta^2 + \\sigma_\\alpha^2)}}\n     }.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 53.17
+    },
+    {
+      "label": "<<FORMULA_0203>>",
+      "formula": "\\E [X \\mid \\tilde X = \\tilde x] \n   = \n  \\frac\n   {\\sum_{a} w_{a}\\big((\\frac{\\sigma_Z^2+\\sigma_a^2} {\\sigma_a^2}\\big)^{n/2}) \\exp\\big(-\\frac{\\lVert \\tilde x - \\mu_{a}\\rVert^2}{2 (\\sigma_Z^2 + \\sigma_a^2)}\\big) \\big(\\frac{\\sigma_a^2 \\, \\tilde{x} + \\sigma_Z^2 \\,\\mu_a}\n     {\\sigma_a^2 + \\sigma_Z^2} \\big)}\n   {\\sum_{a} w_{a} \\big(\\frac{\\sigma_Z^2+\\sigma_a^2} {\\sigma_a^2}\\big)^{n/2} \\exp\\big(-\\frac{\\lVert \\tilde x - \\mu_{a}\\rVert^2}{2 (\\sigma_Z^2 + \\sigma_a^2)}\\big)}",
+      "has_error": true,
+      "error_type": "fraction_inversion",
+      "error_description": "The normalization prefactor inside the sums is inverted; it should scale as (σ_Z^2/(σ_Z^2+σ_a^2))^{n/2} (equivalently ((σ_Z^2+σ_a^2)/σ_Z^2)^{-n/2}), but the formula uses ((σ_Z^2+σ_a^2)/σ_a^2)^{n/2}, yielding incorrect a-dependent weights.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 72.6
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "metadata": {
+    "error_rate": 0.5,
+    "random_seed": null,
+    "total_formulas_processed": 20,
+    "formulas_modified": 9,
+    "formulas_unmodified": 11,
+    "timestamp": "2025-10-31T17:04:03.718711"
+  },
+  "errors": [
+    {
+      "label": "<<FORMULA_0211>>",
+      "original_formula": "\\begin{split}\n\\gL =&\\sup_{s_t}\\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d}  (L(x_t, u_{t|0,1}, t) - \\frac{\\partial s_t}{\\partial t} - \\langle  \\nabla s_t, u\\rangle -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] \\\\ \n    &+ \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\sup_{s_t} \\int_0^1 \\int_{\\sR^d}  ( - H(x_t,  \\nabla s_t, t) - \\frac{\\partial s_t}{\\partial t}  -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] + \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\min_{s_t} \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) + \\frac{\\partial s_t}{\\partial t}  +\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle\n\\end{split}",
+      "modified_formula": "\\begin{split}\n\\gL =&\\sup_{s_t}\\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d}  (L(x_t, u_{t|0,1}, t) - \\frac{\\partial s_t}{\\partial t} - \\langle  \\nabla s_t, u\\rangle -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] \\\\ \n    &+ \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\sup_{s_t} \\int_0^1 \\int_{\\sR^d}  ( - H(x_t,  \\nabla s_t, t) - \\frac{\\partial s_t}{\\partial t}  -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] + \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\min_{s_t} \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) + \\frac{\\partial s_t}{\\partial t}  +\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{2}{\\sigma^2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle\n\\end{split}",
+      "error_type": "fraction_inversion",
+      "error_description": "Inverted fraction (swapped numerator and denominator)",
+      "line_number": 2114,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0238>>",
+      "original_formula": "\\begin{split}\\label{eq:OG3}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 + \\lambda {u_{t|0,1}^\\star}^\\intercal\\nabla G_t -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta + \\lambda \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta - \\lambda \\nabla G_t - u_{t|0,1}^\\star|^2) p_t dxdt\n    \\end{split}",
+      "modified_formula": "\\begin{split}\\label{eq:OG3}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 + \\lambda {u_{t|0,1}^\\star}^\\intercal\\nabla G_t -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta + \\lambda \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{2}{1}\\| a_t^\\theta - \\lambda \\nabla G_t - u_{t|0,1}^\\star|^2) p_t dxdt\n    \\end{split}",
+      "error_type": "fraction_inversion",
+      "error_description": "Inverted fraction (swapped numerator and denominator)",
+      "line_number": 2182,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0185>>",
+      "original_formula": "\\begin{cases}\n        u_t^\\intercal\\nabla G_t > 0 : u_t = a_t  - (\\nabla G_t)\\Rightarrow (a_t  - (\\nabla G_t))^\\intercal\\nabla G_t \\geq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\geq \\|\\nabla G_t\\|^2 \\geq 0 \\\\\n        u_t^\\intercal\\nabla G_t < 0 : u_t = a_t  + (\\nabla G_t)\\Rightarrow (a_t  + (\\nabla G_t))^\\intercal\\nabla G_t \\leq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\leq -\\|\\nabla G_t\\|^2 \\leq 0\\\\\n        u_t^\\intercal\\nabla G_t = 0 : \\partial(u_t^\\intercal\\nabla G_t) = [-1,1], \\text{ from which we infer } a_t^\\intercal\\nabla G_t = \\alpha \\|\\nabla G_t\\|^2, \\text{ for } \\alpha \\in [-1,1].\n     \\end{cases}",
+      "modified_formula": "\\begin{cases}\n        u_t^\\intercal\\nabla G_t > 0 : u_t = a_t  - (\\nabla G_t)\\Rightarrow (a_t  - (\\nabla G_t))^\\intercal\\nabla G_t \\geq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\geq \\|\\nabla G_t\\|^2 \\geq 0 \\\\\n        u_t^\\intercal\\nabla G_t < 0 : u_t = a_t  + (\\nabla G_t)\\Rightarrow (a_t  \\\\times (\\nabla G_t))^\\intercal\\nabla G_t \\leq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\leq -\\|\\nabla G_t\\|^2 \\leq 0\\\\\n        u_t^\\intercal\\nabla G_t = 0 : \\partial(u_t^\\intercal\\nabla G_t) = [-1,1], \\text{ from which we infer } a_t^\\intercal\\nabla G_t = \\alpha \\|\\nabla G_t\\|^2, \\text{ for } \\alpha \\in [-1,1].\n     \\end{cases}",
+      "error_type": "operator_swap",
+      "error_description": "Changed '+' to '×'",
+      "line_number": 2024,
+      "formula_type": "display"
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "original_formula": "\\begin{split}\n            \\sum_{i=0}^{N-1} \\bigg| \\mathbb{E}\\Bigr[ u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) )\\Delta t \\Bigr] \\bigg|\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ \\bigr| (u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) ) \\bigr| \\Delta t \\Bigr]\\\\\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ (\\bigr| u_t^\\intercal\\nabla G \\bigr| + \\bigr|\\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) \\Delta t  \\Bigr] \n        \\end{split}",
+      "modified_formula": "\\begin{split}\n            \\sum_{i=0}^{N-1} \\bigg| \\mathbb{E}\\Bigr[ u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) )\\Delta t \\Bigr] \\bigg|\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ \\bigr| (u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_m})) ) \\bigr| \\Delta t \\Bigr]\\\\\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ (\\bigr| u_t^\\intercal\\nabla G \\bigr| + \\bigr|\\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) \\Delta t  \\Bigr] \n        \\end{split}",
+      "error_type": "index_change",
+      "error_description": "Changed subscript 'i' to 'm'",
+      "line_number": 1934,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0037>>",
+      "original_formula": "\\label{eq:lagrangian}\n    \\begin{split}\n        &\\min_{p_{t},u_t} \\int_{\\sR^d\\times [0,1]} \\Bigr( \\frac{1}{2}\\|u_t\\|^2 +  \\mathbb{E}_{p_{0|t}}\\bigr[|u_t^\\intercal \\nabla G_{t,0}| + \\frac{\\sigma^2}{2}\\Delta G_{t,0}\\bigr]\\Bigr) p_t \\mathrm{d}x \\mathrm{d}t, \\\\\n        \\text{ s.t. }  &\\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\text{ and } p_0 = \\pi_0, p_1 = \\pi_1\n    \\end{split}",
+      "modified_formula": "\\label{eq:lagrangian}\n    \\begin{split}\n        &\\min_{p_{t},u_t} \\int_{\\sR^d\\times [0,1]} \\Bigr( \\frac{1}{2}\\|u_t\\|^2 +  \\mathbb{E}_{p_{0|t}}\\bigr[|u_t^\\intercal \\nabla G_{t,0}| + \\frac{\\sigma^2}{2}\\Delta G_{t,0}\\bigr]\\B^Tigr) p_t \\mathrm{d}x \\mathrm{d}t, \\\\\n        \\text{ s.t. }  &\\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\text{ and } p_0 = \\pi_0, p_1 = \\pi_1\n    \\end{split}",
+      "error_type": "transpose_error",
+      "error_description": "Added transpose to B",
+      "line_number": 1438,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0228>>",
+      "original_formula": "\\begin{split}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star] &= \\int_0^1 \\int_{\\sR^d}  \\Bigr(\\frac{1}{2}|| a_t^\\theta - g_t\\cdot\\nabla G_t||^2 - \\frac{\\sigma^2}{2}\\Delta G_t \\\\ &+ \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 +  |{u_{t|0,1}^\\star}^\\intercal\\nabla G_t| + \\frac{\\sigma^2}{2}\\Delta G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle\\Bigr) p_{t|0,1} \\pi_{0,1} dxdt \\\\\n    \\end{split}",
+      "modified_formula": "\\begin{split}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star] &= \\int_0^1 \\int_{\\sR^d}  \\Bigr(\\frac{1}{2}|| a_t^\\theta - g_t\\cdot\\nabla G_t||^2 - \\frac{\\sigma^2}{2}\\Delta G_t \\\\ &+ \\frac{2}{1}\\|u_{t|0,1}^\\star\\|^2 +  |{u_{t|0,1}^\\star}^\\intercal\\nabla G_t| + \\frac{\\sigma^2}{2}\\Delta G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle\\Bigr) p_{t|0,1} \\pi_{0,1} dxdt \\\\\n    \\end{split}",
+      "error_type": "fraction_inversion",
+      "error_description": "Inverted fraction (swapped numerator and denominator)",
+      "line_number": 2157,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0191>>",
+      "original_formula": "\\begin{cases}\n        \\partial(u_t^\\intercal\\nabla G_t) = sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{      for         }  \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n        \\partial(u_t^\\intercal\\nabla G_t) = \\frac{a_t^\\intercal\\nabla G_t}{\\nabla \\|G_t\\|^2}, \\quad  \\text{    for     } \\quad |a_t^\\intercal\\nabla G_t| \\leq \\|\\nabla G_t\\|^2\n     \\end{cases}",
+      "modified_formula": "\\begin{cases}\n        \\partial(u_t^\\intercal\\nabla G_t) = sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{      for         }  \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n        \\partial(u_t^\\intercal\\nabla G_t) = \\frac{\\nabla \\|G_t\\|^2}{a_t^\\intercal\\nabla G_t}, \\quad  \\text{    for     } \\quad |a_t^\\intercal\\nabla G_t| \\leq \\|\\nabla G_t\\|^2\n     \\end{cases}",
+      "error_type": "fraction_inversion",
+      "error_description": "Inverted fraction (swapped numerator and denominator)",
+      "line_number": 2032,
+      "formula_type": "display"
+    },
+    {
+      "label": "<<FORMULA_0120>>",
+      "original_formula": "\\min_{p_{t|0,1}} \\int \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr],\\\\ \\text{  s.t.  } \\frac{\\partial p_{t|0,1}}{\\partial t} = - \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) + \\frac{\\sigma^2}{2}\\Delta p_{t|0,1}",
+      "modified_formula": "\\min_{p_{t|0,1}} \\int \\mathbb{E^T}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr],\\\\ \\text{  s.t.  } \\frac{\\partial p_{t|0,1}}{\\partial t} = - \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) + \\frac{\\sigma^2}{2}\\Delta p_{t|0,1}",
+      "error_type": "transpose_error",
+      "error_description": "Added transpose to E",
+      "line_number": 1849,
+      "formula_type": "display"
+    },
+    {
+      "label": "<<FORMULA_0193>>",
+      "original_formula": "g(a_t^\\intercal\\nabla G_t) = \\begin{cases} sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{   for     } \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n\\frac{a_t^\\intercal\\nabla G_t}{\\nabla \\|G_t\\|^2}, \\quad \\text{ for } \\quad  \n|a_t^\\intercal\\nabla G_t| \\leq \\|\\nabla G_t\\|^2\n\\end{cases}",
+      "modified_formula": "g(a_t^\\intercal\\nabla G_t) = \\begin{cases} sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{   for     } \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n\\frac{a_t^\\intercal\\nabla G_t}{\\nabla \\|G_t\\|^2}, \\quad \\text{ for } \\quad  \n|a_t^\\intercal\\nabla G_t| \\\\geq \\|\\nabla G_t\\|^2\n\\end{cases}",
+      "error_type": "inequality_flip",
+      "error_description": "Changed '≤' to '≥'",
+      "line_number": 2039,
+      "formula_type": "display"
+    }
+  ],
+  "unmodified": [
+    "<<FORMULA_0215>>",
+    "<<FORMULA_0207>>",
+    "<<FORMULA_0234>>",
+    "<<FORMULA_0231>>",
+    "<<FORMULA_0105>>",
+    "<<FORMULA_0042>>",
+    "<<FORMULA_0165>>",
+    "<<FORMULA_0210>>",
+    "<<FORMULA_0175>>",
+    "<<FORMULA_0218>>",
+    "<<FORMULA_0226>>"
+  ]
+}

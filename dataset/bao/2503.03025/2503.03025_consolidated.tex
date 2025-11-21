@@ -1,0 +1,2349 @@
+%%%%%%%% ICML 2025 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs}
+\usepackage{placeins}
+\usepackage{balance}
+\usepackage[bottom]{footmisc}
+
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2025} with \usepackage[nohyperref]{icml2025} above.
+\usepackage{hyperref}
+
+
+% Attempt to make hyperref and algorithmic work together better:
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+%\usepackage[ruled,vlined]{algorithm2e}
+
+% Use the following line for the initial blind version submitted for review:
+\usepackage[accepted]{icml2025}
+
+\let\algorithmicrequire\relax
+\let\algorithmicensure\relax
+\let\algorithmicreturn\relax
+\let\algorithmicreturn\relax
+\let\algorithmiccomment\relax
+
+\let\algorithmic\relax
+\let\endalgorithmic\relax
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% If accepted, instead use the following line for the camera-ready submission:
+%\usepackage[accepted]{icml2025}
+
+% For theorems and such
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{bm}
+\usepackage{comment}
+\usepackage{booktabs}
+\usepackage{makecell}
+
+
+% if you use cleveref..
+\usepackage[capitalize,noabbrev]{cleveref}
+\usepackage{xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THEOREMS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator*{\bx}{\mathbf{x}}
+\DeclareMathOperator*{\diag}{\mathrm{diag}}
+\DeclareMathOperator*{\by}{\mathbf{y}}
+\DeclareMathOperator*{\bu}{\mathbf{u}}
+\DeclareMathOperator*{\bv}{\mathbf{v}}
+\DeclareMathOperator*{\Tr}{\mathbf{tr}}
+\DeclareMathOperator*{\argmin}{\arg\min}
+\DeclareMathOperator*{\argmax}{\arg\max}
+\newcommand{\dee}{\,\mathrm{d}}
+\newcommand{\mb}{\mathbf}
+\newcommand{\msf}{\mathsf}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\vp}{\varphi}
+\newcommand{\tht}{\theta}
+\newcommand{\sig}{\sigma}
+\newcommand{\ci}{\mathcal{I}}
+\newcommand{\R}{\mathbb{R}}
+%\DeclareMathOperator*{\argmin}{arg\,min}
+
+
+\newcommand{\ourmethod}{\texttt{HiRef}}
+
+\usepackage{xparse}
+
+\NewDocumentCommand{\ourmethodFull}{s}{
+\unskip
+  \IfBooleanTF{#1}
+    {Hierarchical refinement}% Capitalized version
+    {hierarchical refinement}% Lowercase version
+  \unskip
+}
+
+\newcommand{\ourmethodFullCap}
+    {Hierarchical Refinement\xspace}
+
+% Todonotes is useful during development; simply uncomment the next line
+%    and comment out the line below the next line to turn off comments
+%\usepackage[disable,textsize=tiny]{todonotes}
+\usepackage[textsize=tiny]{todonotes}
+
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Hierarchical Refinement: Optimal Transport to Infinity and Beyond}
+
+\begin{document}
+%\balance 
+
+\twocolumn[
+\icmltitle{Hierarchical Refinement: Optimal Transport to Infinity and Beyond}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2025
+% package.
+
+% List of affiliations: The first argument should be a (short)
+% identifier you will use later to specify author affiliations
+% Academic affiliations should list Department, University, City, Region, Country
+% Industry affiliations should list Company, City, Region, Country
+
+% You can specify symbols, otherwise they are numbered in order.
+% Ideally, you should not use this facility. Affiliations will be numbered
+% in order of appearance and this is the preferred way.
+\icmlsetsymbol{equal}{*}
+
+\begin{icmlauthorlist}
+\icmlauthor{Peter Halmos}{xxx,equal}
+\icmlauthor{Julian Gold}{xxx,yyy,equal}
+\icmlauthor{Xinhao Liu}{xxx}
+\icmlauthor{Benjamin J. Raphael}{xxx}
+\end{icmlauthorlist}
+
+
+\icmlaffiliation{xxx}{Department of Computer Science, Princeton University}
+\icmlaffiliation{yyy}{Center for Statistics and Machine Learning, Princeton University}
+
+\icmlcorrespondingauthor{Benjamin J. Raphael}{braphael@princeton.edu}
+
+\icmlkeywords{Machine Learning, ICML}
+
+\vskip 0.3in
+]
+
+\printAffiliationsAndNotice{\icmlEqualContribution}
+
+
+
+
+\begin{abstract}
+Optimal transport (OT) has enjoyed great success in machine learning as a principled way to align datasets via a least-cost correspondence, driven in large part by the runtime efficiency of the Sinkhorn algorithm \cite{sinkhorn}.
+However, Sinkhorn has quadratic space and time complexity in the number of points, limiting scalability to larger datasets. Low-rank OT achieves linear complexity, but by definition, cannot compute a one-to-one correspondence between points. When the optimal transport problem is an assignment problem between datasets then an optimal mapping, known as the \emph{Monge map}, is guaranteed to be a bijection. In this setting, we show that the factors of an optimal low-rank coupling co-cluster each point with its image under the Monge map. We leverage this invariant to derive an algorithm, 
+\emph{\ourmethodFullCap} %\emph{hierarchical refinement} 
+(\ourmethod{}), that dynamically constructs a multiscale partition of each dataset using low-rank OT subproblems, culminating in the bijective Monge map. \ourmethodFullCap{} runs in log-linear time and linear space, retaining the advantages of low-rank OT while overcoming its limited resolution. We demonstrate the advantages of \ourmethodFullCap{} on several datasets, including ones containing over a million points, scaling full-rank OT to problems previously beyond Sinkhorn's reach.
+\end{abstract}
+
+\section{Introduction}
+\label{intro}
+
+Optimal transport (OT) is a mathematical framework for comparing probability distributions $\mu$ and $\nu$. Given a cost function $c$, the \emph{Monge problem} is to find a mapping $T$ transforming a distribution $\mu$ into $\nu$ (i.e. $T_{\sharp} \mu = \nu$) with least-cost. A relaxation of this problem, called the \emph{Kantorovich problem}, instead seeks a least-cost coupling $\gamma$ between  $\mu$ and $\nu$. 
+In the Kantorovich formulation, mass splitting is allowed and thus a solution always exists; in contrast, a Monge map between $\mu$ and $\nu$ may not exist. When a Monge map $T$ does exist, the solution to the Kantorovich problem is a coupling $\gamma = \left( \mathrm{id} \times T \right)_{\sharp} \mu$ supported on its graph, and the Monge and Kantorovich problems coincide \cite{brenier1991polar}.
+
+When $\mu$ and $\nu$ are discrete uniform measures on $n$ 
+points
+the optimal transport problem reduces to an assignment problem. Classical algorithms such as the Hungarian algorithm and Network Simplex \cite{Tarjan1997, Orlin1997}, solve this in cubic time. The Sinkhorn algorithm \cite{sinkhorn} solves the entropy-regularized Kantorovich problem with quadratic runtime, greatly expanding the applicability of computational OT. However, the Sinkhorn algorihtm requires quadratic space to store the coupling $\gamma$.
+%, where an optimal coupling matrix $\mathbf{P} \in \mathbb{R}_+^{n \times m}$ is computed for datasets of size $n$ and $m$. 
+
+In recent years, OT has found numerous applications in machine learning and across science, including: 
+domain adaptation 
+\cite{courty2014domain, solomon2015convolutional}, 
+self-attention \cite{tay20a, sander22a, geshkovski2023mathematical},
+computational biology \cite{schiebinger2019optimal, yang2020predicting, zeira2022PASTE, Bunne_2023, destot, klein2023moscot},
+unpaired data translation \cite{KorotinLGSFB21, bortoli2024schrodinger, tong2024improving, klein2024generative}, and alignment problems in transformers and large language models \cite{melnyk2024distributional, li2024gilot}. The \emph{least-cost} principle of optimal transport is crucial for training high-quality generative models using  Schrödinger bridges, flow-matching, diffusion models, or  neural ordinary differential equations \cite{finlay2020trainneuralodeworld, tong2024improving,bortoli2024schrodinger, kornilov2024optimal,klein2024generative}. These models typically require millions to hundreds of millions of data-points to achieve high-performance at scale \cite{dalle}, limiting the scope of OT for generative modeling.
+
+
+As modern datasets grow to have tens of thousands or even millions of points, the quadratic space and time complexity of Sinkhorn becomes increasingly prohibitive. 
+This limitation is widely recognized in the machine learning literature, with \cite{bortoli2024schrodinger} noting that the quadratic complexity of optimal transport renders its application to modern datasets on the order of millions of points impractical. A number of approaches have been proposed to address scaling OT to massive datasets which avoid instantiating a full coupling matrix. Mini-batch OT \cite{genevay18learning} improves scalability, but incurs significant biases \cite{JMLR:v20:18-079, KorotinLGSFB21, fatras2021jumbot} as each mini-batch alignment is a poor representation of the global coupling.
+Multiple works have investigated the theoretical properties of mini-batch estimators of the coupling \cite{fatras2020learning, fatras2021minibatch}, while others have attempted to mitigate this bias using partial or unbalanced OT that allows mass variation between mini-batches \cite{nguyen2021improving, fatras2021jumbot}. However, these approaches introduce additional hyperparameters to control the degree of unbalancedness, and ultimately remain biased, local approximations of the global coupling.
+
+Neural optimal transport methods \cite{pmlr-v119-makkuva20a, Bunne_2023, fan2023neural, korotin2023neural, buzun2024expectile}, parametrize the Monge map as a neural network instead of materializing a quadratic coupling matrix. However, these methods have noted limitations recovering faithful maps \cite{KorotinLGSFB21}. 
+
+%Other methods \cite{de2021diffusion, bortoli2024schrodinger} solve for a stochastic map through the Schr\"{o}dinger bridge problem, but do not solve the primal optimal transport problem directly.
+
+%In general, maps realizing the minimum \eqref{eq:monge_prob} are called \emph{Monge maps}, and a flurry of recent work \cite{pmlr-v119-makkuva20a, Bunne_2023, fan2023neural, korotin2023neural, buzun2024expectile} 
+%on neural OT is devoted to deriving such maps using neural networks (neural OT).
+
+
+%Training large-scale generative models using  Schrödinger bridges, flow-matching, diffusion models, or  neural ordinary differential equations often requires millions to hundreds of millions of data-points to achieve high-performance \cite{dalle}. However, the \emph{least-cost} principle of optimal transport is essential for 
+
+
+Another approach to improve space complexity of OT is to introduce a \emph{low-rank} constraint on the coupling matrix
+in the Kantorovich problem. This has been done by parameterizing the coupling through a set of low-rank factors \cite{Scetbon2021LowRankSF,scetbon2022linear,scetbon2022lowrank,scetbon2023unbalanced,FRLC}
+%. A related approach uses 
+or by using a proxy objective for the low-rank problem, factoring the transport through a small number of anchor points \cite{forrow19a,lin2021making}. For a given rank $r$ these approaches have $O(n r)$ space complexity, enabling \emph{linear} time and space scaling. Low-rank OT has been used successfully on datasets on the order of $10^{5}$ samples with ranks on the order of $10^{1}$ \cite{scetbon2023unbalanced, FRLC,HMOT,klein2023moscot}, but computing \emph{full-rank} couplings between datasets of sizes on the order of $10^{5}$ and greater
+has not yet been accomplished.
+
+\vspace{-2mm}
+
+\paragraph{Contributions} 
+We introduce \ourmethodFullCap{} (\ourmethod{}), an algorithm to scalably compute a full-rank alignment between two equally-sized input datasets $\mathsf{X}$ and $\mathsf{Y}$ by solving a hierarchy of low-rank OT sub-problems. The success of this refinement is driven by a theoretical result, Proposition~\ref{prop:low_rank_monge_main}, stating that factors of an optimal low-rank coupling between $\mathsf{X}$ and $\mathsf{Y}$ co-cluster points $\mathsf{X}$ with their image under the Monge map. %$T(\mathsf{X}) = \mathsf{Y}$.
+%relating $\mathsf{X}$ and $\mathsf{Y}$.
+%= T(\mathsf{X})$. 
+We use Proposition~\ref{prop:low_rank_monge_main} recursively to obtain increasingly fine partitions of $\mathsf{X}$ and $\mathsf{Y}$. At each scale, the solutions to low-rank OT sub-problems 
+%place 
+are bijections between the partitions of $\mathsf{X}$ and $\mathsf{Y}$. Iterating to the finest scale gives a bijection between $\mathsf{X}$ and $\mathsf{Y}$.
+
+\ourmethodFullCap\ constructs a \emph{multiscale partition} of each dataset, and thus is related to \cite{gerber2017multiscale}, which introduced a general framework for multiscale optimal transport using such partitions, and the earlier work of \cite{merigot2011multiscale}. 
+Unlike \cite{merigot2011multiscale, gerber2017multiscale}, \ourmethodFullCap\ (i) does not assume multiscale partitions for each dataset are given, instead constructing them on the fly; and (ii) operates intrinsically to the data, without a mesh or anchor points in the ambient space of the data, avoiding the curse of dimensionality.
+
+We demonstrate that \ourmethodFullCap\ computes OT maps efficiently in high-dimensional spaces, often matching or even outperforming Sinkhorn in terms of primal cost. Moreover, \ourmethod{} has linear space complexity and time complexity scaling log-linearly in the dataset size. Unlike low-rank OT, \ourmethodFullCap\ places $\mathsf{X}$ and $\mathsf{Y}$ in bijective correspondence. \ourmethodFullCap\ scales to over a million points, enabling the use of OT on massive datasets without incurring the bias of mini-batching.
+\section{Background and Related Work}
+Suppose $\mathsf{X} = \{ \mathbf{x}_i \}_{i=1}^n$ and $\mathsf{Y} = \{ \mathbf{y}_j \}_{j=1}^m$ are datasets in the same metric space $(\mathcal{X}, \mathsf{d}_{\mathcal{X}})$. Let $c: \mathcal{X} \times \mathcal{X} \to \mathbb{R}_{+}$ be a cost function. This cost $c$ is often assumed to satisfy strict convexity or to be a metric. Datasets $\mathsf{X}$ and $\mathsf{Y}$ are represented as discretely supported probability measures $\mu = \sum_{i=1}^{n} \mathbf{a}_{i} \delta_{ \mathbf{x}_{i}}$ and $\nu = \sum_{j=1}^{m} \mathbf{b}_{j} \delta_{ \mathbf{y}_{j}}$ for probability vectors $\mathbf{a} \in \Delta_{n}$ and $\mathbf{b} \in \Delta_{m}$. Throughout, $\Delta_k$ denotes the \emph{$k$-simplex} 
+$\{ \mathbf{p} \in \mathbb{R}_+^k : \sum_i \mathbf{p}_i = 1 \}$, 
+the set of probability vectors of length $k$.
+
+\paragraph{Monge Problem}
+Optimal transport has its origin in the \emph{Monge problem} \cite{monge1781memoire}, concerned with finding an optimal map $T : \mathsf{X} \to \mathsf{Y}$ pushing $\mu$ forward to $\nu$:
+\begin{align}
+\label{eq:monge_prob}
+\mathrm{M}_c(\mu, \nu) = 
+\min_{
+T : 
+T_{\sharp} \mu = 
+\nu
+} 
+\mathbb{E}_{
+\mu
+}c(x, T(x))\,. 
+\end{align}
+Above, $T_{\sharp}\mu$ is the pushforward of $\mu$ under $T$, the measure on $\mathsf{Y}$ with 
+$T_{\sharp} \mu (B) := \mu(T^{-1}(B))$ for 
+any (measurable) set $B \subset \mathsf{Y}$. In general, a Monge map may not exist (e.g. if $m > n$). However, when $|\mathsf{X}| = |\mathsf{Y}| = n$ and $\mathbf{a}, \mathbf{b}$ are uniform then the Monge problem becomes the \emph{assignment problem} and has a bijective solution \cite{Thorpe2017IntroductionTO}.
+
+\paragraph{Kantorovich Problem}
+The \emph{Kantorovich problem} \cite{kantorovich1942transfer} was introduced as a relaxation of the Monge problem. In contrast to the Monge problem, the Kantorovich problem allows mass-splitting and a solution is always guaranteed to exist. 
+Define the \emph{transport polytope} $\Pi_{\mathbf{a}, \mathbf{b}}$ as the following set of coupling matrices
+\begin{equation}
+\begin{split}
+& \Pi_{\mathbf{a}, \mathbf{b} } := \left\{ \mathbf{P} \in \mathbb{R}_+^{n \times m} : \mathbf{P} \mathbf{1}_m = \mathbf{a}, \mathbf{P}^\top \mathbf{1}_n = \mathbf{b} \right\},
+\end{split}
+\end{equation}
+respectively with left (or ``source'') marginal $\mathbf{a}$ and with right (or ``target'') marginal $\mathbf{b}$. 
+For the cost $c(\cdot, \cdot)$, define the cost matrix $\mathbf{C}$ by $\mathbf{C}_{ij} = c(x_{i}, y_{j})$. In this discrete setting, the Kantorovich problem seeks a least cost coupling matrix $\mathbf{P} \in \Pi_{\mathbf{a}, \mathbf{b}}$ between the probability vectors $\mathbf{a}, \mathbf{b}$ associated to each measure $\mu, \nu$:
+\begin{align}
+\label{eq:kantorovich_problem}
+\mathrm{W}_{c}(\mu, \nu) = \min_{\mathbf{P} \in \Pi_{\mathbf{a}, \mathbf{b}}} \langle \mathbf{C}, \mathbf{P} \rangle_{F} \, . 
+\end{align}
+The optimal value $\mathrm{W}_{c}(\mu, \nu)$ of \eqref{eq:kantorovich_problem} is called the \emph{$c$-Wasserstein distance} between $\mu$ and $\nu$.
+
+\paragraph{Sinkhorn Algorithm and the $\epsilon$-schedule} 
+The Sinkhorn algorithm \cite{sinkhorn} relaxes the classical linear-programming formulation of optimal transport by solving an entropy regularized version of \eqref{eq:kantorovich_problem},
+\begin{align}
+\label{eq:ent_wasserstein}
+\mathrm{W}_\epsilon ( \mu, \nu) 
+:
+= \min_{\mathbf{P} \in \Pi_{\mathbf{a}, \mathbf{b}}} \langle \mathbf{C}, \mathbf{P} \rangle _F - \epsilon H( \mathbf{P}),
+\end{align}
+where $H(\mathbf{P}) := -\sum_{ij} \mathbf{P}_{ij} ( \log \mathbf{P}_{ij} -1)$ is the Shannon entropy, and the parameter $\epsilon > 0$ is the regularization strength. The Sinkhorn algorithm improved the $O(n^3 \log n)$ time complexity of classical techniques used for OT such as the Hungarian algorithm \cite{Kuhn1955Hungarian} and Network Simplex \cite{Orlin1997, Tarjan1997} to $O(n^2 \log n)$ \cite{luo2023improved}. As $\epsilon \downarrow 0$, the optimal coupling $\mathbf{P}^{\star, \epsilon}$ for \eqref{eq:ent_wasserstein} converges to a sparse optimal coupling for \eqref{eq:kantorovich_problem} at an extremal point of the transport polytope (c.f. \cite{peyre2019computational}). 
+%The convergence of optimal transport from an initial feasible condition such as the product measure $\mathbf{a} \otimes \mathbf{b}$ to a sparse, optimal plan on the Birkhoff polytope, depends greatly on $\epsilon$. In the limit $\epsilon \to 0$, $\mathbf{P}^{\epsilon}$ converges to the optimal sparse plan . 
+However, the number of iterations required scales as $\mathrm{poly}(1/\epsilon)$, diverging as $\epsilon$ decreases. A technique used to improve this scaling is the $\epsilon$-schedule, an adaptive, monotone-decreasing and step-dependent set of entropy parameters $\epsilon_{1} > \epsilon_{2} > \dots > \epsilon_{t_{\mathrm{fin}}}$. This anneals Problem~\ref{eq:ent_wasserstein} from high-entropy to low-entropy, gradually driving a dense initial condition to a sparse solution with a $\log{(1 / \epsilon)}$ rate \cite{Chen2023}.
+
+\begin{comment}
+As $\epsilon$ corresponds to a temperature parameter in the Sinkhorn factorization $\mathbf{P} = \diag( e^{- \mathbf{f}/ \epsilon} ) e^{ - \mathbf{C} / \epsilon} \diag( e^{- \mathbf{h}/ \epsilon} )$ \cite{sinkhorn, sinkhorn1966relationship}, this \emph{annealing} from high-temperature to low-temperature gradually drives a dense initial condition to a sparse solution with a $\log{(1 / \epsilon)}$ rate \cite{Chen2023}.
+\end{comment}
+
+\paragraph{Low-rank Optimal Transport}
+
+%(\textbf{Diagonal Factorization} + \textbf{Latent-Coupling (LC) Factorization})
+
+The nonnegative rank $\mathrm{rk}_+(\mathbf{M})$ of a nonnegative matrix $\mathbf{M} \succcurlyeq 0$ is the smallest number of nonnegative rank-1 matrices summing to $\mathbf{M}$; i.e. $\mathrm{rk}_+(\mathbf{M})$ is the smallest integer $z$ such that there exist nonnegative vectors $\mathbf{q}_{1}, \dots, \mathbf{q}_{z} \succcurlyeq 0$ and $\mathbf{r}_{1}, \dots, \mathbf{r}_{z} \succcurlyeq 0$ satisfying $\mathbf{M} = \sum_{i=1}^{z} \mathbf{q}_{i} \mathbf{r}_{i}^{\top}$.
+%defined as $\mathrm{rk}_+(\mathbf{M}) = \min_z  \mathbf{M} = \sum_{i=1}^{z} \mathbf{q}_{i} \mathbf{r}_{i}^{\top} \mathbf{q}_{i} \mathbf{r}_{i}^{\top} \succcurlyeq 0 \}$. 
+Let $\Pi_{\mathbf{a}, \mathbf{b}}(r) := \{ \mathbf{P} \in \Pi_{\mathbf{a}, \mathbf{b}} : \mathrm{rk}_+(\mathbf{P})= r\}$ be the set of rank-$r$ couplings. The low-rank Wasserstein problem for general cost matrix $\mathbf{C}$ is:
+\begin{align}
+\label{eq:lora_wass}
+    \mathbf{P}^\star 
+    = \argmin_{
+    \mathbf{P} \in \Pi_{\mathbf{a},\mathbf{b}}(r) }  
+    \langle 
+    \mathbf{C}, \mathbf{P}
+    \rangle_F \,. 
+\end{align}
+From \cite{cohen1993nonnegative}, each $\mathbf{P} \in \Pi_{\mathbf{a}, \mathbf{b}}(r)$ may be decomposed as 
+\vspace{-4mm}
+\begin{equation}
+\mathbf{P} = \sum_{i=1}^{r} (1 / \mathbf{g}_{i}) \mathbf{Q}_{\cdot,i} \mathbf{R}_{\cdot,i}^{\top} :=  \mathbf{Q} \mathrm{diag}(1/\mathbf{g}) \mathbf{R}^\top,
+\end{equation} 
+\vspace{-6mm}
+
+where $\mathbf{g} \in \Delta_r$, $\mathbf{Q} \in \Pi_{ \mathbf{a}, \mathbf{g} }$ and $\mathbf{R} \in \Pi_{\mathbf{b}, \mathbf{g} }$. This factorization was introduced to optimal transport by \cite{Scetbon2021LowRankSF} in the context of the general low-rank problem \eqref{eq:lora_wass}. The  factors $\mathbf{Q}$ and $\mathbf{R}$  constitute co-clusterings of datasets $\mathsf{X}$ and $\mathsf{Y}$ onto the \emph{same} set of $r$ components. Other factorizations have recently been proposed \cite{FRLC}, using $\mathbf{Q}, \mathbf{R}$ and an intermediate latent coupling $\mathbf{T}$ 
+to solve \eqref{eq:lora_wass} where $\mathsf{X}$ and $\mathsf{Y}$ have $r_{1}$ and $r_{2}$ components, respectively.
+
+\paragraph{Hierarchical and Multiscale Approaches to OT}
+
+%\citep{gerber2017multiscale, schmitzer2016sparse, kassraie2024progressive}
+Hierarchical optimal transport \cite{schmitzer2013hierarchical} 
+is a variant of OT modeling data and transport
+at two scales, using Wasserstein distances as
+the 
+coarse-scale 
+ground costs. 
+It has been applied to document representation \cite{yurochkin2019hierarchical}, domain adaptation \cite{el2022hierarchical}, sliced Wasserstein distances \cite{bonneel2015sliced, nguyen2022hierarchical} and to give a discrete formulation of transport between Gaussian mixture models \cite{chen2018optimal, delon2020wasserstein}. These works 
+build interpretable,
+coarse-grained structure into a single coupling, rather than 
+solving for a sequence of couplings at progressively finer scales as in the present work.
+
+Multiscale approaches to OT 
+generalize hierarchical OT to a progression of scales. Building on the semidiscrete approach of \cite{aurenhammer1998minkowski},  \cite{merigot2011multiscale} uses Lloyd's algorithm to progressively coarse-grain the target measure.
+%, propagating couplings computed between source and coarse-grained target to initialize an optimization at the next scale. 
+More recently, 
+using a regular family of multiscale partitions (Definition~\ref{def:reg_fam_msp}) on each dataset, \cite{gerber2017multiscale} formalize a general  hierarchical approach to the Kantorovich problem \eqref{eq:kantorovich_problem}. They propose: (i) solving a Kantorovich problem between the coarsest partitions of $\mathsf{X}$ and $\mathsf{Y}$ in their respective multiscale families; and (ii) propagation of the optimal coupling at scale $t \in \{1, \dots, \kappa-1\}$ to initialize the optimization at scale $t+1$. They take as input a chain of partitions and measures across scales $(\mathsf{X}^{(1)}, \mu_{1}) \to \cdots \to (\mathsf{X}^{(\kappa)}, \mu_{\kappa})$ and $(\mathsf{Y}^{(1)}, \nu_{1}) \to \cdots \to(\mathsf{Y}^{(\kappa)}, \nu_{\kappa})$ where each dataset $\mathsf{X}, \mathsf{Y}$ is identified with the trivial partitions $\mathsf{X}^{(\kappa)} = \{ \{ \mathbf{x} \} : \mathbf{x} \in \mathsf{X} \}$ and $\mathsf{Y}^{(\kappa)} = \{ \{ \mathbf{y} \} : \mathbf{y} \in \mathsf{Y} \}$. 
+At the finest scale $\kappa$, \cite{gerber2017multiscale} recover the original datasets and a near optimal coupling for \eqref{eq:kantorovich_problem}. 
+
+
+A naive implementation of the above idea requires quadratic memory complexity, but \cite{gerber2017multiscale} propose several propagation strategies to mitigate this, following \citep{glimm2013iterative, oberman2015efficient, schmitzer2016sparse}. These strategies use the optimal coupling at scale $t$ to restrict the support of the coupling computed at the next scale using local optimality criteria.
+%for OT \cite{schmitzer2016sparse}. 
+In the next section, we give our own such criterion, Proposition~\ref{prop:low_rank_monge_main}. 
+
+
+\begin{comment}
+In particular, the potential refinement strategy employed by \cite{glimm2013iterative} uses the variables in the dual problem to \eqref{eq:kantorovich_problem} for a local optimality criterion, carefully choosing the support of couplings at subsequent scales to ensure optimality of the coupling at the finest scale. In a similar spirit, \cite{schmitzer2016sparse} introduced shielding neighborhoods to provide local optimality criteria for discrete OT. These local optimality criteria for discrete OT parallel Brenier's theorem \cite{brenier1991polar} in the continuous setting, and in the next section, we give our own such criterion, Proposition~\ref{prop:low_rank_monge_main}. 
+\end{comment}
+
+
+\begin{figure}[tbp]
+% \vskip 0.2in
+\centerline{\includegraphics[width=\linewidth]{images/fig1.png}}
+\caption{
+\ourmethodFullCap algorithm: low-rank optimal transport is used to progressively refine partitions at the previous scale, with the coarsest scale partitions denoted $\mathsf{X}^{(1)}, \mathsf{Y}^{(1)}$, and the finest scale partitions $\mathsf{X}^{(\kappa)}, \mathsf{Y}^{(\kappa)}$ corresponding to the individual points in the datasets.}
+\label{fig:fig1}
+\end{figure}
+
+
+\section{Hierarchical Refinement}
+
+\subsection{Low-rank optimal transport co-clusters source-target pairs under the Monge map}
+%as a co-clustering of $(\mathsf{X}, T(\mathsf{X}))$
+
+We first show that under a few assumptions,  the optimal low-rank factors $(\mathbf{Q}^\star, \mathbf{R}^\star)$ for a \emph{variant} of the low-rank Wasserstein problem \eqref{eq:lora_wass} have qualities suited to our refinement strategy. Specifically, we parameterize low-rank couplings $\mathbf{P}$ of rank-$r$ using the factorization $\mathbf{P} = \mathbf{Q} \mathrm{diag}(1/ \mathbf{g} ) \mathbf{R}^\top$ of \cite{Scetbon2021LowRankSF}, fixing $\mathbf{g} \in \Delta_r$ to be uniform. Define the following variant of \eqref{eq:lora_wass}: 
+\begin{align}
+(\mathbf{Q}^\star, \mathbf{R}^\star)
+&= \arg\min_{(\mathbf{Q}, \mathbf{R})}
+ \left\langle \mathbf{C}, \mathbf{Q} \mathrm{diag}(1/ \mathbf{g}) \mathbf{R}^\top
+\right\rangle_F \, \label{eq:lora_wass_variant}  \\
+\text{s.t.} \quad & \mathbf{Q} \in \Pi_{\mathbf{a}, \mathbf{g}}, \, \mathbf{R} \in \Pi_{\mathbf{b}, \mathbf{g}},  \,
+  \mathbf{g} = (1/r)\mathbf{1}_r  \nonumber
+\end{align}
+Proposition~\ref{prop:low_rank_monge_main} below is the main structural result behind \ourmethodFullCap{}. It says that when optimal $\mathbf{Q}^\star$ and $\mathbf{R}^\star$ for \eqref{eq:lora_wass_variant} correspond to hard-clusterings (partitions) of each dataset, given by clustering functions $\mathsf{q}^\star : \mathsf{X} \to [r], \mathsf{r}^\star : \mathsf{Y} \to [r]$, one has $\msf{q}^\star = \msf{r}^\star \circ T^\star$, where $T^\star$ is a Monge map.
+
+%Proposition~\ref{prop:low_rank_monge_main}. 
+\begin{proposition}[Optimal low-rank factors co-cluster Monge pairs]
+\label{prop:low_rank_monge_main}
+Let $\mathsf{X}, \mathsf{Y} \subset \mathbb{R}^d$ with $|\mathsf{X}| = |\mathsf{Y}| = n$, with cost matrix $\mb{C}$ that is strictly $r$-Monge separable (Definition~\ref{def:r_Monge_sep}).
+Let $\mathbf{a}, \mathbf{b} \in \Delta_n$ be uniform so that  a Monge map $T^\star : \mathsf{X} \to \mathsf{Y}$ exists. 
+If $(\mathbf{Q}^\star, \mathbf{R}^\star)$ are minimizers of \eqref{eq:lora_wass_variant} and correspond to clustering functions $\mathsf{q}^\star: \msf{X} \to [r], \mathsf{r}^\star:\msf{Y} \to [r]$, 
+then for all $\mathbf{x} \in \mathsf{X}$ one has $\mathsf{q}^\star(\mathbf{x}) = \mathsf{r}^\star \left( T^\star (\mathbf{x}) \right).$
+\end{proposition}
+
+The proof of Proposition~\ref{prop:low_rank_monge_main} is in two steps. First, we use the existence of a Monge map and its coupling $\mb{P}^\dagger$ to permute the cost $\mb{C}$ to cost $\mb{C}^\dagger$ (Definition~\ref{def:monge_reg})
+for which the identity matrix is a Monge map. Second, supposing that strict $r$-Monge separability (Definition~\ref{def:r_Monge_sep}) holds, we show the solution to Problem~\ref{eq:lora_wass_variant} with cost $\mb{C}^\dagger$ is symmetric, so that $\min_{
+\mb{Q},\mb{R} \in \Pi_{\mb{a}, \mb{g}} 
+}
+\la
+\mb{C}^\dagger, 
+\mb{Q}\mb{R}^\top \ra_F =
+\min_{
+\mb{Q} \in \Pi_{\mb{a}, \mb{g}}
+}
+\la
+\mb{C}^\dagger, 
+\mb{Q}\mb{Q}^\top \ra_F$. Returning to the coordinate frame of the original cost $\mb{C}$, we find that $\mb{Q} = \mb{P}^{\dagger}\mb{R}$, implying Proposition~\ref{prop:low_rank_monge_main}. We note that when $r=2$, optimal $\mathbf{Q},\mathbf{R}$ are hard-partitions (Lemma~\ref{lem:supp_reduction_lemma}) automatically satisfying one of the assumptions of Proposition~\ref{prop:low_rank_monge_main}.
+
+ %First, supposing that the optimal coupling $\mb{P}^{\dagger} \in  \arg\min_{\,\,\mb{P} \in \Pi_{\bm{a},\bm{b}} } \left\langle \mb{C}, \mb{P} \right\rangle_{F}$ exists is a permutation by the Birkhoff-von Neumann theorem \cite{birkhoff1946tres}, one can express Problem~\ref{eq:lora_wass_variant} as a minimization with respect to a cost
+
+%supposing one has oracle access to 
+
+
+
+
+
+
+\begin{comment}
+The assumption that the datasets are of size $2^k$ is without loss of generality: for a dataset of size $n$, let $q = \min \left\{2^{t} \mid t \in \mathbb{N}, 2^{t} > n \right\}$ and add $q-n$ ``dummy'' points at infinite distance from $\mathsf{X}, \mathsf{Y}$, and mutual distance zero.
+%to invoke the same result for general $n$.
+\end{comment}
+
+
+
+\subsection{Hierarchical Refinement Algorithm}
+
+The \ourmethodFullCap\ algorithm (Algorithm~\ref{alg:hr_ot}) uses 
+Proposition~\ref{prop:low_rank_monge_main} 
+%is central to the  -- it 
+to guarantee that each low-rank step co-clusters the datasets optimally, in that $\mathbf{x}$ and $T^\star(\mathbf{x})$ 
+%will be 
+are assigned the same label by $\mathsf{q}^\star$ and $\mathsf{r}^\star$.
+Using the same label set to partition $\mathsf{X}$ and $\mathsf{Y}$ automatically places the blocks of each partition in bijective correspondence. 
+One then recurses on each pair of corresponding blocks (which we call a \emph{co-cluster}) at the previous scale, until all blocks have size one. This guarantee holds despite that optimal $(\mathbf{Q}^\star, \mathbf{R}^\star)$ for \eqref{eq:lora_wass_variant} may not constitute an optimal triple $(\mathbf{Q}^\star, \mathbf{R}^\star, \mathbf{g}^{\star})$ for the original low-rank problem \eqref{eq:lora_wass} under the \cite{Scetbon2021LowRankSF} factorization.
+
+A hierarchy-depth $\kappa$ denotes the total number of times Algorithm~\ref{alg:hr_ot} refines the initial trivial partitions $\{ \mathsf{X} \} , \{ \mathsf{Y} \}$. The effective rank at scale $t$ is $\rho_t := \prod_{s=1}^t r_s$, given 
+rank-annealing schedule \((r_1, r_2, \ldots, r_\kappa)\) for which $\rho_\kappa$ divides $n$. The base rank is
+$r_{\text{base}} = \frac{n}{\rho_\kappa}$. Note that $n/\rho_t$ is also the size of each partition at scale $t$: $ n/\rho_t = | \mathsf{X}^{(t)}| = | \mathsf{Y}^{(t)}|$, and that any sequence of any factorization of $n$ corresponds to a rank-annealing schedule.
+%to any dataset size $n$ which can be non-trivially factored. 
+%For an $r$-Monge separable cost and dataset of size $n = r^{\kappa}$, we show that \ourmethodFullCap{} is guaranteed to recover the Monge map.
+
+\begin{proposition}
+For any $n$, there exists a rank-schedule $(r_{1}, \cdots, r_{\kappa})$ factorizing $n$ such that all partitions of Algorithm~\ref{alg:hr_ot} at level $t\in [0:\kappa-1]$ satisfy strict $r_{t+1}$-Monge separability (Definition~\ref{def:r_Monge_sep}). Let $\mathrm{LROT}$ denote an optimal rank-$r$ solver for (\ref{eq:lora_wass_variant}) over hard-partitions. For any satisfying rank-schedule, the map returned by Algorithm~\ref{alg:hr_ot} is optimal and supported on the graph of the Monge map $T^\star$.
+\end{proposition}
+\begin{proof}
+Existence follows from the trivial $(r_{1})=(n)$ rank-schedule. For any schedule $(r_{1}, \cdots, r_{\kappa})$ satisfying Monge separability, applying the invariant of Proposition~\ref{prop:low_rank_monge_main} inductively on $t$ to level $\kappa$ yields $n$ tuples $\{(\mathbf{x}, T^\star(\mathbf{x}))\}$ containing each $\mathbf{x} \in \mathsf{X}$ and its image $T^\star (\mathbf{x})$ under the Monge map.
+\end{proof}
+If the black-box subroutine $\mathrm{LROT}$ in Algorithm~\ref{alg:hr_ot} solves \eqref{eq:lora_wass_variant} optimally, then \ourmethodFullCap\ is guaranteed to recover a Monge map. In practice, we implement $\mathrm{LROT}$ using the low-rank solver \cite{FRLC} and enforce that inner marginal $\mathbf{g}$ is uniform.
+%Observe that the assumption that the datasets are of size $ r^\kappa$ is without loss of generality: for a dataset of size $n$, let $q = \min \left\{r^{t} \mid t \in \mathbb{N}, r^{t} > n \right\}$ and add $q-n$ ``dummy'' points at infinite distance from $\mathsf{X}, \mathsf{Y}$, and mutual distance zero.
+\begin{comment}
+\begin{proposition}
+Suppose $n=r^{\kappa}$ and we have an $r$-Monge separable (Definition~\ref{def:r_Monge_sep}) cost. Let $\mathrm{LROT}$ denote an optimal rank-$r$ solver for (\ref{eq:lora_wass_variant}) over hard-partitions. Then, the bijective map returned by Algorithm~\ref{alg:hr_ot} is optimal and supported on the graph of the Monge map $T^\star$.
+\end{proposition}
+\begin{proof}
+Applying the invariant of Proposition~\ref{prop:low_rank_monge_main} inductively after $\kappa = \log_{r}{n}$ levels of refinement 
+yields 
+%implies a return of 
+a set of tuples $(\mathbf{x}, T^\star(\mathbf{x}))$ containing each $\mathbf{x} \in \mathsf{X}$ and its corresponding image $T^\star (\mathbf{x})$ under Monge map $T^\star$.
+\end{proof}
+
+If the black-box subroutine $\mathrm{LROT}$ in Algorithm~\ref{alg:hr_ot} solves \eqref{eq:lora_wass_variant} optimally, then \ourmethodFullCap\ is guaranteed to recover a Monge map. In practice, we implement $\mathrm{LROT}$ using the low-rank solver \cite{FRLC} enforcing that inner marginal $\mathbf{g}$ is uniform. Observe that the assumption that the datasets are of size $ r^\kappa$ is without loss of generality: for a dataset of size $n$, let $q = \min \left\{r^{t} \mid t \in \mathbb{N}, r^{t} > n \right\}$ and add $q-n$ ``dummy'' points at infinite distance from $\mathsf{X}, \mathsf{Y}$, and mutual distance zero.
+\end{comment}
+
+\begin{algorithm}[htb]
+\caption{Hierarchical Refinement}
+\label{alg:hr_ot}
+\begin{algorithmic}[1]
+\Require 
+  \textbf{Data} \( \mathsf{X} \,,  \mathsf{Y} \); 
+  \textbf{Low-rank OT solver} \(\mathrm{LROT}(\cdot)\);
+  \textbf{Rank schedule} \((r_1, r_2, \ldots, r_\kappa)\);
+  \textbf{Base rank} \(r_{\text{base}} \) (=1).
+\Statex
+
+\noindent \textbf{Initialize:}
+\State \(t \gets 0\), \(\Gamma_0 \gets \{\,( \mathsf{X}, \mathsf{Y})\}\)
+\While{$\exists\,( \mathsf{X}_{q}^{(t)}, \mathsf{Y}_{q}^{(t)})\in \Gamma_t$ \textbf{ such that } \\
+        $\qquad \qquad \qquad \min\{|\mathsf{X}_{q}^{(t)}|, |\mathsf{Y}_{q}^{(t)}|\} > r_{\text{base}}$}
+    \State \(\Gamma_{t+1} \gets \varnothing\)
+    \For{$(\mathsf{X}_q^{(t)}, \mathsf{Y}_q^{(t)}) \in \Gamma_t $}
+        \If{ $\min\{ | \mathsf{X}_q^{(t)}|, |\mathsf{Y}_q^{(t)}| \} \leq r_{\text{base}} $ }
+            \State \(\Gamma_{t+1} \gets \Gamma_{t+1} \cup \{(\mathsf{X}_q^{(t)}, \mathsf{Y}_q^{(t)})\}\)
+        \Else
+            %\State Define empirical measures:
+            \State \(\mu_{\mathsf{X}_q^{(t)}} = \frac{1}{|\mathsf{X}_q^{(t)}|} \, \sum_{\mathbf{x} \in \mathsf{X}_q^{(t)}} \delta_{\mathbf{x}}\)
+            \State \(\mu_{\mathsf{Y}_q^{(t)}} = \frac{1}{|\mathsf{Y}_q^{(t)}|} \, \sum_{\mathbf{y} \in \mathsf{Y}_q^{(t)}} \delta_{\mathbf{y}}.\)
+            \State \(\mathbf{g}_{t+1} \gets (1/r_{t+1}) \mathbf{1}_{r_{t+1}}\)
+            \State \((\mathbf{Q}, \mathbf{R}) \gets 
+              \mathrm{LROT}(\mu_{\mathsf{X}_q^{(t)}}, \mu_{\mathsf{Y}_q^{(t)}}, \mathbf{g}_{t+1})\)
+            \For{$z = 1 \to r_{t+1}$}
+                \State \(\mathsf{X}^{(t+1)}_z \gets \text{Assign}(\mathsf{X}^{(t)}, \mathbf{Q}, z) \)
+                \State \(\mathsf{Y}^{(t+1)}_z \gets \text{Assign}(\mathsf{Y}^{(t)}, \mathbf{R}, z)\)
+                \State \(\Gamma_{t+1} \gets \Gamma_{t+1} \cup 
+                  \{\,(\mathsf{X}^{(t+1)}_z,\; \mathsf{Y}^{(t+1)}_z)\}\)
+            \EndFor
+            \State \Comment{\scriptsize\(\text{Assign}(\mathsf{S}, \mathbf{M}, z) = \{s \in \mathsf{S} \mid \arg\max_{z'} \mathbf{M}_{s z'} = z\}\)\normalsize}
+            \EndIf
+    \EndFor
+    \State \(t \gets t + 1\)
+\EndWhile
+
+\State \textbf{Output:} 
+  \(\Gamma_\kappa = \{ (\mathbf{x}_i, T(\mathbf{x}_i))_{i=1}^{n}\}\) 
+  \quad \Comment{Mapped pairs.}
+\end{algorithmic}
+\end{algorithm}
+
+%diagonalizing its output to obtain $(\mathbf{Q}, \mathbf{R}, \mathbf{g})$, and setting the mirror-descent step-size parameter $\tau_{\mathrm{in}} \uparrow \infty$ to enforce the uniform constraint on the inner marginal $\mathbf{g}$.
+
+
+Let $\Gamma_{t,q}$ denote the $q$-th co-cluster at scale $t$ generated by \ourmethodFullCap{}:
+\begin{align}
+\label{eq:gamma_t_q_def}
+    \Gamma_{t,q} := \left\{ ( \mathbf{x}, \mathbf{y} ) : \mathbf{x} \in \mathsf{X}_q^{(t)}, \, 
+    \mathbf{y} \in \mathsf{Y}_q^{(t)} 
+    \right\} \,,
+\end{align}
+where $\mathsf{X}^{(t)} = \{ \mathsf{X}_q^{(t)} \}_{q=1}^{\rho_t}$, $\mathsf{Y}^{(t)} = \{ \mathsf{Y}_q^{(t)} \}_{q=1}^{\rho_t}$, and define the co-clustering $\Gamma_t$ at scale $t$ by:
+\begin{align*}
+    \Gamma_{t} := \left\{ (\mathsf{X}_q^{(t)}, \mathsf{Y}_q^{(t)}) \right\}_{q=1}^{\rho_t}  \, .
+\end{align*}
+At scale $t \in [\kappa]$, \ourmethodFullCap\ refines $\Gamma_{t}$ to $\Gamma_{t+1}$ by running a rank $r_{t+1}$ low-rank optimal transport problem between uniform $\mathbf{g}_{t+1} =(1/r_{t+1}) \mathbf{1}_{r_{t+1}}$ and measures supported on each pair $(\mathsf{X}_q^{(t)}, \mathsf{Y}_q^{(t)})$ in $\Gamma_t$ for $q \in [\rho_t]$, yielding factors specific to this $q \in [\rho_t]$:
+\begin{align}
+\label{eq:QR_gets}
+(\mathbf{Q}, \mathbf{R}) \gets 
+              \mathrm{LROT}(\mu_{\mathsf{X}_q^{(t)}}, \mu_{\mathsf{Y}_q^{(t)}}, \mathbf{g}_{t+1})\,. 
+\end{align}
+For each $q \in [\rho_t]$ we use the $\mathbf{Q}, \mathbf{R}$ from \eqref{eq:QR_gets} to 
+co-cluster $\mathsf{X}_q^{(t)}$ with $\mathsf{Y}_q^{(t)}$ using $r_{t+1}$ labels. Within this pair, each $\mathbf{x}_i \in \mathsf{X}_q^{(t)}$ is assigned a label $z \in [r_{t+1}]$ by taking the argmax over the $i$-th row of $\mathbf{Q}$, and likewise each $\mathbf{y}_j \in \mathsf{Y}_q^{(t)}$ is assigned the argmax over the $j$-th row of $\mathbf{R}$. This corresponds to the $\mathrm{Assign}$ step in Algorithm~\ref{alg:hr_ot}, and coincides with the hard assignment of $\mathsf{q}^\star$ and $\mathsf{r}^\star$ for an optimal $(\mathbf{Q}^{*}, \mathbf{R}^{*})$ (Lemma~\ref{lem:supp_reduction_lemma}).
+
+
+The uniform constraint $\mathbf{g} = \mathbf{1}_{r_{t+1}} / r_{t+1}$ in \eqref{eq:lora_wass_variant} enforces an even split of the dataset, which by Lemma~\ref{lem:supp_reduction_lemma} ensures a partition at optimality (for $r_{t}=2$).
+Repeating for all $q \in [\rho_t]$, one obtains a co-clustering with $r_{t+1}$ components within each co-cluster at the previous scale, leading to a total of $\rho_{t+1} = r_{t+1} \rho_t$ co-clusters at scale $t+1$ (Fig.~\ref{fig:fig1}). If the base-case rank $r_{\mathrm{base}}$ is one, Algorithm~\ref{alg:hr_ot} returns a bijection between $\mathsf{X}$ and $\mathsf{Y}$ as a collection of $n$ tuples. 
+
+%We emphasize that we do not instantiate the transport plans $\mathbf{P}^{(t)}$ implicit at each scale $t$; these ``implicit'' transport plans may be block-diagonalized, with $\rho_{t}$ square blocks for each co-clustering, defined by by 
+Note that \ourmethodFullCap\ defines an implicit hierarchy of block-couplings at each scale $t$.
+\begin{definition}[Hierarchical block-coupling]
+\label{def:hbc}
+    For each scale $t \in [\kappa]$, given the \ourmethodFullCap\ co-cluster partition $\Gamma_{t}$, the \emph{hierarchical block-coupling} at scale $t$ is defined by the matrix
+\vspace{-4mm}
+\begin{equation}
+\label{eq:hbc}
+    \mathbf{P}^{(t)}_{ij}
+:=
+\frac{\rho_t }{ n^2 } \sum_{q=1}^{\rho_{t}} \delta_{(\mathbf{x}_{i}, \mathbf{y}_{j}) \in \Gamma_{t,q}},
+\end{equation}
+\end{definition}
+Without loss of generality, $\mathbf{P}^{(t)}$ may be block diagonalized into $\rho_{t}$ square blocks, as discussed in Appendix~\ref{sec:supp_pfs} (see Equation~\eqref{eq:supp_P_corresp_t}). By Proposition~\ref{prop:low_rank_monge_main}, for any rank-schedule $(r_{j} )_{j=1}^{\kappa}$ satisfying Monge separability, the final $\mathbf{P}^{(\kappa)}$ corresponds to an optimal coupling supported on the graph of the Monge map $T^{\star}$, $\mathbf{P}^{(\kappa)} := (\mathrm{id} \times T^{\star} )_{\sharp} \mu_{\mathsf{X}}$. While these intermediate couplings are never instantiated, one can still use them to define a transport cost $\langle \mathbf{C}, \mathbf{P}^{(t)} \rangle$ at each scale. In Appendix~\ref{prop:one_step_bound}, we show the following bounds on the cost difference across scales. 
+
+\begin{proposition}
+\label{prop:one_step_bound_main}
+Let $c(\cdot, \cdot)$ be a strictly-convex and Lipschitz cost function, let $(r_{1}, r_{2}, \cdots, r_{\kappa})$ be a rank-schedule, %sample size $n$, and step $t < \kappa$. 
+and let $\mathbf{P}^{(t)}$ denote the coupling defined in \eqref{eq:hbc}, obtained from step $t$ of Algorithm~\ref{alg:hr_ot}. Define $\Delta_{t,t+1} = \langle \mathbf{C}, \mathbf{P}^{(t)}\rangle_F - \langle \mathbf{C}, \mathbf{P}^{(t + 1)}\rangle_F$. Then, 
+%the difference in cost between iterations of refinement is
+\vspace{-4mm}
+\begin{align}
+    0 \leq \Delta_{t,t+1} \leq \lVert \nabla c \rVert_{\infty} \frac{1}{\rho_t} \sum_{q=1}^{\rho_t} \mathrm{diam}\bigl( \Gamma_{t,q}\bigr) \,, 
+\end{align}
+where $q$ indexes co-clusters $\Gamma_{t,q}$ at scale $t$, defined in \eqref{eq:gamma_t_q_def}.
+\end{proposition}
+
+\vspace{-2mm}
+Thus, the lower-bound implies that each step of refinement improves the coarse partition, and the upper-bound implies that the difference in solution value is bounded above by a factor depending on the Lipschitz constant and the mean diameter of the coarse partitions at each level $t$. The proof of Proposition~\ref{prop:one_step_bound_main} roughly follows that of Proposition~1 of  \cite{gerber2017multiscale}. In Remark~\ref{rmk:conditional_ub}, we discuss how Proposition~\ref{prop:one_step_bound_main} compares, noting that our result makes fewer geometric assumptions on our multiscale partitions $(\mathsf{X}^{(t)})_{t=1}^\kappa$ and $(\mathsf{Y}^{(t)})_{t=1}^\kappa$ and therefore does not quantify the rate of decay of $\mathrm{diam}\bigl( \Gamma_{t,q}\bigr)$.
+
+%Additionally, in Remark~\ref{remark:no_gain} we note under constant cost within a co-cluster this inequality becomes tight, so that \ourmethod{} offers no gain.
+
+
+\subsection{On the Rank-Annealing Schedule}\label{sec:rank_anneal}
+
+As observed by \cite{forrow19a, Scetbon2021LowRankSF}, rank behaves like a temperature parameter,
+inverse to the strength $\epsilon$
+of entropy regularization. 
+%The \emph{rank-annealing} technique used in \ourmethodFullCap\ thus parallels the $\epsilon$-schedule, annealing from coarse higher-temperatures $\epsilon \to \infty$ to fine lower-temperatures $\epsilon \to 0$ to yield a sparse coupling matrix. 
+The correspondence between small $\epsilon$ and large rank implies that
+%, and large $\epsilon$ to low-rank,  
+annealing in the parameter $\epsilon$ 
+is, from the perspective of rank, analogous 
+to 
+%of entropy-regularized OT, %i.e. gradually decreasing $\epsilon \downarrow 0$ according to some schedule,
+initializing the optimization at a low-rank coupling,
+and then gradually increasing the rank constraint 
+from low to full. 
+In \ourmethodFullCap{}, this gradual rank increase is accomplished
+implicitly. At each scale $t = 1, \dots, \kappa$ the implicit coupling $\mathbf{P}^{(t)}$ is 
+made explicit in the hierarchical block coupling defined in equation~\eqref{eq:hbc}. 
+A rank-annealing schedule $(r_1, \dots, r_\kappa)$ describes the sequence of 
+multiplicative factors by which the rank of this 
+explicit coupling will increase at successive scales.
+The partial products of these, denoted 
+$(\rho_1, \dots, \rho_\kappa)$, are the ranks of the couplings $\mathbf{P}^{(1)}, \dots, \mathbf{P}^{(\kappa)}$. Note that small values of $r_{i}$ generate coarse partitions of the points at the next scale, while large values of $r_{i}$ generate finer partitions at the next scale.
+
+We now turn to the question of how to efficiently choose such a schedule
+under given memory constraints. For an integer $n$, 
+%the number of points per sub-problem decays at the rate at which each sub-division occurs, so that 
+Algorithm~\ref{alg:hr_ot} has log-linear complexity for depth $\kappa = \log_{r}{n}$ (Section~\ref{sec:complexity}). However, the large constants required by low-rank OT in practice encourage minimizing the number of calls to $\mathrm{LROT}$ as a subroutine, so that if memory permits, it may be advantageous to decrease the depth by storing couplings of higher rank. If desired, memory constraints can be enforced by imposing a maximum rank $r_{\max} \geq r_t$ for all $t \in [\kappa]$ to ensure \ourmethodFullCap{} only requires $O(n r_{\max})$ space at each step. Thus, we seek factorizations with \emph{minimal} partial sums of ranks while remaining below a desired memory-capacity: 
+%$\label{eq:rank_opt} \min_{(r_{i})_{i=1}^{\kappa}} \sum_{j=1}^{\kappa} \rho_{j}   \, \textrm{ s.t. } \, \rho_{\kappa} = n, \, r_{i} \leq r_{\max} \, .$
+\vspace{-3mm}
+\begin{align}
+\label{eq:rank_opt}
+\min_{(r_{i})_{i=1}^{\kappa}} \sum_{j=1}^{\kappa} \rho_{j}  
+    \quad  \mathrm{s.t. } \quad \rho_{\kappa} = n, \quad r_{i} \leq r_{\max} \, . 
+\end{align}
+\vspace{-3mm}
+
+The above optimization assumes a base-rank $r_{\mathrm{base}}$ of $1$; we describe how to handle the general case in Appendix~\ref{sect:rank_schedule}. 
+%Here, we remark that 
+Importantly, the recursive structure $\min_{(r_{i})_{i=1}^{\kappa}}  \sum_{j=1}^{\kappa} \rho_{j}  = \min_{(r_{i})_{i=1}^{\kappa}} \left(r_{1} + r_{1} \sum_{j=2}^{\kappa} \prod_{i=2}^{j} r_{i}
+    \right)$
+\begin{comment}
+\begin{align}
+    \min_{(r_{i})_{i=1}^{\kappa}}  \sum_{j=1}^{\kappa} \prod_{i=1}^{j} r_{i}  = \min_{(r_{i})_{i=1}^{\kappa}} \left(r_{1} + r_{1} \sum_{j=2}^{\kappa} \prod_{i=2}^{j} r_{i}
+    \right)
+\end{align}
+\end{comment}
+enables a dynamic programming approach to \eqref{eq:rank_opt}, storing a table of factors up to $r_{\max}$ to optimize \eqref{eq:rank_opt} in $O( r_{\max} \kappa n)$ time. 
+Assuming $\kappa, r_{\max}$ are small constants chosen to ensure that all matrices can fit within memory, determining the optimal rank-schedule with respect to $\kappa, n, r_{\max}$ is a simple linear-time procedure. 
+
+\begin{figure}[!t]
+\centerline{\includegraphics[width=\linewidth]{images/method_costs_samples_log.png}}
+\caption{Primal OT cost for varying sample size on the synthetic half-moon S-curve dataset of \cite{buzun2024expectile} for \ourmethod, Sinkhorn, and ProgOT}
+\label{fig:sample_complexity}
+\end{figure}
+
+\subsection{Complexity and Scaling of Hierarchical Refinement}\label{sec:complexity}
+For two datasets $\mathsf{X}, \mathsf{Y}$ of size $n$, the space complexity of \ourmethodFullCap{} is $\Theta(n)$, since at each level, one must store $\Gamma_{t}$ which is a set of subsets of $\mathsf{X}$ and $\mathsf{Y}$. To derive the time-complexity of \ourmethodFullCap{}, note that if $n = r^{k}$, a rank-$r$ schedule at each layer requires $\frac{n}{r}$ instances of $\mathrm{LROT}$ over rapidly decaying dataset sizes. The complexity of low-rank OT \cite{Scetbon2021LowRankSF, scetbon2022linear, FRLC} is linear  ($K n$) for a constant $K = O(B L r d)$ dependent on $B$ the number of inner Sinkhorn \cite{FRLC} or Dykstra \cite{Scetbon2021LowRankSF} iterations, $L$ the number of mirror-descent steps, $r$ the rank of the coupling, and $d$ the rank of the factorization of the cost matrix $\mathbf{C}$. In this setting, for $n$ a power of $r$, the runtime of Algorithm~\ref{alg:hr_ot} is given by the sum $r^0 \Theta(n) + r^1 \Theta(\frac{n}{r}) + ... + r^{i-1} \Theta(\frac{n}{r^{i-1}}) = \Theta(n d r  \log_{r}{n})$ for $i = \log_{r}n$, achieving \emph{linear} space with \emph{log-linear} time for constant ranks $r, \,d$.
+
+
+%In the case that $d$ is not a small constant, i.e. where one does not assume a low-rank factorization of cost matrix $\mathbf{C} = \mathbf{U V}^{\top}$, the time and space complexity becomes quadratic in $n$, like Sinkhorn.
+
+In cases where the cost matrix does not admit a low-rank factorization $\mathbf{C} = \mathbf{U} {\mathbf{ V}}^{\top}$, i.e., when $d = O(n)$, one requires $\Theta(n^{2})$ space to store the cost matrix and \ourmethodFullCap{} exhibits time complexity $\Tilde{O}( n^{2} )$, as in Sinkhorn. For kernel costs such as squared Euclidean cost, as noted in \cite{Scetbon2021LowRankSF}, one may efficiently compute a $(d+2)$ dimensional factorization where $d$ is the ambient dimension, to achieve log-linear scaling with exact distances. We also use the sample-linear algorithm of \cite{pmlr-v99-indyk19a} to compute approximate factorizations for distances $c(\cdot, \cdot)$ satisfying metric properties such as the triangle inequality (e.g. Euclidean distance, see Appendix~\ref{sec:low_rank_dist}). At each level, pairing such sample-linear approximations with each low-rank step only requires $O(n\log_{d}n)$ time. We observe this scaling empirically, as reported in Fig.~\ref{fig:runtime_scaling}.
+
+
+
+\section{Experiments}
+
+We benchmark \ourmethodFullCap{} (\ourmethod{}) against the full-rank OT methods Sinkhorn \cite{sinkhorn},
+%, the de facto standard for computing OT alignments,
+ProgOT \cite{kassraie2024progressive}, and mini-batch OT \cite{genevay18learning, fatras2020learning, fatras2021minibatch}. We additionally benchmark against the low-rank OT methods LOT \cite{Scetbon2021LowRankSF} and FRLC \cite{FRLC}. We use the default implementations of Sinkhorn, ProgOT, and LOT in the high-performance \texttt{ott-jax} library \cite{cuturi2022optimal}. In particular, Sinkhorn is run with the default entropy regularization parameter of $\epsilon = 0.05$. We also benchmark against the multiscale method MOP \cite{gerber2017multiscale}, which requires multiscale partitions of the input datasets -- akin to a family of dyadic cubes across scales -- to compute alignments. This leads to a transport cost that depends on the choice of this partition. For simplicity, we choose the default partitions of MOP which are computed from the GMRA (Geometric Multi-Resolution Analysis) R package.
+
+\begin{figure*}[!t]
+% \vskip 0.2in
+\centerline{\includegraphics[width=.6\linewidth]{images/synth_ex1.pdf}}
+\caption{Comparison of the \ourmethodFullCap\ Mapping, the Sinkhorn Barycentric Map, and an optimal map computing using dual revised simplex for the \textbf{a.} Half-moon and S-curve dataset \cite{buzun2024expectile} of 4096 points (512 points for dual revised simplex) and \textbf{b.} Checkerboard dataset \cite{pmlr-v119-makkuva20a}.}
+\label{fig:synth_ex}
+\end{figure*}
+
+\subsection{Evaluation on Synthetic Datasets.}\label{sec:EvalSynthetic}
+
+We first evaluate the performance of \ourmethodFullCap\ against optimal transport methods returning primal couplings, namely Sinkhorn \cite{sinkhorn} (as implemented in \texttt{ott-jax} \cite{cuturi2022optimal}) and ProgOT \cite{kassraie2024progressive}. We evaluate the methods with respect to the Wasserstein-1 and Wasserstein-2 distance on an alignment of 1024 pairs of samples on the Checkerboard \cite{pmlr-v119-makkuva20a}, MAFMoons and Rings \cite{buzun2024expectile}, and Half-Moon and S-Curve \cite{buzun2024expectile} synthetic datasets (Fig.~\ref{fig:synth_ex}, Table~\ref{tab:cost_values_supp}). 
+
+All methods are similarly effective at minimizing the primal OT cost $\langle \mathbf{C}, \mathbf{P} \rangle_{F}$, with small absolute difference in cost between the final couplings. \ourmethodFullCap\ achieves slightly lower primal cost on 4 out of the 6 evaluations. Notably, there is a massive difference in the number of non-zero entries (defined as entries $\mathbf{P}_{ij} > 10^{-8}$) in the couplings output by \ourmethod{}, 
+%coupling and the number of non-zero entries in the dense couplings of 
+Sinkhorn, and ProgOT (Table~\ref{tab:entropy_nonzero_combined}). 
+Specifically, across the experiments 
+\ourmethod{} outputs a bijection with exactly 1024 non-zero elements in the coupling matrix, equal to the number of aligned samples.  In constrast,
+Sinkhorn and ProgOT output couplings with 624733 to 678720 and 271087 to 337258 non-zero entries. 
+
+%Moreover, the entropy of the \ourmethod\ coupling matrix is approximately half that of both Sinkhorn and ProgOT.
+
+
+We evaluate the scalability of \ourmethodFullCap\ relative to other full-rank solvers on varying numbers of samples from the Half Moon \& S-Curve \cite{buzun2024expectile} synthetic dataset. We vary the rank from $2^{5} = 32$ ($64$ points aligned) up to $2^{20}$ = 1048576 points (2097152 points aligned) in $\mathbb{R}^{2}$, 
+the latter dataset of a size that is beyond the capabilities of
+%an order of magnitude 
+%which is unprecedented for 
+current optimal transport solvers. We observe that Sinkhorn \cite{sinkhorn} and ProgOT -- methods which produce dense mappings -- require  a coupling matrix with $O(n^{2})$ non-zero entries and thus run only up to 16384 points. 
+\ourmethod{} yields solutions with 
+%ProgOT and Sinkhorn %consistently yield solutions with 
+comparable primal cost to ProgOT and Sinkhorn  on the sample sizes where all methods run. 
+
+We also find that \ourmethod\ achieves an OT cost that is competitive with the dual revised simplex solver \cite{Huangfu2017}, a solver which only scales up to $512$ points (Table~\ref{tab:comparison_512}). This solver computes an \emph{optimal} coupling, unlike ProgOT and Sinkhorn which rely on entropic regularization. While we benchmark Sinkhorn in place of mini-batch OT on the synthetic datasets due to their limited complexity, we also evaluate the multi-scale method MOP on the 512 point instance (Table~\ref{tab:comparison_512}). Although MOP outputs a fast approximation to optimal transport, its primal cost on the Checkerboard \cite{pmlr-v119-makkuva20a} dataset is twice as high as that of the other methods, and it performs significantly worse on the MAF Moons \& Rings and Half Moon \& S-Curve datasets \cite{buzun2024expectile}.
+
+Lastly, we observe that \ourmethodFullCap\ scales to over a million points, two orders of magnitude greater than ProgOT and Sinkhorn,  two full-rank OT methods that compute global alignments. We find \ourmethod\ scales linearly with the size of the problem instance (Fig.~\ref{fig:runtime_scaling}{a}) in contrast to the quadratic scaling in time complexity of Sinkhorn (Fig.~\ref{fig:runtime_scaling}{b}).
+
+
+%In contrast, \ourmethodFullCap\ scales to over a million points, two orders of magnitude greater, while maintaining OT cost competitive with the dual revised simplex solver \cite{Huangfu2017}, which runs only up to $512$ points (Table~\ref{tab:comparison_512}). This solver outputs an \emph{optimal} plan, unlike ProgOT, Sinkhorn, and \ourmethod{} which rely on entropic regulatization. \ourmethod\ scales linearly with the problem instance -- albeit with a large constant --(Fig.~\ref{fig:runtime_scaling}{a}) in contrast to the quadratic scaling in time complexity of Sinkhorn (Fig.~\ref{fig:runtime_scaling}{b}).
+
+
+
+\begin{comment}
+\begin{figure}[!t]
+% \vskip 0.2in
+\centerline{\includegraphics[width=\linewidth]{images/synth_ex1.pdf}}
+\caption{Comparison of the \ourmethodFullCap\ Mapping, the Sinkhorn Barycentric Map, and an optimal map computing using dual revised simplex for the \textbf{a.} Half-moon and S-curve dataset \cite{buzun2024expectile} of 4096 points (512 points for dual revised simplex) and \textbf{b.} Checkerboard dataset \cite{pmlr-v119-makkuva20a}.}
+\label{fig:synth_ex}
+\end{figure}
+\end{comment}
+
+\begin{comment}
+\begin{figure}[!t]
+\centerline{\includegraphics[width=\linewidth]{images/method_costs_samples_log.png}}
+\caption{Primal OT cost for varying sample size on the synthetic half-moon S-curve dataset of \cite{buzun2024expectile} for \ourmethod, Sinkhorn, and ProgOT}
+\label{fig:sample_complexity}
+\end{figure}
+\end{comment}
+
+\subsection{Large-scale Matching Problems and Transcriptomics}
+
+
+
+
+\begin{comment}
+\begin{table}[t]
+    \centering
+    \caption{Cost Values $\langle \mathbf{C}, \mathbf{P} \rangle_{F}$ Across Embryonic Stages}
+    \label{tab:cost_values_combined}
+    \small % Reduce font size
+    \begin{tabular}{l@{\hskip 4pt}ccc@{\hskip 4pt}cccc}
+        \toprule 
+        \textbf{Method} & \textbf{9.5-10.5} & \textbf{10.5-11.5} & \textbf{11.5-12.5} \\
+        \midrule
+        \ourmethod{}  & \textbf{21.81} & \textbf{14.81} & \textbf{16.14} \\
+        Sinkhorn       & 21.91          & 14.89          & N/A            \\
+        ProgOT         & 22.56          & 15.35          & N/A            \\
+        FRLC ($r=40$)  & 23.14          & 16.09          & 17.74          \\
+        LOT ($r=40$)   & 26.06          & 19.06          & 21.64          \\
+        \midrule
+        \textbf{Method} & \textbf{12-13.5} & \textbf{13-14.5} & \textbf{14-15.5} & \textbf{15-16.5} \\
+        \midrule
+        \ourmethod{}  & \textbf{14.57} & \textbf{13.78} & \textbf{14.29} \\
+        Sinkhorn       & N/A            & N/A            & N/A            \\
+        ProgOT         & N/A            & N/A            & N/A            \\
+        FRLC ($r=40$)  & 15.47          & 14.64          & 15.51          \\
+        LOT ($r=40$)   & -              & -              & -              \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\end{comment}
+
+Recently, optimal transport has been applied to single-cell and spatial transcriptomics datasets to compute couplings between cells taken from different timepoints from developmental processes or perturbations  \cite{schiebinger2019optimal,lavenant2021towards, bunne2022proximal, Huizing2024, destot, klein2023moscot}.
+%, demonstrating that optimal transport can be leveraged to learn the energy-landscape of biological processes. 
+However, the size of current datasets \cite{chen2022spatiotemporal} ($>$100k cells) has exceeded the capacity of existing full-rank solvers, requiring low-rank approximations of the coupling \cite{scetbon2023unbalanced,klein2023moscot,HMOT} to produce alignments. 
+
+We evaluate whether the full-rank solver of \ourmethodFullCap\ exhibits competitive alignments for such datasets. Specifically, we analyze the mouse organogenesis spatiotemporal transcriptomic atlas (MOSTA) datasets, which include spatial transcriptomics data from mouse embryos at successive 1-day time-intervals with increasing number $n$ of cells at each stage: E9.5 ($n=5913$), E10.5 ($n=18408$), E11.5 ($n=30124$), E12.5 ($n=51365$), E13.5 ($n=77369$), E14.5 ($n=102519$), E15.5 ($n=113350$), and E16.5 ($n=121767$).
+%, where the embryonic mouse develops across the stages so that the sample-complexity $n$ increases with the numeric stage. 
+For the cost we use the Euclidean distance $\mathbf{C}_{ij} = \lVert \mathbf{x}_{i} - \mathbf{y}_{j} \rVert_{2}$ in $60$-dimensional PCA space of expression vectors, so $\mathbf{x}_{i}, \mathbf{y}_{j} \in \mathbb{R}^{60}$.
+
+
+
+Sinkhorn and ProgOT are unable to produce alignments for the stages beyond E10.5 ($n=18408$ cells), whereas \ourmethod, the low-rank solvers, and mini-batch OT (batch-sizes $B=128$ to $B=2048$) are able to continue scaling to $>10^{5}$ (Table~\ref{tab:cost_values_late}, Table~\ref{tab:cost_values_supp}). We observe that the Kantorovich cost of \ourmethod\ is consistently lower than all other methods for all timepoints (Table~\ref{tab:cost_values_late}, Table~\ref{tab:cost_values_supp}).
+
+\ourmethod{} achieves a substantially lower cost than the low-rank solvers FRLC and LOT for rank $r=40$, even though \ourmethod{} relies on low-rank optimal transport (FRLC) as a subroutine. This result underscores the empirical trend observed in Fig.~\ref{fig:samples}, where the refinement step of \ourmethod{} progressively decreases the primal cost of coarser low-rank couplings (Proposition~\ref{prop:one_step_bound_main}). While the mini-batch solvers exhibit competitive scaling up to the last pair, the primal cost of mini-batch is higher for all tested batch-sizes (Table~\ref{tab:cost_values_supp}). Unlike \ourmethod, mini-batch OT does not compute a global alignment and exhibits batch-size dependent error.
+
+
+\begin{table}[t]
+    \centering
+    \caption{Cost Values $\langle \mathbf{C}, \mathbf{P} \rangle_{F}$ Across Later Embryonic Stages}
+    \label{tab:cost_values_late}
+    \small % Reduce font size
+    \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Method} & \textbf{E12-13.5} & \textbf{E13-14.5} & \textbf{E14-15.5} & \textbf{E15-16.5} \\
+        \midrule
+        \ourmethod{}        & \textbf{14.35} & \textbf{13.78} & \textbf{14.29} & \textbf{12.79} \\
+        Sinkhorn        & -            & -            & -            & -           \\
+        MB $128$ & 14.86
+        & 14.14
+        & 14.75 & 13.32 \\
+        MB $1024$ & 14.45
+        & 13.86
+        & 14.43 & 12.91
+        \\
+        FRLC   & 15.47          & 14.64          & 15.51          & 14.00          \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{MERFISH Brain Atlas Alignment}
+
+\begin{figure*}[tbp]
+% \vskip 0.2in
+\centerline{\includegraphics[width=.9\linewidth]{images/merfish_fig.pdf}}
+\caption{
+\textbf{a.}
+\ourmethodFullCap{} alignment on MERFISH mouse brain data, using only spatial coordinates.
+\textbf{b.} Abundance $\mathbf{v}^1$ of gene \emph{Slc17a7} in the source slice. \textbf{c.} Predicted \emph{Slc17a7} abundance $\hat{\mathbf{v}}$ from the source slice to the target slice, through the \ourmethod{} coupling.
+\textbf{d.} Abundance $\mathbf{v}^2$ of the same gene in the target slice. 
+Transferred abundances $\hat{\mathbf{v}}$ have cosine similarity $0.8098$ with true abundances $\mathbf{v}^2$ in the target.
+}
+\label{fig:merfish}
+\end{figure*}
+
+
+We ran \ourmethod{} on two slices of MERFISH Mouse Brain Receptor Map data from \href{https://info.vizgen.com/mouse-brain-map}{Vizgen} to test whether \ourmethod{} can produce biologically valid alignments using the \emph{only} spatial densities of each tissue. These spatial transcriptomics data consist of spatial and gene expression measurements at individual spots in three full coronal slices across three biological replicates. Our ``source'' dataset $(\mathbf{X}^1, \mathbf{S}^1)$ is replicate 3 of slice 2, while our ``target'' dataset $(\mathbf{X}^2, \mathbf{S}^2)$ is replicate 2 of slice 2, following the expression transfer task described \cite{clifton2023stalign} between these two slices. Each dataset has roughly 84k spots, where memory constraints prohibit instantiation a full-rank alignment as a matrix. Thus, solvers such as Sinkhorn \cite{sinkhorn} and ProgOT \cite{kassraie2024progressive} are unable to run on the dataset. 
+
+We use only spatial information when building a map between the two slices, using the spatial Euclidean cost $\mathbf{C}_{ij} := \| \mathbf{s}_i^1 - \mathbf{s}_j^2 \|_2$, after registering spatial coordinates $\mathbf{S}^1 = \{ \mathbf{s}_i^1\}_{i=1}^n$ and $\mathbf{S}^2 = \{ \mathbf{s}_i^2 \}_{i=1}^n$ with an affine transformation. We gauged the quality of the \ourmethod{ }alignment (Fig.~\ref{fig:merfish}{a}), using gene expression abundances of five ``spatially-varying'' genes. Specifically, we observe that expression vector $\mathbf{v}^1$ of gene \emph{Slc17a7} in the source slice ( Fig.~\ref{fig:merfish}{b}) when transferred to target slice through the bijective mapping output by \ourmethod{}, denoted as $\hat{\mathbf{v}}$ (Fig.~\ref{fig:merfish}{c}), closely matches the observed expression vector $\mathbf{v}^2$ of \emph{Slc17a7} in the target slice
+(Fig.~\ref{fig:merfish}{d}) with cosine similarity equal to $0.8098$.
+%For gene \emph{Slc17a7}, the cosine similarity between $\mathbf{v}^2$ and $\hat{\mathbf{v}}$ is $0.8098$, 
+For genes \emph{Slc17a7}, \emph{Grm4}, \emph{Olig1}, \emph{Gad1}, \emph{Peg10}, the corresponding cosine similarities between the transferred and observed expression vectors are $0.8098$, $0.7959$, $0.7526$, $0.4932$, $0.6015$, respectively.
+
+For comparison, we also ran the low-rank methods FRLC \cite{FRLC} and LOT \cite{Scetbon2021LowRankSF} with and without subsampling, reporting their best scores, as discussed in Section~\ref{supp:exp_merfish}. For the gene \emph{Slc17a7}, FRLC's cosine similarity was $0.2373$, while LOT's cosine similarity was $0.3390$. For all five genes \emph{Slc17a7}, \emph{Grm4}, \emph{Olig1}, \emph{Gad1}, \emph{Peg10}, FRLC's scores were ($0.2373$, $0.2124$, $0.1929$, $0.0963$, $0.1550$, respectively, while LOT's scores were $0.3390$, $0.2712$, $0.3186$, $0.1666$, $0.1080$. 
+%These scores are also listed  in Table~\ref{tab:merfish}; across 
+Across all five genes \ourmethod{}'s scores were at least twice those of FRLC or LOT (Table~\ref{tab:merfish}) with gene abundances shown in Fig.~\ref{fig:merfish_supp}. On the same task, we compared against MOP, the method of \cite{gerber2017multiscale}, whose scores for the five genes were: ($0.5211$, $0.4714$, $0.5972$, 
+$0.3571$, $0.2719$). Finally, we also benchmarked against mini-batch OT
+using batch sizes ranging from 128 to 2048 in powers of two, whose best scores 
+($0.7434$, 
+$0.7822$,
+$0.7056$,
+$0.4912$,
+$0.5683$)
+were 
+more comparable to that of the performance of \ourmethod{}. Across all methods and genes compared in 
+Table~\ref{tab:merfish}, \ourmethod{} had greatest cosine similarity scores in the expression transfer task, while also having lowest transport cost.
+Further experimental details are in Section~\ref{supp:exp_merfish}.
+
+
+
+\subsection{ImageNet Alignment}
+We demonstrate the scalability of \ourmethodFullCap{} on a large-scale and high-dimensional dataset by aligning $2048$-dimensional embeddings of $1.281$ million images from the ImageNet ILSVRC dataset \cite{deng2009imagenet, ILSVRC15}. 
+Each image is embedded using using the ResNet50 architecture \cite{he2016deep}, and we construct two datasets, $\mathsf{X}$ and $\mathsf{Y}$, by taking a random 50:50 split of the embedded images. We align $\mathsf{X}$ and $\mathsf{Y}$ using \ourmethod, FRLC, and mini-batch OT with batch-sizes ranging from $B=128$ to $B=1024$. ProgOT, Sinkhorn, and LOT could not be run on the datasets due to memory constraints. \ourmethod\ yielded a primal OT cost of 18.974, while FRLC \cite{FRLC} solution had a primal OT cost of 24.119 for rank $r=40$ and mini-batch OT has costs of $21.89$ ($B=128$) to $19.58$ ($B=1024$) (Table~\ref{tab:cost_values_imagenet_main}). 
+
+
+\begin{comment}
+\begin{table}[t]
+    \centering
+    \caption{Cost Values $\langle \mathbf{C}, \mathbf{P} \rangle_{F}$ for ImageNet \cite{deng2009imagenet, ILSVRC15} Alignment Task.}
+    \label{tab:cost_values_imagenet_main}
+    \small % Reduce font size
+
+    \begin{tabular}{lcccccc}
+        \toprule
+        \textbf{Method} & \ourmethod\ & MB $128$ & MB $256$ & MB $512$ & MB $1024$ & FRLC \\
+        \midrule
+        \textbf{OT Cost} & \textbf{18.97} & 21.89 & 21.11 & 20.34 & 19.58 & 24.12 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\end{comment}
+
+
+\begin{table}[t]
+    \centering
+    \caption{Cost Values $\langle \mathbf{C}, \mathbf{P} \rangle_{F}$ for ImageNet \cite{deng2009imagenet, ILSVRC15} Alignment Task.}
+    \label{tab:cost_values_imagenet_main}
+    \scriptsize % Use smaller font size than \small
+    \setlength{\tabcolsep}{4pt} % Reduce column separation
+    \begin{tabular}{lcccccc}
+        \toprule
+        \textbf{Method} & \ourmethod\ & MB $128$ & MB $256$ & MB $512$ & MB $1024$ & FRLC \\
+        \midrule
+        \textbf{OT Cost} & \textbf{18.97} & 21.89 & 21.11 & 20.34 & 19.58 & 24.12 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+%We (1) computed the primal cost of the alignments, (2) visualized the alignments in the embedding space using t-SNE \cite{JMLR:v9:vandermaaten08a}, (3) plotted a number of images aligned under the \ourmethod\ mapping. 
+
+
+
+\section{Discussion}
+
+
+\ourmethodFullCap
+computes the Monge map between large-scale datasets in linear space, but has several limitations. 
+% Perhaps the most significant is the assumption that one is aligning datasets with 
+First, we currently assume that the datasets 
+$\mathsf{X}$ and $\mathsf{Y}$ have the same number of samples. 
+%$|\mathsf{X}| = |\mathsf{Y}| = n$, 
+%prohibiting immediate application to datasets of different sizes. 
+In many machine learning applications, this is not a limiting factor, as 
+one generally seeks to pair an equal number of source points $\mathbf{x}$ to target points $\mathbf{y}$. 
+Second, while \ourmethodFullCap{} scales linearly in space and log-linearly in time, it still involves a constant dependent on the low-rank OT sub-procedure used -- this underscores the need to accelerate and stabilize low-rank OT solvers further \cite{scetbon2022lowrank, FRLC}. Finally, while \ourmethodFullCap  guarantees an optimal solution given an optimal black-box low-rank solver (Proposition~\ref{prop:low_rank_monge_main}), the low-rank solvers \cite{scetbon2022linear, FRLC} used in practice are not necessarily optimal, owing to the non-convexity of low-rank problems. 
+%Finally, 
+%curious limitations of \ourmethodFull\ is that since 
+%the rank-schedule used in \ourmethodFullCap requires a  non-trivial factorization of $n$, and thus requires datasets that do not  have a prime number of samples. Of course, this limitation can be bypassed through light sub-sampling of one or both datasets, provided they are of comparable size. 
+
+\begin{comment}
+\ourmethodFullCap may be useful in neural OT approaches which learn 
+a continuous Monge map between the densities of two datasets.
+For example, \cite{seguy2018large} minimize a 
+loss $\min_{\theta}\frac{1}{2}\mathbb{E}_{\mu} \lVert T_{\theta}(\mathbf{x}_{i}) -   T(\mathbf{x}_{i}) \rVert_{2}^{2}$ between a neural network $T_{\theta}$ with parameters $\theta$ and a Monge map $T$ over samples $\mathbf{x}_{i} \sim \mu$
+(Remark~\ref{remark:Monge_regression}).
+\ourmethodFullCap can generate datasets of Monge map pairs $(\mathbf{x}_{i},T(\mathbf{x}_{i}))$ from unpaired samples  $(\mathbf{x}_{i})_{i=1}^{n}$ and $(\mathbf{y}_{i})_{i=1}^{n}$.
+This suggests one may directly train a neural network $T_{\theta}$ to match these pairs, without the bias of mini-batching.
+\end{comment}
+
+Optimal transport has been successfully applied in deep learning frameworks, such as OT flow-matching \cite{tong2024improving}, computer vision and point cloud registration, \cite{yu2021cofinet, qin2022geometric}, among many others. The mini-batch procedure used to train many of these methods involves sampling two datasets $\mathsf{X}_{B} \sim \mu$ and $\mathsf{Y}_{B} \sim \nu$ with batch-size $B$ and aligning them with Sinkhorn at every training iteration. \ourmethod\ suggests an alternative approach: one can precompute millions of \emph{globally aligned} pairs and then sample $\mathsf{X}_{B} \sim \mu$ and the optimal mapping $T(\mathsf{X}_{B}) \sim \nu$ by indexing into these precomputed pairs. This approach applies to any loss function dependent on an OT alignment.
+
+\ourmethodFullCap may also be useful in neural OT approaches which learn 
+a continuous Monge map between the densities of two datasets.
+For example, \cite{seguy2018large} minimize a 
+loss $\min_{\theta}\frac{1}{2}\mathbb{E}_{\mu} \lVert T_{\theta}(\mathbf{x}_{i}) -   T(\mathbf{x}_{i}) \rVert_{2}^{2}$ between a neural network $T_{\theta}$ with parameters $\theta$ and a Monge map $T$ over samples $\mathbf{x}_{i} \sim \mu$
+(Remark~\ref{remark:Monge_regression}). Thus, the procedure outlined above may be used to directly regress a neural network $T_{\theta}$ on the Monge map $T$ without the bias of mini-batching or entropy.
+
+
+%\ourmethodFullCap can generate datasets of Monge map pairs $(\mathbf{x}_{i},T(\mathbf{x}_{i}))$ from unpaired samples  $(\mathbf{x}_{i})_{i=1}^{n}$ and $(\mathbf{y}_{i})_{i=1}^{n}$. This suggests one may directly train a neural network $T_{\theta}$ to match these pairs, without the bias of mini-batching.
+
+
+
+%without solving a mini-batch OT problem for each training iteration.
+
+%With properties such as input-convexity \cite{pmlr-v70-amos17b} used to approximate the Brenier potential $\varphi: \mathbb{R}^{d} \to \mathbb{R}$, one may also extrapolate the transport to new points $\mathbf{x}' \mapsto \nabla \varphi(\mathbf{x}')$.
+
+%If $c(x,y) = \lVert x- y\rVert_{2}^{2}$ so that $\gamma$ is supported on the graph of the gradient of a convex function $\varphi$, one may also use input-convexity \cite{pmlr-v70-amos17b} to approximate the associated Brenier potential $\varphi: \mathbb{R}^{d} \to \mathbb{R}$ and extrapolate the transport to new points $\mathbf{x}' \mapsto \nabla \varphi(\mathbf{x}')$.
+
+
+\section{Conclusion}
+
+We introduce \ourmethodFullCap (\ourmethod), an algorithm to solve optimal transport with linear complexity in the number of points, making sparse, full-rank optimal transport feasible for large-scale datasets. Our algorithm leverages that low-rank optimal transport 
+co-clusters points with their image under the  Monge map, refining bijections between partitions of each dataset across a hierarchy of scales, down to a bijective Monge map between the datasets at the finest scale. \ourmethodFullCap{} couplings achieve comparable primal cost to couplings obtained through full-rank entropic solvers, and scales to datasets with over a million points, % \ourmethodFullCap's ability to compute alignments between massive datasets will 
+opening the door to applications previously infeasible for optimal transport.
+
+
+\section*{Acknowledgements}  We thank Henri Schmidt for many helpful conversations. This research was supported by NIH/NCI grant U24CA248453 to B.J.R. J.G. is supported by the Schmidt DataX Fund at Princeton University made possible through a major gift from the Schmidt Futures Foundation. 
+
+\section*{Impact Statement}
+
+
+Optimal transport has emerged as a powerful tool in generative modeling, yet its widespread use has been limited by scalability constraints. \ourmethod{} overcomes this limitation by enabling the application of OT to datasets with millions of points. This advancement paves the way for integrating OT into large-scale deep generative models and modern vision and language tasks.
+
+As with any computational tool which may advance large-scale generative modeling, there are potential issues with bias in training datasets and a possibility of misuse. Use of  \ourmethod{} in applications should be careful and transparent about these risks and utilize appropriate mitigation strategies.
+%and transparent application of, particularly when applied in high-impact settings.
+
+
+\section*{Code Availability}
+
+Our implementation of \ourmethodFullCap\ is available at \href{https://github.com/raphael-group/HiRef}{https://github.com/raphael-group/HiRef}.
+
+\begin{comment}
+\section*{Impact Statement}
+
+``This paper presents work whose goal is to advance the field of 
+Machine Learning. There are many potential societal consequences 
+of our work, none which we feel must be specifically highlighted here.''
+\end{comment}
+
+%\newpage
+
+\bibliographystyle{icml2025}
+\bibliography{bibliography}
+
+
+% In the unusual situation where you want a paper to appear in the
+% references without citing it in the main text, use \nocite
+\nocite{langley00}
+
+%\bibliography{example_paper}
+%\bibliographystyle{icml2025}
+
+
+\newpage
+\appendix
+\onecolumn
+
+\begin{comment}
+\textbf{Notes}
+\begin{itemize}
+    \item Who to compare against? (1) Sinkhorn, (2) ProgOT, (3) Neural OT (expectile, dual, and Monge Gap), (4) ??
+    \item Which datasets to evaluate on? (1) Synthetic, (2) Connectome, (3) Transcriptomics, (4) ??
+    \item Evaluate affect of levels of refinement on OT cost across rank (how does it decrease OT cost relative to low-rank)
+    \item Can one show exact or approximate convergence using theoretical results from the convergence of LR OT?
+    \item How does the approximation/how do properties of the algorithm depend on the rank-schedule? Can we say anything theoretical about a good choice for it?
+    \item Can we show theoretically that at every step of refinement the cost decreases monotonically?
+    \item Can we show precisely how the rank schedule will trade-off between time and space complexity?
+\end{itemize}
+\end{comment}
+
+\begin{comment}
+\begin{algorithm}[tb]
+   \caption{Hierarchical Refinement}
+   \label{alg:hr_ot}
+\begin{algorithmic}
+   \STATE {\bfseries Input:} Datasets $\mathsf{X} = \{ x_{i} \}_{i=1}^{n}, \mathsf{Y} =  \{ y_{i} \}_{i=1}^{n}$, 
+   %measures $\mu = \frac{1}{n} \sum_{i} \delta_{x_{i}}, \nu = \frac{1}{n} \sum_{i} \delta_{y_{i}}$, 
+   \emph{balanced} low-rank OT solver $\mathcal{O}(\cdot)$, rank-schedule $(r_{t})_{t=1}^{\kappa}$ dividing $n$, and base-case rank $r = n / (\prod_{t=1}^{{\kappa}} r_t )$ [e.g., $r=1$].
+   \STATE $t \gets 0$
+   \STATE \emph{{\color{gray}{\# Initialize coarsest co-clustering}}}
+   \STATE $\Gamma^{\mathsf{X}}_{t} =  \mathsf{X} $, $\Gamma^{\mathsf{Y}}_{t} = \mathsf{Y} $
+   \STATE $\mathcal{F}_{t} = \{ ( \Gamma^{\mathsf{X}}_{t}, \Gamma^{\mathsf{Y}}_{t} ) \}$
+   \WHILE{$\exists( \Gamma_{t}^{\mathsf{X}}, \Gamma_{t}^{\mathsf{Y}}) \in \mathcal{F}_t: \quad \min(
+   | \Gamma_t^{\mathsf{X}}  |, 
+   | \Gamma_t^{\mathsf{Y}} |
+   )> r$}
+   \STATE $\mathcal{F}_{t+1} \gets \{ \}$
+   \FOR{co-cluster tuples $(\Gamma_{t}^{\mathsf{X}}, \Gamma_{t}^{\mathsf{Y}}) \in \mathcal{F}_{t}$}
+   \STATE \emph{{\color{gray}{\# Define empirical measures}}}
+    \STATE $\mu_{\Gamma_{t}^{\mathsf{X}}} = \frac{1}{|\Gamma_{t}^{\mathsf{X}}|} \sum_{x \in \Gamma^{\mathsf{X}}_t} \delta_{x}$
+    \STATE $\mu_{\Gamma^{\mathsf{Y}}_t} = \frac{1}{|\Gamma^{\mathsf{Y}}_t|} \sum_{y \in \Gamma^{\mathsf{Y}}_t} \delta_{y}$
+    \STATE \emph{{\color{gray}{\# Solve a balanced low-rank OT problem}}}
+    \STATE $\mathbf{p} := \mathrm{Uniform}(r_{t+1})$ \emph{{\color{gray}{\# Ensures even-splits}}}
+    \STATE $(\mathbf{Q}, \mathbf{R}) \gets \mathcal{O}(\mu_{\Gamma^{\mathsf{X}}_t}, \mu_{\Gamma^{\mathsf{Y}}_t}, r_{t+1}, \mathbf{p})$
+    \STATE \emph{{\color{gray}{\# Refine sets into new co-clusters}}}
+    \FOR{ $z \in [r_{t+1}]$}
+    \STATE{ $ \mathcal{X}_{z} = \{ x \in \Gamma_t^{\mathsf{X}} : \arg\max \mathbf{Q}_{x,\cdot} = z \}$
+    \STATE $\mathcal{Y}_{z} = \{ y \in \Gamma_t^{\mathsf{Y}} : \argmax \mathbf{R}_{y,\cdot} = z \})$}
+   \STATE  $\mathcal{F}_{t+1} \gets \mathcal{F}_{t+1} \, \bigcup \,\{ (\mathcal{X}_{z}, \mathcal{Y}_{z}) \} $
+   \ENDFOR{}
+    \ENDFOR
+    \STATE $t \gets t+1$
+   \ENDWHILE{}
+   \STATE Return tuples $\mathcal{F}_{\kappa} = \{ (x_{i}, T(x_{i}) = y_{j}) \}$
+\end{algorithmic}
+\end{algorithm}
+\end{comment}
+
+
+\setcounter{figure}{0} 
+\setcounter{table}{0} 
+
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+
+\setcounter{equation}{0}
+\renewcommand{\theequation}{S\arabic{equation}}
+
+\newpage
+
+\newpage
+
+\section{Hierarchical-Refinement Algorithm}
+
+\begin{algorithm}[htb]
+\caption{Hierarchical Refinement for Full-Rank OT}
+\label{alg:hr_ot_supp}
+\begin{algorithmic}[1]
+\Require 
+  \textbf{Datasets} \( \mathsf{X} = \{\mathbf{x}_i\}_{i=1}^n,\, \quad  \mathsf{Y} = \{\mathbf{y}_i\}_{i=1}^n\); 
+  \textbf{Low-rank OT solver} \(\mathrm{LROT}(\cdot)\);
+  \textbf{Rank schedule} \((r_1, r_2, \ldots, r_\kappa)\);
+  \textbf{Base rank} \(r_{\text{base}} = \frac{n}{\prod_{t=1}^\kappa r_t}\) (e.g. 1).
+\Statex
+
+\noindent \textbf{Initialize:}
+\State \(t \gets 0\), \(\Gamma_0 \gets \{\,( \mathsf{X}, \mathsf{Y})\}\)
+\While{$\exists\,( \mathsf{X}^{(t)}, \mathsf{Y}^{(t)})\in \Gamma_t$ \textbf{ such that } \\
+        $\qquad \qquad \qquad \min\{|\mathsf{X}^{(t)}|, |\mathsf{Y}^{(t)}|\} > r_{\text{base}}$}
+    \State \(\Gamma_{t+1} \gets \varnothing\)
+    \For{$(\mathsf{X}_q^{(t)}, \mathsf{Y}_q^{(t)}) \in \Gamma_t $}
+        \If{ $\min\{ | \mathsf{X}_q^{(t)}|, |\mathsf{Y}_q^{(t)}| \} \leq r_{\text{base}} $ }
+            \State \(\Gamma_{t+1} \gets \Gamma_{t+1} \cup \{(\mathsf{X}_q^{(t)}, \mathsf{Y}_q^{(t)})\}\)
+        \Else
+            %\State Define empirical measures:
+            \State \(\mu_{\mathsf{X}_q^{(t)}} = \frac{1}{|\mathsf{X}_q^{(t)}|} \sum_{\mathbf{x} \in \mathsf{X}_q^{(t)}} \delta_{\mathbf{x}}\)
+            \State \(\mu_{\mathsf{Y}_q^{(t)}} = \frac{1}{|\mathsf{Y}_q^{(t)}|} \sum_{\mathbf{y} \in \mathsf{Y}_q^{(t)}} \delta_{\mathbf{y}}.\)
+            \State \(\mathbf{g}_{t+1} \gets (1/r_{t+1}) \mathbf{1}_{r_{t+1}}\)
+            \State \((\mathbf{Q}, \mathbf{R}) \gets 
+              \mathrm{LROT}(\mu_{\mathsf{X}_q^{(t)}}, \mu_{\mathsf{Y}_q^{(t)}}, \mathbf{g}_{t+1})\)
+            \For{$z = 1 \to r_{t+1}$}
+                \State \(\mathsf{X}^{(t+1)}_z \gets \text{Assign}(\mathsf{X}^{(t)}, \mathbf{Q}, z) \)
+                \State \(\mathsf{Y}^{(t+1)}_z \gets \text{Assign}(\mathsf{Y}^{(t)}, \mathbf{R}, z)\)
+                \State \(\Gamma_{t+1} \gets \Gamma_{t+1} \cup 
+                  \{\,(\mathsf{X}^{(t+1)}_z,\; \mathsf{Y}^{(t+1)}_z)\}\)
+            \EndFor
+            \State \Comment{\scriptsize\(\text{Assign}(\mathsf{S}, \mathbf{M}, z) = \{s \in \mathsf{S} \mid \arg\max_{z'} \mathbf{M}_{s z'} = z\}\)\normalsize}
+            \EndIf
+    \EndFor
+    \State \(t \gets t + 1\)
+\EndWhile
+
+\State \textbf{Output:} 
+  \(\Gamma_\kappa = \{ (\mathbf{x}_i, T(\mathbf{x}_i))\}\) 
+  \quad \Comment{Set of refined pairs.}
+\end{algorithmic}
+\end{algorithm}
+
+\section{Proofs}
+\label{sec:supp_pfs}
+
+Datasets $\mathsf{X}$ and $\mathsf{Y}$ are represented as discretely supported probability measures $\mu = \sum_{i=1}^{n} \mathbf{a}_{i} \delta_{ \mathbf{x}_{i}}$ and $\nu = \sum_{j=1}^{n} \mathbf{b}_{j} \delta_{ \mathbf{y}_{j}}$ for probability vectors $\mathbf{a}, \mathbf{b} \in \Delta_{n}$, which we assume to be uniform: $\mb{a} = \mb{b} = \bm{u}_{n} = (1/n) \mathbf{1}_{n} \in \Delta_{n}$. We form the cost matrix $\mathbf{C}$ defined by 
+\begin{align}
+\label{eq:supp_cost}
+    \mathbf{C}_{ij} := c( \mathbf{x}_i, \mathbf{y}_j ). 
+\end{align}
+ In all cases below, we are concerned with the assignment problem \eqref{eq:monge_prob} for this cost matrix.
+
+Let $\mb{perm}(n) = \{ \Tilde{\mb{P}} \in \mathbb{R}^{n \times n} : \Tilde{\mb{P}}\bm{1}_n=\Tilde{\mb{P}}^{\top}\bm{1}_n=(1/n)\,\bm{1}_n\}$ denote the set of (scaled) $n \times n$ permutation matrices. By the Birkhoff-von Neumann theorem \cite{birkhoff1946tres}, an optimal solution to the $n \times n$ assignment problem is attained at a permutation matrix in $\mb{perm}(n)$.
+
+\begin{definition}
+\label{def:monge_reg}
+    Say that cost matrix $\mb{C} \in \R^{n \times n}$ is
+    \emph{Monge rotated} if the identity matrix $\mb{I}$ is a solution to the assignment problem associated to $\mb{C}$, i.e.
+    \begin{align*}
+        \mb{I}
+        \in \argmin_{
+        \mb{P} \in \mb{perm}(n)
+        }
+        \la \mb{C}, \mb{P} \ra .
+    \end{align*}
+\end{definition}
+For arbitrary cost matrix $\mb{C} \in \mathbb{R}^{n \times n}$, let $\mb{P}^{\dagger} \in  \arg\min_{\,\,\mb{P} \in \mb{perm}(n) } \left\langle \mb{C}, \mb{P} \right\rangle_{F}$,
+and note that the column-permuted cost matrix 
+$\mb{C}^\dagger := \mb{C}\mb{P}^{\dagger, \top}$ is Monge rotated by construction. This is a consequence of the following identity, which holds for any permutation $\tilde{\mb{P}} \in \mb{perm}(n)$.
+\begin{equation}
+\label{eq:monge_reg_id}
+\begin{split}
+    \la \mb{C}, \mb{P} \ra_F
+    &= \Tr ( \mb{C}^\top \mb{P} )  \\
+    &= \Tr (\tilde{\mb{P}}^{-1} \tilde{\mb{P}}\mb{C}^\top 
+     \mb{P} ) \\
+    &=
+    \Tr ( \tilde{\mb{P}} \mb{C}^\top 
+    \mb{P} \tilde{\mb{P}}^\top )
+    =
+    \la \mb{C} \tilde{\mb{P}}^\top 
+    ,\mb{P}  \tilde{\mb{P}}^\top  \ra_F. 
+\end{split}
+\end{equation}
+Let $\Pi(\bm{u}_n, \bm{u}_r) \equiv \Pi_{\bm{u}_n, \bm{u}_2}$ denote the transport polytope between two uniform measures. For $\mb{Q} \in \Pi(\bm{u}_n, \bm{u}_r)$, say that a row of $\mb{Q}$ is \emph{soft} if at least two of its entries are positive, and call the row \emph{hard} otherwise. 
+For rank $r \ll n$ such that $r$ divides $n$, 
+let $\Pi_\bullet( \bm{u}_n, \bm{u}_r)$ be the subset of $\Pi(\bm{u}_n, \bm{u}_r)$ consisting of transport plans $\mb{Q}$ with only hard rows. 
+Below, we consider two low-rank OT problems associated to $\mb{C}^\dagger$. 
+The first low-rank problem considered is 
+\begin{align}
+\label{prob:general_LROT}
+\min_{\mb{Q},\mb{R} \in \Pi_\bullet(\bm{u}_{n}, \bm{u_{r}})} \,\,\langle \mb{C}^\dagger, \mb{Q} \mb{R}^{\top} \rangle_{F}.
+\end{align}
+while the second low-rank problem considered is restricted to symmetric couplings:
+\begin{align}
+\label{eq:lr_sym}
+\min_{
+\mb{Q} \in \Pi_\bullet(\bm{u}_n, \bm{u}_r) 
+}
+\la
+\mb{C}^\dagger, 
+\mb{Q}\mb{Q}^\top \ra_F. 
+\end{align}
+In either case, we have omitted the constant factor of $r$ coming from $\mathrm{diag}(1/\bm{u}_r)$. 
+We next introduce a technical condition on $\mb{C}$. Let $\mb{C} \in \R^{n \times n}$ be a cost matrix and let $\mb{P}^\dagger \in \argmin_{\mb{P}\in \mb{perm}(n)} \la \mb{C}, \mb{P}\ra$ corresponding to permutation $\sig^\dagger : [n] \to [n], \sig^\dagger \in \mathfrak{S}_n$. Given partitions $\mathcal{I} = \{ I_1, \dots, I_r\}$ and 
+$\mathcal{J} = \{ J_1, \dots, J_r\}$ of $[n]$ and $a, b \in [r]$, define the cost between two sets $I_a$, $J_b$ to be
+\begin{align}
+\label{eq:C_block}
+    \mb{C}_{I_a, J_b} := 
+    \sum_{i \in I_a, j \in J_b}
+    \mb{C}_{i \sig^\dagger(j)}.
+\end{align}
+We call partition $\mathcal{I}$ \emph{balanced} if each block $I_a$ of $\mathcal{I}$ has the same number of elements, $|\, I_a\, | = (n/r)$.
+
+\begin{definition} 
+\label{def:r_Monge_sep}
+Cost matrix $\mb{C} \in \R^{n \times n}$ is 
+\emph{$r$-Monge separable} if there exists a balanced partition $\mathcal{I}^\star = \{ I_k^\star \}_{k=1}^r$, such that for any two permutations $\pi_1, \pi_2 \in \mathfrak{S}_n$, one has
+\begin{align}
+\label{eq:r_Monge_sep}
+\sum_{k=1}^r 
+\mb{C}_{I_k^\star, I_k^\star} 
+\leq \sum_{k=1}^{r} \, \mb{C}_{
+\pi_1(I_k^\star), \pi_2(I_k^\star)
+}.
+\end{align}
+We say that $\mb{C}$ is \emph{strictly $r$-Monge separable} if \eqref{eq:r_Monge_sep} holds with strict inequality $(<)$ for any $\pi_1(I_k^\star) \neq \pi_2(I_k^\star)$. 
+\end{definition}
+
+One interesting feature of this definition is that while the sum is over $r \leq n$ terms, where it may occur that $r \ll n$, this inequality must hold over all permutations $\pi_1$ and $\pi_2$ acting on the individual data points, rather than partition blocks. This captures the notion of finding low-rank or low-resolution solutions which are nevertheless compatible with the optimal bijective Monge map.
+
+\begin{remark}
+\label{rmk:r_Monge_sep}
+    If $\mb{C}$ is $r$-Monge separable, the distinguished partition $\mathcal{I}^\star$ may be represented as $\mb{Q}^\star \in \Pi_\bullet( \bm{u}_n, \bm{u}_r)$ such that $\mb{Q}^\star$ is optimal for \eqref{eq:lr_sym} and the pair
+    $(\mb{Q}^\star, \mb{Q}^\star)$ is optimal for \eqref{prob:general_LROT}. After proving the next lemma, we will relate $r$-Monge separability to cyclic monotonicity. 
+\end{remark}
+
+
+\begin{proposition}\label{prop:low_rank_monge}
+%[Monge Reduction Lemma]
+Let $\mb{C} \in \R^{n \times n}$ be strictly $r$-Monge separable. If $\mb{Q}^\star , \mb{R}^\star \in \argmin_{\mb{Q}, \mb{R} \in \Pi_\bullet (\bm{u}_n, \bm{u}_2)} \la \mb{C}, \mb{Q} \mb{R}^\top \ra$ then, for all $i \in [n]$,
+\begin{align}
+\label{eq:monge_cc}
+\argmax_{z \in [r]} 
+\mb{Q}^\star_{iz} = 
+\argmax_{z \in [r]}
+\mb{R}^\star_{\sig^\dagger(i)z},
+\end{align}
+where $\sig^\dagger : [n] \to [n]$ is the permutation corresponding to $\mb{P}^\dagger \in \argmin_{\mb{P} \in \mb{perm}(n)} \la \mb{C}, \mb{P} \ra_F$.
+\end{proposition}
+\begin{proof}
+Let $\sig^\dagger, \mb{P}^\dagger$ be as in the statement of the lemma, and define $\mb{C}^\dagger := \mb{C}\mb{P}^{\dagger, \top}$. The same reasoning as in \eqref{eq:monge_reg_id} implies that if $(\mb{Q}^\star, \mb{R}^\star) \in \argmin_{\mb{Q}, \mb{R} \in \Pi_\bullet(\bm{u}_n, \bm{u}_2)} \la \mb{C}, \mb{Q}\mb{R}^\top \ra_F$, then
+\begin{align}
+\label{eq:mcclem1}
+    (\mb{Q}^\star, \mb{P}^\dagger\mb{R}^\star) \in 
+    \argmin_{
+    \mb{Q}, \mb{R} \in \Pi_\bullet(\bm{u}_n, \bm{u}_2)
+    } \la \mb{C}^\dagger, \mb{Q} \mb{R}^\top \ra_F . 
+\end{align}
+The membership \eqref{eq:mcclem1} follows from the identities
+\begin{align*}
+    \la \mb{C}^\dagger, \mb{Q}^\star \mb{R}^\star \mb{P}^{\dagger, \top} \ra_F &= \la \mb{C} \mb{P}^{\dagger, \top} , \mb{Q}^\star \mb{R}^{\star, \top} \mb{P}^{\dagger, \top} \ra_F, \\
+    &= \Tr ( 
+    \mb{P}^\dagger \mb{C}^\top \mb{Q}^\star \mb{R}^{\star,\top} \mb{P}^{\dagger, \top} ), \\
+    &= \Tr \mb{C}^\top \mb{Q}^\star \mb{R}^{\star, \top} = \la \mb{C}, \mb{Q}^\star \mb{R}^{\star, \top} \ra_F. 
+\end{align*}
+Remark~\ref{rmk:r_Monge_sep} above follows from the requirement that the variables $\mb{Q}, \mb{R}$ have all hard rows, and are subject to uniform marginal constraints, so that all non-zero entries of $\mb{Q}\mb{R}^\top$ have the same value. 
+Thus, if 
+$\mb{C}$ is $r$-Monge separable, there exists $\tilde{\mb{Q}} \in \Pi_\bullet(\bm{u}_n, \bm{u}_2)$ corresponding to distinguished balanced partition $\tilde{\mathcal{I}}$ from Definition~\ref{def:r_Monge_sep} such that 
+\begin{align}
+\label{eq:mcclem2}
+    (\tilde{\mb{Q}}, \tilde{\mb{Q}}) \in
+    \argmin_{
+    \mb{Q}, \mb{R} \in \Pi_\bullet(\bm{u}_n, \bm{u}_2)
+    }
+    \la \mb{C}^\dagger , \mb{Q} \mb{R}^\top \ra .
+\end{align}
+Moreover, this pair $(\tilde{\mb{Q}}, \tilde{\mb{Q}})$ is the unique optimum when $\mb{C}$ is strictly $r$-Monge separable. 
+From \eqref{eq:mcclem1}, \eqref{eq:mcclem2}, we must have 
+\begin{align*}
+    \tilde{\mb{Q}} = \mb{Q}^\star, \quad \tilde{\mb{Q}} = \mb{P}^\dagger \mb{R},
+\end{align*}
+from which \eqref{eq:monge_cc} follows immediately. 
+\end{proof}
+
+Let us now discuss how the notion of $r$-Monge separability is related to $c$-cyclic monotonicity. Recall that for a cost matrix $\mb{C} \in \R^{n \times n}$ derived from ground cost $c$ the support of an optimal plan is $c$-cyclically monotone if for all permutations $\pi : [n] \to [n], \pi \in \mathfrak{S}_n$, one has
+\begin{align}
+\label{eq:ccm}
+    \sum_{i=1}^n \mb{C}_{ii} \leq 
+    \sum_{i=1}^n \mb{C}_{i\pi(i)}. 
+\end{align}
+As it amounts to a reindexing of the sum on the right side of \eqref{eq:ccm} , one can equivalently define the support of the optimal plan to be $c$-cyclically monotone if for any \emph{pair} of permutations $\pi_1, \pi_2 \in \mathfrak{S}_n$, 
+\begin{align*}
+    \sum_{i=1}^n 
+    \mb{C}_{ii}
+    \leq
+    \sum_{i=1}^n 
+    \mb{C}_{\pi_1(i)\pi_2(i)},
+\end{align*}
+from which we see that $c$-cyclical monotonicity is equivalent to $r$-Monge separability with $r=n$. 
+
+We next show that the optimal factors $\mathbf{Q}^\star, \mathbf{R}^\star$ for the rank-2 Wasserstein problem given in \eqref{eq:lora_wass} correspond to hard-partitions of each dataset, so that for this problem the optimal $\mathbf{Q}^{\star}, \mathbf{R}^{\star} \in \Pi( \bm{u}_n, \bm{u}_2)$ satisfy $\mathbf{Q}^\star, \mathbf{R}^\star \in \Pi_\bullet( \bm{u}_n, \bm{u}_r)$. Below, let $\mathrm{supp}_i(\mathbf{Q}^\star) \subset [n]$ be the indices on which column $i$ of $\mathbf{Q}^\star$ is supported, where $i=1,2$. 
+\begin{lemma}
+\label{lem:supp_reduction_lemma}
+    Let $(\mathbf{Q}^\star, \mathbf{R}^\star)$ be optimal for the rank-2 Wasserstein problem \eqref{eq:lora_wass} subject to the additional constraint that $\mathbf{a}= \mathbf{b}=\bm{u}_{n},$ and
+    $\mathbf{g}= \bm{u}_{2}$ are uniform and $n=m$ is even. Then, $(\mathrm{supp}_1( \mathbf{Q}^\star) ,\mathrm{supp}_2( \mathbf{Q}^\star))$ is a partition of $[n]$, and symmetrically, so is $(\mathrm{supp}_1( \mathbf{R}^\star) ,\mathrm{supp}_2( \mathbf{R}^\star))$, so $(\mathbf{Q}^\star, \mathbf{R}^\star) \in \Pi_{\bullet (\bm{u}_{n},\bm{u}_{2})}$.
+\end{lemma}
+\begin{proof} The cost is linear in $(\mathbf{Q}, \mathbf{R})$ respectively: the minimization in each variable given the other fixed can be expressed as
+\begin{align}\label{eq:supp_alternating}
+\argmin_{\mathbf{Q} \in \Pi(\bm{u}_{n}, \bm{u}_{2})} 2\,\langle \mathbf{Q} , \mathbf{C} \mathbf{R}  \rangle_{F},\, 
+\quad \argmin_{\mathbf{R} \in \Pi(\bm{u}_{n}, \bm{u}_{2})} 2\,\langle \mathbf{R}, \mathbf{C}^{\top} \mathbf{Q}  \rangle_{F}\,.
+\end{align}
+Thus for any optimal $\mathbf{Q}^{\star}$ or $\mathbf{R}^{\star}$ fixed the minimization in the other variable is a linear optimal transport problem, where by Corollary 2.11 in \cite{Loera2013CombinatoricsAG} it holds that since the constraint matrix is totally unimodular with marginals integral (on rescaling), the optima $\mathbf{R}^{\star}$ and $\mathbf{Q}^{\star}$ must be vertices on the transport polytope $\Pi_{\bm{u}_{n}, \bm{u}_{2}}$ with integral entries (on rescaling, by $2n$ or $2m$). There are $\leq n +1$ positive entries in any optimal rank $r=2$ solution \cite{Loera2013CombinatoricsAG, peyre2019computational}, so that $n$ (resp. $m$) being even and the rescaled rows and columns summing to $2$ and $n$ implies that there are exactly $n$ positive entries and thus that the vertices define partitions of $[n]$ and $[m]$. Thus, solutions to \ref{eq:supp_alternating} satisfy $(\mathbf{Q}^\star, \mathbf{R}^\star) \in \Pi_{\bullet (\bm{u}_{n},\bm{u}_{2})}$.
+%Let us write optimal $(\mathbf{Q}^\star, \mathbf{R}^\star, \mathbf{g}^\star)$ for the $r=2$ problem \eqref{eq:lora_wass} as $(\mathbf{Q}, \mathbf{R}, \mathbf{g})$. Suppose for the sake of contradiction that $\mathbf{Q}$ does not correspond to a hard clustering. This means in particular there is $i \in [n]$ with $\mathbf{Q}_{i1} >0$ \emph{and} $\mathbf{Q}_{i2} > 0$. 
+\end{proof}
+
+Notably, in the case of an odd number of points $n$ or $m$ this likewise implies that one has a single row which has 2 entries $\begin{pmatrix}
+    1/2n & 1/2n
+\end{pmatrix}$, with all other rows of the form $\begin{pmatrix}
+    0 & 1/n
+\end{pmatrix}$ or $\begin{pmatrix}
+    1/n & 0
+\end{pmatrix}$ defining a partition of the remaining even subset of size $(n-1)$ or $(m-1)$. In the general case of ranks $r \neq 2$ there are maximally $n + r + 1$ \cite{peyre2019computational} non-zero edges (so that the graph is acyclic), and for $n \gg r$ the optimal solution remains close to a partition given mild assumptions on $\mathbf{C}$.
+
+Lemma~\ref{lem:supp_reduction_lemma} states optimal low-rank couplings $(\mathbf{Q}^\star, \mathbf{R}^\star)$ for Problem~\ref{eq:lora_wass_variant} over $\Pi_{(\bm{u}_{n},\bm{u}_{2})}$ are in $\Pi_{\bullet(\bm{u}_{n},\bm{u}_{2})}$. Thus, by Proposition~\ref{prop:low_rank_monge} these solutions co-cluster points $\mathbf{x} \in \mathsf{X}$ with their image under Monge map $T^\star(\mathbf{x})$, supposing the cost is strictly 2-Monge separable (Definition~\ref{def:r_Monge_sep}). This co-clustering is in the sense of the clustering functions $\mathsf{q}^\star, \mathsf{r}^\star$ from Proposition~\ref{prop:low_rank_monge_main} corresponding to each factor $\mathbf{Q}^\star, \mathbf{R}^\star$. We note that when $\mu$ and $\nu$ are discretely supported measures with supports of equal cardinality, a Monge map, $T^\star : \mathsf{X} \to \mathsf{Y}$, is guaranteed to exist by Theorem 2.7 of \cite{Thorpe2017IntroductionTO}.
+
+\paragraph{On the Rank Schedule.} At each intermediate scale $t \in [\kappa]$, the \emph{rank-schedule} $(r_1, \dots, r_\kappa)$ determines the effective rank of the coupling computed so far. For each $t \in [\kappa]$, define the \emph{effective rank} at scale $t$ as $\rho_t := \prod_{s=1}^t r_s $. This effective rank corresponds to the number of partitions, which are placed in bijective correspondence
+\begin{align}
+\label{eq:supp_onetoone_t}
+    \mathsf{X}_q^{(t)} \leftrightarrow \mathsf{Y}_q^{(t)} \, \quad t \in [\rho_t] \,. 
+\end{align}
+at the $t$-th step of \ourmethod{}. The size of the partitions at scale $t$ is given by $n / \rho_t = | \mathsf{X}^{(t)}| = |\mathsf{Y}^{(t)}|$. Given these preliminaries, we show that for an appropriate rank-schedule \ourmethodFullCap{} yields optimal transport maps. 
+
+\begin{proposition}[Optimality of Hierarchical Refinement]
+Suppose the Monge-map exists between two datasets $\mathsf{X}$, $\mathsf{Y}$ of size $n$. Then there exists a rank-schedule $(r_{1}, \cdots, r_{\kappa})$ which factorizes $n$ such that all size $n/\rho_{t}$ partitions generated by Hierarchical Refinement at level $t$ satisfy strict $r_{t+1}$-Monge separability (Definition~\ref{def:r_Monge_sep}) for $t \in [0:\kappa-1]$. For any such rank-schedule, given an optimal black-box low-rank solver over $\Pi_{\bullet}(\cdot, \cdot)$, Hierarchical Refinement returns the Monge-map.
+%Refinement for $n = r^{\kappa}$ produces tuples $(x, T(x))$ corresponding to the optimal permutation assuming a black-box optimal low-rank solver.
+\end{proposition}
+\begin{proof}
+For existence, observe that taking $r_{1}= n$ implies the statement $\sum_{k=1}^{n} 
+\mb{C}_{I_k^\star, I_k^\star} 
+\leq \sum_{k=1}^{n} \, \mb{C}_{
+\pi_1(I_k^\star), \pi_2(I_k^\star)
+}$. For partitions $I_{k}$ of size one, this is equivalent to the statement of $c$-cyclical monotonicity $\sum_{i=1}^n \mb{C}_{ii} \leq \sum_{i=1}^n \mb{C}_{i\pi(i)}$, so that for the trivial rank-schedule $(r_{1}):=(n)$ the cost is always $n$-Monge separable.
+
+Given the existence of such a schedule $( r_{1}, \cdots, r_{\kappa} )$ with $r_{t+1}$-Monge separability, we proceed by induction on $t \in [0,\kappa ]$. For the base case of $t=0$, as we assume the Monge map exists, for the initial partition $\Gamma_{0} = \{ (\mathsf{X}, \mathsf{Y}) \}$ one has that $\mathsf{Y} = T(\mathsf{X})$. We want to show the variant that $\Gamma_{t}$ contains sets which are co-clusters of sets with their image under $T$. As the inductive hypothesis, at scale $t >0$ with $\rho_{t}$ co-clusters $\Gamma_{t} = \{ (\mathsf{X}_{i}^{(t)}, \mathsf{Y}_{i}^{(t)}) \}_{i=1}^{\rho_{t}}$ each satisfies $\mathsf{Y}_{i}^{(t)} = T(\mathsf{X}_{i}^{(t)})$. As strict $r_{t+1}$-Monge separability holds for each size $n/\rho_{t}$ bipartition $(\mathsf{X}_{i}^{(t)}, \mathsf{Y}_{i}^{(t)}) \in \Gamma_{t}$, using Proposition~\ref{prop:low_rank_monge} each such set is divided into $r_{t+1}$ co-clusters $\{(\mathsf{X}_{j}^{(t+1)}, \mathsf{Y}_{j}^{(t+1)}) \}_{j=1}^{r_{t+1}}$ which satisfy $\mathsf{Y}_{j}^{(t+1)} = T(\mathsf{X}_{j}^{(t+1)})$. Thus, taking the union of these $r_{t+1}$ bi-partitions across the $\rho_{t}$ elements of $\Gamma_{t}$ we form a set $\Gamma_{t+1}$ of size $\rho_{t+1} = r_{t+1} \rho_{t}$ which maintains the invariant that $(\mathsf{X}_{j}^{(t+1)}, \mathsf{Y}_{j}^{(t+1)}) \in \Gamma_{t+1} \implies \mathsf{Y}_{j}^{(t+1)} = T(\mathsf{X}_{j}^{(t+1)})$. At the final level $r_{\kappa}$ Monge separability holds, so one may conclude on singleton sets of the form $\Gamma_{\kappa} = \{(x_{i}, T(x_{i}))\}_{i=1}^{n}$.
+%Proposition~\ref{prop:low_rank_monge} implies that each pair of sets co-clusters $\mathsf{X}^{(i)}$ with its image under the Monge-map as $T( \mathsf{X}^{(i)} ) = \mathsf{Y}^{(i)}$. Recursing on each set, as $r$-Monge separability holds, the sets at any level $t$ $(\mathsf{X}^{(t,j)}, \mathsf{Y}^{(t,j)})$ from $\Gamma_{t-1}$ maintain the invariant $T(\mathsf{X}^{(t,j)})= \mathsf{Y}^{(t,j)}$, so the inductive hypothesis holds at all levels up to singleton sets of the form $\Gamma_{\kappa} = (x, T(x))$.
+\end{proof}
+\begin{remark}\label{remark:base_rank}
+Strict Monge separability applies unconditionally at the terminal level. Observe that all sets in $\Gamma_{\kappa - 1}$ have size equal to the rank $(n/\rho_{\kappa-1}) = r_{\kappa}$, and that we have maintained the invariant that $\mathsf{Y}_{j}^{(\kappa-1)} = T(\mathsf{X}_{j}^{(\kappa-1)})$. Let $J_{\kappa} \subset [n]$ denote the size $r_{\kappa}$ set of indices for $\mathsf{X}_{j}^{(\kappa-1)}$ in $\mathsf{X}$. By $c$-cyclical monotonicity, one has for all permutations $\pi \in \mb{perm}(n)$
+\begin{align*}
+    \sum_{i=1}^n \mb{C}_{ii}=\sum_{i\in J_{\kappa}} \mb{C}_{ii} + \sum_{j \in [n]\setminus J_{\kappa}} \mb{C}_{jj}  \leq \sum_{i\in J_{\kappa}} \mb{C}_{i\pi(i)} + \sum_{j \in [n]\setminus J_{\kappa}} \mb{C}_{j\pi(j)}
+    =\sum_{i=1}^n \mb{C}_{i\pi(i)}
+\end{align*}
+Thus, for the subset of permutations on $n$ where $\pi: \pi \mid_{[n]\setminus J_{\kappa}} = \mathrm{id}$, we have $\sum_{i\in J_{\kappa}} \mb{C}_{ii}  \leq \sum_{i\in J_{\kappa}} \mb{C}_{i\pi(i)}$ implying that one may solve a constant time $O(r_{\kappa}^{2})$ solution to the assignment problem on each size $r_{\kappa}$ bipartition to recover the final map.
+\end{remark}
+We call $\rho_t$ the effective rank because (to avoid quadratic space complexity) we never instantiate the transport coupling corresponding to the bijective mapping \eqref{eq:supp_onetoone_t} as a matrix $\mathbf{T}^{(t)}$. Were we to instantiate $\mathbf{T}^{(t)}$, it would have rank $\rho_t$, and moreover we can evaluate its transport cost by using $\mathbf{T}^{(t)}$ to induce a transport coupling $\mathbf{P}^{(t)}$ between the full datasets $\mathsf{X}, \mathsf{Y}$.
+\begin{align}
+\label{eq:supp_P_corresp_t}
+\mathbf{P}^{(t)}_{ij}
+:=
+\begin{cases}
+\rho_t / n^2
+& \text{ if } \quad q(n / \rho_t) < i,j \leq (q+1)(n /\rho_t) \\
+0 & \text{ otherwise}
+\end{cases} \,,
+\end{align}
+where $q \in [\rho_t]$, and where the mass $\rho_t / n^2$ is a simplified form of $(\rho_t /n )^2 ( 1/ \rho_t)$. We note that this is a rewriting of $\frac{\rho_t }{ n^2 } \sum_{q=1}^{\rho_{t}} \delta_{(\mathbf{x}_{i}, \mathbf{y}_{j}) \in \Gamma_{t,q}}$ to have the indices ordered into a contiguous block-structure. Using coupling \eqref{eq:supp_P_corresp_t}, which again we never instantiate, one can define:
+\begin{align*}
+    \mathrm{cost}(\mathbf{T}^{(t)}) := \langle \mathbf{C}, \mathbf{P}^{(t)} \rangle .
+\end{align*}
+The next proposition shows that the costs $\langle \mathbf{C}, \mathbf{P}^{(t)} \rangle$ decrease as $t$ increases from $1$ to $\kappa$, and also provides a bound on their consecutive differences. Below, recall that each $\Gamma_t$ denotes the co-clustering $(\mathsf{X}^{(t)}, \mathsf{Y}^{(t)})$, where
+\begin{align*}
+    \mathsf{X}^{(t)} = \{ \mathsf{X}^{(t)}_q \}_{q=1}^{\rho_t}, 
+    \quad 
+    \mathsf{Y}^{(t)} =  \{ \mathsf{Y}^{(t)}_q \}_{q=1}^{\rho_t}\,,
+\end{align*} 
+and where co-cluster $\Gamma_{t,q}$ is defined as:
+\begin{align*}
+    \Gamma_{t,q} := \{ ( \mathbf{x}, \mathbf{y} ) : 
+    \mathbf{x} \in \mathsf{X}^{(t)}_q, \, 
+    \mathbf{y} \in \mathsf{Y}^{(t)}_q \} \,. 
+\end{align*} 
+
+\begin{proposition}[Proposition~\ref{prop:one_step_bound_main}]
+\label{prop:one_step_bound}
+%Suppose one has a strictly-convex and Lipschitz cost function $c(\cdot, \cdot)$, rank-schedule $(r_{1}, r_{2}, \cdots, r_{\kappa})$, sample size $n$, and step $t < \kappa$. Suppose one applies one step of Algorithm~\ref{alg:hr_ot} after hierarchy-depth $t$ to generate a refined coupling $\mathbf{P}^{(t+1)}$ from $\Gamma_{t}$ at depth $(t+1)$, and 
+Let cost function $c : \mathbb{R}^d \times \mathbb{R}^d \to \mathbb{R}_+$ be of the form $c(\mathbf{x},\mathbf{y}) = h(\mathbf{x}-\mathbf{y})$ for some strictly convex function $h : \mathbb{R}^d \to \mathbb{R}_+$ and suppose that $h$ is Lipschitz. Let $\mathbf{P}^{(t)}$ be as defined above in \eqref{eq:supp_P_corresp_t}. Then one has the following bound on the difference in cost between iterations of refinement:
+\begin{align}
+    0 \leq \langle \mathbf{C}, \mathbf{P}^{(t)}\rangle 
+    - \langle \mathbf{C}, \mathbf{P}^{(t + 1)}\rangle
+    \leq 
+    \lVert \nabla c \rVert_{\infty} 
+    \frac{ 1}{ \rho_t } 
+    \sum_{q=1}^{\rho_t } 
+    \mathrm{diam}\bigl( \Gamma_{t,q}\bigr) \,, 
+\end{align}
+where
+\begin{align*}
+        \mathrm{diam}\bigl( \Gamma_{t,q}\bigr) \equiv 
+        \mathrm{diam}\bigl(
+        \mathsf{X}_q^{(t)} \cup T(\mathsf{X}_q^{(t)})\bigr) 
+    \;:=\;
+    \max_{ \mathbf{x}_i,\, \mathbf{x}_j,\, \mathbf{x}_k,\, \mathbf{x}_l \in \mathsf{X}_q^{(t)}}\;
+    \Bigl\|
+    \bigl( \mathbf{x}_i,\,T(\mathbf{x}_j)\bigr)
+    \;-\;
+    \bigl(\mathbf{x}_k,\,T(\mathbf{x}_l)\bigr)
+    \Bigr\|.
+\end{align*}
+%where $q \in |\Gamma_{t}|$ indexes each refinement set $(X^{(t)}, Y^{(t)}) := (X_{q}^{(t)}, Y_{q}^{(t)}) \in \Gamma_{t}$.
+\end{proposition}
+    
+\begin{proof}
+By definition \eqref{eq:supp_P_corresp_t} of $\mathbf{P}^{(t)}$, 
+\begin{align*}
+    \langle \mathbf{C}, 
+    \mathbf{P}^{(t)}
+    \rangle 
+    - 
+    \langle \mathbf{C}, 
+    \mathbf{P}^{(t + 1)}
+    \rangle 
+    &= \frac{\rho_t}{n^{2} } 
+    \sum_{i=1}^{n} 
+    \sum_{j=1}^{n} 
+    c(\mathbf{x}_{i}, \mathbf{y}_{j}) 
+    \sum_{q=1}^{\rho_t} 
+    \delta_{(\mathbf{x}_{i}, \mathbf{y}_{j}) 
+    \in \Gamma_{t,q}} 
+    - \frac{\rho_{t+1}}{n^{2}} 
+    \sum_{i=1}^{n}
+    \sum_{j=1}^{n} c(x_{i}, y_{j}) 
+    \sum_{q=1}^{\rho_{t+1}} 
+    \delta_{(\mathbf{x}_{i}, \mathbf{y}_{j}) \in \Gamma_{t+1,q}}\\
+    &= \frac{\rho_t}{n^{2}}
+    \left(
+     \sum_{i=1}^{n} 
+     \sum_{j=1}^{n} 
+     c(\mathbf{x}_{i}, \mathbf{y}_{j}) 
+     \sum_{q=1}^{ \rho_t} 
+     \delta_{(\mathbf{x}_{i}, \mathbf{y}_{j}) \in \Gamma_{t,q}} - r_{t+1} 
+     \sum_{i=1}^{n} 
+     \sum_{j=1}^{n} 
+     c(\mathbf{x}_{i}, \mathbf{y}_{j}) 
+     \sum_{q'=1}^{\rho_{t+1}} 
+     \delta_{(\mathbf{x}_{i}, \mathbf{y}_{j}) \in \Gamma_{t+1,q'}} 
+     \right) \\
+    &= 
+    \frac{\rho_t}{n^{2}}  
+    \left(
+    \sum_{q=1}^{ \rho_t} 
+    \sum_{i=1}^{n} 
+    \sum_{j=1}^{n} 
+    c(\mathbf{x}_{i}, \mathbf{y}_{j}) 
+    \delta_{(\mathbf{x}_{i}, \mathbf{y}_{j}) \in \Gamma_{t,q}} 
+    - r_{t+1} 
+    \sum_{q'=1}^{\rho_{t+1}} 
+    \sum_{i=1}^{n} 
+    \sum_{j=1}^{n} c(\mathbf{x}_{i}, \mathbf{y}_{j}) 
+    \delta_{(\mathbf{x}_{i}, \mathbf{y}_{j}) \in \Gamma_{t+1,q'}}
+    \right)\,.
+\end{align*}
+By Proposition~\ref{prop:low_rank_monge}, one then has:
+%this reduces to the expected distortion of the set of points $X^{(t)}$ and $T(X^{(t)})$ under the current refined partition
+\begin{align}\label{eq:full_term}
+= \frac{\rho_{t+1}}
+{n^{2}} 
+\left(
+\sum_{q=1}^{\rho_t}  
+\left(
+\underbrace{
+\frac{1}{r_{t+1}} 
+\sum_{i \in \mathsf{X}_{q}^{(t)}} 
+\sum_{j \in \mathsf{X}_{q}^{(t)}} 
+c( \mathbf{x}_{i}, T( \mathbf{x}_{j}))}
+_{\text{average ``Monge distortion'' in } \Gamma_{t,q} \text{ over next scale}
+} 
+-  
+\underbrace{
+\sum_{z=1}^{r_{t+1}}
+\sum_{i \in 
+\mathsf{X}_{q \rho_t + z}^{(t+1)}} 
+\sum_{j \in 
+\mathsf{X}_{q \rho_t + z}^{(t+1)}} 
+c(\mathbf{x}_{i}, T( \mathbf{x}_{j}))}_
+{\text{``Monge distortion'' at scale } {t+1}}
+\right)
+\right)
+\end{align}
+% if the cost $c(x_{i}, T(x_{j}))$ is not constant,
+Note that the inner summands of \eqref{eq:full_term} (indexed by $q$) are non-negative by definition of the refinement step, where \emph{within} each cluster, one has a minimization 
+over a larger set of couplings. 
+%over a rank $r_{t+1}$ coupling with respect to the level $t$ cost $c( \mathsf{X}_{q}^{(t)},Y_{q}^{(t)} = T(X_{q}^{(t)}))$, and thus either maintaining or lowering the cost of coarse step $t$ coupling. 
+This shows $\langle \mathbf{C}, \mathbf{P}^{(t)}\rangle 
+    - \langle \mathbf{C}, \mathbf{P}^{(t + 1)}\rangle \geq 0$. 
+\begin{comment}
+\begin{align*}
+ \frac{1}{r_{t+1}} \sum_{i \in X_{q}^{(t)}} \sum_{j \in X_{q}^{(t)}} c(x_{i}, T(x_{j})) -  \sum_{z=1}^{r_{t+1}}
+    \sum_{i \in X_{q (r_{t}..r_{1}) + z}^{(t+1)}} \sum_{j \in X_{q (r_{t}..r_{1}) + z}^{(t+1)}} c(x_{i}, T(x_{j})) \geq 0
+\end{align*}
+\end{comment}
+Towards an upper bound, we will bound each summand of \eqref{eq:full_term}:
+\begin{align}
+\label{eq:summand_ugly}
+    \left(
+\frac{1}{r_{t+1}} 
+\sum_{i \in \mathsf{X}_{q}^{(t)}} 
+\sum_{j \in \mathsf{X}_{q}^{(t)}} 
+c( \mathbf{x}_{i}, T( \mathbf{x}_{j}))
+-  
+\sum_{z=1}^{r_{t+1}}
+\sum_{i \in 
+\mathsf{X}_{q \rho_t + z}^{(t+1)}} 
+\sum_{j \in 
+\mathsf{X}_{q \rho_t + z}^{(t+1)}} 
+c(\mathbf{x}_{i}, T( \mathbf{x}_{j}))
+\right) \,. 
+\end{align}
+Define $s_{t+1} := n / \rho_{t+1}$ as well as barycenters
+\begin{align*}
+    \bar{\mathbf{x}}^{(t)} := \sum_{
+    \mathbf{x}_i \in 
+    \mathsf{X}_{q \rho_t + z}^{(t+1)}} 
+    \frac{\mathbf{x}_{i}}{s_{t+1}}, 
+    \quad 
+    \bar{\mathbf{y}}^{(t)} := 
+    \sum_{\mathbf{x} \in 
+    \mathsf{X}_{q \rho_t + z}^{(t+1)}} 
+    \frac{T(\mathbf{x}_{i})}{s_{t+1}} \,,
+\end{align*}
+and note that by Jensen's inequality, for convex cost $c(\cdot, \cdot)$ one has:
+\begin{align*}
+\sum_{z=1}^{r_{t+1}}
+    \sum_{
+    \mathbf{x}_i \in \mathsf{X}_{q \rho_t + z}^{(t+1)}} 
+    \sum_{ \mathbf{x}_j \in \mathsf{X}_{q \rho_t + z}^{(t+1)}} 
+    c( \mathbf{x}_{i}, T( \mathbf{x}_{j})) 
+    &= 
+    s_{t+1}^{2} 
+    \sum_{z=1}^{r_{t+1}}
+    \sum_{\mathbf{x}_i \in \mathsf{X}_{q\rho_t + z}^{(t+1)}} 
+    \frac{1}{s_{t+1}} 
+    \sum_{j \in \mathsf{X}_{q \rho_t + z}^{(t+1)}} 
+    \frac{1}{s_{t+1}} 
+    c(\mathbf{x}_{i}, T(\mathbf{x}_{j})) \\ 
+    & \geq s_{t+1}^{2} r_{t+1} c( \bar{\mathbf{x}}^{(t)}, \bar{\mathbf{y}}^{(t)} ),\ \quad 
+\end{align*}
+so that we may continue upper-bounding the difference \eqref{eq:summand_ugly}:
+\begin{align}
+    & \leq  
+    \frac{1}{r_{t+1}} 
+    \left(
+    \sum_{\mathbf{x}_i \in \mathsf{X}_{q}^{(t)}} 
+    \sum_{\mathbf{x}_j \in \mathsf{X}_{q}^{(t)}} 
+    c(\mathbf{x}_{i}, T(\mathbf{x}_{j})) 
+    \right)
+    -  
+    s_{t+1}^{2} r_{t+1} 
+    c( \bar{\mathbf{x}}^{(t)}, \bar{\mathbf{y}}^{(t)} ) \\
+    & = \frac{1}{r_{t+1}} 
+    \left( 
+    \left(\sum_{ \mathbf{x}_i \in \mathsf{X}_{q}^{(t)}} 
+    \sum_{ \mathbf{x}_j \in \mathsf{X}_{q}^{(t)}} 
+    c(\mathbf{x}_{i}, T(\mathbf{x}_{j}))
+    \right)
+    - \frac{n^{2}}{\rho_t} 
+    c( \bar{\mathbf{x}}^{(t)}, \bar{\mathbf{y}}^{(t)} ) 
+    \right) \\
+    & = \frac{1}{r_{t+1}} 
+    \left( \sum_{ \mathbf{x}_i \in \mathsf{X}_{q}^{(t)}} 
+    \sum_{ \mathbf{x}_j \in \mathsf{X}_{q}^{(t)}} 
+    \left( c( \mathbf{x}_{i}, T( \mathbf{x}_{j})) 
+    -  c( \bar{\mathbf{x}}^{(t)}, \bar{\mathbf{y}}^{(t)} ) \right) \right)  \,. 
+    \end{align}
+Now, define the diameter of co-cluster $\Gamma_{t,q}$ as follows:
+\begin{align*}
+        \mathrm{diam}\bigl( \Gamma_{t,q}\bigr) \equiv 
+        \mathrm{diam}\bigl(
+        \mathsf{X}_q^{(t)} \cup T(\mathsf{X}_q^{(t)})\bigr) 
+    \;:=\;
+    \max_{ \mathbf{x}_i,\, \mathbf{x}_j,\, \mathbf{x}_k,\, \mathbf{x}_l \in \mathsf{X}_q^{(t)}}\;
+    \Bigl\|
+    \bigl( \mathbf{x}_i,\,T(\mathbf{x}_j)\bigr)
+    \;-\;
+    \bigl(\mathbf{x}_k,\,T(\mathbf{x}_l)\bigr)
+    \Bigr\|,
+\end{align*}
+Using our Lipschitz assumption on $h$ made at the beginning of the section, where $c(\mathbf{x}, \mathbf{y}) = h( \mathbf{x} - \mathbf{y})$ (we will write $\| \nabla c \|_\infty$ for $\| \nabla h \|_\infty$), one has the inequality:
+\begin{align*}
+        \left| c( \mathbf{x}_{i}, T(\mathbf{x}_{i})) - c( \mathbf{x}_{j}, T(\mathbf{x}_{j})) \right| 
+        \leq \lVert \nabla c \rVert_{\infty}\mathrm{diam}\bigl( \Gamma_{t,q}\bigr) \,. 
+\end{align*}
+Thus, returning to the bound on each summand \eqref{eq:summand_ugly}, we obtain the upper bound:
+    \begin{align}
+    \leq \frac{1}{r_{t+1}} 
+    \sum_{\mathbf{x}_i \in \mathsf{X}_{q}^{(t)}} 
+    \sum_{\mathbf{x}_j \in \mathsf{X}_{q}^{(t)}} 
+    \lVert \nabla c \rVert_{\infty} 
+    \Bigl\| \bigl( \mathbf{x}_i,\,T(\mathbf{x}_j)\bigr)
+    \;-\;\bigl(\bar{\mathbf{x}}^{(t)},\, \bar{\mathbf{y}}^{(t)} \bigr)
+    \Bigr\|
+\end{align}
+As partition $\mathsf{X}^{(t+1)}$ is a refinement of $\mathsf{X}^{(t)}$ and $\mathsf{Y}^{(t+1)}$ is a refinement of $\mathsf{Y}^{(t)}$, it holds that \eqref{eq:summand_ugly} is upper bounded by: 
+\begin{align}
+    &\leq \frac{1}{r_{t+1}} 
+    \sum_{i \in \mathsf{X}_{q}^{(t)}} 
+    \sum_{j \in \mathsf{X}_{q}^{(t)}} 
+    \lVert \nabla c \rVert_{\infty} 
+    \mathrm{diam}\bigl( \Gamma_{t,q}\bigr) \, , \\
+    &= \frac{1}{r_{t+1}} | \mathsf{X}_{q}^{(t)}|^{2} \lVert \nabla c \rVert_{\infty} 
+    \mathrm{diam}\bigl( \Gamma_{t,q}\bigr)  \, ,\\
+    &= \frac{1}{r_{t+1}} \frac{n^{2} \lVert \nabla c \rVert_{\infty}}{\rho_t^{2} } 
+    \mathrm{diam}\bigl( \Gamma_{t,q}\bigr) \,.
+\end{align}
+To conclude, we plug these bounds into each summand of \eqref{eq:full_term}, obtaining the following bound on the full sum:
+\begin{align}
+& =\frac{\rho_{t+1}}{n^{2}}  
+\frac{1}{r_{t+1}} \frac{n^{2} 
+\lVert \nabla c \rVert_{\infty}}{\rho_t^2 } 
+\sum_{q=1}^{\rho_t} 
+    \mathrm{diam}\bigl( \Gamma_{t,q}\bigr) \\
+    & =  \lVert \nabla c \rVert_{\infty} 
+    \frac{ 1}{ \rho_t } 
+    \sum_{q=1}^{\rho_t } 
+    \mathrm{diam}\bigl( \Gamma_{t,q}\bigr) . 
+\end{align}
+completing the proof. \end{proof}
+
+\begin{remark} 
+\label{rmk:conditional_ub}
+Proposition~\ref{prop:one_step_bound} should be considered a \emph{conditional} result. Our proof follows that of (Proposition 1, \cite{gerber2017multiscale}), but they are able to provide sharper bounds between elements of a cluster and the centroid of the cluster using the properties assumed to hold in their definition of a multiscale family of partitions (Definition~\ref{def:reg_fam_msp}), which mimick the structure of dyadic cubes in Euclidean space. As we do not make any geometric assumptions of our partitions, the above result is a priori weaker, through we leave the exploration of the geometry of partitions induced by low-rank OT to future work.
+\\
+\end{remark}
+
+\begin{remark}\label{remark:no_gain}
+    Note, if $c(\mathbf{x}_{i}, T(\mathbf{x}_{j})) = \gamma$ is constant (i.e., if all points are equidistant in a block), one has that refinement offers no gain from level $\Gamma_{t} \to \Gamma_{t+1}$:
+    $$\leq 
+    \frac{\rho_{t+1}}{n^{2}} \sum_{q=1}^{\rho_t} 
+    \left| \gamma \frac{| \mathsf{X}_{q}^{(t)}|^{2}}{r_{t+1}} - \gamma r_{t+1} | \mathsf{X}_{q}^{(t+1)}|^{2}
+    \right| = \frac{\rho_{t+1}}{n^{2}} \sum_{q=1}^{\rho_t} 
+    \left| \gamma \frac{(n/ \rho_t )^{2}}{r_{t+1}} - \gamma r_{t+1} (n/\rho_{t+1})^{2}
+    \right| = 0 \,. 
+    $$
+\end{remark}
+
+
+\begin{remark}\label{remark:Monge_regression}
+    The work \cite{seguy2018large} suggests a loss dependent on an (entropic) coupling $\gamma$. If $\gamma$ is  sparse and supported on the graph of the Monge map so that $\gamma = \left(\mathrm{id} \times T\right)_{\sharp} \mu  $, this loss becomes a regression of a neural network $T_{\theta}$ on the Monge map $T$ over the support of $\mu$: $    \min_{ T_{\theta}}\mathbb{E}_{\mu} c\left( T_{\theta}(\mathbf{x}_{i}),  T(\mathbf{x}_{i}) \right)$.
+\end{remark}
+\begin{proof}
+By linearity of the push-forward map one immediately obtains
+\begin{align*}
+    & \int_{\mathsf{X} \times \mathsf{Y}} \lVert T_{\theta}(x) - y \rVert_{2}^{p} (\mathrm{id} \times T)_{\sharp} \sum_{i=1}^{n} \mu_{i} \delta_{x_{i}} \mathrm{d} x \mathrm{d} y = \int_{\mathsf{X} \times \mathsf{Y}} \lVert T_{\theta}(x) - y \rVert_{2}^{p} \sum_{i=1}^{n} \mu_{i} (\mathrm{id} \times T)_{\sharp} \delta_{x_{i}} \mathrm{d}x \mathrm{d}y  \\
+    &= \sum_{i=1}^{n} \mu_{i} \int_{\mathsf{X} \times \mathsf{Y}} \lVert T_{\theta}(x) - y \rVert_{2}^{p} \delta_{(x_{i}, T(x_{i}))} \mathrm{d}y \mathrm{d}x = \sum_{i=1}^{n} \mu_{i} \lVert T_{\theta}(x_{i}) - T(x_{i}) \rVert_{2}^{p} \, ,
+    \end{align*}
+    By integrating against the $\delta$. As $\mu_{i} > 0$, it holds that this loss is identically zero if and only if $T_{\theta} = T$ on the dataset $(x_{i})_{i=1}^{n}$
+    $$
+\min_{T_{\theta}}\int_{\mathsf{X} \times \mathsf{Y}} \lVert T_{\theta}(x) - y \rVert_{2}^{p} d\gamma(x, y) = 0 \iff \lVert T_{\theta}(x_{i}) - T(x_{i}) \rVert_{2}^{p} = 0 \iff T_{\theta}(x_{i}) = T(x_{i})$$
+\end{proof}
+In other words, when one minimizes the objective of \cite{seguy2018large} using the bijective Monge map $\gamma = (\mathrm{id} \times T)_{\sharp} \mu$ as opposed to an entropic coupling, the objective of \cite{seguy2018large} reduces to an unbiased regression. That is, the neural map $T_{\theta}$ directly matches $T$ over the dataset support as if trained on supervised $(x,y)$ pairs $y=T(x)$.
+
+\section{Background: Multiscale Optimal Transport}
+
+\subsection{Multiscale Partitions}
+
+\cite{gerber2017multiscale} describe a general multiscale strategy for computing OT couplings between metric measure spaces $(\mathsf{X}, \mathsf{d}_\mathsf{X}, \mu)$ and $(\mathsf{Y}, \mathsf{d}_\mathsf{Y}, \nu)$. They state this in the Kantorovich setting, using a general cost function ${c} : \mathsf{X} \times \mathsf{Y} \to \mathbb{R}_+$. Their framework consists of several elements:
+\begin{enumerate}
+    \item A way of \emph{coarsening} the set of source points $\mathsf{X}$ and the measure $\mu$ across multiple scales:
+    \begin{align}
+    \label{eq:supp_X_chain}
+        (\mathsf{X}, \mu) =: 
+        ( \mathsf{X}_J, \mu_J) 
+        \to 
+        ( \mathsf{X}_{J-1}, \mu_{J-1} )
+        \to 
+        \dots 
+        \to 
+        ( \mathsf{X}_1, \mu_1) \,,
+    \end{align}
+    as well as an analogous coarsening for the set of target points $\mathsf{Y}$:
+    \begin{align}
+    \label{eq:supp_Y_chain}
+        (\mathsf{Y}, \nu) =: 
+        ( \mathsf{Y}_J, \nu_J) 
+        \to 
+        ( \mathsf{Y}_{J-1}, \nu_{J-1} )
+        \to 
+        \dots 
+        \to 
+        ( \mathsf{Y}_1, \nu_1) \,,
+    \end{align}
+    where at each scale $j$, $\mathrm{supp}(\mu_j) = \mathsf{X}_j$ and $\mathrm{supp}(\nu_j) = \mathsf{Y}_j$, and the cardinality of each $\mathsf{X}_j$ and $\mathsf{Y}_j$ decreases with $j$. 
+\item A way of \emph{propagating} coupling $\pi_j$ solving the transport problem $\mu_j \to \nu_j$ at scale $j$ to a coupling $\pi_{j+1}$ at scale $j+1$.
+\item A way of \emph{refining the coupling} from scale $j$ to an optimal solution at scale $j+1$. 
+\end{enumerate}
+To derive approximation bounds for the error incurred by the multiscale transport problem at each scale, \cite{gerber2017multiscale} use regular families of multiscale partitions (Definition~\ref{def:reg_fam_msp} below) to define approximations to $\mu, \nu$ and $\mathsf{c}$ at all scales. 
+
+For $z \in \mathsf{X}$, define $B_x(r) := \{ x' \in \mathsf{X} : \mathsf{d}_{\mathsf{X}} (x,x') < r \}$ as the metric ball of radius $r$ centered at $x$. Functions $f, g : \mathsf{X} \to \mathbb{R}$ have the \emph{same order of magnitude} if there is $c_1, c_2 >0$ with $c_1 f(x) \leq g(x) \leq c_2 f(x)$ for all $x \in \mathsf{X}$, and in this case we write $f \asymp g$. Write $\mathcal{M}(\mathsf{X})$ for the space of unsigned measures on $\mathsf{X}$, and write $\mathcal{P}(\mathsf{X})$ for the subspace of probability measures. 
+\begin{definition}
+    A metric space $(\mathsf{X}, \mathsf{d}_{\mathsf{X}})$ has \emph{doubling dimension} $d >0$ if every $B_z(r)$ admits a covering by at most $2^d$ balls of radius $r/2$.
+\end{definition}
+A metric space is said to be \emph{doubling} if it has doubling dimension $d$ for some $d > 0$. A related notion to a doubling metric space is a doubling measure.
+\begin{definition}
+    Measure $\mu \in \mathcal{M}(\mathsf{X})$ is a \emph{doubling measure with dimension $d$} if there is a constant $c_1 > 0$ such that for all $x \in \mathsf{X}$ and all $r>0$, one has $c_1^{-1} r^d \leq \mu(B_x(r)) \leq c_1r^d$, i.e. $\mu(B_x(r)) \asymp r^d$.
+\end{definition}
+Note that if $(\mathsf{X}, \mathsf{d}_{\mathsf{X}}, \mu)$ is doubling, then $\mathsf{d}_{\mathsf{X}}$ is doubling, and up to modification of $d_{\mathsf{X}}$ to an equivalent metric, the dimension $d$ can be taken as the same in either case.
+
+\begin{definition}
+\label{def:reg_fam_msp}
+Given metric measure space $(\mathsf{X}, \mathsf{d}_{\mathsf{X}}, \mu)$, a \emph{regular family of multiscale partitions} with scaling parameter $\theta > 1$ is a family of sets 
+\begin{align*}
+    \Big\{ 
+\{ C_{j,k} \}_{k=1}^{K_j}
+    \Big\}_{j=1}^J \,,
+\end{align*}
+with each $C_{j,k} \subset \mathsf{X}$ such that:
+\begin{enumerate}
+    \item For each scale $j$, the sets $\{ C_{j,k} \}_{k=1}^{K_j}$ partition $\mathsf{X}$. 
+    \item For each scale $j \in [J-1]$, either $C_{j+1,k'} \cap C_{j,k} = \emptyset$ or $C_{j+1,k'} \subset C_{j,k}$. In this latter case, we say that $(j+1, k')$ is a \emph{child} of $(j,k)$, or equivalently that $(j,k)$ is a \emph{parent} of $(j+1,k')$, writing $(j+1, k') \prec (j,k)$.
+    \item There is a constant $A > 0$ such that for all $j,k$, we have diameter $\mathrm{diam}(C_{j,k}) \leq A \theta^{-j}$. 
+    \item Each $C_{j,k}$ contains a ``center point'' $c_{j,k}$ such that $B_{c_j, k}(\theta^{-j}) \subset C_{j,k}$.
+\end{enumerate}
+\end{definition}
+
+We take $\theta = 2$ for simplicity. As the child-parent terminology suggests, these partitions (through the second point) have a tree structure, like dyadic cubes in $\mathbb{R}^d$. Though the measure $\mu$ is not explicitly used in the above definition, the third and fourth points imply $\mu(C_{j,k}) \asymp 2^{-jd}$ and $K_j \asymp 2^{jd}$.
+
+\paragraph{Coarsening spaces and measures}
+
+Now suppose that each of $\mathsf{X}$ and $\mathsf{Y}$ are each discrete metric measure spaces, each equipped with regular families $\Gamma(\mathsf{X}), \Gamma(\mathsf{Y})$ of multiscale partitions:
+\begin{align*}
+    \Gamma({\mathsf{X}})
+    &:= 
+    \{ \Gamma_j(\mathsf{X}) \}_{j=0}^J
+    \,,  \quad \Gamma_j(\mathsf{X}) := \{ C_{j,k}(\mathsf{X}) \}_{k=1}^{K_j(\mathsf{X})}
+    \\ 
+        \Gamma({\mathsf{Y}})
+    &:= 
+    \{ \Gamma_j(\mathsf{Y}) \}_{j=0}^J
+    \,,  \quad \Gamma_j(\mathsf{Y}) := \{ C_{j,k}(\mathsf{Y}) \}_{k=1}^{K_j(\mathsf{Y})} \,,
+\end{align*}
+and these yield the coarsening chains in \eqref{eq:supp_X_chain}, \eqref{eq:supp_Y_chain} in the most natural way possible at each scale $j$, defining the coarse-grained spaces $\mathsf{X}_j, \mathsf{Y}_j$ to be the clusters at scale $j$:
+\begin{align*}
+    \mathsf{X}_j := \Gamma_j(\mathsf{X}) \, , \quad 
+    \mathsf{Y}_j := \Gamma_j(\mathsf{Y}) \,,
+\end{align*}
+while the measures at scale $j$ are defined from the measures at scale $j+1$ via:
+\begin{align*}
+\mu_j (
+C_{j,k}(\mathsf{X})
+)
+:= \sum_{ (j+1,k') \prec (j,k) }
+\mu_{j+1} ( C_{j+1, k'}(\mathsf{X} ) ) \, , \quad 
+\nu_j (
+C_{j,k}(\mathsf{Y})
+)
+:= \sum_{ (j+1,k') \prec (j,k) }
+\nu_{j+1} ( C_{j+1, k'}(\mathsf{Y} ) ) \,.
+\end{align*}
+The fourth item of Definition~\ref{def:reg_fam_msp} requires that we define cluster centers $\bar{c}_{j,k}(\mathsf{X})$ for each $C_{j,k}(\mathsf{X})$.
+At the finest scale $j=J$, all clusters $C_{J,k}(\mathsf{X})$ correspond to singletons $\{x_{J,k} \}$, so we define $\bar{c}_{J,k}(\mathsf{X}) := x_{J,k}$ in this case. At coarser scales, these centers can be defined recursively from the next finest scale, depending on the structure of $\mathsf{X}$. 
+
+For example, if $\mathsf{X}$ has vector space structure (in addition to being a metric measure space), a natural choice for cluster centers $x_{j,k}$ at scale $j =0, \dots, J-1$ is the weighted average $x_{j,k} := \bar{c}_{j,k}(\mathsf{X})$, where
+\begin{align*}
+    \bar{c}_{j,k}(\mathsf{X})
+    :=
+    \sum_{
+    (j+1, k') \prec (j,k) 
+    }
+    \mu_{j+1}
+    (
+    C_{j+1, k'}(\mathsf{X})
+    )
+    x_{j+1,k'} \,. 
+\end{align*}
+On the other hand, in the absence of vector space structure, one can still define 
+\begin{align*}
+    \bar{c}_{j,k}(\mathsf{X})
+    =
+    \argmin_{x \in \mathsf{X}} 
+    \sum_{(j+1,k') \prec (j,k)} 
+    \mathsf{d}_{\mathsf{X}}^p ( x, x_{j+1, k'} ) \,,
+\end{align*}
+with analogous constructions for $\mathsf{Y}$ yielding centers $y_{j,k}$. 
+
+\paragraph{Coarsening the cost function}
+
+\cite{gerber2017multiscale} suggest three ways to coarsen the cost function using the multiscale partition. To condense the notation slightly, let us write $x_{j,k}$ in place of $C_{j,k}(\mathsf{X})$ and $y_{j,k'} $ in place of $C_{j,k}(\mathsf{X})$ and $C_{j,k'}(\mathsf{Y})$.
+\begin{enumerate}
+    \item[($\mathsf{c}$-i)] The pointwise value
+    \begin{align}
+        \mathsf{c}_j
+        ( \, 
+        x_{j,k} , \, 
+        y_{j, k'}
+        \, ) := 
+        \mathsf{c}( x_{j,k}, y_{j,k'}) \,,
+    \end{align}
+    using centers $x_{j,k}$ and $y_{j,k'}$ defined in any of the ways above.
+    \item[($\mathsf{c}$-ii)] The local average
+    \begin{align*}
+        \mathsf{c}_j
+        ( \, 
+        x_{j,k} , \, 
+        y_{j, k'}
+        \, ) := 
+        \frac{
+        \sum_{x \in C_{j,k}(\mathsf{X}), y \in C_{j,k'}(\mathsf{Y})  }
+        \mathsf{c}(x,y)
+        }{
+        | C_{j,k}(\mathsf{X}) | \, | C_{j,k'}(\mathsf{Y}) | 
+        }
+    \end{align*}
+    \item[($\mathsf{c}$-iii)] The local weighted average:
+        \begin{align*}
+        \mathsf{c}_j
+        ( \, 
+        x_{j,k} , \, 
+        y_{j, k'}
+        \, ) := 
+        \frac{
+        \sum_{
+        x \in C_{j,k}(\mathsf{X}), y \in C_{j,k'}(\mathsf{Y})  
+        }
+        \mathsf{c}(x,y)
+        \pi_{j-1}^\star ( x_{j-1, k_1}, y_{j-1, k_1'} ) 
+        }{
+        \sum_{
+        x \in C_{j,k}(\mathsf{X}), y \in C_{j,k'}(\mathsf{Y})  
+        }
+        \pi_{j-1}^\star ( x_{j-1, k_1}, y_{j-1, k_1'} ) 
+        } \,,
+    \end{align*}
+    where $\pi_{j-1}^\star$ is the optimal (or approximately optimal) OT coupling at scale $j-1$, defined below. The indices $k_1$ and $k_1'$ are defined using the tree structure of the partition: $k_1$ is the unique index among $[K_{j-1}(\mathsf{X})]$ such that $(j,k) \prec (j-1, k_1)$, and likewise $k_1'$ is unique among $[K_{j-1}(\mathsf{X})]$.
+\end{enumerate}
+
+\subsection{Propagation of OT solutions across scales}
+
+For each scale $j$, consider the OT problem given as follows. 
+\begin{equation}
+\label{eq:supp_otscale_j}
+    \begin{split}
+\pi_j^\star 
+&:=
+\argmin_{
+\pi \in \Pi( \mu_j, \nu_j) 
+}
+\mathrm{cost}( \pi_j )\, , \quad \text{where:} \\
+\mathrm{cost}( \pi_j ) &: = \sum_{
+k \in [K_j(\mathsf{X})], \, 
+k' \in [K_j(\mathsf{Y})]
+}
+c( x_{j,k}, y_{j,k'} )
+\pi_j ( x_{j,k}, y_{j,k'} )
+    \end{split}
+\end{equation}
+\cite{gerber2017multiscale} show bounds on $| \mathrm{cost}(\pi_j^\star) - \mathrm{cost}( \pi_J^\star) |$ of a constant times $2^{-j} \| \nabla \mathsf{c} \|_\infty$, but note that this only implies closeness of the couplings in terms of their cost, not necessarily in any other sense.
+
+Given an optimal coupling $\pi_j^\star$ at scale $j$, \cite{glimm2013iterative} proposed a direct propagation strategy to initialize the problem at scale $j+1$, distributing the mass $\pi_j^\star(x_{j,k}, y_{j,k'})$ equally to all combinations of paths between $\mathrm{children}(x_{j,k})$ and $\mathrm{children}(y_{j,k'})$. In this context, a path is understood to mean a source-target pair at the next scale, e.g. a pair of the form $(x_{j+1, \ell}, y_{j+1, \ell'})$. To formalize this, let 
+\begin{align*}
+    \mathcal{A}_j := \{ (x_{j, k}, y_{j, k'}) : 
+    k \in [K_j(\mathsf{X})], \, 
+    k' \in [K_j(\mathsf{Y})] \}
+\end{align*}
+denote \emph{all} paths between points in $\mathsf{X}_j$ and $\mathsf{Y}_j$.
+The drawback of this warm-start procedure is that if $\mathrm{supp}(\mu_j) \subset \mathcal{A}_j$, which is always the case, the refinement procedure still requires quadratic space complexity at the finest scale. 
+
+To mitigate the ultimate quadratic space complexity of retaining all possible paths at all scales, \cite{gerber2017multiscale} allow for a refinement procedure where the support of couplings at scale $j+1$ is restricted to a subset $\mathcal{R}_{j+1} \subset \mathcal{A}_{j+1}$ of all possible paths (with $\mathcal{R}_{j+1}$ defined by the optimal coupling at the previous iteration). Given $\mathcal{R}_j \subset \mathcal{A}_j$, let $  \pi_j^\star |_{\mathcal{R}_j}$ denote the optimal solution to the path-restricted or \emph{restricted problem} at scale $j$:
+\begin{align}
+\label{eq:supp_restricted_problem}
+    \pi_j^\star |_{\mathcal{R}_j} 
+    := 
+    \argmin_{
+    \substack{\pi \in \Pi( \mu_j, \nu_j)\, , \\
+    \mathrm{supp}(\pi) \subset \mathcal{R}_j
+    }
+    }
+    \mathrm{cost}( \pi_j ) \,. 
+\end{align}
+
+\paragraph{Simple propagation.}
+
+The simplest way to restrict the number of paths considered at subsequent scales is to use paths at scale $j$ whose endpoints are children of mass-bearing paths at scale $j+1$:
+\begin{align*}
+    \mathcal{R}
+    _{j+1}
+    :=
+    \{ 
+( x_{j+1, \ell}
+, y_{j+1, \ell} )  \colon 
+\exists 
+(x_{j,k}, 
+y_{j,k'}) \in \mathrm{supp}(\pi_j^\star) \,
+\textrm{ s.t }  \,
+(j+1, \ell) \prec (j,k) 
+\textrm{ and } (j+1, \ell') 
+\prec (j, k ') 
+    \}\,.
+\end{align*}
+The optimal Kantorovich plan at scale $j$ has at most $(K_j(\mathsf{X}) + K_j(\mathsf{Y}) + 1)$ non-zero entries. Using the above simple propagation strategy constrains plan at scale $j+1$ to be supported on at most
+\begin{align*}
+    \alpha_j^2 ( K_j(\mathsf{X}) + K_j(\mathsf{Y}) ) 
+\end{align*}
+entries, where $\alpha_j$ is the maximum number of children of any $(j,k)$ across both datasets. When the ambient space has doubling dimension $d$, for any $j$ one has $\alpha_j \asymp 2^d$, yielding a plan with \emph{linear} space complexity at the finest scale. 
+
+
+\paragraph{Capacity constraint propagation.}
+
+This propagation strategy solves a modified minimum flow problem at scale $j$ in order to include additional paths at scale $j+1$ likely to be included in the optimal solution $\pi_{j+1}^\star$. Concretely, one first computes an unconstrained optimal plan $\pi_j^\star|_{\mathcal{R}_j}$ at scale $j$. Then, a new OT plan $\tilde{\pi}_j^\star|_{\mathcal{R}_j}$ is solved for at scale $j$ now subject to the capacity constraint
+\begin{align*}
+\tilde{\pi}_j^\star|_{\mathcal{R}_j} 
+\leq U_{k,k'} \min( \mu(x_{j,k}), \nu(y_{j,k'}) ) 
+\end{align*}
+for each $(x_{j,k}, y_{j,k'}) \in \mathrm{supp}(\pi_j^\star|_{\mathcal{R}_j})$, where the random variables $U_{k,k'}$ are i.i.d. $\mathrm{Uniform}([0.1, 0.9])$. This can also be iterated several times, in all cases leading to linear space complexity in the optimization at the finest scale. 
+
+\subsection{Refinement of the propagated solution}
+
+Propagation of a solution to the restricted transport problem \eqref{eq:supp_restricted_problem} at scale $j$, in general cannot guarantee reaching an optimal solution to the restricted problem at scale $j+1$, and can lead to accumulation of errors across all scales. Several \emph{refinement} strategies are proposed in \cite{gerber2017multiscale} to address this.
+
+\paragraph{Potential Refinement.}
+
+One refinement strategy leverages the problem dual to \eqref{eq:kantorovich_problem}, here stated at the finest scale:
+\begin{align}
+\label{eq:supp_kant_dual}
+\max_{
+\substack{\mathbf{f} \in \mathbb{R}^n, \mathbf{g} \in \mathbb{R}^m\\
+\mathbf{f}_i + \mathbf{g}_j \leq \mathbf{C}_{ij}
+}
+}
+\sum_{i=1}^n \mu(\{ x_i \}) \mathbf{f}_i +
+\sum_{j=1}^m \mu( \{ y_j \} ) \mathbf{g}_j \,.
+\end{align}
+The refinement strategy uses optimal dual variables $\mathbf{f}^\star, \mathbf{g}^\star$ to select paths to include at the next scale. From the dual formulation, an optimal solution $(\mathbf{f}^\star, \mathbf{g}^\star)$ to \eqref{eq:supp_kant_dual} must have all nonnegative entries in the \emph{reduced cost matrix}, defined as the matrix $\mathbf{C} - \mathbf{f} \oplus \mathbf{g}$ with entries
+$
+    \mathbf{C}_{kk'} - \mathbf{f}_k - \mathbf{g}_{k'} \,. 
+$
+Note that the dual to the restricted problem \eqref{eq:supp_restricted_problem} is well-defined, and for this dual we denote the optimal dual potentials by $\mathbf{f}^\star |_{\mathcal{R}_j}$ and $\mathbf{g}^\star |_{\mathcal{R}_j}$. With slight abuse of notation, let $(\mathbf{f}^\star \oplus \mathbf{g}^\star)|_{\mathcal{R}_j}$ be
+\begin{align*}
+    (\mathbf{f}^\star \oplus \mathbf{g}^\star)|_{\mathcal{R}_j} 
+    := (\mathbf{f}^\star |_{\mathcal{R}_j} \oplus \mathbf{g}^\star 
+    |_{\mathcal{R}_j}) \odot \mathbf{M}^{(j)}\,,
+\end{align*}
+where $\mathbf{M}^{(j)}$ is the indicator matrix of the restricted set of paths $\mathcal{R}_j$ at scale $j$, and where $\odot$ denotes the Hadamard (entrywise) product. While the restricted set of paths $\mathcal{R}_j$ is inherited from the previous scale, one can define a new set of paths $\mathcal{V}_j^0$ based on where the restricted reduced cost 
+$
+    \mathbf{C} - (\mathbf{f}^\star \oplus \mathbf{g}^\star)|_{\mathcal{R}_j} 
+$
+is nonpositive:
+\begin{align*}
+\mathcal{V}_j^0 ( \pi_j^\star |_{\mathcal{R}_j} )
+:=
+\{
+(x_{j,k}, y_{j,k'}) \in \mathcal{A}_j : 
+\mathbf{C}_{kk'} - [(\mathbf{f}^\star \oplus \mathbf{g}^\star)|_{\mathcal{R}_j} ]_{kk'} 
+\leq 0
+\} \,.
+\end{align*}
+With a new set of paths $\mathcal{Q}_j^0 := \mathcal{V}_j^0 ( \pi_j^\star |_{\mathcal{R}_j} )$, one can compute a new optimal plan $\pi_j^\star|_{\mathcal{Q}_j^0}$ at scale $j$ restricted to these paths, as well as \emph{new} optimal dual potentials $\mathbf{f}^\star |_{\mathcal{V}_j^0}$ and $\mathbf{g}^\star |_{\mathcal{V}_j^0}$ leading to a new reduced cost $\mathbf{C} - (\mathbf{f}^\star \oplus \mathbf{g}^\star)|_{\mathcal{V}_j^0} $. This strategy can be iterated via
+\begin{align}
+    \mathcal{Q}_j^i := \mathcal{V}_j ( 
+\pi_j^\star |_{\mathcal{Q}_j^{i-1}} 
+    )\,,
+\end{align}
+yielding the sequence of transport plans $\pi_j^\star |_{\mathcal{Q}_j^i}$, all at scale $j$, 
+which converge on a solution whose reduced cost is nonnegative, necessarily making it optimal. 
+The potential refinement strategy was used by \cite{glimm2013iterative}, with \cite{schmitzer2016sparse} introducing shielding neighborhoods in a similar spirit, using dual potentials to locally verify global optimality. 
+
+\begin{comment}
+\paragraph{Neighborhood refinement}
+
+A different refinement strategy, used in \cite{oberman2015efficient} uses the heuristic that ``simple propagation,'' defined above, yields sub-optimal...
+\end{comment}
+
+
+\section{Experimental Details}
+
+\subsection{Synthetic Experiments}
+
+For all of the synthetic experiments, we first generate $n = 1024$ points from three datasets: the checkerboard dataset (\cite{pmlr-v119-makkuva20a}), the MAFMoons and Rings dataset (\cite{buzun2024expectile}), and the Half-moon and S-curve dataset (\cite{buzun2024expectile}). Following \cite{buzun2024expectile} the random seed was set to $0$ for data-generation with \texttt{jax.random.key(0)}. We evaluate the OT cost $\langle \mathbf{C}, \mathbf{P} \rangle_{F}$ of \ourmethod\, Sinkhorn \cite{sinkhorn}, and ProgOT \cite{kassraie2024progressive} on each of these three datasets, where we use (1) the Euclidean cost $\lVert \cdot \rVert_{2}$, and (2) the squared Euclidean cost $\lVert \cdot \rVert_{2}^{2}$ (Table~\ref{tab:merged_comparison}). We additionally quantify the number of non-zero entries in the plan and its entropy (Table~\ref{tab:entropy_nonzero_combined}).
+
+We also compare the cost of couplings computed by \ourmethodFullCap{} to low-rank couplings \cite{Scetbon2021LowRankSF,FRLC} of varying rank. We observe that as the latent rank $r \to n$, the OT cost $\langle \mathbf{C}, \mathbf{P}_{r} \rangle_{F}$ asymptotically approaches the cost achieved by \ourmethodFullCap{} (Figure~\ref{fig:samples}). In the limit  $\lim_{r \to n} \langle \mathbf{C}, \mathbf{P}_{r} \rangle_{F}$  low-rank OT recovers Sinkhorn  \cite{scetbon2022lowrank} and approaches quadratic memory complexity, while \ourmethod\ remains linear in space.
+
+
+\begin{table}[]
+    \centering
+    \caption{Hyperparameters for Synthetic Experiments}
+    \label{tab:hyperparameters_full}
+    \small % Optional: Reduce font size to fit content
+    \begin{tabular}{@{}lll@{}}
+        \toprule
+        \textbf{Parameter Name}          & \textbf{Variable}         & \textbf{Value} \\ \midrule
+        Rank-Annealing Schedule         & \( (r_1, \dots, r_\kappa) \) & [2, 512]        \\
+        Hierarchy Depth                  & \( \kappa \)              & 2               \\
+        Maximal Base Rank                & \( Q \)                   & \( 2^{10} \)     \\
+        Maximal Intermediate Rank        & \( C \)                   & 16              \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+\textbf{Checkerboard}
+
+The checkerboard dataset \cite{pmlr-v119-makkuva20a} is defined by random variables $Y \sim Q$ sampled from the source distribution according to $\mathbf{Y} = \mathbf{X} + \mathbf{Z}$ where $\mathbf{X}$ and $\mathbf{Z}$ are sampled from Uniform distributions defined by
+\[
+\begin{aligned}
+& \mathbf{X} \sim \text{Uniform} \left( \left\{ (0, 0),\ (1, 1),\ (1, -1),\ (-1, 1),\ (-1, -1) \right\} \right), \\
+& \mathbf{Z} \sim \text{Uniform} \left( [-0.5, 0.5] \times [-0.5, 0.5] \right).
+\end{aligned}
+\]
+the target distribution $P$ has random variable $\mathbf{Y}'$ where the random variable \( \mathbf{Y}' \) is defined as $\mathbf{Y}' = \mathbf{X}' + \mathbf{Z}$ with components
+
+\[
+\begin{aligned}
+& \mathbf{X}' \sim \text{Uniform} \left( \left\{ (0, 1),\ (0, -1),\ (1, 0),\ (-1, 0) \right\} \right), \\
+& \mathbf{Z} \sim \text{Uniform} \left( [-0.5, 0.5] \times [-0.5, 0.5] \right).
+\end{aligned}
+\]
+
+
+\textbf{MAFMoons and Rings}
+
+The MAFMoon dataset \cite{buzun2024expectile} defines a source distribution $Q$ by sampling $\mathbf{X} \sim \mathcal{N}(0 , \mathbbm{1}_{2})$ and applying the non-linear transformation defined by
+$$
+\mathbf{Y} = \begin{bmatrix}
+    Y_{1} \\
+    Y_{2}
+\end{bmatrix} = \begin{bmatrix}
+    0.5( X_{1} + X_{2}^{2} ) - 5 \\
+    X_{2}
+\end{bmatrix}
+$$
+this introduces a quadratic dependency on the Gaussian randomly variable to generate a crescent shape.
+
+The target distribution $P$ representing concentric rings is generated by first sampling $\theta \sim \mathrm{Uniform}(2 \pi )$, with fixed radii $r_{i} \in \{ 0.25, 0.55, 0.9, 1.2 \}$ from which one transforms to Cartesian coordinates as $x_{i} = 3 r_{i} \cos\theta_{i}$ and $y_{i} = 3 r_{i} \sin\theta_{i}$. Gaussian noise is added to each of these, as $\epsilon \sim \mathcal{N}(0 , \mathbbm{1} \sigma^{2})$ for $\sigma = 0.08$.
+
+\textbf{Half-moon and S-Curve}
+
+The Half-moon and S-curve dataset \cite{buzun2024expectile} is generated from $\mathbf{Y}$ = \texttt{make\_moons} and \texttt{make\_S\_curve} from the \texttt{scikit-learn} library. Both datasets are transformed further with a rotation $\mathbf{R}(\theta)$, a scaling $\lambda$, and a translation $\mathbf{\mu}$ applied as $\mathbf{Y}' \gets \mathbf{R}(\theta) (\lambda \mathbf{Y}) + \mathbf{\mu}$.
+
+
+\begin{table}[ht]
+\centering
+\caption{Comparison Table for Coupling-Based OT Methods on Primal Cost $\langle \mathbf{C}, \mathbf{P} \rangle_{F}$ for $\lVert \cdot \rVert_{2}$ and $\lVert \cdot \rVert_{2}^{2}$}
+\label{tab:merged_comparison}
+\small % Adjust font size
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Method} & \multicolumn{2}{c}{\textbf{Checkerboard (Makkuva 2020)}} & \multicolumn{2}{c}{\textbf{MAFMoons \& Rings (Buzun 2024)}} & \multicolumn{2}{c}{\textbf{Half Moon \& S-Curve (Buzun 2024)}} \\
+\cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-7}
+& $\lVert \cdot \rVert_{2}$ & $\lVert \cdot \rVert_{2}^{2}$ & $\lVert \cdot \rVert_{2}$ & $\lVert \cdot \rVert_{2}^{2}$ & $\lVert \cdot \rVert_{2}$ & $\lVert \cdot \rVert_{2}^{2}$ \\
+\midrule
+Sinkhorn & 0.3573 & 0.1319 & 0.4422 & 0.4440 & \textbf{0.5663} & \textbf{0.5663} \\
+ProgOT                     & N/A    & 0.1320 & N/A    & 0.4443 & N/A    & 0.5709 \\
+\ourmethod                      & \textbf{0.3533} & \textbf{0.1248} & \textbf{0.4398} & \textbf{0.4414} & 0.5741 & 0.5737 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{table}[ht]
+\centering
+\caption{Entropy and Non-Zero Entries ( $> 10^{-8}$) of Coupling Matrices for Each Method and Dataset (Wasserstein-2 distance cost, $\lVert \cdot \rVert_{2}^{2}$)}
+\label{tab:entropy_nonzero_combined}
+\small % Adjust font size
+\begin{tabular}{lccccccccc}
+\toprule
+\textbf{Method} & \multicolumn{2}{c}{\textbf{Checkerboard (Makkuva 2020)}} & \multicolumn{2}{c}{\textbf{MAFMoons \& Rings (Buzun 2024)}} & \multicolumn{2}{c}{\textbf{Half Moon \& S-Curve (Buzun 2024)}} \\
+\cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-7}
+& Entropy & Non-Zeros & Entropy & Non-Zeros & Entropy & Non-Zeros \\
+\midrule
+Sinkhorn  & 12.8509 & 624733 & 12.6117 & 678720 & 12.7776 & 652993 \\
+ProgOT  & 12.3830 & 271087 & 11.6158 & 327764 & 12.1170 & 337258 \\
+\ourmethod                      & \textbf{6.9314} & \textbf{1024}  & \textbf{6.9314} & \textbf{1024} & \textbf{6.9314} & \textbf{1024} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{comment}
+\begin{table}[ht]
+\centering
+\caption{Comparison Table for Coupling-Based OT Methods on Primal Cost $\langle \mathbf{C}, \mathbf{P} \rangle_{F}$ for $\lVert \cdot \rVert_{2}^{2}$ on small 512 point instance}
+\label{tab:comparison_512}
+\small % Adjust font size
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Method} & \multicolumn{2}{c}{\textbf{Checkerboard (Makkuva 2020)}} & \multicolumn{2}{c}{\textbf{MAFMoons \& Rings (Buzun 2024)}} & \multicolumn{2}{c}{\textbf{Half Moon \& S-Curve (Buzun 2024)}} \\
+\cmidrule(r){2-3} \cmidrule(r){4-5} \cmidrule(r){6-7}
+& $\lVert \cdot \rVert_{2}$ & $\lVert \cdot \rVert_{2}^{2}$ & $\lVert \cdot \rVert_{2}$ & $\lVert \cdot \rVert_{2}^{2}$ & $\lVert \cdot \rVert_{2}$ & $\lVert \cdot \rVert_{2}^{2}$ \\
+\midrule
+Sinkhorn (\texttt{ott-jax}) & 0.3573 & 0.1319 & 0.4422 & 0.4440 & \textbf{0.5663} & \textbf{0.5663} \\
+ProgOT                     & N/A    & 0.1320 & N/A    & 0.4443 & N/A    & 0.5709 \\
+\ourmethod                      & \textbf{0.3533} & \textbf{0.1248} & \textbf{0.4398} & \textbf{0.4414} & 0.5741 & 0.5737 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{comment}
+
+\begin{table}[ht]
+\centering
+\caption{Comparison of Coupling-Based OT Methods on Primal Cost $\langle \mathbf{C}, \mathbf{P} \rangle_{F}$ (Wasserstein-2) on 512 point small instance.}
+\label{tab:comparison_512}
+\small % Adjust font size
+\renewcommand{\arraystretch}{0.9} % Adjust row spacing
+\setlength{\tabcolsep}{5pt} % Adjust column spacing
+\begin{tabular}{lccc}
+\toprule
+\textbf{Method} & \textbf{Checkerboard} & \textbf{MAF Moons \& Rings} & \textbf{Half Moon \& S-Curve} \\
+\midrule
+MOP \cite{gerber2017multiscale}
+& 0.393
+& 0.276
+& 0.401
+ \\
+Sinkhorn (\texttt{ott-jax}) & 0.136 & 0.221 & 0.338 \\
+ProgOT                      & 0.136 & 0.216 & 0.334 \\
+\ourmethod                       & 0.129 & 0.216 & 0.334 \\
+Dual Revised Simplex Solver & \textbf{0.127} & \textbf{0.214} & \textbf{0.332} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\newpage
+
+\subsection{Large-scale Transcriptomics Matching on Mouse-Embryo}
+
+\begin{comment}
+\begin{table}[t]
+    \centering
+    \caption{Cost Values $\langle \mathbf{C}, \mathbf{P} \rangle_{F}$ Across Early Embryonic Stages}
+    \label{tab:cost_values_early}
+    \small % Reduce font size
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Method} & \textbf{E9.5-10.5} & \textbf{E10.5-11.5} & \textbf{E11.5-12.5} \\
+        \midrule
+        \ourmethod{}        & \textbf{21.81} & \textbf{14.81} & \textbf{16.14} \\
+        Sinkhorn        & 21.91          & 14.89          & -            \\
+        ProgOT          & 22.56          & 15.35          & -            \\
+        MB $128$ & 22.44
+        & 15.35
+        & 16.69 \\
+        MB $256$ & 22.31
+        & 15.18
+        & 16.48
+            \\
+        FRLC ($r=40$)  & 23.14          & 16.09          & 17.74          \\
+        LOT ($r=40$)  & 26.06          
+        & 19.06 
+        & 21.64       \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\end{comment}
+
+\begin{table}[]
+    \centering
+    \caption{Hyperparameters for Mouse-Embryo Spatial Transcriptomics Experiment (E15.5-16.5)}
+    \label{tab:hyperparameters_ME}
+    \small % Optional: Reduce font size to fit content
+    \begin{tabular}{@{}lll@{}}
+        \toprule
+        \textbf{Parameter Name}          & \textbf{Variable}         & \textbf{Value} \\ \midrule
+        Rank-Annealing Schedule         & \( (r_1, \dots, r_\kappa) \) & [2, 86, 659]
+        \\
+        Hierarchy Depth                  & \( \kappa \)              & 3              \\
+        Maximal Base Rank                & \( Q \)                   & \( 2^{10} \)     \\
+        Maximal Intermediate Rank        & \( C \)                   & 128              \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+In this problem, we use \ourmethod\ to find a full-rank alignment matrix between successive pairs of spatial transcriptomics (ST) \cite{staahl2016visualization} slices. These are from a dataset of whole-mouse embryogenesis \cite{chen2022spatiotemporal} on the Stereo-Seq platform. These datasets have been measured at successive 1-day time-intervals: E9.5 ($n=5913$), E10.5 ($n=18408$), E11.5 ($n=30124$), E12.5 ($n=51365$), E13.5 ($n=77369$), E14.5 ($n=102519$), E15.5 ($n=113350$), and E16.5 ($n=121767$), where the embryonic mouse is growing across the stages so that the sample-complexity $n$ increases with the numeric stage. For each pair of datasets of size $n$ and $m$, we sub-sample the datasets so that the size of the two datasets is given as $n \gets \min\{ n, m \}$.
+
+In the context of spatial transcriptomics, an experiment conducted on a two-dimensional tissue slice produces a data pair $(\mathbf{X}, \mathbf{Z})$. Here, $\mathbf{X} \in \mathbb{R}^{n \times p}$ represents the gene expression matrix, where n denotes the number of cells (or spatial spots) analyzed on the slice, and p signifies the number of genes measured. Specifically, the entry $\mathbf{X}_{ij} \in \mathbb{R}_{+}$ corresponds to the expression level of gene j in cell i, with higher values indicating greater expression intensity. Concurrently, $\mathbf{Z} \in \mathbb{R}^{n \times 2}$ is the spatial coordinate matrix, where each row i contains the (x, y) coordinates of cell i on the tissue slice. Consequently, every cell on the slice is characterized by a gene expression vector of length p, capturing its molecular features, and a coordinate vector of length two, detailing its spatial position within the slice.
+
+We utilize the extensive, real-world dataset on mouse embryo development presented in \cite{chen2022spatiotemporal}, which encompasses eight temporal snapshots of spatial transcriptomics (ST) slices throughout the entire mouse embryo development process. And align all consecutive timepoints. The preprocessing of this dataset is conducted using the standard SCANPY \cite{wolf2018scanpy} workflow. Initially, we ensure that both slices contain an identical set of genes by filtering, which results in a common gene set across all cells for each pair of timepoints. Subsequently, we apply log-normalization to the gene expression data of all cells from the two slices. To compress the data, we perform Principal Component Analysis (PCA), reducing the dimensionality of the gene expression profiles to $d=60$ PCs. Finally, we compute the Euclidean distances between gene expression vectors in the PCA-transformed space to construct the cost matrix $\mathbf{C}$, on which we solve a Wasserstein problem to obtain the optimal coupling $\mathbf{P}$ of full-rank. We offer hyperparameters for the E15-16.5 experiment (the largest alignment) in Table~\ref{tab:hyperparameters_ME}. For the other experiments, the maximal intermediate rank is $r=16$ up to E10.5, $r=32$ to E11.5, $r=64$ up to E13.5, and $128$ for E14.5-16.5. The rank-annealing schedule is generated according to the dynamic program in each case by the \texttt{rank\_annealing.optimal\_rank\_schedule( n, hierarchy\_depth , max\_Q , max\_rank )} function. 
+
+In this experiment, we benchmark against the default implementation of Sinkhorn in \texttt{ott-jax} \cite{cuturi2022optimal} with entropy parameter $\epsilon = 0.05$, and additionally benchmark against the default implementations of \texttt{ProgOT} \cite{kassraie2024progressive} and \texttt{LOT} \cite{Scetbon2021LowRankSF} in \texttt{ott-jax}. For the low-rank methods \texttt{LOT} and \texttt{FRLC} \cite{FRLC} we fix a constant rank of $r=40$ for these experiments. While LOT \cite{Scetbon2021LowRankSF} provides a robust, scalable low-rank procedure for the Wasserstein-2 distance, the LOT solver with point cloud input on Wasserstein-1 cost only runs for the first pair (E9.5:E10.5). For subsequent pairs we input the cost $\mathbf{C}$ directly, resulting in the LOT solver running up to the third pair (E11.5:E12.5). Mini-batch OT is run with batch-sizes ranging from $128$ to $2048$, and is performed without replacement. As noted in prior works \cite{fatras2020learning, fatras2021jumbot, fatras2021minibatch}, this is a standard choice for instantiating a full-rank coupling using mini-batch OT. Sinkhorn is used to solve each mini-batch coupling, as implemented in \texttt{ott-jax} with a default setting of the entropy parameter $\epsilon = 0.05$.
+
+
+
+\begin{table}[t]
+    \centering
+    \caption{Cost Values $\langle \mathbf{P}, \mathbf{C} \rangle_{F}$ for Different Methods Across Embryonic Stages}
+    \label{tab:cost_values_supp}
+    \begin{tabular}{lccccccc}
+        \toprule
+        \textbf{Method} & \textbf{E9.5-E10.5} & \textbf{E10.5-E11.5} & \textbf{E11.5-E12.5} & \textbf{E12.5-E13.5} & \textbf{E13.5-E14.5} & \textbf{E14.5-E15.5} & \textbf{E15.5-E16.5} \\
+        \midrule
+        \ourmethod{}  & \textbf{21.81} & \textbf{14.81} & \textbf{16.14} & \textbf{14.35} & \textbf{13.78} & \textbf{14.29} & \textbf{12.79} \\
+        Sinkhorn  & 21.91 & 14.89 & -     & -    & -     & -     & -    \\
+        ProgOT    & 22.56 & 15.35 & -    & -    & -     & -     & -   \\
+        MB $128$ & 22.44 & 15.35 & 16.69 & 14.86 & 14.14 & 14.75 & 13.32
+        \\
+        MB $512$ & 22.15 &
+                   15.05 &
+                   16.33 &
+                   14.54 &
+                   13.92 &
+                   14.50 &
+                   13.01 \\
+        MB $1024$ & 22.05 & 15.02 & 16.24 & 14.45 & 13.86 & 14.43 & 12.91 \\
+        MB $2048$ & 21.98 &
+                   14.98 &
+                   16.18 &
+                   14.39 &
+                   13.81 &
+                   14.39 &
+                   12.85 \\
+        FRLC     & 23.14 & 16.09 & 17.74 & 15.47 & 14.64 & 15.51 & 14.00 \\
+        LOT & 26.06 & 19.06 & 21.64 & - & - & -
+        \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% MB $256$ & 22.31 & 15.18 & 16.48 & 14.67 & 14.01 & 14.60 & 13.14 \\
+\subsection{Brain Atlas Spatial Alignment}\label{supp:exp_merfish}
+
+We took inspiration from MERFISH-MERFISH alignment experiments of \cite{clifton2023stalign}, particularly gene abundance transfer tasks that STalign is exhibited on. The data are available on the Vizgen website for MERFISH Mouse Brain Receptor Map data release (\href{https://info.vizgen.com/mouse-brain-map}{https://info.vizgen.com/mouse-brain-map}). The two spatial transcriptomics slices used for the experiment are slice 2, replicate 3 (``source'' dataset) and slice 2, replicate 2 (``target'' dataset). The datasets will be denoted $(\mathbf{X}^1, \mathbf{S}^1)$ for the source and $(\mathbf{X}^2, \mathbf{S}^2)$ for the target. 
+
+The source dataset consists of $85,958$ spots, while the target dataset consists of $84,172$ spots. To apply \ourmethod{} to these data, we subsampled the source dataset to have $84,172$ spots also (uniformly at random), removing a total of $1786$ spots. We use this sub-sampled $n \times n$ dataset for all methods, but as discussed below, note that this sub-sampling incurs little error. We ran \ourmethod{} using the settings \texttt{max\_rank = 11} and \texttt{hierarchy\_depth=4}, for a total runtime of 10 minutes 6 seconds, on an A100 GPU. The random seed was set to \texttt{44}.
+For the cost function used by \ourmethod{}, we only use the \emph{spatial} modalities $\mathbf{S}^1, \mathbf{S}^2$ of the two datasets. We centered the spatial coordinates of both datasets, and applied a rotation by 45 degrees to the first dataset. With these registered spatial data, here denoted $\tilde{\mathbf{S}}^1 = \{ \mathbf{s}_i^1 \}_{i=1}^n$ and $\tilde{\mathbf{S}}^2 = \{ \mathbf{s}_i^2 \}_{i=1}^n$, we formed the cost matrix $\mathbf{C}$ given by:
+\begin{align*}
+    \mathbf{C}_{ij} = \| \mathbf{s}_i^1 - \mathbf{s}_j^2 \|_2 \,,
+\end{align*}
+where $\| \cdot \|_2$ denotes the Euclidean distance between the spatial coordinates. This cost $\mathbf{C}$ was used as input to \ourmethod{}, which produced as output a 1-1 mapping $T$ between the two datasets (a permutation matrix is too large to instantiate). 
+
+We then evaluated the performance of \ourmethod{} through cosine similarity of predicted gene abundance with target gene abundance, across five ``spatially-patterned genes''  (using the terminology of \cite{clifton2023stalign}): \emph{Slc17a7}, \emph{Grm4}, \emph{Olig1}, \emph{Gad1}, \emph{Peg10}. Writing $\mathfrak{g}$ to stand in for any of these genes, we formed the abundance vectors $\mathbf{v}^{1, \mathfrak{g}}$ and $\mathbf{v}^{2, \mathfrak{g}}$ using the raw counts for gene $\mathfrak{g}$ in each datasets' expression component $\mathbf{X}^1, \mathbf{X}^2$. Using \ourmethod{} output $T$, we also formed the \emph{predicted} abundance vector $\hat{\mathbf{v}}^{\mathfrak{g}}$, which maps the raw counts from $\mathbf{v}^{1, \mathfrak{g}}$ to the spots in the second dataset through $T$. 
+
+Moreover, to compute cosine similarities between predicted and true expression abundances, \cite{clifton2023stalign} employ a spatial binning on their output, using windows of $200\mu\mathrm{m}$ to tile each slice. The diameter of each slice is roughly $10,000 \mu \mathrm{m}$, and 
+to make our output comparable, we used the spatial coordinates $\mathbf{S}'$ to bin and average the vectors $\mathbf{v}^{2, \mathfrak{g}}$ and $\hat{\mathbf{v}}$ locally. We used a total of 5625 bins, corresponding to a 15-to-1 mapping from spots to bins. Averaging the abundance of gene $\mathfrak{g}$ in each bin, we obtain spatially smoothed versions of $\mathbf{v}^{2, \mathfrak{g}}$ and $\hat{\mathbf{v}}$, as in \cite{clifton2023stalign}. Denote these smoothed vectors by $\mathbf{w}^{2, \mathfrak{g}}$ and $\hat{\mathbf{w}}$. For each gene $\mathfrak{g}$ among $\{$ \emph{Slc17a7}, \emph{Grm4}, \emph{Olig1}, \emph{Gad1}, \emph{Peg10} $\}$, we computed the cosine similarity between $\mathbf{w}^{2, \mathfrak{g}}$ and $\hat{\mathbf{w}}$, listing our results in Table~\ref{tab:merfish}. 
+In the same table, we list scores obtained by the low-rank methods FRLC \cite{FRLC} and LOT \cite{Scetbon2021LowRankSF} for comparison. 
+While \ourmethod{} is restricted to running on datasets of the same size, LOT and FRLC have no
+such restriction, and can run on the 
+pair of MERFISH slices without any subsampling.
+To address this, in each case of LOT and FRLC, we give results
+from the methods run on the datasets with \emph{and} without subsampling, reporting the highest scores for each method in main. In particular, we compared the cosine similarities for the original and sub-sampled dataset on a downstream task, as the primal OT cost is no longer directly comparable. Without the sub-sampling, the cosine score is only slightly higher than with: (0.3390, 0.2712, 0.3186, 0.1666, 0.1080) vs (0.3241, 0.2279, 0.3029, 0.1653, 0.0719). These scores remain significantly lower than those of hierarchical refinement on the sub-sampled data: (0.8098, 0.7959, 0.7526, 0.4932, 0.6015).
+
+For the FRLC algorithm, we set $\alpha=0$, $\gamma=200$, $\tau_{\mathrm{in}}=500$, rank $r=500$, using $20$ outer iterations and $300$ inner iterations. The runtime of FRLC was 1 minute 26 seconds on an A100 GPU. 
+For the LOT algorithm, we were unable to pass a low-rank factorization of the distance matrix, so we had to use a smaller rank $r=20$ in order to avoid exceeding GPU memory (the choice $r=20$ led to memory usage of 30GB). We set $\epsilon = 0.01$ and otherwise used the default settings of the method. The total runtime was 36 minutes 8 seconds on an A100 GPU. To form a spot-to-spot mapping from each transport plan output by FRLC and LOT, we mapped the spot with index $i$ in the first slice to the index argmax of the $i$-th row of the transport plan. Note that we ran LOT using the squared Euclidean cost as default, as passing
+\texttt{cost\_fn=costs.Euclidean()} as an argument to \texttt{ott-jax}'s \texttt{PointCloud} raised an error. 
+The discrepancy in transport cost between the two low rank methods reported in Table~\ref{tab:merfish} is explained by (i) needing to use squared-Euclidean cost in the case of LOT, and (ii) using a rank-$20$ plan of LOT versus the rank-$500$ plan of FRLC. 
+We applied the exact same spatial averaging to the outputs of all methods. We plot the ground-truth and \ourmethod{}-predicted abundances in Figure~\ref{fig:merfish_supp}.
+
+\begin{table}[t]
+    \centering
+    \caption{Cosine Similarity Scores for Expression Transfer \& Spatial Transport Cost}
+    \label{tab:merfish}
+    \begin{tabular}{lcccccccc}
+        \toprule
+        \textbf{Method} 
+        & 
+                \emph{Slc17a7}
+        & 
+        \emph{Grm4}
+        & 
+        \emph{Olig1}
+        & 
+        \emph{Gad1}
+        & 
+        \emph{Peg10}
+        & Transport Cost \\
+        \midrule
+        \ourmethod{} (this work) & 
+                \textbf{0.8098} & 
+        \textbf{0.7959} & 
+        \textbf{0.7526} & 
+        \textbf{0.4932} & 
+        \textbf{0.6015} &
+        \textbf{330.3301}\\ %cost
+        FRLC \cite{FRLC} & 
+                {0.2180} & 
+        {0.2124} & 
+        {0.1929} & 
+        {0.0963} & 
+        {0.0991} & 
+        {415.0683}\\
+        FRLC, no subsampling &
+        {0.2373} &
+        {0.1896} &
+        {0.1579} &
+        {0.0644} &
+        {0.1550} &
+        {634.4158} \\ %cost
+        LOT \cite{Scetbon2021LowRankSF} & 
+                {0.3241} & 
+        {0.2279} & 
+        {0.3029} & 
+        {0.1653} & 
+        {0.0719} & 
+        {3722.3171} \\ % cost
+                LOT, no subsampling & 
+                {0.3390} & 
+        {0.2712} & 
+        {0.3186} & 
+        {0.1666} & 
+        {0.1080} & 
+        {3722.1360}\\
+        MOP 
+        \cite{gerber2017multiscale} &
+        {0.5211} &
+        {0.4714} &
+        {0.5972} & 
+        {0.3571} &
+        {0.2719} & 
+        {2479.6117} \\
+        Mini-batch (128)
+        & 
+        {0.6693} & 
+        {0.6637} & 
+        {0.6442} & 
+        {0.4150} &
+        {0.4932} & 
+        653.0491 \\ % cost
+        Mini-batch (512)
+        &
+        {0.7089} &
+        {0.7383} &
+        {0.6771} &
+        {0.4562} &
+        {0.5383} & 
+        438.1703 \\ % cost 
+        Mini-batch (1,024) 
+        & 
+        {0.7256} & 
+        {0.7621} &
+        {0.6918} &
+        {0.4733} &
+        {0.5557} &
+        384.2498 \\ % cost 
+        Mini-batch (2,048) 
+        &
+        {0.7434} & 
+        {0.7822} & 
+        {0.7056} &
+        {0.4912} & 
+        {0.5683} & 
+        349.2964 \\ % cost
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+\subsection{Alignment of ImageNet Embeddings}\label{supp:imagenet_emb}
+
+To demonstrate the scalability of \ourmethod{} to massive and high-dimensional datasets, we perform an alignment unprecedented for OT solvers: aligning $1.281$ million images from the ImageNet ILSVRC dataset \cite{ILSVRC15,deng2009imagenet}. A negligible amount of sub-sampling, $167$ points out of $1281167$, was applied so that $n$ divided into two integers $n/2 = 640500$ of which neither is prime. From this, \texttt{rank\_annealing.optimal\_rank\_schedule( n, hierarchy\_depth , max\_Q , max\_rank )} was called to generate the depth 3 rank-annealing schedule of $(r_{1}, r_{2}, r_{3}) = (7, 50, 1830)$ for \ourmethod{}. We used the ResNet50 architecture \cite{he2016deep} available at \href{https://download.pytorch.org/models/resnet50-0676ba61.pth}{https://download.pytorch.org/models/resnet50-0676ba61.pth} to generate embeddings of each image of dimension $d=2048$. We then took a 50:50 split of the dataset as the two image datasets $\mathsf{X}, \mathsf{Y}$ to be aligned, where we used a random permutation of the indices of the dataset using \texttt{torch.randperm} so that the splits approximately represent the same distribution over images. We then aligned these image datasets using \ourmethod\, FRLC, and mini-batch OT. For $\mathbf{z}_{i}, \mathbf{z}_{j} \in \mathbb{R}^{2048}$ we used the standard Euclidean cost defined by
+\begin{align*}
+\mathbf{C}_{ij} = \lVert \mathbf{z}_{i} - \mathbf{z}_{j}  \rVert_{2}
+\end{align*}
+We use the sample-linear algorithm \cite{pmlr-v99-indyk19a} to factorize $\mathbf{C}$ into low-rank factors of dimensions $(d_{1}, d_{2}, d_{3}) = (r_{1}, r_{2}, r_{3}) = (7, 50, 1830)$ paralleling the rank-schedule. The final cost values for each are shown in Table~\ref{tab:cost_values_imagenet_supp}.
+
+\begin{table}[t]
+    \centering
+    \caption{Cost Values $\langle \mathbf{C}, \mathbf{P} \rangle_{F}$ for ImageNet \cite{deng2009imagenet, ILSVRC15} Alignment Task.}
+    \label{tab:cost_values_imagenet_supp}
+    \small % Reduce font size
+    \begin{tabular}{lccccccccc}
+        \toprule
+        \textbf{Method} & \ourmethod{} & Sinkhorn & MB $128$ & MB $256$ & MB $512$ & MB $1024$ & FRLC & LOT & ProgOT \\
+        \midrule
+        \textbf{OT Cost} & \textbf{18.97} & N/A & 21.89 & 21.11 & 20.34 & 19.58 & 24.12 & N/A & N/A \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[]
+    \centering
+    \caption{Hyperparameters for ImageNet Experiment}
+    \label{tab:hyperparameters_imagenet}
+    \small % Optional: Reduce font size to fit content
+    \begin{tabular}{@{}lll@{}}
+        \toprule
+        \textbf{Parameter Name}          & \textbf{Variable}         & \textbf{Value} \\ \midrule
+        Rank-Annealing Schedule         & \( (r_1, \dots, r_\kappa) \) & [7, 50, 1830]        \\
+        Hierarchy Depth                  & \( \kappa \)              & 3               \\
+        Maximal Base Rank                & \( Q \)                   & \( 2^{11} \)     \\
+        Maximal Intermediate Rank        & \( C \)                   & 64              \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+
+\section{Additional Information}
+
+There are a number of additional practical details regarding Algorithm~\ref{alg:hr_ot} in its actual implementation. In particular, to achieve linear scaling, one must also have sample-linear approximation of the distance matrix $\mathbf{C}$. We use the algorithm of \cite{pmlr-v99-indyk19a} to accomplish this, as discussed in Section~\ref{sec:low_rank_dist}. In addition, one requires parallel sequence of ranks for the distance matrices used at each step, $(d_{1}, \cdots, d_{\kappa})$. As a default, we set $(d_{1}, \cdots, d_{\kappa}) = (r_{1}, \cdots, r_{\kappa})$ so that the ranks of the distance matrices parallel those of the coupling matrices. Moreover, \ourmethod{} has the capacity to be heavily parallelized: since Algorithm~\ref{alg:hr_ot} breaks each instance into independent partitions, one may also parallelize the low-rank sub-problems of Algorithm~\ref{alg:hr_ot} across compute nodes.
+
+\subsection{Optimizing the Rank-Annealing Schedule}\label{sect:rank_schedule}
+
+As discussed in Section~\ref{sec:rank_anneal}, the large constants required by low-rank OT (\textrm{LROT}) in practice encourage factorizations which have \emph{minimal} partial sums. In particular, one seeks a factorization which minimizes the number of times \textrm{LROT} is run as a sub-procedure. Suppose one defines the maximal admissible rank of the low-rank solutions to be $C \in \mathbb{Z}_{+}$, the hierarchy-depth to be $\kappa$, the number of data-points to be $n$, and the maximal-rank permissible for the base-case alignment to be $Q$. If $Q \neq 1$, then one may take $n \gets n/Q$, $\kappa \gets \kappa - 1$, to observe that the total number of runs required is $1 + r_{1} + r_{1}r_{2} + ... + \prod_{i=1}^{\kappa} r_{i}$, where the ranks factor the sample-size as $\prod_{i=1}^{\kappa} r_{i} = n$. Thus, to optimize the number of \textrm{LROT} calls for a given hierarchy-depth $\kappa$, one can optimize for the rank-annealing schedule by minimizing the sum of partial products defined by
+$\min_{(r_{i})_{i=1}^{\kappa}}  \sum_{j=1}^{\kappa} \prod_{i=1}^{j} r_{i}$ subject to $\prod_{i=1}^{\kappa} r_{i} = n, \, r_{i} \in \mathbb{Z}_{+}, \, r_{i} \leq C$. Observing that this equals $\min_{(r_{i})_{i=1}^{\kappa}}  r_{1} + r_{1} \sum_{j=2}^{\kappa} \prod_{i=2}^{j} r_{i} $ implies a standard dynamic-programming approach and store a table of factors up to $C$ to optimize this in $O( C \kappa n)$ time for $C, \kappa$ generally pre-fixed constants. 
+
+%The dynamic program accomplishing this is implemented in the \texttt{rank\_annealing} package by calling the \texttt{rank\_annealing.optimal\_rank\_schedule( n, hierarchy\_depth , max\_Q , max\_rank )} function. This depends on the number of data points $n$, the hierarchy depth $\kappa$, the maximal rank at the intermediate couplings $Q$, and the maximal rank to solve for the terminal coupling ($r_{base}$) \texttt{max\_rank}.
+
+\paragraph{Low-rank distance matrix $\mathbf{C}$.}\label{sec:low_rank_dist} A key work \cite{pmlr-v99-indyk19a} showed that one may approximately factor a distance matrix $\mathbf{C}$ with linear complexity in the number of points $n$ (Algorithm~\ref{alg:dist_factorization}). For certain costs, e.g. squared Euclidean, this factorization can be given for free \cite{Scetbon2021LowRankSF}. We rely on both of these for low-rank factorizations of the distance matrix, so that both the space of the coupling and pairwise distance matrix scale linearly. 
+
+
+
+
+\begin{algorithm}\label{alg:dist_factorization}
+\caption{\quad Low-Rank approximation for distance matrix $\mathbf{C}$}
+\begin{algorithmic}
+\State Input point sets $\{ \mathbf{x}_{i}\}_{i=1}^{n}$, $\{ \mathbf{y}_{j} \}_{j=1}^{M}$ in metric space $\mathcal{X}$ and metric $d$
+\State Pick indices $i^{*} \in [n],j^{*} \in [m]$ uniformly at random
+\For{$i=1$ to $n$}
+\State Update sample probability $p_{i} = d(\mathbf{x}_{i}, \mathbf{y}_{j^{*}})^{2} + d(\mathbf{x}_{i^{*}}, \mathbf{y}_{j^{*}})^{2} + \frac{1}{m}\sum_{j=1}^{m}d(\mathbf{x}_{i^{*}}, \mathbf{y}_{j})^{2}$
+\EndFor
+\State Sample $O(r/\varepsilon)$ rows $\mathbf{C}_{i,.} \sim Categorical\left(\frac{p_{i}}{\sum_{i} p_{i}}\right)$
+\State Compute $\mathbf{U}$ using \cite{10.1145/1039488.1039494}
+\State Compute $\mathbf{V}$ using \cite{chen2017condition}
+\State return $\mathbf{V}$, $\mathbf{U}$
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{figure}[tbp]
+\begin{center}
+\centerline{\includegraphics[width=.8\linewidth]{images/merfish_supp_fig.pdf}}
+\caption{Abundance of 5 genes (\textbf{a.} \emph{Slc17a7}, \textbf{b.} \emph{Grm4}, \textbf{c.} \emph{Olig1}, \textbf{d.} \emph{Gad1}, \textbf{e.} \emph{Peg10}) in Allen Brain Atlas MERFISH dataset \cite{clifton2023stalign}. From left to right are plotted (1) abundance in the first dataset, (2) abundance in the second dataset, and (3) predicted abundance via transfer of the abundances in the first dataset under the mapping of \ourmethod.}
+\label{fig:merfish_supp}
+\end{center}
+\end{figure}
+
+\begin{figure*}[tbp]
+% \vskip 0.2in
+\begin{center}
+\centerline{\includegraphics[width=\linewidth]{images/HiRef_Runtime.pdf}}
+\caption{Runtime scaling across sample-complexities $n$ of \textbf{a.} \ourmethodFullCap{} (\ourmethod{}) and \textbf{b.} Sinkhorn for Euclidean cost, $\lVert \cdot \rVert_{2}$ (single CPU core). \ourmethodFullCap{} exhibits linear scaling for increasing $n$, whereas Sinkhorn exhibits quadratic scaling and is unable to run beyond 16k points. \textbf{c.} Runtime scaling of \ourmethod{} (GPU).}
+\label{fig:runtime_scaling}
+\end{center}
+\end{figure*}
+
+\begin{figure*}[tbp]
+% \vskip 0.2in
+\begin{center}
+\centerline{\includegraphics[width=0.5\linewidth]{images/Presentation7.pdf}}
+\caption{\ourmethod\ cost and the cost of the low-rank OT solution of FRLC \cite{FRLC} across the coupling rank $r \in [5, 100]$. }
+\label{fig:samples}
+\end{center}
+\end{figure*}
+
+\begin{figure*}[tbp]
+% \vskip 0.2in
+\begin{center}
+\centerline{\includegraphics[width=0.75\linewidth]{images/barycentric_comparison2.pdf}}
+\caption{Comparison of optimal transport maps under (1) the \ourmethod\ alignment, and (2) the Sinkhorn \cite{sinkhorn} barycentric projection. \textbf{a.} The checkerboard dataset of \cite{pmlr-v119-makkuva20a}, \textbf{b.} the Half-moon and S-curve dataset of \cite{buzun2024expectile}, and \textbf{c.} the MAF-Moons Rings dataset of \cite{buzun2024expectile}.
+}
+\label{fig:synth_ex_supp}
+\end{center}
+\end{figure*}
+
+\begin{figure*}[tbp]
+% \vskip 0.2in
+\begin{center}
+\centerline{\includegraphics[width=0.7\linewidth]{images/optimal_simplex.pdf}}
+\caption{Alignments of the synthetic datasets of \cite{pmlr-v119-makkuva20a, buzun2024expectile} using the optimal dual revised simplex \cite{Huangfu2017} algorithm for small instances (512 points). \textbf{a.} The checkerboard dataset of \cite{pmlr-v119-makkuva20a}, \textbf{b.} the Half-moon and S-curve dataset of \cite{buzun2024expectile}, and \textbf{c.} the MAF-Moons Rings dataset of \cite{buzun2024expectile}.}
+\label{fig:synth_ex_supp_2}
+\end{center}
+\end{figure*}
+
+
+
+
+\end{document}
+

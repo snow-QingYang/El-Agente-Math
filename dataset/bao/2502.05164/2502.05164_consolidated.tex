@@ -1,0 +1,2130 @@
+%%%%%%%% ICML 2025 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+\documentclass{article}
+
+% Optional math commands from https://github.com/goodfeli/dlbook_notation.
+
+% BEGIN INCLUDE: math_commands.tex
+%%%%% NEW MATH DEFINITIONS %%%%%
+
+\usepackage{amsmath,amsfonts,bm}
+
+% Mark sections of captions for referring to divisions of figures
+\newcommand{\figleft}{{\em (Left)}}
+\newcommand{\figcenter}{{\em (Center)}}
+\newcommand{\figright}{{\em (Right)}}
+\newcommand{\figtop}{{\em (Top)}}
+\newcommand{\figbottom}{{\em (Bottom)}}
+\newcommand{\captiona}{{\em (a)}}
+\newcommand{\captionb}{{\em (b)}}
+\newcommand{\captionc}{{\em (c)}}
+\newcommand{\captiond}{{\em (d)}}
+
+% Highlight a newly defined term
+\newcommand{\newterm}[1]{{\bf #1}}
+
+
+% Figure reference, lower-case.
+\def\figref#1{figure~\ref{#1}}
+% Figure reference, capital. For start of sentence
+\def\Figref#1{Figure~\ref{#1}}
+\def\twofigref#1#2{figures \ref{#1} and \ref{#2}}
+\def\quadfigref#1#2#3#4{figures \ref{#1}, \ref{#2}, \ref{#3} and \ref{#4}}
+% Section reference, lower-case.
+\def\secref#1{section~\ref{#1}}
+% Section reference, capital.
+\def\Secref#1{Section~\ref{#1}}
+% Reference to two sections.
+\def\twosecrefs#1#2{sections \ref{#1} and \ref{#2}}
+% Reference to three sections.
+\def\secrefs#1#2#3{sections \ref{#1}, \ref{#2} and \ref{#3}}
+% Reference to an equation, lower-case.
+\def\eqref#1{equation~\ref{#1}}
+% Reference to an equation, upper case
+\def\Eqref#1{Equation~\ref{#1}}
+% A raw reference to an equation---avoid using if possible
+\def\plaineqref#1{\ref{#1}}
+% Reference to a chapter, lower-case.
+\def\chapref#1{chapter~\ref{#1}}
+% Reference to an equation, upper case.
+\def\Chapref#1{Chapter~\ref{#1}}
+% Reference to a range of chapters
+\def\rangechapref#1#2{chapters\ref{#1}--\ref{#2}}
+% Reference to an algorithm, lower-case.
+\def\algref#1{algorithm~\ref{#1}}
+% Reference to an algorithm, upper case.
+\def\Algref#1{Algorithm~\ref{#1}}
+\def\twoalgref#1#2{algorithms \ref{#1} and \ref{#2}}
+\def\Twoalgref#1#2{Algorithms \ref{#1} and \ref{#2}}
+% Reference to a part, lower case
+\def\partref#1{part~\ref{#1}}
+% Reference to a part, upper case
+\def\Partref#1{Part~\ref{#1}}
+\def\twopartref#1#2{parts \ref{#1} and \ref{#2}}
+
+\def\ceil#1{\lceil #1 \rceil}
+\def\floor#1{\lfloor #1 \rfloor}
+\def\1{\bm{1}}
+\newcommand{\train}{\mathcal{D}}
+\newcommand{\valid}{\mathcal{D_{\mathrm{valid}}}}
+\newcommand{\test}{\mathcal{D_{\mathrm{test}}}}
+
+\def\eps{{\epsilon}}
+
+
+% Random variables
+\def\reta{{\textnormal{$\eta$}}}
+\def\ra{{\textnormal{a}}}
+\def\rb{{\textnormal{b}}}
+\def\rc{{\textnormal{c}}}
+\def\rd{{\textnormal{d}}}
+\def\re{{\textnormal{e}}}
+\def\rf{{\textnormal{f}}}
+\def\rg{{\textnormal{g}}}
+\def\rh{{\textnormal{h}}}
+\def\ri{{\textnormal{i}}}
+\def\rj{{\textnormal{j}}}
+\def\rk{{\textnormal{k}}}
+\def\rl{{\textnormal{l}}}
+% rm is already a command, just don't name any random variables m
+\def\rn{{\textnormal{n}}}
+\def\ro{{\textnormal{o}}}
+\def\rp{{\textnormal{p}}}
+\def\rq{{\textnormal{q}}}
+\def\rr{{\textnormal{r}}}
+\def\rs{{\textnormal{s}}}
+\def\rt{{\textnormal{t}}}
+\def\ru{{\textnormal{u}}}
+\def\rv{{\textnormal{v}}}
+\def\rw{{\textnormal{w}}}
+\def\rx{{\textnormal{x}}}
+\def\ry{{\textnormal{y}}}
+\def\rz{{\textnormal{z}}}
+
+% Random vectors
+\def\rvepsilon{{\mathbf{\epsilon}}}
+\def\rvtheta{{\mathbf{\theta}}}
+\def\rva{{\mathbf{a}}}
+\def\rvb{{\mathbf{b}}}
+\def\rvc{{\mathbf{c}}}
+\def\rvd{{\mathbf{d}}}
+\def\rve{{\mathbf{e}}}
+\def\rvf{{\mathbf{f}}}
+\def\rvg{{\mathbf{g}}}
+\def\rvh{{\mathbf{h}}}
+\def\rvu{{\mathbf{i}}}
+\def\rvj{{\mathbf{j}}}
+\def\rvk{{\mathbf{k}}}
+\def\rvl{{\mathbf{l}}}
+\def\rvm{{\mathbf{m}}}
+\def\rvn{{\mathbf{n}}}
+\def\rvo{{\mathbf{o}}}
+\def\rvp{{\mathbf{p}}}
+\def\rvq{{\mathbf{q}}}
+\def\rvr{{\mathbf{r}}}
+\def\rvs{{\mathbf{s}}}
+\def\rvt{{\mathbf{t}}}
+\def\rvu{{\mathbf{u}}}
+\def\rvv{{\mathbf{v}}}
+\def\rvw{{\mathbf{w}}}
+\def\rvx{{\mathbf{x}}}
+\def\rvy{{\mathbf{y}}}
+\def\rvz{{\mathbf{z}}}
+
+% Elements of random vectors
+\def\erva{{\textnormal{a}}}
+\def\ervb{{\textnormal{b}}}
+\def\ervc{{\textnormal{c}}}
+\def\ervd{{\textnormal{d}}}
+\def\erve{{\textnormal{e}}}
+\def\ervf{{\textnormal{f}}}
+\def\ervg{{\textnormal{g}}}
+\def\ervh{{\textnormal{h}}}
+\def\ervi{{\textnormal{i}}}
+\def\ervj{{\textnormal{j}}}
+\def\ervk{{\textnormal{k}}}
+\def\ervl{{\textnormal{l}}}
+\def\ervm{{\textnormal{m}}}
+\def\ervn{{\textnormal{n}}}
+\def\ervo{{\textnormal{o}}}
+\def\ervp{{\textnormal{p}}}
+\def\ervq{{\textnormal{q}}}
+\def\ervr{{\textnormal{r}}}
+\def\ervs{{\textnormal{s}}}
+\def\ervt{{\textnormal{t}}}
+\def\ervu{{\textnormal{u}}}
+\def\ervv{{\textnormal{v}}}
+\def\ervw{{\textnormal{w}}}
+\def\ervx{{\textnormal{x}}}
+\def\ervy{{\textnormal{y}}}
+\def\ervz{{\textnormal{z}}}
+
+% Random matrices
+\def\rmA{{\mathbf{A}}}
+\def\rmB{{\mathbf{B}}}
+\def\rmC{{\mathbf{C}}}
+\def\rmD{{\mathbf{D}}}
+\def\rmE{{\mathbf{E}}}
+\def\rmF{{\mathbf{F}}}
+\def\rmG{{\mathbf{G}}}
+\def\rmH{{\mathbf{H}}}
+\def\rmI{{\mathbf{I}}}
+\def\rmJ{{\mathbf{J}}}
+\def\rmK{{\mathbf{K}}}
+\def\rmL{{\mathbf{L}}}
+\def\rmM{{\mathbf{M}}}
+\def\rmN{{\mathbf{N}}}
+\def\rmO{{\mathbf{O}}}
+\def\rmP{{\mathbf{P}}}
+\def\rmQ{{\mathbf{Q}}}
+\def\rmR{{\mathbf{R}}}
+\def\rmS{{\mathbf{S}}}
+\def\rmT{{\mathbf{T}}}
+\def\rmU{{\mathbf{U}}}
+\def\rmV{{\mathbf{V}}}
+\def\rmW{{\mathbf{W}}}
+\def\rmX{{\mathbf{X}}}
+\def\rmY{{\mathbf{Y}}}
+\def\rmZ{{\mathbf{Z}}}
+
+% Elements of random matrices
+\def\ermA{{\textnormal{A}}}
+\def\ermB{{\textnormal{B}}}
+\def\ermC{{\textnormal{C}}}
+\def\ermD{{\textnormal{D}}}
+\def\ermE{{\textnormal{E}}}
+\def\ermF{{\textnormal{F}}}
+\def\ermG{{\textnormal{G}}}
+\def\ermH{{\textnormal{H}}}
+\def\ermI{{\textnormal{I}}}
+\def\ermJ{{\textnormal{J}}}
+\def\ermK{{\textnormal{K}}}
+\def\ermL{{\textnormal{L}}}
+\def\ermM{{\textnormal{M}}}
+\def\ermN{{\textnormal{N}}}
+\def\ermO{{\textnormal{O}}}
+\def\ermP{{\textnormal{P}}}
+\def\ermQ{{\textnormal{Q}}}
+\def\ermR{{\textnormal{R}}}
+\def\ermS{{\textnormal{S}}}
+\def\ermT{{\textnormal{T}}}
+\def\ermU{{\textnormal{U}}}
+\def\ermV{{\textnormal{V}}}
+\def\ermW{{\textnormal{W}}}
+\def\ermX{{\textnormal{X}}}
+\def\ermY{{\textnormal{Y}}}
+\def\ermZ{{\textnormal{Z}}}
+
+% Vectors
+\def\vzero{{\bm{0}}}
+\def\vone{{\bm{1}}}
+\def\vmu{{\bm{\mu}}}
+\def\vtheta{{\bm{\theta}}}
+\def\va{{\bm{a}}}
+\def\vb{{\bm{b}}}
+\def\vc{{\bm{c}}}
+\def\vd{{\bm{d}}}
+\def\ve{{\bm{e}}}
+\def\vf{{\bm{f}}}
+\def\vg{{\bm{g}}}
+\def\vh{{\bm{h}}}
+\def\vi{{\bm{i}}}
+\def\vj{{\bm{j}}}
+\def\vk{{\bm{k}}}
+\def\vl{{\bm{l}}}
+\def\vm{{\bm{m}}}
+\def\vn{{\bm{n}}}
+\def\vo{{\bm{o}}}
+\def\vp{{\bm{p}}}
+\def\vq{{\bm{q}}}
+\def\vr{{\bm{r}}}
+\def\vs{{\bm{s}}}
+\def\vt{{\bm{t}}}
+\def\vu{{\bm{u}}}
+\def\vv{{\bm{v}}}
+\def\vw{{\bm{w}}}
+\def\vx{{\bm{x}}}
+\def\vy{{\bm{y}}}
+\def\vz{{\bm{z}}}
+
+% Elements of vectors
+\def\evalpha{{\alpha}}
+\def\evbeta{{\beta}}
+\def\evepsilon{{\epsilon}}
+\def\evlambda{{\lambda}}
+\def\evomega{{\omega}}
+\def\evmu{{\mu}}
+\def\evpsi{{\psi}}
+\def\evsigma{{\sigma}}
+\def\evtheta{{\theta}}
+\def\eva{{a}}
+\def\evb{{b}}
+\def\evc{{c}}
+\def\evd{{d}}
+\def\eve{{e}}
+\def\evf{{f}}
+\def\evg{{g}}
+\def\evh{{h}}
+\def\evi{{i}}
+\def\evj{{j}}
+\def\evk{{k}}
+\def\evl{{l}}
+\def\evm{{m}}
+\def\evn{{n}}
+\def\evo{{o}}
+\def\evp{{p}}
+\def\evq{{q}}
+\def\evr{{r}}
+\def\evs{{s}}
+\def\evt{{t}}
+\def\evu{{u}}
+\def\evv{{v}}
+\def\evw{{w}}
+\def\evx{{x}}
+\def\evy{{y}}
+\def\evz{{z}}
+
+% Matrix
+\def\mA{{\bm{A}}}
+\def\mB{{\bm{B}}}
+\def\mC{{\bm{C}}}
+\def\mD{{\bm{D}}}
+\def\mE{{\bm{E}}}
+\def\mF{{\bm{F}}}
+\def\mG{{\bm{G}}}
+\def\mH{{\bm{H}}}
+\def\mI{{\bm{I}}}
+\def\mJ{{\bm{J}}}
+\def\mK{{\bm{K}}}
+\def\mL{{\bm{L}}}
+\def\mM{{\bm{M}}}
+\def\mN{{\bm{N}}}
+\def\mO{{\bm{O}}}
+\def\mP{{\bm{P}}}
+\def\mQ{{\bm{Q}}}
+\def\mR{{\bm{R}}}
+\def\mS{{\bm{S}}}
+\def\mT{{\bm{T}}}
+\def\mU{{\bm{U}}}
+\def\mV{{\bm{V}}}
+\def\mW{{\bm{W}}}
+\def\mX{{\bm{X}}}
+\def\mY{{\bm{Y}}}
+\def\mZ{{\bm{Z}}}
+\def\mBeta{{\bm{\beta}}}
+\def\mPhi{{\bm{\Phi}}}
+\def\mLambda{{\bm{\Lambda}}}
+\def\mSigma{{\bm{\Sigma}}}
+
+% Tensor
+\DeclareMathAlphabet{\mathsfit}{\encodingdefault}{\sfdefault}{m}{sl}
+\SetMathAlphabet{\mathsfit}{bold}{\encodingdefault}{\sfdefault}{bx}{n}
+\newcommand{\tens}[1]{\bm{\mathsfit{#1}}}
+\def\tA{{\tens{A}}}
+\def\tB{{\tens{B}}}
+\def\tC{{\tens{C}}}
+\def\tD{{\tens{D}}}
+\def\tE{{\tens{E}}}
+\def\tF{{\tens{F}}}
+\def\tG{{\tens{G}}}
+\def\tH{{\tens{H}}}
+\def\tI{{\tens{I}}}
+\def\tJ{{\tens{J}}}
+\def\tK{{\tens{K}}}
+\def\tL{{\tens{L}}}
+\def\tM{{\tens{M}}}
+\def\tN{{\tens{N}}}
+\def\tO{{\tens{O}}}
+\def\tP{{\tens{P}}}
+\def\tQ{{\tens{Q}}}
+\def\tR{{\tens{R}}}
+\def\tS{{\tens{S}}}
+\def\tT{{\tens{T}}}
+\def\tU{{\tens{U}}}
+\def\tV{{\tens{V}}}
+\def\tW{{\tens{W}}}
+\def\tX{{\tens{X}}}
+\def\tY{{\tens{Y}}}
+\def\tZ{{\tens{Z}}}
+
+
+% Graph
+\def\gA{{\mathcal{A}}}
+\def\gB{{\mathcal{B}}}
+\def\gC{{\mathcal{C}}}
+\def\gD{{\mathcal{D}}}
+\def\gE{{\mathcal{E}}}
+\def\gF{{\mathcal{F}}}
+\def\gG{{\mathcal{G}}}
+\def\gH{{\mathcal{H}}}
+\def\gI{{\mathcal{I}}}
+\def\gJ{{\mathcal{J}}}
+\def\gK{{\mathcal{K}}}
+\def\gL{{\mathcal{L}}}
+\def\gM{{\mathcal{M}}}
+\def\gN{{\mathcal{N}}}
+\def\gO{{\mathcal{O}}}
+\def\gP{{\mathcal{P}}}
+\def\gQ{{\mathcal{Q}}}
+\def\gR{{\mathcal{R}}}
+\def\gS{{\mathcal{S}}}
+\def\gT{{\mathcal{T}}}
+\def\gU{{\mathcal{U}}}
+\def\gV{{\mathcal{V}}}
+\def\gW{{\mathcal{W}}}
+\def\gX{{\mathcal{X}}}
+\def\gY{{\mathcal{Y}}}
+\def\gZ{{\mathcal{Z}}}
+
+% Sets
+\def\sA{{\mathbb{A}}}
+\def\sB{{\mathbb{B}}}
+\def\sC{{\mathbb{C}}}
+\def\sD{{\mathbb{D}}}
+% Don't use a set called E, because this would be the same as our symbol
+% for expectation.
+\def\sF{{\mathbb{F}}}
+\def\sG{{\mathbb{G}}}
+\def\sH{{\mathbb{H}}}
+\def\sI{{\mathbb{I}}}
+\def\sJ{{\mathbb{J}}}
+\def\sK{{\mathbb{K}}}
+\def\sL{{\mathbb{L}}}
+\def\sM{{\mathbb{M}}}
+\def\sN{{\mathbb{N}}}
+\def\sO{{\mathbb{O}}}
+\def\sP{{\mathbb{P}}}
+\def\sQ{{\mathbb{Q}}}
+\def\sR{{\mathbb{R}}}
+\def\sS{{\mathbb{S}}}
+\def\sT{{\mathbb{T}}}
+\def\sU{{\mathbb{U}}}
+\def\sV{{\mathbb{V}}}
+\def\sW{{\mathbb{W}}}
+\def\sX{{\mathbb{X}}}
+\def\sY{{\mathbb{Y}}}
+\def\sZ{{\mathbb{Z}}}
+
+% Entries of a matrix
+\def\emLambda{{\Lambda}}
+\def\emA{{A}}
+\def\emB{{B}}
+\def\emC{{C}}
+\def\emD{{D}}
+\def\emE{{E}}
+\def\emF{{F}}
+\def\emG{{G}}
+\def\emH{{H}}
+\def\emI{{I}}
+\def\emJ{{J}}
+\def\emK{{K}}
+\def\emL{{L}}
+\def\emM{{M}}
+\def\emN{{N}}
+\def\emO{{O}}
+\def\emP{{P}}
+\def\emQ{{Q}}
+\def\emR{{R}}
+\def\emS{{S}}
+\def\emT{{T}}
+\def\emU{{U}}
+\def\emV{{V}}
+\def\emW{{W}}
+\def\emX{{X}}
+\def\emY{{Y}}
+\def\emZ{{Z}}
+\def\emSigma{{\Sigma}}
+
+% entries of a tensor
+% Same font as tensor, without \bm wrapper
+\newcommand{\etens}[1]{\mathsfit{#1}}
+\def\etLambda{{\etens{\Lambda}}}
+\def\etA{{\etens{A}}}
+\def\etB{{\etens{B}}}
+\def\etC{{\etens{C}}}
+\def\etD{{\etens{D}}}
+\def\etE{{\etens{E}}}
+\def\etF{{\etens{F}}}
+\def\etG{{\etens{G}}}
+\def\etH{{\etens{H}}}
+\def\etI{{\etens{I}}}
+\def\etJ{{\etens{J}}}
+\def\etK{{\etens{K}}}
+\def\etL{{\etens{L}}}
+\def\etM{{\etens{M}}}
+\def\etN{{\etens{N}}}
+\def\etO{{\etens{O}}}
+\def\etP{{\etens{P}}}
+\def\etQ{{\etens{Q}}}
+\def\etR{{\etens{R}}}
+\def\etS{{\etens{S}}}
+\def\etT{{\etens{T}}}
+\def\etU{{\etens{U}}}
+\def\etV{{\etens{V}}}
+\def\etW{{\etens{W}}}
+\def\etX{{\etens{X}}}
+\def\etY{{\etens{Y}}}
+\def\etZ{{\etens{Z}}}
+
+% The true underlying data generating distribution
+\newcommand{\pdata}{p_{\rm{data}}}
+% The empirical distribution defined by the training set
+\newcommand{\ptrain}{\hat{p}_{\rm{data}}}
+\newcommand{\Ptrain}{\hat{P}_{\rm{data}}}
+% The model distribution
+\newcommand{\pmodel}{p_{\rm{model}}}
+\newcommand{\Pmodel}{P_{\rm{model}}}
+\newcommand{\ptildemodel}{\tilde{p}_{\rm{model}}}
+% Stochastic autoencoder distributions
+\newcommand{\pencode}{p_{\rm{encoder}}}
+\newcommand{\pdecode}{p_{\rm{decoder}}}
+\newcommand{\precons}{p_{\rm{reconstruct}}}
+
+\newcommand{\laplace}{\mathrm{Laplace}} % Laplace distribution
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Ls}{\mathcal{L}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\emp}{\tilde{p}}
+\newcommand{\lr}{\alpha}
+\newcommand{\reg}{\lambda}
+\newcommand{\rect}{\mathrm{rectifier}}
+\newcommand{\softmax}{\mathrm{softmax}}
+\newcommand{\sigmoid}{\sigma}
+\newcommand{\softplus}{\zeta}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\standarderror}{\mathrm{SE}}
+\newcommand{\Cov}{\mathrm{Cov}}
+% Wolfram Mathworld says $L^2$ is for function spaces and $\ell^2$ is for vectors
+% But then they seem to use $L^2$ for vectors throughout the site, and so does
+% wikipedia.
+\newcommand{\normlzero}{L^0}
+\newcommand{\normlone}{L^1}
+\newcommand{\normltwo}{L^2}
+\newcommand{\normlp}{L^p}
+\newcommand{\normmax}{L^\infty}
+
+\newcommand{\parents}{Pa} % See usage in notation.tex. Chosen to match Daphne's book.
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Tr}{Tr}
+\let\ab\allowbreak
+
+% END INCLUDE: math_commands.tex
+
+
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs} % for professional tables
+
+\usepackage{url}
+\usepackage{comment}
+\usepackage[normalem]{ulem}
+\usepackage{scalerel}
+
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2025} with \usepackage[nohyperref]{icml2025} above.
+%\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+%\usepackage{xurl}
+
+\newcommand*{\paral}{\stretchrel*{\parallel}{\perp}}
+\newcommand*{\Sslash}{\stretchrel*{\sslash}{\perp}}
+\newcommand{\En}{\mathcal{E}}
+
+% Uncomment the next line to enable comments
+\def\showcomments{}
+
+% Attempt to make hyperref and algorithmic work together better:
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+% Use the following line for the initial blind version submitted for review:
+%\usepackage{icml2025}
+% If accepted, instead use the following line for the camera-ready submission:
+\usepackage[accepted]{icml2025_arxiv}
+
+% For theorems and such
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{bbm}
+
+\newtheorem{prop}{Proposition}
+
+% if you use cleveref..
+\usepackage[capitalize,noabbrev]{cleveref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THEOREMS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Todonotes is useful during development; simply uncomment the next line
+%    and comment out the line below the next line to turn off comments
+%\usepackage[disable,textsize=tiny]{todonotes}
+\usepackage[textsize=tiny]{todonotes}
+
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+%\icmltitlerunning{In-context denoising with minimal transformers as associative memory retrieval}
+
+\icmltitlerunning{In-context denoising with one-layer transformers: connections between attention and associative memory retrieval}
+%\icmltitlerunning{In-Context Denoising with One-Layer Transformers: Connections between Attention and Associative Memory Retrieval}
+
+
+\begin{document}
+
+% ===========================================================================================
+%\title{In-context denoising with minimal \\transformers}
+%\title{In-context denoising with one-layer transformers and connections to associative memory retrieval}
+\twocolumn[
+\icmltitle{In-context denoising with one-layer transformers: \\ connections between attention and associative memory retrieval}
+%\icmltitle{In-Context Denoising with One-Layer Transformers: \\ Connections between Attention and Associative Memory Retrieval}
+
+%[ICML asks us to capitalize 'content words' in the title]
+%\icmltitle{In-Context Denoising with One-Layer Transformers: \\ connections between Attention and Associative Memory Retrieval}
+
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2025
+% package.
+
+% List of affiliations: The first argument should be a (short)
+% identifier you will use later to specify author affiliations
+% Academic affiliations should list Department, University, City, Region, Country
+% Industry affiliations should list Company, City, Region, Country
+
+% You can specify symbols, otherwise they are numbered in order.
+% Ideally, you should not use this facility. Affiliations will be numbered
+% in order of appearance and this is the preferred way.
+\icmlsetsymbol{equal}{*}
+
+\begin{icmlauthorlist}
+
+\icmlauthor{Matthew Smart}{xxx}
+\icmlauthor{Alberto Bietti}{yyy}
+\icmlauthor{Anirvan M. Sengupta}{yyy,www,zzz}
+
+\end{icmlauthorlist}
+
+%
+%Department of Physics and Astronomy, Rutgers University, Piscataway, New Jersey 08854, USA 
+%Center for Computational Quantum Physics, Flatiron Institute, New York, New York 10010, USA 
+%Center for Computational Mathematics, Flatiron Institute, New York, New York 10010, USA
+
+\icmlaffiliation{xxx}{
+    Center for Computational Biology, Flatiron Institute, New York, NY, USA}
+\icmlaffiliation{yyy}{
+    Center for Computational Mathematics, Flatiron Institute, New York, NY, USA}
+    \icmlaffiliation{www}{
+    Center for Computational Quantum Physics, Flatiron Institute, New York, NY, USA}
+\icmlaffiliation{zzz}{
+    Department of Physics and Astronomy, Rutgers University, Piscataway, NJ, USA}
+    
+\icmlcorrespondingauthor{Matthew Smart}{msmart@flatironinstitute.org}
+\icmlcorrespondingauthor{Anirvan M. Sengupta}{anirvans.physics@gmail.com}
+%\texttt{asengupta@flatironinstitute.org} \\
+
+% You may provide any keywords that you
+% find helpful for describing your paper; these are used to populate
+% the "keywords" metadata in the PDF but will not be shown in the document
+\icmlkeywords{attention, in-context learning, denoising, associative memory, Hopfield network, transformers}
+
+\vskip 0.3in
+]
+
+% this must go after the closing bracket ] following \twocolumn[ ...
+
+% This command actually creates the footnote in the first column
+% listing the affiliations and the copyright notice.
+% The command takes one argument, which is text to display at the start of the footnote.
+% The \icmlEqualContribution command is standard text for equal contribution.
+% Remove it (just {}) if you do not need this facility.
+
+\printAffiliationsAndNotice{}  % leave blank if no need to mention equal contribution
+%\printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
+
+\begin{abstract}
+We introduce in-context denoising, a task that refines the connection between attention-based architectures and dense associative memory (DAM) networks, also known as modern Hopfield networks. Using a Bayesian framework, we show theoretically and empirically that certain restricted denoising problems can be solved optimally even by a single-layer transformer. We demonstrate that a trained attention layer processes each denoising prompt by performing a single gradient descent update on a context-aware DAM energy landscape, where context tokens serve as associative memories and the query token acts as an initial state. This one-step update yields better solutions than exact retrieval of either a context token or a spurious local minimum, providing a concrete example of DAM networks extending beyond the standard retrieval paradigm. Overall, this work solidifies the link between associative memory and attention mechanisms first identified by Ramsauer et al., and demonstrates the relevance of associative memory models in the study of in-context learning.
+
+\end{abstract}
+% ===========================================================================================
+
+\section{Introduction}
+\label{sec:intro}
+
+The transformer architecture \cite{Vaswani2017} has achieved remarkable success across diverse domains, from natural language processing \cite{devlin2019bert,brown2020language,touvron2023llama} 
+to computer vision \cite{dosovitskiy2020image}. 
+Despite their practical success, understanding the mechanisms behind transformer-based networks remains an open challenge. 
+This challenge is exacerbated by the growing scale and complexity of modern large networks. 
+Toward addressing this, researchers studying simplified architectures have identified connections between the attention operation that is central to transformers and associative memory models \cite{ramsauer2021iclr}, providing not only an avenue for understanding how such architectures encode and retrieve information but also potentially ways to improve them further.
+
+The most celebrated model for associative memories in systems neuroscience is the so-called Hopfield model \cite{amari1972learning, nakano1972associatron, little1974existence, Hopfield1982}. This model has a capacity to store ``memories" (stable fixed points of a recurrent update rule) proportional to the number of nodes \cite{Hopfield1982, Amit1985}. In the last decade, new energy functions \cite{krotov2016hopfield, demircigil2017} were proposed for dense associative memories with much higher capacities. These energy functions are often referred to as modern Hopfield models. 
+\citet{ramsauer2021iclr} pointed out the similarity between the one-step update rule of a certain modern Hopfield network \cite{demircigil2017} and the softmax attention layer of transformers, generating interest in the statistical physics and systems neuroscience communities \cite{krotov2021large,krotov2023new,lucibello2024prl, millidge2022universal}. 
+Recent work has extended this concept to improve retrieval by incorporating sparsity \cite{hu2023_r2_sparse, wu2024_r2_stanhop, santos2024_r2, wu2024a_r2}, while others have leveraged associative memory principles to design new energy-based transformer architectures \cite{hoover2023energytransformer}.
+However, these extensions and the foundational construction
+in~\citet{ramsauer2021iclr} primarily focus on the specific task of exact retrieval (converging to a fixed point), while in practice transformers may tackle many other tasks.
+
+To explore this connection beyond retrieval, we introduce \emph{in-context denoising}, a task that bridges the behavior of trained transformers and associative memory networks through the lens of in-context learning (ICL). In standard ICL, a sequence model is trained to infer an unknown function $g$ from contextual examples, predicting $g(X_{L+1})$ given a sequence of input-output pairs $E = ((X_1, g(X_1)), ..., (X_L, g(X_L)), (X_{L+1},-))$. Crucially, $g$ is implied solely through the context and differs across prompts -- performant models are therefore said to ``learn $g(x)$ in context".
+While ICL has been extensively studied in supervised settings \citep{garg2022neurips, bartlett2024jmlr, akyurek2023, reddy2024iclr}, recent work suggests that transformers may internally emulate gradient descent over a context-specific loss function during inference \citep{vonOswald2023mordvintsev, dai2023gptlearnicl, ahn2023transformers}. This general perspective aligns with our findings. 
+
+In this work, we generalize ICL to an unsupervised setting where the prompt consists of $L$ samples from a random distribution and the query is a noise-corrupted sample from the same distribution. This shift allows us to probe how trained transformers internally approximate Bayes optimal inference, while deepening the connection to associative memory models which are prototypical denoisers. 
+By setting up this problem in this way, we also attempt to answer a few questions. One concerns the memorization-generalization dilemma in denoising: a Hopfield model's success is usually measured by successful memory recovery, while in-context learning may have to solve a completely new problem. Another question has to do with the number of iterations of the corresponding Hopfield model: why does the \citet{ramsauer2021iclr} correspondence involve only one iteration of Hopfield energy minimization and not many?
+
+
+\textbf{In summary, our contributions are as follows:}
+In Section~\ref{sec:results}, we introduce in-context denoising as a framework for understanding how transformers perform implicit inference beyond memory retrieval. In Section \ref{sec:experiments}, we establish that single-layer transformers with one attention head are expressive enough to optimally solve certain denoising problems. We then empirically demonstrate that standard training from random weights can recover the Bayes optimal predictors. 
+The trained attention layers are mapped back to dense associative memory networks in Section \ref{sec:assoc-mem}. Our results refine the general connection pointed out in previous work, offer new mechanistic insights into attention, and provide a concrete example of dense associative memory networks extending beyond the standard memory retrieval paradigm to solve a novel in-context learning task.
+  
+\section{Problem formulation: In-context denoising}
+\label{sec:results}
+
+In this section, we describe our general setup. Recurring common notation is described in Appendix \ref{appendix:notation}.
+\subsection{Setup}
+Each task corresponds to a distribution $D$ over the probability distribution of data: $p_X\sim D$.
+Let $X_1,\cdots,X_{L+1} \overset{\mathrm{iid}}{\sim}  p_X$, define the sampling of the tokens. Let the noise corruption be defined by $\tilde X\sim p_\text{noise}(\cdot|X_{L+1})$. The random sequence $E=(X_1, X_2, ..., X_L, \tilde X)$ are given as ``context" (input) to a sequence model $F(\cdot;\theta)$ which outputs an estimate $\hat X_{L+1}$ of the original $(L+1)$-th token . The task is to minimize the expected loss $\E[l(\hat X_{L+1},X_{L+1})]$ for some loss function $l(\cdot,\cdot)$. Namely, our problem is to find
+\begin{equation}
+    \min_\theta \E_{p_X\sim D,X_{1:L\!+\!1}\sim p_X^{L\!+\!1},\tilde X\sim p_\text{noise}(\cdot|X_{L\!+\!1}) }[l(F(E,\theta),X_{L\!+\!1})].
+\end{equation}
+
+In practice, we choose $\tilde X= X_{L+1} + Z$, a pure token corrupted by the addition of isotropic Gaussian noise $Z \sim \mathcal{N}(0, \sigma_{Z}^2 I_n)$, and our objective function to minimize is the mean squared error (MSE) $\E[||\hat X_{L+1}-X_{L+1}||^2]$. 
+
+In the following subsection, we explain the pure token distributions for three specific tasks. These tasks are of course structured so that a one-layer transformer has the expressivity to capture a solution, which, as $L\to\infty$, provides an optimal solution, in some sense. To that end, we derive Bayes optimal estimators for each of the three tasks, under the assumption that we know the original distribution $p_X$ of pure tokens. In Section \ref{sec:experiments}, we use these estimators as baselines to evaluate the performance of the denoiser $f(E,\theta)$ based on a one-layer transformer trained on finite datasets. 
+
+
+\begin{figure*}[h!]
+\centering
+\includegraphics[width=0.99\textwidth]{figs/fig-overview-cases-formulation-v3.pdf}
+\caption{
+  (a) Problem formulation for a general in-context denoising task. 
+  (b) The three denoising tasks considered here include instances of linear and non-linear manifolds as well as Gaussian mixtures. 
+  In each case, the task embedding $E^{(i)}$ consists of a sequence of pure tokens from the data distribution $p_X^{(i)} \sim D$ where $D$ denotes the task distribution, along with a single query token that has been corrupted by Gaussian noise. The objective is to predict the target (i.e. \emph{denoise} the query) given information contained only in the prompt.
+  }
+\label{fig:setup}
+\end{figure*}
+
+
+\subsection{Task-specific token distributions}
+We consider three elementary in-context denoising tasks, where the data (vectors in $\mathbb R^n$) comes from:
+\begin{enumerate}
+  \item Linear manifolds ($d$-dimensional subspaces)
+  \item Nonlinear manifolds ($d$-spheres)
+  \item Small noise Gaussian mixtures (clusters) where the component means have fixed norm
+\end{enumerate}
+
+Below we describe the task-specific distributions $p_X$ and the process for sampling tokens $\{x_t\}$. 
+The same corruption process applies to all cases: $\tilde X = X_{L+1} + Z, Z \sim \mathcal{N}(0, \sigma_{Z}^2 I_n)$. 
+
+\subsubsection{Case 1 - Linear manifolds}\label{case1}
+A given training prompt consists of pure tokens sampled from a random $d$-dimensional subspace $S$ of $\mathbb{R}^n$. 
+\begin{itemize}
+  \item Let $P$ be the orthogonal projection operator to a random $d$-dim subspace $S$ of $\mathbb{R}^n$, sampled according to the uniform measure, induced by the Haar measure on the coset space $O(n)/O(n-d)\times O(d)$, on the Grassmanian $G(d,n)$, the manifold of all $d$-dimensional subspaces of $\mathbb{R}^n$. 
+  %\bluebf{note: reversed $G$ notation}
+  % swapped notation: G(n,d) -> G(d, n)
+  % Thanks!-A
+  %
+  \item Let $Y \sim \mathcal{N}(0, \sigma_0^2 I_n)$ and define $X = P Y$; we use this procedure to construct the starting sequences $(X_1, ..., X_{L+1})$ of $L+1$ independent tokens.
+\end{itemize}
+We thus have $p_X = \mathcal{N}(0, \sigma_0^2 P)$, with the Haar distribution of $P$ characterizing the task ensemble associated with $D$. 
+
+\subsubsection{Case 2 - Nonlinear manifolds}\label{case2}
+We focus on the case of $d$-dimensional spheres of fixed radius $R$ centered at the origin in $\mathbb{R}^n$. 
+\begin{itemize}
+  \item Choose a random $d+1$-dimensional subspace $V$ of $\mathbb{R}^n$, sampled according to the uniform measure, as before, on the Grassmanian $G(d+1, n)$.
+  The choice of this random subspace generates the distribution of tasks $D$.
+  %, and the corresponding orthogonal projector $P$. 
+  % swapped notation: G(n,d+1) -> G(d+1, n)
+  %
+  \item %Let $z \sim \mathcal{N}(0, \sigma_z^2 P)$ and define $x = R z/||z||$, projecting the point to the $d$ dimensional sphere of radius $R$, $S\subset V$, resampling if $z=0$. 
+  Inside $V$, sample uniformly from the radius $R$ sphere (once more, a Haar induced measure on a coset space $O(d+1)/O(d)$).
+  We use this procedure to construct input sequences $X_{1:L+1}=(x_1, ..., x_{L+1})$ of $L+1$ independent tokens.
+\end{itemize}
+
+In practice, we uniformly sample points with fixed norm in $\mathbb{R}^d$ and embed them in $\mathbb{R}^n$ by concatenating zeros. We then rotate the points by selecting a random orthogonal matrix $Q \in \mathbb{R}^{n \times n}$. 
+
+\subsubsection{Case 3 - Gaussian mixtures (Clustering)}
+Pure tokens are sampled from a weighted mixture of isotropic Gaussians in $n$-dimensions, 
+$\{w_{a}, (\mu_{a}, \sigma_{a}^2)\}_{a=1}^K$. The density is
+
+$$p_X(x) =  
+    \sum_{a=1 } ^K  w_{a} C_{a}
+        e^{- \lVert x - \mu_{a} \rVert ^2 / 2 \sigma_{a}^2}, $$
+
+where $C_{a} = (2 \pi \sigma_{a}^2)^{-n/2}$ are normalizing constants. 
+%We choose $\sigma_\alpha=\sigma, \:\,\forall\: \alpha$. 
+The $\mu_a$ are independently chosen from a uniform distribution on the radius $R$ sphere of dimension $n-1$, centered around zero. The distribution of tasks $D$, is decided by the choice of $\{\mu_a\}_{a=1}^K$.
+
+For our ideal case, we will consider the limit that the variances go to zero. In that case, the density is simply
+
+$$p_{X_0}(x) =  
+    \sum_{a=1 }^K w_{a} \delta(x - \mu_{a}). $$
+
+\subsection{Bayes optimal denoising baselines for each case}
+\label{sec:bayes-optimal-predictors}
+% based on notes 24-11-21
+The first $L$ tokens in $E$ are ``pure samples" from $p$ that should provide information about the distribution for our denoising task. Our performance is expected to be no better than that of the best method, in the case that the token distribution and also the corrupting process are exactly known. This is where the Bayesian optimal baseline comes in.
+As is well-known, the Bayes optimal predictor of a quantity is given by the posterior mean. We use that fact to compute the Bayes optimal loss.
+
+ In particular, we seek a function $f: \mathbb{R}^n \rightarrow \mathbb{R}^n$ such that $\E_{X, \tilde X} \left[ \Vert X - f(\tilde X) \rVert^2 \right]$ is minimized. 
+ %Below we will drop the subscript when the expectation is over the joint distribution $p_{X, \tilde X}$. 
+% \bluebf{TODO cleanup notation}.
+Since the perturbation~$Z$ is Gaussian, the posterior distribution of $X$, given $\tilde X$ is
+\begin{equation*}
+  p_{X \mid \tilde X}(x \mid \tilde x) = C(\tilde x) p_X(x) e ^{  
+    - \lVert x - \tilde x \rVert ^2 / 2 \sigma_{Z}^2
+  },    
+\end{equation*}
+ where $C(\tilde x)$ is a normalizing factor (see Appendix \ref{appendix:Bayes-notation} for more explanation). 
+% The square loss objective is minimized by the posterior mean 
+% \begin{equation*}
+% %\begin{aligned}
+%   f_\text{opt}(\tilde X) = \E_{X \mid \tilde X} [ X \mid \tilde X ]
+%               = \int x\: p_{X \mid \tilde X}(x \mid \tilde X) dx %\\
+%              % &= \frac{1}{p_{\tilde X}(\tilde X)} \int x\: p_{X, \tilde X}(x, \tilde X) dx.
+% %\end{aligned}
+% \end{equation*}
+The following proposition sets up a baseline to which we expect to compare our results as $L\to\infty$. The proof is in Appendix \ref{appendix:performance-bound}.
+\begin{prop}
+\label{prop:performance-bound}
+For each task, specified by the input distribution $p_X$, and the noise model $p_{\tilde X|X}$,
+\begin{equation}
+  \E_{X,\tilde X} \left[ \Vert X - f(\tilde X) \rVert^2 \right] 
+ \ge   \E_{\tilde X} \left[ \Tr{ \Cov (X \mid \tilde X)} \right].
+\end{equation}
+
+%Note the final line is independent of $f$. 
+This lower bound is met when $f(\tilde X) = \E [ X \mid \tilde X ]$. 
+\end{prop}
+
+Thus, the Bayes optimal denoiser is the posterior expectation for $X$ given $\tilde X$. The expected loss is found by computing the posterior sum of variances. 
+
+These optimal denoisers can be computed analytically for both the linear and nonlinear manifold cases (given the variances and dimensionalities). In the Gaussian mixture (clustering) case, it depends on the choice of the centroids which then needs to be averaged over. 
+
+\paragraph{Linear case.}
+
+
+For the linear denoising task, pure samples $X$ are drawn from an isotropic Gaussian in a restricted subspace. 
+The following result provides the Bayes optimal predictor in this case, the proof of which is in Appendix \ref{appendix:Bayes-optimal-linear}. 
+
+\begin{prop}
+\label{prop:Bayes-optimal-linear}
+For $p_X$ corresponding to Subsection \ref{case1}, the Bayes optimal answer is 
+ \begin{equation}
+    f_\text{opt}(\tilde X)=\E[X|\tilde X] 
+    = \frac{\sigma_{0}^2}{\sigma_{0}^2 + \sigma_{Z}^2} P \tilde X,
+ \end{equation}
+ and the expected loss is
+ \begin{equation}
+    \label{eq:linear_predictor_errorval}
+    \E \left[ \lVert P \tilde X - X_{L+1} \rVert^2 \right] 
+    = d \sigma_{0}^2 \sigma_Z^2 / (\sigma_0^2 + \sigma_{Z}^2).
+\end{equation}
+\end{prop}   
+
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.38\textwidth]{figs/fig-linear-baselines-wide.pdf}
+\caption{
+  Baseline estimators for the case of random linear manifolds with projection operator $P^{(i)}$. 
+  }
+\label{fig:linear-baselines}
+\end{figure}
+
+
+
+\paragraph{Manifold case.}
+In the nonlinear manifold denoising problem, we focus on the case of lower dimensional spheres $S$ (e.g. the circle $S^1 \subset \mathbb{R}^2$). 
+For such manifolds, the Bayes optimal answer is given by the following proposition.
+
+\begin{prop}
+\label{prop:Bayes-optimal-manifold}
+For $p_X$ defined as in Subsection \ref{case2}, with $P$ being the orthogonal projection operator to $V$, the $d+1$ dimensional linear subspace, with $R$ being the radius of sphere $S$, the Bayes optimal answer is
+\begin{align}
+&f_\text{opt}(\tilde X)=\E [ X \mid \tilde X ]  \nonumber\\
+  & = 
+  \frac{\int e^{\langle x, \tilde X_{\paral} \rangle / \sigma_{Z}^2} \:x\, d S_x}
+       {\int e^{\langle x, \tilde X_{\paral} \rangle / \sigma_{Z}^2} \: d S_x}\\
+  &= 
+  \frac{I_\frac{d+1}{2} \left(R \frac{\lVert \tilde X_{\paral} \rVert}{\sigma_{Z}^2} \right)}
+       {I_\frac{d-1}{2} \left(R \frac{\lVert \tilde X_{\paral} \rVert}{\sigma_{Z}^2} \right)} 
+  R \frac{\tilde X_{\paral}}{\lVert \tilde X_{\paral} \rVert},
+\end{align}
+where $\tilde X_{\paral}=P\tilde X$ and $I_\nu$ is the modified Bessel function of the first kind.
+\end{prop}
+
+
+\paragraph{Clustering case.}
+For clustering with isotropic Gaussian mixtures 
+$\{w_{a}, (\mu_{a}, \sigma_{a}^2)\}_{a=1}^p$, the Bayes optimal predictors for some important special cases are as follows. See Appendix \ref{appendix:bayes-case3} for the general case.
+\begin{prop}
+\label{prop:bayes-case3}
+For general isotropic Gaussian model with $\sigma_a=\sigma_0, ||\mu_a||=R$ for all $a=1,\ldots,K$.
+ %\begin{equation}
+ %\label{eq:bayes-case3-nonzero}
+ \begin{align}
+    &f_\text{opt}(\tilde X)=\E[X|\tilde X] \nonumber\\
+    &= \frac{\sigma_{0}^2}{\sigma_{0}^2 + \sigma_{Z}^2} \tilde X 
+    +\frac{\sigma_{Z}^2}{\sigma_{0}^2 + \sigma_{Z}^2} \frac
+    {\sum_{a } w_a
+         e^{\langle \mu_{a}, \tilde X \rangle /(\sigma_0^2 +\sigma_{Z}^2)}
+        \:\: \mu_{a}
+        }
+    {\sum_{a }w_a
+         e^{\langle \mu_{a}, \tilde X \rangle / (\sigma_0^2 +\sigma_{Z}^2)}}.
+ \end{align}
+ %\end{equation}
+If $\sigma_0\to 0$,
+\begin{equation}
+\label{eq:bayes-case3-zerolimit}
+ f_\text{opt}(\tilde X)=\E [X \mid \tilde X]  = \frac
+    {\sum_{a } w_a
+         e^{\langle \mu_{a}, \tilde X \rangle / \sigma_{Z}^2}
+        \:\: \mu_{a}
+        }
+    {\sum_{a }w_a
+         e^{\langle \mu_{a}, \tilde X \rangle / \sigma_{Z}^2}}. 
+\end{equation}         
+\end{prop}
+
+In all three cases, we notice similarities between the form of the Bayes optimal predictor, and attention operations in transformers, a connection which we explore below.
+
+\section{In-context denoising with one-layer transformers -- Empirical results}
+\label{sec:experiments}
+
+In this section, we provide simple constructions of one-layer transformers that approximate (and under certain conditions, exactly match) the Bayes optimal predictors above.
+
+\textbf{Input:}
+Let $p_X^{(1)},\ldots, p_X^{(N)}\overset{\mathrm{iid}}{\sim}D$, be distributions sampled for one of the tasks. For each distribution $p_X^{(i)}$, we sample $E^{(i)}:=(X_1^{(i)},\ldots,X_L^{(i)},\tilde X^{(i)})$ taking value in $\mathbb{R}^{n \times (L+1)}$ be an input to a sequence model. We also retain the true $(L+1)$-th token $X_{L+1}^{(i)}$ for each $i$.  
+
+\textbf{Objective:}
+Given an input sequence $E^{(i)}$, return the uncorrupted final token $X_{L+1}^{(i)}$. We consider the mean-squared error loss over a collection of $N$ training pairs, $\{E^{(i)}, X_{L+1}^{(i)}\}_{i=1}^{N}$, 
+\begin{equation}
+\label{eq:cost}
+    %\textrm{argmin}_{\theta} \: L(\theta) \:\: \textrm{where} \:\: 
+    C(\theta) = \sum_{i=1}^{N} \lVert F(E^{(i)},\theta) - x_{L+1}^{(i)} \rVert^2,
+\end{equation}
+where $F(E^{(i)},\theta)$ denotes the parametrized function predicting the target final token based on input sequence $E^{(i)}$.
+
+
+\subsection{One-layer transformer and the attention between the query and pure tokens}
+
+%To motivate our choice of transformer architecture, let us start by discussing the linear case. 
+To motivate our choice of architecture, let us start by discussing the linear case. 
+
+There we have $f_\text{opt}(\tilde X)=\tfrac{\sigma_0^2}{\sigma_0^2+\sigma_Z^2}P\tilde X$. Note that, by the strong law of large numbers, $\hat P=
+\tfrac{1}{\sigma_0^2L}\sum_{t=1}^LX_tX_t^T$ is a random matrix that almost surely converges component-by-component to the orthogonal projection $P$ as $L\to \infty$, since, for each $t$, $X_tX_t^T$ has the expectation $\sigma_0^2P$ and that $X_t$ is a Gaussian random variable with zero mean and a finite covariance matrix. So we could propose
+
+\begin{equation}
+\label{eq:main-case1-sec3}
+    f(\tilde X)=\frac{\sigma_0^2}{\sigma_0^2+\sigma_Z^2}\hat P\tilde X=\frac{1}{(\sigma_0^2+\sigma_Z^2)L}\sum_{t=1}^LX_t\langle X_t,\tilde X\rangle.
+\end{equation}
+
+
+\begin{figure*}[h!]
+\centering
+%\includegraphics[width=0.9\textwidth]{figs/fig-training-triple.pdf}
+%\includegraphics[width=0.99\textwidth]{figs/fig-training-triple-smaller.pdf}
+\includegraphics[width=0.99\textwidth]{figs/fig-training-triple-smaller-noLin.pdf}
+\caption{
+  (a) Training dynamics for the studied cases using one-layer softmax attention (circles) as well as linear attention (triangles). 
+  Solid lines represent the average loss over six seeds, with the shaded area indicating the range for cases 2 and 3. 
+  For each case, the grey dashed baseline indicates the 0-predictor, and the pink line indicates the Bayes optimal predictor.
+  All cases use a context length of $L=500$, ambient dimension $n=16$, and are trained with Adam on a dataset of size 800 with batch size 80 and standard weight initialization $w_{ij} \sim U[-1/\sqrt{n}, 1/\sqrt{n}]$. 
+  (b) Final attention weights $W_{KQ}$ and $W_{PV}$ are shown. For each, we indicate the mean of the diagonal elements. Representative initial weights are displayed for the second and third case.
+  }
+\label{fig:empirical-training-triple}
+\end{figure*}
+
+ We now consider a simplified one-layer linear transformer (see Appendices \ref{appendix:self-attention-general} and \ref{appendix:self-attention-denoising} for more detailed discussions) which still has sufficient expressive power to capture our finite sample approximation to the Bayes optimal answer. We define 
+\begin{equation}
+\label{eq:transformer-linear-attn}
+\hat X = F_\textrm{Lin}(E,\theta) := \frac{1}{L} W_{PV} X_{1:L} X_{1:L}^T W_{KQ} \tilde X    
+\end{equation}
+taking values in $\mathbb{R}^{n}$,
+where $X_{1:L}:=[X_1,\ldots,X_L]$ taking values in $\R^{n\times L}$, 
+with learnable weights $W_{KQ}, W_{PV} \in \mathbb{R}^{n \times n}$ abbreviated by $\theta$.
+Note that, when $W_{PV}=\alpha I_n,W_{KQ}=\beta I_n$, and 
+$\alpha\beta=\tfrac{1}{\sigma_0^2+\sigma_Z^2}$, $F(E,\theta)$ should approximate the Bayes optimal answer $f_\text{opt}(\tilde X)$ as $L\to \infty$. For a detailed discussion of the convergence rate, see Appendix~\ref{appendix:convergence-rates}, in general, and Proposition~\ref{prop:linear-case-rate}, in particular.
+
+Similarly, we could argue that the second two problems, the $d$-dimesional spheres and the $\sigma_0\to 0$ zero limit of the Gaussian mixtures could be addressed by  softmax attention
+\begin{equation}
+\label{eq:transformer-softmax-attn}
+  \hat X = F(E,\theta) :=  W_{PV} X_{1:L}\textrm{softmax} (X_{1:L}^T W_{KQ} \tilde X) 
+\end{equation}
+taking values in $\mathbb{R}^{n }$. 
+% where 
+% $M\in\bar\R^{(L+1)\times(L+1)}$ is a masking matrix  of the form
+% \begin{equation}
+% M=\begin{bmatrix}
+%   0_{L\times(L+ 1)}\\
+%   (-\infty) 1_{1\times L+1} 
+%   \end{bmatrix},
+% \end{equation}
+% once more, preventing the contribution of $\tilde X$ value to the output.  
+The function $\textrm{softmax}(z):=\frac{1}{\sum_{i=1}^n e^{z_i}}(e^{z_1}, \ldots, e^{z_n})^T \in \mathbb{R}^n$ is applied column-wise. 
+
+% We then define 
+% \begin{equation}
+%   F(E,\theta):=[\textrm{Attn}(E,W_{PV},W_{KQ})]_{:,L+1}.    
+% \end{equation}
+For both problems, namely the spheres and the $\sigma_0\to 0$ Gaussian mixtures, we could have $W_{PV}=\alpha I_n,W_{KQ}=\beta I_n$ with $\alpha=1, \beta=1/\sigma_Z^2$ providing Bayes optimal answers as $L\to\infty$. 
+% \matt{only $W_{KQ}$ acts like an inverse temp $\beta$ in the softmax -- can maybe lighten notation by using $W_{PV}=\alpha I_n, W_{KQ}=\beta I_n $?}
+
+
+In fact, we could make a more general statement about distributions $p_X$ where the norm of $X$ is fixed.
+\begin{theorem}
+\label{theorem:convergence}
+If we have a task distribution $D$ so that the support of each $p_X$ is the subset of some sphere, centered around the origin, with a $p_X$-dependent radius $R$, then the function 
+\begin{equation}
+F((\{X_t\}_{t=1}^L,\tilde x),\theta^*)=\frac{\sum_{t=1}^LX_te^{\langle X_t,\tilde x\rangle/\sigma_Z^2}}{\sum_{t=1}^Le^{\langle X_t,\tilde x\rangle/\sigma_Z^2}}
+\end{equation}
+converges almost surely to the Bayes optimal answer $f_\text{opt}(\tilde x)$ for all $\tilde x\in \R^n$, as $L\to\infty$. The optimal parameter $\theta^*$ refers to $W_{PV}= I_n,W_{KQ}=\tfrac{1}{\sigma_Z^2}I_n$.
+\end{theorem}
+The proof of the theorem is in Appendix \ref{appendix:convergence}.  
+See Appendix~\ref{appendix:convergence-rates}, particularly  Proposition~\ref{prop:nonlinear-case-rate}, for consideration of convergence rates.
+Note that the condition of $p_X$ being supported on a sphere is not artificial as, in many practical transformers, pre-norm with RMSNorm gives you inputs on the sphere, up to learned diagonal multipliers.
+% \alb{comment on layernorm (pre-norm with RMSNorm gives you inputs on the sphere, up to learned diagonal multipliers)} \matt{minor note: query would also be on sphere after pre-norm}
+
+Note that the natural form of attention that is suggested by our formulation of in-context denoising would involve Gaussian kernels:
+\begin{equation}
+\label{eq:transformer-Gaussian-attn}
+  \hat X = F_G(E,\theta) := \frac{\sum_t W_{PV} X_te^{-\frac{1}{2}||W_KX_t-W_Q\tilde X||^2 }}{\sum_t e^{-\frac{1}{2}||W_KX_t-W_Q\tilde X||^2 }}.
+\end{equation}
+The relation between softmax attention and the Gaussian kernel has been noted in \citep{choromanski2021performer, Ambrogioni2024_diffusion} and a Gaussian kernel-based attention is implemented in \citep{chen2021skyformer}. A related Hopfield energy, with $W_K$, $W_Q$, and $W_{PV}$ proportional to identity matrices, is proposed in \citep{hoover2024dense}.
+
+
+For the linear case, we use linear attention, but that may not be essential. Informally speaking, the softmax attention model has the capacity to subsume the linear attention model. 
+\begin{proposition}
+\label{prop:attention-limit}
+As $\epsilon\to 0$,
+\begin{align}
+&F\Big(E,\big(\frac{1}{\epsilon}W_{PV},\epsilon W_{KQ}\big)\Big)=\frac{1}{\epsilon} W_{PV}\bar X\nonumber\\
+&+ \frac{1}{L}W_{PV}\sum_{t=1}^LX_t(X_t-\bar X)^TW_{KQ}\tilde X+O(\epsilon),
+\end{align}
+where $\bar X=\tfrac{1}{L}\sum_{t=1}^LX_t$ is the empirical mean. 
+\end{proposition}
+See Appendix \ref{appendix:expansion-softmax} for the details of small $W_{KQ}$ expansion and Appendix \ref{appendix:attention-limit} for the proof of Proposition \ref{prop:attention-limit}. 
+
+For case 1, note that $\E[X_t]=0$ and covariance of $X_t$ is finite, $E[\bar X]=0$, and $E[||\bar X||^2]=O(\tfrac{1}{L})$, allowing us to drop $\bar X$ as $L\to \infty$. If, in addition, $\epsilon$ is small, only the second term survives. Thus, $F\big(E,(\frac{1}{\epsilon}W_{PV},\epsilon W_{KQ})\big)$ starts to approximate $F_{\text{Lin}}\big(E,(W_{PV},W_{KQ})\big)$ when $L$ is large and $\epsilon$ is small, with $\epsilon\sqrt{L}$ large. 
+% \alb{why do you need $L$ and $||W_{PV}||$ large? isn't small~$W_{KQ}$ sufficient?}\ams{Does that convince you, Alberto?} \matt{I'm also confused why we need large $W_{PV}$}\alb{yes, thanks!}. 
+We therefore could use the softmax model for all three cases. 
+
+
+\begin{figure*}[h]
+\centering
+\includegraphics[width=0.99\textwidth]{figs/fig3-icl.pdf}
+\caption{
+  (a) Trained linear attention network converges to Bayes optimal estimator as context length increases ($n=16$, $d=8$, $\sigma_0^2=2, \sigma_z^2=1$). 
+  (b) A network trained to denoise subspaces of dimension $d=8$ can accurately denoise subspaces of different dimensions presented at inference time, given sufficient context.
+}
+\label{fig:empirical-ICL}
+\end{figure*}
+
+\subsection{Case 1 -- Linear manifolds}
+\label{subsec:linear-case}
+The Bayes optimal predictor for the linear denoising task from Section \ref{sec:bayes-optimal-predictors} suggests that the linear attention weights should be scaled identity matrices with their product satisfying
+$\alpha \beta = \frac{1}{\sigma_0^2 + \sigma_Z^2}$. 
+Fig. \ref{fig:empirical-training-triple} shows that a one-layer network of size $n=16$ trained on tasks with $\sigma_Z^2=1, \sigma_0^2=2, d=8, L=500$ indeed achieves this bound, training to nearly diagonal weights with the appropriate scale
+%$\left\langle w_{KQ}^{(ii)} \right\rangle \left\langle w_{PV}^{(ii)} \right\rangle = 0.327 \approx \tfrac{1}{3}$. 
+$\langle w_{KQ}^{(ii)} \rangle \langle w_{PV}^{(ii)} \rangle = 0.327 \approx 1/3$ (similar weights are learned for each seed, up to a sign flip). 
+
+Fig. \ref{fig:empirical-ICL}(a) displays how this bound is approached as the context length $L$ of training samples is increased. In Fig. \ref{fig:empirical-ICL}(b) we study how the performance of a model trained to denoise random subspaces of dimension $d=8$ is affected by shifts in the subspace dimension at inference time. We find that when provided sufficient context, such models can adapt with mild performance loss to solve more challenging tasks not present in the training set.
+
+It is evident from Fig. \ref{fig:empirical-training-triple}(a) that the softmax network performs similarly to the linear one for this task. We can understand this through the small argument expansion of the softmax function mentioned above. The learned weights displayed in Fig. \ref{fig:empirical-training-triple}(b) indicate that $\beta^\textrm{softmax}\approx 0.194$ becomes small (note it decreases by a factor $\epsilon \approx 0.344$ relative to $\beta^\textrm{linear}$), 
+while the value scale $\alpha^\textrm{softmax}\approx 1.607$ becomes larger by a similar factor $\sim 1/\epsilon$ to compensate.
+Thus, although the optimal denoiser for this case is intuitively expressed through linear self-attention, it can also be achieved with softmax self-attention in the appropriate limit.
+
+Moreover, we find that when the entire prompt undergoes a global invertible transformation $A \neq I$, the optimal attention weights are no longer scaled identity matrices but acquire a structured form determined by $A$. Both linear and softmax attention layers are able to recover this structure through training; see Appendix \ref{appendix:sec-coord-transform} for details and empirical verification.
+
+\subsection{Case 2 -- Nonlinear manifolds}
+%
+Fig. \ref{fig:empirical-training-triple} (case 2) shows networks of size $n=16$ trained to denoise subspheres of dimension $d=8$ and radius $R=1$, with corruption $\sigma_Z^2=0.1$ and context length $L=500$. 
+Once again, the network trains to have scaled identity weights. 
+
+We note that although the network nearly achieves the optimal MSE on the test set, the weights appear at first glance to deviate slightly from the Bayes optimal predictor of Section \ref{sec:bayes-optimal-predictors}, which indicated $W_{PV}=\alpha I$, $W_{KQ}=\beta I$ with $\alpha=1, \beta= 1/\sigma_Z^2$. To better understand this, we consider a coarse-grained MSE loss landscape by scanning over $\alpha$ and $\beta$. See Fig. \ref{fig:loss-landscape-MSE-2d}(a) in Appendix \ref{appendix:loss-landscapes-and-extra-training}. We find that the 2D loss landscape has roughly hyperbolic level sets which is suggestive of the linear attention limit, where the weight scales become constrained by their product $\alpha \beta$. Reflecting the symmetry of the problem, we also note mirrored negative solutions  (i.e. one could also identify $\alpha = -1$, $\beta = -1/ {\sigma_Z^2}$ from the analysis in Section \ref{sec:bayes-optimal-predictors}). Importantly, the plot shows that the trained network lies in the same valley of the loss landscape as the optimal predictor, in agreement with Fig. \ref{fig:empirical-training-triple}. Moreover, the shape of the loss landscape suggested that linear attention might also be applicable to this case, which we demonstrate and discuss further in Appendix \ref{appendix:loss-landscapes-and-extra-training}. %Fig. \ref{fig:case2and3-linear-vs-softmax}.
+
+\subsection{Case 3 -- Gaussian mixtures}
+
+Figure \ref{fig:empirical-training-triple} (case 3) shows networks of size $n=16$ trained to denoise balanced Gaussian mixtures with $p=8$ components that have isotropic variance $\sigma_0^2=0.02$ and centers randomly placed on the unit sphere in $\mathbb{R}^n$. The corruption magnitude is $\sigma_Z^2=0.1$ and context length is $L=500$. The baselines show the zero predictor (dashed grey line) as well as the optimum from Proposition (\ref{prop:bayes-case3}) (pink) and its $\sigma_0^2 \rightarrow 0$ approximation Eq. (\ref{eq:bayes-case3-zerolimit}) (grey). 
+
+The trained weights qualitatively approach the optimal estimator for the zero-variance limit but with a slightly different scaling: while the scale of $W_{PV}$ is $\alpha \approx 1$, the $W_{KQ}$ scale is $\beta \approx 5.127 < 1/\sigma_Z^2$. To study this, we provide a corresponding plot of the 2D loss landscape in Fig. \ref{fig:loss-landscape-MSE-2d}(a) in Appendix \ref{appendix:loss-landscapes-and-extra-training}. While the symmetry of the previous case has been broken (the context cluster centers $\{\mu_{a}\}$ will not satisfy $\langle \mu \rangle = 0$), we again find that the trained network lies in the anticipated global valley of the MSE loss landscape. 
+
+
+\section{Connection to dense associative memory networks}
+% \section{Trained denoisers through the lens of associative memory networks}
+%Energy landscape of the trained denoiser (associative memory perspective)
+\label{sec:assoc-mem}
+
+In each of the denoising problems studied above, we have shown analytically and empirically that the optimal weights of the one-layer transformer are scaled identity matrices $W_{PV} \approx \alpha I, W_{KQ} \approx \beta I$. In the softmax case, the trained denoiser can be concisely expressed as 
+%\matt{should we have lower case $x_{1:L}$, since we have lowercase query? alternatively, should it be $E_{1:L}$?}\ams{Perhaps, we could say, it is over one realization of the pure tokens $X_{1:L}=x_{1:L}$. One the other hand $X_1:L$, totally unintentionally, looks like a matrix, which happen to be true ;)}
+$$\hat x = g(X_{1:L}, \tilde x):=\alpha X_{1:L} \textrm{softmax}(\beta X_{1:L}^T \tilde x),$$
+re-written such that $X \in \mathbb{R}^{n \times L}$ stores pure context tokens.
+
+We now demonstrate that such denoising corresponds to one-step gradient descent (with specific step sizes) of energy models related to dense associative memory networks, also known as modern Hopfield networks \cite{ramsauer2021iclr, demircigil2017, krotov2016hopfield}.
+
+Consider the energy function:
+\begin{equation}
+\label{eq:LSE-Hopfield-alt}
+   \En(X_{1:L},s) = \frac{1}{2 \alpha} \| s \|^2 - \frac{1}{\beta}\log \left( 
+    \sum_{t=1}^L e^{\beta X_t^T s}
+    \right),
+\end{equation}
+
+which mirrors the \citet{ramsauer2021iclr} construction but with a Lagrange multiplier added to the first term. Figure \ref{fig:energy-landscape-denoising} illustrates this energy landscape for the spherical manifold case.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.49\textwidth]{figs/fig-energy-landscape-denoising-1x2-wide-largefont.pdf}
+%figs/fig-energy-landscape-denoising-1x2-wide.pdf
+%figs/fig-energy-landscape-denoising-1x2.pdf
+%figs/fig-energy-landscape-denoising.pdf
+\caption{
+  Gradient descent denoising for the nonlinear manifold case (spheres) in $n=2$ with $d=1$. A context-aware dense associative memory network $\En(X_{1:L}, s)$ is constructed whose gradient corresponds to the Bayes optimal update (trained attention layer). Note that the density of sampled context tokens sculpts the valleys of the energy landscape. 
+  Left: the attention step of a one-layer transformer trained on the denoising task corresponds to a single gradient descent step. 
+  Right: Iterating the denoising process\textemdash as is conventional for Hopfield networks\textemdash can potentially degrade the estimate by causing it to become query-independent (e.g. converging to a distant minimum). Here $R=1, \sigma_{Z}^2=10, L=20$ and $\alpha=1, \beta= 1/\sigma_{Z}^2$. 
+  }
+\label{fig:energy-landscape-denoising}
+\end{figure}
+
+An operation inherent to the associative memory perspective is the recurrent application of a denoising update. 
+Gradient descent iteration $s(t+1) =  s(t) - \gamma \;\nabla_s \En \bigl(X_{1:L}, s(t)\bigr)$ yields
+
+\begin{equation}
+\label{eq:DAM-GD-update}
+\begin{aligned}
+    s(t+1) &= 
+      \left(1 - \frac{\gamma}{\alpha}\right) s(t) 
+      + \gamma X_{1:L} \mathrm{softmax} \bigl( \beta X_{1:L}^T s(t) \bigr).
+\end{aligned}
+\end{equation} 
+
+
+It is now clear that initializing the state to the query $s(0)=\tilde x$ and taking a single step with size $\gamma=\alpha$ recovers the behavior of the trained attention model (Fig. \ref{fig:energy-landscape-denoising}). 
+The attention mechanism here is thus mechanistically interpretable: the context tokens $X_{1:L}$ induce a context-dependent associative memory landscape, while the query acts as an initial condition for inference-time gradient descent. 
+One could naturally consider alternative step sizes and recurrent iteration. However, Fig. \ref{fig:energy-landscape-denoising} demonstrates that naive iteration of Eq. (\ref{eq:DAM-GD-update}) has the potential to degrade performance. 
+
+Additional details are provided in Appendix \ref{appendix:sec-mapping-attn-assocmem}. In particular, the energy model for linear attention is discussed in Appendix \ref{appendix:linear-attention-trad-Hopfield}.
+
+\section{Discussion}
+\label{sec:discussion}
+
+Motivated by the connection between attention mechanisms and dense associative memories, here we have introduced in-context denoising, a task that distills their relationship. We first analyze the general problem, deriving Bayes optimal predictors for certain restricted tasks. We identify that one-layer transformers using either softmax or linearized self-attention are expressive enough to describe these predictors. We then empirically demonstrate that standard training of attention layers from random initial weights will readily converge to scaled identity weights with scales that approach the derived optima given sufficient context.
+Accordingly, the rather minimal transformers studied here can perform optimal denoising of novel tasks provided at inference time via self-contained prompts. This work therefore sheds light on other in-context learning phenomena, a point we return to below. 
+
+While practical transformers differ in various ways from the minimal models studied here, we note several key connections. 
+Intriguingly, the self-attention heads of trained transformers sometimes exhibit weights $W_{KQ}$, $W_{PV}$ that resemble scaled identity matrices, i.e. $ c I + \epsilon$ with small fluctuations $\epsilon_{ij} \sim \mathcal{N}(0, \sigma^2)$,
+an observation noted in \citet{trockman2023identity}. This phenomenon motivated their proposal of ``mimetic" weight initialization schemes mirroring this learned structure. Relatedly, connections to associative memory concepts have been explored in other architectures \cite{smart2021iclr}, which enabled data-dependent weight initialization strategies to be identified and leveraged. 
+More broadly, our study suggests that trained attention layers can readily adopt structures that facilitate context-aware associative retrieval. 
+We have also noted preliminary connections between our work and other architectural features of modern transformers, namely layer normalization and residual streams, which warrant further study. 
+
+In-context denoising and generative modeling both involve learning about an underlying distribution, suggesting potential relationships between these two tasks. 
+Recently, \citet{pham2024memorization} invoked spurious states of the Hopfield model as a way of understanding how one can move away from retrieving individual memorized patterns towards generalization via appropriate mixtures of multiple similar ``memories".   
+In our work, one-step updates do not have to land in a spurious minimum, but we often operate under circumstances where there are such states (see, for example, the energy landscape in Fig. \ref{fig:energy-landscape-denoising}). 
+More generally, analogies between energy-based associative memory and diffusion models have recently been noted \citep{Ambrogioni2024_diffusion, hoover2023memory}.
+Lastly, Bayes optimal denoisers play an important role in the analysis \cite{ghio2024sampling} of a very related generative model that is based on stochastic interpolants \cite{albergo2022building}. 
+Although this work focuses on the case where it is possible to sample enough tokens from the relevant distributions for certain functions to converge, generative models become important when the distribution is in a prohibitively high-dimensional space making direct sampling difficult. Nonetheless, investigating the precise relationship between our work and different generative modeling approaches would be an interesting direction to pursue.
+
+Overall, this work refines the connection between dense associative memories and attention layers first identified in \cite{ramsauer2021iclr}. 
+While we show that one energy minimization step of a particular DAM (associated with a trained attention layer) is optimal for the denoising tasks studied here, it remains an open question whether multilayer architectures with varying or tied weights could extend these results to more complex tasks by effectively performing multiple iterative steps. This aligns with recent studies on in-context learning, which have considered whether transformers with multiple layers emulate gradient descent updates on a context-specific objective \cite{vonOswald2023mordvintsev, shen2023khashabi, dai2023gptlearnicl, ahn2023transformers}, and may provide a bridge to work on emerging architectures guided by associative memory principles \citep{Hoover2023_EnergyTransformer}.
+% maybe energy transformer sentence here, as in NFAM workshop overleaf
+Investigating when and how multilayer attention architectures perform such gradient descent iterations in a manner that is both context-dependent and informed by a large training set represents an exciting direction for future research at the intersection of transformer mechanisms, associative memory retrieval, and in-context learning.
+
+% ===========================================================================
+\section*{Software and Data}
+Python code underlying this work is available at \href{https://github.com/mattsmart/in-context-denoising}{https://github.com/mattsmart/in-context-denoising}.
+
+
+\section*{Acknowledgements}
+%\bluebf{ICLR NFAM blurb:} 
+MS acknowledges M. M\'ezard for very useful feedback on an earlier version of this work. AS thanks D. Krotov and P. Mehta for enlightening discussions on related matters. Our early work also benefited from AS's participation in the deeplearning23 workshop at the Kavli Institute for Theoretical Physics (KITP), which was supported in part by grants NSF PHY-1748958 and PHY-2309135 to KITP. AS thanks Y. Bahri and C. Pehlevan for their patience and willingness to listen to our early ideas at KITP.
+
+
+\section*{Impact Statement}
+This paper presents work whose goal is to advance the field of Machine Learning. There are many potential societal consequences of our work, none which we feel must be specifically highlighted here.
+
+%\bibliography{references}
+%\bibliographystyle{icml2025}
+
+% BEGIN INCLUDE: main.bbl
+\begin{thebibliography}{48}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Ahn et~al.(2023)Ahn, Cheng, Daneshmand, and Sra]{ahn2023transformers}
+Ahn, K., Cheng, X., Daneshmand, H., and Sra, S.
+\newblock Transformers learn to implement preconditioned gradient descent for in-context learning.
+\newblock \emph{Advances in Neural Information Processing Systems}, 36:\penalty0 45614--45650, 2023.
+
+\bibitem[Aky{\"u}rek et~al.(2023)Aky{\"u}rek, Schuurmans, Andreas, Ma, and Zhou]{akyurek2023}
+Aky{\"u}rek, E., Schuurmans, D., Andreas, J., Ma, T., and Zhou, D.
+\newblock What learning algorithm is in-context learning? investigations with linear models.
+\newblock In \emph{The Eleventh International Conference on Learning Representations}, 2023.
+\newblock URL \url{https://openreview.net/forum?id=0g0X4H8yN4I}.
+
+\bibitem[Albergo \& Vanden-Eijnden(2023)Albergo and Vanden-Eijnden]{albergo2022building}
+Albergo, M.~S. and Vanden-Eijnden, E.
+\newblock Building normalizing flows with stochastic interpolants.
+\newblock In \emph{The Eleventh International Conference on Learning Representations}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2209.15571}.
+
+\bibitem[Amari(1972)]{amari1972learning}
+Amari, S.-I.
+\newblock Learning patterns and pattern sequences by self-organizing nets of threshold elements.
+\newblock \emph{IEEE Transactions on computers}, 100\penalty0 (11):\penalty0 1197--1206, 1972.
+
+\bibitem[Ambrogioni(2024)]{Ambrogioni2024_diffusion}
+Ambrogioni, L.
+\newblock In search of dispersed memories: Generative diffusion models are associative memory networks.
+\newblock \emph{Entropy}, 26\penalty0 (5), 2024.
+\newblock ISSN 1099-4300.
+\newblock \doi{10.3390/e26050381}.
+\newblock URL \url{https://www.mdpi.com/1099-4300/26/5/381}.
+
+\bibitem[Amit et~al.(1985)Amit, Gutfreund, and Sompolinsky]{Amit1985}
+Amit, D.~J., Gutfreund, H., and Sompolinsky, H.
+\newblock {Spin-glass models of neural networks}.
+\newblock \emph{Physical Review A}, 32\penalty0 (2):\penalty0 1007--1018, 1985.
+\newblock ISSN 10502947.
+\newblock \doi{10.1103/PhysRevA.32.1007}.
+
+\bibitem[Boll{\'e} et~al.(2003)Boll{\'e}, Nieuwenhuizen, Castillo, and Verbeiren]{bolle2003spherical}
+Boll{\'e}, D., Nieuwenhuizen, T.~M., Castillo, I.~P., and Verbeiren, T.
+\newblock A spherical hopfield model.
+\newblock \emph{Journal of Physics A: Mathematical and General}, 36\penalty0 (41):\penalty0 10269, 2003.
+
+\bibitem[Brown et~al.(2020)Brown, Mann, Ryder, Subbiah, Kaplan, Dhariwal, Neelakantan, Shyam, Sastry, Askell, et~al.]{brown2020language}
+Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J.~D., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., et~al.
+\newblock Language models are few-shot learners.
+\newblock \emph{Advances in neural information processing systems}, 33:\penalty0 1877--1901, 2020.
+
+\bibitem[Chen et~al.(2021)Chen, Zeng, Ji, and Yang]{chen2021skyformer}
+Chen, Y., Zeng, Q., Ji, H., and Yang, Y.
+\newblock Skyformer: Remodel self-attention with gaussian kernel and nyström method.
+\newblock \emph{Advances in Neural Information Processing Systems}, 34:\penalty0 2122--2135, 2021.
+
+\bibitem[Choromanski et~al.(2021)Choromanski, Likhosherstov, Dohan, Song, Gane, Sarlos, Hawkins, Davis, Mohiuddin, Kaiser, Belanger, Colwell, and Weller]{choromanski2021performer}
+Choromanski, K.~M., Likhosherstov, V., Dohan, D., Song, X., Gane, A., Sarlos, T., Hawkins, P., Davis, J.~Q., Mohiuddin, A., Kaiser, L., Belanger, D.~B., Colwell, L.~J., and Weller, A.
+\newblock Rethinking attention with performers.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+\newblock URL \url{https://openreview.net/forum?id=Ua6zuk0WRH}.
+
+\bibitem[Dai et~al.(2023)Dai, Sun, Dong, Hao, Ma, Sui, and Wei]{dai2023gptlearnicl}
+Dai, D., Sun, Y., Dong, L., Hao, Y., Ma, S., Sui, Z., and Wei, F.
+\newblock Why can gpt learn in-context? language models implicitly perform gradient descent as meta-optimizers, 2023.
+\newblock URL \url{https://arxiv.org/abs/2212.10559}.
+
+\bibitem[Demircigil et~al.(2017)Demircigil, Heusel, L{\"o}we, Upgang, and Vermet]{demircigil2017}
+Demircigil, M., Heusel, J., L{\"o}we, M., Upgang, S., and Vermet, F.
+\newblock On a model of associative memory with huge storage capacity.
+\newblock \emph{Journal of Statistical Physics}, 168:\penalty0 288--299, 2017.
+
+\bibitem[Devlin et~al.(2019)Devlin, Chang, Lee, and Toutanova]{devlin2019bert}
+Devlin, J., Chang, M.-W., Lee, K., and Toutanova, K.
+\newblock Bert: Pre-training of deep bidirectional transformers for language understanding.
+\newblock In \emph{Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)}, pp.\  4171--4186, 2019.
+
+\bibitem[Dosovitskiy et~al.(2021)Dosovitskiy, Beyer, Kolesnikov, Weissenborn, Zhai, Unterthiner, Dehghani, Minderer, Heigold, Gelly, Uszkoreit, and Houlsby]{dosovitskiy2020image}
+Dosovitskiy, A., Beyer, L., Kolesnikov, A., Weissenborn, D., Zhai, X., Unterthiner, T., Dehghani, M., Minderer, M., Heigold, G., Gelly, S., Uszkoreit, J., and Houlsby, N.
+\newblock An image is worth 16x16 words: Transformers for image recognition at scale.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+\newblock URL \url{https://openreview.net/forum?id=YicbFdNTTy}.
+
+\bibitem[Fischer \& Hertz(1993)Fischer and Hertz]{fischer1993spin}
+Fischer, K.~H. and Hertz, J.~A.
+\newblock \emph{Spin Glasses}.
+\newblock Cambridge University Press, 1993.
+
+\bibitem[Garg et~al.(2022)Garg, Tsipras, Liang, and Valiant]{garg2022neurips}
+Garg, S., Tsipras, D., Liang, P.~S., and Valiant, G.
+\newblock What can transformers learn in-context? a case study of simple function classes.
+\newblock In \emph{Advances in Neural Information Processing Systems}, volume~35, pp.\  30583--30598, 2022.
+\newblock URL \url{https://arxiv.org/abs/2208.01066}.
+
+\bibitem[Ghio et~al.(2024)Ghio, Dandi, Krzakala, and Zdeborov{\'a}]{ghio2024sampling}
+Ghio, D., Dandi, Y., Krzakala, F., and Zdeborov{\'a}, L.
+\newblock Sampling with flows, diffusion, and autoregressive neural networks from a spin-glass perspective.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 121\penalty0 (27):\penalty0 e2311810121, 2024.
+
+\bibitem[Gradshteyn \& Ryzhik(2007)Gradshteyn and Ryzhik]{gradstein2007zwillinger}
+Gradshteyn, I.~S. and Ryzhik, I.~M.
+\newblock \emph{Table of Integrals, Series, and Products}.
+\newblock Elsevier/Academic Press, Amsterdam, seventh edition, 2007.
+
+\bibitem[Hoeffding(1994)]{hoeffding1994probability}
+Hoeffding, W.
+\newblock Probability inequalities for sums of bounded random variables.
+\newblock \emph{The collected works of Wassily Hoeffding}, pp.\  409--426, 1994.
+
+\bibitem[Hoover et~al.(2023{\natexlab{a}})Hoover, Liang, Pham, Panda, Strobelt, Chau, Zaki, and Krotov]{Hoover2023_EnergyTransformer}
+Hoover, B., Liang, Y., Pham, B., Panda, R., Strobelt, H., Chau, D.~H., Zaki, M., and Krotov, D.
+\newblock Energy transformer.
+\newblock In \emph{Advances in Neural Information Processing Systems}, volume~36, pp.\  27532--27559, 2023{\natexlab{a}}.
+
+\bibitem[Hoover et~al.(2023{\natexlab{b}})Hoover, Liang, Pham, Panda, Strobelt, Chau, Zaki, and Krotov]{hoover2023energytransformer}
+Hoover, B., Liang, Y., Pham, B., Panda, R., Strobelt, H., Chau, D.~H., Zaki, M.~J., and Krotov, D.
+\newblock Energy transformer.
+\newblock In \emph{Thirty-seventh Conference on Neural Information Processing Systems}, 2023{\natexlab{b}}.
+\newblock URL \url{https://openreview.net/forum?id=MbwVNEx9KS}.
+
+\bibitem[Hoover et~al.(2024{\natexlab{a}})Hoover, Chau, Strobelt, Ram, and Krotov]{hoover2024dense}
+Hoover, B., Chau, D.~H., Strobelt, H., Ram, P., and Krotov, D.
+\newblock Dense associative memory through the lens of random features.
+\newblock In \emph{The Thirty-eighth Annual Conference on Neural Information Processing Systems}, 2024{\natexlab{a}}.
+
+\bibitem[Hoover et~al.(2024{\natexlab{b}})Hoover, Strobelt, Krotov, Hoffman, Kira, and Chau]{hoover2023memory}
+Hoover, B., Strobelt, H., Krotov, D., Hoffman, J., Kira, Z., and Chau, D.~H.
+\newblock Memory in plain sight: Surveying the uncanny resemblances of associative memories and diffusion models, 2024{\natexlab{b}}.
+\newblock URL \url{https://arxiv.org/abs/2309.16750}.
+
+\bibitem[Hopfield(1982)]{Hopfield1982}
+Hopfield, J.~J.
+\newblock {Neural networks and physical systems with emergent collective computational abilities.}
+\newblock \emph{Proceedings of the National Academy of Sciences of the United States of America}, 79\penalty0 (8):\penalty0 2554--2558, 1982.
+\newblock ISSN 00278424.
+\newblock \doi{10.1073/pnas.79.8.2554}.
+
+\bibitem[Hu et~al.(2023)Hu, Yang, Wu, Xu, Chen, and Liu]{hu2023_r2_sparse}
+Hu, J. Y.-C., Yang, D., Wu, D., Xu, C., Chen, B.-Y., and Liu, H.
+\newblock On sparse modern hopfield model.
+\newblock In \emph{Proceedings of the 37th International Conference on Neural Information Processing Systems}, NIPS '23, 2023.
+
+\bibitem[Katharopoulos et~al.(2020)Katharopoulos, Vyas, Pappas, and Fleuret]{katharopoulos2020icml}
+Katharopoulos, A., Vyas, A., Pappas, N., and Fleuret, F.
+\newblock Transformers are rnns: fast autoregressive transformers with linear attention.
+\newblock In \emph{Proceedings of the 37th International Conference on Machine Learning}, ICML'20. JMLR.org, 2020.
+
+\bibitem[Krotov(2023)]{krotov2023new}
+Krotov, D.
+\newblock A new frontier for hopfield networks.
+\newblock \emph{Nature Reviews Physics}, 5\penalty0 (7):\penalty0 366--367, 2023.
+
+\bibitem[Krotov \& Hopfield(2016)Krotov and Hopfield]{krotov2016hopfield}
+Krotov, D. and Hopfield, J.~J.
+\newblock Dense associative memory for pattern recognition.
+\newblock In \emph{Advances in Neural Information Processing Systems}, volume~29, 2016.
+
+\bibitem[Krotov \& Hopfield(2021)Krotov and Hopfield]{krotov2021large}
+Krotov, D. and Hopfield, J.~J.
+\newblock Large associative memory problem in neurobiology and machine learning.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+\newblock URL \url{https://openreview.net/forum?id=X4y_10OX-hX}.
+
+\bibitem[Little(1974)]{little1974existence}
+Little, W.~A.
+\newblock The existence of persistent states in the brain.
+\newblock \emph{Mathematical biosciences}, 19\penalty0 (1-2):\penalty0 101--120, 1974.
+
+\bibitem[Lo{\`e}ve(1977)]{loeve1977probability}
+Lo{\`e}ve, M.
+\newblock Probability theory i.
+\newblock \emph{Graduate Texts in Mathematics}, 1977.
+
+\bibitem[Lucibello \& M\'ezard(2024)Lucibello and M\'ezard]{lucibello2024prl}
+Lucibello, C. and M\'ezard, M.
+\newblock Exponential capacity of dense associative memories.
+\newblock \emph{Phys. Rev. Lett.}, 132:\penalty0 077301, Feb 2024.
+\newblock \doi{10.1103/PhysRevLett.132.077301}.
+\newblock URL \url{https://link.aps.org/doi/10.1103/PhysRevLett.132.077301}.
+
+\bibitem[Millidge et~al.(2022)Millidge, Salvatori, Song, Lukasiewicz, and Bogacz]{millidge2022universal}
+Millidge, B., Salvatori, T., Song, Y., Lukasiewicz, T., and Bogacz, R.
+\newblock Universal hopfield networks: A general framework for single-shot associative memory models.
+\newblock In \emph{International Conference on Machine Learning}, pp.\  15561--15583. PMLR, 2022.
+
+\bibitem[Nakano(1972)]{nakano1972associatron}
+Nakano, K.
+\newblock Associatron-a model of associative memory.
+\newblock \emph{IEEE Transactions on Systems, Man, and Cybernetics}, 2:\penalty0 380--388, 1972.
+
+\bibitem[Pham et~al.(2024)Pham, Raya, Negri, Zaki, Ambrogioni, and Krotov]{pham2024memorization}
+Pham, B., Raya, G., Negri, M., Zaki, M.~J., Ambrogioni, L., and Krotov, D.
+\newblock Memorization to generalization: The emergence of diffusion models from associative memory.
+\newblock In \emph{NeurIPS 2024 Workshop on Scientific Methods for Understanding Deep Learning}, 2024.
+
+\bibitem[Ramsauer et~al.(2021)Ramsauer, Sch{\"{a}}fl, Lehner, Seidl, Widrich, Gruber, Holzleitner, Adler, Kreil, Kopp, Klambauer, Brandstetter, and Hochreiter]{ramsauer2021iclr}
+Ramsauer, H., Sch{\"{a}}fl, B., Lehner, J., Seidl, P., Widrich, M., Gruber, L., Holzleitner, M., Adler, T., Kreil, D.~P., Kopp, M.~K., Klambauer, G., Brandstetter, J., and Hochreiter, S.
+\newblock Hopfield networks is all you need.
+\newblock In \emph{9th International Conference on Learning Representations, {ICLR} 2021, Virtual Event, Austria, May 3-7, 2021}. OpenReview.net, 2021.
+\newblock URL \url{https://openreview.net/forum?id=tL89RnzIiCd}.
+
+\bibitem[Reddy(2024)]{reddy2024iclr}
+Reddy, G.
+\newblock The mechanistic basis of data dependence and abrupt learning in an in-context classification task.
+\newblock In \emph{The Twelfth International Conference on Learning Representations}, 2024.
+\newblock URL \url{https://openreview.net/forum?id=aN4Jf6Cx69}.
+
+\bibitem[Rigollet \& H{\"u}tter(2023)Rigollet and H{\"u}tter]{rigollet2023high}
+Rigollet, P. and H{\"u}tter, J.-C.
+\newblock High-dimensional statistics.
+\newblock \emph{arXiv preprint arXiv:2310.19244}, 2023.
+
+\bibitem[Santos et~al.(2024)Santos, Niculae, Mcnamee, and Martins]{santos2024_r2}
+Santos, S. J. R.~D., Niculae, V., Mcnamee, D.~C., and Martins, A.
+\newblock Sparse and structured hopfield networks.
+\newblock In \emph{Proceedings of the 41st International Conference on Machine Learning}, volume 235 of \emph{Proceedings of Machine Learning Research}, pp.\  43368--43388. PMLR, 21--27 Jul 2024.
+\newblock URL \url{https://proceedings.mlr.press/v235/santos24a.html}.
+
+\bibitem[Shen et~al.(2024)Shen, Mishra, and Khashabi]{shen2023khashabi}
+Shen, L., Mishra, A., and Khashabi, D.
+\newblock Position: Do pretrained transformers learn in-context by gradient descent?
+\newblock In \emph{Proceedings of the 41st International Conference on Machine Learning}, volume 235 of \emph{Proceedings of Machine Learning Research}, pp.\  44712--44740. PMLR, 21--27 Jul 2024.
+\newblock URL \url{https://proceedings.mlr.press/v235/shen24d.html}.
+
+\bibitem[Smart \& Zilman(2021)Smart and Zilman]{smart2021iclr}
+Smart, M. and Zilman, A.
+\newblock On the mapping between hopfield networks and restricted boltzmann machines.
+\newblock \emph{International Conference on Learning Representations}, 2021.
+\newblock URL \url{https://openreview.net/forum?id=RGJbergVIoO}.
+
+\bibitem[Touvron et~al.(2023)Touvron, Lavril, Izacard, Martinet, Lachaux, Lacroix, Rozi{\`e}re, Goyal, Hambro, Azhar, et~al.]{touvron2023llama}
+Touvron, H., Lavril, T., Izacard, G., Martinet, X., Lachaux, M.-A., Lacroix, T., Rozi{\`e}re, B., Goyal, N., Hambro, E., Azhar, F., et~al.
+\newblock Llama: Open and efficient foundation language models.
+\newblock \emph{arXiv preprint arXiv:2302.13971}, 2023.
+
+\bibitem[Trockman \& Kolter(2023)Trockman and Kolter]{trockman2023identity}
+Trockman, A. and Kolter, J.~Z.
+\newblock Mimetic initialization of self-attention layers.
+\newblock In \emph{Proceedings of the 40th International Conference on Machine Learning}, ICML'23. JMLR.org, 2023.
+
+\bibitem[Vaswani et~al.(2017)Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez, Łukasz Kaiser, and Polosukhin]{Vaswani2017}
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A.~N., Łukasz Kaiser, and Polosukhin, I.
+\newblock Attention is all you need.
+\newblock In \emph{Advances in Neural Information Processing Systems}, volume 2017-December, 2017.
+
+\bibitem[Von~Oswald et~al.(2023)Von~Oswald, Niklasson, Randazzo, Sacramento, Mordvintsev, Zhmoginov, and Vladymyrov]{vonOswald2023mordvintsev}
+Von~Oswald, J., Niklasson, E., Randazzo, E., Sacramento, J., Mordvintsev, A., Zhmoginov, A., and Vladymyrov, M.
+\newblock Transformers learn in-context by gradient descent.
+\newblock In \emph{International Conference on Machine Learning}, pp.\  35151--35174. PMLR, 2023.
+
+\bibitem[Wu et~al.(2024{\natexlab{a}})Wu, Hu, Hsiao, and Liu]{wu2024a_r2}
+Wu, D., Hu, J. Y.-C., Hsiao, T.-Y., and Liu, H.
+\newblock Uniform memory retrieval with larger capacity for modern hopfield models.
+\newblock In \emph{Proceedings of the 41st International Conference on Machine Learning}, ICML'24. JMLR.org, 2024{\natexlab{a}}.
+
+\bibitem[Wu et~al.(2024{\natexlab{b}})Wu, Hu, Li, Chen, and Liu]{wu2024_r2_stanhop}
+Wu, D., Hu, J. Y.-C., Li, W., Chen, B.-Y., and Liu, H.
+\newblock Stanhop: Sparse tandem hopfield model for memory-enhanced time series prediction.
+\newblock In \emph{The Twelfth International Conference on Learning Representations}, 2024{\natexlab{b}}.
+\newblock URL \url{https://arxiv.org/abs/2312.17346}.
+
+\bibitem[Zhang et~al.(2024)Zhang, Frei, and Bartlett]{bartlett2024jmlr}
+Zhang, R., Frei, S., and Bartlett, P.~L.
+\newblock Trained transformers learn linear models in-context.
+\newblock \emph{Journal of Machine Learning Research}, 25\penalty0 (49):\penalty0 1--55, 2024.
+\newblock URL \url{http://jmlr.org/papers/v25/23-1042.html}.
+
+\end{thebibliography}
+
+% END INCLUDE: main.bbl
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDIX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\appendix
+\onecolumn
+
+\section{Notation}
+
+%\bluebf{The $\mathtt{\backslash onecolumn}$ command above can be kept in place if you prefer a one-column appendix, or can be removed if you prefer a two-column appendix.  Apart from this possible change, the style (font size, spacing, margins, page numbering, etc.) should be kept the same as the main body.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\label{appA}
+\renewcommand{\theequation}{\ref{appA}.\arabic{equation}}
+\setcounter{equation}{0}  % reset the counter
+
+
+\subsection{Recurring notation} 
+\label{appendix:notation}
+
+\begin{itemize}
+  \item $n$ -- ambient dimension of input tokens.
+  \item $x_t \in \mathbb{R}^{n}$ -- the value of the $t$-th random input token.
+  \item $E=(X_1, ..., X_{L}, \tilde X) $ -- the random variable input to the sequence model. The ``tilde" indicates that the final token has in some way been corrupted. $E$ takes values $(x_1, ..., x_{L}, \tilde x) \in \mathbb{R}^{n \times (L+1)}$. Note: while capital $X$ or $X_i$ here denotes a random variable, in Section \ref{appendix:attention-and-softmax} use $X_{1:L}$ or simply $X$ to refer to the realized matrix of input tokens.
+  \item $L$ -- context length = number of uncorrupted tokens.
+  \item $d$ -- dimensionality of manifold $S$ that $x_t$ are sampled from
+  \item $N$ -- number of training pairs
+\end{itemize} 
+
+\subsection{Bayes posterior notation}
+\label{appendix:Bayes-notation}
+
+\begin{itemize}
+  \item $p_{X}(x)$ is task-dependent (the three scenarios considered here are introduced above).
+  
+  \item $p_{\tilde X}(\tilde x)$ where $\tilde x = x + z$. 
+  For a sum of independent random variables, $Y=X_1+X_2$, their pdf is a convolution $p_Y(y)=\int p_{X_1}(x) p_{X_2}(y-x)dx$. Thus:
+    \begin{equation*}
+    \begin{aligned}
+      p_{\tilde X}(\tilde x) 
+        & = \int p_{Z}(z) p_{X}(\tilde x - z) dz \\
+        & = C_{Z} \int e ^{- \lVert z \rVert ^2 / 2 \sigma_{Z}^2} p_{X}(\tilde x - z) dz
+    \end{aligned}
+    \end{equation*}
+   where $C_Z = (2 \pi \sigma_{Z}^2)^{-n/2}$ is a constant. 
+
+  \item $p_{\tilde X \mid X}(\tilde x \mid x)$: 
+    This is simply 
+    $$p_{Z}(\tilde x - x) = C_{Z} e ^{- \lVert \tilde x - x \rVert ^2 / 2 \sigma_{Z}^2}.$$
+   
+
+  \item $p_{X \mid \tilde X}(x \mid \tilde x)$: By Bayes' theorem, this is
+
+    \begin{equation*}
+    \begin{aligned}
+      p_{X \mid \tilde X}(x \mid \tilde x) 
+        & = \frac{p_{\tilde X \mid X}(\tilde x \mid x) p_{X}(x)} { p_{\tilde X}(\tilde x) }\\
+        & = \frac
+            {e ^{- \lVert \tilde x -  x \rVert ^2 / 2 \sigma_{Z}^2} p_X(x) }
+            {\int e ^{- \lVert \tilde x -  x' \rVert ^2 / 2 \sigma_{Z}^2} p_X(x') dx'}.
+    \end{aligned}
+    \end{equation*}
+
+\item Posterior mean:
+\begin{equation*}
+\begin{aligned}
+   \E_{X \mid \tilde X} [ X \mid \tilde X ]
+              &= \int x\: p_{X \mid \tilde X}(x \mid \tilde X) dx \\
+              &= 
+              \frac
+            {\int
+              x \, e ^{- \lVert \tilde X -  x \rVert ^2 / 2 \sigma_{Z}^2} p_X(x) 
+            dx}
+            {\int 
+              e ^{- \lVert \tilde X -  x \rVert ^2 / 2 \sigma_{Z}^2} p_X(x) 
+            dx}.
+\end{aligned}
+\end{equation*}
+
+\end{itemize}
+\section{Bayes optimal predictors for square loss}
+\label{appendix:Bayes-optimal}
+
+
+
+\subsection{Proof of Proposition \ref{prop:performance-bound}}
+\label{appendix:performance-bound}
+
+\begin{proof}
+
+Observe that 
+\begin{equation*}
+\begin{aligned}
+  \E \left[ \Vert X - f(\tilde X) \rVert^2 \right] 
+  & = \E_{\tilde X} \left[ 
+        \E_{X \mid \tilde X} \bigl[ \lVert X - f(\tilde X) \rVert^2 \mid \tilde X \bigr] 
+      \right] \\ 
+  & = \E_{\tilde X} \Bigl[ 
+        \E_{X\mid \tilde X} \bigl[ \lVert X - \E [X \mid \tilde X] \rVert^2 \mid \tilde X \bigr]  \\
+         & \:\:\:\:\:\:\:\:\:\:\:\: + \lVert \E [X \mid \tilde X] - f(\tilde X) \rVert^2 \Bigr] \\
+  & \ge \E_{\tilde X} \left[ 
+        \E_{X\mid \tilde X} \bigl[ \lVert X - \E [X \mid \tilde X] \rVert^2 \mid \tilde X \bigr]
+    \right] \\
+  & = \E_{\tilde X} \left[ \Tr{ \Cov (X \mid \tilde X)} \right].
+\end{aligned}
+\end{equation*}
+
+Note the final line is independent of $f$. This inequality becomes an equality when $f(\tilde X) = \E [ X \mid \tilde X ]$. 
+\end{proof}
+
+
+\section{Details of Bayes optimal denoising baselines for each case}
+\label{appendix:bayes-optimal-details}
+
+%\emph{The linear case} 
+
+\subsection{Proof of Proposition \ref{prop:Bayes-optimal-linear}}
+\label{appendix:Bayes-optimal-linear}
+\begin{proof}
+The linear denoising task is a special case of the result in Proposition \ref{prop:performance-bound}. 
+Here, $X$ is an isotropic Gaussian in a restricted subspace,
+\begin{equation*}
+  p_{X \mid \tilde X}(x \mid \tilde x) = C(\tilde x) p_X(x) e ^{  
+    -\frac{\lVert x - \tilde x \rVert ^2} {2 \sigma_{Z}^2}
+  }    
+\end{equation*}
+where $C(\tilde x)$ is a normalizing factor. The noise can be decomposed into parallel and perpendicular parts using the projection $P$ onto $S$, i.e.
+\begin{equation*}
+  \tilde X = \tilde X_{\paral} + \tilde X_{\perp}= P \tilde X + (I-P) \tilde X,
+\end{equation*}
+so that 
+\begin{equation*}
+  e^{- \frac{\lVert x - \tilde x \rVert ^2} {2 \sigma_{Z}^2}} = 
+    e^{- \frac{\lVert x-\tilde x_{\paral} \rVert ^2}{2 \sigma_{Z}^2}} \:\:
+    e^{- \frac{\lVert \tilde x_{\perp} \rVert ^2} {2 \sigma_{Z}^2}}.
+\end{equation*}
+
+Only the first factor matters for $p_{X \mid \tilde X}(x \mid \tilde x)$ since it depends on $x$. Then, for $x\in S$, the linear subspace supporting $p_X$,  dropping the $x$ independent $\tilde x_{\perp}$ contribution,   \\
+\begin{equation*}
+\begin{aligned}
+p_X(x)e^{- \frac{\lVert x - \tilde x_{\paral} \rVert ^2} {2 \sigma_{Z}^2}}
+  & \propto e^{- \frac{\lVert x \rVert ^2}{ 2 \sigma_{0}^2}
+         - \frac{\lVert x - \tilde x_{\paral} \rVert ^2 }{ 2 \sigma_{Z}^2} }\\
+  & \propto \exp 
+    \left( - \frac{\lVert x - \frac{\sigma_{0}^2}{\sigma_{0}^2 + \sigma_{Z}^2} \tilde x_{\paral} \rVert ^2}
+                   {2 \frac{\sigma_{0}^2 \sigma_{Z}^2}{\sigma_{0}^2 + \sigma_{Z}^2}
+                  } 
+    \right). 
+\end{aligned}
+\end{equation*}
+
+Thus, $f(\tilde X) 
+    = \frac{\sigma_{0}^2}{\sigma_{0}^2 + \sigma_{Z}^2} \tilde X_{\paral} 
+    = \frac{\sigma_{0}^2}{\sigma_{0}^2 + \sigma_{Z}^2} P \tilde X$.
+
+Using $\tilde X=X+Z$, $X=PX$, and the independence of $X$ and $Z$
+$$\E\Big[\lVert X-\frac{\sigma_{0}^2}{\sigma_{0}^2 + \sigma_{Z}^2} P \tilde X \rVert^2\Big] =  \E\Big[\lVert\frac{\sigma_{Z}^2}{\sigma_{0}^2 + \sigma_{Z}^2}PX\rVert^2\Big]+\E\Big[\lVert\frac{\sigma_{0}^2}{\sigma_{0}^2 + \sigma_{Z}^2} PZ \rVert^2\Big]=\frac{\sigma_Z^4d\sigma_{0}^2+\sigma_0^4d\sigma_{Z}^2}{(\sigma_{0}^2 + \sigma_{Z}^2)^2}=\frac{d\sigma_0^2\sigma_{Z}^2}{\sigma_{0}^2 + \sigma_{Z}^2}.$$
+\end{proof}
+
+%\emph{The manifold case} \\ \\
+
+\subsection{Proof of Proposition \ref{prop:Bayes-optimal-manifold}}
+\label{appendix:Bayes-optimal-manifold}
+
+\begin{proof}
+In the nonlinear manifold denoising problem, we focus on the case of lower dimensional spheres $S$ (e.g. the circle $S^1 \subset \mathbb{R}^2$). 
+For such manifolds, we have
+\begin{equation*}
+\begin{aligned}
+\E [ X \mid \tilde X = \tilde x ] 
+  & = 
+  \frac{\int e^{- \frac{\lVert x - \tilde x_{\paral} \rVert ^2 }{ 2 \sigma_{Z}^2}} \: x\: p_X(x) dx}
+       {\int e^{- \frac{\lVert x - \tilde x_{\paral} \rVert ^2 }{ 2 \sigma_{Z}^2}} \: p_X(x) dx} \\
+  & = 
+  \frac{\int e^{\langle x, \tilde x_{\paral} \rangle / \sigma_{Z}^2} \:x\, d S_x}
+       {\int e^{\langle x, \tilde x_{\paral} \rangle / \sigma_{Z}^2} \: d S_x}.
+\end{aligned}
+\end{equation*}
+We have used the fact that $\lVert x - \tilde x_{\paral} \rVert ^2=\lVert x \rVert ^2+\lVert\tilde x_{\paral} \rVert ^2-2\langle x,\tilde x_{\paral}\rangle$ and that $\lVert x \rVert$ is fixed on the sphere.
+
+The integrals can be evaluated directly once the parameters are specified. If $S$ is a $d$--sphere of radius $R$, then the optimal predictor is again a shrunk projection of $\tilde x$ onto $S$,
+
+\begin{equation*}
+\begin{aligned}
+  \frac{\int_0^{\pi} e^{R \lVert \tilde x_{\paral} \rVert \cos \theta / \sigma_{Z}^2} \: \cos \theta \sin^{(d - 1)} \theta \: d\theta}
+       {\int_0^{\pi} e^{R \lVert \tilde x_{\paral} \rVert \cos \theta / \sigma_{Z}^2} \: \sin^{(d - 1)} \theta \: d\theta}
+  R \frac{\tilde x_{\paral}}{\lVert \tilde x_{\paral} \rVert} \\
+  = 
+  \frac{I_\frac{d+1}{2} \left(R \frac{\lVert \tilde x_{\paral} \rVert}{\sigma_{Z}^2} \right)}
+       {I_\frac{d-1}{2} \left(R \frac{\lVert \tilde x_{\paral} \rVert}{\sigma_{Z}^2} \right)} 
+  R \frac{\tilde x_{\paral}}{\lVert \tilde x_{\paral} \rVert},
+\end{aligned}
+\end{equation*}
+where we used identities involving  $I_\nu(y)$, modified Bessel function of the first kind of order $\nu$ \cite{gradstein2007zwillinger}. The vector 
+$R \frac{\tilde x_{\paral}}{\lVert \tilde x_{\paral} \rVert}$
+is the point on $S$ in the direction of $x_{\paral}$. 
+
+\end{proof}
+
+\subsection{Proof of Proposition \ref{prop:bayes-case3}}
+\label{appendix:bayes-case3}
+
+\begin{proof}
+For the clustering case involving isotropic Gaussian mixtures with parameters
+$\{w_{a}, (\mu_{a}, \sigma_{a}^2)\}_{a=1}^p$, 
+
+\begin{equation*}
+\E [X \mid \tilde X = \tilde x] = 
+  \frac
+   {\int e^{-\frac{\|x - \tilde{x}\|^2}{2 \sigma_Z^2}} \sum_a \left( w_{a} C_a e^{-\frac{\|x - \mu_\alpha\|^2}{2 \sigma_a^2}}\right) 
+     x \, dx
+   }
+   {\int e^{-\frac{\|x - \tilde{x}\|^2}{2 \sigma_Z^2}} \sum_a \left( w_{a} C_a e^{-\frac{\|x - \mu_a\|^2}{2 \sigma_a^2}} \right)
+     \, dx
+   },
+\end{equation*}
+where $C_a=(2\pi\sigma_a^2)^{-\tfrac{n}{2}}$.
+
+
+We can simplify this expression by completing the square in the exponent and using the fact that the integral of a Gaussian about its mean is zero. This yields
+\begin{equation*}
+  \E [X \mid \tilde X = \tilde x] 
+   = 
+  \frac
+   {\sum_{a} w_{a}C_a m_{a} \int \exp(-g_{a}) \,dx}
+   {\sum_{a} w_{a} C_a \int \exp(-g_{a}) \,dx}
+\end{equation*}
+
+where we have introduced
+\begin{equation*}
+g_{a} =\frac{1}{2}\Bigl(\frac{\sigma_Z^2+\sigma_a^2}{\sigma_Z^2\sigma_a^2}\Bigr) \,\|x - m_\alpha\|^2
+\, 
++ \frac{1}{2 (\sigma_Z^2 + \sigma_a^2)}\lVert \tilde x - \mu_{a}\rVert^2,
+\end{equation*}
+with 
+%``constant" 
+%   $C_{\alpha} = -\frac{\lVert \tilde x - \mu_{\alpha}\rVert}{2 (\sigma_\eta^2 + \sigma_\alpha^2)}$
+
+% and
+\begin{equation*}
+m_a 
+% =
+% \frac{\frac{1}{\sigma_\eta^2} \,\tilde{x} + \frac{1}{\sigma_\alpha^2}\,\mu_\alpha}
+%      {\frac{1}{\sigma_\eta^2} + \frac{1}{\sigma_\alpha^2}}
+ = \frac{\sigma_a^2 \, \tilde{x} + \sigma_Z^2 \,\mu_a}
+     {\sigma_a^2 + \sigma_Z^2}.
+\end{equation*}
+
+Doing the integrals and using the expressions for $C_a,m_a$
+\begin{equation*}
+  \E [X \mid \tilde X = \tilde x] 
+   = 
+  \frac
+   {\sum_{a} w_{a}\big(\frac{\sigma_Z^2+\sigma_a^2} {\sigma_a^2}\big)^{n/2} \exp\big(-\frac{\lVert \tilde x - \mu_{a}\rVert^2}{2 (\sigma_Z^2 + \sigma_a^2)}\big) \big(\frac{\sigma_a^2 \, \tilde{x} + \sigma_Z^2 \,\mu_a}
+     {\sigma_a^2 + \sigma_Z^2} \big)}
+   {\sum_{a} w_{a} \big(\frac{\sigma_Z^2+\sigma_a^2} {\sigma_a^2}\big)^{n/2} \exp\big(-\frac{\lVert \tilde x - \mu_{a}\rVert^2}{2 (\sigma_Z^2 + \sigma_a^2)}\big)}
+\end{equation*}
+
+
+In the case that the center norms $\lVert \mu_{a} \rVert$ are independent of $a$ and variances $\sigma_{a}^2=\sigma_0$, we have
+\begin{equation*}
+  \E [X \mid \tilde X = \tilde x] 
+%  & = 
+%  \frac{\sigma_\alpha^2}
+%     {\sigma_\alpha^2 + \sigma_\eta^2} \, \tilde{x}
+%    + 
+%\frac{\sigma_\eta^2}
+%     {\sigma_\alpha^2 + \sigma_\eta^2}
+%  \frac
+%   {\sum_{\alpha} w_{\alpha} \mu_{\alpha} \int \exp(g_{\alpha}) \,dx}
+%   {\sum_{\alpha} w_{\alpha} \int \exp(g_{\alpha}) \,dx} \\
+ = 
+  \frac{\sigma_0^2}
+     {\sigma_0^2 + \sigma_Z^2} \, \tilde{x}
+    + 
+\frac{\sigma_Z^2}
+     {\sigma_0^2 + \sigma_Z^2}
+  \frac
+   {\sum_{a} w_{a} \mu_{a} 
+            \exp\left( \frac{\langle \tilde{x}, \mu_a \rangle}{\sigma_Z^2 + \sigma_0^2} \right)
+     }
+   {\sum_{a} w_{a} 
+            \exp\left( \frac{\langle \tilde{x}, \mu_a \rangle}{\sigma_Z^2 + \sigma_0^2} \right)
+            %e^{\frac{\langle \tilde{x}, \mu_\alpha \rangle}{(\sigma_\eta^2 + \sigma_\alpha^2)}}
+     }.
+\end{equation*}
+
+
+Note that in the limit that $\sigma_{0} \rightarrow 0$ , this becomes expressible by one-layer self-attention, since one can simply replace the matrix of cluster centers $M=[\mu_1 \ldots \mu_p]$ implicit in the expression with the context $X_{1:L}$ itself, 
+
+\begin{equation*}
+  \E [X \mid \tilde X] = \frac
+    {\sum_{a } w_{a}
+         e^{\langle \mu_{\alpha}, \tilde X \rangle / \sigma_{Z}^2}
+        \mu_{a}
+        }
+    {\sum_{a }w_a e^{\langle \mu_{\alpha}, \tilde X \rangle / \sigma_{Z}^2}
+                  }.
+\end{equation*}
+\end{proof}
+
+
+
+\section{Additional details on attention layers and softmax expansion} 
+\label{appendix:attention-and-softmax}
+
+\subsection{Standard self-attention}
+\label{appendix:self-attention-general}
+Given a sequence of $L_{\text{seq}}$ input tokens $x_i \in \mathbb{R}^n$ represented as a matrix $X \in \mathbb{R}^{n \times L_{\text{seq}}}$, standard self-attention defines query, key, and value matrices
+%K = W_K X$, $Q = W_Q X$, $V = W_V X$  
+\begin{equation}
+  K = W_K X, Q = W_Q X, V = W_V X
+\end{equation}
+where $W_K, W_Q \in \mathbb{R}^{n_\textrm{attn} \times n}$ and $W_V \in \mathbb{R}^{n_\textrm{out} \times n}$. 
+The softmax self-attention map \cite{Vaswani2017} is then 
+%$f(X)=X + V \textrm{softmax}(QK^T)$.
+\begin{equation}
+  \text{Attn}(X,W_V,W_K^TW_Q):=V \textrm{softmax}(K^T Q)\in\R^{n_\textrm{out}\times L_{\text{seq}}}.
+\label{eq:attention-VKQ}
+\end{equation}
+
+
+  On merging $W_K$, $W_Q$ into $W_{KQ}=W_K^T W_Q$: 
+  The simplification $W_{KQ}=W_K^T W_Q$ (made here and elsewhere) is general only when $n_\textrm{attn} \ge n$; in that case, the product $W_{KQ}$ can have rank $n$ and thus it is reasonable to work with the combined matrix. 
+  On the other hand, if $n_\textrm{attn} < n$, then the rank of their product is at most $n_\textrm{attn}$ and thus there are matrices in $\mathbb{R}^{n \times n}$ that cannot be expressed as $W_K^T W_Q$. A similar point can be made about $W_{PV}$. 
+  We note that while $n_\textrm{attn} < n$ may be used in practical settings, one often also uses multiple heads which when concatenated could be (roughly) viewed as a single higher-rank head. 
+  
+
+
+We will also use the simplest version of linear attention \cite{katharopoulos2020icml},
+
+\begin{equation}
+  \text{Attn}_{\text{Lin}}(X,W_V,W_K^TW_Q):=\frac{1}{L_{\text{seq}}}V (K^T Q)\in\R^{n_\textrm{out}\times L_{\text{seq}}}.
+\label{eq:linear-attention-VKQ}
+\end{equation}
+
+
+
+
+\subsection{Minimal transformer architecture for denoising}
+\label{appendix:self-attention-denoising}
+
+ We now consider a simplified one-layer linear transformer in term of our variable $E=(X_{1:L},\tilde X)$ taking values in $\R^{n\times (L+1)}$ and start with the linear transformer which still has sufficient expressive power to capture our finite sample approximation to the Bayes optimal answer in the linear case.
+Inspired by \citet{bartlett2024jmlr}, we define 
+\begin{equation}
+  \textrm{Attn}_\text{Lin}(E,W_{PV},W_{KQ}) :=\frac{1}{L} W_{PV}E M_\text{Lin}E^T W_{KQ} E     
+\end{equation}
+taking values in $\mathbb{R}^{n \times (L+1)}$. The additional aspect compared to the last subsection is the masking matrix  $M_\text{Lin}\in\R^{(L+1)\times(L+1)}$ which is of the form
+\begin{equation}
+M_\text{Lin}=\begin{bmatrix}
+  I_L & 0_{L\times 1}\\
+  0_{1\times L} & 0
+  \end{bmatrix},
+\end{equation}
+preventing  $W_{PV}\tilde X$ from being added to the output. 
+
+Note that this more detailed expression is equivalent to the form used in the main text. 
+$$ 
+\hat X = F_\textrm{Lin}(E,\theta) := \frac{1}{L} W_{PV} X_{1:L}X_{1:L}^T W_{KQ} \tilde X
+$$
+% where $E_{0} = E_{:,1:L}, \tilde X = E_{:, L+1}$.
+
+With learnable weights $W_{KQ}, W_{PV} \in \mathbb{R}^{n \times n}$ abbreviated by $\theta$, we define 
+\begin{equation}
+  F(E,\theta):=[\textrm{Attn}_\text{Lin}(E,W_{PV},W_{KQ})]_{:,L+1}.    
+\end{equation}
+Note that, when $W_{PV}=\alpha I_n,W_{KQ}=\beta I_n$, and 
+$\alpha \beta = \tfrac{1}{\sigma_0^2+\sigma_Z^2}$, $F(E,\theta)$ should approximate the Bayes optimal answer $f_\text{opt}(\tilde X)$ as $L\to \infty$.
+
+Similarly, we could argue that the second two problems, the $d$-dimesional spheres and the $\sigma_0\to 0$ zero limit of the Gaussian mixtures could be addressed by the full softmax attention
+\begin{equation}
+  \textrm{Attn}(E,W_{PV},W_{KQ}) = W_{PV} E \textrm{softmax}(E^T W_{KQ} E+M) 
+\end{equation}
+taking values in $\mathbb{R}^{n \times (L+1)}$ where 
+$M\in\bar\R^{(L+1)\times(L+1)}$ is a masking matrix  of the form
+\begin{equation}
+M=\begin{bmatrix}
+  0_{L\times(L+ 1)}\\
+  (-\infty) 1_{1\times L+1} 
+  \end{bmatrix},
+\end{equation}
+once more, preventing the contribution of $\tilde X$ value to the output.  
+The function $\textrm{softmax}(z):=\frac{1}{\sum_{i=1}^n e^{z_i}}(e^{z_1}, \ldots, e^{z_n})^T \in \mathbb{R}^n$ is applied column-wise. 
+
+We then define 
+\begin{equation}
+  F(E,\theta):=[\textrm{Attn}(E,W_{PV},W_{KQ})]_{:,L+1},
+\end{equation}
+
+which is equivalent to the simplified form used in the main text:
+$$
+\hat X = F(E,\theta) := W_{PV} X_{1:L} \softmax(X_{1:L}^T W_{KQ} \tilde X).
+$$
+% where $E_0 = E_{:, 1:L}$. 
+
+\subsection{Proof of Theorem \ref{theorem:convergence}}
+\label{appendix:convergence}
+\begin{proof}
+Let the support of $p_X$ be a subset of a sphere, centered around the origin, of radius $R$. Then the function 
+\begin{equation}
+\label{eq:softmax-ratio}
+g(\{X_t\}_{t=1}^L,\tilde x)=\frac{\sum_{t=1}^LX_te^{\langle X_t,\tilde x\rangle/\sigma_Z^2}}{\sum_{t=1}^Le^{\langle X_t,\tilde x\rangle/\sigma_Z^2}}=\frac{\frac{1}{L}\sum_{t=1}^LX_te^{\langle X_t,\tilde x\rangle/\sigma_Z^2}}{\frac{1}{L}\sum_{t=1}^Le^{\langle X_t,\tilde x\rangle/\sigma_Z^2}}.
+\end{equation}
+Both the numerator $\tfrac{1}{L}\sum_{t=1}^LX_te^{\langle X_t,\tilde x\rangle/\sigma_Z^2}$  and the denominator $\tfrac{1}{L}\sum_{t=1}^Le^{\langle X_t,\tilde x\rangle/\sigma_Z^2}$ are averages of independent and identically distributed bounded random variables. By the strong law of large numbers, as $L\to \infty$, the average vector in the numerator converges to almost surely to $\int e^{\langle x, \tilde x_{\paral} \rangle / \sigma_{Z}^2} \:x\, dp_X(x)$ for each component, while the average in the denominator almost surely converges $\int e^{\langle x, \tilde x_{\paral} \rangle / \sigma_{Z}^2} \: dp_X(x)$, which is positive. So, as $L\to\infty$, the ratio in Eq. \ref{eq:softmax-ratio} converges almost surely to 
+ $$ \frac{\int e^{\langle x, \tilde x_{\paral} \rangle / \sigma_{Z}^2} \:x\, dp_X(x)}
+       {\int e^{\langle x, \tilde x_{\paral} \rangle / \sigma_{Z}^2} \: dp_X(x)},$$
+which is the Bayes optimal answer $f_\text{opt}(\tilde x)$ for all $\tilde x\in \R^n$.
+\end{proof}
+
+
+\section{Further discussion of convergence rates as $L\to \infty$ and the dependence on dimensions}
+\label{appendix:convergence-rates}
+
+Our analysis primarily focused on the asymptotic behavior as $L\to \infty$
+ using the strong law of large numbers, which just requires the mean to exist \cite{loeve1977probability}. However, in the linear example, our tokens are Gaussian, and in the two nonlinear cases they are bounded. Intuitively, we expect error 
+ %$O(\sqrt{\tfrac{1}{L}})$. 
+ $O(\frac{1}{\sqrt{L}})$.
+ In fact, we can give precise results of the form that the probability of the difference between the empirical sum for the ideal weights departing from the expectation by less than 
+ $C(\tilde x)\sqrt{\tfrac{f\big(d,\ln\tfrac {1}{\delta}\big)}{L}}$
+ %$C(\tilde x)\sqrt{\tfrac{f\big(d, \; \ln \delta^{-1}\big)}{L}}$ 
+ is greater than $1-\delta$. The function $C$ of the query vector and the function $f$ depend on the problem. Interestingly, these bounds depend on $d$, the dimension spanned by the tokens, not the ambient dimension $n$.
+
+ As mentioned before, the results of the previous paragraph refer to the convergence of the finite sample attention expressions for ideal weights, namely those corresponding to Bayes optimal answer. There is a second source of error associated with finite sample estimation of weights, which should also get small as $L$ becomes large. Once more the expectation is that the weights are known to error 
+ %$O(1/\sqrt{L})$ 
+ $O(\frac{1}{\sqrt{L}})$
+ %$O(\sqrt{\tfrac{1}{L}})$ 
+ for well-converged training procedures, although this is more difficult to guarantee or quantify analytically.
+ %but it is hard to be sure in practice. 
+ Overall we expect the loss (MSE) to go down inversely with some power of $L$.
+ Fig.~\ref{fig:empirical-ICL}(a) provides some empirical evidence for this relationship, showing how performance improves with increasing context length.
+
+ Notice that the one-layer transformer output is a linear combination of the uncorrupted samples. Hence, if the distribution $p_X$ is supported by a $d$-dimensional linear subspace, the estimate $\hat X$ is also in that subspace. We can therefore look at convergence restricted to the supporting subspace. Therefore, it is the dimensionality of the supporting subspace that matters.
+
+ Let a $d$-dimensional vector space $V$ be a linear subspace of $\R^n$. We define the maximum norm for $V$ with respect to some orthonormal basis $\{v_i\}_{i=1}^d$ in $V$ as $||x||_{\infty,V}:=\max_{i\in\{1,\ldots,d\}}|\langle v_i,x\rangle|$ for any $x\in V$. The conventional maximum norm for $\R^n$, of course, is defined  with respect to the standard orthonormal basis  $\{e_j\}_{j=1}^n$. 
+ Since $|\langle v_i,x\rangle|\le ||x||_{\infty,V}$, for all $i$,
+ $$||x||_2^2=\sum_{i=1}^d(\langle v_i,x\rangle)^2\le d||x||_{\infty,V}^2 \implies ||x||_2\le\sqrt{d}||x||_{\infty,V}.$$
+ Then, for any $x\in V\subseteq \R^n$,
+ $||x||_\infty\le \sqrt{d}||x||_{\infty,V}$, since
+ $|\langle x,e_j\rangle|\le||x||_2\le\sqrt{d}||x||_{\infty,V}$, for all $j\in\{1\ldots,n\}$. Thus, controlling component-wise error in any orthonormal basis in $V$ controls component-wise error in $\R^n$, in an $n$-independent but $d$-dependent manner. In the following, we give a flavor of how we can analyze finite sample estimate errors in $V$. The maximum norm $||\cdot||_\infty$ is to be understood as $||\cdot||_{\infty,V}$ for some orthonormal basis choice. Here is the result relevant to the linear case described Subsubsection \ref{case1}.
+
+ \begin{prop}
+\label{prop:linear-case-rate}
+Let $X_t\overset{\text{i.i.d}}{\sim}\mathcal{N}(0,\sigma_0^2I_d), t=1,\ldots,L$ and let $\hat \Pi:=\frac{1}{\sigma_0^2L}\sum_{t=1}^LX_tX_t^T.$
+Then, for any $\delta\in(0,1),$
+$$\textrm{Pr}\Bigg[||\hat\Pi\tilde x-\tilde x||_\infty<C||\tilde x||_2\max\Bigg\{\sqrt\frac{d+\ln(\frac{2}{\delta})}{L},\frac{d+\ln(\frac{2}{\delta})}{L}\Bigg\}\Bigg]>1-\delta$$
+for some $C>0$.
+\end{prop}
+\begin{proof} We start by bounding the maximum norm of the difference,
+$$||\hat\Pi\tilde x-\tilde x||_\infty\le||\hat\Pi\tilde x-\tilde x||_2\le||\hat\Pi-I_d||_{\text{op}}||x||_2,$$
+where $||\cdot||_{\text{op}}$ is the operator norm.
+
+It can be shown that, for any $\delta\in (0,1)$
+$$\textrm{Pr}\Bigg[||\hat\Pi-I_d||_\text{op}<C\max\Bigg\{\sqrt\frac{d+\ln(\frac{2}{\delta})}{L},\frac{d+\ln(\frac{2}{\delta})}{L}\Bigg\}\Bigg]>1-\delta$$
+for some $C>0$ \cite{rigollet2023high}. Combining with the first bound, we get our result.
+\end{proof}
+
+As to the nonlinear cases, the key result of Theorem~\ref{theorem:convergence} is the convergence of the numerator 
+$\frac{1}{L}\sum_{t=1}^LX_te^{\langle X_t,\tilde x_{\paral}\rangle/\sigma_Z^2}$
+to
+$\E[ Xe^{\langle X, \tilde x_{\paral} \rangle / \sigma_{Z}^2}]=\int e^{\langle x, \tilde x_{\paral} \rangle / \sigma_{Z}^2} \:x\, dp_X(x)$
+and the denominator
+$\frac{1}{L}\sum_{t=1}^Le^{\langle X_t,\tilde x_{\paral}\rangle/\sigma_Z^2}$
+to
+$\E[ e^{\langle X, \tilde x_{\paral} \rangle / \sigma_{Z}^2}]=\int e^{\langle x, \tilde x_{\paral} \rangle / \sigma_{Z}^2}  dp_X(x)$.
+
+In the following, we assume that the support of $p_X$ is inside a vector space $V$ whose dimension we denote by $d$ (instead of $d+1$, as in the sphere problem). In addition, we refer to the projection of the query on $V$ by $\tilde x\in V$, instead of $\tilde x_{\paral}$. As usual, the maximum norm in $V$ is with respect to some orthonormal basis choice
+
+\begin{prop}
+\label{prop:nonlinear-case-rate}
+Let $X_t\overset{\text{i.i.d}}{\sim}p_X$ and $||X_t||_2\le R$ for $t=1,\ldots,L$. 
+
+Then, for any $\delta\in(0,1),$
+$$\textrm{Pr}\Bigg[\Big|\frac{1}{L}\sum_{t=1}^Le^{\langle X_t,\tilde x\rangle/\sigma_Z^2}-\E[ e^{\langle X, \tilde x \rangle / \sigma_{Z}^2}]\Big|<\sinh{\bigg(\frac{R||\tilde x||_2}{\sigma_Z^2}\bigg)}\sqrt{\frac{2}{L}\ln\bigg(\frac{2}{\delta}\bigg)}\Bigg]\ge1-\delta$$
+and 
+$$\textrm{Pr}\Bigg[\Big|\Big|\frac{1}{L}\sum_{t=1}^LX_te^{\langle X_t,\tilde x\rangle/\sigma_Z^2}-\E[ Xe^{\langle X, \tilde x \rangle / \sigma_{Z}^2}]\Big|\Big|_\infty<Re^{\frac{R||\tilde x||_2}{\sigma_Z^2}}\sqrt{\frac{2}{L}\ln\bigg(\frac{2d}{\delta}\bigg)}\Bigg]\ge 1-\delta.$$
+\end{prop}
+
+\begin{proof} We provide the sketch of our proof here, the key ingredient of which is the Hoeffding inequality \cite{hoeffding1994probability}.
+
+For the average $\frac{1}{L}\sum_{t=1}^Le^{\langle X_t,\tilde x\rangle/\sigma_Z^2}$, each term in the sum is bounded above and below by $e^{\pm\frac{R||\tilde x||_2}{\sigma_Z^2}}$.
+So, the Hoeffding inequality leads to
+$$\textrm{Pr}\Bigg[\Big|\frac{1}{L}\sum_{t=1}^Le^{\langle X_t,\tilde x\rangle/\sigma_Z^2}-\E[ e^{\langle X, \tilde x \rangle / \sigma_{Z}^2}]\Big|\ge \epsilon]\le 2\exp\Bigg[-\frac{2L\epsilon^2}{\Big(\exp\big(\frac{R||\tilde x||_2}{\sigma_Z^2}\big)-\exp\big(-\frac{R||\tilde x||_2}{\sigma_Z^2}\big)\Big)^2}\Bigg]=2\exp\Bigg[-\frac{L\epsilon^2}{2\sinh^2\big(\frac{R||\tilde x||_2}{\sigma_Z^2}\big)}\Bigg].$$
+Setting $\delta=2\exp\Big[-\tfrac{L\epsilon^2}{2\sinh^2\big(\tfrac{R||\tilde x||_2}{\sigma_Z^2}\big)}\Big]$, we get $\epsilon=\sinh{\big(\tfrac{R||\tilde x||_2}{\sigma_Z^2}\big)}\sqrt{\tfrac{2}{L}\ln\big(\tfrac{2}{\delta}\big)}$, which gives our first probabilistic inequality.
+
+For each component of the vector average $\frac{1}{L}\sum_{t=1}^LX_te^{\langle X_t,\tilde x\rangle/\sigma_Z^2}$, the terms in the sum are bounded above and below by $\pm R^{\frac{R||\tilde x||_2}{\sigma_Z^2}}$. We use similar arguments involving the Hoeffding inequality, combined with the union bound over all $d$ coordinates 
+$$\textrm{Pr}\Bigg[\Big|\Big|\frac{1}{L}\sum_{t=1}^LX_te^{\langle X_t,\tilde x\rangle/\sigma_Z^2}-\E[ Xe^{\langle X, \tilde x \rangle / \sigma_{Z}^2}]\Big|\Big|_\infty\ge \epsilon]\le 2d\exp\Bigg[-\frac{L\epsilon^2}{2R^2\exp\big(\frac{2R||\tilde x||_2}{\sigma_Z^2}\big)}\Bigg].$$ Once more, setting the RHS to $\delta$ and solving for $\epsilon$, we get our second probabilistic inequality.
+\end{proof}
+
+
+
+\section{Limiting behaviors of the softmax function and softmax attention}
+\label{appendix:expansion-softmax}
+
+
+\subsection*{For small argument}
+%\( \beta \) (or small $W_{KQ}$)}
+A Taylor expansion of the softmax function at zero gives
+% \begin{equation*}
+% \text{softmax}(v_i) = \frac{1}{Z} \left( 1 + v_i + \frac{1}{2} v_i^2 + O(v_i^3) \right),
+% \end{equation*}
+% where $Z = \sum_j \left( 1 + v_j + \frac{1}{2} v_j^2 + O(v_j^3)\right)$ is a normalizing factor.
+\begin{equation*}
+\text{softmax}(\beta v) = \frac{1}{Z} \left( \mathbbm{1}_L + \beta v  + O(\beta^2) \right),
+\end{equation*}
+where $Z = \sum_i \left( 1 + \beta v_i + O(\beta^2))\right)=L(1+\beta\bar v+ O(\beta^2))$ is a normalizing factor, with $\bar v=\tfrac{1}{L}\sum_iv_i$. The notation $\mathbbm{1}_L$ stands for an $L$-dimensional vector of ones.
+
+Thus, we have
+\begin{lemma}[Small argument expansion of softmax]
+\label{appendix:small-arg}
+As $\beta\to 0$,
+\begin{equation*}
+\mathrm{softmax}(\beta v)
+= \frac{1}{L \left( 1 + \beta\bar v + O(\beta^2)\right)} \left( \mathbbm{1}_L + \beta v +O(\beta^2)\right)
+=\frac{1}{L}\left( \mathbbm{1}_L + \beta(v-\bar v\mathbbm{1}) + O(\beta^2)\right).
+\end{equation*}
+\end{lemma}
+
+\subsection{Proof of Proposition \ref{prop:attention-limit}}
+\label{appendix:attention-limit}
+\begin{proof}
+
+$$
+F\Big(E,\big(\frac{1}{\epsilon}W_{PV},\epsilon W_{KQ}\big)\Big) := \frac{1}{\epsilon}W_{PV} X_{1:L} \softmax(\epsilon X_{1:L}^T W_{KQ} \tilde X).
+$$
+
+Using Lemma \ref{appendix:small-arg}, as $\epsilon\to 0$,
+\begin{align}
+&F\Big(E,\big(\frac{1}{\epsilon}W_{PV},\epsilon W_{KQ}\big)\Big)=\frac{1}{\epsilon}W_{PV} X_{1:L}\Bigg[\frac{1}{L}\left( \mathbbm{1}_L +\epsilon \big( X_{1:L}^T W_{KQ}\tilde X-(\frac{1}{L}\sum_t X_t^TW_{KQ}\tilde X)\mathbbm{1}_L\big) + O(\epsilon^2)\right)\Bigg]\nonumber\\
+&=\frac{1}{\epsilon} W_{PV}\bar X
++ \frac{1}{L}W_{PV}\sum_{t=1}^LX_t(X_t-\bar X)^TW_{KQ}\tilde X+O(\epsilon),
+\end{align}
+where $\bar X=\tfrac{1}{L}\sum_{t=1}^LX_t$ is the empirical mean and the notation $\mathbbm{1}_L$ emphasizes that it is a column vector of ones with dimension $L$. 
+
+\end{proof}
+
+
+\subsection*{For large argument}
+%\( \beta \) (or large $W_{KQ}$)}
+As \( \beta \to \infty \), the softmax function simply selects the maximum over its inputs (as long as the the maximum is unique):
+\begin{equation*}
+\text{softmax}(\beta v) \approx
+\begin{cases}
+  1 & \text{if } i = \arg\max_j v_j, \\
+  0 & \text{otherwise}.
+\end{cases}
+\end{equation*}
+In this case, all attention weight is given to a single element, and the others are effectively ignored.
+
+
+
+\section{MSE Loss landscape for scaled identity weights}
+\label{appendix:loss-landscapes-and-extra-training}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.92\textwidth]{figs/fig-appendix-landscape-MSE.pdf}
+\caption{
+  Loss landscape corresponding to Case 2 and Case 3 of Fig. \ref{fig:empirical-training-triple}. 
+  The MSE is numerically evaluated by assuming scaled identity weights $W_{KQ}=\beta I_n$ (x-axis) and $W_{PV}=\alpha I_n$ (y-axis) and scanning over a $50 \times 50$ grid. The green point corresponds to the heuristic minimizer identified from the posterior mean. In Case 2 it is exact, while in case 3 it is an approximation that neglects the residual term (see Proposition \ref{prop:bayes-case3}). The orange point corresponds to the learned weights displayed in Fig. \ref{fig:empirical-training-triple}(b), while the white point corresponds to the numerically identified minimum from this 2D scan. These can fluctuate due to the finite context ($L=500$) and sampling ($N=800$ here). In both panels, it is apparent that the trained weights and the heuristic estimator co-occur in a broad valley (contour) of the loss landscape. 
+  }
+\label{fig:loss-landscape-MSE-2d}
+\end{figure}
+
+The loss landscapes in Fig. \ref{fig:loss-landscape-MSE-2d} exhibit large, low-cost valleys with a roughly hyperbolic structure that is especially apparent in Case 2. This indicates a multiplicative tradeoff in the scales of $W_{KQ}$ and $W_{PV}$, which suggests that linear attention might be applicable here as well. For completeness, Figure \ref{fig:case2and3-linear-vs-softmax} shows linear attention performance for both cases, demonstrating that it performs quite similarly to softmax for sub-sphere denoising, but less well in the Gaussian mixtures case. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.72\textwidth]{figs/fig-appendix-case2and3_lin_and_softmax.pdf}
+\caption{
+  Linear attention performance for Cases 2 and 3. Additional empirical results for the nonlinear manifolds case (left) and the Gaussian mixtures case (right). (a) Loss dynamics for randomly initialized softmax and linear attention layers. Solid lines represent the average loss over six seeds, with shaded area indicating the range. Training details and parameters follow Fig. \ref{fig:empirical-training-triple}(a). (b) Representative final attention weights for each layer. 
+  }
+\label{fig:case2and3-linear-vs-softmax}
+\end{figure}
+
+
+\section{Structured optimal weights under prompt transformation}
+\label{appendix:sec-coord-transform}
+We find that one-layer transformers can learn to undo arbitrary invertible coordinate transformations that warp the denoising tasks.
+Focusing on the subspace denoising case, suppose each prompt is transformed by a fixed invertible square matrix $A$, i.e. $E=(X_{1:L}, \tilde x) \rightarrow E'=(AX_{1:L}, A \tilde x)$.
+If the target remains $x_{L+1}$ in the untransformed space, then the optimal attention weights are no longer diagonal, but instead take a structured form determined by the transformation matrix:
+
+\begin{equation}
+W_{PV} = \alpha A^{-1}, \quad W_{KQ} = \beta (AA^T)^{-1},
+\label{solution-for-coord-transform}
+\end{equation}
+where $\alpha \beta = \frac{1}{\sigma_0^2 + \sigma_Z^2}$ as before. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.92\textwidth]{figs/fig-appendix-non-identity-weights.pdf}
+\caption{
+    (a) Example transformation $A$ used to globally alter the in-context denoising prompts. (b) Structure of the optimal attention weights for this transformed subspace-denoising task. (c,d) Empirically, we find that both linear attention and softmax attention layers are able to learn these structured targets, but with distinct scalings $\alpha, \beta$. Final weights after 500 epochs using Adam, random initializations, and context length $L=500$; other parameters follow Fig. \ref{fig:empirical-training-triple}(a).
+  }
+\label{fig:non-identity-weights}
+\end{figure}
+
+Notably, we find that both the linear and softmax attention layers are able to learn these structures; see Fig. \ref{fig:non-identity-weights} for an example. We use the same basic training procedure as the limiting case of $A=I$ (no additional coordinate transformation) assumed throughout the main text. 
+
+Suppose we still work with transformed coordinates $Y_t=AX_t$ and $\tilde Y=A\tilde X$, but now intend to retrieve $Y_{L+1}=AX_{L+1}$ in the new coordinate space (rather than $X_{L+1}$ as above). In this case, we would be dealing with variables with covariance matrices $\Sigma\propto AA^T$. We would need weight matrices that are not simply proportional to identity to deal with the covariance structure. This is also the case for in-context learning of linear functions when the input has an anisotropic covariance matrix \cite{bartlett2024jmlr, ahn2023transformers}. 
+Recall in the original setting, we had the sample covariance
+$\E[X X^T]\equiv\Sigma_X=\sigma_0^2 P$ and noise $\Sigma_Z \equiv \sigma_Z^2 I$, leading to the estimator, Eq. (\ref{eq:main-case1-sec3}): 
+$\hat X = \frac{1}{(\sigma_0^2 + \sigma_Z^2)L} \sum_{t=1}^L X_t \langle X_t, \tilde X \rangle$ . 
+Here, the sample covariance is $\Sigma_Y \equiv \sigma_0^2 A P A^{T}$, and the noise $V\equiv AZ$ has covariance $\Sigma_{V} \equiv \sigma_Z^2 A A^{T}$.
+One can show the generalized solution is $\hat Y = \Sigma_Y (\Sigma_Y + \Sigma_{V})^{-1} \tilde Y$.
+Thus, in the transformed coordinates, the denoising estimate is
+\begin{equation}
+\hat Y = \frac{1}{(\sigma_0^2 + \sigma_Z^2)L}\sum_{t=1}^L Y_t \langle A^{-1}Y_t,A^{-1}\tilde Y\rangle.
+\label{solution-for-coord-transform-in-Y}
+\end{equation}
+
+For the relationship of this denoising result in $Y$ to energy models, as discussed in Section~\ref{sec:assoc-mem} and Subsection~\ref{appendix:linear-attention-trad-Hopfield}, we need a modified energy $\En(Y_{1:L},s)=\frac{1}{2\gamma} \|s\|^{2} - \frac{1}{2L}\sum_{t=1}^L\langle A^{-1}Y_t,A^{-1}s\rangle^2$ and a preconditioner proportional to $AA^T$.
+
+
+\section{Additional comments on the mapping from attention to associative memory models}
+\label{appendix:sec-mapping-attn-assocmem}
+
+\subsection{Linear attention and traditional Hopfield model}
+\label{appendix:linear-attention-trad-Hopfield}
+We have considered a trained network with linear attention, relating the query $\tilde X$ and the estimate of the target $\hat X$, of the form 
+\begin{equation}
+\hat X=f(\tilde X):=\frac{\gamma}{L}\sum_{t=1}^LX_t\langle X_t,\tilde X\rangle
+\label{linear-net}
+\end{equation}
+with $\gamma=\tfrac{1}{\sigma_0^2+\sigma_Z^2}$. 
+
+With 
+\begin{equation}
+    \En(X_{1:L},s) := \frac{1}{2\gamma} \|s\|^{2} - \frac{1}{2L}s^T(\sum_{t=1}^LX_tX_t^T)s
+\label{eq:spherical-Hopfield-appendix}
+\end{equation}
+gradient descent iteration $s(t+1) =  s(t) - \gamma \;\nabla_s \En \bigl(X_{1:L}, s(t)\bigr)$ gives us $$s(t+1) =\frac{\gamma}{L}\sum_tX_t\langle X_t,s(t)\rangle$$ 
+making the one-step iteration our denoising operation.
+
+We will call this energy function the Naive Spherical Hopfield model for the following reason.
+For random memory patterns $X_{1:L}$, and the query denoting Ising spins $s\in\{-1,1\}^n$, the so-called Hopfield energy is 
+\begin{equation}
+    \En_\text{Hopfield}(X_{1:L},s) := - \frac{1}{2L}s^T(\sum_{t=1}^LX_tX_t^T)s.
+\label{eq:Ising-Hopfield}
+\end{equation}
+We could relax the Ising nature of the spins by letting $s\in\R^n$, with a constraint $||s||^2=n$. This is the spherical model \cite{fischer1993spin} since the spin vector $s$ lives on a sphere. If we minimize this energy the optimal $s$ would be aligned with the dominant eigenvector of the matrix  $\tfrac{1}{L}(\sum_{t=1}^LX_tX_t^T)$ \cite{fischer1993spin}, and the model will not have a retrieval phase (see \citet{bolle2003spherical} for a similar model that does). A soft-constrained variant can also be found in Section 3.3, Model C of  \citet{krotov2021large}.
+
+We could reformulate the optimization problem of minimizing the Hopfield energy, subject to $||s||^2=R^2$, as
+$$\argmin_{s\in\R^n} \Big[\max_\lambda \big\{ - \frac{1}{2L}s^T(\sum_{t=1}^LX_tX_t^T)s+\lambda (s^Ts-R^2)\big\}\Big].$$
+The $s$-dependent part of the Lagrangian, with $\lambda$ replaced by $\tfrac{1}{2\gamma}$ gives us the energy function in Eq. \ref{eq:spherical-Hopfield-appendix} which we have called the Naive Spherical Hopfield model. 
+
+\begin{equation}
+    \En(X_{1:L},s) := \frac{1}{2\gamma} \|s\|^{2} - \frac{1}{2L}s^T(\sum_{t=1}^LX_tX_t^T)s=\frac{1}{2} s^T\Big[(\sigma_0^2+\sigma_Z^2) I_n-\frac{1}{L}(\sum_{t=1}^LX_tX_t^T)\Big ]s.
+\label{eq:Naive-spherical-Hopfield-appendix}
+\end{equation}
+
+
+For $L$ much larger than $n$, $\tfrac{1}{L}\sum_{t=1}^LX_tX_t^T\approx \sigma_0^2 P$, so its eigenvalues are either 0 or are very close to $\sigma_0^2$. Hence, for large $L$ and $\sigma_Z>0$, this quadratic function is very likely to be positive definite.  One-step gradient descent brings $s$ down to the $d$-dimensional linear subspace $S$ spanned by the patterns, but repeated gradient descent steps would take $s$ towards zero.
+
+
+\subsection{Remarks on the softmax attention case (mapping to dense associative memory networks)}
+
+Regarding the mapping discussed in the main text, we note that there is a symmetry condition on the weights $W_{KQ}, W_{PV}$ that is necessary for the softmax update to be interpreted as a gradient descent (i.e. a conservative flow). 
+In general, a flow $ds/dt = f(s)$ is conservative if it can be written as the gradient of a potential, i.e. 
+$f(s)=-\nabla_s V(s)$ for some $V$. For this to hold, the Jacobian of the dynamics $J_f(s)=\nabla_s f$ must be symmetric. 
+
+The softmax layer studied in the main text is $f(s)=W_{PV} X \,\softmax(X^T W_{KQ} s)$.
+We will denote $z(s)=X^T W_{KQ} \,s$ and $g(s) = \softmax(z(s))$, both in $\mathbb{R}^L$. 
+Then the Jacobian is
+\begin{equation}
+  J(s) = 
+  W_{PV} X \frac{\partial g} {\partial s} = W_{PV} X \left( \text{diag}(g) - g g^T \right) X^T W_{KQ}.
+\end{equation}
+
+Observe that $Y = X \left( \text{diag}(g) - g g^T \right) X^T$ is symmetric (keeping in mind that $g(s)$ depends on $W_{KQ}$). The Jacobian symmetry requirement $J=J^T$ therefore places the following constraint on feasible $W_{KQ}, W_{PV}$:
+\begin{equation}
+  W_{PV} \,Y \,W_{KQ}^T = W_{KQ} \,Y \, W_{PV}^T.
+\end{equation}
+
+It is clear that this condition holds for the scaled identity attention weights discussed in the main text. Potentially, it could allow for more general weights that might arise from non-isotropic denoising tasks to be cast as gradient descent updates.
+
+%\matt{Not sure if we make note on residual terms here or in main text/discussion:} 
+The mapping discussed in the main text involves discrete gradient descent steps, Eq. (\ref{eq:DAM-GD-update}). In general, this update rule retains a ``residual" term in $s(t)$ if we choose a different descent step size $\gamma \neq \alpha$. Thus, taking $K$ recurrent updates could be viewed as the depthwise propagation of query updates through a $K$-layer architecture if one were to use tied weights. Analogous residual streams are commonly utilized in more elaborate transformer architectures to help propagate information to downstream attention heads.
+
+
+\end{document}

@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2503.03025",
+    "model": "openai/gpt-5-nano",
+    "total_responses": 20,
+    "timestamp": "2025-10-31T17:26:44.553856"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0436>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The diameter should be defined using the distance between two points: ||(x_i, T(x_j)) - (x_k, T(x_l))||, not the sum ||(x_i, T(x_j)) + (x_k, T(x_l))||; i.e., the sign between the two terms is incorrect.\"\n}",
+      "response_length": 281,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0446>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the diameter definition, the norm term uses '+' in one place (|(x_i, T(x_j)) + (x_k, T(x_l))|) but later uses '-' (|(x_i, T(x_j)) - (x_k, T(x_l))|), i.e., an inconsistent sign (sign flip) in the diameter expression.\"\n}",
+      "response_length": 297,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0066>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0443>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the definition of \\\\bar{\\\\mathbf{y}}^{(t)}, the summand uses T(\\\\mathbf{x}_{i}) while the summation variable is \\\\mathbf{x}; it should be T(\\\\mathbf{x}) (the index i is undefined in that scope).\"\n}",
+      "response_length": 279,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0441>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the definition of diam(Γ_{t,q}), the expression uses a plus inside the norm in one place ( (x_i, T(x_j)) + (x_k, T(x_l)) ) and a minus in another ( (x_i, T(x_j)) - (x_k, T(x_l)) ); this inconsistent change of sign constitutes a sign flip error.\"\n}",
+      "response_length": 326,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0447>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The inner distance term changes from a difference to a sum between definitions: initially ||(x_i, T(x_j)) - (x_k, T(x_l))||, later ||(x_i, T(x_j)) + (x_k, T(x_l))||, indicating a sign flip inconsistency.\"\n}",
+      "response_length": 282,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0452>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The diameter definition uses a plus inside the norm: ||(x_i, T(x_j)) + (x_k, T(x_l))||, which should be a difference ||(x_i, T(x_j)) - (x_k, T(x_l))|| to represent a distance. There are also inconsistent diameter definitions (plus vs minus, max vs min) in the excerpt.\"\n}",
+      "response_length": 347,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0303>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"transpose_error\",\n  \"error_description\": \"From Tr( tilde{P}^{-1} tilde{P} C^T P ) to Tr( tilde{P} C^T P tilde{P}^T ), the derivation effectively uses tilde{P}^{-1} = tilde{P}^T (orthogonality) to move/insert factors, which is not generally valid. The transpose is introduced where the inverse should be used.\"\n}",
+      "response_length": 351,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0453>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"transpose_error\",\n  \"error_description\": \"In the first line, the diameter term uses \\\\\\\\G^Tamma_{t,q} instead of \\\\\\\\Gamma_{t,q}, i.e., an extraneous transpose marker (the ^T) corrupts the symbol and creates inconsistency with the later \\\\\\\\Gamma_{t,q} term.\"\n}",
+      "response_length": 301,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0445>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the diameter definition, the norm switches from a sum to a difference between two paired terms (plus inside the norm in one place, minus in another), i.e., a sign-flip error.\"\n}",
+      "response_length": 256,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0339>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0438>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Suspicious subscript ρ_{t×1} (written as ρ_{t\\\\times1}) instead of the intended ρ_t; this index change affects normalization.\"\n}",
+      "response_length": 207,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0457>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The second equality incorrectly replaces |X_q^{(t)}|^2 and |X_q^{(t-1)}|^2 by (n/ρ_t)^2 and (n/ρ_{t+1})^2, mixing index subscripts and breaking the intended dependence on t. This change in indices makes the claimed equality to 0 invalid.\"\n}",
+      "response_length": 319,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0437>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the definition of diam(Γ_{t,q}), the norm uses a sum of two vectors (x_i, T(x_j)) + (x_k, T(x_l)); this should be the difference to measure distance between points, i.e., (x_i, T(x_j)) - (x_k, T(x_l)).\"\n}",
+      "response_length": 283,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0539>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0520>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Inconsistent subscript: the outer definition uses Γ_m(X) with index j=0..J, while the inner definition uses Γ_j(X); the indices m and j are mismatched (should be Γ_j(X)).\"\n}",
+      "response_length": 252,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0545>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The cost is defined as a product over all pairs (k,k') of c(x_{j,k}, y_{j,k'}) π_j(x_{j,k}, y_{j,k'}), but the OT cost should be a sum: cost(π_j) = sum_{k, k'} c(x_{j,k}, y_{j,k'}) π_j(x_{j,k}, y_{j,k'}).\"\n}",
+      "response_length": 290,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0460>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0540>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The denominator uses a product over pi terms (\\\\prod) instead of a sum, effectively swapping a sum with a product and yielding a non-normalized weighted average. It should be a sum (or proper normalization) of the weights π, not a product.\"\n}",
+      "response_length": 325,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0454>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the definition of diameter Γ_{t,q}, the expression toggles from using the norm of the sum ( (x_i, T(x_j)) + (x_k, T(x_l)) ) to using the norm of the difference ( (x_i, T(x_j)) - (x_k, T(x_l)) ), i.e., a sign flip in the diameter definition.\"\n}",
+      "response_length": 322,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

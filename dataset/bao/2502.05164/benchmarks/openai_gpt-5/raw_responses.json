@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2502.05164",
+    "model": "openai/gpt-5",
+    "total_responses": 20,
+    "timestamp": "2025-10-31T18:02:46.887923"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0172>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0174>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"Typographical delimiter error: '\\\\geft[' should be '\\\\left[', causing a missing/mismatched opening bracket around the inner expectation.\"\n}",
+      "response_length": 225,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0189>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the first fraction, the numerator’s exponential uses +||x - tilde x_parallel||^2/(2 sigma_Z^2) instead of the required negative sign; both numerator and denominator should have e^{-||x - tilde x_parallel||^2/(2 sigma_Z^2)}.\"\n}",
+      "response_length": 305,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0183>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"When completing the square, the mean term uses σ0^2/(σ0^2 − σZ^2) but should be σ0^2/(σ0^2 + σZ^2); the plus was changed to minus in the denominator.\"\n}",
+      "response_length": 228,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0054>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The orders of the modified Bessel functions in the ratio are identical; they should be different (e.g., I_{d/2}(·)/I_{d/2−1}(·)). As written, the ratio equals 1, contradicting the integral expression.\"\n}",
+      "response_length": 282,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0187>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"In the final step, the denominator (σ0^2 + σZ^2) was incorrectly replaced by σ0^2 × σZ^2. The correct simplification is d σ0^2 σZ^2 / (σ0^2 + σZ^2), not divided by the product.\"\n}",
+      "response_length": 259,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0062>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The numerator incorrectly uses a product over components instead of a sum; it should be a sum of w_a e^{<mu_a, \\\\tilde X>/\\\\sigma_Z^2} mu_a to form the posterior mean.\"\n}",
+      "response_length": 253,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0197>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the numerator, the term uses μ_α inside the sum over a (e^{−||x−μ_α||^2/(2σ_a^2)}), which should be μ_a to match the summation index.\"\n}",
+      "response_length": 218,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0060>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The second term should be added, not subtracted; the correct posterior mean is (σ0^2/(σ0^2+σZ^2))·𝑋̃ + (σZ^2/(σ0^2+σZ^2))·E[μ_a | 𝑋̃]\"\n}",
+      "response_length": 212,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0173>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0193>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0245>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0201>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"In the commented precision-weighted formula, the denominator incorrectly uses \\\\sigma_\\\\eta^2/1 instead of 1/\\\\sigma_\\\\eta^2.\"\n}",
+      "response_length": 213,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0293>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0296>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"In the Hoeffding bound, the first exponential term uses exp(σ_Z^2/(R||\\\\tilde x||_2)) instead of exp(R||\\\\tilde x||_2/σ_Z^2); the numerator and denominator are swapped, making the equality to 2 sinh((R||\\\\tilde x||_2)/σ_Z^2) incorrect.\"\n}",
+      "response_length": 323,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0294>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0301>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0309>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0206>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0203>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The normalization prefactor inside the sums is inverted; it should scale as (σ_Z^2/(σ_Z^2+σ_a^2))^{n/2} (equivalently ((σ_Z^2+σ_a^2)/σ_Z^2)^{-n/2}), but the formula uses ((σ_Z^2+σ_a^2)/σ_a^2)^{n/2}, yielding incorrect a-dependent weights.\"\n}",
+      "response_length": 326,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

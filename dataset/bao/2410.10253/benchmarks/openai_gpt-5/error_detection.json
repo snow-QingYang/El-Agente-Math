@@ -1,0 +1,212 @@
+{
+  "metadata": {
+    "paper_id": "2410.10253",
+    "model": "openai/gpt-5",
+    "context_words": 300,
+    "total_formulas_checked": 20,
+    "timestamp": "2025-10-31T17:52:01.539245",
+    "benchmark_mode": true
+  },
+  "detections": [
+    {
+      "label": "<<FORMULA_0010>>",
+      "formula": "\\label{prediction_ODE}\n\t\t\\bm{x}(t + \\Delta t) = \\bm{x}(t) + \\int_t^{t + \\Delta t} {\\bm{f}\\left( {\\bm{x}\\left( \\tau \\right), \\bm{I}\\left( \\tau \\right),\\tau} \\right)d\\tau}.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 6.09
+    },
+    {
+      "label": "<<FORMULA_0084>>",
+      "formula": "\\label{eq:oc}\n\t\t&\\min_{\\bm{\\theta}} \\sum_{i=1}^{N-1} \\;l_i(\\bm{x}_i, {\\bm{x}_i}^r, \\bm{\\theta}) - l_N(\\bm{x}_N, {\\bm{x}_N}^r)\\\\\n\t\t& s.t.\\;\\;\\bm{x}_{i+1} = \n\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The terminal cost l_N is subtracted in the objective; it should be added (i.e., + l_N) to match the standard formulation and the stated adjoint terminal condition.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 8.38
+    },
+    {
+      "label": "<<FORMULA_0025>>",
+      "formula": "\\label{sys1_1}\n\t\t\\bm{\\hat{f}}_{neural}(t) = \\bm{f}_{neural}(t) + \\sum\\limits_{i = 0}^k {\\bm{L}\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_k}} \\right)} \\right)}",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "In the summation, the reference state uses t_k inside each term, but it should match the term’s index as t_i (i.e., use \\bar{x}(t_i) so each residual is x(t_i) - \\bar{x}(t_i)).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 12.16
+    },
+    {
+      "label": "<<FORMULA_0071>>",
+      "formula": "\\label{learn_feedback_part}\n\t\t{\\bm{\\xi} ^ * } & = \\mathop {\\arg \\min }\\limits_{\\bm{\\xi}}  \\sum\\limits_{i = 1}^{{n_{case}}} {\\sum\\limits_{j \\in \\mathcal{D}_i^{tra}} {\\left\\| {\\bm{x}_{i,j}^ *  - \\bm{x}_{i,j} } \\right\\|}} \\notag \\\\\n\t\ts.t.\\quad {\\bm{x}_{i,j}} & = {\\bm{x}_{i,j - 1}} + {T_s}\\left( {{\\bm{f}_{neural}}({\\bm{x}_{i,j - 1}}) + \\bm{h}_{neural}\\left( {{\\bm{x}_{i,j - 1}} - {\\bm{\\hat x}_{i,j - 1}},\\bm{\\xi} } \\right)} \\right)",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 12.93
+    },
+    {
+      "label": "<<FORMULA_0119>>",
+      "formula": "\\tilde{\\bm{x}}^{T} \\Delta \\bm{f}(t)\\le \\sqrt{\\lambda_{m}(\\bm{L})}\\|\\tilde{\\bm{x}}\\| \\frac{\\gamma}{\\sqrt{\\lambda_{m}(\\bm{L})}}\\\\ge \\frac{\\lambda_{m}(\\bm{L})\\|\\tilde{\\bm{x}}\\|^{2}}{2}+\\frac{\\gamma^{2}}{2 \\lambda_{m}(\\bm{L})}",
+      "has_error": true,
+      "error_type": "inequality_flip",
+      "error_description": "The second inequality is reversed; it should be '≤' (via Young's inequality), not '≥': √λ_m(L)‖x̃‖·(γ/√λ_m(L)) ≤ (λ_m(L)‖x̃‖²)/2 + γ²/(2λ_m(L)).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 13.09
+    },
+    {
+      "label": "<<FORMULA_0011>>",
+      "formula": "\\label{pure_NN}\n\t\t\\bm{f}\\left( {\\bm{x}(t),\\bm{I}(t), t} \\right) = \\bm{f}_{neural}\\left( {\\bm{x}(t),\\bm{I}(t), t,\\bm{\\theta}} \\right) + \\Delta \\bm{f}(t)",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 14.26
+    },
+    {
+      "label": "<<FORMULA_0030>>",
+      "formula": "\\label{auxiliary_var}\n\t\t\\bm {\\hat{x}}\\left( {{t}} \\right) = \\bm {\\bar{x}}\\left( {{t}} \\right) - \\sum\\limits_{i = 0}^{k-1} {\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_n}} \\right)} \\right)}",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "In the summand, the term uses \\bar{x}(t_n) instead of the consistent evaluation index \\bar{x}(t_k); the index n is incorrect.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 14.74
+    },
+    {
+      "label": "<<FORMULA_0118>>",
+      "formula": "\\label{lyapunov_devi}\n\t\t\\dot V\\left( t \\right) & = \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{\\dot{\\tilde {x}}}\\left( t \\right) \\notag \\\\\n\t\t&\\mathop  = \\limits^{(a)} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\left( {- \\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\Delta \\bm{f}(t)} \\right) \\notag \\\\\n\t\t& = -\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) \\\\times \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag \\\\\n\t\t& \\mathop  \\le \\limits^{(b)} \\textcolor{black}{-\\frac{\\lambda_m(\\bm{L})}{2} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{{\\tilde {x}}}{\\left( t \\right)} + \\frac{1}{2\\lambda_m(\\bm{L})}\\gamma^2}",
+      "has_error": true,
+      "error_type": "operator_swap",
+      "error_description": "The expression -x~^T L x~(t) × x~^T Δf(t) should be a sum, not a product: -x~^T L x~(t) + x~^T Δf(t).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 16.0
+    },
+    {
+      "label": "<<FORMULA_0050>>",
+      "formula": "\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_m(\\bm{L})}} + \\gamma\\right\\}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 16.21
+    },
+    {
+      "label": "<<FORMULA_0093>>",
+      "formula": "& \\begin{aligned}\n\t\t\tH &= J + \n\t\t\t\\sum_{i=1}^{N-1} \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})\n\t\t\\end{aligned}\\\\\n\t\t&\\bm{x}_{i+1} = \\nabla_{\\bm{\\lambda}} H \n\t\t= \\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta}),\n\t\t\\;\\bm{x}_1 = \\bm{x}(0) \\label{rollout}\\\\\n\t\t& \\bm{\\lambda}_i = \\nabla_{\\bm{x}}H \n\t\t= \\nabla_{\\bm{x}} l_i \\\\times (\\frac{\\partial \\bm{f}_{neural}^d}{\\partial{\\bm{x}}})^\\top\n\t\t\\bm{\\lambda}_{i+1} \\label{adjoint},\n\t\t\\;\\bm{\\lambda}_N = \\frac{\\partial{l_N}}{\\partial{\\bm{x}_N}}\\\\\n\t\t& \\begin{aligned}\n\t\t\t\\frac{\\partial{H}}{\\partial{\\bm{\\theta}}}\n\t\t\t= \\sum_{i=1}^{N-1} \\;\\nabla_{\\bm{\\theta}} l_i + \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\nabla_{\\bm{\\theta}} \\bm{f}_{neural}^d = 0\n\t\t\\end{aligned} \\label{gradient}",
+      "has_error": true,
+      "error_type": "operator_swap",
+      "error_description": "In the adjoint equation, the required plus between ∇_x l_i and (∂f_neural^d/∂x)^T λ_{i+1} is incorrectly written as a multiplication (×).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 23.47
+    },
+    {
+      "label": "<<FORMULA_0126>>",
+      "formula": "\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_m(\\bm{L})}} + \\gamma\\right\\}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 15.81
+    },
+    {
+      "label": "<<FORMULA_0130>>",
+      "formula": "\\label{discrete_error}\n\t\t\\textcolor{black}{{\\bm{\\tilde x}}(t_j)} & = \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) + T_s(\\bm{f}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}))} \\notag \\\\\n\t\t&\\mathop  = \\limits^{(c)} \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) +  T_s(\\bm{{f}}_{neural}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}) + \\Delta \\bm{f}(t) )}\\notag \\\\\n\t\t&\\mathop  = \\limits^{(d)} \\textcolor{black}{(\\bm{I}- T_s\\bm{L}){\\bm{\\tilde x}}(t_{k-1}) + T_s\\Delta \\bm{f}(t)},",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "Inconsistent time indices: LHS uses t_j while RHS uses t_{k-1}; also Δf is written as Δf(t) instead of Δf(t_{k-1}) for consistency.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 12.03
+    },
+    {
+      "label": "<<FORMULA_0218>>",
+      "formula": "\\label{lyapunov2}\n\t\t\t\\textcolor{black}{V(t) = \\frac{1}{2}{\\bm{{\\tilde {x}}}}(t)^T{\\bm{{\\tilde {x}}}}(t) + \\frac{1}{2}{\\bm{\\tilde \\chi}}^T \\bm{\\Gamma}^{-1}{\\bm{\\tilde \\chi}}.}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 8.41
+    },
+    {
+      "label": "<<FORMULA_0167>>",
+      "formula": "\\label{quadrotor_model}\n\t\t\\begin{aligned}\n\t\t\t&\\dot {\\bm p} = \\bm v, \\quad \\dot {\\bm v} = \\bm a = \n\t\t\t-\\frac{1}{m}\\bm Z_B T + g\\bm Z_E\\\\\n\t\t\t& \\dot {\\bm{\\Theta}} = \\bm{W}(\\bm{\\Theta})\\bm{\\omega},\\quad\n\t\t\t\\bm J \\dot {\\bm \\omega}= \n\t\t\t-\\bm \\omega \\times (\\bm J \\bm \\omega) \n\t\t\t+ \\bm \\tau\\\\\n\t\t\t& [T, \\bm \\tau]^\\top = \\bm{C} \n\t\t\t[T_1, T_2, T_3, T_4]^\\top\n\t\t\\end{aligned}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 11.71
+    },
+    {
+      "label": "<<FORMULA_0123>>",
+      "formula": "\\label{bounded_converg}\n\t\t\\textcolor{black}{\\mathop {\\lim }\\limits_{t \\to \\infty }\\|\\bm{\\tilde{x}}(t)\\|\\le \\frac{\\gamma}{{\\lambda_m(\\bm{L})}}}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 19.85
+    },
+    {
+      "label": "<<FORMULA_0134>>",
+      "formula": "\\bm{\\dot{x}}\\left( t \\right) = \\left[ {\\begin{array}{*{20}{c}}\n\t\t\t\t{ - \\eta }&\\omega \\\\\n\t\t\t\t{ - \\omega }&{ - \\eta }\n\t\t\\end{array}} \\right]\\bm{x}\\left( t \\right) + \\\\geft[ {\\begin{array}{*{20}{c}}\n\t\t\t\t\\varepsilon \\\\\n\t\t\t\t\\varepsilon \n\t\t\\end{array}} \\right]",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 16.51
+    },
+    {
+      "label": "<<FORMULA_0184>>",
+      "formula": "\\begin{aligned}\n\t\t\t& \\min_{\\bm{x}_{1:N}, \\bm{u}_{0:N-1}}\\;\n\t\t\tl_N(\\bm{x}_N, \\bm{x}_N^r) +\n\t\t\t\\sum_{i=1}^{N}\\; l_x(\\bm{x}_i, \\bm{x}_i^r) + \n\t\t\tl_u(\\bm{u}_i, \\bm{u}_i^r)\\\\\n\t\t\t&\\begin{aligned}\n\t\t\t\ts.t.\\;\\;\n\t\t\t\t&\\bm{{x}}_{i+1}\n\t\t\t\t= \\bm{f}_d(\\bm{x}_i, \\bm{u}_i),\\; \\bm{x}_0 = \\bm{x}(0)\\\\\n\t\t\t\t&\\bm{u}_i \\in \\mathbb{U},\\;\\bm{x}_i \\in \\mathbb{X}\n\t\t\t\\end{aligned}\n\t\t\\end{aligned}\n\t\t\\label{Standard_MPC}",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "The stage-cost sum uses i=1..N, which omits i=0 and includes i=N (where u_N is not a decision variable), conflicting with u_{0:N-1}. It should typically sum over i=0..N-1.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 15.87
+    },
+    {
+      "label": "<<FORMULA_0216>>",
+      "formula": "\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_j(\\bm{L})}} + \\gamma\\right\\}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 16.83
+    },
+    {
+      "label": "<<FORMULA_0220>>",
+      "formula": "\\label{lyapunov_devi2}\n\t\t\t\\dot V\\left( t \\right) & = \\textcolor{black}{\\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\dot{{x}}}\\left( t \\right)-\\bm{\\dot{\\hat {x}}}\\left( t \\right)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Gamma}^{-1} {\\bm{\\dot{\\hat \\chi}}}}  \\notag \\\\\n\t\t\t&\\mathop  = \\limits^{(e)} \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) - \\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\Xi}(t)\\bm{\\tilde{\\chi}} + \\Delta \\bm{f}(t)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Xi}^T(t)\\bm{\\tilde{x}}(t)} \\notag \\\\\n\t\t\t& = \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag} \\\\",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "In step (e), the terms tilde{x}^T Xi(t) tilde{chi} and tilde{x}^T Delta f(t) are written with negative signs; they should be positive after substituting the error dynamics so that + tilde{x}^T Xi(t) tilde{chi} cancels with - tilde{chi}^T Xi^T(t) tilde{x}, yielding the final expression.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 21.6
+    },
+    {
+      "label": "<<FORMULA_0208>>",
+      "formula": "\\label{feedback_N^TN2}\n\t\t\\textcolor{black}{\\bm{\\hat{f}}_{neural}(t) = \\bm{\\Xi}(t)\\bm{\\hat{\\chi}} + \\bm{L}(\\bm{x}(t)-\\bm{\\hat{x}}(t)),}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 30.63
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2410.10253",
+    "model": "openai/gpt-5",
+    "total_responses": 20,
+    "timestamp": "2025-10-31T17:52:01.541473"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0010>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0084>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The terminal cost l_N is subtracted in the objective; it should be added (i.e., + l_N) to match the standard formulation and the stated adjoint terminal condition.\"\n}",
+      "response_length": 242,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0025>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the summation, the reference state uses t_k inside each term, but it should match the term’s index as t_i (i.e., use \\\\bar{x}(t_i) so each residual is x(t_i) - \\\\bar{x}(t_i)).\"\n}",
+      "response_length": 260,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0071>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0119>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The second inequality is reversed; it should be '≤' (via Young's inequality), not '≥': √λ_m(L)‖x̃‖·(γ/√λ_m(L)) ≤ (λ_m(L)‖x̃‖²)/2 + γ²/(2λ_m(L)).\"\n}",
+      "response_length": 229,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0011>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0030>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the summand, the term uses \\\\bar{x}(t_n) instead of the consistent evaluation index \\\\bar{x}(t_k); the index n is incorrect.\"\n}",
+      "response_length": 209,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0118>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"The expression -x~^T L x~(t) × x~^T Δf(t) should be a sum, not a product: -x~^T L x~(t) + x~^T Δf(t).\"\n}",
+      "response_length": 184,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0050>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0093>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"In the adjoint equation, the required plus between ∇_x l_i and (∂f_neural^d/∂x)^T λ_{i+1} is incorrectly written as a multiplication (×).\"\n}",
+      "response_length": 220,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0126>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0130>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Inconsistent time indices: LHS uses t_j while RHS uses t_{k-1}; also Δf is written as Δf(t) instead of Δf(t_{k-1}) for consistency.\"\n}",
+      "response_length": 213,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0218>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0167>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0123>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0134>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0184>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The stage-cost sum uses i=1..N, which omits i=0 and includes i=N (where u_N is not a decision variable), conflicting with u_{0:N-1}. It should typically sum over i=0..N-1.\"\n}",
+      "response_length": 253,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0216>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0220>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In step (e), the terms tilde{x}^T Xi(t) tilde{chi} and tilde{x}^T Delta f(t) are written with negative signs; they should be positive after substituting the error dynamics so that + tilde{x}^T Xi(t) tilde{chi} cancels with - tilde{chi}^T Xi^T(t) tilde{x}, yielding the final expression.\"\n}",
+      "response_length": 365,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0208>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

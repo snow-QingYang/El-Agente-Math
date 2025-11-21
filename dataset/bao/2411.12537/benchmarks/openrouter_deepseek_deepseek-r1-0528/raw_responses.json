@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2411.12537",
+    "model": "openrouter/deepseek/deepseek-r1-0528",
+    "total_responses": 20,
+    "timestamp": "2025-11-01T16:38:05.220751"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0479>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The reflection matrix should use minus sign (I - 2vv^T) but is written as I + 2vv^T for the first term\"\n}",
+      "response_length": 181,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0378>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the first row, second element, the eigenvalue subscript should be 'i' but is written as 'l'\"\n}",
+      "response_length": 176,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0125>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0215>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"In sign function definition, the condition for negative values uses 'x > 0' instead of 'x < 0'\"\n}",
+      "response_length": 179,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0428>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The subscript index on the left-hand side (l) does not match the variable used in the condition (k); it should be \\\\widehat\\\\mC_k to reflect the dependence on k\"\n}",
+      "response_length": 242,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0004>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"The multiplication operator '×' between matrices should be addition '+' for the standard linear recurrence form in LRNNs, as confirmed by context examples.\"\n}",
+      "response_length": 238,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0457>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The subscript index for odd states should be 2k+1 instead of 2k-1 to match context\"\n}",
+      "response_length": 164,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0652>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The state variable \\\\mH_t is missing the superscript index (s) and should be \\\\mH_t^{(s)}\"\n}",
+      "response_length": 171,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0647>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The minus operator should be a plus between \\mA^{(i)}(w^{(i)}_t) \\mH^{(i)}_{t-1} and \\mB^{(i)}(w^{(i)}_t) for correct state update in reset cases\"\n}",
+      "response_length": 224,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0507>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0681>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the state transition equation, the subscript for the state vector should be t-1 (previous state) but is incorrectly written as t+1 (future state)\"\n}",
+      "response_length": 230,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0406>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0356>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0694>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"The function for the fourth identity should be rotation (R) instead of reflection (H), as the product of a reflection and rotation yields a rotation\"\n}",
+      "response_length": 231,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0643>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the reset case, B should be defined as negative to yield a positive state in the recurrence; current definition leads to negative state vector when subtracted\"\n}",
+      "response_length": 240,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0431>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0695>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The rotation angle for defining vd_i should be negative: R(-2iπ/m) instead of R(2iπ/m)\"\n}",
+      "response_length": 165,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0696>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The rotation angle should be 2(i-j)π/m to match the state index vd_{i-j mod m}, but it is written as 2(i+j)π/m\"\n}",
+      "response_length": 189,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0706>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the even case (i mod 2 = 0), the plus operator should be minus in the modular addition: it should be y_i - x_{i+1} instead of y_i + x_{i+1}\"\n}",
+      "response_length": 221,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0703>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The operator in the subscript should be addition for cumulative sum: x1 - x2 mod m should be x1 + x2 mod m\"\n}",
+      "response_length": 185,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

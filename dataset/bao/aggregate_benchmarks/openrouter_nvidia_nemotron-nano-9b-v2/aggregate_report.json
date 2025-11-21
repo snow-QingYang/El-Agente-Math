@@ -1,0 +1,93 @@
+{
+  "model": "openrouter/nvidia/nemotron-nano-9b-v2",
+  "timestamp": "2025-10-31T17:32:31.655750",
+  "metadata": {
+    "total_papers_in_directory": 11,
+    "successful_benchmarks": 11,
+    "failed_benchmarks": 0,
+    "no_ground_truth": 0
+  },
+  "aggregate_metrics": {
+    "binary_classification": {
+      "mean_accuracy": 0.5771818181818182,
+      "mean_precision": 0.6750909090909091,
+      "mean_recall": 0.4401818181818182,
+      "mean_f1_score": 0.5177272727272727,
+      "std_accuracy": 0.21542089879202445,
+      "std_precision": 0.2809923324738433,
+      "std_recall": 0.18386126192421187,
+      "std_f1_score": 0.19892163829462642,
+      "min_accuracy": 0,
+      "max_accuracy": 0.769
+    },
+    "error_type_matching": {
+      "mean_type_accuracy": 0.515090909090909,
+      "std_type_accuracy": 0.31369585733492067
+    },
+    "instruction_following": {
+      "mean_perfect_json_rate": 0.6657272727272727,
+      "mean_fallback_rate": 0.023,
+      "mean_failure_rate": 0.22036363636363637
+    }
+  },
+  "per_error_type_performance": {
+    "sign_flip": {
+      "detected": 9,
+      "total": 20,
+      "recall": 0.45
+    },
+    "index_change": {
+      "detected": 3,
+      "total": 6,
+      "recall": 0.5
+    },
+    "operator_swap": {
+      "detected": 5,
+      "total": 10,
+      "recall": 0.5
+    },
+    "transpose_error": {
+      "detected": 4,
+      "total": 9,
+      "recall": 0.4444444444444444
+    },
+    "inequality_flip": {
+      "detected": 4,
+      "total": 10,
+      "recall": 0.4
+    },
+    "fraction_inversion": {
+      "detected": 4,
+      "total": 9,
+      "recall": 0.4444444444444444
+    },
+    "exponent_order": {
+      "detected": 2,
+      "total": 3,
+      "recall": 0.6666666666666666
+    },
+    "function_swap": {
+      "detected": 1,
+      "total": 3,
+      "recall": 0.3333333333333333
+    },
+    "sum_product_swap": {
+      "detected": 4,
+      "total": 6,
+      "recall": 0.6666666666666666
+    }
+  },
+  "paper_ids": [
+    "2410.10253",
+    "2506.04194",
+    "2410.14055",
+    "2411.00161",
+    "2502.02013",
+    "2411.12537",
+    "2507.09128",
+    "2502.05164",
+    "2410.16201",
+    "2506.08362",
+    "2503.03025"
+  ]
+}

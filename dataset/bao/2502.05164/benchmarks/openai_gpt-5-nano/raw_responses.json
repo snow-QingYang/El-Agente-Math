@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2502.05164",
+    "model": "openai/gpt-5-nano",
+    "total_responses": 20,
+    "timestamp": "2025-10-31T17:24:21.768018"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0062>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"Numerator uses a product over a (∏) instead of a sum (∑); the posterior should be sum_a [ w_a e^{<μ_a, X~> / σ_Z^2} μ_a ] divided by sum_a [ w_a e^{<μ_a, X~> / σ_Z^2} ], not a product in the numerator.\"\n}",
+      "response_length": 287,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0173>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0189>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The numerator contains e^{+||x - \\\\tilde x_{\\\\parallel}||^2/(2\\\\sigma_Z^2)} instead of the correct e^{-||x - \\\\tilde x_{\\\\parallel}||^2/(2\\\\sigma_Z^2)} in the Gaussian likelihood; the sign should be negative in the exponent for the likelihood term.\"\n}",
+      "response_length": 327,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0172>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0183>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The posterior mean term uses sigma0^2/(sigma0^2 - sigmaZ^2) instead of sigma0^2/(sigma0^2 + sigmaZ^2); the denominator should have a plus, not a minus.\"\n}",
+      "response_length": 230,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0174>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0197>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the numerator the Gaussian term uses mu_alpha while the sum uses mu_a; inconsistent index (mu_alpha vs mu_a) suggests a mismatch and should be mu_a in both places.\"\n}",
+      "response_length": 248,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0054>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The Bessel I function order is written as (d-1)/2 in both numerator and denominator, which would cancel the ratio and is inconsistent with the standard VMF normalization (the order should correspond to d/2 - 1, and may differ between terms).\"\n}",
+      "response_length": 323,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0245>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0193>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0187>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"Incorrect simplification: (σ0^2 + σZ^2)^2 in the denominator was treated as σ0^2 σZ^2, which leads to the erroneous result d. The correct simplification is d σ0^2 σZ^2 /(σ0^2 + σZ^2).\"\n}",
+      "response_length": 272,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0206>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0060>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"In the manifold-case formula, the final expression shows I_{(d-1)/2}(R ||X_parallel||/sigma_Z^2) divided by I_{(d-1)/2}(R ||X_parallel||/sigma_Z^2), i.e., the same order in numerator and denominator cancels to 1; this is highly likely a typo. The denominator should have a different order (e.g., I_{(d-1)/2}(...)/I_{(d+1)/2}(...)) or a different argument.\"\n}",
+      "response_length": 439,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0294>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0296>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"The expression (e^{A} - e^{-B})^2 with A = σ_Z^2/(R||x||_2) and B = R||x||_2/σ_Z^2 is rewritten as 2 sinh^2(B). This is incorrect in general (A ≠ B; AB = 1). The correct relation is (e^{A} - e^{-B})^2 = 4 sinh^2((A+B)/2) only when A = B. Therefore the bound using 2 exp[-L ε^2 / (2 sinh^2(B))] is not generally valid.\"\n}",
+      "response_length": 401,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0301>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0201>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"In the first expression, the denominator is σ_η^2 + 1/σ_α^2, while the numerator uses (1/σ_η^2). For a correct precision-weighted average, the denominator should be (1/σ_η^2) + (1/σ_α^2); the current terms are inconsistent and the two expressions are not algebraically equivalent.\"\n}",
+      "response_length": 368,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0293>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0203>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0309>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"Malformed grouping: '\\\\geft(' appears instead of '\\\\left(', indicating a missing/incorrect opening parenthesis around the inner expression after 1/L.\"\n}",
+      "response_length": 238,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

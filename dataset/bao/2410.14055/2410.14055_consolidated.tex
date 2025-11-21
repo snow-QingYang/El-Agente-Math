@@ -1,0 +1,2762 @@
+
+\documentclass{article} % For LaTeX2e
+\usepackage{iclr2025_conference,times}
+
+% Optional math commands from https://github.com/goodfeli/dlbook_notation.
+
+% BEGIN INCLUDE: math_commands.tex
+%%%%% NEW MATH DEFINITIONS %%%%%
+
+\usepackage{amsmath,amsfonts,bm}
+
+% Mark sections of captions for referring to divisions of figures
+% \newcommand{\figleft}{{\em (Left)}}
+% \newcommand{\figcenter}{{\em (Center)}}
+% \newcommand{\figright}{{\em (Right)}}
+% \newcommand{\figtop}{{\em (Top)}}
+% \newcommand{\figbottom}{{\em (Bottom)}}
+% \newcommand{\captiona}{{\em (a)}}
+% \newcommand{\captionb}{{\em (b)}}
+% \newcommand{\captionc}{{\em (c)}}
+% \newcommand{\captiond}{{\em (d)}}
+
+% Highlight a newly defined term
+% \newcommand{\newterm}[1]{{\bf #1}}
+
+
+% Figure reference, lower-case.
+\def\figref#1{figure~\ref{#1}}
+% Figure reference, capital. For start of sentence
+\def\Figref#1{Figure~\ref{#1}}
+\def\twofigref#1#2{figures \ref{#1} and \ref{#2}}
+\def\quadfigref#1#2#3#4{figures \ref{#1}, \ref{#2}, \ref{#3} and \ref{#4}}
+% Section reference, lower-case.
+\def\secref#1{section~\ref{#1}}
+% Section reference, capital.
+\def\Secref#1{Section~\ref{#1}}
+% Reference to two sections.
+\def\twosecrefs#1#2{sections \ref{#1} and \ref{#2}}
+% Reference to three sections.
+\def\secrefs#1#2#3{sections \ref{#1}, \ref{#2} and \ref{#3}}
+% Reference to an equation, lower-case.
+\def\eqref#1{equation~\ref{#1}}
+% Reference to an equation, upper case
+\def\Eqref#1{Equation~\ref{#1}}
+% A raw reference to an equation---avoid using if possible
+\def\plaineqref#1{\ref{#1}}
+% Reference to a chapter, lower-case.
+\def\chapref#1{chapter~\ref{#1}}
+% Reference to an equation, upper case.
+\def\Chapref#1{Chapter~\ref{#1}}
+% Reference to a range of chapters
+\def\rangechapref#1#2{chapters\ref{#1}--\ref{#2}}
+% Reference to an algorithm, lower-case.
+\def\algref#1{algorithm~\ref{#1}}
+% Reference to an algorithm, upper case.
+\def\Algref#1{Algorithm~\ref{#1}}
+\def\twoalgref#1#2{algorithms \ref{#1} and \ref{#2}}
+\def\Twoalgref#1#2{Algorithms \ref{#1} and \ref{#2}}
+% Reference to a part, lower case
+\def\partref#1{part~\ref{#1}}
+% Reference to a part, upper case
+\def\Partref#1{Part~\ref{#1}}
+\def\twopartref#1#2{parts \ref{#1} and \ref{#2}}
+
+\def\ceil#1{\lceil #1 \rceil}
+\def\floor#1{\lfloor #1 \rfloor}
+% \def\1{\bm{1}}
+% \newcommand{\train}{\mathcal{D}}
+% \newcommand{\valid}{\mathcal{D_{\mathrm{valid}}}}
+% \newcommand{\test}{\mathcal{D_{\mathrm{test}}}}
+
+\def\eps{{\epsilon}}
+
+
+% Random variables
+\def\reta{{\textnormal{$\eta$}}}
+\def\ra{{\textnormal{a}}}
+\def\rb{{\textnormal{b}}}
+\def\rc{{\textnormal{c}}}
+\def\rd{{\textnormal{d}}}
+\def\re{{\textnormal{e}}}
+\def\rf{{\textnormal{f}}}
+\def\rg{{\textnormal{g}}}
+\def\rh{{\textnormal{h}}}
+\def\ri{{\textnormal{i}}}
+\def\rj{{\textnormal{j}}}
+\def\rk{{\textnormal{k}}}
+\def\rl{{\textnormal{l}}}
+% rm is already a command, just don't name any random variables m
+\def\rn{{\textnormal{n}}}
+\def\ro{{\textnormal{o}}}
+\def\rp{{\textnormal{p}}}
+\def\rq{{\textnormal{q}}}
+\def\rr{{\textnormal{r}}}
+\def\rs{{\textnormal{s}}}
+\def\rt{{\textnormal{t}}}
+\def\ru{{\textnormal{u}}}
+\def\rv{{\textnormal{v}}}
+\def\rw{{\textnormal{w}}}
+\def\rx{{\textnormal{x}}}
+\def\ry{{\textnormal{y}}}
+\def\rz{{\textnormal{z}}}
+
+% Random vectors
+\def\rvepsilon{{\mathbf{\epsilon}}}
+\def\rvtheta{{\mathbf{\theta}}}
+\def\rva{{\mathbf{a}}}
+\def\rvb{{\mathbf{b}}}
+\def\rvc{{\mathbf{c}}}
+\def\rvd{{\mathbf{d}}}
+\def\rve{{\mathbf{e}}}
+\def\rvf{{\mathbf{f}}}
+\def\rvg{{\mathbf{g}}}
+\def\rvh{{\mathbf{h}}}
+\def\rvu{{\mathbf{i}}}
+\def\rvj{{\mathbf{j}}}
+\def\rvk{{\mathbf{k}}}
+\def\rvl{{\mathbf{l}}}
+\def\rvm{{\mathbf{m}}}
+\def\rvn{{\mathbf{n}}}
+\def\rvo{{\mathbf{o}}}
+\def\rvp{{\mathbf{p}}}
+\def\rvq{{\mathbf{q}}}
+\def\rvr{{\mathbf{r}}}
+\def\rvs{{\mathbf{s}}}
+\def\rvt{{\mathbf{t}}}
+\def\rvu{{\mathbf{u}}}
+\def\rvv{{\mathbf{v}}}
+\def\rvw{{\mathbf{w}}}
+\def\rvx{{\mathbf{x}}}
+\def\rvy{{\mathbf{y}}}
+\def\rvz{{\mathbf{z}}}
+
+% Elements of random vectors
+\def\erva{{\textnormal{a}}}
+\def\ervb{{\textnormal{b}}}
+\def\ervc{{\textnormal{c}}}
+\def\ervd{{\textnormal{d}}}
+\def\erve{{\textnormal{e}}}
+\def\ervf{{\textnormal{f}}}
+\def\ervg{{\textnormal{g}}}
+\def\ervh{{\textnormal{h}}}
+\def\ervi{{\textnormal{i}}}
+\def\ervj{{\textnormal{j}}}
+\def\ervk{{\textnormal{k}}}
+\def\ervl{{\textnormal{l}}}
+\def\ervm{{\textnormal{m}}}
+\def\ervn{{\textnormal{n}}}
+\def\ervo{{\textnormal{o}}}
+\def\ervp{{\textnormal{p}}}
+\def\ervq{{\textnormal{q}}}
+\def\ervr{{\textnormal{r}}}
+\def\ervs{{\textnormal{s}}}
+\def\ervt{{\textnormal{t}}}
+\def\ervu{{\textnormal{u}}}
+\def\ervv{{\textnormal{v}}}
+\def\ervw{{\textnormal{w}}}
+\def\ervx{{\textnormal{x}}}
+\def\ervy{{\textnormal{y}}}
+\def\ervz{{\textnormal{z}}}
+
+% Random matrices
+\def\rmA{{\mathbf{A}}}
+\def\rmB{{\mathbf{B}}}
+\def\rmC{{\mathbf{C}}}
+\def\rmD{{\mathbf{D}}}
+\def\rmE{{\mathbf{E}}}
+\def\rmF{{\mathbf{F}}}
+\def\rmG{{\mathbf{G}}}
+\def\rmH{{\mathbf{H}}}
+\def\rmI{{\mathbf{I}}}
+\def\rmJ{{\mathbf{J}}}
+\def\rmK{{\mathbf{K}}}
+\def\rmL{{\mathbf{L}}}
+\def\rmM{{\mathbf{M}}}
+\def\rmN{{\mathbf{N}}}
+\def\rmO{{\mathbf{O}}}
+\def\rmP{{\mathbf{P}}}
+\def\rmQ{{\mathbf{Q}}}
+\def\rmR{{\mathbf{R}}}
+\def\rmS{{\mathbf{S}}}
+\def\rmT{{\mathbf{T}}}
+\def\rmU{{\mathbf{U}}}
+\def\rmV{{\mathbf{V}}}
+\def\rmW{{\mathbf{W}}}
+\def\rmX{{\mathbf{X}}}
+\def\rmY{{\mathbf{Y}}}
+\def\rmZ{{\mathbf{Z}}}
+
+% Elements of random matrices
+\def\ermA{{\textnormal{A}}}
+\def\ermB{{\textnormal{B}}}
+\def\ermC{{\textnormal{C}}}
+\def\ermD{{\textnormal{D}}}
+\def\ermE{{\textnormal{E}}}
+\def\ermF{{\textnormal{F}}}
+\def\ermG{{\textnormal{G}}}
+\def\ermH{{\textnormal{H}}}
+\def\ermI{{\textnormal{I}}}
+\def\ermJ{{\textnormal{J}}}
+\def\ermK{{\textnormal{K}}}
+\def\ermL{{\textnormal{L}}}
+\def\ermM{{\textnormal{M}}}
+\def\ermN{{\textnormal{N}}}
+\def\ermO{{\textnormal{O}}}
+\def\ermP{{\textnormal{P}}}
+\def\ermQ{{\textnormal{Q}}}
+\def\ermR{{\textnormal{R}}}
+\def\ermS{{\textnormal{S}}}
+\def\ermT{{\textnormal{T}}}
+\def\ermU{{\textnormal{U}}}
+\def\ermV{{\textnormal{V}}}
+\def\ermW{{\textnormal{W}}}
+\def\ermX{{\textnormal{X}}}
+\def\ermY{{\textnormal{Y}}}
+\def\ermZ{{\textnormal{Z}}}
+
+% Vectors
+\def\vzero{{\bm{0}}}
+\def\vone{{\bm{1}}}
+\def\vmu{{\bm{\mu}}}
+\def\vtheta{{\bm{\theta}}}
+\def\va{{\bm{a}}}
+\def\vb{{\bm{b}}}
+\def\vc{{\bm{c}}}
+\def\vd{{\bm{d}}}
+\def\ve{{\bm{e}}}
+\def\vf{{\bm{f}}}
+\def\vg{{\bm{g}}}
+\def\vh{{\bm{h}}}
+\def\vi{{\bm{i}}}
+\def\vj{{\bm{j}}}
+\def\vk{{\bm{k}}}
+\def\vl{{\bm{l}}}
+\def\vm{{\bm{m}}}
+\def\vn{{\bm{n}}}
+\def\vo{{\bm{o}}}
+\def\vp{{\bm{p}}}
+\def\vq{{\bm{q}}}
+\def\vr{{\bm{r}}}
+\def\vs{{\bm{s}}}
+\def\vt{{\bm{t}}}
+\def\vu{{\bm{u}}}
+\def\vv{{\bm{v}}}
+\def\vw{{\bm{w}}}
+\def\vx{{\bm{x}}}
+\def\vy{{\bm{y}}}
+\def\vz{{\bm{z}}}
+
+% Elements of vectors
+\def\evalpha{{\alpha}}
+\def\evbeta{{\beta}}
+\def\evepsilon{{\epsilon}}
+\def\evlambda{{\lambda}}
+\def\evomega{{\omega}}
+\def\evmu{{\mu}}
+\def\evpsi{{\psi}}
+\def\evsigma{{\sigma}}
+\def\evtheta{{\theta}}
+\def\eva{{a}}
+\def\evb{{b}}
+\def\evc{{c}}
+\def\evd{{d}}
+\def\eve{{e}}
+\def\evf{{f}}
+\def\evg{{g}}
+\def\evh{{h}}
+\def\evi{{i}}
+\def\evj{{j}}
+\def\evk{{k}}
+\def\evl{{l}}
+\def\evm{{m}}
+\def\evn{{n}}
+\def\evo{{o}}
+\def\evp{{p}}
+\def\evq{{q}}
+\def\evr{{r}}
+\def\evs{{s}}
+\def\evt{{t}}
+\def\evu{{u}}
+\def\evv{{v}}
+\def\evw{{w}}
+\def\evx{{x}}
+\def\evy{{y}}
+\def\evz{{z}}
+
+% Matrix
+\def\mA{{\bm{A}}}
+\def\mB{{\bm{B}}}
+\def\mC{{\bm{C}}}
+\def\mD{{\bm{D}}}
+\def\mE{{\bm{E}}}
+\def\mF{{\bm{F}}}
+\def\mG{{\bm{G}}}
+\def\mH{{\bm{H}}}
+\def\mI{{\bm{I}}}
+\def\mJ{{\bm{J}}}
+\def\mK{{\bm{K}}}
+\def\mL{{\bm{L}}}
+\def\mM{{\bm{M}}}
+\def\mN{{\bm{N}}}
+\def\mO{{\bm{O}}}
+\def\mP{{\bm{P}}}
+\def\mQ{{\bm{Q}}}
+\def\mR{{\bm{R}}}
+\def\mS{{\bm{S}}}
+\def\mT{{\bm{T}}}
+\def\mU{{\bm{U}}}
+\def\mV{{\bm{V}}}
+\def\mW{{\bm{W}}}
+\def\mX{{\bm{X}}}
+\def\mY{{\bm{Y}}}
+\def\mZ{{\bm{Z}}}
+\def\mBeta{{\bm{\beta}}}
+\def\mPhi{{\bm{\Phi}}}
+\def\mLambda{{\bm{\Lambda}}}
+\def\mSigma{{\bm{\Sigma}}}
+
+% Tensor
+\DeclareMathAlphabet{\mathsfit}{\encodingdefault}{\sfdefault}{m}{sl}
+\SetMathAlphabet{\mathsfit}{bold}{\encodingdefault}{\sfdefault}{bx}{n}
+% \newcommand{\tens}[1]{\bm{\mathsfit{#1}}}
+\def\tA{{\tens{A}}}
+\def\tB{{\tens{B}}}
+\def\tC{{\tens{C}}}
+\def\tD{{\tens{D}}}
+\def\tE{{\tens{E}}}
+\def\tF{{\tens{F}}}
+\def\tG{{\tens{G}}}
+\def\tH{{\tens{H}}}
+\def\tI{{\tens{I}}}
+\def\tJ{{\tens{J}}}
+\def\tK{{\tens{K}}}
+\def\tL{{\tens{L}}}
+\def\tM{{\tens{M}}}
+\def\tN{{\tens{N}}}
+\def\tO{{\tens{O}}}
+\def\tP{{\tens{P}}}
+\def\tQ{{\tens{Q}}}
+\def\tR{{\tens{R}}}
+\def\tS{{\tens{S}}}
+\def\tT{{\tens{T}}}
+\def\tU{{\tens{U}}}
+\def\tV{{\tens{V}}}
+\def\tW{{\tens{W}}}
+\def\tX{{\tens{X}}}
+\def\tY{{\tens{Y}}}
+\def\tZ{{\tens{Z}}}
+
+
+% Graph
+\def\gA{{\mathcal{A}}}
+\def\gB{{\mathcal{B}}}
+\def\gC{{\mathcal{C}}}
+\def\gD{{\mathcal{D}}}
+\def\gE{{\mathcal{E}}}
+\def\gF{{\mathcal{F}}}
+\def\gG{{\mathcal{G}}}
+\def\gH{{\mathcal{H}}}
+\def\gI{{\mathcal{I}}}
+\def\gJ{{\mathcal{J}}}
+\def\gK{{\mathcal{K}}}
+\def\gL{{\mathcal{L}}}
+\def\gM{{\mathcal{M}}}
+\def\gN{{\mathcal{N}}}
+\def\gO{{\mathcal{O}}}
+\def\gP{{\mathcal{P}}}
+\def\gQ{{\mathcal{Q}}}
+\def\gR{{\mathcal{R}}}
+\def\gS{{\mathcal{S}}}
+\def\gT{{\mathcal{T}}}
+\def\gU{{\mathcal{U}}}
+\def\gV{{\mathcal{V}}}
+\def\gW{{\mathcal{W}}}
+\def\gX{{\mathcal{X}}}
+\def\gY{{\mathcal{Y}}}
+\def\gZ{{\mathcal{Z}}}
+
+% Sets
+\def\sA{{\mathbb{A}}}
+\def\sB{{\mathbb{B}}}
+\def\sC{{\mathbb{C}}}
+\def\sD{{\mathbb{D}}}
+% Don't use a set called E, because this would be the same as our symbol
+% for expectation.
+\def\sF{{\mathbb{F}}}
+\def\sG{{\mathbb{G}}}
+\def\sH{{\mathbb{H}}}
+\def\sI{{\mathbb{I}}}
+\def\sJ{{\mathbb{J}}}
+\def\sK{{\mathbb{K}}}
+\def\sL{{\mathbb{L}}}
+\def\sM{{\mathbb{M}}}
+\def\sN{{\mathbb{N}}}
+\def\sO{{\mathbb{O}}}
+\def\sP{{\mathbb{P}}}
+\def\sQ{{\mathbb{Q}}}
+\def\sR{{\mathbb{R}}}
+\def\sS{{\mathbb{S}}}
+\def\sT{{\mathbb{T}}}
+\def\sU{{\mathbb{U}}}
+\def\sV{{\mathbb{V}}}
+\def\sW{{\mathbb{W}}}
+\def\sX{{\mathbb{X}}}
+\def\sY{{\mathbb{Y}}}
+\def\sZ{{\mathbb{Z}}}
+
+% Entries of a matrix
+\def\emLambda{{\Lambda}}
+\def\emA{{A}}
+\def\emB{{B}}
+\def\emC{{C}}
+\def\emD{{D}}
+\def\emE{{E}}
+\def\emF{{F}}
+\def\emG{{G}}
+\def\emH{{H}}
+\def\emI{{I}}
+\def\emJ{{J}}
+\def\emK{{K}}
+\def\emL{{L}}
+\def\emM{{M}}
+\def\emN{{N}}
+\def\emO{{O}}
+\def\emP{{P}}
+\def\emQ{{Q}}
+\def\emR{{R}}
+\def\emS{{S}}
+\def\emT{{T}}
+\def\emU{{U}}
+\def\emV{{V}}
+\def\emW{{W}}
+\def\emX{{X}}
+\def\emY{{Y}}
+\def\emZ{{Z}}
+\def\emSigma{{\Sigma}}
+
+% entries of a tensor
+% Same font as tensor, without \bm wrapper
+% \newcommand{\etens}[1]{\mathsfit{#1}}
+\def\etLambda{{\etens{\Lambda}}}
+\def\etA{{\etens{A}}}
+\def\etB{{\etens{B}}}
+\def\etC{{\etens{C}}}
+\def\etD{{\etens{D}}}
+\def\etE{{\etens{E}}}
+\def\etF{{\etens{F}}}
+\def\etG{{\etens{G}}}
+\def\etH{{\etens{H}}}
+\def\etI{{\etens{I}}}
+\def\etJ{{\etens{J}}}
+\def\etK{{\etens{K}}}
+\def\etL{{\etens{L}}}
+\def\etM{{\etens{M}}}
+\def\etN{{\etens{N}}}
+\def\etO{{\etens{O}}}
+\def\etP{{\etens{P}}}
+\def\etQ{{\etens{Q}}}
+\def\etR{{\etens{R}}}
+\def\etS{{\etens{S}}}
+\def\etT{{\etens{T}}}
+\def\etU{{\etens{U}}}
+\def\etV{{\etens{V}}}
+\def\etW{{\etens{W}}}
+\def\etX{{\etens{X}}}
+\def\etY{{\etens{Y}}}
+\def\etZ{{\etens{Z}}}
+
+% The true underlying data generating distribution
+% \newcommand{\pdata}{p_{\rm{data}}}
+% The empirical distribution defined by the training set
+% \newcommand{\ptrain}{\hat{p}_{\rm{data}}}
+% \newcommand{\Ptrain}{\hat{P}_{\rm{data}}}
+% % The model distribution
+% \newcommand{\pmodel}{p_{\rm{model}}}
+% % \newcommand{\Pmodel}{P_{\rm{model}}}
+% \newcommand{\ptildemodel}{\tilde{p}_{\rm{model}}}
+% Stochastic autoencoder distributions
+% \newcommand{\pencode}{p_{\rm{encoder}}}
+% \newcommand{\pdecode}{p_{\rm{decoder}}}
+% \newcommand{\precons}{p_{\rm{reconstruct}}}
+
+% \newcommand{\laplace}{\mathrm{Laplace}} % Laplace distribution
+
+% \newcommand{\E}{\mathbb{E}}
+% \newcommand{\Ls}{\mathcal{L}}
+% \newcommand{\R}{\mathbb{R}}
+% \newcommand{\emp}{\tilde{p}}
+% \newcommand{\lr}{\alpha}
+% \newcommand{\reg}{\lambda}
+% \newcommand{\rect}{\mathrm{rectifier}}
+% \newcommand{\softmax}{\mathrm{softmax}}
+% \newcommand{\sigmoid}{\sigma}
+% \newcommand{\softplus}{\zeta}
+% \newcommand{\KL}{D_{\mathrm{KL}}}
+% \newcommand{\Var}{\mathrm{Var}}
+% \newcommand{\standarderror}{\mathrm{SE}}
+% \newcommand{\Cov}{\mathrm{Cov}}
+% % Wolfram Mathworld says $L^2$ is for function spaces and $\ell^2$ is for vectors
+% % But then they seem to use $L^2$ for vectors throughout the site, and so does
+% % wikipedia.
+% \newcommand{\normlzero}{L^0}
+% \newcommand{\normlone}{L^1}
+% \newcommand{\normltwo}{L^2}
+% \newcommand{\normlp}{L^p}
+% \newcommand{\normmax}{L^\infty}
+
+% \newcommand{\parents}{Pa} % See usage in notation.tex. Chosen to match Daphne's book.
+
+% \DeclareMathOperator*{\argmax}{arg\,max}
+% \DeclareMathOperator*{\argmin}{arg\,min}
+
+% \DeclareMathOperator{\sign}{sign}
+% \DeclareMathOperator{\Tr}{Tr}
+% \let\ab\allowbreak
+
+% END INCLUDE: math_commands.tex
+
+
+
+% BEGIN INCLUDE: Commands/Packages
+%!TEX root = main.tex
+
+\usepackage{setspace}
+%\doublespacing
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{amsthm}
+%\usepackage{subfigure}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{graphics} % for pdf, bitmapped graphics files
+\usepackage{epsfig} % for postscript graphics files
+% \usepackage{mathptmx} % assumes new font selection scheme installed
+\usepackage{times} % assumes new font selection scheme installed
+\usepackage{amsmath} % assumes amsmath package installed
+\usepackage{amssymb}  % assumes amsmath package installed
+\usepackage{makeidx}
+\usepackage{float}
+\usepackage{balance}
+\usepackage{booktabs}
+\usepackage{bbm}
+\usepackage{mathrsfs}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+% \usepackage{algpseudocode}
+\usepackage{float}
+\usepackage{placeins}
+
+\usepackage{mathrsfs}
+\usepackage[normalem]{ulem}
+%\usepackage{balance}
+\usepackage{xr} % enable referencing labels in other documents
+% \usepackage{xcolor}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage[nolist]{acronym}
+%  This is used for custom colored hyperlinks within the document to point to equations or references. If submitting to a journal or conference, use their defaults and comment this out
+\usepackage{xcolor}
+\usepackage[colorlinks]{hyperref}       % hyperlinks
+
+\hypersetup{
+  colorlinks = true,
+  allcolors = siaminlinkcolor,
+  urlcolor = siamexlinkcolor,
+}
+\colorlet{siaminlinkcolor}{green!50!black}
+\colorlet{siamexlinkcolor}{red!50!black}
+
+\usepackage{lipsum} %this package can be removed
+
+\usepackage{setspace}
+%\doublespacing
+
+
+\usepackage{cleveref} %Cleveref must be defined after hyperref
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linkcolor={blue!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!50!black}
+}
+
+% \usepackage{parskip}
+\usepackage{cancel}
+\usepackage{hyperref}
+\usepackage{siunitx}
+
+% END INCLUDE: Commands/Packages
+
+
+% BEGIN INCLUDE: Commands/math_commands
+%%%%% NEW MATH DEFINITIONS %%%%%
+
+\usepackage{amsmath,amsfonts,bm}
+
+% Mark sections of captions for referring to divisions of figures
+\newcommand{\figleft}{{\em (Left)}}
+\newcommand{\figcenter}{{\em (Center)}}
+\newcommand{\figright}{{\em (Right)}}
+\newcommand{\figtop}{{\em (Top)}}
+\newcommand{\figbottom}{{\em (Bottom)}}
+\newcommand{\captiona}{{\em (a)}}
+\newcommand{\captionb}{{\em (b)}}
+\newcommand{\captionc}{{\em (c)}}
+\newcommand{\captiond}{{\em (d)}}
+
+% Highlight a newly defined term
+\newcommand{\newterm}[1]{{\bf #1}}
+
+
+% Figure reference, lower-case.
+\def\figref#1{figure~\ref{#1}}
+% Figure reference, capital. For start of sentence
+\def\Figref#1{Figure~\ref{#1}}
+\def\twofigref#1#2{figures \ref{#1} and \ref{#2}}
+\def\quadfigref#1#2#3#4{figures \ref{#1}, \ref{#2}, \ref{#3} and \ref{#4}}
+% Section reference, lower-case.
+\def\secref#1{section~\ref{#1}}
+% Section reference, capital.
+\def\Secref#1{Section~\ref{#1}}
+% Reference to two sections.
+\def\twosecrefs#1#2{sections \ref{#1} and \ref{#2}}
+% Reference to three sections.
+\def\secrefs#1#2#3{sections \ref{#1}, \ref{#2} and \ref{#3}}
+% Reference to an equation, lower-case.
+\def\eqref#1{equation~\ref{#1}}
+% Reference to an equation, upper case
+\def\Eqref#1{Equation~\ref{#1}}
+% A raw reference to an equation---avoid using if possible
+\def\plaineqref#1{\ref{#1}}
+% Reference to a chapter, lower-case.
+\def\chapref#1{chapter~\ref{#1}}
+% Reference to an equation, upper case.
+\def\Chapref#1{Chapter~\ref{#1}}
+% Reference to a range of chapters
+\def\rangechapref#1#2{chapters\ref{#1}--\ref{#2}}
+% Reference to an algorithm, lower-case.
+\def\algref#1{algorithm~\ref{#1}}
+% Reference to an algorithm, upper case.
+\def\Algref#1{Algorithm~\ref{#1}}
+\def\twoalgref#1#2{algorithms \ref{#1} and \ref{#2}}
+\def\Twoalgref#1#2{Algorithms \ref{#1} and \ref{#2}}
+% Reference to a part, lower case
+\def\partref#1{part~\ref{#1}}
+% Reference to a part, upper case
+\def\Partref#1{Part~\ref{#1}}
+\def\twopartref#1#2{parts \ref{#1} and \ref{#2}}
+
+\def\ceil#1{\lceil #1 \rceil}
+\def\floor#1{\lfloor #1 \rfloor}
+\def\1{\bm{1}}
+\newcommand{\train}{\mathcal{D}}
+\newcommand{\valid}{\mathcal{D_{\mathrm{valid}}}}
+\newcommand{\test}{\mathcal{D_{\mathrm{test}}}}
+
+\def\eps{{\epsilon}}
+\def\del{{\delta }}
+\def\delx{{\delta x}}
+\def\delu{{\delta u}}
+
+
+% Random variables
+\def\reta{{\textnormal{$\eta$}}}
+\def\ra{{\textnormal{a}}}
+\def\rb{{\textnormal{b}}}
+\def\rc{{\textnormal{c}}}
+\def\rd{{\textnormal{d}}}
+\def\re{{\textnormal{e}}}
+\def\rf{{\textnormal{f}}}
+\def\rg{{\textnormal{g}}}
+\def\rh{{\textnormal{h}}}
+\def\ri{{\textnormal{i}}}
+\def\rj{{\textnormal{j}}}
+\def\rk{{\textnormal{k}}}
+\def\rl{{\textnormal{l}}}
+
+% rm is already a command, just don't name any random variables m
+\def\rn{{\textnormal{n}}}
+\def\ro{{\textnormal{o}}}
+\def\rp{{\textnormal{p}}}
+\def\rq{{\textnormal{q}}}
+\def\rr{{\textnormal{r}}}
+\def\rs{{\textnormal{s}}}
+\def\rt{{\textnormal{t}}}
+\def\ru{{\textnormal{u}}}
+\def\rv{{\textnormal{v}}}
+\def\rw{{\textnormal{w}}}
+\def\rx{{\textnormal{x}}}
+\def\ry{{\textnormal{y}}}
+\def\rz{{\textnormal{z}}}
+
+% Random vectors
+\def\rvepsilon{{\mathbf{\epsilon}}}
+\def\rvtheta{{\mathbf{\theta}}}
+\def\rva{{\mathbf{a}}}
+\def\rvb{{\mathbf{b}}}
+\def\rvc{{\mathbf{c}}}
+\def\rvd{{\mathbf{d}}}
+\def\rve{{\mathbf{e}}}
+\def\rvf{{\mathbf{f}}}
+\def\rvg{{\mathbf{g}}}
+\def\rvh{{\mathbf{h}}}
+\def\rvu{{\mathbf{i}}}
+\def\rvj{{\mathbf{j}}}
+\def\rvk{{\mathbf{k}}}
+\def\rvl{{\mathbf{l}}}
+\def\rvm{{\mathbf{m}}}
+\def\rvn{{\mathbf{n}}}
+\def\rvo{{\mathbf{o}}}
+\def\rvp{{\mathbf{p}}}
+\def\rvq{{\mathbf{q}}}
+\def\rvr{{\mathbf{r}}}
+\def\rvs{{\mathbf{s}}}
+\def\rvt{{\mathbf{t}}}
+\def\rvu{{\mathbf{u}}}
+\def\rvv{{\mathbf{v}}}
+\def\rvw{{\mathbf{w}}}
+\def\rvx{{\mathbf{x}}}
+\def\rvX{{\mathbf{X}}}
+\def\rvy{{\mathbf{y}}}
+\def\rvY{{\mathbf{Y}}}
+\def\rvz{{\mathbf{z}}}
+
+% Elements of random vectors
+\def\erva{{\textnormal{a}}}
+\def\ervb{{\textnormal{b}}}
+\def\ervc{{\textnormal{c}}}
+\def\ervd{{\textnormal{d}}}
+\def\erve{{\textnormal{e}}}
+\def\ervf{{\textnormal{f}}}
+\def\ervg{{\textnormal{g}}}
+\def\ervh{{\textnormal{h}}}
+\def\ervi{{\textnormal{i}}}
+\def\ervj{{\textnormal{j}}}
+\def\ervk{{\textnormal{k}}}
+\def\ervl{{\textnormal{l}}}
+\def\ervm{{\textnormal{m}}}
+\def\ervn{{\textnormal{n}}}
+\def\ervo{{\textnormal{o}}}
+\def\ervp{{\textnormal{p}}}
+\def\ervq{{\textnormal{q}}}
+\def\ervr{{\textnormal{r}}}
+\def\ervs{{\textnormal{s}}}
+\def\ervt{{\textnormal{t}}}
+\def\ervu{{\textnormal{u}}}
+\def\ervv{{\textnormal{v}}}
+\def\ervw{{\textnormal{w}}}
+\def\ervx{{\textnormal{x}}}
+\def\ervy{{\textnormal{y}}}
+\def\ervz{{\textnormal{z}}}
+
+% Random matrices
+\def\rmA{{\mathbf{A}}}
+\def\rmB{{\mathbf{B}}}
+\def\rmC{{\mathbf{C}}}
+\def\rmD{{\mathbf{D}}}
+\def\rmE{{\mathbf{E}}}
+\def\rmF{{\mathbf{F}}}
+\def\rmG{{\mathbf{G}}}
+\def\rmH{{\mathbf{H}}}
+\def\rmI{{\mathbf{I}}}
+\def\rmJ{{\mathbf{J}}}
+\def\rmK{{\mathbf{K}}}
+\def\rmL{{\mathbf{L}}}
+\def\rmM{{\mathbf{M}}}
+\def\rmN{{\mathbf{N}}}
+\def\rmO{{\mathbf{O}}}
+\def\rmP{{\mathbf{P}}}
+\def\rmQ{{\mathbf{Q}}}
+\def\rmR{{\mathbf{R}}}
+\def\rmS{{\mathbf{S}}}
+\def\rmT{{\mathbf{T}}}
+\def\rmU{{\mathbf{U}}}
+\def\rmV{{\mathbf{V}}}
+\def\rmW{{\mathbf{W}}}
+\def\rmX{{\mathbf{X}}}
+\def\rmY{{\mathbf{Y}}}
+\def\rmZ{{\mathbf{Z}}}
+
+% Elements of random matrices
+\def\ermA{{\textnormal{A}}}
+\def\ermB{{\textnormal{B}}}
+\def\ermC{{\textnormal{C}}}
+\def\ermD{{\textnormal{D}}}
+\def\ermE{{\textnormal{E}}}
+\def\ermF{{\textnormal{F}}}
+\def\ermG{{\textnormal{G}}}
+\def\ermH{{\textnormal{H}}}
+\def\ermI{{\textnormal{I}}}
+\def\ermJ{{\textnormal{J}}}
+\def\ermK{{\textnormal{K}}}
+\def\ermL{{\textnormal{L}}}
+\def\ermM{{\textnormal{M}}}
+\def\ermN{{\textnormal{N}}}
+\def\ermO{{\textnormal{O}}}
+\def\ermP{{\textnormal{P}}}
+\def\ermQ{{\textnormal{Q}}}
+\def\ermR{{\textnormal{R}}}
+\def\ermS{{\textnormal{S}}}
+\def\ermT{{\textnormal{T}}}
+\def\ermU{{\textnormal{U}}}
+\def\ermV{{\textnormal{V}}}
+\def\ermW{{\textnormal{W}}}
+\def\ermX{{\textnormal{X}}}
+\def\ermY{{\textnormal{Y}}}
+\def\ermZ{{\textnormal{Z}}}
+
+% Vectors
+\def\vzero{{\bm{0}}}
+\def\vone{{\bm{1}}}
+\def\vmu{{\bm{\mu}}}
+\def\vtheta{{\bm{\theta}}}
+\def\va{{\bm{a}}}
+\def\vb{{\bm{b}}}
+\def\vc{{\bm{c}}}
+\def\vd{{\bm{d}}}
+\def\ve{{\bm{e}}}
+\def\vf{{\bm{f}}}
+\def\vg{{\bm{g}}}
+\def\vh{{\bm{h}}}
+\def\vi{{\bm{i}}}
+\def\vj{{\bm{j}}}
+\def\vk{{\bm{k}}}
+\def\vl{{\bm{l}}}
+\def\vm{{\bm{m}}}
+\def\vn{{\bm{n}}}
+\def\vo{{\bm{o}}}
+\def\vp{{\bm{p}}}
+\def\vq{{\bm{q}}}
+\def\vr{{\bm{r}}}
+\def\vs{{\bm{s}}}
+\def\vt{{\bm{t}}}
+\def\vu{{\bm{u}}}
+\def\vv{{\bm{v}}}
+\def\vw{{\bm{w}}}
+\def\vx{{\bm{x}}}
+\def\vy{{\bm{y}}}
+\def\vz{{\bm{z}}}
+
+% Elements of vectors
+\def\evalpha{{\alpha}}
+\def\evbeta{{\beta}}
+\def\evepsilon{{\epsilon}}
+\def\evlambda{{\lambda}}
+\def\evomega{{\omega}}
+\def\evmu{{\mu}}
+\def\evpsi{{\psi}}
+\def\evsigma{{\sigma}}
+\def\evtheta{{\theta}}
+\def\eva{{a}}
+\def\evb{{b}}
+\def\evc{{c}}
+\def\evd{{d}}
+\def\eve{{e}}
+\def\evf{{f}}
+\def\evg{{g}}
+\def\evh{{h}}
+\def\evi{{i}}
+\def\evj{{j}}
+\def\evk{{k}}
+\def\evl{{l}}
+\def\evm{{m}}
+\def\evn{{n}}
+\def\evo{{o}}
+\def\evp{{p}}
+\def\evq{{q}}
+\def\evr{{r}}
+\def\evs{{s}}
+\def\evt{{t}}
+\def\evu{{u}}
+\def\evv{{v}}
+\def\evw{{w}}
+\def\evx{{x}}
+\def\evy{{y}}
+\def\evz{{z}}
+
+% Matrix
+\def\mA{{\bm{A}}}
+\def\mB{{\bm{B}}}
+\def\mC{{\bm{C}}}
+\def\mD{{\bm{D}}}
+\def\mE{{\bm{E}}}
+\def\mF{{\bm{F}}}
+\def\mG{{\bm{G}}}
+\def\mH{{\bm{H}}}
+\def\mI{{\bm{I}}}
+\def\mJ{{\bm{J}}}
+\def\mK{{\bm{K}}}
+\def\mL{{\bm{L}}}
+\def\mM{{\bm{M}}}
+\def\mN{{\bm{N}}}
+\def\mO{{\bm{O}}}
+\def\mP{{\bm{P}}}
+\def\mQ{{\bm{Q}}}
+\def\mR{{\bm{R}}}
+\def\mS{{\bm{S}}}
+\def\mT{{\bm{T}}}
+\def\mU{{\bm{U}}}
+\def\mV{{\bm{V}}}
+\def\mW{{\bm{W}}}
+\def\mX{{\bm{X}}}
+\def\mY{{\bm{Y}}}
+\def\mZ{{\bm{Z}}}
+\def\mBeta{{\bm{\beta}}}
+\def\mPhi{{\bm{\Phi}}}
+\def\mLambda{{\bm{\Lambda}}}
+\def\mSigma{{\bm{\Sigma}}}
+
+% Tensor
+\DeclareMathAlphabet{\mathsfit}{\encodingdefault}{\sfdefault}{m}{sl}
+\SetMathAlphabet{\mathsfit}{bold}{\encodingdefault}{\sfdefault}{bx}{n}
+\newcommand{\tens}[1]{\bm{\mathsfit{#1}}}
+\def\tA{{\tens{A}}}
+\def\tB{{\tens{B}}}
+\def\tC{{\tens{C}}}
+\def\tD{{\tens{D}}}
+\def\tE{{\tens{E}}}
+\def\tF{{\tens{F}}}
+\def\tG{{\tens{G}}}
+\def\tH{{\tens{H}}}
+\def\tI{{\tens{I}}}
+\def\tJ{{\tens{J}}}
+\def\tK{{\tens{K}}}
+\def\tL{{\tens{L}}}
+\def\tM{{\tens{M}}}
+\def\tN{{\tens{N}}}
+\def\tO{{\tens{O}}}
+\def\tP{{\tens{P}}}
+\def\tQ{{\tens{Q}}}
+\def\tR{{\tens{R}}}
+\def\tS{{\tens{S}}}
+\def\tT{{\tens{T}}}
+\def\tU{{\tens{U}}}
+\def\tV{{\tens{V}}}
+\def\tW{{\tens{W}}}
+\def\tX{{\tens{X}}}
+\def\tY{{\tens{Y}}}
+\def\tZ{{\tens{Z}}}
+
+
+% Graph
+\def\gA{{\mathcal{A}}}
+\def\gB{{\mathcal{B}}}
+\def\gC{{\mathcal{C}}}
+\def\gD{{\mathcal{D}}}
+\def\gE{{\mathcal{E}}}
+\def\gF{{\mathcal{F}}}
+\def\gG{{\mathcal{G}}}
+\def\gH{{\mathcal{H}}}
+\def\gI{{\mathcal{I}}}
+\def\gJ{{\mathcal{J}}}
+\def\gK{{\mathcal{K}}}
+\def\gL{{\mathcal{L}}}
+\def\gM{{\mathcal{M}}}
+\def\gN{{\mathcal{N}}}
+\def\gO{{\mathcal{O}}}
+\def\gP{{\mathcal{P}}}
+\def\gQ{{\mathcal{Q}}}
+\def\gR{{\mathcal{R}}}
+\def\gS{{\mathcal{S}}}
+\def\gT{{\mathcal{T}}}
+\def\gU{{\mathcal{U}}}
+\def\gV{{\mathcal{V}}}
+\def\gW{{\mathcal{W}}}
+\def\gX{{\mathcal{X}}}
+\def\gY{{\mathcal{Y}}}
+\def\gZ{{\mathcal{Z}}}
+
+% Sets
+\def\sA{{\mathbb{A}}}
+\def\sB{{\mathbb{B}}}
+\def\sC{{\mathbb{C}}}
+\def\sD{{\mathbb{D}}}
+% Don't use a set called E, because this would be the same as our symbol
+% for expectation.
+\def\sF{{\mathbb{F}}}
+\def\sG{{\mathbb{G}}}
+\def\sH{{\mathbb{H}}}
+\def\sI{{\mathbb{I}}}
+\def\sJ{{\mathbb{J}}}
+\def\sK{{\mathbb{K}}}
+\def\sL{{\mathbb{L}}}
+\def\sM{{\mathbb{M}}}
+\def\sN{{\mathbb{N}}}
+\def\sO{{\mathbb{O}}}
+\def\sP{{\mathbb{P}}}
+\def\sQ{{\mathbb{Q}}}
+\def\sR{{\mathbb{R}}}
+\def\sS{{\mathbb{S}}}
+\def\sT{{\mathbb{T}}}
+\def\sU{{\mathbb{U}}}
+\def\sV{{\mathbb{V}}}
+\def\sW{{\mathbb{W}}}
+\def\sX{{\mathbb{X}}}
+\def\sY{{\mathbb{Y}}}
+\def\sZ{{\mathbb{Z}}}
+
+% Entries of a matrix
+\def\emLambda{{\Lambda}}
+\def\emA{{A}}
+\def\emB{{B}}
+\def\emC{{C}}
+\def\emD{{D}}
+\def\emE{{E}}
+\def\emF{{F}}
+\def\emG{{G}}
+\def\emH{{H}}
+\def\emI{{I}}
+\def\emJ{{J}}
+\def\emK{{K}}
+\def\emL{{L}}
+\def\emM{{M}}
+\def\emN{{N}}
+\def\emO{{O}}
+\def\emP{{P}}
+\def\emQ{{Q}}
+\def\emR{{R}}
+\def\emS{{S}}
+\def\emT{{T}}
+\def\emU{{U}}
+\def\emV{{V}}
+\def\emW{{W}}
+\def\emX{{X}}
+\def\emY{{Y}}
+\def\emZ{{Z}}
+\def\emSigma{{\Sigma}}
+
+% entries of a tensor
+% Same font as tensor, without \bm wrapper
+\newcommand{\etens}[1]{\mathsfit{#1}}
+\def\etLambda{{\etens{\Lambda}}}
+\def\etA{{\etens{A}}}
+\def\etB{{\etens{B}}}
+\def\etC{{\etens{C}}}
+\def\etD{{\etens{D}}}
+\def\etE{{\etens{E}}}
+\def\etF{{\etens{F}}}
+\def\etG{{\etens{G}}}
+\def\etH{{\etens{H}}}
+\def\etI{{\etens{I}}}
+\def\etJ{{\etens{J}}}
+\def\etK{{\etens{K}}}
+\def\etL{{\etens{L}}}
+\def\etM{{\etens{M}}}
+\def\etN{{\etens{N}}}
+\def\etO{{\etens{O}}}
+\def\etP{{\etens{P}}}
+\def\etQ{{\etens{Q}}}
+\def\etR{{\etens{R}}}
+\def\etS{{\etens{S}}}
+\def\etT{{\etens{T}}}
+\def\etU{{\etens{U}}}
+\def\etV{{\etens{V}}}
+\def\etW{{\etens{W}}}
+\def\etX{{\etens{X}}}
+\def\etY{{\etens{Y}}}
+\def\etZ{{\etens{Z}}}
+
+% The true underlying data generating distribution
+\newcommand{\pdata}{p_{\rm{data}}}
+% The empirical distribution defined by the training set
+\newcommand{\ptrain}{\hat{p}_{\rm{data}}}
+\newcommand{\Ptrain}{\hat{P}_{\rm{data}}}
+% The model distribution
+\newcommand{\pmodel}{p_{\rm{model}}}
+\newcommand{\Pmodel}{P_{\rm{model}}}
+\newcommand{\ptildemodel}{\tilde{p}_{\rm{model}}}
+% Stochastic autoencoder distributions
+\newcommand{\pencode}{p_{\rm{encoder}}}
+\newcommand{\pdecode}{p_{\rm{decoder}}}
+\newcommand{\precons}{p_{\rm{reconstruct}}}
+
+\newcommand{\laplace}{\mathrm{Laplace}} % Laplace distribution
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Ls}{\mathcal{L}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\emp}{\tilde{p}}
+\newcommand{\lr}{\alpha}
+\newcommand{\reg}{\lambda}
+\newcommand{\rect}{\mathrm{rectifier}}
+\newcommand{\softmax}{\mathrm{softmax}}
+\newcommand{\sigmoid}{\sigma}
+\newcommand{\softplus}{\zeta}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\standarderror}{\mathrm{SE}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Proj}{\mathrm{Proj}}
+\newcommand{\Alg}{\mathrm{Alg}}
+\newcommand{\vectorize}{\mathrm{vec}}
+% \newcommand{\Alg}{\mathrm{Alg}}
+
+% Wolfram Mathworld says $L^2$ is for function spaces and $\ell^2$ is for vectors
+% But then they seem to use $L^2$ for vectors throughout the site, and so does
+% wikipedia.
+\newcommand{\normlzero}{L^0}
+\newcommand{\normlone}{L^1}
+\newcommand{\normltwo}{L^2}
+\newcommand{\normlp}{L^p}
+\newcommand{\normmax}{L^\infty}
+
+\newcommand{\parents}{Pa} % See usage in notation.tex. Chosen to match Daphne's book.
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Tr}{Tr}
+\let\ab\allowbreak
+
+\newlength\myindent
+\setlength\myindent{2em}
+
+\newcommand\bindent{%
+  \begingroup
+  \setlength{\itemindent}{\myindent}
+  \addtolength{\algorithmicindent}{\myindent}
+}
+\newcommand\eindent{\endgroup}
+
+% END INCLUDE: Commands/math_commands
+
+
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage[export]{adjustbox}
+\usepackage{xcolor}
+\usepackage{subcaption}
+\usepackage{enumitem}
+
+% \usepackage{slashbox}
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the
+% [preprint] option:
+%     \usepackage[preprint]{neurips_2023}
+
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+%     \usepackage[final]{neurips_2023}
+
+
+% to avoid loading the natbib package, add option nonatbib:
+%    \usepackage[nonatbib]{neurips_2023}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+
+\newcommand{\guan}[1]{{\color{red}{\bf[Guan:} #1{\bf]}}}
+
+\title{Feedback Schr\"{o}dinger Bridge Matching}
+% Authors must not appear in the submitted version. They should be hidden
+% as long as the \iclrfinalcopy macro remains commented out below.
+% Non-anonymous submissions will be rejected without review.
+\vspace{-.4in}
+\author{Panagiotis Theodoropoulos$^{\normalfont\text{1}}$,~Nikos Komianos$^{\normalfont\text{1}}$,~Vincent Pacelli$^{\normalfont\text{1}}$,\\
+\textbf{Guan-Horng Liu}$^{\normalfont\text{2}}$\thanks{Equal advising. Work done while Guan was at Georgia Tech.}~,
+\textbf{Evangelos A. Theodorou}$^{\normalfont\text{1}\dagger}$\\
+$^{\normalfont\text{1}}$Georgia Institute of Technology~~%
+$^{\normalfont\text{2}}$FAIR, Meta\\
+\texttt{\{ptheodor3,nkomianos3,vpacelli3,evangelos.theodorou\}@gatech.edu} \\
+\texttt{ghliu@meta.com}
+}
+% Change thanks symbol to dagger
+% https://tex.stackexchange.com/questions/455140/customizing-the-symbol-next-to-the-authors-name-in-a-document
+\makeatletter
+\def\@fnsymbol#1{\ensuremath{\ifcase#1\or \dagger\or \ddagger\or
+   \mathsection\or \mathparagraph\or \|\or **\or \dagger\dagger
+   \or \ddagger\ddagger \else\@ctrerr\fi}}
+\makeatother
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+\def\eq#1{Eq. (\ref{eq:#1})}
+
+\iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
+
+\begin{document}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\maketitle
+\vspace{-.3in}
+\begin{abstract}
+Recent advancements in diffusion bridges for distribution transport problems have heavily relied on matching frameworks, yet existing methods often face a trade-off between scalability and access to optimal pairings during training. 
+Fully unsupervised methods make minimal assumptions but incur high computational costs, limiting their practicality. On the other hand, imposing full supervision of the matching process with optimal pairings improves scalability, however, it can be infeasible in most applications.
+% Fully unsupervised methods (e.g. DSBM; \citet{shi2023diffusion}) make minimal assumptions but incur high computational costs, limiting their practicality. On the other hand, more scalable approaches (e.g. I$^2$SB; \citet{liu20232}) require full supervision with optimal pairings, which can be impractical.
+To strike a balance between scalability and minimal supervision, we introduce \textbf{Feedback Schrödinger Bridge Matching (FSBM)}, a novel \textit{semi-supervised} matching framework that incorporates a small portion ($<8\%$ of the entire dataset) of pre-aligned pairs as \textit{state feedback} to guide the transport map of non-coupled samples, thereby significantly improving efficiency. This is achieved by formulating a static Entropic Optimal Transport (EOT) problem with an additional term capturing the semi-supervised guidance. The generalized EOT objective is then recast into a dynamic formulation to leverage the scalability of matching frameworks. Extensive experiments demonstrate that FSBM accelerates training and enhances generalization by leveraging coupled pairs' guidance, opening new avenues for training matching frameworks with partially aligned datasets.
+
+% Modern matching frameworks can not effectively leverage information from partially aligned datasets, where some pairs are a priori optimally coupled. These algorithms build diffusion bridges either in an unsupervised fashion, discovering the couplings during training, or in a supervised manner, relying entirely on pre-aligned optimal pairs.
+% In this vein, we introduce \textbf{Feedback Schrödinger Bridge Matching (FSBM)}, a novel semi-supervised matching framework capable of effectively handling partially aligned datasets.
+% In addition to minimizing the kinetic energy, our algorithm also incorporates pre-aligned pairs as state feedback to effectively guide the matching of non-coupled samples, thereby improving generalizability and efficiency.
+% Our analysis starts from a static Entropic Optimal Transport (EOT) objective with an additional regularization term to capture semi-supervised guidance. 
+% We recast this generalized EOT objective into a dynamic formulation to obtain a more comprehensive transport map and leverage the enhanced scalability of matching frameworks.
+% We empirically validate through extensive experimentation, the faster training and greater generalizability achieved by our algorithm, as a product of the guidance from the coupled pairs. 
+% Finally, our method creates new algorithmic opportunities for training matching frameworks, leveraging partially aligned datasets.
+\end{abstract}
+
+
+% BEGIN INCLUDE: Text/Introduction
+\section{Introduction}
+Transporting samples between distributions is a ubiquitous problem in machine learning. Given the rise of generative modeling, significant progress has been made using static \citep{goodfellow2014generative}, deterministic \citep{chen2018neural, bilovs2021neural}, or stochastic mappings \citep{ho2020denoising,song2020score} that transport samples from noise to a more complex distribution. 
+A prominent approach lies in diffusion models that simulate a Stochastic Differential Equation (SDE) to diffuse the data to noise, and learn the score function 
+\citep{hyvarinen2005estimation, vincent2011connection} to reverse the process \citep{anderson1982reverse}.
+However, these models present several limitations.
+For instance, the requirement to converge during the noising (forward) process to a Gaussian noise suggests that these models must run for a sufficient number of time steps to ensure the final distribution approximates Gaussian noise \citep{chen2021likelihood}.
+Additionally, this suggests that these models begin their generative (backward) processes without any structural information about the data distribution, which implies randomness being introduced in the couplings that emerge from the diffusion models \citep{liu20232}.
+Lastly, there is no guarantee that the optimal path interpolating the boundary distribution minimizes the kinetic energy. \citep{shi2023diffusion}
+
+In an attempt to overcome these shortcomings, principled approaches that stem from Optimal Transport \citep{villani2009optimal} have emerged. The most prominent alternative has been the Schrödinger Bridge (SB; \citet{schrodinger1931umkehrung}), which has been shown to be equivalent to entropy-regularized Optimal Transport (EOT;  \citet{cuturi2013sinkhorn,leonard2013survey,pavon2021data}), and can also be framed as a Stochastic Optimal Control (SOC) Problem \citep{chen2016relation,chen2021likelihood}. 
+In particular, SB gained significant popularity in the realm of generative modeling following advancements proposing a training scheme based on the Iterative Proportional Fitting (IPF), a continuous state space extension of the Sinkhorn algorithm to solve the dynamic SB problem \citep{de2021diffusion,vargas2021solving}. 
+Notably, SB generalizes standard diffusion models transporting data between arbitrary distributions $\pi_0, \pi_1$ with fully nonlinear stochastic processes, seeking the unique path measure that minimizes the kinetic energy.
+More recently, building on advancements in Bridge Matching methods \citep{peluchetti2023diffusion, liu2022let}, \citet{shi2023diffusion} introduced Diffusion Schrödinger Bridge Matching (DSBM), a framework that solves the Schrödinger Bridge problem while being significantly more efficient. Unlike previous methods, DSBM avoids the need to cache the full trajectories of forward and backward SDEs, making it more scalable and mitigating the time-discretization and "forgetting" issues encountered in earlier DSB techniques.
+% \guan{this is not true; DSBM needs simulation and caches model coupling, it also accumulates errors just the same as IPF. Emphasize scalability form other points, or say empirically more scalable}. 
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{images/concept.png}
+    \caption{FSBM connecting existing Bridge Matching frameworks at the extremes, where the dataset is comprised of either fully aligned or fully non-aligned pairs}
+    \label{fig:Fsbm-brigding}
+\end{figure}
+For training these matching frameworks, we start from two datasets that lack pre-aligned pairs---that is, we sample only from the marginal $\pi_0, \pi_1$---and the framework is trained to determine the optimal coupling in the sense of least-energy transportation.
+This process represents an unsupervised learning approach, as no prior information about the coupling is provided.
+However, there are other applications---such as image restoration \citep{liu20232} and protein docking \citep{somnath2023aligned}---in which we have prior knowledge of the coupling $\pi_{0,1}$, between pairs $(x_0, x_1)\sim \pi_{0,1}$ drawn presumably from the SB solutions. Consequently, using an unsupervised approach for such problems is not ideal, as it discards valuable information about the relationships between the samples of the two boundary distributions. An alternative approach suggests reframing these tasks as inverse problems. In this vein, \cite{liu20232} proposed recently $I^2 SB$, building diffusion bridge matching frameworks between coupled data to perform image restoration.
+ 
+In practice, in most tasks, the available datasets might possess a few limited coupled pairs, however, the high cost of manually labeling large datasets renders fully supervised approaches infeasible. 
+Unfortunately, existing matching frameworks can not effectively leverage the information in partially pre-aligned datasets. 
+An alternative approach from Optimal Transport (OT) literature involves using guided transportation maps, where only a few pairs that belong to a Key-Point (KP) set are annotated. These pairs are utilized to guide the transportation mapping of the unpaired samples \citep{gu2023optimal}, substantially reducing the need for extensive human labeling or expert guidance by leveraging a small number of source-target aligned sample pairs for training \citep{mustafa2020transformation}.
+More specifically, recent approaches employ a “relation-preserving” scheme, which maintains the data’s relationship to the given pairs from the KP set \citep{memoli2011gromov,sato2020fast}, or a pairwise distance-preserving constraint \citep{gu2023keypointguided}. 
+However, the feasibility of adapting semi-supervised guidance in a dynamic Schrödinger Bridge or Bridge Matching setting remains an open question. 
+In this vein, drawing inspiration from the guided OT schemes, we advocate a semi-supervised guided Schrödinger Bridge Matching framework.
+
+In this work, we introduce a novel semi-supervised matching algorithm, \textbf{Feedback Schrödinger Bridge Matching (FSBM)}, designed to integrate information from partially aligned datasets. Drawing inspiration from optimal transport (OT) literature \citep{gu2022keypoint}, our analysis begins from a static, semi-supervised OT problem, from which we derive a dynamic objective. Following recent advancements in matching frameworks, we adopt an alternating scheme, where the intermediate path and the coupling are optimized in two separate steps, resulting in a novel matching framework that leverages partially aligned data to guide the transport mapping of non-aligned samples.
+A key aspect of our approach is that the information from aligned samples is encoded as \textbf{state feedback} within the dynamic objective, effectively steering the transport of non-aligned data. This renders our FSBM a bridge between two extremes: unsupervised matching frameworks, which lack pre-aligned couplings \citep{shi2023diffusion}, and fully supervised frameworks, where data is entirely pre-aligned \citep{liu20232,somnath2023aligned} (see Figure \ref{fig:Fsbm-brigding}).
+Empirical results show that our algorithm generalizes better, is more robust to perturbations in the initial conditions, and exhibits reduced training time. Our contributions are summarized as follows:
+\begin{itemize}
+    \item We introduce FSBM, the first matching framework leveraging information from partially aligned datasets.
+    \item We begin our analysis from a static semi-supervised OT problem, and derive a modified dynamic formulation.  Notably, our analysis can be extended to any selection of regularization functions.
+    \item We introduce an Entropic Lagrangian extension of the variational gap objective used in BM frameworks to match the parameterized drift given a prescribed probability path
+    \item Through extensive experimentation, we verify the remarkable capability of FSBM to generalize under a variety of unseen initial conditions, while simultaneously achieving faster training times. These results were consistent across a wide range of matching tasks from low-dimension crowd navigation, to high-dimensional opinion depolarization and image translation.
+\end{itemize}
+
+
+
+% \guan{should be marginal? why joint? vanilla SB requires only marginal samples then learn joint optimal coupling}
+% i was referring to DSBM and GSBM
+% not clear from the current context -- the coupling DSBM used is more from algorithmic standpoint rather than problem formulation (which is what we'd like to emphasize here
+% that is what i tried to convey, that's why i said require as in what the algorithm needs
+% also, not all joint distributions lead to DSBM solution, so the statement is technically inaccurate 
+% i know i just used it because the couplings are joint distributions, right? should i change it back to coupling? and then regarding the reference to DSBM and GSBM, i used 'matching frameworks' in the begining, bc i tried to shift the conversation from vanilla SB to SB matching
+% we should just use marginal. The knowledge of how DSBM solves SB (with model coupling) isn't introduced at this point yet -- and isn't relavent to the story line either
+% like that?
+% maybe start this paragraph from SB not from DSBM? It's the problem formulation of SB that implies unsupervised learning
+% --------
+% For training these matching frameworks, we start from two datasets with no pre-aligned pairs are available---that is, we sample only from the marginal $\pi_0, \pi_1$---and the framework is trained to determine the optimal coupling in the sense of least-energy transportation.
+% --------
+
+
+% Optimal Transport (OT) (Villani, 2009) is a mathematical tool for distribution alignment, mass transport, etc.
+
+
+% OT has been employed in many applications et al., 2011; Solomon et al., 2015), natural language processing (Kusner et al., 2015; Huang et al., 2016; Alvarez-Melis and Jaakkola, 2018; Yurochkin et al., 2019), generative adversarial network (Arjovsky et al., 2017), domain adaptation (Courty et al., 2017), clustering (Ho et al., 2017; Huynh et al., 2021), anomaly detection (Tong et al., 2022), dataset comparison (Alvarez-Melis and Fusi, 2020)
+% In most of the above models, the main criterion for the optimal transport plan/matching is by the minimization of total transport distance or distortion over all samples. Though having achieved promising results in many applications, without any additional guidance, the OT models may lead to incorrect matching of samples.
+% In many applications, it is reasonable to annotate some paired keypoints across domains for guiding the matching in OT.
+% The GW model (Mémoli, 2011) seeks a “distance-preserving” transport plan such that the distance between transported points in the target domain is the same as the distance between the original points in source domain
+% Lin et al. (2021) use the anchors to encourage clustering of data and to impose rank constraints on the transport plan to improve its robustness to outliers.
+% Hierarchical OT (Yurochkin et al., 2019; Lee et al., 2019; Xu et al., 2020) transports points by dividing them into some subgroups and then derives the transport of these subgroups using OT
+% Courty et al. (2017) constrain the cost function to encourage the matching of labeled data across source and target domains that share the same class labels for domain adaptation. They use the Laplacian regularization to preserve the data structure.
+% Zhang et al. (2022) propose Masked OT model as a regularization term to preserve the local feature invariances between fine-tuned and pretrained graph neural network 
+% In the earlier supervised I2I translation works (Isola et al., 2017; Wang et al., 2018; Zhu et al., 2017b; Zhang et al., 2020; Bansal et al., 2018), researchers use many aligned cross-domain image pairs to obtain the translation model that translates the source images to the desired target images. However, training supervised translation is not very practical because of the difficulty and high cost of acquiring these large, paired training data in many tasks.
+% Semi-supervised I2I translation approach (Mustafa and Mantiuk, 2020) leverages source images alongside a few source-target aligned image pairs for training, reducing the cost of human labeling or expert guidance in supervised I2I.
+% Unsupervised I2I translation methods (Zhu et al., 2017a; Kim et al., 2017; Yi et al., 2017; Choi et al., 2021; Meng et al., 2021)
+
+
+% One of such data-rich applications is generative modeling
+% while Denoising Diffusion Models (DDMs) (Song et al., 2021b; Ho et al., 2020) build a dynamic, stochastic transport map by simulating a Stochastic Differential Equation (SDE), whose drift is learned using score matching (Hyvärinen, 2005; Vincent, 2011).
+%  recent developments of Bridge Matching and Flow Matching models, which are dynamic transport maps using SDEs (Song et al., 2021a; Peluchetti, 2021; Liu, 2022; Albergo et al., 2023) or ODEs (Albergo and VandenEijnden, 2023; Heitz et al., 2023; Lipman et al., 2023; Liu et al., 2023b). Compared to DDMs, Bridge and Flow Matching methods do not rely on a forward “noising” diffusion converging to the reference distribution in infinite time, and are also more generally applicable as they can approximate transport maps between two general distributions based on their samples.
+% increasing attention in the machine learning community
+% In a landmark paper, Cuturi (2013) showed that an entropy-regularized version of OT can be computed more efficiently using the Sinkhorn algorithm (Sinkhorn, 1967).
+% In contrast, the Schrödinger Bridge (SB) problem is a dynamic version of entropy-regularized OT (EOT) (Föllmer, 1988; Léonard, 2014b). The SB is the finite-time diffusion which admits as initial and terminal distributions the two distributions of interest and is the closest in Kullback–Leibler divergence to a reference diffusion. 
+% Numerous methods to approximate SBs numerically have been proposed, see e.g. (Bernton et al., 2019; Chen et al., 2016; Finlay et al., 2020; Caluya and Halder, 2021; Pavon et al., 2021), but these techniques tend to be restricted to low-dimensional settings. Recently, novel techniques using diffusion-based ideas have been proposed in (De Bortoli et al., 2021; Vargas et al., 2021; Chen et al., 2022) based on Iterative Proportional Fitting (IPF) (Fortet, 1940; Kullback, 1968; Rüschendorf and Thomsen, 1993), a continuous state-space extension of the Sinkhorn algorithm (Essid and Pavon, 2019). These approaches have been shown to scale better empirically, but numerical errors tend to accumulate over iterations (Fernandes et al., 2021).
+
+% While an exciting line of new matching algorithms (Peluchetti, 2023; Shi et al., 2023) has been developed for SB, i.e., when Vt := 0, to ensure that the solutions are proximity to the feasible set throughout training, it remains unclear whether, or how, these “SB Matching” (SBM)
+% The distribution matching problem—of learning transport maps that match specific distributions—is a ubiquitous problem setup that appears in many areas of machine learning, with extensive applications in optimal transport (Peyr´e & Cuturi, 2017), domain adaptation (Wang & Deng, 2018), and generative modeling (Sohl-Dickstein et al., 2015; Chen et al., 2018).
+% The tasks are often cast as learning mappings, X0 → X1, such that X0 ∼ µ X1 ∼ ν follow the (unknown) laws of two distributions µ,ν.
+
+
+% Optimal transport (OT) has emerged as a powerful tool in many domains of machine learning (Arjovsky et al., 2017;Peyré \& Cuturi, 2018). 
+% Generative modeling has also been among the domains that has enjoyed a big influx of methodologies stemming from OT. 
+% OT maps have shown potential as generative models for image generation and restoration (Rout et al., 2021). Recent efforts focus on guiding OT maps to enhance learning, using methods like GW distance to create "distance-preserving" transport plans (Mémoli, 2011) or keypoint-based schemes to preserve distances for unlabeled samples (Gu et al., 2022). These approaches inspired our guidance-based scheme.
+% Finally, Gu et al. (2023) also adapted the partially paired datasets to guide a conditional score-based diffusion model.\\
+% \textbf{Schrodinger Bridge}
+% Another highly celebrated branch of optimal transport in recent years is Schrödinger Bridge problem connects naturally to optimal transport by framing it as an entropy-regularized version, adding an entropy term to the transport cost. Recent works has proposed theoretical frameworks for tractable training of Schrödinger bridges  (SB) for generative modeling, and demonstrated promising results in image generation, interpolation, and inpainting tasks ( Wang et al., 2021 ; Shi et al., 2022 , Song, 2022;Shi et al., 2022, Wang et al. (2021), DeBortoli et 2021, Chen et al. 2021).\\
+% \textbf{Bridge Matching} Peluchetti (2023) introduced the Markovian projection for Bridge matching, later employed by Liu et al. (2022) to learn representations in constrained domains. While Bridge matching is computationally efficient, it requires additional assumptions. Action Matching (Neklyudov, 2023) offers a more general method with fewer assumptions but reduced scalability. DSBM (Shi, 2023) uses Iterative Markovian Fitting (IMF) to solve Schrödinger Bridge problems, while Bortoli (2023) focuses on preserving coupling information in flow and bridge matching, enhancing image translation tasks.  [SF]²M (Tong 2023) provides a simulation-free objective for inferring stochastic dynamics, demonstrating efficiency in solving Schrödinger bridge problems. GSBM (Liu et al., 2023) presents a framework for solving distribution matching to account for task-specific state costs. While these methods aim to identify the optimal coupling, Somnath et al. (2023) and Liu et al. (2023a) propose Bridge Matching algorithms between a priori coupled datafrom the static Schrödinger Bridge.
+% Recent works improve efficiency with Gaussian mixture parameterization or discrete-time Iterative Markovian Fitting using Denoising Diffusion GANs for faster generative modeling (Guschin, 2024a, 2024b).
+
+
+% END INCLUDE: Text/Introduction
+
+
+% BEGIN INCLUDE: Text/Preliminaries
+\section{Preliminaries}
+\subsection{Schrödinger Bridges}
+The Schrödinger Bridge \citep{schrodinger1931umkehrung} in the path measure sense is concerned with finding the optimal measure $\sP^\star$ that minimizes the following optimization problem
+\begin{equation}\label{eq:SB}
+    \min_\sP KL(\sP|\sQ),      \quad \sP_0=\pi_0,  \ \sP_1 = \pi_1
+\end{equation}
+where $\sQ$ is a Markovian reference measure. Hence the solution of the dynamic SB $\sP^\star$ is considered to be the closest path measure to $\sQ$. A very convenient, and heavily used property of $\sP^\star$ is its decomposition as $P^\star = \int_{\sR^d\times\sR^d} \sQ_{|0,1}d\pi^\star(x_0,x_1)$, where $\pi^\star$ is the solution of the static SB $\min_{\pi\in\Pi(\pi_0,\pi_1)}KL(\pi|R)$, and $Q_{|0,1}$ is the Bridge of the reference measure for pinned points $(x_0, x_1)$ \citep{leonard2013survey}.
+Another formulation of the dynamic SB crucially emerges by applying the Girsanov theorem in \eq{SB}
+\begin{align}
+    \begin{split}\label{eq:van_DSB}
+    \min_{u_t, p_t} \int_0^1 \mathbb{E}_{p_t}&[\|u_t\|^2] dt \quad
+        \text{ s.t. }  \ \frac{\partial p_{t}}{\partial t} = -\nabla\cdot (u_t p_{t}) + \frac{\sigma^2}{2}\Delta p_{t}, \quad \text{ and } \quad p_0 = \pi_0,\quad p_1 = \pi_1
+    \end{split}
+\end{align}
+Finally, note that the static SB is equivalent to the entropy regularized OT formulation \citep{pavon2021data, nutz2021introduction}.
+\begin{equation}\label{eq:EOT}
+    \min_{\pi\in\Pi(\pi_0, \pi_1)}\int_{\sR^d\times\sR^d} \|X_0-X_1\|^2 d\pi(X_0, X_1) + \epsilon KL(\pi|\pi_0\otimes\pi_1)
+\end{equation}
+This regularization term enabled efficient solution through the Sinkhorn algorithm and has presented numerous benefits, such as smoothness, and other statistical properties \citep{ghosal2022stability, leger2021gradient, peyre2019computational}.
+
+\subsection{Schrödinger Bridge Matching}\label{sec:SBM}
+
+As discussed above, SB Matching algorithms \citep{shi2023diffusion, liu2024gsbm} have emerged recently, following advancements in matching frameworks \citep{liu2022let, peluchetti2023diffusion, lipman2022flow, liu2022flow}, rendering the solution of the SB problem significantly more tractable. Specifically, this family of algorithms solves \eq{van_DSB} by separating the training process into two alternating steps. The first step entails relaxing the boundary distributional constraints in \eq{van_DSB} into just two endpoints, by fixing the coupling $\pi_{0,1}$, and drawing pairs of samples $(x_0, x_1)$.
+\begin{align}
+\begin{split}\label{eq:van_cond_DSB}
+    \min_{u_{t|0,1}} \int_0^1 &\mathbb{E}_{p_{t|0,1}}[\|u_{t|0,1}\|^2] dt \quad \\ \text{ s.t. } \frac{\partial p_{t|0,1}}{\partial t} = -\nabla \cdot (p_{t|0,1} u_{t}) &+ \frac{1}{2} \sigma^2 \Delta p_{t|0,1}, \quad X_0=x_0, \quad X_1=x_1
+    \end{split}
+\end{align}
+
+This optimization problem returns the optimized intermediate bridges between the drawn pairs. Subsequently, the parameterized drift $u_t^\theta$ is matched given the prescribed marginal path from the previous step, by minimizing the following variational gap 
+\begin{equation}\label{eq:expl_bm}
+    \min_\theta \int_0^1 \mathbb{E}_{p_t} [\|u_t^\star - u_t^\theta\|^2] dt
+\end{equation}
+where $u_t^\star$ is the drift associated with the fixed intermediate path. Propagation of the SDE according to the matched parameterized drift $u_t^\theta:\sR^d\times[0,1]\rightarrow \sR$ 
+\begin{equation}\label{eq:SDE_prel}
+    dX_t = u_t^\theta dt +\sigma dW_t, \quad X_0\sim\pi_0, \ X_1\sim\pi_1
+\end{equation}
+induces the parameterized coupling $\pi_{0,1}^\theta$.
+In the next iteration of the BM algorithm, this updated coupling is used to generate improved pairs of $(x_0, x_1)\sim\pi_{0,1}^\theta$ employed to refine the marginal path.  
+  
+% \guan{I think here we should introduce prelim for Sec 3.2.2 and 3.2.3, i.e., how (3) is optimized via alternate (fixed coupling <--> ... ) scheme }
+%should i expand more on that? i think it is mentioned here
+% yes, I think we need an equation for condSOC w/o state cost, so that it can be compared to (9) -- is (5) refered elsewhere? feel a waste of space 
+% actually no, but i could change the FPE constraint in 8 or 9 with an SDE but it would not be the same SDE with parameterized drift. Another question: do you like the discussion on the markovian projection or should i remove it?
+% 8 and 9 should be kept with FPE constraints, SDE or 5 is inaccurate
+% I personally perfer removing markovian and reciprecal --- we either stick heavily onto these terms in later context (which I don't see the point) or we should keep the content as low burden as possible. You mention reciprocal path in one sentence without explaining it -- this may cause unnecessary burden
+% ok sounds good, i will remove the references to reciprocal and markovian projections
+% END INCLUDE: Text/Preliminaries
+
+
+% BEGIN INCLUDE: Text/Methodology
+\section{Methodology}
+% In this section, we start from the static Semi-Supervised guided optimal transport problem, to which we add the entropy regularization. 
+% In our approach, we considered a dynamic Bridge Matching approach. 
+% We first derive a dynamic formulation in Section \ref{sec:dyn.obj.}, that generalizes the standard entropic optimal transport problem, by including the key-point pairs information to guide the unlabeled samples. 
+% Incorporating the information aims to contribute to 2 main attributes. Our first motivation is to reduce significantly training time of Bridge Matching objective by guiding the coupling of neighboring elements.
+% Second, as shown in Section \ref{sec:dyn.obj.}, the information from the key-points is encoded in the dynamic objective as a feedback term, which from stochastic optimal control is shown to improve generalizability.
+\subsection{Semi-Supervised Guidance}\label{sec:SSG} 
+
+
+\begin{wrapfigure}[13]{r}{0.43\textwidth}
+  \begin{center}
+    \vskip -.2in
+    \includegraphics[width=0.43\textwidth]{images/Screenshot_1.png}
+  \end{center}
+  \captionof{figure}{Source and Target Distributions with their KP set pairs}
+  \label{fig:KP}
+\end{wrapfigure}
+
+In the context of semi-supervised optimal transport, certain aligned couples of data points from the source and target distributions are employed to guide the matching of unpaired samples.
+These pairs are assumed by construction to be given by the optimal solution of the static SB. 
+We denote with $\gK = \{x_0^n, x_1^n\}_{n=1}^N$ the set with the aligned pairs, the Key-Point (KP) set, with $N$ being the number of pairs in the set. Usually, $N\ll M$, where $M$ is the total number of samples. 
+\begin{assumption}\label{ass:kp_interpolation}
+    All pairs from the KP set are considered to be solutions of the static Schrödinger Bridge. 
+\end{assumption}
+Note that since the KP pairs are sampled from the solution of the static SB, this ensures their stochastic nature, making them well-suited for guiding the transport map.
+Our analysis begins with the static entropic OT problem in \eq{EOT}, to which an additional regularization term is included to capture the interaction among unpaired samples and aligned samples, thereby guiding the transport map. We consider a distance-preserving scheme.
+We start by sampling a pair of non-coupled samples $(X_0, X_1)$.
+Let us assume that the $i^\text{th}$ sample from the KP set $x_0^i \in\gK$ is closest to $X_0$ in the source distribution. Then, the distance $d(X_0, x_0^i)$ is computed and we proceed to compute the distance $d(X_1, x_1^i)$. 
+Therefore, for a fixed cou pair $(x_0^i, x_1^i)\in \gK$, we define the Guidance function for the non-aligned pair $(X_0, X_1)$, and  as 
+\begin{equation}\label{eq:G-fun}
+    G(X_0, X_1) = (d(X_1, x_1^{i}) - d(X_0, x_0^{i}))^2
+\end{equation}
+% where $\alpha\in\sR$ is the guidance regularization hyperparameter.
+Intuitively, this regularization term creates a region of attraction, as illustrated in Figure \ref{fig:KP}.
+This attraction around each KP sample defines clusters that guide the neighboring samples from the source distribution to the target distribution, by preserving the relative distance to the respective KP sample.
+Adjusting the cost function of the entropic O.T. formulation in \ref{eq:EOT}, to incorporate guidance from the coupled pairs yields
+\begin{equation}\label{eq:static_SSOT}
+    \min_{\pi\in\Pi(\pi_0, \pi_1)}\int \bigr( ||X_0-X_1||^2 + G(X_0, X_1)\bigr) d\pi(x_0, x_1) + \epsilon KL(\pi|\pi_0\otimes\pi_1)
+\end{equation}
+% \vspace{-.3in}
+In this work, we start our analysis from the modified expression of \eq{EOT} to exploit the flexibility of static OT formulation into adding the regularization term that is responsible for the guidance of the non-paired samples. However, our focal point is to derive an equivalent dynamic formulation, resembling \eq{van_DSB}, which provides a more thorough description of the transport process. From an algorithmic standpoint, our methodology is based on BM frameworks (see Section \ref{sec:SBM}) in order to leverage their great efficiency and scalability in solving distribution matching problems.
+
+\subsection{Feedback Schrödinger Bridge Matching}
+ We propose \textbf{Feedback Schrodinger Brige Matching} (FBSM) a novel matching framework, which leverages the information of partially, optimally paired datasets to guide the matching of the non-aligned samples. Our analysis starts from recasting \eq{static_SSOT} in a dynamic formulation in Sec. \ref{sec:dyn.obj.}. Subsequently, we adopt recent advances in dynamic SB frameworks, that propose a decomposition of the dynamic optimization problem into two components \citep{liu2024gsbm, shi2023diffusion}. Therefore, we separate the training phase into two stages: 1) the optimization of the intermediate path, conditioning on the endpoints $(x_0, x_1)$, and 2) the optimization of the parameterized drift, which results in refining the coupling.
+
+\subsubsection{Dynamic objective}\label{sec:dyn.obj.}
+The theorem below provides a general framework to recast the entropy regularized semi-supervised O.T. problem in \eq{static_SSOT} in a dynamic setting, regardless of the selection for the guidance function $G$. 
+\begin{theorem}\label{th:dyn.obj.}
+     Assume $X_0, X_1 \in\sR^d$, with $X_0\sim\pi_0$, and $X_1\sim\pi_1$, and consider a stochastic random variable $X_t$ connecting $X_0$ and $X_1$, whose law is the continuous marginal probability path $p_t$ joining $\pi_0, \text{ and } \pi_1$. 
+     Additionally consider the KP pairs $\{x_0^n, x_1^n\}_{n=1}^N$ with their fixed interpolating paths.
+     Starting from the static semi-supervised guided entropic OT problem in \eq{static_SSOT}, we derive the following relaxed dynamic formulation.
+    \begin{align}\label{eq:lagrangian}
+    \begin{split}
+        &\min_{p_{t},u_t} \int_{\sR^d\times [0,1]} \Bigr( \frac{1}{2}\|u_t\|^2 +  \mathbb{E}_{p_{0|t}}\bigr[|u_t^\intercal \nabla G_{t,0}| + \frac{\sigma^2}{2}\Delta G_{t,0}\bigr]\Bigr) p_t \mathrm{d}x \mathrm{d}t, \\
+        \text{ s.t. }  &\ \frac{\partial p_{t}}{\partial t} = -\nabla\cdot (u_t p_{t}) + \frac{\sigma^2}{2}\Delta p_{t}, \text{ and } p_0 = \pi_0, p_1 = \pi_1
+    \end{split}
+    \end{align}
+% The proof is left in Appendix \ref{sec:proof_dyn_obj}
+\end{theorem}
+Notice that our dynamic formulation is a modified and generalized version of \eq{van_DSB} to capture the guidance from the KP samples. For degenerate guidance term $(G\equiv 0)$, one readily obtains the standard entropic analogue of the fluid dynamic formulation \citep{benamou2000computational,gentil2017analogy} in \eq{van_DSB} which also corresponds to the objective of SB objective \citep{de2021diffusion, shi2023diffusion}.
+% \vspace{-.3cm}
+
+
+\subsubsection{Intermediate Path Optimization}
+As discussed above, the initial step of our methodology entails the optimization of the intermediate path. Let the marginal be expressed as a mixture of conditional probability paths $p_t = \int p_{t|0,1}\pi_{0,1} \rm{d}x_0\rm{d}x_1$. More explicitly, we sample non-coupled pairs $(x_0, x_1)$ and fix the coupling at the boundaries $\pi_{0,1}$. This results in relaxing the distributional constraints in \eq{lagrangian} to just two endpoints. 
+The optimization of the intermediate path yields the optimal marginal conditioned on the two endpoints $p_{t|0,1}$ of the uncoupled samples, which crucially preserves their relative distance to the KPs throughout the entire trajectory.
+\begin{proposition}\label{th:cond.lagrang.}
+Let the continuous marginal path $p_t$ satisfy the following decomposition $p_t = \int p_{t|0,1}\pi_{0,1} \rm{d}x_0\rm{d}x_1$. For optimizing with respect to the intermediate path, the coupling $\pi_{0,1}$ is frozen which results in \eq{lagrangian} being recasted as 
+    \begin{align}
+    \begin{split}\label{eq:cond.lagrang.}
+        \min_{p_{t|0,1}} \int_{\sR^d\times [0,1]} (\frac{1}{2}\|u_{t|0,1}\|^2 + \bigr|u_{t|0,1}^\intercal \nabla G(X_t, x_0)\bigr| + \frac{\sigma^2}{2}\Delta G(X_t, x_0) \ p_{t|0,1} \mathrm{d}x \mathrm{d}t, \quad \\ \text{ s.t. } \frac{\partial p_{t|0,1}}{\partial t} = -\nabla \cdot (p_{t|0,1} u_{t}) + \frac{1}{2} \sigma^2 \Delta p_{t|0,1}, \quad X_0=x_0, \quad X_1=x_1
+    \end{split}
+\end{align}
+\end{proposition}
+
+Importantly, the conditioning on the unpaired sample $x_0$ acts as an anchor.
+Our guidance function $G$ groups the unpaired data into clusters around the KPs in the source distribution, and penalize the deviation of the unpaired samples from the trajectory that their assigned keypoint sample follows, preserving structural and distance information in the dynamic transport map. 
+This forces unpaired samples to preserve their relative distance from the closest KP sample in the source distribution at each time-step. 
+
+\begin{remark}
+    Notice that in the extreme case in which the entire dataset is comprised of only pre-aligned couples, $G$ would be trivial, and \eq{cond.lagrang.} would retrieve the diffusion bridges between optimal pairs, similarly to $I^2 SB$ \citep{liu20232}. Conversely, in the other extreme case, where the KP set is the empty set, our algorithm retrieves DSBM.  
+\end{remark}
+
+% \begin{wrapfigure}[15]{r}{0.3\textwidth}
+%    \begin{center}
+%     \vskip -.1in
+%     \includegraphics[width=0.28\textwidth]{images/trajectories.png}
+%   \end{center}
+%   \captionof{figure}{Initial Trajectory of non-aligned samples and KP sample trajectory guiding the transport}
+%   \label{fig:fig_traj}
+% \end{wrapfigure}
+
+\paragraph{Feedback} 
+Interestingly, in stochastic optimal control literature (\citep{theodorou2010generalized}) it has been reported that the inner product of the drift with the state cost acts as state feedback. 
+Hence, the term $|\nabla G_{t|0}^\intercal u_{t|0,1}|$ is interpreted as state-feedback that steers the non-coupled samples, by projecting the conditioned drift on the gradient of $G_{t|0}$
+% as illustrated in Figure \ref{fig:fig_traj}. 
+Figure \ref{fig:grad_f} illustrates the gradient field of the guidance function, and how it pushes the optimal trajectory towards the path of the aligned data.
+Note that the trajectories of the KP samples along with their coupling are assumed to be given and fixed for each KP pair. 
+Furthermore, the absolute value implies that the angle of projection is always acute, which greatly improves stability during training.  
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{images/grad_G.png}
+    \caption{Gradient Field of $\nabla G$ in the S-tunnel}
+    \label{fig:grad_f}
+\end{figure}
+
+\paragraph{Intemediate Path} Recall that we have relaxed the distributional constraints in \eq{lagrangian} to just two endpoints.
+We solve \eq{cond.lagrang.} for each pair $(x_0, x_1) \sim p_{0,1}^\theta$ and later marginalize to construct $p_t$.
+The conditioned probability path is approximated in a simulation-free manner as a Gaussian path $p_{t|0,1}\approx \gN(I_{t|0,1}, \sigma_t \mathbf{I}_d)$, where $I_{t|0,1}\equiv I(t, x_0,x_1)$ is the interpolant function between the pinned endpoints $I_0=x_0$, $I_1=x_1$, and $\sigma$ is the standard deviation with $\sigma_0 = \sigma_1 = 0$.
+This enables us to compute a closed-form expression for the conditional drift of the uncoupled pairs \citep{sarkka2019applied, albergo2023stochastic}.
+\begin{equation}\label{eq:cond.drift}
+    u_{t|0,1} =  \partial_t I_{t|0,1} + \Bigr(\frac{\partial_t\sigma_t}{\sigma_t} - \frac{\nu^2}{2\sigma_t^2}\Bigr) (X_t - I_t)
+\end{equation}
+where $\nu$ is by definition of $\sigma_t=\nu\sqrt{t(1-t)}$. 
+% Finally, to efficiently parameterize $I_t$, and $\sigma_t$, splines are fit among k control points $X_{t_k}\in\sR^d$ and $\sigma_{t_k}\in\sR$, which have been sampled sparsely between the endpoints \citep{liu2024gsbm}.
+More details are left for Appendix \ref{sec:Gauss.aprox.}.
+
+% \vspace{-.3cm}
+\subsubsection{Coupling Optimization} 
+Subsequently, we will match the parameterized drift $u_t^\theta$, given the prescribed path $p_{t|0,1}$ of the uncoupled samples from the previous step, which will further improve the intermediate path in the next iteration.
+The more general form of the Lagrangian in \eq{cond.lagrang.} prompts us to express the variational gap through the Bregman divergence, following recent advancements in bridging optimality gaps for general Lagrangian costs \cite{neklyudov2023action}.
+However, before deriving the expression of the variational gap, we need the convex conjugate of the Lagrangian in \eq{cond.lagrang.}.
+% Given the convexity of \eq{cond.lagrang.}, we compute the Hamiltonian through the subgradient of the absolute value $\partial(|u_t^\intercal\nabla G|)$.
+\begin{proposition}\label{prop:hamiltonian}
+The convex conjugate of the Lagrangian in \eq{cond.lagrang.} is defined as the Hamiltonian $H(x_t, a_t, t) = \sup_{u_{t|0,1}}\langle u_{t|0,1}, a_t\rangle - L(x_t, u_{t|0,1}, t)$. 
+The optimization with respect to the drift yields $u_{t|0,1} = a_t - g(a_t^\intercal \nabla G_{t|0}) \nabla G_{t|0}$, where $\nabla G_{t|0} \equiv G(X_t, x_0)$, and $g(\cdot):\sR\rightarrow\sR$ is given by
+$$
+        g(a_t^\intercal \nabla G_{t|0}) = \begin{cases} 
+        \frac{a_t^\intercal \nabla G_{t|0}}{\|\nabla G_{t|0}\|^2} \quad \text{   if   } \quad |a_t^\intercal \nabla G_{t|0}|\leq\|\nabla G_{t|0}\|^2 \\
+        sgn(a_t^\intercal \nabla G_{t|0}) \quad \text{else}
+        \end{cases}
+$$
+Finally, we obtain the Hamiltonian associated with the Lagrangian in \eq{cond.lagrang.} 
+    \begin{align}
+    \begin{split}\label{eq:hamiltonian_main}
+        H(x_t, a_t, t) &= \frac{1}{2}||a_t - g(a_t^\intercal \nabla G_{t|0})\cdot\nabla G_{t|0}||^2 - \frac{\sigma^2}{2}\Delta G(X_t, x_0)
+    \end{split}
+    \end{align}
+% and $\nabla G_{t|0} \equiv G(X_t, x_0)$. 
+% The proof is left in Appendix \ref{sec:proof_ham}
+\end{proposition}
+
+At this point, we introduce our Entropic Lagrangian Bridge Matching objective through the Bregman divergence, using the Hamiltonian in \eq{hamiltonian_main}.
+\begin{proposition}\label{prop:breg.}
+    Consider the optimized conditional drift $u_{t|0,1}^\star$ following the optimization in \eq{cond.lagrang.}. The 
+    parameterized drift $u_t^\theta$ is matched to $u_{t|0,1}^\star$ given the prescribed marginal path by minimizing the variational gap expressed through the Bregman divergence: $D_{\text{L, H}} = L(X_t,u_t, t) + H(X_t, a_t, t) - \langle a_t, u_t\rangle$
+    \begin{align}\label{eq:BD}
+        \begin{split}
+                \min_\theta \int_0^1 \mathbb{E}_{p_{0,1}}\mathbb{E}_{p_{t|0,1}}\| a_t^\theta - u_{t|0,1}^\star - g(a_t^\intercal \nabla  G_{t|0})\cdot\nabla  G_{t|0}\|^2 \mathrm{d}t 
+        \end{split}
+    \end{align}
+    From Proposition \ref{prop:hamiltonian},  the parameterized drift can be expressed as  $u_t^\theta =  a_t^\theta - g(a_t^\intercal \nabla G_{t|0})\cdot\nabla G_{t|0}$.
+    Therefore, the matching objective of \eq{BD} can be rewritten as the objective in \eq{expl_bm}
+    \begin{equation}\label{eq:BM}
+        \min_\theta \int_0^1 \mathbb{E}_{p_{t}} ||u_{t|0,1}^\star -u_t^\theta||^2 \rm{d}t
+    \end{equation}
+    % The proof is left in Appendix \ref{sec:proof_breg}
+\end{proposition}
+
+\subsection{Training Scheme}
+A summary of our training procedure is presented in Alg. \ref{alg:FSBM}. 
+Our algorithm finds a solution $(p_t^\star, u_t^\star)$ to \eq{lagrangian} by iteratively optimizing \eq{cond.lagrang.}, and \eq{BM}. 
+First, we draw pairs $(x_0, x_1)$, and fix the parameterized coupling $\pi_{0,1}^\theta$.
+Subsequently, to compute the guidance function, let the $i^\text{th}$ data point from the KPs set $x_0^i \in\gK$ be closest to $x_0$ in the source distribution, the distance $d(x_0, x_0^i)$ between the two samples is evaluated. Next, for every sampled time-step ${t_k}$, we compute the distance $d(X_{t_k}, X_{t_k}^i)$ between $X_{t_k}$, and $X_{t_k}^{i}$, and evaluate $G(X_{t_k}, x_0)$.
+Then, optimizing \eq{cond.lagrang.}, between the endpoints $(x_0, x_1)$ from the first step, yields the optimal conditional path $p_{t|0,1}^\star$, whose corresponding drift $u_{t|0,1}^\star$ is obtained from \eq{cond.drift}. This drift ensures that the uncoupled data follow the trajectory of the KPs.
+Lastly, we fix the marginal path and optimize the coupling, by matching the parameterized drift $u_t^\theta$ to the optimized 
+drift of the uncoupled samples $u_{t|0,1}^\star$, using \eq{BM}. 
+% using \eq{BM}, given the prescribed marginal $p_t$.
+The optimized parameterized drift $u_t^\theta$ induces an improved coupling $\pi^\theta_{0,1}$ by propagating the dynamics through the SDE in  \eq{SDE_prel}.
+
+
+\begin{algorithm}[t]
+    \small\caption{\small Feedback Schr\"{o}dinger Bridge Matching (\textbf{FSBM})}\label{alg:FSBM}
+    \begin{algorithmic}[1]
+    \STATE {\bfseries Input}: Boundary distributions $\pi_0$, and $\pi_1$ and the pairs from the key-point (KP) set $\{x_0^{n}, x_1^{n}\}_{n=1}^N$, and their fixed trajectories 
+    \STATE Initialize $u_t^\theta$, and $\pi_{0,1}$ as independent coupling $\pi_0\otimes\pi_1$.
+    \STATE {\bfseries repeat}
+        \STATE \hskip1em  Sample $x_0, x_1, X_{t_k}$ by forward propagating using $u_t^\theta$, on time steps $0<t_1<\dots<t_K<1$
+        \STATE \hskip1em  Find closest aligned sample $x_0^{i}$ to $x_0$, and calculate $d(x_0, x_0^{i})$
+        \STATE \hskip1em  Using the same $i^\text{th}$ data point from the KP set, calculate $d(X_{t_k}, x_{t_k}^{i})$
+        \STATE \hskip1em  $G(X_{t_k}, x_0)$ from \eq{G-fun}
+        \STATE \hskip1em  Fix the $x_0, x_1$, and obtain $p_{t|0,1}^\star$ using \eq{cond.lagrang.}
+        \STATE \hskip1em  Calculate $u_{t|0,1}$ from \eq{cond.drift}
+        \STATE \hskip1em  Update $u_t^\theta$, from \eq{BM}
+    \STATE {\bfseries until} converges
+  \end{algorithmic}
+\end{algorithm}
+
+
+
+% END INCLUDE: Text/Methodology
+
+
+% BEGIN INCLUDE: Text/Experiments
+\section{Experiments}
+
+We demonstrate the efficacy of our FSBM in a variety of distribution matching tasks, such as Crowd Navigation, Opinion Depolarization, and Unpaired Image Translation, compared against other state-of-the-art distribution matching frameworks such as GSBM \citep{liu2024gsbm}, DSBM \citep{shi2023diffusion}, and Light and Optimal Schrodinger Bridge Matching (LOSBM; \cite{gushchin2024light}). 
+
+\subsection{Crowd Navigation}
+We first showcase the efficacy of our FSBM in solving complex crowd navigation tasks and its superior capability to generalize under a variety of initial conditions, listed as: \textbf{i) Vanilla}: initial distribution is the same as the one the model was trained on, \textbf{ii) Perturbed Mean}: shift the mean of Vanilla, \textbf{iii) Perturbed STD}: shift the standard deviation (STD) of Vanilla,\textbf{ iv) Uniform Distribution}: the initial distribution is defined as a uniform distribution.
+We compare our FSBM with the GSBM framework \citep{liu2024gsbm}. 
+The aligned pairs used to guide the transport map were less than 4$\%$ of the uncoupled pairs for both tasks.
+More details are left for Appendix \ref{sec:CN_App}.
+
+\begin{figure}[t]
+    \centering
+\includegraphics[width=\textwidth, trim={0cm 3.39cm 0cm 0cm}, clip]{images/vneck-stunnel-comp.png}    
+    \caption{Crowd Navigation comparison between GSBM and FSBM in the S-tunnel, and V-neck under perturbed mean and uniform initial distribution, and in the V-neck under perturbed mean and perturbed STD. The color of particles means: \textbf{i) Yellow:} initial conditions, \textbf{ii) Green and Cyan:} intermediate trajectory, \textbf{iii) Red:} target distribution, \textbf{iv) Navy Blue:} generated distribution}
+    \label{fig:cn_comp}
+\end{figure}
+
+\begin{figure}
+\begin{minipage}{.6\textwidth}
+\begin{table}[H]
+\caption{$\gW_2$ distance between generated and ground truth distributions for GSBM and FSBM in (Lower is better)}
+\label{tab:w2-comp-cn}
+\begin{tabular}{lllll}
+\toprule
+                                         & \multicolumn{2}{c}{S-tunnel} & \multicolumn{2}{c}{V-neck} \\ \cline{2-5} 
+                                                          & GSBM          & FSBM         & GSBM         & FSBM        \\ \hline
+Vanilla                                                   & 0.02          & 0.02         & 0.01         & 0.01        \\\midrule
+\begin{tabular}[c]{@{}l@{}}Perturbed \\ Mean\end{tabular} & 8.87e+5          & \textbf{0.67 }        & 0.68         & \textbf{0.34}        \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Perturbed \\ STD\end{tabular} & 2.43e+10         & \textbf{0.34 }         & 3.03       & \textbf{0.11 }       \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Uniform \\ Distribution \end{tabular} & 6.65e+9         & \textbf{0.49}          & 0.10        & \textbf{0.10}     \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+\end{minipage}
+\hfill
+\begin{minipage}{.35\textwidth}
+% \vspace{-0.3cm}
+  \centering
+    \includegraphics[width=\textwidth]{images/training_times.png}
+    \captionof{figure}{Training time percentage comparison between GSBM and FSBM in Crowd Navigation tasks}
+    % First solve forward ODE with forward dynamics F. Then backpropagate using backward dynamics $\bar{F}$.}
+    \label{fig:training_times}
+\end{minipage}
+\end{figure}
+
+Table \ref{tab:w2-comp-cn} shows that FSBM generated more accurately the targeted distribution in both tasks. Additionally, Figure \ref{fig:cn_comp} depicts our FSBM consistently producing better trajectories, successfully avoiding the obstacles under all initial conditions, and generating final distributions $p_1^\theta$, that more closely match the target distribution $\pi_1$, also shown by the smaller values of the Wasserstein distance $\gW_2(p_1^\theta, \pi_1)$. In contrast, under GSBM, several particles were observed to diverge completely in the S-tunnel task under shifted initial conditions, causing the increase of the $\gW_2$ distance. 
+Additionally, notice that the final distributions generated by GSBM (see navy blue particles in the upper row of Figure \ref{fig:cn_comp}), even for the samples that did not diverge, were substantially more inaccurate when compared to our FSBM.
+Lastly, Fig. \ref{fig:training_times} illustrates that our FSBM required significantly less wall-clock time for training.
+This is attributed to the faster convergence of FSBM with regards to the number of epochs, but also due to GSBM requiring the computation of the entropy and congestion cost, which according to our experiments has been shown to increase training duration significantly.
+
+\vspace{-.3cm}
+\subsection{Opinion Dynamics}
+
+\begin{figure}[t]
+\begin{minipage}{.55\textwidth}
+\vspace{-1.cm}
+\begin{table}[H]
+  \caption{Comparison of $\gW_2 (p_1^\theta, \pi_1)$ distance and KL divergence between target and generated distribution in High Dimensional $(X\in\sR^{100})$ Opinion Dynamics among Deep GSB, GSBM and FSBM (ours) (Lower is better in all metrics)}
+  \label{tab:od-met}
+   \centering
+  \begin{tabular}{llllll}
+  \toprule
+   Optimizer & \shortstack{Time\\(hours:min)} & \shortstack{W2\\Distance} & \shortstack{KL\\ divergence} \\
+    \midrule
+    DeepGSB & 4:37 & 58.16  &  0.096  \\
+    \midrule
+    GSBM  &  5:29 & 43.41 & \textbf{0.034} \\
+    \midrule
+    FSBM  & \textbf{2:43} & \textbf{42.91} & \textbf{0.034} \\
+    \bottomrule
+\end{tabular}
+\end{table}
+\end{minipage}
+\hfill
+\begin{minipage}{.4\textwidth}
+\vspace{-.cm}
+  \centering
+    \includegraphics[width=.85\textwidth]{images/Opinion_depolarization.png}
+    \captionof{figure}{Opinion depolarization from our FSBM and GSBM, and DeepGSB}
+    % First solve forward ODE with forward dynamics F. Then backpropagate using backward dynamics $\bar{F}$.}
+    \label{fig:opinion_depolarization}
+\end{minipage}
+\end{figure}
+
+Subsequently, we consider high-dimensional opinion depolarization, where each particle possesses a high-dimensional opinion $X_t\in\sR^{100}$ that evolves through interaction with the other agents under polarizing dynamics 
+% \begin{equation}
+%     dX_t = f_{\text{polarize}}(X_t, t)dt +\sigma dW_t
+% \end{equation}
+which tend to segregate them into two groups of diametrically opposing opinions (see Figure \ref{fig:opinion_depolarization}: first row, second column). More information about the polarization base drift are left in Appendix \ref{sec:OD_App}.
+To mitigate the segregation, we apply our FSBM method employing the KPs samples to guide the rest of the population to a more uniform opinion, closer to the target distribution (see Figure \ref{fig:opinion_depolarization}: second row third column). 
+We compare against DeepGSB and GSBM \citep{liu2022deep, liu2024gsbm}, which employ state cost to mitigate polarizing dynamics. 
+Lastly, it is worth noting that the size of the KP set utilized for the opinion depolarization was approximately 2$\%$, of the entire population. 
+
+The results shown demonstrate that the utilization of certain opinion leaders, that guide the overall opinion of the population to depolarization renders our FSBM a highly efficient model to mitigate opinion segregation. The metrics used to evaluate the proximity of the generated and target distributions (e.g. $p_1^\theta$, $\pi_1$ respectively) are the $\gW_2(p_1^\theta, \pi_1)$ distance and the KL divergence. 
+Observation of Table \ref{tab:od-met} and Figure \ref{fig:opinion_depolarization} indicates that our FSBM retrieves a solution that is slightly closer to the targeted distribution compared to GSBM, albeit needing half of the training time.
+% Both methods significantly outperform DeepGSB when it comes to their proximity to the target distribution. 
+
+% \vspace{-.5cm} 
+\subsection{Image Translation}
+Finally, we present the results of our FSBM in two types of image translations: \textbf{i)} Gender translation, \textbf{ii)} Age translation.
+We follow the setup of \citep{korotin2023light} with the pre-trained ALAE autoencoder \citep{pidhorskyi2020adversarial} on the 1024 ×1024 FFHQ dataset \citep{karras2019style} to perform the translation in the latent space of dimensions $512\times 1$,  enabling more efficient training and sampling. 
+Notably, the number of aligned images was $4\%$ of the total dataset for the gender translation and $8\%$ for the age translation. 
+Our method is compared with other state-of-the-art matching frameworks, such as DSBM \citep{shi2023diffusion} and Light and Optimal SBM (LOSBM)\citep{gushchin2024light}.
+Additional details are left for Appendix \ref{sec:IT_App}.
+
+\begin{figure}[H]
+\begin{minipage}{.57\textwidth}
+\vspace{-0.2cm}
+\begin{table}[H]
+  \caption{FID values in 4 translation tasks for DSBM, LOSBM, and our FSBM (Lower is better)}
+  \label{tab:fid}
+   \centering
+  \begin{tabular}{llllll}
+  \toprule
+   Optimizer & \shortstack{Man to \\ Woman} & \shortstack{Woman \\ to Man} & \shortstack{Old to \\ Young} & \shortstack{Young \\ to Old} \\
+    \midrule
+    DSBM  &  15.90 & 17.02 & 16.83 & 17.76\\
+    \midrule
+    LOSBM  & 18.89  & 17.24  & 17.89 & 19.32\\
+    \midrule
+    FSBM  & \textbf{14.78}  & \textbf{16.12} & \textbf{15.52} & \textbf{17.14} \\
+    \bottomrule
+\end{tabular}
+\end{table}
+\end{minipage}
+\hfill
+\begin{minipage}[h]{.4\textwidth}
+% \vspace{-0.2cm}
+  \centering
+    \includegraphics[width=\textwidth]{images/translations_com.png}
+    \captionof{figure}{Translation comparison between our FSBM, LOSBM and DSBM}
+    % First solve forward ODE with forward dynamics F. Then backpropagate using backward dynamics $\bar{F}$.}
+    \label{fig:transl-comp}
+\end{minipage}
+\end{figure}
+
+Table \ref{tab:fid} shows that our FSBM consistently achieves lower FID value, than the other methods.
+Additionally, it is demonstrated that our FSBM recovers better couplings through the qualitative comparison in Figure \ref{fig:transl-comp} and quantitatively through the LPIPS values in Table \ref{tab:lpips}.
+We can see that DSBM and FSBM return very close LPIPS values, along with very similar images, which suggests that the two methods converge to close solutions. Conversely, the translations of LOSBM in the validation set were losing some of the features of the input image. Figure \ref{fig:fsbm-comp} presents additional examples of the couplings obtained from our FSBM. 
+Our FSBM demonstrates highly accurate translations preserving key features identical, such as smile, accessories, angle of the face, and background color.
+Notably, Table \ref{tab:res-im} demonstrates that FSBM required \textit{only an additional 180 MB of VRAM} compared to DSBM, to manage the aligned latent vectors, which is tractable for most modern GPUS, while training DSBM and FSBM for the same number of epochs requires \textit{virtually identical training duration}.
+
+\begin{figure}[t]
+\includegraphics[width=\textwidth]{images/image_translations.png}
+    \captionof{figure}{Image Translations using our FSBM}
+    \label{fig:fsbm-comp}
+\end{figure}
+
+\begin{figure}
+\begin{minipage}{.4\textwidth}
+% \vspace{-0.3cm}
+\begin{table}[H]
+  \caption{Epoch duration and memory usage (GB) of different stages in Alg. \ref{alg:FSBM}, measured on the age translation task}
+  \label{tab:res-im}
+   \centering
+  \begin{tabular}{lll}
+  \toprule
+    & \shortstack{Epoch Time\\(hours:min)} & \shortstack{Memory\\(GB)}   \\
+    \midrule
+    \textit{\shortstack{Guidance\\(lines 5-8)}}  & \textit{00:01} & \textit{0.18} \\
+    \midrule
+    \shortstack{Matching \\ (lines 9-11)} & 02:56  & 1.51 \\
+    \bottomrule
+\end{tabular}
+\end{table}
+\end{minipage}
+\hfill
+\begin{minipage}{.55\textwidth}
+\begin{table}[H]
+  \caption{LPIPS values in 4 translation tasks for DSBM, LOSBM, and our FSBM (Lower is better)}
+  \label{tab:lpips}
+   \centering
+  \begin{tabular}{llllll}
+  \toprule
+   Optimizer & \shortstack{Man to \\ Woman} & \shortstack{Woman \\ to Man} & \shortstack{Old to \\ Young} & \shortstack{Young \\ to Old} \\
+    \midrule
+    DSBM  &  0.47 & 0.48& 0.53 &0.49\\
+    \midrule
+    LOSBM  & 0.70 & 0.69 &0.71 &0.70\\
+    \midrule
+    FSBM  & \textbf{0.44} & \textbf{0.43}& \textbf{0.48}& \textbf{0.47} \\
+    \bottomrule
+\end{tabular}
+\end{table}
+\end{minipage}
+\end{figure}
+
+
+
+\subsection{Limitions and Discussions}
+Our FSBM has demonstrated remarkable results in leveraging partially aligned datasets for distribution matching. However, our framworks relies heavily on the availability and the quality of the available KP pairs. 
+The manner in which we sample from solution of the static SB does not ensure that all modes are equally and satisfactorily represented. 
+This implies that in cases where a minimal number of these pairs are available, the regions of attraction formed around these may not sufficiently cover the diversity of the source distribution.
+This could lead to wrongful guidance, suboptimal matching and poor generalizabilty. 
+\\
+In future work, we have identified several directions which could improve our work even further. For instance, we aim to devise a more intricate mechanism to sample from the solution of the static SB, while guaranteeing that all modes in highly diverse datasets are covered and represented through the sampled KPs. 
+Additionally, we aim to further explore the capabilities of the guidance function and devise more task-specific function which furhter improve perfomance generalizability by optimizing the information offered by the KP samples. Additionally, we intend to improve the way we impose guidance, by allowing the aligned pairs to preserve the relative distance to k-nearest neighboring KPs, instead of simply the nearest one.
+
+
+
+
+% \paragraph{Different selections for guidance function}
+% Defining the guidance function $G$ is a crucial aspect of our FSBM framework. Although our analysis extends to any selection of function G, the specific type of guidance regularization term directly affects the nature of the attraction region and thus the guidance imposed by the KP samples. For instance, recall that in our analysis we used a relative distance-preserving guidance, while \citep{gu2022keypoint} employed a relation-preserving scheme, utilizing the Jensen-Shannon divergence. A more extensive comparison of different selections for the Guidance function and their effect on the efficacy of the model is a topic for future work.
+
+
+
+
+% END INCLUDE: Text/Experiments
+
+
+% BEGIN INCLUDE: Text/Conclusions
+\section{Conclusion}
+In this work, we developed FSBM, a novel matching algorithm capable of using the information from pre-aligned data pairs, to guide the transport mapping of samples from the source to the target distribution. 
+We demonstrated our algorithm's enhanced generalizability and reduced training over prior methods through extensive experimentation. 
+In future work, we wish to delve deeper into the effect of the KP samples on the matching procedure, along with using more intricate and task-specific guidance functions for further improvements. In summary, our work paves new ways for training diffusion models with partially aligned data. 
+
+% END INCLUDE: Text/Conclusions
+
+
+\newpage
+\section*{Acknowledgements}
+The authors would like to thank Tianrong Chen and Kevin Rojas for the useful and fruitful discussions. 
+\bibliography{iclr2025_conference}
+\bibliographystyle{iclr2025_conference}
+
+\newpage
+\begin{appendix}
+
+% BEGIN INCLUDE: Text/Appendix-Proofs
+\section{Appendix}
+ \subsection{Proof of Theorem \ref{th:dyn.obj.}}\label{sec:proof_dyn_obj}
+\textit{ Assume $X_0, X_1 \in\sR^d$, with $X_0\sim\pi_0$, and $X_1\sim\pi_1$, and consider a stochastic random variable $X_t$ connecting $X_0$ and $X_1$, whose law is the continuous marginal probability path $p_t$ joining $\pi_0, \text{ and } \pi_1$. Starting from the static semi-supervised guided entropic OT problem in \eq{static_SSOT}, we modify it appropriately and obtain the following relaxed dynamic formulation.}
+    \begin{align}\label{eq:lagrangian_app}
+    \begin{split}
+        &\min_{p_{t},u_t} \int_{\sR^d\times [0,1]} \Bigr( \frac{1}{2}\|u_t\|^2 +  \mathbb{E}_{p_{0|t}}\bigr[|u_t^\intercal G_{t,0}| + \frac{\sigma^2}{2}\Delta G_{t,0}\bigr]\Bigr) p_t \mathrm{d}x \mathrm{d}t, \\
+        \text{ s.t. }  &\ \frac{\partial p_{t}}{\partial t} = -\nabla\cdot (u_t p_{t}) + \frac{\sigma^2}{2}\Delta p_{t}, \text{ and } p_0 = \pi_0, p_1 = \pi_1
+    \end{split}
+    \end{align}
+
+Before the proof, we provide a sketch of the proof overviewing the key steps towards the derivation of our dynamic formulation.
+\\
+\textit{Sketch of Proof.} Let $\pi_0, \pi_1$ be the two given boundary laws, recall the static formulation: 
+$\min_{\pi} \int \|X_0-X_1\|^2 + G(X_0,X_1) + \epsilon KL(\pi_{0,1}|\pi_0\otimes\pi_1)$.
+The first step of our analysis is a rearrangement of the terms of the static semi-superivsed EOT problem in Eq. (8). This rearrangement allows us to rewrite the modified EOT as a regularized static Schrodinger Bridge problem. 
+
+$$
+\min_\pi KL(\pi_{0,1}|\pi_{0,1}^\mathbb{Q}) + \int G(X_0,X_1)\pi_{0,1} dx_0dx_1
+$$
+
+Starting from the EOT problem, from $t_0=0$ and $t_N=1$, we can consider any intermediate point $t_1$ and find the optimal paths $p_1^\star$, $p_2^\star$ between the endpoints in the two newly formed subproblems (i.e., from $t_0$ to $t_1$, and $t_1$  to $t_N$). The union of the optimal subpaths forms the optimal policy of the initial problem, and the converse is also true \cite{villani2009optimal}. This can be extended for any number $N$ of intermediate points. As  $N\rightarrow \infty$ , this leads us to to consider ‘local’ versions of optimal transport problems between infinitesimally close distributions. This implies that the local path $p_{t_i, t_{i+1}}$ converges to the continuous marginal $p_t$, for arbitrarily large number of steps in $[0,1]$ \cite{villani2009optimal}. Therefore, in the next step, we express the guidance constraint EOT problem as a sequence of local EOT problems.
+
+$$
+\min_{p_t}\min_{X_t} \sum_{i=0}^{N-1} KL(p_{t_{i\rightarrow i+1}}|q_{i\rightarrow i+1}) + \mathbb{E}_{p_t}\sum_{i=0}^{N-1} G(X_{t_i}, X_{t_{i+1}})
+$$
+
+Subsequently, we rewrite the $G:\mathbb{R}^d\times\mathbb{R}^d\rightarrow\mathbb{R}$ function between $X_{t_i}$ and $X_{t_{i+1}}$, and as a sum of telescopic series with constant reference point $X_0$ from the source distribution. This induces the difference $G(X_{t_{i+1}}, X_0) - G(X_{t_i}, X_0)$. Although, this term is positive at the optimal path, in order to ensure positivity of this term throughout the optimization process, we upper bound it with its absolute value.
+
+$$
+\min_{p_t, X_t}\sum_{i=0}^{N-1} \Bigr|\mathbb{E}_{p_{t_{i, i+1,0}}}G(X_{t_i}, X_0) - G(X_{t_{i+1}}, X_0)\Bigr| + \sum_{i=0}^{N-1} KL(p_{t_{i\rightarrow i+1}}|q_{i\rightarrow i+1})
+$$
+
+Finally, we apply the Girsanov theorem in the KL divergence and Ito’s Lemma in the difference $G(X_{t_{i+1}}, X_0) - G(X_{t_i}, X_0)$ introduced in step 3, where the stochastic terms are dropped assuming zero mean Wiener noise. 
+
+Assuming now that the number of intermediate steps $N\rightarrow\infty$, this yields our continuous dynamic formulation 
+
+$$
+   \min_{p_{t|0,1}} \int \mathbb{E}_{p_{t}}\Bigr[ \frac{1}{2}\|u_{t|0,1}\|^2 + \bigr[| u_{t|0,1}^\intercal\nabla G_{t| 0} | + \frac{\sigma^2}{2}\Delta G_{t| 0} \bigr]  \Bigr],\\ \text{  s.t.  } \frac{\partial p_{t|0,1}}{\partial t} = - \nabla \cdot (u_{t|0,1} p_{t|0,1}) + \frac{\sigma^2}{2}\Delta p_{t|0,1}
+$$
+
+    
+\begin{proof}
+First, let $c(X_0,X_1)$ be the cost from the static optimal transport expression, and let $\pi_0, \pi_1$ be the two given boundary laws.
+Recall the static formulation: 
+$\min_{\pi} \int \|X_0-X_1\|^2 + G(X_0,X_1) + \epsilon KL(\pi_{0,1}|\pi_0\otimes\pi_1)$.
+Our objective is to derive a dynamic formulation for the static EOT problem with the cost function $c(X_0,X_1) = ||X_0-X_1||^2 + G(X_0,X_1)$. 
+We can rewrite the divergence $KL(\pi_{0,1}|\pi_0\otimes\pi_1)$, and the quadratic cost $\|X_0-X_1\|^2$, as $KL(\pi_{0,1}|\pi_{0,1}^\sQ)$ assuming a gaussian prior measure $\sQ$ \citep{nutz2021introduction}.
+More specifically, it holds that $\log\pi^{\sQ}_{0,1} \propto \|X_0-X_1\|^2/\epsilon$, hence $\pi^\sQ \propto e^{\|X_0-X_1\|^2/\epsilon}$.
+We rewrite the objective in \eq{starting_point}, as $ KL(\pi_{0,1}|\pi_{0,1}^\sQ) + \int G(x_0, x_1)\pi_{0,1} dx_0dx_1$.
+Therefore, the static objective can be rewritten as
+\begin{equation}\label{eq:starting_point}
+    \min_\pi KL(\pi_{0,1}|\pi_{0,1}^\sQ) + \int G(X_0,X_1)\pi_{0,1} dx_0dx_1
+\end{equation}
+In this work, our focal point is the derivation of a dynamic expression for the semi-supervised regularized cost function in \ref{eq:static_SSOT}. Through the prism of entropic interpolation \cite{gentil2017analogy}, the solution of dynamical OT formulations correspond to solving ‘local’ versions of optimal transport problems between infinitesimally close distributions \cite{villani2009optimal}. 
+Let a stochastic random variable path $(X_t)_{0\leq t\leq 1}$ joining $X_0\sim\pi_0$ to $X_1\sim\pi_1$, namely $X_t$ is an interpolation from $X_0$ to $X_1$. This random variable is assumed to be the solution of the following SDE
+\begin{equation}\label{eq:SDE_app}
+    dX_t = u_t dt + \sigma dW_t
+\end{equation}
+Equivalent we can consider a marginal density induced by Eq.\ref{eq:SDE_app} $(p_t)_{0\leq t\leq 1}$ which joins $\pi_0$, and $\pi_1$ \cite{villani2009optimal} admits the Fokker Plank Equation (FPE): 
+\begin{equation}\label{eq:FPE}
+    \frac{\partial p_t}{\partial t} = - \nabla \cdot (u_t p_t) + \frac{1}{2}\sigma^2\Delta p_t
+\end{equation}
+
+
+Now, application of [\cite{villani2009optimal}, Theorem 7.21] suggests that if we consider $p_t$ be the solution to the infimum above, namely a minimizing curve. The endpoints of the random curve $X_t$, whose law admits an optimal transference plan, are an optimal coupling $(X_{t_i}, X_{t_{i+1}})$. Then from the definition of the optimal cost and the minimizing property of the $X_t$
+\begin{equation}\label{eq:sum_of_G}
+    \min_{p_t}\min_{X_t} \sum_{i=0}^{N-1} KL(p_{t_{i\rightarrow i+1}}|q_{i\rightarrow i+1}) + \mathbb{E}_{p_t}\sum_{i=0}^{N-1} G(X_{t_i}, X_{t_{i+1}})
+\end{equation}
+for with $p_0=\pi_0$, and $p_N = \pi_N$. 
+It generally holds $ \mathbb{E}_{p_t}c(x_i, x_{i+1})\geq \mathbb{E}_{p_t}c(x_0, x_{i+1})-\mathbb{E}_{p_t}c(x_0, x_{i})$, with the equality being true for the minimizing path. 
+Therefore, we can say that 
+\begin{equation}
+    \min_{p_t}\min_{X_t} \mathbb{E}_{p_t}c(X_i, X_{i+1}) = \min_{p_t}\min_{X_t} \mathbb{E}_{p_t}c(X_0, X_{i+1})-\mathbb{E}_{p_t}c(X_0, X_{i})
+\end{equation}
+This yields the modified version of the dynamic analogue
+\begin{align}
+\begin{split}
+     \min_{p_t}\min_{X_t} &\sum_{i=0}^{N-1} KL(p_{t_{0, i+1}}|q_{0, i+1}) - KL(p_{t_{0, i}}|q_{0,i}) \\+ &\sum_{i=0}^{N-1} \mathbb{E}_{p_{t_{i+1}, 0}}[G(X_{t_{i+1}}, X_0)] - \mathbb{E}_{p_{t_{i}, 0}}[G(X_{t_{i}}, X_0)]
+\end{split}
+\end{align} 
+
+However, note that $KL(p_{t_{0, i+1}}|q_{0, i+1}) - KL(p_{t_{0, i}}|q_{0,i})\leq KL(p_{t_{i\rightarrow i+1}}|q_{i\rightarrow i+1})$.
+Subsequently, note for any coupling between $p_{t_i}$, and $p_{t_{i+1}}$, it holds that 
+$$
+\mathbb{E}_{p_{t_{i+1}, 0}}[c(X_{t_{i+1}}, X_0)] - \mathbb{E}_{p_{t_{i}, 0}}[c(X_{t_{i}}, X_0)] \leq \mathbb{E}_{p_{t_{i\rightarrow i+1,0}}}[c(X_{t_i}, X_0) - c(X_{t_{i+1}}, X_0)]
+$$
+Finally, in order to ensure positivity of the difference $ G(X_{t_i}, X_0) - G(X_{t_{i+1}}, X_0) $, we upper bound with its absolute value, and finally obtain the relaxed dynamic objective, which admits the following formulation 
+\begin{align}\label{eq:modified_kin}
+    \min_{p_t, X_t}\sum_{i=0}^{N-1} \Bigr|\mathbb{E}_{p_{t_{i, i+1,0}}}G(X_{t_i}, X_0) - G(X_{t_{i+1}}, X_0)\Bigr| + \sum_{i=0}^{N-1} KL(p_{t_{i\rightarrow i+1}}|q_{i\rightarrow i+1})
+\end{align}
+For the first term, assuming the Markovian property of the base measure, we apply the Girsanov theorem in the infinitesimally small time-step $i\rightarrow i+1$: 
+\begin{equation}\label{eq:kl_girs}
+    KL(p_{i, i+1}|q_{i, i+1}) = \int_{t_i}^{t_{i+1}} \|u_{t_i}\|^2 dt = \|u_{t_i}\|^2 \Delta t_i
+\end{equation}
+
+For the second term, we have 
+$$
+\Bigr|\mathbb{E}_{p_{t_{i\rightarrow i+1,0}}}[G(X_{t_{i+1}}, X_0) - G(X_{t_{i}}, X_0)]\Bigr|
+$$
+
+% For any coupling between $p_{t_i}$, and $p_{t_{i+1}}$, it holds that 
+% \begin{align*}
+%     \begin{split}
+%         \min_{p_t} \min_{X_t} \sum_{i=0}^N \mathbb{E}_{p_{t_{i+1}, 0}}[c(X_{t_{i+1}}, X_0)]& - \mathbb{E}_{p_{t_{i}, 0}}[c(X_{t_{i}}, X_0)] \leq \\ &\min_{p_t} \min_{X_t} \sum_{i=0}^N  \mathbb{E}_{p_{t_{i\rightarrow i+1,0}}}[c(X_{t_i}, X_0) - c(X_{t_{i+1}}, X_0)] 
+%     \end{split}
+% \end{align*}
+% with the equality being true for the optimal coupling. Finally, in order to ensure the term on the RHS is positive, we upper bound with the absolute value, and yield the desired result
+% \begin{equation}
+%      \min_{p_t} \min_{X_t} \sum_{i=0}^N \mathbb{E}c(X_{t_i}, X_{t_{i+1}}) \leq \min_{p_t} \min_{X_t} \sum_{i=0}^N \Bigr| \mathbb{E}_{p_{t_{i, i+1,0}}}[c(X_{t_i}, X_0) - c(X_{t_{i+1}}, X_0)] \Bigr|
+% \end{equation}  
+    
+
+For discretized random variable $X_{t_i}$ obeying the following discretized SDE: $X_{t_{i+1}} = X_{t_i} + u_{t_i}\Delta t_i + \sigma_{t_i}\Delta W_{t_i}$, application of the discrete version of the Ito's Lemma yields
+    \begin{equation}
+     \sum_{i=0}^{N-1} \Bigr| \mathbb{E}_{p_{t_{i\rightarrow i+1,0}}}[(\frac{\partial G_{t_i}}{\partial t} + u_t^\intercal \nabla G_{t_i} + \frac{1}{2}\sigma_{t_i}^2 \mathrm{Tr}(\nabla^2 G_{t_i}))\Delta t_i + (\sigma_{t_i}\nabla G_{t_i})\Delta W_{t_i}]\Bigr|
+    \end{equation}
+    It holds that $\frac{\partial G_{t_i}}{\partial t_i} = 0$, since $G$ does not explicitly depend on $t$, and also assume that the Wiener process increment has zero expectation, hence the equation above is rewritten as 
+    \begin{equation}
+    \sum_{i=0}^{N-1} \Bigr|\mathbb{E}[(u_t^\intercal \nabla G_{t_i} + \frac{1}{2}\sigma_{t_i}^2 \mathrm{Tr}(\nabla^2 G_{t_i}))\Delta t_i]\Bigr|
+    \end{equation}
+    Now, we make use of the fact that $|\mathbb{E}[f(x)]|\leq\mathbb{E}[|f(x)|]$, to take the expectation out of the absolute value.
+    \begin{align}
+        \begin{split}
+            \sum_{i=0}^{N-1} \bigg| \mathbb{E}\Bigr[ u_t^\intercal\nabla G + \frac{\sigma^2}{2}\mathrm{Tr}(\nabla^2 G_{t_i})) )\Delta t \Bigr] \bigg|
+            &\leq \sum_{i=0}^{N-1} \mathbb{E}\Bigr[ \bigr| (u_t^\intercal\nabla G + \frac{\sigma^2}{2}\mathrm{Tr}(\nabla^2 G_{t_i})) ) \bigr| \Delta t \Bigr]\\
+            &\leq \sum_{i=0}^{N-1} \mathbb{E}\Bigr[ (\bigr| u_t^\intercal\nabla G \bigr| + \bigr|\frac{\sigma^2}{2}\mathrm{Tr}(\nabla^2 G_{t_i})) \Delta t  \Bigr] 
+        \end{split}
+    \end{align}
+    Note that  $G$ is convex, i.e., $\frac{\sigma^2}{2}\mathrm{Tr}( \nabla^2 G ) \geq 0$, thus we conclude that the expression in \eq{sum_of_G} is upper bound by 
+    \begin{equation}\label{eq:del_g}
+                 \mathbb{E}_{p_{t_{i\rightarrow i+1,0}}}\sum_{i=0}^{N-1} G(X_{t_i}, X_{t_{i+1}})  \leq \sum_{i=0}^{N-1} \mathbb{E}_{p_{t_{i\rightarrow i+1,0}}}\Bigr[ \bigr(| u_t^\intercal\nabla G | + \frac{\sigma^2}{2}\mathrm{Tr}(\nabla^2 G_{t_i})\bigr)\Delta t  \Bigr]
+    \end{equation}
+
+Finally, let us substitute back in the expression above the function $G$, and consider the continuous analogue of \eq{kl_girs} and \ref{eq:del_g}
+\begin{equation}\label{eq:2nd_term}
+    \min_{p_t} \min_{u_t}  \int_0^1 \mathbb{E}_{p_{t}}[\|u_t\|^2] + \mathbb{E}_{p_{t, 0}}\Bigr[ \bigr(| u_t^\intercal\nabla G_{t, 0} | + \frac{\sigma^2}{2}\Delta G_{t, 0} \bigr)  \Bigr] \mathrm{d}t
+\end{equation}
+where $G_{t, 0} = G(X_t, X_0)$. Finally, we conclude the relaxed dynamic formulation is given by
+\begin{equation}\label{eq:lagrangian_app}
+    \min_{p_t} \min_{u_t} \int_0^1 \mathbb{E}_{p_{t}}\Bigr[ \frac{1}{2}\|u_t\|^2 + \mathbb{E}_{p_{0|t}}\bigr[| u_t^\intercal\nabla G_{t, 0} | + \frac{\sigma^2}{2}\Delta G_{t, 0} \bigr]  \Bigr] \mathrm{d}t
+\end{equation}
+subjected to the FPE: $\frac{\partial p_t}{\partial t} = - \nabla \cdot (u_t p_t) + \frac{1}{2}\sigma^2\Delta p_t$, and under the boundary constraints: $p_0=\pi_0$, and $p_1=\pi_1$.
+\end{proof}
+
+
+\subsection{Proof of Proposition \ref{th:cond.lagrang.}}\label{sec:CL}
+\textit{Let the continuous marginal path $p_t$ satisfy the following decomposition $p_t = \int p_{t|0,1}\pi_{0,1} \rm{d}x_0\rm{d}x_1$. For optimization with respect to the intermediate path, we freeze the joint distribution at the boundaries $\pi_{0,1}$, which results in \eq{lagrangian} being recasted as }
+    \begin{align}
+    \begin{split}\label{eq:cond.lagrang.app.}
+        \min_{p_{t|0,1}} \int_0^1 \int_{\sR^d} (\frac{1}{2}\|u_{t|0,1}\|^2 + \bigr|u_{t|0,1}^\intercal \nabla G(X_t, x_0)\bigr| + \frac{\sigma^2}{2}\Delta G(X_t, x_0) \ p_{t|0,1} \mathrm{d}x \mathrm{d}t, \quad \\ \text{ s.t. } \frac{\partial p_{t|0,1}}{\partial t} = -\nabla \cdot (p_{t|0,1} u_{t}) + \frac{1}{2} \sigma^2 \Delta p_{t|0,1}
+    \end{split}
+\end{align}
+\begin{proof}
+Initially, let us deal with the dynamic objective in \eq{lagrangian_app}
+\begin{equation}
+   \min_{p_t} \min_{u_t} \int_0^1 \mathbb{E}_{p_{t}}\Bigr[ \frac{1}{2}\|u\|^2 + \mathbb{E}_{p_{0|t}}\bigr[| u_t^\intercal\nabla G_{t, 0} | + \frac{\sigma^2}{2}\Delta G_{t, 0} \bigr]  \Bigr]\mathrm{d}t
+\end{equation}
+
+The marginal is constructed as a mixture of conditional probability paths $p_t = \int p_{t|0,1}\pi_{0,1} \rm{d}x_0\rm{d}x_1$.
+Now, we sample pairs of $x_0, x_1$, and fix the couplings. This is equivalent to fixing the vector, which induces the couplings. Consequently, fixing the coupling results in recasting \eq{lagrangian_app} as
+\begin{equation}
+   \min_{p_{t|0,1}} \int \mathbb{E}_{p_{t}}\Bigr[ \frac{1}{2}\|u_{t|0,1}\|^2 + \bigr[| u_{t|0,1}^\intercal\nabla G_{t| 0} | + \frac{\sigma^2}{2}\Delta G_{t| 0} \bigr]  \Bigr]\mathrm{d}t
+\end{equation}
+where $u_{t|0,1}$ is used to emphasize the drift that corresponds to the conditional probability path, $G_{t|0}\equiv G(X_t, x_0)$. Additionally, notice that by fixing the coupling, the expectation $\mathbb{E}_{p_{0|t}}$ is dropped.
+\begin{equation}\label{eq:sum_of_G}
+    \min_{p_t}\min_{X_t} \mathbb{E}_{p_{t_{i|0,1}}}\sum_{i=0}^N G(X_{t_i}, X_{t_{i+1}})
+\end{equation}
+
+Now, we want to prove that the conditional path preserves the marginal. Our process to show that is to isolate from every term in the Fokker Plank the joint distribution $\pi_{0,1}$, and preserve the Fokker Plank formulation after freezing the coupling. 
+\begin{itemize}
+    \item $\frac{\partial p_t}{\partial t} = \frac{\partial}{\partial t}\int p_{t|0,1}\pi_{0,1} \rm{d}x_0\rm{d}x_1 = \int \frac{\partial p_{t|0,1}}{\partial t}\pi_{0,1} \rm{d}x_0\rm{d}x_1 = \mathbb{E}_{\pi_{0,1}}[\frac{\partial p_{t|0,1}}{\partial t}]$
+    \item $\nabla \cdot (u_{t|0,1} p_t) = \nabla \cdot (u_{t|0,1} \int p_{t|0,1}\pi_{0,1} \rm{d}x_0\rm{d}x_1) =  \int  \nabla \cdot (u_{t|0,1} p_{t|0,1}) \pi_{0,1} \rm{d}x_0\rm{d}x_1 = \mathbb{E}_{\pi_{0,1}}[\nabla \cdot (u_{t|0,1} p_{t|0,1})]$
+    \item $\Delta p_t = \nabla \cdot \nabla p_t = \nabla \cdot \nabla \int p_{t|0,1}\pi_{0,1} \rm{d}x_0\rm{d}x_1 = \int \nabla \cdot \nabla  p_{t|0,1}\pi_{0,1} \rm{d}x_0\rm{d}x_1 = \mathbb{E}_{\pi_{0,1}}[\Delta p_{t|0,1}]$
+\end{itemize}
+where in every term we used Fubini's Theorem, to change the order between the integral from the definition of the marginal and the differentations from the FPE.
+Therefore, we can conclude that by freezing the coupling the \eq{lagrangian_app} is recasted as
+\begin{align}
+\begin{split}
+   \min_{p_{t|0,1}} \int \mathbb{E}_{p_{t}}\Bigr[ \frac{1}{2}\|u_{t|0,1}\|^2 &+ \bigr[| u_{t|0,1}^\intercal\nabla G_{t| 0} | + \frac{\sigma^2}{2}\Delta G_{t| 0} \bigr]  \Bigr],\\ \text{  s.t.  } &\frac{\partial p_{t|0,1}}{\partial t} = - \nabla \cdot (u_{t|0,1} p_{t|0,1}) + \frac{\sigma^2}{2}\Delta p_{t|0,1}
+\end{split}
+\end{align}
+\end{proof}
+
+
+\subsection{Proof of Proposition \ref{prop:hamiltonian}}\label{sec:proof_ham}
+\textit{The convex conjugate of the Lagrangian in \eq{cond.lagrang.} is defined as the Hamiltonian $H(x_t, a_t, t) = \sup_{u_{t|0,1}}\langle u_{t|0,1}, a_t\rangle - L(x_t, u_{t|0,1}, t)$. 
+The optimization with respect to the drift $u_{t|0,1}$ yields $u_{t|0,1} = a_t - g(a_t^\intercal \nabla G_{t|0}) \nabla G_{t|0}$, where $\nabla G_{t|0} \equiv G(X_t, x_0)$, and 
+$$
+        g(a_t^\intercal \nabla G_{t|0}) = \begin{cases} 
+        \frac{a_t^\intercal \nabla G_{t|0}}{\|\nabla G_{t|0}\|^2} \quad \text{   if   } \quad |a_t^\intercal \nabla G_{t|0}|\leq\|\nabla G_{t|0}\|^2 \\
+        sgn(a_t^\intercal \nabla G_{t|0}) \quad \text{else}
+        \end{cases}
+$$
+Finally, we obtain the Hamiltonian associated with the Lagrangian in \eq{cond.lagrang.} 
+    \begin{align}
+    \begin{split}\label{eq:hamiltonian}
+        H(x_t, a_t, t) &= \frac{1}{2}||a_t - g(a_t^\intercal \nabla G_{t|0})\cdot\nabla G_{t|0}||^2 - \frac{\sigma^2}{2}\Delta G(X_t, x_0)
+    \end{split}
+    \end{align}}
+\begin{proof}
+We begin with the definition of the Hamiltonian, dependent on the gradient field $a_t$. 
+    \begin{equation}\label{eq:Ham.def.app.}
+        H(x_t, a_t, t) = \sup_{u_{t|0,1}}\langle u_{t|0,1}, a_t\rangle - L(x_t, u_{t|0,1}, t)
+    \end{equation}
+A more detailed analysis on the gradient field is given in \cite{neklyudov2023action}.
+Given the convexity of \eq{cond.lagrang.}, we compute the Hamiltonian through the subgradient of the absolute value $\partial(|u_t^\intercal\nabla G|)$.
+Optimizing with respect to the conditioned drift $u_{t|0,1}$ yields the following
+    \begin{equation}\label{eq:Ham.opt.}
+        0  =  a_t  - (u_t +  \partial(u_t^\intercal\nabla G_t)(\nabla G_t)) \Rightarrow u_{t|0,1}^\star =  a_t  -  \partial(u_t^\intercal\nabla G_t)\cdot(\nabla G_t)
+    \end{equation}
+    where $\partial(\cdot)$ denotes the subgradient. Note that 
+\[
+    \begin{cases}
+        u_t^\intercal\nabla G_t > 0 : u_t = a_t  - (\nabla G_t)\Rightarrow (a_t  - (\nabla G_t))^\intercal\nabla G_t \geq 0 \Rightarrow a_t^\intercal\nabla G_t \geq \|\nabla G_t\|^2 \geq 0 \\
+        u_t^\intercal\nabla G_t < 0 : u_t = a_t  + (\nabla G_t)\Rightarrow (a_t  + (\nabla G_t))^\intercal\nabla G_t \leq 0 \Rightarrow a_t^\intercal\nabla G_t \leq -\|\nabla G_t\|^2 \leq 0\\
+        u_t^\intercal\nabla G_t = 0 : \partial(u_t^\intercal\nabla G_t) = [-1,1], \text{ from which we infer } a_t^\intercal\nabla G_t = \alpha \|\nabla G_t\|^2, \text{ for } \alpha \in [-1,1].
+     \end{cases}
+\] 
+This essentially means that the inner products $u_t^\intercal\nabla G_t$, and $a_t^\intercal \nabla G_t$ share the same sign, namely $sgn(u_t^\intercal\nabla G_t) = sgn(a_t^\intercal\nabla G_t)$, when $u_t^\intercal\nabla G_t \neq 0$, otherwise  $a_t^\intercal\nabla G_t = \alpha \|\nabla G_t\|^2$. 
+\[
+    \begin{cases}
+        \partial(u_t^\intercal\nabla G_t) = sgn(a_t^\intercal\nabla G_t), \quad \text{      for         }  \quad |a_t^\intercal\nabla G_t| \geq \|\nabla G_t\|^2  \\
+        \partial(u_t^\intercal\nabla G_t) = \frac{a_t^\intercal\nabla G_t}{\nabla \|G_t\|^2}, \quad  \text{    for     } \quad |a_t^\intercal\nabla G_t| \leq \|\nabla G_t\|^2
+     \end{cases}
+\] 
+We define function $g:\sR\rightarrow\sR$, to be equal to:
+$$g(a_t^\intercal\nabla G_t) = \begin{cases} sgn(a_t^\intercal\nabla G_t), \quad \text{   for     } \quad |a_t^\intercal\nabla G_t| \geq \|\nabla G_t\|^2  \\
+\frac{a_t^\intercal\nabla G_t}{\nabla \|G_t\|^2}, \quad \text{ for } \quad  
+|a_t^\intercal\nabla G_t| \leq \|\nabla G_t\|^2
+\end{cases}$$
+and substitute it in \eq{Ham.def.app.}, which yields an expression for $u_t$ as a function of the gradient field
+\begin{equation}\label{eq:drift_grad.field}
+    u_{t|0,1} = a_t  -  g(a_t^\intercal\nabla G_t)\cdot \nabla G_t
+\end{equation}
+Now, we will provide an expression for the Hamiltonian dependent only on the gradient field $a_t$ and the feedback term $\nabla G_t(X_t, x_0)$. 
+\begin{align}
+    \begin{split}
+        H(x_t, a_t, t) &= \langle a_t  -  g_t\nabla G_t, a_t\rangle - \bigg( \frac{1}{2}\|a_t  -  g_t\nabla G_t\|^2 -\langle a_t  -  g_t\nabla G_t, \nabla G_t\rangle\bigg) - \frac{\sigma^2}{2}\Delta G_t \\
+    \end{split}
+\end{align}
+
+Therefore, we conclude that the Hamiltonian can be expressed as:
+    \begin{equation}
+        H(x_t,  a_t, t) = \frac{1}{2}|| a_t - g(a_t^\intercal\nabla G_t)\cdot \nabla G_t||^2 - \frac{\sigma^2}{2}\Delta G_t
+    \end{equation}
+\end{proof}
+
+\subsection{Proof of Proposition \ref{prop:breg.}}\label{sec:proof_breg}
+\textit{Given the optimal conditional drift $u_{t|0,1}^\star$, we match the parameterized drift $u_t^\theta$, by minimizing the optimality gap given by our Entropic Lagrangian Bridge Matching objective as
+    \begin{align}\label{eq:BD_app}
+        \begin{split}
+                \min_\theta \int_0^1 \mathbb{E}_{p_{0,1}}\mathbb{E}_{p_{t|0,1}}\| a_t^\theta - u_{t|0,1}^\star - g(a_t^\intercal\nabla G_t)\cdot\nabla  G_{t|0}\|^2 \mathrm{d}t 
+        \end{split}
+    \end{align}
+    From Proposition \ref{prop:hamiltonian}, we find that the parameterized drift can be expressed as  $u_t^\theta =  a_t^\theta - g(a_t^\intercal\nabla G_t)\cdot\nabla G_{t|0}$.
+    Therefore, the matching objective of \eq{BD} can be rewritten as follows}
+    \begin{equation}\label{eq:BM_app}
+        \min_\theta \int_0^1 \mathbb{E}_{p_{t}} ||u_{t|0,1}^\star -u_t^\theta||^2 \rm{d}t
+    \end{equation}
+\begin{proof}
+Given the prescribed path, we seek to learn a parameterized drift field that matches the optimal conditioned paths, acquired from the previous step, which minimized the Lagrangian in \eq{cond.lagrang.app.}. Following advancements in matching frameworks, we extend the notion of bridging the variational gap for an entropy regularized optimal transport problem with general langriangian cost. 
+We will first prove the following proposition which shows that we can express the variational gap that we need to bridge is expressed through the Bregman divergence.
+\begin{proposition}
+For a Lagrangian function $L(X_t, u_t, t)$, the convex conjugate is given by the Hamiltonian: $H(x_t, a_t, t) = \sup \langle a_t, u_t\rangle - L(x_t, u_t, t)$, dependent on the gradient field $a_t$.
+The variational gap between the optimal drift and the parameterized gradient field is expressed as the following Bregman divergence.
+\begin{align}
+    \begin{split}
+        \gL^\theta - \gL^\star &= \int_0^1 \int_{\sR^d} D_{L,H}[ a_t:u^\star_{t|0,1}] p_{t|0,1} \mathrm{d}x\mathrm{d}t
+    \end{split}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Starting from a general minimization problem for a Lagrangian strictly convex with $u_t$
+\begin{equation}
+    \min_{u_{t|0,1}} \int_0^1 \int_{\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\mathrm{d}x\mathrm{d}t, \text{ subj.: } \frac{\partial p_{t|0,1}}{\partial t} = -\nabla\cdot(p_{t|0,1} u_{t|0,1}) + \frac{1}{2}\sigma^2\Delta p_{t|0,1}, \text{ and } p_0 = x_0, p_1 = x_1
+\end{equation}
+and expressing it as a Lagrange optimization problem yields, with $s_t$ is the Lagrange multiplier enforcing the Fokker Plank equation constraint
+\begin{align}\label{eq:Lagr.integration_by_parts}
+    \begin{split}
+        \gL(\theta) &= \min_{u_{t|0,1}} \int_0^1 \int_{\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\mathrm{d}x\mathrm{d}t,\ \ \text{ subj.: } \frac{\partial p_{t|0,1}}{\partial t} = -\nabla\cdot(p_{t|0,1} u_{t|0,1}) + \frac{1}{2}\sigma^2\Delta p_{t|0,1} \\
+                    &=  \sup_{s_t}\min_{u_{t|0,1}} \int_0^1 \int_{\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\mathrm{d}x\mathrm{d}t + \int_0^1 \int_{\sR^d} s_t( \frac{\partial p_{t|0,1}}{\partial t} + \nabla\cdot(p_{t|0,1} u_{t|0,1}) - \frac{1}{2}\sigma^2\Delta p_{t|0,1}) \mathrm{d}x\mathrm{d}t \\
+                    &= 
+                    \sup_{s_t}\min_{u_{t|0,1}} 
+                    \underbrace{\int_0^1 \int_{\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\mathrm{d}x\mathrm{d}t}_{I_1}
+                    +\underbrace{\int_0^1 \int_{\sR^d} s_t \frac{\partial p_{t|0,1}}{\partial t} \mathrm{d}x\mathrm{d}t}_{I_2} \\
+                    &+\underbrace{\int_0^1 \int_{\sR^d} s_t \nabla\cdot(p_{t|0,1} u_{t|0,1})\mathrm{d}x\mathrm{d}t}_{I_3}
+                    - \underbrace{\int_0^1 \int_{\sR^d} \frac{s_t}{2}\sigma^2\Delta p_{t|0,1}\mathrm{d}x\mathrm{d}t}_{I_4}
+    \end{split}
+\end{align}
+
+We separate each one of the integrals and perfrom integration by parts
+\begin{itemize}
+    \item $I_2 = \int_0^1 \int_{\sR^d} s_t \frac{\partial p_{t|0,1}}{\partial t} \mathrm{d}x\mathrm{d}t =  [s_t p_{t|0,1}]_{0}^1  - \int_0^1 \int_{\sR^d} p_{t|0,1} \frac{\partial s_t}{\partial t} \mathrm{d}x\mathrm{d}t$ 
+    \\ 
+    \item $I_3 = \int_0^1 \int_{\sR^d} s_t \nabla\cdot(p_{t|0,1} u_{t|0,1})\mathrm{d}x\mathrm{d}t = -\int_0^1 \int_{\sR^d} \langle  \nabla s_t, u\rangle p_{t|0,1} \mathrm{d}t\mathrm{d}x + \frac{\sigma^2}{2} \int_0^1 \oint s_t \langle \nabla p_{t|0,1}, d\rvn\rangle \mathrm{d}t$
+    \\
+    \item $I_4 = \oint s_t\langle \nabla p_{t|0,1}, d\rvn\rangle \mathrm{d}t - \int_0^1 \int_{\sR^d} s_t\Delta p_{t|0,1} \mathrm{d}t \mathrm{d}x = \int_0^1 \int_{\sR^d} \langle  \nabla s_t, \nabla p_{t|0,1}\rangle \mathrm{d}x = - \int_0^1 \int_{\sR^d} \Delta s_t \ p_{t|0,1} \mathrm{d}x + \frac{\sigma^2}{2}\oint s_t \langle p_{t|0,1}, d\rvn\rangle$    
+\end{itemize}
+
+Substituting them back to \eq{Lagr.integration_by_parts}, we obtain
+\begin{align}
+\begin{split}
+\gL =&\sup_{s_t}\min_{u_{t|0,1}} \int_0^1 \int_{\sR^d}  (L(x_t, u_{t|0,1}, t) - \frac{\partial s_t}{\partial t} - \langle  \nabla s_t, u\rangle -\Delta s_t) \ p_{t|0,1} \mathrm{d}x\mathrm{d}t - \mathbb{E}_{p_0}[x_0] + \mathbb{E}_{p_1}[x_1] \\ 
+    &+ \frac{\sigma^2}{2}\int \oint  s_t \langle p_{t|0,1}, d\rvn\rangle \\
+    =&\sup_{s_t} \int_0^1 \int_{\sR^d}  ( - H(x_t,  \nabla s_t, t) - \frac{\partial s_t}{\partial t}  -\Delta s_t) \ p_{t|0,1} \mathrm{d}x\mathrm{d}t - \mathbb{E}_{p_0}[x_0] + \mathbb{E}_{p_1}[x_1] + \frac{\sigma^2}{2}\int \oint  s_t \langle p_{t|0,1}, d\rvn\rangle \\
+    =&\min_{s_t} \int_0^1 \int_{\sR^d}  ( H(x_t,  \nabla s_t, t) + \frac{\partial s_t}{\partial t}  +\Delta s_t) \ p_{t|0,1} \mathrm{d}x\mathrm{d}t + \mathbb{E}_{p_0}[x_0] - \mathbb{E}_{p_1}[x_1] - \frac{\sigma^2}{2}\int \oint  s_t \langle p_{t|0,1}, d\rvn\rangle
+\end{split}
+\end{align}
+where, the second equation stems from defining the Hamiltonian of the Lagrangian $L(x_t, u_t, t)$  with respect to the Lagrange multiplier $s_t$ as: 
+$H(x_t, \nabla s_t, t) = \sup \langle u_t, \nabla s_t \rangle - L(x_t, u_t, t)$.
+Now, consider the optimality gap between a parameterized gradient field, and an optimal gradient field $s_t^\star$, which corresponds to a loss function $\gL^\star$. 
+We compute the optimality gap as
+\begin{align}
+    \begin{split}\label{eq:gap}
+        \gL^\theta - \gL^\star &= \int_0^1 \int_{\sR^d}  ( H(x_t,  \nabla s_t, t) + \frac{\partial s_t}{\partial t}  +\Delta s_t) \ p_{t|0,1} \mathrm{d}x\mathrm{d}t + \mathbb{E}_{p_0}[x_0] - \mathbb{E}_{p_1}[x_1] - \frac{\sigma^2}{2}\int \oint  s_t \langle p_{t|0,1}, d\rvn\rangle \\
+                        &- \int_0^1 \int_{\sR^d}  ( H(x_t,  \nabla s^\star_t, t) + \frac{\partial  s^\star_t}{\partial t}  +\Delta  s^\star_t) \ p_{t|0,1} \mathrm{d}x\mathrm{d}t + \mathbb{E}_{p_0}[x_0] - \mathbb{E}_{p_1}[x_1] - \frac{\sigma^2}{2}\int \oint  s^\star_t \langle p_{t|0,1}, d\rvn\rangle\\
+                        &= \int_0^1 \int_{\sR^d}  ( H(x_t,  \nabla s_t, t) - H(x_t,  \nabla s^\star_t, t) ) p_{t|0,1} \mathrm{d}x \mathrm{d}t + \underbrace{\int_0^1 \int_{\sR^d} \frac{\partial s_t}{\partial t}p_{t|0,1} \mathrm{d}x\mathrm{d}t +\mathbb{E}_{p_0}[x_0] - \mathbb{E}_{p_1}[x_1]}_{ - \int_0^1 \int_{\sR^d} \frac{\partial p_{t|0,1}}{\partial t}s_t \mathrm{d}x \mathrm{d}t} \\ 
+                        &- \underbrace{\int_0^1 \int_{\sR^d} \frac{\partial  s^\star_t}{\partial t}p_{t|0,1} \mathrm{d}x\mathrm{d}t +\mathbb{E}_{p_0}[x_0] - \mathbb{E}_{p_1}[x_1]}_{\int_0^1 \int_{\sR^d} \frac{\partial p_{t|0,1}}{\partial t} s^\star_t \mathrm{d}x \mathrm{d}t} 
+                        + \underbrace{\int_0^1 \int_{\sR^d} \Delta s_t p_{t|0,1} \mathrm{d}x \mathrm{d}t - \frac{\sigma^2}{2}\int \oint  s_t \langle p_{t|0,1}, d\rvn\rangle}_{\int_0^1 \int_{\sR^d} \Delta p_{t|0,1} s_t \mathrm{d}x \mathrm{d}t} \\
+                        &- \underbrace{\int_0^1 \int_{\sR^d} \Delta  s^\star_t p_{t|0,1} \mathrm{d}x \mathrm{d}t - \frac{\sigma^2}{2}\int \oint  s_t \langle p_{t|0,1}, d\rvn\rangle}_{\int_0^1 \int_{\sR^d} \Delta p_{t|0,1}  s^\star_t \mathrm{d}x \mathrm{d}t} \\
+                        &= \int_0^1 \int_{\sR^d}  ( H(x_t,  \nabla s_t, t) - H(x_t,  \nabla s^\star_t, t) ) p_{t|0,1} \mathrm{d}x \mathrm{d}t + \int_0^1 \int_{\sR^d} (s_t -  s^\star_t) (-\frac{\partial p_{t|0,1}}{\partial t}+\Delta p_{t|0,1})\mathrm{d}x\mathrm{d}t \\
+                        &= \int_0^1 \int_{\sR^d}  ( H(x_t,  \nabla s_t, t) - H(x_t,  \nabla s^\star_t, t) ) p_{t|0,1} \mathrm{d}x \mathrm{d}t + \int_0^1 \int_{\sR^d} (s_t -  s^\star_t) (\nabla\cdot(p_{t|0,1} u^\star_{t|0,1})) \mathrm{d}x\mathrm{d}t \\
+                        &= \int_0^1 \int_{\sR^d}  ( H(x_t,  \nabla s_t, t) - H(x_t,  \nabla s^\star_t, t) ) - \langle \nabla(s_t -  s^\star_t), u^\star_{t|0,1} \rangle p_{t|0,1} \mathrm{d}x\mathrm{d}t
+    \end{split}
+\end{align}
+At this point, we define the gradient field function $a_t(X_t):\sR^d\rightarrow\sR^d$, which is equal to $\nabla s_t = a_t$, which finally yields
+\begin{align}
+    \begin{split}
+        \gL^\theta - \gL^\star &= \int_0^1 \int_{\sR^d}  H(x_t,  a_t, t) + L(x_t, u_{t|0,1}^\star, t) ) - \langle  a_t , u^\star_{t|0,1} \rangle p_{t|0,1} \mathrm{d}x\mathrm{d}t \\
+        &= \int_0^1 \int_{\sR^d} D_{L,H}[ a_t:u^\star_{t|0,1}] p_{t|0,1} \mathrm{d}x\mathrm{d}t
+    \end{split}
+\end{align}
+where the first equality stems from the fact that at the optimal point ($a_t^\star, u_t^\star$), it holds that $H(x_t, a_t^\star, t) = \langle a_t^\star, u_t^\star\rangle - L(x_t, u_t^\star, t)$ \citep{neklyudov2023action, boyd2004convex}. 
+This allows us to substitute the expression in the last line of \eq{gap}, $\langle a_t^\star, u^\star_t\rangle - H(x_t, a^\star_t, t)$ with $L(x_t, u_t^\star, t)$, and express the variational gap as the Bregman Divergence, which emerges by the definition in the last equality finishing the proof of the proposition.
+\end{proof}
+Therefore, to minimize the optimality gap, we sample sufficiently many uncoupled pairs $(x_0, x_1)$, and parameterize the gradient field $a_t\rightarrow a_t^\theta$, and try to match the parameterized gradient field on the optimized drift $u_t^\star$. We express our matching objective an expectation over the sampled pairs of optimality gap derived from the previous proposition
+\begin{align}
+    \begin{split}
+        \min_\theta \mathbb{E}_{\pi_{0,1}}[\gL^\theta - \gL^\star]  &= \min_\theta  \mathbb{E}_{\pi_{0,1}}\Bigr[ \int_0^1 \int_{\sR^d}  H(x_t,  a_t^\theta, t) + L(x_t, u_{t|0,1}^\star, t)  - \langle  a_t^\theta , u^\star_t \rangle p_{t|0,1} \mathrm{d}x\mathrm{d}t\Bigr]
+    \end{split}
+\end{align}
+
+Substituting for the expressions we have for the functions $L, \text{ and } H$, we obtain
+\begin{align}
+    \begin{split}
+        \mathbb{E}_{\pi_{0,1}}[\gL^\theta - \gL^\star] &= \int_0^1 \int_{\sR^d}  \Bigr(\frac{1}{2}|| a_t^\theta - g_t\cdot\nabla G_t||^2 - \frac{\sigma^2}{2}\Delta G_t \\ &+ \frac{1}{2}\|u_{t|0,1}^\star\|^2 +  |{u_{t|0,1}^\star}^\intercal\nabla G_t| + \frac{\sigma^2}{2}\Delta G_t - \langle  a_t^\theta, u_{t|0,1}^\star \rangle\Bigr) p_{t|0,1} \pi_{0,1} dxdt \\
+    \end{split}
+\end{align} 
+At this point, we take cases for the different values of $g_t$. 
+\textbf{First: } $sgn( a_t^\intercal\nabla G_t) = sgn(u^{\star, \intercal}_t \nabla G_t) > 0$, and $g(a_t^\intercal\nabla G_t) = 1$:
+\begin{align}
+    \begin{split}\label{eq:OG1}
+        \mathbb{E}_{\pi_{0,1}}[\gL^\theta - \gL^\star]
+        &= \int_0^1 \int_{\sR^d}  (\frac{1}{2}|| a_t^\theta - \nabla G_t||^2 + \frac{1}{2}\|u_{t|0,1}^\star\|^2 +  {u_{t|0,1}^\star}^\intercal\nabla G_t - \langle  a_t^\theta, u_{t|0,1}^\star \rangle) p_t dxdt \\
+        &= \int_0^1 \int_{\sR^d} (\frac{1}{2}|| a_t^\theta - \nabla G_t||^2 + \frac{1}{2}\|u_{t|0,1}^\star\|^2 -  \langle u_{t|0,1}^\star,  a_t^\theta - \nabla G_t \rangle) p_t dxdt \\
+        &= \int_0^1 \int_{\sR^d} (\frac{1}{2}\| a_t^\theta - \nabla G_t - u_{t|0,1}^\star\|^2 ) p_t dxdt
+    \end{split}
+\end{align}
+\textbf{Second: } $sgn( a_t \nabla G_t) = sgn(u^\star_t \nabla G_t) < 0$, and $g(a_t^\intercal\nabla G_t) = -1$:
+\begin{align}
+    \begin{split}\label{eq:OG2}
+        \mathbb{E}_{\pi_{0,1}}[\gL^\theta - \gL^\star]
+        &= \int_0^1 \int_{\sR^d}  (\frac{1}{2}|| a_t^\theta + \nabla G_t||^2 + \frac{1}{2}\|u_{t|0,1}^\star\|^2 -  {u_{t|0,1}^\star}^\intercal \nabla G_t - \langle  a_t^\theta, u_{t|0,1}^\star \rangle) p_t dxdt \\
+        &= \int_0^1 \int_{\sR^d} (\frac{1}{2}|| a_t^\theta + \nabla G_t||^2 + \frac{1}{2}\|u_{t|0,1}^\star\|^2 -  \langle u_{t|0,1}^\star,  a_t^\theta + \nabla G_t \rangle) p_t dxdt \\
+        &= \int_0^1 \int_{\sR^d} (\frac{1}{2}\| a_t^\theta + \nabla G_t - u_{t|0,1}^\star\|^2) p_t dxdt
+    \end{split}
+\end{align}
+\textbf{Third: }$(u^\star_t \nabla G_t) = 0$, , and $g(a_t^\intercal\nabla G_t) = \lambda$ , with $\lambda\in [-1,1]$:
+\begin{align}
+    \begin{split}\label{eq:OG3}
+        \mathbb{E}_{\pi_{0,1}}[\gL^\theta - \gL^\star]
+        &= \int_0^1 \int_{\sR^d}  (\frac{1}{2}|| a_t^\theta - \lambda\nabla G_t||^2 + \frac{1}{2}\|u_{t|0,1}^\star\|^2 -   \langle  a_t^\theta, u_{t|0,1}^\star \rangle) p_t dxdt \\
+        &= \int_0^1 \int_{\sR^d}  (\frac{1}{2}|| a_t^\theta - \lambda\nabla G_t||^2 + \frac{1}{2}\|u_{t|0,1}^\star\|^2 + \lambda {u_{t|0,1}^\star}^\intercal\nabla G_t -   \langle  a_t^\theta, u_{t|0,1}^\star \rangle) p_t dxdt \\
+        &= \int_0^1 \int_{\sR^d} (\frac{1}{2}|| a_t^\theta - \nabla G_t||^2 + \frac{1}{2}\|u_{t|0,1}^\star\|^2 -  \langle u_{t|0,1}^\star,  a_t^\theta + \lambda \nabla G_t \rangle) p_t dxdt \\
+        &= \int_0^1 \int_{\sR^d} (\frac{1}{2}\| a_t^\theta - \lambda \nabla G_t - u_{t|0,1}^\star|^2) p_t dxdt
+    \end{split}
+\end{align}
+where the second equality comes from the fact that we added the quantity $\lambda u_{t|0,1}^\star\nabla G_t = 0$. 
+Finally, we can succinctly express the optimality gap combining \eq{OG1}, and \ref{eq:OG2}:
+\begin{equation}\label{eq:Breg.Div}
+    \min_\theta \mathbb{E}_{\pi_{0,1}}[ \gL^\theta - \gL^\star] = \min_\theta \int_0^1 \int_{\sR^d} (\frac{1}{2}\| a_t^\theta - g(a_t^\theta, \nabla G_t)\nabla G_t - u^\star_{t|0,1}\|^2) p_t dxdt
+\end{equation}
+But notice that by the definition of $u_t^\theta$ in \eq{drift_grad.field}, we have $u_{t}^\theta =  a_t^\theta - g(a_t^\theta, \nabla G_{t_{|0}})\nabla G_{t_{|0}}$, hence the minimization problem of the variational gap in \eq{Breg.Div} is expressed as
+\begin{equation}
+    \min_\theta \int_0^1 \int_{\sR^d} \frac{1}{2}||u^\star_{t|0,1} - u_t^\theta||^2p_t \mathrm{d}x \mathrm{d}t
+\end{equation}
+\end{proof}
+
+
+% \subsection{Connection with Generalized Schrödinger Bridge}
+% \subsubsection{Proof of Proposition \ref{prop:SB connection}}\label{sec:proof_SB_conn.}
+% \textit{Assume that our algorithm has converged to a solution $(p_t^\star, u_t^\star)$. We express the optimization in \eq{cond.lagrang.}, as dual Lagrangian optimization problem, and optimize for the drift to yield $u_t^\star = V_x - g(V_x, \nabla G_{t|0})\nabla G_{t|0} $. We obtain the associated HJB equation, which paired with the FPE equation gives the following set of PDEs
+% \begin{align}
+%     \begin{split}\label{eq:nonlinear_PDEs_app}
+%         - \frac{\partial V_{t}}{\partial t} + \frac{1}{2}\|V_x\|^2  + \frac{1}{2} \| \nabla G \|^2 + \frac{\sigma^2}{2}\Delta G(X_t, x_0) - V_x^\intercal \bigg[\bigr(g(V_x^\intercal \nabla G) \bigr) \cdot \nabla G \bigg] + \frac{1}{2} \sigma^2 \Delta V_{t} &= 0 
+%         \\ 
+%         - \frac{\partial p_{t}}{\partial t} -\nabla \cdot \Bigr( p_{t} (V_x - \bigr[g(V_x^\intercal\nabla G)\cdot\nabla G)\bigr]\Bigr) + \frac{1}{2} \sigma^2 \Delta p_{t} = 0,\ p_0 = \pi_0 \text{ and } p_1 &= \pi_1
+%     \end{split}
+% \end{align}}
+% \begin{proof}
+% We start by reformulating the dynamic objective as Lagrangian optimization, where the Lagrange multiplier is a function $V(x, t)$.
+% \begin{equation}
+%     \min_u \sup_V \int_0^1 \int_{\sR^d} (\frac{1}{2}||u_t||^2 + \bigr|u_t^\intercal \nabla G_{t|0}\bigr| + \frac{\sigma^2}{2}\Delta G_{t|0}) p_{t} + V_t \Bigr(\frac{\partial p_{t}}{\partial t} + \nabla \cdot (p_{t} u_{t}) - \frac{1}{2} \sigma^2 \Delta p_{t}\Bigr) \mathrm{d}x \mathrm{d}t 
+% \end{equation}
+
+% Let $p_t$ be the transition probability density and let $V(x)$ be a bounded and twice differentiable but otherwise arbitrary test function such that the integrated conjunct vanishes [\cite{hanson2007applied}, Theorem 7.5], namely
+% \begin{equation}\label{eq:integrand}
+%     [V(x, t)p(x, t)u(x, t) + \frac{1}{2} \sigma^2  (V\nabla p_t  -  V_x  p_t) ]_{-\infty}^\infty = 0
+% \end{equation}
+
+
+% \begin{align}
+% \begin{split}
+%      \int_0^1 \int_{\sR^d} \frac{1}{2}||u_t||^2 + \bigr|u_t^\intercal \nabla G_t(x_t)\bigr| p_{t} + V_t \Bigr( \frac{\partial p_{t}}{\partial t} + \nabla \cdot (p_{t} u_{t}) - \frac{1}{2} \sigma^2 \Delta p_{t}\Bigr) \mathrm{d}x \mathrm{d}t \\
+%     = \int_0^1 \int_{\sR^d} \frac{1}{2}||u_t||^2 + \bigr|u_t^\intercal \nabla G_t(x_t)\bigr| p_{t} + \underbrace{V_t\frac{\partial p_{t}}{\partial t}}_{I_1} + \underbrace{V_t\nabla \cdot (p_{t} u_{t})}_{I_2} - \underbrace{V\frac{1}{2} \sigma^2 \Delta p_{t}\Bigr)}_{I_3} \mathrm{d}x \mathrm{d} t
+% \end{split}
+% \end{align}
+
+% Performing integrations by parts to the terms $I_1, I_2, I_3$:  
+% \begin{itemize}
+%     \item $I_1 = \int_0^1 \int_{\sR^d} V\frac{\partial p_{t}}{\partial t} \mathrm{d}x \mathrm{d}t = [V(x, t)p(x, t)]_{-\infty}^\infty - \int_0^1 \int_{\sR^d} \frac{\partial V_{t}}{\partial t} p_t \mathrm{d}x \mathrm{d}t $ 
+%     \item $I_2 = \int_0^1 \int_{\sR^d} V\nabla \cdot (p_{t} u_{t})\mathrm{d}x \mathrm{d}t = [V(x, t)p(x, t)u(x, t)]_{-\infty}^\infty -  \int_0^1 \int_{\sR^d} V_x^\intercal u_t p_t \mathrm{d}x \mathrm{d}t$
+%     \item $I_3 = \int_0^1 \int_{\sR^d} \frac{1}{2} \sigma^2 V \Delta p_{t}\mathrm{d}x\mathrm{d}t = \frac{1}{2} \sigma^2 [V \nabla p_t]_{-\infty}^\infty - \int_0^1 \int_{\sR^d} \frac{1}{2} \sigma^2 V_x \nabla p_{t}\mathrm{d}x\mathrm{d}t = \frac{1}{2} \sigma^2 [V\nabla p_t]_{-\infty}^\infty - \frac{1}{2} \sigma^2 [V_x  p_t]_{-\infty}^\infty + \int_0^1 \int_{\sR^d} \frac{1}{2} \sigma^2 \Delta V p_{t}\mathrm{d}x\mathrm{d}t $
+% \end{itemize}
+
+% Combine the expressions for $I_1, I_2, I_3$, and \eq{integrand}, one readily obtains
+
+% \begin{equation}\label{eq:HJB_app_}
+%      \int_0^1 \int_{\sR^d} \Bigr( \frac{1}{2}||u_t||^2 + \bigr|u_t^\intercal \nabla G_{t|0} \bigr| + \frac{\sigma^2}{2}\Delta G_{t|0} - \frac{\partial V_{t}}{\partial t} - V_x^\intercal u_t - \frac{1}{2} \sigma^2 \Delta V \Bigr) p_t \mathrm{d}x \mathrm{d}t
+%     \mathrm{d}x \mathrm{d}t
+% \end{equation}
+
+% Optimize the integrand with respect to the drift $u_t$: 
+% $$
+% u_t^\star = V_x - \partial(u_t^\intercal\nabla G_t)\nabla G_t
+% $$
+% where $\partial(u_t^\intercal\nabla G_t)$ is the subgradient of $|u_t^\intercal\nabla G_t|$.  
+% {\color{red} Notice that: 
+% \[
+%     \begin{cases}
+%         u_t^\intercal\nabla G_t\geq 0 : u_t = V_x - \nabla G_t\Rightarrow (V_x - \nabla G_t)^\intercal\nabla G_t \geq 0 \Rightarrow V_x^\intercal\nabla G_t \geq \|\nabla G_t\|^2 \geq 0 \\
+%         u_t^\intercal\nabla G_t \leq 0 : u_t = V_x  + \nabla G_t \Rightarrow (V_x  + \nabla G_t)^\intercal\nabla G_t \leq 0 \Rightarrow V_x^\intercal\nabla G_t  \leq -\|\nabla G_t \|^2 \leq 0 \\
+%         u_t^\intercal\nabla G_t = 0 : \partial(u_t^\intercal\nabla G_t) = \lambda \in [-1, 1], \text{ from which we obtain } \lambda = \frac{V_x^\intercal\nabla G_t}{\|\nabla G_t\|^2}
+%     \end{cases}
+% \] 
+% % Recall from Section \ref{sec:proof_ham} the definition of $g(V_x, \nabla G_t) = sgn(V_x^\intercal\nabla G_t) \text{ if } |V_x^\intercal\nabla G_t| \geq \|\nabla G_t\|^2, \quad \frac{V_x^\intercal\nabla G_t}{\|\nabla G_t\|^2} \text{      else}$. Hence, we can rewrite $u_t$ as
+% \begin{equation}
+%     u_t^\star = V_x - sgn(V_x, \nabla G_t)\nabla G_t 
+% \end{equation}
+
+% Next, if we substitute into \eq{HJB_app_}, the expression above for $u_t^\star$
+% \begin{equation}
+%     \int_0^1 \int_{\sR^d} \Bigr( \frac{1}{2}\| V_x\|^2  + \frac{sgn^2}{2} \| \nabla G_{t|0} \|^2 + \frac{\sigma^2}{2}\Delta G_{t|0}  - V_x^\intercal \bigr(sgn \cdot\nabla G_{t|0} \bigr)  -   \frac{\partial V_{t}}{\partial t} - \frac{1}{2} \sigma^2 \Delta V_{t}\Bigr) p_t \mathrm{d}x \mathrm{d}t 
+% \end{equation}
+%  We readily obtain the Hamilton Jacobi Bellman (HJB) equation associated with our problem. The FPE equation of the constraint in the initial optimization problem and the HJB we just derived describe the transformation between two distributions (from FPE) while obeying some optimality (from HJB). 
+
+% \begin{align}
+%     \begin{split}
+%         - \frac{\partial V_{t}}{\partial t} + \frac{1}{2}\| V_x\|^2  +\frac{sgn^2}{2} \| \nabla G_{t|0} \|^2 + \frac{\sigma^2}{2}\Delta G_{t|0} - V_x^\intercal \bigr(sgn \cdot \nabla G_{t|0}\bigr)  - \frac{1}{2} \sigma^2 \Delta V_{t} &= 0 
+%         \\ 
+%         - \frac{\partial p_{t}}{\partial t} -\nabla \cdot \Bigr( p_{t} (V_x - sgn\cdot\nabla G_{t|0})\Bigr) + \frac{1}{2} \sigma^2 \Delta p_{t} = 0,\ p_0 &= \pi_0 \text{ and } p_1 = \pi_1
+%     \end{split}
+% \end{align}
+% }
+% \end{proof}
+
+% {\color{red} Finally, application of the Hopf-Cole transformation, $\Psi(X_t, t) = \exp(-V(X_t, t)), \ \hat{\Psi}(X_t, t) = p_t \exp({V(X_t, t)})$ to the coupled set of PDEs above yields the coupled PDEs associated with Generalized Schrödinger Bridge problem \cite{liu2022deepgeneralizedschrodingerbridge, chen2014optimalsteeringinertialparticles}.
+% \begin{align}
+% \begin{split}\label{eq:GSB-PDEs}
+%     \frac{\partial \Psi_t}{\partial t} &= -\nabla\Psi_t^\intercal f_t - \frac{1}{2}\sigma^2\Delta\Psi_t + \Bigr( \frac{g^2}{2} \| \nabla G_t \|^2 + \frac{\sigma^2}{2}\Delta G(X_t, x_0)\Bigr)\Psi_t, \ (\Psi\hat{\Psi})(\cdot, 0) = \pi_0\\ 
+%     \frac{\partial \hat{\Psi}_t}{\partial t} &= -\nabla\cdot\bigg(\hat{\Psi}_t^\intercal f_t\bigg) + \frac{1}{2}\sigma^2\Delta\hat{\Psi}_t - \Bigr( \frac{g^2}{2} \| \nabla G_t \|^2 + \frac{\sigma^2}{2}\Delta G(X_t, x_0)\Bigr)\hat{\Psi}_t, \quad  (\Psi\hat{\Psi})(\cdot, 1) = \pi_1
+% \end{split}
+% \end{align}
+% where we set $f_t=g(\nabla\log\Psi_t, \nabla G_t)\cdot\nabla G_t$. 
+% This shows that the solution $(p_t^\star, u_t^\star)$ obtained through Alg. \ref{alg:FSBM} corresponds to the generalized Schrödinger system, with cost equal to $F_t =  \frac{g^2}{2} \| \nabla G(X_t, x_0) \|^2 + \frac{\sigma^2}{2}\Delta G(X_t, x_0) $. }
+
+
+
+% \begin{definition}[Dynamic optimal coupling]
+%     Consider $(\gX, d)$ a Polish space, with a dynamic optimal transference plan $\gT$ belonging to the set of cost-minimizing curves $\Gamma$, such that $\pi_{0,1} = (x_0, x_1)_\#\gT$ is an optimal transference between $\pi_0$, and $\pi_1$. Equivalently, $\gT$ is the law of the cost-minimizing random path between two boundary distributions $\pi_0$, and $\pi_1$, with $\text{law}(X_0) = \pi_0$, and $\text{law}(X_1)=\pi_1$. This random curve is called dynamical optimal coupling of $(\pi_0, \pi_1)$.
+% \end{definition}
+
+% This definition implies that the law at time $t$ of a dynamical optimal coupling can be seen as a minimizing path in the space of probability measures.
+
+ % \begin{proposition}
+%     Assume the transfer plan $\pi_{0,1}$ from which the keypoint set is drawn is the static Schrödigner Bridge. Then its dynamic interpolation is the dynamic Schrödigner Bridge, with probability measure  $P = \int \sQ_{|0,1} \mathrm{d}\pi_{0,1}$, for some reference measure $\sQ$, with $\sQ_{|0,1}$ being the Brownian bridge between the two samples of the keypoint set.
+%     This enables us to express the interpolating curve between the $X_0^{ks}$, and $X_1^{ks}$ as $X_t^{ks} = t*X_1^{ks} + (1-t)*X_0^{ks}$. 
+% \end{proposition}
+
+\section{Discussions}
+
+% \subsection{Markovian Projection}\label{sec:proof_conv}
+% Consider the following decomposition of the KL divergence
+% \begin{equation}\label{eq:KL_min_app}
+% \min_\theta KL(\sP|\sP^\theta) = \min_\theta KL(\pi_{0,1}^\star|\pi_{0,1}^\theta) + \mathbb{E}_{\pi_{0,1}}[KL(\sP^\star_{|0,1}|\sP^\theta_{|0,1})]
+% \end{equation}
+
+% We show that our matching objective can also be interpreted as a Markovian projection, since it minimizes the the RHS terms in \eq{KL_min_app}.
+% \\
+% First, let us define the Markovization of $\sP$, $\sP^\star$
+% \begin{definition}
+%     The Markovian projection $\sP^\star$ of non-necessarily Markovian path measure $\sP$ is defined as the closest Markov measure in the path measure sense, that is the solution of $\sP^\star = \argmin_{\sM\in\gM} KL(\sP|\sM)$.
+% \end{definition}
+% Furthermore, it holds for $\sP^\star$
+%         \begin{equation}
+%             KL(\sP|\sP^\theta) = KL(\sP|\sP^\star) + KL(\sP^\star|\sP^\theta)
+%         \end{equation}
+% The detailed proof is in \cite{liu2022let}. The main idea is that the expectations from the KL divergences on the RHS can be taken based on the same probability path, due to the fact that the Markovian projection admits the same marginal, that is $p_t^\sP = p_t^{\sP^\star}$. Hence, 
+%         \begin{equation}
+%             \min_\theta KL(\sP|\sP^\theta) = \min_\theta KL(\sP|\sP^\star) + KL(\sP^\star|\sP^\theta) = \min_\theta KL(\sP^\star|\sP^\theta)
+%         \end{equation}
+% given that the first of the RHS is not dependent on $\theta$. The variational minimization in \eq{BM} directly corresponds to the second term in \eq{KL_min_app}.
+% The next proposition below provides a guarantee that during training, as the parameterized drift approximates the optimal drift, it also provides an increasingly better approximation of the optimal coupling.
+
+
+% {\color{red}
+% Consequently, we conclude that our training scheme minimizes both terms on the RHS of \eq{KL_min_app} simultaneously, thus equivalently approximating the markovian projection on the reciprocal path measure \cite{leonard2014reciprocal}, which in our case is provided by solving \eq{cond.lagrang.}. This suggests that our algorithm essentially computes a Markovian measure that belongs to the reciprocal class of the base reference measure $\sR$. Next section presents a discussion on Reciprocal path measures.}
+
+% \subsection{Reciprocal Measures}\label{sec:RM}
+% Initially, we define the reciprocal measure
+% \begin{definition} [Reciprocal Measure \cite{leonard2014reciprocal}]
+%     A probability measure $P$ on $\Omega$ is called reciprocal if for any times $s\leq u \in [0,1]$ and for any events $A\in \gA_{[0,s]}, B\in\gA_{[s,u]}, C\in\gA_{[u,1]}$
+%     \begin{equation}
+%         P(A\cap B\cap C | X_s, X_u) = P(A\cap C |X_s, X_u) P(B|X_s, X_u) \ P-a.e.
+%     \end{equation}
+% \end{definition}
+% This definition suggests that under measure $P$, the events “inside” $(s,u)$ and those “outside” $(s,u)$ are conditionally independent, from which we can further infer that a measure obeying the definition above is time symmetric, similarly to Markov measures \citep{jamison1974reciprocal}.
+% More explicitly, the above statement implies that conditioning an event depending on the inside $X_{[s,u]}$ by the knowledge of the outside data $X_{[0,s]\cup[u,1]}$ amounts to conditioning it by the knowledge of the boundary data $(X_s,X_u)$.
+% More specifically, any Markov measure is reciprocal, but the converse is false. That implies that a measure the Markovian property of a measure is stronger than being reciprocal.
+% Interestingly, pinning leads to the Markov property.More specifically, le $P$ be a reciprocal measure. If either $x_0$ or $x_1$ is a.s. constant, then any bridge $P(\cdot | x_0,x_1)$, defined $P_{01}$-almost surely, is a Markov measure. \cite{jamison1974reciprocal}.
+% Expanding on the notion of pinning, taking the mixture of reciprocal measures preserves the reciprocal property under certain conditions.
+% More specifically, let $R$ be a reciprocal measure such that the mapping $(x,y)\in \gX^2 \rightarrow R_{|x,y}$ is defined everywhere and measurable. Then, for any probability measure $\pi$ on $\gX^2$, the path measure 
+%     $$
+%     P(\cdot) = \int R_{|x,y}(\cdot)\pi(dxdy) 
+%     $$
+% is reciprocal. Importantly, this means that the bridges of $P$ coincide with those of $R$, $P$-a.e.
+% This statement enables us to construct classes of reciprocal measures based on some reference reciprocal measure by varying the way of mixing bridges.
+% \begin{definition}[(Reciprocal class associated with reference measure $R$) \cite{leonard2014reciprocal})]
+%     Suppose that $R$ is a reciprocal measure such that $(x,y)\in \gX^2 \rightarrow R_{|x,y}$ is defined everywhere and measurable. The set of probability measures on $\Omega$ defined by 
+%     $$
+%     \gR(R) = \{ P(\cdot) = \int R_{x,y}(\cdot)\pi(dxdy); \pi \text{ probability measure on } \gX^2 \}
+%     $$
+%     is called the reciprocal class associated with R.
+% \end{definition}
+% Finally, from Theorem 2.14 in \cite{leonard2014reciprocal}, for probability measures $P, R$, with $R$ being Markov, it is concluded that the measure $P$ belongs to the reciprocal class $\gR(R)$ and inherits the Markovian property.
+
+% Subsequently, we shift our focus to the dynamic and static solutions of the variational Schrödinger problems $P$, and $\pi$ respectively.
+% It can be shown that the two solutions are linked through the following expression
+% \begin{equation}
+%     P(\cdot) = \int R_{|xy}\pi(dxdy)
+% \end{equation}
+% where $R_{|xy}$ is the is the mixture of bridges from the base measure $R$ (\cite{leonard2013survey}).
+% Therefore, it follows directly from Theorem 2.14 in \cite{leonard2014reciprocal}, that if the reference measure R is Markov, the solution of the Schrödinger problem also inherits the markovian property from the base measure, and also belongs to the reciprocal family of the base measure.
+% Finally, recall that the initial OT problem can be written in the variational form as the minimization of the KL, which is equivalent to the Schrodinger problem. Therefore, we conclude that the conditional probability measure we obtain from \eq{cond.lagrang.} is the reciprocal path measure.
+
+\subsection{Gaussian path approximation}\label{sec:Gauss.aprox.}
+Finally, following recent advancements in matching frameworks \citep{liu2024gsbm, albergo2023stochastic}, the conditioned probability path is approximated in a simulation-free manner, as a Gaussian path 
+\begin{equation}\label{eq:gauss_path}
+    p_{t|0,1}\approx \gN(I_{t|0,1}, \sigma_t \mathbf{I}_d)
+\end{equation}
+, where the process is given from 
+$$X_t = I_{t|0,1} + \sigma_t Z$$
+,where $I_{t|0,1}\equiv I(t, x_0,x_1)$ is the interpolant function between the pinned endpoints, and $Z\sim\gN(0, \mathbf{I}_d)$ is the Brownian motion. 
+evaluate $I_t$, and $\sigma_t$ through the following equations for the vector field and the score function \citep{sarkka2019applied}
+$$
+\partial_t X_t = \partial I_t + \frac{\partial_t \sigma_t}{\sigma_t} (X_t-I_t), \ \ \nabla \log p_t(X_t) = -\frac{1}{\sigma_t^2}(X_t-I_t)
+$$
+Lastly, using these expressions, we obtain the following expression for the conditional drift
+$$
+u_t(X_t|x_0,x_1) = \partial_t I_t + \frac{\partial_t \sigma_t}{\sigma_t}(X_t-I_t)- \frac{\nu^2}{2\sigma_t^2}(X_t-I_t)
+$$
+where $\nu$ is given by the definition of $\sigma_t=\nu\sqrt{t(1-t)}$. We can see that substitution of $I_t := (1-t)x_0 + t x_1$ and $\sigma_t := \nu \sqrt{t(1-t)}$, to the conditional drift expression indeed yields the desired drift of the Brownian bridge $\frac{x_1 - X_t}{1-t}$.
+
+
+\textbf{Spline optimization.}
+Efficient optimization is achieved by parameterizing $I_t,\sigma_t$ respectively as $d$- and $1$-D splines using several knots (i.e., control points) sampled sparsely and uniformly along the time steps $0 < t_1 < ... < t_K < 1$: $X_{t_k} \in \sR^d$ and $\sigma_{t_k} \in \sR$. Among those knots, we fit the time-dependent interpolant function $I_t$, and the standard deviation $\sigma_t$
+\begin{align}\label{eq:splines}
+   I_t := \mathrm{Spline}(t;~x_0, \{X_{t_k}\}, x_1) \qquad
+   \sigma_t := \mathrm{Spline}(t;~\sigma_0{=}0, \{\sigma_{t_k}\}, \sigma_1{=}0).
+\end{align}
+%
+Notice that the parameterization in \eq{splines} satisfies the boundary in \eq{gauss_path}, hence remains as a feasible solution to \eq{cond.lagrang.}.
+The number of control points $K$ is much smaller than the discretization steps ($K{\le}$30 for all experiments).
+This significantly reduces the memory complexity, compared to prior methods caching entire discretized SDEs (e.g. \citep{de2021diffusion, chen2021likelihood}).
+
+\begin{algorithm}[t]
+    \small\caption{\small Spline Optimization}\label{alg:splines}
+    \begin{algorithmic}[1]
+    \STATE {\bfseries Input}: $x_0, x_1, \{X_{t_k}\}$ where $0 {<} t_1 {<} \cdots {<} t_K {<} 1$, and the pairs from the key-point (KP) set $\{x_0^{n}, x_1^{n}\}_{n=1}^N$, and obtain their trajectories.
+         % \Require $x_0$, $x_1$, $\{X_{t_k}\}$
+    \STATE Initialize $I_t$, $\sigma_t$
+    \STATE {\bfseries repeat}
+        \STATE \hskip1em  Sample $X_t \sim \gN(I_t, \sigma_t^2 I_d)$  
+        \STATE \hskip1em  Evaluate the objective $G(X_t, x_0)$ using the KP pairs
+        \STATE \hskip1em  Estimate the conditional drift $u_t(X_t|x_0,x_1)$ \eq{cond.drift}
+        \STATE \hskip1em  Take gradient step w.r.t control pts. $\{X_{t_k},\sigma_{t_k}\}$
+    \STATE {\bfseries until} converges
+    \STATE Return $p_{t|0,1}$ parametrized by optimized $I_t$, $\sigma_t$
+  \end{algorithmic}
+\end{algorithm}
+
+
+We follow the algorithm proposed in \citep{liu2024gsbm}, shown in Alg. \ref{alg:splines}, which, crucially, involves no simulation of an SDE.
+This is attributed to the utilization of independent samples from $p_{t|0,1}$, which are known in closed form. Finally, recall that since we solve \eq{cond.lagrang.} for each pair $(x_0, x_1) \sim p_{0,1}^\theta$ and later marginalize to construct $p_t$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% We show that the marginal is preserved
+% \begin{equation}
+    % \frac{\partial p_{t|0,1}}{\partial t} = - \nabla \cdot (u_t p_{t|0,1}) + \frac{1}{2}\sigma^2\Delta p_{t|0,1}
+% \end{equation}
+
+
+% \begin{theorem}\label{th:displacement_interpolation}
+%     Let $(\gX, d)$ be a Polish space, with continuous cost function $c(x_0, x_1)$ and denote by $C(\pi_0, \pi_1)= \mathbb{E}_{\pi_{0,1}}[c(x, y)]$ the cost between probability measures.
+%     Then consider a continuous minimizing probability path $(p_t)_{0\leq t\leq 1}$ for which it holds
+% \begin{equation}\label{eq:displacement_interpolation}
+%     \min_{p_t} \min_{X_t} \mathbb{E} \sum_{i=0}^N c(X_{t_i}, X_{t_{i+1}})
+% kai \end{equation}
+%     where the infimum is taken over all random curves $X_t:[0,1]\rightarrow\gX$, such that the $\mathrm{law}(X_t)=p_t$, and the probability path minimizing the above optimization problem $p_t^\star$ is said to be a displacement interpolation between $\mu_0$, and $\mu_1$. 
+% \end{theorem}
+% \begin{proof}
+  % a random curve $(X_t)_{0\leq t\leq 1}$, connecting $x_0\sim\pi_0$, and $x_1\sim\pi_1$.
+% Additionally, 
+% However, in our methodology the static cost is not merely the L2 norm, hence we can not assume that the Bridges coincide. 
+% We proceed to derive a dynamic objective similar to the Wasserstein distance which upper bounds the static semi-supervised regularized EOT. 
+% Based on Theorem \ref{}, and by substituting the expression for the cost $c$ into \eq{static_EOT_2}, we obtain
+% \begin{equation}\label{eq:discrete_dyn}
+%     \mathbb{E} \bigg[\sum_{i=0}^N \frac{1}{2}\|X_{t_i}- X_{t_{i-1}}\|^2 + G(X_{t_i}, X_{t_{i-1}}) + \log p_{t_{i\rightarrow i+1}}\bigg] \leq \mathbb{E} \bigg[\sum_{i=0}^N \frac{1}{2}\|X_{t_i}- X_{t_{i-1}}\|^2 + G(X_{t_i}, X_{t_{i-1}}) \bigg]
+% \end{equation}
+% where the inequality comes from the fact that $\log p_{t_{i\rightarrow i+1}}\leq 0$. We examine each of the terms in the RHS of \eq{discrete_dyn} separately. First, 
+% \begin{align}
+% \begin{split}
+% \mathbb{E}_{p_{t}} \bigg[\sum_{i=0}^N \frac{1}{2}\|X_{t_i}- X_{t_{i-1}}\|^2\bigg] &= \mathbb{E}\bigg[\sum_{i=0}^N \frac{1}{2}\| \int_{t_i}^{t_{i+1}} u_{t_i} \mathrm{d}t + \sigma \int_{t_i}^{t_{i+1}} dW_t \|^2\bigg] \\
+% &\approx \mathbb{E}\bigg[\sum_{i=0}^N \frac{1}{2}\| \int_{t_i}^{t_{i+1}} u_{t_i} \mathrm{d}t \|^2  + \|\sigma \int_{t_i}^{t_{i+1}} dW_t \|^2\bigg] \\
+% &\leq \mathbb{E}\bigg[\sum_{i=0}^N \frac{1}{2} \int_{t_i}^{t_{i+1}} \|u_{t_i}\|^2 \mathrm{d}t + \sigma^2 \| \Delta W_{t_{i\rightarrow i+1}} \|^2 \bigg]\\
+% & =  \mathbb{E} \bigg[\sum_{i=0}^N \frac{1}{2}  \|u_{t_i}\|^2 \Delta_{t_{i\rightarrow i+1}} + \sigma^2 \Delta_{t_{i\rightarrow i+1}} \bigg]\\
+% \end{split}
+% \end{align}
+% \textbf{ADD the Dimension for DW}
+
+% where the approximation stems from the fact that the cross term ensuing would be $\gO(dt^2)$, hence it is dropped, and the inequality comes from the Jensen inequality. 
+% Take the number of intermediate points to infinity and dropping $\sigma^2 \mathrm{d}t$ because it is a constant yields:
+% \begin{equation}\label{eq:1st_term}
+%     \mathbb{E}_{p_{t}} \bigg[\sum_{i=0}^N \frac{1}{2}\|X_{t_i}- X_{t_{i-1}}\|^2\bigg] \leq \mathbb{E}_{p_{t}} \bigg[\int \frac{1}{2}  \|u_{t}\|^2 \mathrm{d}t\bigg]
+% \end{equation} 
+% END INCLUDE: Text/Appendix-Proofs
+
+
+% BEGIN INCLUDE: Text/Experiments_App
+\section{Additional Details on the Experiments}\label{sec:Exp_App}
+\vspace{-.2cm} 
+In this section, we provide further information about the experiments run to validate the efficacy of our FSBM.
+
+\paragraph{Baselines}
+We compare the efficacy of our FSBM in the crowd navigation tasks against the state-of-the-art matching framework GSBM \citep{liu2024gsbm}, with the default hyperparamters. 
+For the opinion depolarization task, we compare against the GSBM, and the DeepGSB \citep{liu2022deep} also run with their default hyperparameters. 
+For the DeepGSB, we adopt the “actor-critic” parameterization which yields better performance. 
+Finally, in the image translation experiments, we compare against with DSBM \citep{shi2023diffusion}, and Light and Optimal SBM (LOSBM) \citep{korotin2023light}. 
+In our experiments, DSBM was implemented by considering trivial guidance returning the analytic solution of non-guided Brownian bridges. 
+All other frameworks were run using their official implementation, and default hyperparameters.
+All methods, including our FSBM, are implemented in PyTorch \citep{paszke2019pytorch}.
+
+\paragraph{Guidance Function}
+Recall that our analysis begins with the static entropic OT problem in \eq{EOT}, to which an additional regularization term is included to capture the interaction among unpaired samples and aligned samples, thereby guiding the transport map.
+In practice, the selected Guidance Function was a slightly modified version of \eq{G-fun}
+\begin{equation}\label{eq:G_app}
+    G(X_0, X_t) = \alpha\cdot(d(X_t, x_t^{i}) - d(X_0, x_0^{i}))^2
+\end{equation}
+where $\alpha\in\sR$ is the guidance regularization hyperparameter responsible to amplify $G$, and bypass the minimization of the kinetic energy of the non-paired samples enough to satisfy the feasibility of the solution.
+where for our experiments, the selected distance between the non-coupled samples and the fixed KP sample was the $L_1$ norm  $d(X_t, x_t^i) = \|X_t - x_t^{i}\|_{L1}$. The $i^\text{th}$ aligned data point was the closest keypoint sample to non-aligned particle $X_t$ at time $t=0$. To compute the guidance function, we need the trajectories of the KP samples. These are assumed to be given only through their samples and fixed for each KP pair. In practice in the next sections, we discuss how we acquired those trajectories for each of our experiments.
+
+\paragraph{Relation-Preserving vs Distance Preserving}
+Although the relation-preserving scheme was indeed the more effective choice in the static setting in [1], this was not the case in our applications. This could be attributed to the fact that the softmax averaging relation preserving scheme works more effectively in static frameworks. However, in our dynamic formulation, we observed empirically that the softmax averaging in relation-preserving schemes (similar to [1]) failed to generate a gradient field capable of providing effective guidance to the unpaired samples. In contrast, the distance-preserving scheme offered significantly better guidance. Figure \ref{fig:grad_f_com} presents a comparison of the ensuing gradient fields after training with the relation-preserving guidance function similar to \citep{gu2022keypoint}, and our distance-preserving guidance function.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{images/grad_f_com.png}
+    \caption{Comparison of gradient fields ensuing after training with UP: distance-preserving $G$, DOWN: relation-preserving $G$}
+    \label{fig:grad_f_com}
+\end{figure}
+
+\paragraph{Related Works (Semi-Supervised OT)}
+Recently, the field of Optimal Transport (OT) has seen advancements in developing partially supervised frameworks aimed at reducing the reliance on source-target aligned image pairs for training, thereby alleviating the high cost of labeling supervised datasets \citep{mustafa2020transformation}. In particular, the semi-supervised domain adaptation framework \citep{sato2020fast} demonstrates how limited labeled target domain data can act as keypoints, enabling the adaptation of unlabeled data through iterative optimization. These approaches generally share a common theme: the way partial supervision is integrated into the OT formulation. For many applications, annotated keypoint pairs are pre-determined, and guidance is incorporated into the OT problem as regularization terms that constraint the transport map \citep{gu2023optimal}. For example, \citep{courty2017joint} explored regularizing the OT cost using functions that encode class label information. Their regularization term was used to preserve the data structure while encouraging the alignment of labeled data with shared class labels across source and target domains for domain adaptation. Similarly, \citep{yan2018semi} proposed a method that uses the Gromov-Wasserstein (GW) model to transport source samples to the target domain. Their approach induced constraints in the transport process by minimizing the distance between the centers of transported source samples and labeled target samples with the same class labels. Furthermore, \citep{lin2021making} regularized the OT cost to capture the group structure between source and target distributions and their representative anchors. In this framework, the anchors promote clustering, similar to our approach, and are used to enhance robustness to outliers by imposing rank constraints on the transport plan. However, unlike the concept of keypoints in our approach, the anchors do not represent pairs of annotated points explicitly used to guide the transport map. More closely aligned with our approach, \citep{gu2023keypointguided} proposed a relation-preserving keypoint-guided model that steers OT matching by preserving both the correspondence between keypoint pairs and the relationships of each data point to the keypoints. In their framework, this guidance is introduced as a regularization term in the OT formulation. While the utilization of keypoitns by Gu et al. 2023  is similar to ours, their choice of the guidance function differs. Specifically, they modeled the distance as a softmax-averaged relationship between unlabeled samples and keypoints, with the guidance expressed as the Jensen-Shannon divergence between the softmax averages of the source and target distributions.  Lastly, in \citep{gu2023optimal} it was shown that this partially supervised OT framework could be applied to effectively guide a score based diffusion model.
+
+
+\paragraph{Network Architectures}
+For all experiments, we adopted the same architectures from GSBM, which consists of 4 to 5 residual blocks with sinusoidal time embedding.
+All networks are trained from scratch, without utilizing any pretrained checkpoint, and optimized with AdamW \citep{loshchilov2017decoupled}
+
+\paragraph{Forward and Backward Scheme}
+Training of our FSBM entails a 'forward-backward' scheme originally proposed in DSBM \citep{shi2023diffusion}. This necessitates the parameterization of two drifts, one for the forward SDE and another for the backward.
+%
+During odd epochs, we simulate the coupling from the forward drift, solve the corresponding conditional lagrangian problem in Eq. (\ref{eq:cond.lagrang.}), and then match the resulting $p_t$ with the backward drift.
+On the other hand, during even epochs, we perform the reverse procedure, matching the forward drift with the marginal $p_t$ derived from the backward drift.
+As discussed in \cite{liu2024gsbm}, this alternating scheme improves the performance of the matching algorithm, averting the matching framework from bias accumulation, as the forward drift always matches the terminal distribution $\pi_1$, and the backward drift is ensured to match the source distribution $\pi_0$.
+
+\subsection{Crowd Navigation}\label{sec:CN_App}
+We revisit the efficacy of our FSBM in solving complex crowd navigation tasks and its superior capability to generalize under a variety of initial conditions. 
+More explicitly, the two compared frameworks were trained on transporting the samples $X_0\sim\pi_0$ to $X_1\sim \pi_1$. In the evaluation phase, the task is always to transport the samples to the same target distribution as in the training phase, however, the initial conditions change throughout the different tasks. 
+For the first task (Vanilla), we draw new samples from the same distribution $\pi_0 = \gN(\mu_0, \sigma_0)$, for the second task we shift the mean of the distribution, for the third task we increase the standard deviation, and in the fourth task we sample from a uniform distribution.
+The initial conditions for each task are the following: 
+\begin{itemize}
+    \item Vanilla: $\gN\Bigr([-11, -1], 0.5\Bigr)$
+    \item Perturbed Mean: $\gN\Bigr([-11, -4], 0.5)$
+    \item Perturbed STD: $\gN\Bigr([-11, -1], 3\Bigr)$
+    \item Uniform Distribution with geometric mean $[-11, -1]$
+\end{itemize}
+where $\gN([\mu_1, \mu_2], \sigma^2)$ represents a Gaussian with mean the point $[\mu_1, \mu_2]$, and standard deviation equal to $\sigma$. 
+Note that for the S-tunnel crowd navigation, we used 100 KPs, which is approximately 4$\%$, of the entire population, and in the V-neck task only 20 KP samples were employed, which is approximately 1$\%$ of the population. 
+In our experiments, for the trajectories of the aligned data, we utilized the POT python package \citep{flamary2021pot}, to acquire optimal pairings, and GSBM for one epoch to obtain the trajectories between the endpoints. Figures \ref{fig:interpolating_s}, and \ref{fig:interpolating_v} illustrate the trajectories of the coupled samples, that guide the matching of the unpaired particles. 
+Finally, Figure \ref{fig:cn_ext} presents additional plots of FSBM in the crowd navigation tasks examined under the variety of initial conditions mentioned above.
+
+\begin{figure}[h]
+\begin{minipage}{.47\textwidth}
+  \centering
+    \includegraphics[width=1.\textwidth]{images/interpolation_s.png}
+    \captionof{figure}{Interpolating path of the KP samples for the S-tunnel}
+    % First solve forward ODE with forward dynamics F. Then backpropagate using backward dynamics $\bar{F}$.}
+    \label{fig:interpolating_s}
+\end{minipage}
+\hfill
+\begin{minipage}{.47\textwidth}
+  \centering
+    \includegraphics[width=1.\textwidth]{images/interpolation_v.png}
+    \captionof{figure}{Interpolating path of the KP samples for the V-neck}
+    % First solve forward ODE with forward dynamics F. Then backpropagate using backward dynamics $\bar{F}$.}
+    \label{fig:interpolating_v}
+\end{minipage}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/translation_ext.png}
+    \caption{Additional Figures on S-tunnel using our FSBM. The color of particles means: \textbf{i) Yellow:} initial conditions, \textbf{ii) Green and Cyan:} intermediate trajectory, \textbf{iii) Red:} target distribution, \textbf{iv) Navy Blue:} generated distribution}
+    \label{fig:cn_ext}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/vneck_ext.png}
+    \caption{Additional Figures on V-neck using our FSBM. The color of particles means: \textbf{i) Yellow:} initial conditions, \textbf{ii) Green and Cyan:} intermediate trajectory, \textbf{iii) Red:} target distribution, \textbf{iv) Navy Blue:} generated distribution}
+    \label{fig:cn_ext}
+\end{figure}
+
+\subsubsection{Impact of KP pairs in the S-tunnel}
+In our methodology, it becomes clear that the number of KP pairs used to guide the rest of the samples affects the effectiveness of our algorithm. 
+In Fig. \ref{fig:disc}, and Table \ref{tab:disc}, we see that the vanilla performance of our framework continues to increase as the number of aligned pairs increases. 
+As depicted in Figure \ref{fig:disc}a, although an increase of the aligned pairs results in reduced training time.
+Additionally, in Fig. \ref{fig:disc}, we see that the vanilla performance of our framework continues to increase as the number of aligned pairs increases. 
+However, it is shown that the empirical generalization to unseen initial conditions (e.g. when the mean of the initial distribution is perturbed) does not necessarily improve by adding more keypoints, suggesting an overfitting like phenomenon. There appears to be a "sweet spot", which suggests that using too many KP pairs hinders the ability of our algorithm to generalize effectively akin to an overfitting-like effect.
+Lastly, it is important to note that the hyperparameters of the framework were tuned to maximize the performance while using few keypoints. As a result, increasing the number of aligned pairs may require re-tuning the hyperparameters to maintain optimal performance.
+Lastly, it should be mentioned that even this decrease in generalizability is still very small compared to the benchmark methods. 
+Deeper understanding the effect of the aligned data points in the efficacy, and generalizability of the model is a topic for future work.
+
+
+\begin{figure}
+\begin{minipage}{.44\textwidth}
+    \vspace{.2cm}
+  \centering
+    \includegraphics[width=\textwidth]{images/Disc.png}
+    \captionof{figure}{UP: Training Epochs, DOWN: The $W^2$ Distance under Vanilla and Perturbed Mean in the S-tunnel for varying the number of KP samples}
+    % First solve forward ODE with forward dynamics F. Then backpropagate using backward dynamics $\bar{F}$.}
+    \label{fig:disc}
+\end{minipage}
+\hfill
+\begin{minipage}{.5\textwidth}
+\begin{table}[H]
+    \centering
+    \label{tab:disc}
+    \caption{The $W^2$ Distance under Vanilla and Perturbed Mean in the S-tunnel for varying the number of KP samples}
+    \begin{tabular}{lll}
+    \toprule
+        \shortstack{Percentage\\ of KPs}	& \shortstack{$\mathcal{W}^2$\\ Vanilla} &	 \shortstack{$\mathcal{W}^2$\\ Pert. Mean}\\
+        \midrule
+        1         & 0.034 & 0.77 \\
+        2.5 & 0.027 & 0.55 \\
+        5 & 0.018 & 0.79 \\
+        8 & 0.015 & 0.82 \\
+        10 & 0.013 & 0.81 \\
+        12 & 0.010 & 1.01 \\
+        15 & 0.008 & 1.23 \\
+        20 & 0.008 & 1.48 \\
+    \bottomrule
+    \end{tabular}
+    \label{tab:my_label}
+\end{table}
+
+\end{minipage}
+\end{figure}
+
+\subsection{Opinion Dynamics}\label{sec:OD_App}
+Subsequently, we revisit the high-dimensional opinion depolarization of a population. Each particle possesses a high-dimensional opinion $X_t\in\sR^{100}$ that evolves under polarizing dynamics 
+\begin{equation}
+    dX_t = f_{\text{polarize}}(X_t, t)dt +\sigma dW_t
+\end{equation}
+which tend to segregate them into two groups of diametrically opposing opinions.
+\paragraph{Polarization drift }
+We use the same polarization drift from DeepGSB and GSBM \cite{liu2022deep, liu2024gsbm}, based on the party model \citep{gaitonde2021polarization}.
+At each time step $t$,  all agents receive the same random information $\xi_t\in \R^d$ sampled independently of $p_t$, then react to this information according to
+ 
+\begin{align}
+    f(x; p_t, \xi_t) := \mathbb{E}_{y\sim p_t}[a(x,y,\xi_t)\bar{y}],
+    ~~a(x,y,\xi_t) :=
+    \begin{cases}
+        1  & \text{if } \sign(\langle x,\xi_t \rangle) = \sign(\langle y,\xi_t \rangle) \\
+        -1 & \text{otherwise}
+    \end{cases},
+    \label{eq:f-opinion}
+\end{align}
+where $x, y$ are opinions and  $\bar y := \frac{y}{\|y\|^{\frac{1}{2}}}$ and $a(x,y,\xi_t)$ is the agreement function indicating whether the two opinions agree on the information $\xi_t$.
+This suggests that the agents tend to reject opinions, with which they disagree, while they accept opinions closer to theirs. As the dynamics of this model evolve
+
+Recall that the size of the key-point set utilized for the opinion depolarization was approximately 2$\%$, of the entire population. 
+In our opinion depolarization experiments, the optimal pairings were obtained through the POT python package, however, in contrast to the crowd navigation tasks, in this case, the trajectories of the opinion guide particles were obtained by linear interpolating between initial and target positions.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{images/image_translations_app.png}
+    \caption{Additional Translation Examples}
+    \label{fig:ext_trans}
+\end{figure}
+
+% \vspace{-.1cm}
+\subsection{Image Translations}\label{sec:IT_App}
+Finally, we review the experiments in the two types of image translations: \textbf{i)} Gender translation, \textbf{ii)} Age translation.
+We follow the setup of (\cite{gushchin2024light}) with the pre-trained ALAE autoencoder (\cite{pidhorskyi2020adversarial}) on 1024 ×1024 FFHQ dataset (\cite{karras2019style}) to perform the translation in the latent space of dimension $512\times 1$  enable more efficient training and sampling. 
+
+Recall that the number of aligned images was $4\%$ of the total number of images for the gender translation and $8\%$ for the age translation. 
+In our translation experiments, the aligned pairings, used to guide the rest of the matching algorithm, were obtained by employing a lightweight SB algorithm using Gaussian mixture parameterization \citep{korotin2023light}. Theoretically, this algorithm provides guarantees to solve the SB, and empirically the quality of the images generated in the training set of this algorithm was deemed satisfactory to constitute our KP set.
+Tables \ref{tab:l2} and \ref{tab:ssim} present additional results establishing the superiority of the coupling obtained by our FSBM. More specifically, Table \ref{tab:l2} presents the $L2$-norm of the difference between the pixel values of the input images and the generated images for each of the 4 translation tasks. Note that the values have also been divided by the total number of pixels $(1024\times1024)$ to derive a mean $L2$-norm difference. Furthermore, Table \ref{tab:ssim} presents the Structural Similarity Index Measure (SSIM) between the input and the generated images in the 4 translation tasks.
+Finally, Figure \ref{fig:ext_trans} presents additional translation instances using our FSBM.
+
+\begin{table}[H]
+  \caption{$L2-\text{norm}/(1024\times 1024)$ values between input and generated images in 4 translation tasks for DSBM, LOSBM, and our FSBM (Lower is better). Note the values are divided by $2^20$, which is the total number of pixels to get a mean $L2$-norm over all the pixels}
+  \label{tab:l2}
+   \centering
+  \begin{tabular}{llllll}
+  \toprule
+   Optimizer & \shortstack{Man to \\ Woman} & \shortstack{Woman \\ to Man} & \shortstack{Old to \\ Young} & \shortstack{Young \\ to Old} \\
+    \midrule
+    DSBM  & 0.87  & 0.84 & 0.88& \textbf{0.87}\\
+    \midrule
+    LOSBM  &1.42  &1.47  & 1.41 & 1.35\\
+    \midrule
+    FSBM  &\textbf{0.79}   & \textbf{0.81} &  \textbf{0.83} & 0.88 \\
+    \bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+  \caption{SSIM values between input and generated images in 4 translation tasks for DSBM, LOSBM, and our FSBM (Higher is better)}
+  \label{tab:ssim}
+   \centering
+  \begin{tabular}{llllll}
+  \toprule
+   Optimizer & \shortstack{Man to \\ Woman} & \shortstack{Woman \\ to Man} & \shortstack{Old to \\ Young} & \shortstack{Young \\ to Old} \\
+    \midrule
+    DSBM  &  0.46 & \textbf{0.51} & \textbf{0.50} & 0.43\\
+    \midrule
+    LOSBM  & 0.34  & 0.35  & 0.35 & 0.36\\
+    \midrule
+    FSBM  & \textbf{0.49}  & {0.47} & 0.46  & \textbf{0.45} \\
+    \bottomrule
+\end{tabular}
+\end{table}
+
+Finally, we also used ChatGPT to assess the image couplings between 100 pairs of input and generated images in each translation task. Given that the coupling from LOSBM was considerably worse than the coupling generated by the other two methods, we only performed comparison between DSBM [1] and our FSBM.  ChatGPT was instructed to give a score on the coupling quality on a scale 0-5, with 5 being the best. The coupling quality was assessed using the following 3 criteria: i) Background Consistency: consistency in terms of color, lighting, background objects, ii) Identity Preservation: maintain the identity of the original face in terms of facial features and overall resemblance  iii) Structural Integrity: preserve structural integrity of the input image in terms of accessories worn, pose, orientation.  The results in 4 translation tasks are shown in the Tables below.
+
+\begin{table}[H]
+  \caption{Background Consistency score between input and generated images in 4 translation tasks for DSBM, and our FSBM (Higher is better), assigned by ChatGPT}
+  \label{tab:ssim}
+   \centering
+  \begin{tabular}{llllll}
+  \toprule
+   Optimizer & \shortstack{Man to \\ Woman} & \shortstack{Woman \\ to Man} & \shortstack{Old to \\ Young} & \shortstack{Young \\ to Old} \\
+    \midrule
+    DSBM  &  4.05 & {4.04} & {3.99} & 4.08\\
+    \midrule
+    FSBM  & \textbf{4.58}  & \textbf{{4.21}} &\textbf{ 4.05}  & \textbf{4.10} \\
+    \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \caption{Identity Preservation score between input and generated images in 4 translation tasks for DSBM, and our FSBM (Higher is better), assigned by ChatGPT}
+  \label{tab:ssim}
+   \centering
+  \begin{tabular}{llllll}
+  \toprule
+   Optimizer & \shortstack{Man to \\ Woman} & \shortstack{Woman \\ to Man} & \shortstack{Old to \\ Young} & \shortstack{Young \\ to Old} \\
+    \midrule
+    DSBM  &  3.89 & {3.09} & {3.15} & 3.49\\
+    \midrule
+    FSBM  & \textbf{4.02}  & \textbf{3.48} & \textbf{3.72}  & \textbf{3.60} \\
+    \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \caption{Structural Integrity score between input and generated images in 4 translation tasks for DSBM, and our FSBM (Higher is better), assigned by ChatGPT}
+  \label{tab:ssim}
+   \centering
+  \begin{tabular}{llllll}
+  \toprule
+   Optimizer & \shortstack{Man to \\ Woman} & \shortstack{Woman \\ to Man} & \shortstack{Old to \\ Young} & \shortstack{Young \\ to Old} \\
+    \midrule
+    DSBM  &  3.38 & {3.27} & {3.11} & 3.30\\
+    \midrule
+    FSBM  & \textbf{3.69}  & \textbf{3.61} & \textbf{3.55} & \textbf{3.33} \\
+    \bottomrule
+\end{tabular}
+\end{table}
+% END INCLUDE: Text/Experiments_App
+
+% \input{Text/Related_Works}
+\end{appendix}
+
+
+\end{document}

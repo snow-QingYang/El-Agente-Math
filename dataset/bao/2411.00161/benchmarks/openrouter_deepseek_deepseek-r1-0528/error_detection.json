@@ -1,0 +1,202 @@
+{
+  "metadata": {
+    "paper_id": "2411.00161",
+    "model": "openrouter/deepseek/deepseek-r1-0528",
+    "context_words": 300,
+    "total_formulas_checked": 19,
+    "timestamp": "2025-11-01T16:24:44.293565",
+    "benchmark_mode": true
+  },
+  "detections": [
+    {
+      "label": "<<FORMULA_0128>>",
+      "formula": "\\label{eq:scalar_matern_kernel_addition_theorem}\n    k_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\\\prod_{k=0}^{K} \\Phi_{\\nu,\\kappa}(\\lambda_k) c_{k, d} C_k^{(\\alpha)}(x\\cdot x').",
+      "has_error": true,
+      "error_type": "sum_product_swap",
+      "error_description": "The product operator was used instead of the sum operator for the summation over k",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 10.06
+    },
+    {
+      "label": "<<FORMULA_0034>>",
+      "formula": "\\label{eq:variational_posterior_mean_and_kernel}\n\\mu_{\\v{z}, \\v{m}, \\v{S}}(\\cdot)\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(\\v{m}-\\mu(\\v{z}))\n,\n\\\\\nk_{\\v{z}, \\v{m}, \\v{S}}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(k(\\v{z}, \\v{z}) - \\m{S})\nk(\\v{z}, \\v{z})^{-1}\nk(\\v{z}, \\cdot')\n.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 40.39
+    },
+    {
+      "label": "<<FORMULA_0012>>",
+      "formula": "\\label{eq:exact_posterior_mean_and_kernel}\n\\mu_{f \\given \\v{y}}(\\cdot)\n&=\n\\mu(\\cdot) +\nk(\\cdot, \\v{x})(k(\\v{x}, \\v{x}) + \\m{\\Sigma})^{-1}\\del{\\v{y} - \\mu(\\v{x})},\n\\\\\nk_{f \\given \\v{y}}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot') - k(\\cdot, \\v{x})(k(\\v{x}, \\v{x}) + \\m{\\Sigma})^{-1}k(\\v{x}, \\cdot').",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 44.45
+    },
+    {
+      "label": "<<FORMULA_0037>>",
+      "formula": "\\label{eqn:eucl_deep_gp_vf}\nF_{\\v{\\theta}}\n=\nf_{\\v{z}^L, \\v{m}^L, \\m{S}^L}\n\\circ\n\\ldots\n\\circ\nf_{\\v{z}^1, \\v{m}^1, \\m{S}^1}\n,\n&&\n\\v{\\theta}\n=\n\\cbr{\\v{z}^l, \\v{m}^l, \\m{S}^l}_{l=1}^L\n.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 49.76
+    },
+    {
+      "label": "<<FORMULA_0074>>",
+      "formula": "\\v{k}_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\sum_{j=0}^{\\infty} \\P^Thi_{\\nu,\\kappa}(\\lambda_j) s_j(x) \\otimes s_j(x')\\label{eq:hodge_matern_kernel}.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 58.04
+    },
+    {
+      "label": "<<FORMULA_0089>>",
+      "formula": "\\label{eqn:sequential_sampling}\n\\hat{F}(x_i) = \\hat{f}^{L}_i\n,\n&&\n\\hat{f}^{l}_i = \\exp_{\\hat{f}^{l-1}_i}(g_{\\v{z}^l, \\v{m}^l, \\m{S}^l}(\\hat{f}^{l-1}_i))\n\\t{~for~}\n1 \\leq l \\leq L\n,\n&&\n\\hat{f}^{0}_i = x_i\n,",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 67.74
+    },
+    {
+      "label": "<<FORMULA_0165>>",
+      "formula": "\\m{\\Psi}_{i:j}(\\cdot) = \\left(\\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{i})}\\phi_{i}(\\cdot), \\dots, \\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_j)}\\phi_l(\\cdot)\\right)^{\\top}\n,",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "In the last eigenfunction term, subscript index should be j to match λ_j, but is written as l (ϕ_l instead of ϕ_j)",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 17.07
+    },
+    {
+      "label": "<<FORMULA_0080>>",
+      "formula": "\\v{m}^l = (\\v{m}^l_1, \\ldots, \\v{m}^l_m)\n,\n&&\n\\v{m}^l_j \\in T_{z^l_j} X\n,\n&&\n\\operatorname{im}(\\m{S}^l) \\subseteq T_{z^l_1} X \\x \\ldots \\x T_{z^l_m} X\n,",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 86.27
+    },
+    {
+      "label": "<<FORMULA_0082>>",
+      "formula": "\\v{m}^l = P_{\\v{z}^l} \\widetilde{\\v{m}}^l\n,\n&&\n\\m{S}^l = P_{\\v{z}^l} \\widetilde{\\m{S}}^l P_{\\v{z}^l}^{\\top}\n,\n&&\nP_{\\v{z}^l} = P_{z^l_1} \\oplus \\ldots \\oplus P_{z^l_m}\n,",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 102.16
+    },
+    {
+      "label": "<<FORMULA_0139>>",
+      "formula": "\\mu_{\\v{z}, \\v{m'}, \\v{S'}}(\\cdot)\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(\\m{L}\\v{m}'-\\mu(\\v{z}))\n\\\\\n\\label{eq:whitened_variational_posterior_mean}\n&=\n\\mu(\\cdot)\n+\nk(\\cdot, \\v{z})\n\\m{L}^{-\\top}\n(\\v{m}' - \\m{L}^{-1}\\mu(\\v{z}))\n,\n\\\\\nk_{\\v{z}, \\v{m}', \\v{S}'}(\\cdot, \\cdot')\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\nk(\\v{z}, \\v{z})^{-1}\n(k(\\v{z}, \\v{z}) - \\m{L}\\m{S}'\\m{L}^\\top)\nk(\\v{z}, \\v{z})^{-1}\nk(\\v{z}, \\cdot')\n\\\\\n\\label{eq:whitened_variational_posterior_kernel}\n&=\nk(\\cdot, \\cdot')\n-\nk(\\cdot, \\v{z})\n\\m{L}^{-\\top}\n(\\m{I} - \\m{S'})\n\\m{L}^{-1}\nk(\\v{z}, \\cdot').",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 77.02
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "formula": "\\alpha_\\text{hodge} &= \\underbrace{(m^2 + m)/2}_{\\text{covariance}} + \\underbrace{m}_\\text{mean}\\\\\n    \\alpha_\\text{euclidean} = \\alpha_\\text{projected} &= 3\\cdot((m^2 + m)/2+m)",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 60.82
+    },
+    {
+      "label": "<<FORMULA_0147>>",
+      "formula": "\\mathrm{colatitude} = \\arccos\\left(1 - \\frac{2i + 1}{n}\\right),\n    &&\n    \\mathrm{longitude} = \\frac{2\\pi i}{\\phi},\n    &&\n    \\phi = \\frac{1 + \\sqrt{5}}{2}.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 83.95
+    },
+    {
+      "label": "<<FORMULA_0015>>",
+      "formula": "\\label{eq:matern_kernel_eigenvalues_sum}\n\\!\\!\\!\nk_{\\nu, \\kappa, \\sigma^2}(x, x') = \\frac{\\sigma^2}{C_{\\nu, \\kappa}} \\sum_{j=0}^{\\infty} \\Phi_{\\nu,\\kappa}(\\lambda_j) \\phi_j(x)\\phi_j(x')\n,\n&&\n\\Phi_{\\nu, \\kappa}(\\lambda) = \\begin{cases}\n    \\left((\\frac{2\\nu}{\\kappa^2} + \\lambda\\right)^{-\\nu-\\frac{d}){2}} & \\nu < \\infty\\\\\ne^{-\\frac{\\kappa^2}{2}\\lambda} & \\nu = \\infty\n\\end{cases}",
+      "has_error": true,
+      "error_type": "missing_parentheses",
+      "error_description": "Mismatched parentheses in the expression for finite nu: extra opening parenthesis in the base and extra closing parenthesis in the exponent",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 134.47
+    },
+    {
+      "label": "<<FORMULA_0040>>",
+      "formula": "\\label{eq:euclidean_deep_gp_elbo}\n\\mathrm{ELBO}\n=\n{\\sum}_{i=1}^n\n{\\E}_{F(x_i) \\sim p(F_{\\v{\\theta}}(x_i))}\n\\\\ln p(y_i| F(x_i))\n-\n{\\sum}_{l=1}^L\n\\KL(q(\\v{u}^l) \\,\\Vert\\, p(\\v{u}^l)),",
+      "has_error": true,
+      "error_type": "function_swap",
+      "error_description": "The expectation uses p (prior distribution) but should use q (variational distribution) for F_θ(x_i)",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 149.36
+    },
+    {
+      "label": "<<FORMULA_0150>>",
+      "formula": "Y_{2,3}(\\theta, \\phi) &= \\sqrt{\\frac{105}{32\\pi}} \\sin^3\\theta \\sin(3\\phi),\n    \\\\\n    Y_{1,2}(\\theta, \\phi) &= \\sqrt{\\frac{15}{8\\pi}} \\\\cos\\theta \\sin(2\\phi)\n    \\\\\n    R(x) &= (x_1, -x_3, x_2)\n    \\\\\n    \\varphi(x) &= (\\operatorname{atan2}(x_2, x_1), \\arccos(x_3)),",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "Spherical harmonic indices Y_{l,m} have |m|>l (e.g., Y_{2,3} and Y_{1,2}), which is invalid as |m| must be ≤ l.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 100.1
+    },
+    {
+      "label": "<<FORMULA_0179>>",
+      "formula": "&k_{\\v{\\zeta}, \\v{m}', \\m{S}'}(\\cdot, \\cdot')\n\\\\\n=&\\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')\n+\n\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')\n+ \\m{\\Psi}_{M+1:K}^\\top(\\cdot)(\\m{D'} - \\m{I})\\m{\\Psi}_{M+1:K}(\\cdot') \\\\\n=&\\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot') + \\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{D'}\\m{\\Psi}_{M+1:K}(\\cdot').",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 82.56
+    },
+    {
+      "label": "<<FORMULA_0168>>",
+      "formula": "k(\\cdot, \\v{\\zeta})\\m{L}^{-\\top}\n    &=\n    \\left(\\phi_0(\\cdot), \\dots, \\phi_M(\\cdot)\\right)^\\top\\mathrm{diag}\\left(\\frac{1}{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{0})}, \\dots, \\frac{1}{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{M})}\\right)^{-1/2}\n    \\\\\n    &=\n    \\left(\\phi_0(\\cdot), \\dots, \\phi_M(\\cdot)\\right)^\\top\n    \\mathrm{diag}\\left(\\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{0})}, \\dots, \\sqrt{\\frac{\\sigma^2}{C_{\\nu, \\kappa}}\\Phi_{\\nu,\\kappa}(\\lambda_{M})}\\right)\n    \\\\\n    &=\n    \\m{\\Psi}_{0: M}(\\cdot)^{\\top},",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 118.07
+    },
+    {
+      "label": "<<FORMULA_0169>>",
+      "formula": "k_{\\v{\\zeta}, \\v{m}', \\m{S}'}(\\cdot, \\cdot')\n    &=\n    k(\\cdot, \\cdot')\n    -\n    k(\\cdot, \\v{\\zeta})\n    \\m{L}^{-\\top}\n    (\\m{I} - \\m{S'})\n    \\m{L}^{-1}\n    k(\\v{\\zeta}, \\cdot').\n    \\\\\n    &=\n    \\m{\\Psi}_{0:K}^\\top(\\cdot)\\m{\\Psi}_{0:K}(\\cdot')\n    -\n    \\m{\\Psi}_{0:M}^\\top(\\cdot)\n    (\\m{I} - \\m{S'})\n    \\m{\\Psi}_{0:M}(\\cdot')\n    \\\\\n    &=\n    \\m{\\Psi}_{M+1:K}^\\top(\\cdot)\\m{\\Psi}_{M+1:K}(\\cdot')\n    +\n    \\m{\\Psi}_{0:M}^\\top(\\cdot)\\m{S'}\\m{\\Psi}_{0:M}(\\cdot')",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 125.58
+    },
+    {
+      "label": "<<FORMULA_0132>>",
+      "formula": "\\v{k}^{\\mathrm{div}}_{\\nu, \\kappa, \\sigma^2}(x, x') &= \\frac{\\sigma^2}{C^{\\mathrm{div}}_{\\nu, \\kappa}} \\sum_{k=0}^{K} \\frac{\\Phi_{\\nu,\\kappa}(\\lambda_k)}{\\lambda_k} \\frac{k \\\\times \\alpha}{\\alpha}(\\nabla_x \\otimes \\nabla_{x'})C_k^{(\\alpha)}(x\\cdot x')  \\\\\n    \\v{k}^{\\mathrm{curl}}_{\\nu, \\kappa, \\sigma^2}(x, x') &= \\frac{\\sigma^2}{C^{\\mathrm{curl}}_{\\nu, \\kappa}} \\sum_{k=0}^{K} \\frac{\\Phi_{\\nu,\\kappa}(\\lambda_k)}{\\lambda_k} \\frac{k + \\alpha}{\\alpha}(\\star\\nabla_x \\otimes \\star\\nabla_{x'})C_k^{(\\alpha)}(x\\cdot x').",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 277.68
+    }
+  ]
+}

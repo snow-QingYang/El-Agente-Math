@@ -1,0 +1,172 @@
+{
+  "metadata": {
+    "paper_id": "2507.09128",
+    "model": "openrouter/nvidia/nemotron-nano-9b-v2",
+    "total_detections_attempted": 20,
+    "parsing_failures": 8,
+    "valid_evaluations": 12,
+    "formulas_with_errors_injected": 9,
+    "formulas_unmodified": 11,
+    "timestamp": "2025-10-31T17:26:25.080520"
+  },
+  "binary_classification": {
+    "true_positives": 4,
+    "false_positives": 1,
+    "true_negatives": 5,
+    "false_negatives": 2,
+    "accuracy": 0.75,
+    "precision": 0.8,
+    "recall": 0.667,
+    "f1_score": 0.727
+  },
+  "error_type_matching": {
+    "total_errors_detected": 4,
+    "correct_type_identified": 2,
+    "incorrect_type_identified": 2,
+    "type_accuracy": 0.5
+  },
+  "instruction_following": {
+    "perfect_json_responses": 12,
+    "fallback_parsing_required": 0,
+    "parsing_failures": 8,
+    "perfect_json_rate": 0.6,
+    "fallback_rate": 0.0,
+    "failure_rate": 0.4,
+    "strategy_breakdown": {
+      "direct": 12,
+      "failed": 8
+    }
+  },
+  "per_error_type_performance": {
+    "sign_flip": {
+      "detected": 3,
+      "total": 3,
+      "recall": 1.0
+    },
+    "index_change": {
+      "detected": 0,
+      "total": 1,
+      "recall": 0.0
+    },
+    "inequality_flip": {
+      "detected": 0,
+      "total": 1,
+      "recall": 0.0
+    },
+    "sum_product_swap": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    }
+  },
+  "detailed_results": [
+    {
+      "label": "<<FORMULA_0824>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0831>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0826>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0902>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0481>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "index_change",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_1240>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_1029>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "inequality_flip",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0884>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_1302>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_1167>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sum_product_swap",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_1249>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0883>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    }
+  ]
+}

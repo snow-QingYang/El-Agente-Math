@@ -1,0 +1,212 @@
+{
+  "metadata": {
+    "paper_id": "2411.12537",
+    "model": "openai/gpt-5-nano",
+    "context_words": 300,
+    "total_formulas_checked": 20,
+    "timestamp": "2025-10-31T17:21:40.914404",
+    "benchmark_mode": true
+  },
+  "detections": [
+    {
+      "label": "<<FORMULA_0479>>",
+      "formula": "\\mR(\\theta) := \\Big[\\begin{array}{cc}\n\\cos \\theta & -\\sin \\theta \\\\\n\\sin \\theta & \\cos \\theta\n\\end{array}\\Big] = \\left(\\mI + 2\\vv_1\\vv_1^\\top\\right)\\left(\\mI - 2\\vv_2\\vv_2^\\top\\right), \\quad \\theta = \\frac{2\\pi}{m}.",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The first factor should be I - 2 v1 v1^T; it is incorrectly written as I + 2 v1 v1^T, which prevents representing the rotation as a product of two reflections.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 8.14
+    },
+    {
+      "label": "<<FORMULA_0428>>",
+      "formula": "\\widehat\\mC_l := \\mathrm{cast}(\\mA(1)^k \\mB) = \\begin{cases}\n        \\overline\\mC_1 \\text{ if } k \\bmod 2 = 1 \\\\\n        \\overline\\mC_2 \\text{ if } k \\bmod 2 = 0\n    \\end{cases}\n    \\widehat\\mD_k := \\mathrm{cast}(\\mA(1)^k \\mH_0) =  \\begin{cases}\n        \\overline\\mD_1 \\text{ if } k \\bmod 2 = 1 \\\\\n        \\overline\\mD_2 \\text{ if } k \\bmod 2 = 0\n    \\end{cases}",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "Mismatched index: left-hand side uses \\widehat\\mC_l, but right-hand side defines it with k (\\widehat\\mC_l := ... in terms of k). The indices l and k are inconsistent.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 10.51
+    },
+    {
+      "label": "<<FORMULA_0457>>",
+      "formula": "\\widehat\\mH_{2k}^{(2)} = \\begin{cases}\n        \\overline\\mH^{(2)}_1 \\text{ if } k \\bmod 2 = 0 \\\\\n        \\overline\\mH^{(2)}_2 \\text{ if } k \\bmod 2 = 1 \n    \\end{cases}, \\quad     \\widehat\\mH_{2k - 1}^{(2)} = \\begin{cases}\n        \\overline\\mH^{(2)}_3 \\text{ if } k \\bmod 2 = 0 \\\\\n        \\overline\\mH^{(2)}_4 \\text{ if } k \\bmod 2 = 1 \n    \\end{cases}.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 10.69
+    },
+    {
+      "label": "<<FORMULA_0004>>",
+      "formula": "\\label{eq:linrnn}\n\\begin{gathered}\n    \\mH_i =  \\mA(\\vx_i) \\mH_{i-1} \\\\times \\mB(\\vx_i), \\quad \\hat{\\vy}_i = \\mathrm{dec}(\\mH_i, \\vx_i), \\quad \\text{ for all } i \\in \\{1, \\dots, t\\}, \\\\\n\\mH_0 \\in \\C^{n \\times d}, \\quad \\mA: \\R^l \\to \\C^{n \\times n}, \\quad  \\mB: \\R^l \\to \\C^{n \\times d}, \\quad \\mathrm{dec}: \\C^{n \\times d} \\times \\R^l \\to \\R^p\n\\end{gathered}",
+      "has_error": true,
+      "error_type": "operator_swap",
+      "error_description": "In the recurrence, the two terms A(x_i) H_{i-1} and B(x_i) are multiplied together. The usual LRNN recurrence uses addition: H_i = A(x_i) H_{i-1} + B(x_i). The product leads to dimension/consistency issues.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 14.23
+    },
+    {
+      "label": "<<FORMULA_0378>>",
+      "formula": "\\mA(1)^k = \\mP \\mJ^k \\mP^{-1}, \\quad \\mJ_{i}^k=\\left[\\begin{array}{cccccc}\n\\lambda_i^k & \\binom{k}{1} \\lambda_l^{k-1} & \\binom{k}{2} \\lambda_i^{k-2} & \\cdots & \\cdots & \\binom{k}{k_i-1} \\lambda_i^{k-k_i+1} \\\\\n& \\lambda_i^k & \\binom{k}{1} \\lambda_i^{k-1} & \\cdots & \\cdots & \\binom{k}{k_i-2} \\lambda_i^{k-k_i+2} \\\\\n& & \\ddots & \\ddots & \\vdots & \\vdots \\\\\n& & & \\ddots & \\ddots & \\vdots \\\\\n& & & & \\lambda_i^k & \\binom{k}{1} \\lambda_i^{k-1} \\\\\n& & & & & \\lambda_i^k\n\\end{array}\\right].",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "In the (1,2) entry of J_i^k, the term uses λ_l^{k-1} instead of λ_i^{k-1}; a mismatched index (l vs i) should be λ_i^{k-1} to match the Jordan-block structure.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 14.6
+    },
+    {
+      "label": "<<FORMULA_0215>>",
+      "formula": "\\indic{s} := \\begin{cases}\n        1 \\text{ if  $s$ is true} \\\\\n        0 \\text{ if $s$ is false }\n    \\end{cases}, \\qquad \\mathrm{sign}(x) := \\begin{cases}\n        1 &\\text{if } x \\geq 0 \\\\\n        -1 &\\text{if } x > 0\n    \\end{cases}.",
+      "has_error": true,
+      "error_type": "inequality_flip",
+      "error_description": "The sign function has non-disjoint branches: 1 if x ≥ 0 and -1 if x > 0; the second condition should be x < 0 (with a separate case for x = 0) or the first should be x > 0 and the second x ≤ 0. As written, x > 0 is already covered by x ≥ 0, causing ambiguity.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 15.84
+    },
+    {
+      "label": "<<FORMULA_0356>>",
+      "formula": "a_{2k} &= \\sum_{i=1}^n \\hat{c}_i\\binom{2k}{m_i}  |\\lambda_i|^{2k- m_i}, \\quad \\hat{c}_i = c_i\\mathrm{sign}(\\lambda_i)^{2k- m_i} \\\\\na_{2k+1} &= \\sum_{i=1}^n \\tilde{c}_i\\binom{2k+1}{m_i}  |\\lambda_i|^{2k+1- m_i}, \\quad \\tilde{c}_i = c_i \\mathrm{sign}(\\lambda_i)^{2k+1- m_i},",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 16.32
+    },
+    {
+      "label": "<<FORMULA_0431>>",
+      "formula": "\\widehat\\mH_{2k} &= \\mathrm{cast}\\left(\\sum_{i=1}^{\\tau-1} \\widehat \\mC_i  + \\left(k - \\frac{\\tau}{2} +1\\right) \\overline \\mC_2 + \\left(k - \\frac{\\tau}{2}\\right) \\overline \\mC_1 + k\\overline\\mD_2 \\right) \\\\\n    \\widehat\\mH_{2k+1} &= \\mathrm{cast}\\left(\\sum_{i=1}^{\\tau-1} \\widehat \\mC_i+ \\left(k - \\frac{\\tau}{2} +1\\right)  (\\overline\\mC_2 + \\overline \\mC_1) + k\\overline\\mD_1 \\right)  \\\\",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 23.86
+    },
+    {
+      "label": "<<FORMULA_0643>>",
+      "formula": "\\begin{aligned}\n    \\mA^{(i)}(w)_{q',q}  &= \\indic{\\delta(q, w)= q'}, && \\mB^{(i)}(w)_{q'} = 0,  \\quad  &&\\text{ if } \\delta^{(i)}(\\cdot, w) \\text{ is bijective, or} \\\\\n    \\mA^{(i)}(w)_{q',q}  &= 0, && \\mB^{(i)}(w)_{q'} = \\indic{q' = q(w)},  &&\\text{ if } \\delta^{(i)}(\\cdot, w) \\equiv q(w).\n\\end{aligned}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 21.47
+    },
+    {
+      "label": "<<FORMULA_0125>>",
+      "formula": "\\label{eq:GHset}\n    \\mathcal{M}_{k}^n(\\Omega) : =\\left\\{\\mC_1\\mC_2 \\cdots \\mC_k \\ : \\ \\mC_i = \\mI - \\beta_i \\vv_i \\vv_i^\\top, \\quad (1- \\beta_i) \\in \\Omega, \\quad \\vv_i \\in \\R^{n},\\, \\lVert \\vv_i \\rVert = 1 \\right\\}.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 34.23
+    },
+    {
+      "label": "<<FORMULA_0406>>",
+      "formula": "\\label{eq:hoscillating}\n    \\widehat\\mH_{k} := \\begin{cases}\n        \\overline{\\mH}_1 \\quad \\text{if } k \\mod 2 = 0 \\\\\n        \\overline{\\mH}_2 \\quad \\text{otherwise} \n    \\end{cases}, \\quad \\hat y_k  = \\begin{cases}\n        \\bar y_1 \\quad \\text{if } k \\mod 2 = 0 \\\\\n        \\bar y_2 \\quad \\text{otherwise}\n    \\end{cases}",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "The piecewise definition of hat H_k and hat y_k uses a 2-period parity rule (even -> H1, odd -> H2), but the surrounding derivation later derives a 4-period pattern for H_k (via H_{2k} and H_{2k+1}) depending on k, making the two descriptions inconsistent.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 38.94
+    },
+    {
+      "label": "<<FORMULA_0694>>",
+      "formula": "\\begin{aligned}\n\\mR(\\alpha) \\mR(\\gamma) & =\\mR(\\alpha + \\gamma), \\quad \n &&\\mH(\\alpha)\\mH(\\gamma)  =\\mR(\\alpha- \\gamma), \\\\\n\\mR(\\alpha) \\mH(\\gamma) & =\\mH\\left(\\alpha+ \\gamma\\right) \n&&\\mH(\\gamma) \\mR(\\alpha)  =\\mH\\\\geft(\\gamma-\\alpha\\right).\n\\end{aligned}",
+      "has_error": true,
+      "error_type": "function_swap",
+      "error_description": "The last relation contains a corrupted macro: '\\mH\\geft(\\gamma-\\alpha)' should be '\\mH(\\gamma-\\alpha)'. This appears to be a typographical/macro error in the function call.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 23.44
+    },
+    {
+      "label": "<<FORMULA_0652>>",
+      "formula": "y^{(s)}_t &= \\mathrm{dec}^{(s)}(\\mH_t, w_t^{(s)}) \\\\\n&= (\\delta^{(s)}(q_0^{(s)}, \\vw^{(s)}),y_t^{(s-1)}) \\\\\n&= (\\delta^{(s)}(q_0^{(s)}, \\vw^{(s)}), \\delta^{(s-1)}(q_0^{(s-1)}, \\vw^{(s-1)}), y_t^{(s-2)}) \\\\   \n&= (\\delta^{(s)}(q_0^{(s)}, \\vw^{(s)}),\\dots, \\delta^{(1)}(q_0^{(1)}, \\vw), w_t) \\in \\N^{s+1},",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "Line 2 uses y_t^{(s-1)} as the second component of dec^{(s)}(H_t, w_t^{(s)}), but dec^{(s)} should return (δ^{(s)}(q_0^{(s)}, v^{(s)}), w_t^{(s)}); this is an index/subscript inconsistency.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 25.07
+    },
+    {
+      "label": "<<FORMULA_0647>>",
+      "formula": "\\mH^{(i)}_t &= \\mA^{(i)}(w^{(i)}_t) \\mH^{(i)}_{t-1} - \\mB^{(i)}(w^{(i)}_t), \\qquad  \\mH^{(i)}_0 = (1,0\\dots,0)^\\top \\in \\R^n \\\\  \n     y^{(i)} &= \\mathrm{dec}^{(i)}(\\mH_t^{(i)}, w_t^{(i)})   = (g(\\mH_t^{(i)}), w_t^{(i)}) = (\\delta^{(i)}(q_0^{(i)}, \\vw^{(i)}), w^{(i)})",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The update term uses a subtraction before B^{(i)}(w_t^{(i)}); it should likely be addition: H_t^{(i)} = A^{(i)}(w_t^{(i)}) H_{t-1}^{(i)} + B^{(i)}(w_t^{(i)})",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 35.78
+    },
+    {
+      "label": "<<FORMULA_0703>>",
+      "formula": "\\vh_1^{(2)} &= \\mH(\\theta(x_1, 1)) \\vh_0^{(2)} = \\mH(\\theta(x_1, 1))  \\vd_0  = \\vc_{x_1 \\bmod m} =  \\vc_{y_1}  \\\\\n    \\vh_2^{(2)}  &= \\mH(\\theta(x_2, 0)) \\vh_1^{(2)} = \\mH(\\theta(x_2, 0)) \\vc_{x_1 \\bmod m} = \\vd_{x_1 - x_2 \\bmod m} = \\vd_{y_2},",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 14.92
+    },
+    {
+      "label": "<<FORMULA_0507>>",
+      "formula": "\\mP = \\prod_{l=1}^{k-1} \\mP_{i_l j_l}, \\quad, \\mP_{ij} = (I - 2\\vv_{ij} \\vv_{ij}^\\top) \\qquad v_{ijl} = \\begin{cases}\n       1/\\sqrt{2} \\quad \\text{ if } l = i \\\\\n       -1/\\sqrt{2} \\quad \\text{ if } l = j \\\\\n       0 \\quad \\text{ otherwise} \n   \\end{cases},",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 42.64
+    },
+    {
+      "label": "<<FORMULA_0696>>",
+      "formula": "\\label{eq:ctod}\n\\begin{aligned}\n     \\mH(\\theta(j,0))\\vc_i &= \\mH(\\theta(j,1))\\mR(-2i\\pi/m)\\vc_0 \\\\\n     &= \\mH(\\theta(j,0))\\mR(-2i\\pi/m)\\mH(\\pi/m)\\vd_0 \\\\\n      &= \\mH(\\theta(j,0))\\mH(\\theta(i,1))\\vd_0 \\\\\n     &= \\mR( \\theta(j,0) - \\theta(i,1))\\vd_0 \\\\\n     &= \\mR(2(i+j)\\pi/m)\\vd_0 = \\vd_{i - j \\bmod m},\n\\end{aligned}",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "In the final step, the rotation angle is 2(i+j)π/m, which would map to v_{i+j mod m}, but it is equated to v_{i - j mod m}. This sign inconsistency indicates an addition-to-subtraction mismatch in the angle versus the resulting index.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 27.68
+    },
+    {
+      "label": "<<FORMULA_0695>>",
+      "formula": "\\label{eq:dtoc}\n\\begin{aligned}\n     \\mH(\\theta(j,1))\\vd_i &= \\mH(\\theta(j,1))\\mR(2i\\pi/m)\\vd_0 \\\\\n     &= \\mH(\\theta(j,1))\\mR(2i\\pi/m)\\mH(\\pi/m)\\vc_0 \\\\\n     &= \\mH(\\theta(j,1))\\mH(\\theta(i,0))\\vc_0 \\\\\n     &= \\mR( \\theta(j,1) - \\theta(i,0))\\vc_0 \\\\\n     &= \\mR(-2(i+j)\\pi/m)\\vc_0 = \\vc_{i+j \\bmod m},\n\\end{aligned}",
+      "has_error": true,
+      "error_type": "exponent_order",
+      "error_description": "The line R(θ(j,1) - θ(i,0)) is equated to R(-2(i+j)π/m) using inconsistent angle definitions; θ(i,0) and θ(j,1) are not defined compatibly across steps, causing an incorrect exponent for the rotation (the subsequent equality to vc_{i+j mod m} relies on this flawed angle accounting).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 49.89
+    },
+    {
+      "label": "<<FORMULA_0681>>",
+      "formula": "\\vh^{(2)}_{0} = (1,0)^\\top, \\quad  \\vh^{(2)}_t = \\mA^{(2)}(\\vy^{(1)}_t) \\vh^{(2)}_{t + 1}, \\quad \\vy^{(2)}_t = \\mathrm{dec}^{(2)}(\\vh_t^{(2)}, \\vy^{(1)}_t)  \\\\\n    \\mA^{(2)}(\\vy) = \\mH(\\theta(y_1, y_2)) = \\left[\\begin{array}{cc}\n\\cos \\theta(y_1, y_2) &  \\sin \\theta(y_1, y_2) \\\\\n\\sin \\theta(y_1, y_2) & -\\cos \\theta(y_1, y_2)\n\\end{array}\\right] \\\\\n    \\mathrm{dec}^{(2)}(\\vh, \\vy) = \\argmax_{i \\in \\{0, \\dots, m-1\\}} \\max (\\vc_i^\\top \\vh, \\vd_i^\\top \\vh) \\quad",
+      "has_error": true,
+      "error_type": "exponent_order",
+      "error_description": "The 2D reflection matrix H(α) is incorrectly written: a reflection across a line with angle α should have entries involving cos 2α and sin 2α (i.e., H(α) = [cos 2α, sin 2α; sin 2α, -cos 2α]); the given matrix [cos α, sin α; sin α, -cos α] corresponds to a line angle α/2, which leads to incorrect composition identities (e.g., H(α)H(γ) = R(α−γ) instead of R(2(α−γ))).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 59.87
+    },
+    {
+      "label": "<<FORMULA_0706>>",
+      "formula": "\\vh_{i+1}^{(2)} = \\begin{cases}\n        \\mH(\\theta(x_{i+1}, 1))  \\vh_{i}^{(2)} = \\mH(\\theta(x_{i+1}, 1))  \\vc_{y_i} = \\vc_{x_{i+1} + y_i \\bmod m} = \\vc_{y_{i+1}}  \\text{ if } i \\bmod 2 = 1\\\\\n        \\mH(\\theta(x_{i+1}, 0))  \\vh_{i}^{(2)} = \\mH(\\theta(x_{i+1}, 0))  \\vd_{s_i} = \\vd_{x_{i+1} + y_i \\bmod m} = \\vd_{y_{i - 1}} \\text{ if } i \\bmod 2 = 0\n    \\end{cases}.",
+      "has_error": true,
+      "error_type": "missing_parentheses",
+      "error_description": "Required parentheses around the sum before applying mod: (x_{i+1} + y_i) mod m; without parentheses it may be interpreted as x_{i+1} + (y_i mod m).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 46.96
+    }
+  ]
+}

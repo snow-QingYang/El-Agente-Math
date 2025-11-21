@@ -1,0 +1,202 @@
+{
+  "metadata": {
+    "paper_id": "2410.14055",
+    "model": "openrouter/nvidia/nemotron-nano-9b-v2",
+    "context_words": 300,
+    "total_formulas_checked": 19,
+    "timestamp": "2025-10-31T17:18:49.261988",
+    "benchmark_mode": true
+  },
+  "detections": [
+    {
+      "label": "<<FORMULA_0185>>",
+      "formula": "\\begin{cases}\n        u_t^\\intercal\\nabla G_t > 0 : u_t = a_t  - (\\nabla G_t)\\Rightarrow (a_t  - (\\nabla G_t))^\\intercal\\nabla G_t \\geq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\geq \\|\\nabla G_t\\|^2 \\geq 0 \\\\\n        u_t^\\intercal\\nabla G_t < 0 : u_t = a_t  + (\\nabla G_t)\\Rightarrow (a_t  \\\\times (\\nabla G_t))^\\intercal\\nabla G_t \\leq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\leq -\\|\\nabla G_t\\|^2 \\leq 0\\\\\n        u_t^\\intercal\\nabla G_t = 0 : \\partial(u_t^\\intercal\\nabla G_t) = [-1,1], \\text{ from which we infer } a_t^\\intercal\\nabla G_t = \\alpha \\|\\nabla G_t\\|^2, \\text{ for } \\alpha \\in [-1,1].\n     \\end{cases}",
+      "has_error": true,
+      "error_type": "operator_swap",
+      "error_description": "The addition operator was incorrectly replaced with a cross product operator (×) in the second case of the piecewise function",
+      "parse_success": false,
+      "parse_strategy": "extraction",
+      "llm_response_time": 5.71
+    },
+    {
+      "label": "<<FORMULA_0165>>",
+      "formula": "\\begin{split}\\label{eq:cond.lagrang.app.}\n        \\min_{p_{t|0,1}} \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr|u_{t|0,1}^\\intercal \\nabla G(X_t, x_0)\\bigr| + \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0) \\ p_{t|0,1} \\mathrm{d}x \\mathrm{d}t, \\quad \\\\ \\text{ s.t. } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla \\cdot (p_{t|0,1} u_{t}) + \\frac{1}{2} \\sigma^2 \\Delta p_{t|0,1}\n    \\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 9.18
+    },
+    {
+      "label": "<<FORMULA_0175>>",
+      "formula": "\\begin{split}\n   \\min_{p_{t|0,1}} \\int \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 &+ \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr],\\\\ \\text{  s.t.  } &\\frac{\\partial p_{t|0,1}}{\\partial t} = - \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) + \\frac{\\sigma^2}{2}\\Delta p_{t|0,1}\n\\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 9.59
+    },
+    {
+      "label": "<<FORMULA_0120>>",
+      "formula": "\\min_{p_{t|0,1}} \\int \\mathbb{E^T}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr],\\\\ \\text{  s.t.  } \\frac{\\partial p_{t|0,1}}{\\partial t} = - \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) + \\frac{\\sigma^2}{2}\\Delta p_{t|0,1}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 9.78
+    },
+    {
+      "label": "<<FORMULA_0042>>",
+      "formula": "\\begin{split}\\label{eq:cond.lagrang.}\n        \\min_{p_{t|0,1}} \\int_{\\sR^d\\times [0,1]} (\\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr|u_{t|0,1}^\\intercal \\nabla G(X_t, x_0)\\bigr| + \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0) \\ p_{t|0,1} \\mathrm{d}x \\mathrm{d}t, \\quad \\\\ \\text{ s.t. } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla \\cdot (p_{t|0,1} u_{t}) + \\frac{1}{2} \\sigma^2 \\Delta p_{t|0,1}, \\quad X_0=x_0, \\quad X_1=x_1\n    \\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 10.12
+    },
+    {
+      "label": "<<FORMULA_0105>>",
+      "formula": "\\label{eq:lagrangian_app}\n    \\begin{split}\n        &\\min_{p_{t},u_t} \\int_{\\sR^d\\times [0,1]} \\Bigr( \\frac{1}{2}\\|u_t\\|^2 +  \\mathbb{E}_{p_{0|t}}\\bigr[|u_t^\\intercal G_{t,0}| + \\frac{\\sigma^2}{2}\\Delta G_{t,0}\\bigr]\\Bigr) p_t \\mathrm{d}x \\mathrm{d}t, \\\\\n        \\text{ s.t. }  &\\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\text{ and } p_0 = \\pi_0, p_1 = \\pi_1\n    \\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 12.75
+    },
+    {
+      "label": "<<FORMULA_0207>>",
+      "formula": "\\label{eq:Lagr.integration_by_parts}\n    \\begin{split}\n        \\gL(\\theta) &= \\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t,\\ \\ \\text{ subj.: } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla\\cdot(p_{t|0,1} u_{t|0,1}) + \\frac{1}{2}\\sigma^2\\Delta p_{t|0,1} \\\\\n                    &=  \\sup_{s_t}\\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} s_t( \\frac{\\partial p_{t|0,1}}{\\partial t} + \\nabla\\cdot(p_{t|0,1} u_{t|0,1}) - \\frac{1}{2}\\sigma^2\\Delta p_{t|0,1}) \\mathrm{d}x\\mathrm{d}t \\\\\n                    &= \n                    \\sup_{s_t}\\min_{u_{t|0,1}} \n                    \\underbrace{\\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t}_{I_1}\n                    +\\underbrace{\\int_0^1 \\int_{\\sR^d} s_t \\frac{\\partial p_{t|0,1}}{\\partial t} \\mathrm{d}x\\mathrm{d}t}_{I_2} \\\\\n                    &+\\underbrace{\\int_0^1 \\int_{\\sR^d} s_t \\nabla\\cdot(p_{t|0,1} u_{t|0,1})\\mathrm{d}x\\mathrm{d}t}_{I_3}\n                    - \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{s_t}{2}\\sigma^2\\Delta p_{t|0,1}\\mathrm{d}x\\mathrm{d}t}_{I_4}\n    \\end{split}",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The subtraction of I4 in the original formula may incorrectly flip the sign of terms derived from integration by parts, leading to inconsistent sign handling in the substituted expression.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 14.27
+    },
+    {
+      "label": "<<FORMULA_0193>>",
+      "formula": "g(a_t^\\intercal\\nabla G_t) = \\begin{cases} sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{   for     } \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n\\frac{a_t^\\intercal\\nabla G_t}{\\nabla \\|G_t\\|^2}, \\quad \\text{ for } \\quad  \n|a_t^\\intercal\\nabla G_t| \\\\geq \\|\\nabla G_t\\|^2\n\\end{cases}",
+      "has_error": true,
+      "error_type": "missing_parentheses",
+      "error_description": "The denominator in the second case is ∇ ||G_t||² (a vector) instead of ||∇G_t||² (a scalar), likely due to missing parentheses.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 21.18
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "formula": "\\begin{split}\n            \\sum_{i=0}^{N-1} \\bigg| \\mathbb{E}\\Bigr[ u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) )\\Delta t \\Bigr] \\bigg|\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ \\bigr| (u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_m})) ) \\bigr| \\Delta t \\Bigr]\\\\\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ (\\bigr| u_t^\\intercal\\nabla G \\bigr| + \\bigr|\\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) \\Delta t  \\Bigr] \n        \\end{split}",
+      "has_error": true,
+      "error_type": "missing_parentheses",
+      "error_description": "The Δt multiplier is not enclosed in parentheses with the terms inside the absolute value, leading to incorrect operator precedence.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 21.85
+    },
+    {
+      "label": "<<FORMULA_0226>>",
+      "formula": "\\begin{split}\n        \\min_\\theta \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]  &= \\min_\\theta  \\mathbb{E}_{\\pi_{0,1}}\\Bigr[ \\int_0^1 \\int_{\\sR^d}  H(x_t,  a_t^\\theta, t) + L(x_t, u_{t|0,1}^\\star, t)  - \\langle  a_t^\\theta , u^\\star_t \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\\Bigr]\n    \\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 11.73
+    },
+    {
+      "label": "<<FORMULA_0228>>",
+      "formula": "\\begin{split}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star] &= \\int_0^1 \\int_{\\sR^d}  \\Bigr(\\frac{1}{2}|| a_t^\\theta - g_t\\cdot\\nabla G_t||^2 - \\frac{\\sigma^2}{2}\\Delta G_t \\\\ &+ \\frac{2}{1}\\|u_{t|0,1}^\\star\\|^2 +  |{u_{t|0,1}^\\star}^\\intercal\\nabla G_t| + \\frac{\\sigma^2}{2}\\Delta G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle\\Bigr) p_{t|0,1} \\pi_{0,1} dxdt \\\\\n    \\end{split}",
+      "has_error": true,
+      "error_type": "fraction_inversion",
+      "error_description": "The coefficient 2/1 in the term ||u_{t|0,1}^∗||^2 appears to be an inversion of the expected 1/2 coefficient, which is inconsistent with standard Lagrangian formulations.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 11.42
+    },
+    {
+      "label": "<<FORMULA_0215>>",
+      "formula": "\\begin{split}\\label{eq:gap}\n        \\gL^\\theta - \\gL^\\star &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) + \\frac{\\partial s_t}{\\partial t}  +\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n                        &- \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s^\\star_t, t) + \\frac{\\partial  s^\\star_t}{\\partial t}  +\\Delta  s^\\star_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{\\sigma^2}{2}\\int \\oint  s^\\star_t \\langle p_{t|0,1}, d\\rvn\\rangle\\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial s_t}{\\partial t}p_{t|0,1} \\mathrm{d}x\\mathrm{d}t +\\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1]}_{ - \\int_0^1 \\int_{\\sR^d} \\frac{\\partial p_{t|0,1}}{\\partial t}s_t \\mathrm{d}x \\mathrm{d}t} \\\\ \n                        &- \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial  s^\\star_t}{\\partial t}p_{t|0,1} \\mathrm{d}x\\mathrm{d}t +\\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1]}_{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial p_{t|0,1}}{\\partial t} s^\\star_t \\mathrm{d}x \\mathrm{d}t} \n                        + \\underbrace{\\int_0^1 \\int_{\\sR^d} \\Delta s_t p_{t|0,1} \\mathrm{d}x \\mathrm{d}t - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle}_{\\int_0^1 \\int_{\\sR^d} \\Delta p_{t|0,1} s_t \\mathrm{d}x \\mathrm{d}t} \\\\\n                        &- \\underbrace{\\int_0^1 \\int_{\\sR^d} \\Delta  s^\\star_t p_{t|0,1} \\mathrm{d}x \\mathrm{d}t - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle}_{\\int_0^1 \\int_{\\sR^d} \\Delta p_{t|0,1}  s^\\star_t \\mathrm{d}x \\mathrm{d}t} \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} (s_t -  s^\\star_t) (-\\frac{\\partial p_{t|0,1}}{\\partial t}+\\Delta p_{t|0,1})\\mathrm{d}x\\mathrm{d}t \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} (s_t -  s^\\star_t) (\\nabla\\cdot(p_{t|0,1} u^\\star_{t|0,1})) \\mathrm{d}x\\mathrm{d}t \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) - \\langle \\nabla(s_t -  s^\\star_t), u^\\star_{t|0,1} \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\n    \\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 16.36
+    },
+    {
+      "label": "<<FORMULA_0210>>",
+      "formula": "I_4 = \\oint s_t\\langle \\nabla p_{t|0,1}, d\\rvn\\rangle \\mathrm{d}t - \\int_0^1 \\int_{\\sR^d} s_t\\Delta p_{t|0,1} \\mathrm{d}t \\mathrm{d}x = \\int_0^1 \\int_{\\sR^d} \\langle  \\nabla s_t, \\nabla p_{t|0,1}\\rangle \\mathrm{d}x = - \\int_0^1 \\int_{\\sR^d} \\Delta s_t \\ p_{t|0,1} \\mathrm{d}x + \\frac{\\sigma^2}{2}\\oint s_t \\langle p_{t|0,1}, d\\rvn\\rangle",
+      "has_error": true,
+      "error_type": "operator_swap",
+      "error_description": "The gradient operator ∇p was incorrectly replaced with p in the line integral term, leading to an invalid boundary term in the integration by parts derivation.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 20.54
+    },
+    {
+      "label": "<<FORMULA_0234>>",
+      "formula": "\\begin{split}\\label{eq:OG2}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta + \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  {u_{t|0,1}^\\star}^\\intercal \\nabla G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta + \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta + \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta + \\nabla G_t - u_{t|0,1}^\\star\\|^2) p_t dxdt\n    \\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 8.83
+    },
+    {
+      "label": "<<FORMULA_0211>>",
+      "formula": "\\begin{split}\n\\gL =&\\sup_{s_t}\\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d}  (L(x_t, u_{t|0,1}, t) - \\frac{\\partial s_t}{\\partial t} - \\langle  \\nabla s_t, u\\rangle -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] \\\\ \n    &+ \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\sup_{s_t} \\int_0^1 \\int_{\\sR^d}  ( - H(x_t,  \\nabla s_t, t) - \\frac{\\partial s_t}{\\partial t}  -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] + \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\min_{s_t} \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) + \\frac{\\partial s_t}{\\partial t}  +\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{2}{\\sigma^2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle\n\\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 23.91
+    },
+    {
+      "label": "<<FORMULA_0238>>",
+      "formula": "\\begin{split}\\label{eq:OG3}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 + \\lambda {u_{t|0,1}^\\star}^\\intercal\\nabla G_t -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta + \\lambda \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{2}{1}\\| a_t^\\theta - \\lambda \\nabla G_t - u_{t|0,1}^\\star|^2) p_t dxdt\n    \\end{split}",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The cross terms in the squared norm expansion have incorrect signs compared to the original expression. The original terms include +λ⟨u, ∇G⟩ - ⟨a, u⟩, but the expansion of ||a - λ∇G - u||² introduces -2⟨a, u⟩ + 2λ⟨∇G, u⟩, leading to a sign flip in the coefficients.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 15.63
+    },
+    {
+      "label": "<<FORMULA_0231>>",
+      "formula": "\\begin{split}\\label{eq:OG1}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 +  {u_{t|0,1}^\\star}^\\intercal\\nabla G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta - \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta - \\nabla G_t - u_{t|0,1}^\\star\\|^2 ) p_t dxdt\n    \\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 29.84
+    },
+    {
+      "label": "<<FORMULA_0037>>",
+      "formula": "\\label{eq:lagrangian}\n    \\begin{split}\n        &\\min_{p_{t},u_t} \\int_{\\sR^d\\times [0,1]} \\Bigr( \\frac{1}{2}\\|u_t\\|^2 +  \\mathbb{E}_{p_{0|t}}\\bigr[|u_t^\\intercal \\nabla G_{t,0}| + \\frac{\\sigma^2}{2}\\Delta G_{t,0}\\bigr]\\B^Tigr) p_t \\mathrm{d}x \\mathrm{d}t, \\\\\n        \\text{ s.t. }  &\\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\text{ and } p_0 = \\pi_0, p_1 = \\pi_1\n    \\end{split}",
+      "has_error": true,
+      "error_type": "operator_swap",
+      "error_description": "The transpose operator is applied to a scalar result of the expectation, which is invalid.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 105.05
+    },
+    {
+      "label": "<<FORMULA_0191>>",
+      "formula": "\\begin{cases}\n        \\partial(u_t^\\intercal\\nabla G_t) = sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{      for         }  \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n        \\partial(u_t^\\intercal\\nabla G_t) = \\frac{\\nabla \\|G_t\\|^2}{a_t^\\intercal\\nabla G_t}, \\quad  \\text{    for     } \\quad |a_t^\\intercal\\nabla G_t| \\leq \\|\\nabla G_t\\|^2\n     \\end{cases}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 107.8
+    }
+  ]
+}

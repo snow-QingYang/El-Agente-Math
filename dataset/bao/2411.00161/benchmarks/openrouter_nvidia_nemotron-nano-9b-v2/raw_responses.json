@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "paper_id": "2411.00161",
+    "model": "openrouter/nvidia/nemotron-nano-9b-v2",
+    "total_responses": 19,
+    "timestamp": "2025-10-31T17:20:36.137073"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0015>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"missing_parentheses\", \"error_description\": \"The exponent in the first case of Φ_{ν,κ}(λ) has misplaced parentheses, causing incorrect grouping of terms in the expression.\"}",
+      "response_length": 207,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0037>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0040>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0128>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0082>>",
+      "raw_response": "Okay, let's take a look at the provided formula and context. The user wants me to check for specific types of mathematical errors in the formulas presented.\n\nFirst, I'll focus on the formulas given. The first one is \\v{m}^l = P_{\\v{z}^l} \\widetilde{\\v{m}}^l. Then there's \\m{S}^l = P_{\\v{z}^l} \\widetilde{\\m{S}}^l P_{\\v{z}^l}^{\\top}, and P_{\\v{z}^l} defined as a sum of P_{z^l_1} terms. \n\nLooking at the first equation, the left side is \\v{m}^l, which is a vector, and the right side is a product of P (which might be a matrix or operator) and \\widetilde{\\v{m}}^l. The tilde here might denote a transformed or projected version of \\v{m}^l. This seems plausible, but I need to check if there's an inconsistency here.\n\nThe second formula involves \\m{S}^l, which is defined using P_{\\v{z}^l} and \\widetilde{\\m{S}}^l multiplied by the transpose of P_{\\v{z}^l}. The structure here looks like a covariance matrix or similarity matrix, which is common in GVFs (Gaussian Vector Fields). The use of transpose here is correct if P is a matrix, as the product would form a valid matrix expression.\n\nThe third formula defines P_{\\v{z}^l} as a sum of P_{z^l_j} terms. The notation \\oplus usually denotes direct sum or disjoint union. If P_{z^l_j} are matrices or operators, their sum (or direct sum) would make sense. However, the notation here uses \\oplus between terms, which is okay if they are elements in a direct sum space. But I should check if the context requires a different operator, like matrix addition or Kronecker product. However, the problem is about errors in the formula as written, not about whether the operator is appropriate for the context. \n\nNow, looking for possible errors. The error types are specific. Let's check each possible category:\n\n- sign_flip: Are there any additions changed to subtractions? Doesn't seem so here.\n- operator_swap: Are operators like + swapped with ×? The formulas use multiplication and transposes, but no obvious swaps.\n- exponent_order: Any exponents misplaced? The formulas don't have exponents except in the context of vectors or matrices, which isn't the case here.\n- index_change: Subscript indices changed? The indices in P_{\\v{z}^l} and P_{z^l_j} seem consistent. The subscripts are correctly placed.\n- transpose_error: The second formula includes P_{\\v{z}^l}^{\\top}. If P is a matrix, the transpose is correctly applied. If P is a vector or something else, this might be an error. But in the context of GVFs, P might be a matrix, so this is likely correct.\n- inequality_flip: No inequalities here.\n- fraction_inversion: No fractions in the formulas provided.\n- sum_product_swap: The third formula uses \\oplus, which is a sum-like operator. If it should be a product, that's an error. But the context mentions \"sum\" in the definition of P_{\\v{z}^l}, so \\oplus might be correct. However, if the intended operation is a product (like matrix multiplication), then using \\oplus would be wrong. But without more context on what \\oplus represents, it's hard to tell. The user's context mentions \"sum\" in the third formula's description, so \\oplus is appropriate here.\n- missing_parentheses: Are there missing parentheses? The formulas as written don't show any missing parentheses. The expressions are structured with proper grouping.\n- function_swap: No functions like sin, cos, etc., are swapped here.\n\nAnother thing to check is the use of \\widetilde{\\v{m}}^l and \\widetilde{\\m{S}}^l. The tilde might indicate a transformation, but unless there's a specific expectation about what it should be, it's hard to flag as an error. \n\nLooking at the context provided, the formulas are part of a discussion on GVFs on manifolds. The use of tangent spaces and projections is mentioned, but the formulas themselves don't show an error in that regard. \n\nThe key point is whether any of the error types apply. The most possible candidate might be transpose_error if P is not a matrix, but given the context of GVFs and the use of transpose, it's likely correct. Alternatively, if \\oplus is supposed to be a different operator, but the context says \"sum\", so \\oplus is correct. \n\nAnother angle: in the definition of P_{\\v{z}^l}, it's a sum (or direct sum) of P_{z^l_j}. If each P_{z^l_j} is a matrix, then adding them would be correct if they are of compatible dimensions. However, if they are operators acting on different spaces, the direct sum makes sense. The formula as written seems okay. \n\nNo obvious sign flips, operator swaps, exponent issues, index changes, etc. The transpose in the second formula is correctly applied. \n\nTherefore, after careful analysis, there doesn't seem to be an error in the formulas as presented. The error_type should be \"none\".\n{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 4765,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0034>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0012>>",
+      "raw_response": "Okay, let's take a look at the formula provided. The user wants me to check for any mathematical errors in the equations given. The formula is part of a posterior mean and kernel for a Gaussian process, specifically in the context of Riemannian manifolds.\n\nFirst, I'll start by examining the first equation for the posterior mean μ_{f|y}(·). The formula is:\n\nμ_{f|y}(·) = μ(·) + k(·, x)(k(x, x) + Σ)^{-1}δ(y - μ(x))\n\nBreaking this down, this looks like the standard formula for the posterior mean in a Gaussian process regression. The term k(·, x) is the kernel evaluated at the input point x, and k(x, x) + Σ would be the variance term, which is a common structure in GP updates. The δ here is likely the Dirac delta function, indicating that the update is applied at the specific point y. This seems correct because in GP, when you have observations y at points x, the posterior mean is updated by adding a term that depends on the kernel and the difference between the observed and predicted values.\n\nNow, moving to the second equation for the posterior kernel k_{f|y}(·, ·'):\n\nk_{f|y}(·, ·') = k(·, ·') - k(·, x)(k(x, x) + Σ)^{-1}k(x, ·')\n\nThis is the standard form of the posterior kernel in GP after incorporating data. The term subtracted is the outer product of the kernel between the input and the data point x, scaled by the inverse of the variance term. This is a well-known result in GP literature, often referred to as the Schur complement or the update to the covariance matrix. So this part also seems correct.\n\nLooking for possible errors, I need to check each component. The first equation has a delta function δ(y - μ(x)). Wait, in standard GP, the posterior mean is updated by the observations y, which are typically at specific input points. The delta function here might be a notation issue. Usually, the update is a sum over the data points, but here it's written as a single term. However, if this is for a single observation, then it's correct. The presence of δ(y - μ(x)) would imply that the update is applied at the point y, which might be a way to represent the influence of the observation at y. However, in standard notation, the posterior mean is a function, and the update is typically a sum over all data points. If this is for a single data point, then the formula is correct. But if there are multiple data points, this might be missing a summation. However, the context isn't entirely clear here. The formula is presented as a general form, so maybe it's assuming a single observation. That could be a possible error if multiple observations are intended, but based on the given context, it's not clear. The user hasn't provided information about multiple data points, so I can't be sure. \n\nAnother thing to check is the use of Σ. In the formula, Σ is likely the noise variance or the covariance matrix. If Σ is a scalar (noise variance), then k(x, x) + Σ is correct. If Σ is a matrix, then the inverse would be matrix inverse, which is okay. But in the context of the equations, the kernel k is a function, so k(x, x) would be a scalar, and Σ is probably a scalar noise term. That seems consistent.\n\nLooking at the second equation, the structure is correct. The posterior kernel is the original kernel minus the rank-one update from the data. The terms k(·, x) and k(x, ·') are correctly multiplied by the inverse term. \n\nPotential errors could be in the notation. For example, the use of δ might be non-standard. In some contexts, δ could represent a delta function, but in others, it might be a different notation. However, given the context of GP, it's plausible. Another thing is the placement of the delta function. If δ(y - μ(x)) is meant to represent the observation at point y, then it's correct. However, if the observation is at a specific input point, say x*, then the formula should have y evaluated at x*, but here it's written as δ(y - μ(x)), which might be a way to express the residual. \n\nAlternatively, maybe the formula is missing a summation over the data points. But again, without more context, it's hard to tell. The formula as written seems to be for a single data point. \n\nAnother possible issue is the use of k(·, x) and k(x, ·'). In the second equation, the kernel is symmetric, so k(·, x) and k(x, ·') should be the same as k(x, ·) and k(·', x), but since the kernel is symmetric, that's okay. \n\nLooking for any operator swaps or sign flips. The first equation has a plus sign, which is correct. The second equation subtracts the term, which is also correct. \n\nExponent order: No exponents here. Index change: No indices. Transpose error: No matrices involved. Inequality flip: No inequalities. Fraction inversion: No fractions. Sum_product_swap: No sum or product operators. Missing parentheses: The formula uses parentheses correctly. Function swap: No functions swapped. \n\nSo, based on this analysis, I don't see any errors in the formulas. They match the standard GP update equations. Therefore, the error_type should be \"none\".\n{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 5064,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0089>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"operator_swap\", \"error_description\": \"The exponential operator is incorrectly applied to a function g instead of a scalar or vector argument\"}",
+      "response_length": 177,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0132>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"operator_swap\", \"error_description\": \"The multiplication operator (×) was incorrectly used between k and α in the divergence kernel term, where addition (+) is expected based on the curl kernel's structure.\"}",
+      "response_length": 243,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0147>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0165>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"index_change\", \"error_description\": \"The last term uses \\phi_l instead of \\phi_j, which may be an incorrect index substitution.\"}",
+      "response_length": 164,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0080>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0168>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"sign_flip\", \"error_description\": \"The inverse operation on the diagonal matrix was incorrectly applied, flipping the fraction's numerator and denominator under the square root.\"}",
+      "response_length": 213,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0169>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"sign_flip\", \"error_description\": \"The minus operator between the two terms in the second equality was changed to a plus in the third equality\"}",
+      "response_length": 178,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0150>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"index_change\", \"error_description\": \"The function φ(x) swaps the order of colatitude θ and longitude φ, which may cause inconsistencies in spherical coordinate handling as described in the context.\"}",
+      "response_length": 234,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0139>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"transpose_error\", \"error_description\": \"Incorrect use of L^T^{-1} instead of L^{-1} in the manipulation of the matrix terms\"}",
+      "response_length": 160,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0179>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"missing_parentheses\", \"error_description\": \"The formula omits cross terms between Ψ_{0:M} and Ψ_{M+1:K} due to missing parentheses in the matrix product expansion.\"}",
+      "response_length": 200,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0074>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

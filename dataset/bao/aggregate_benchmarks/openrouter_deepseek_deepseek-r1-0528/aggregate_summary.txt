@@ -1,0 +1,55 @@
+======================================================================
+Aggregate Benchmark Report
+======================================================================
+
+Model: openrouter/deepseek/deepseek-r1-0528
+Timestamp: 2025-11-01T17:06:48.792110
+
+Papers Processed:
+  Total papers: 10
+  Successful benchmarks: 10
+  No ground truth: 0
+  Failed: 0
+
+Binary Classification (Mean ± Std):
+  Accuracy:  79.9% ± 10.3%
+  Precision: 75.0% ± 15.3%
+  Recall:    92.7% ± 9.6%
+  F1 Score:  82.1% ± 10.3%
+
+Accuracy Range:
+  Min: 65.0%
+  Max: 94.4%
+
+Error Type Identification:
+  Mean type accuracy: 67.9% ± 14.5%
+
+📊 Instruction Following (JSON Format Compliance):
+  Mean perfect JSON rate: 96.0%
+  Mean fallback rate: 0.0%
+  Mean failure rate: 4.0%
+
+Aggregated Per-Error-Type Recall:
+  exponent_order       3/3 (100.0%)
+  fraction_inversion   9/10 (90.0%)
+  function_swap        3/3 (100.0%)
+  index_change         12/13 (92.3%)
+  inequality_flip      16/16 (100.0%)
+  operator_swap        10/11 (90.9%)
+  sign_flip            20/22 (90.9%)
+  sum_product_swap     8/8 (100.0%)
+  transpose_error      7/8 (87.5%)
+
+Per-Paper Results:
+  ✓ 2410.10253           Acc: 85.0%, F1: 87.0%
+  ✓ 2506.04194           Acc: 65.0%, F1: 58.8%
+  ✓ 2410.14055           Acc: 68.4%, F1: 75.0%
+  ✓ 2411.00161           Acc: 94.4%, F1: 90.9%
+  ✓ 2502.02013           Acc: 68.4%, F1: 75.0%
+  ✓ 2411.12537           Acc: 84.2%, F1: 88.0%
+  ✓ 2507.09128           Acc: 76.5%, F1: 80.0%
+  ✓ 2502.05164           Acc: 90.0%, F1: 90.9%
+  ✓ 2506.08362           Acc: 89.5%, F1: 91.7%
+  ✓ 2503.03025           Acc: 77.8%, F1: 83.3%
+
+======================================================================

@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2507.09128",
+    "model": "openai/gpt-5-nano",
+    "total_responses": 20,
+    "timestamp": "2025-10-31T17:23:12.922116"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0826>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0824>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0963>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0902>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"The exponent of mu_{X,i} flips sign from -\\\\beta in the first line to +\\\\beta in the second line, leading to an inconsistency in the expression.\"\n}",
+      "response_length": 228,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0884>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the equality step, the term +3||hg_rho - g_rho||_G^2 * ||Fhat - Fstar||^2_{L2(Q_X; G)} was changed to -3||hg_rho - g_rho||_G^2 * ||Fhat - Fstar||^2_{L2(Q_X; G)}\"\n}",
+      "response_length": 242,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1022>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The inequality is written with '≥' instead of the correct '≤' bound from (a+b+c)^2 ≤ 3(a^2+b^2+c^2); the left-hand side should be at most 3 times the sum of the squared terms, not at least.\"\n}",
+      "response_length": 274,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1021>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0378>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The line uses a product over j where a sum over j is appropriate; the Hilbert-Schmidt norm squared should be a double sum, not a product. It should read: sum_{j∈J} sum_{k∈K} ⟨A^* h_k, g_j⟩_G^2.\"\n}",
+      "response_length": 279,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0831>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"sum_product_swap\", \"error_description\": \"Assumes X and Y are independent given Z=z by replacing P_{X,Y|Z=z} with P_{X|Z=z} ⊗ P_{Y|Z=z}, which is not stated.\"}",
+      "response_length": 193,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0481>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the final case, the value is σ_m when j = k = i ∈ I. Since i is the index from I, the corresponding singular value should be σ_i; using σ_m is an inconsistent index (m vs i).\"\n}",
+      "response_length": 259,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0898>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"In the line 'mu_{X,i}^{ + \\\\beta}' the exponent sign is inconsistent with the surrounding mu_{X,i}^{-\\\\beta} terms; it should be mu_{X,i}^{-\\\\beta} to match the previous factor.\"\n}",
+      "response_length": 261,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1167>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1029>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The inequality sign is reversed: by Cauchy–Schwarz, (∫ gρ(z) Rsans(x,z) (1 − dρ_Z/dQ_Z)(z) dQ_Z(z))^2 ≤ ∥gρ Rsans(x,·)∥_{L2(Q_Z)}^2 ∥1 − dρ_Z/dQ_Z∥_{L2(Q_Z)}^2, but the formula shows ≥ with χ^2(...) factor, which is inconsistent.\"\n}",
+      "response_length": 314,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1063>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The second line uses an inner product with e_j while the summation index is i (\\\\langle S_{Q_{X,Z}}, μ_i^{1/2} e_j) but a later line uses e_i; this inconsistent use of indices i vs j indicates an index-change error.\"\n}",
+      "response_length": 297,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0883>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The last term in the inequality uses a minus sign (- 3 ||hg_rho - g_rho||_G^2 · ||Fhat - F_star||^2), whereas the preceding terms are added. The correct bound should have + 3 ||hg_rho - g_rho||_G^2 · ||Fhat - F_star||^2_{L2(Q_X; G)}.\"\n}",
+      "response_length": 312,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1260>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The first equality is incorrect: (1/(2n)) ||A - B||_F^2 equals (1/(2n)) sum_i ||a_i - b_i||^2, but the right-hand side uses (1/n) rather than (1/(2n)); the RHS is missing a factor of 1/2.\"\n}",
+      "response_length": 275,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1240>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1302>>",
+      "raw_response": "{\"has_error\": true, \"error_type\": \"sign_flip\", \"error_description\": \"In the third equation, the left-hand side uses '+' where it should use '-' to match the conditional-variance identity Cov(X|Z) = Cov(X) - Cov(X,Z) Cov(Z)^{-1} Cov(Z,X). The correct form should be C_{XX|0} - C_{XZ|0} C_{ZZ|0}^{-1} C_{ZX|0} = C_{XX|1} - C_{XZ|1} C_{ZZ|1}^{-1} C_{ZX|1}\"}",
+      "response_length": 354,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1249>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"In the decomposition, the coefficient of the diagonal-squared term changes from (1/2) to 1: (1/2) sum_i ( (\\hat S_{AB})_{ii} - 1)^2 expands to (1/2) sum_i (\\hat S_{AB})_{ii}^2 - sum_i (\\hat S_{AB})_{ii} + d/2, but the rewritten variance regularization uses sum_i (\\hat S_{AB})_{ii}^2 (without the 1/2) which is inconsistent.\"\n}",
+      "response_length": 408,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_1252>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"The step substituting a_i = a_i' + ᾱ and b_j = b_j' + β̄ into (<a_i, b_j>)^2 and then replacing it with (<a_i - ᾱ, b_j - β̄>)^2 + (<ᾱ, β̄>)^2 neglects cross-terms. In general, (<a_i, b_j>)^2 = (<a_i', b_j'> + <a_i', β̄> + <ᾱ, b_j'> + <ᾱ, β̄>)^2, which produces cross-terms that are not accounted for. The resulting equality is incorrect due to missing cross-terms from the expansion.\"\n}",
+      "response_length": 477,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

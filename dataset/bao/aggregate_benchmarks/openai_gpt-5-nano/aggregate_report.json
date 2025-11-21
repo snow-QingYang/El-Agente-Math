@@ -1,0 +1,93 @@
+{
+  "model": "openai/gpt-5-nano",
+  "timestamp": "2025-10-31T17:26:44.568603",
+  "metadata": {
+    "total_papers_in_directory": 11,
+    "successful_benchmarks": 11,
+    "failed_benchmarks": 0,
+    "no_ground_truth": 0
+  },
+  "aggregate_metrics": {
+    "binary_classification": {
+      "mean_accuracy": 0.6313636363636363,
+      "mean_precision": 0.6270909090909091,
+      "mean_recall": 0.7264545454545455,
+      "mean_f1_score": 0.6594545454545454,
+      "std_accuracy": 0.23954969118213146,
+      "std_precision": 0.23970834551406614,
+      "std_recall": 0.27896536116025716,
+      "std_f1_score": 0.23790307422829307,
+      "min_accuracy": 0,
+      "max_accuracy": 0.895
+    },
+    "error_type_matching": {
+      "mean_type_accuracy": 0.4979090909090909,
+      "std_type_accuracy": 0.28535152165196337
+    },
+    "instruction_following": {
+      "mean_perfect_json_rate": 0.8951818181818182,
+      "mean_fallback_rate": 0.0,
+      "mean_failure_rate": 0.01390909090909091
+    }
+  },
+  "per_error_type_performance": {
+    "index_change": {
+      "detected": 12,
+      "total": 13,
+      "recall": 0.9230769230769231
+    },
+    "operator_swap": {
+      "detected": 9,
+      "total": 12,
+      "recall": 0.75
+    },
+    "inequality_flip": {
+      "detected": 13,
+      "total": 16,
+      "recall": 0.8125
+    },
+    "transpose_error": {
+      "detected": 7,
+      "total": 9,
+      "recall": 0.7777777777777778
+    },
+    "sign_flip": {
+      "detected": 18,
+      "total": 24,
+      "recall": 0.75
+    },
+    "fraction_inversion": {
+      "detected": 8,
+      "total": 10,
+      "recall": 0.8
+    },
+    "sum_product_swap": {
+      "detected": 7,
+      "total": 8,
+      "recall": 0.875
+    },
+    "function_swap": {
+      "detected": 3,
+      "total": 3,
+      "recall": 1.0
+    },
+    "exponent_order": {
+      "detected": 2,
+      "total": 3,
+      "recall": 0.6666666666666666
+    }
+  },
+  "paper_ids": [
+    "2410.10253",
+    "2506.04194",
+    "2410.14055",
+    "2411.00161",
+    "2502.02013",
+    "2411.12537",
+    "2507.09128",
+    "2502.05164",
+    "2410.16201",
+    "2506.08362",
+    "2503.03025"
+  ]
+}

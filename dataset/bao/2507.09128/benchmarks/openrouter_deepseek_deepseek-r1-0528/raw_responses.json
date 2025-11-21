@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2507.09128",
+    "model": "openrouter/deepseek/deepseek-r1-0528",
+    "total_responses": 20,
+    "timestamp": "2025-11-01T16:49:47.196754"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0902>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The exponent sign in the weight term was inverted from negative to positive: μ_{X, i}^{-β} became μ_{X, i}^{+β} in the second step, effectively inverting the fractional relationship\"\n}",
+      "response_length": 269,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0826>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0378>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The sum operator was incorrectly replaced by a product operator in the expression for the Hilbert-Schmidt norm squared\"\n}",
+      "response_length": 204,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0831>>",
+      "raw_response": "",
+      "response_length": 0,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_1021>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0883>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the second term, \\\\Fhat should be F_\\\\star to match the context after and decomposition intent\"\n}",
+      "response_length": 179,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0884>>",
+      "raw_response": "",
+      "response_length": 0,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_1022>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The inequality direction should be ≤ instead of ≥ for the squared norm expansion\"\n}",
+      "response_length": 165,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0963>>",
+      "raw_response": "",
+      "response_length": 0,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_1167>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"Product operator ∏ incorrectly used where sum operator ∑ is required for the class-wise norm terms\"\n}",
+      "response_length": 184,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0898>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The basis functions [f_k]_X and [f_l]_X should be replaced by \\\\M_{Z|X} [g_k]_Z and \\\\M_{Z|X} [g_l]_Z respectively, as indicated in the context after the formula.\"\n}",
+      "response_length": 244,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1302>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the third equation, the plus operator after \\\\C_{XX|0} should be a minus to correctly represent the conditional variance\"\n}",
+      "response_length": 202,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1063>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the first line, subscript j in e_j should be i to match the summation index\"\n}",
+      "response_length": 160,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1029>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The inequality direction is flipped: Cauchy-Schwarz implies an upper bound (≤), but the formula uses ≥\"\n}",
+      "response_length": 187,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0481>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the case statement, the singular value should be indexed by i (i.e., \\\\sigma_i) but is written as \\\\sigma_m with m undefined\"\n}",
+      "response_length": 209,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0824>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1240>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The plus operator for the variance terms should be minus in the approximation of the CLIP loss.\"\n}",
+      "response_length": 174,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1260>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1252>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"The square of the inner product is incorrectly expanded as the sum of squares without cross terms when centering features.\"\n}",
+      "response_length": 206,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1249>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

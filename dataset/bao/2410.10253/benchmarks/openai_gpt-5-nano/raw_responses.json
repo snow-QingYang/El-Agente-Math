@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2410.10253",
+    "model": "openai/gpt-5-nano",
+    "total_responses": 20,
+    "timestamp": "2025-10-31T17:16:12.773073"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0030>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the auxiliary_var formula, the sum uses x(t_i) but subtracts xbar(t_n) inside the summand, introducing an index mismatch (t_n should align with t_i, e.g., xbar(t_i) or t_k).\"\n}",
+      "response_length": 258,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0011>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0010>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0025>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the summation, x̄ is evaluated at t_k for all i (x̄(t_k)) instead of at t_i (x̄(t_i)), causing inconsistent indexing within the sum.\"\n}",
+      "response_length": 217,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0118>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"In the Lyapunov derivative, the step shows '-x^T L x × x^T Δf(t)', i.e., multiplication between the two scalar terms. It should be '-x^T L x + x^T Δf(t)' (addition), since dot V = x^T(-Lx + Δf).\"\n}",
+      "response_length": 277,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0071>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0050>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0119>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The chained inequalities use A ≤ B ≥ C, but by Cauchy–Schwarz and Young's inequality one gets A ≤ B ≤ C; the last inequality sign should be '≤' instead of '≥'.\"\n}",
+      "response_length": 244,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0084>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"In the adjoint equation, λ_i = ∇_{\\bm{x}} l_i × (\\frac{\\partial \\bm{f}_{neural}^d}{\\partial{\\bm{x}}})^\\top \\bm{\\lambda}_{i+1} should use addition, i.e., λ_i = ∇_{\\bm{x}} l_i + (\\frac{\\partial \\bm{f}_{neural}^d}{\\partial{\\bm{x}}})^\\top \\bm{\\lambda}_{i+1}\"\n}",
+      "response_length": 336,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0126>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"In the Lyapunov derivative computation, the term -\\\\bm{{\\\\tilde {x}}}(t)^T \\\\bm{L}\\\\bm{{\\\\tilde {x}}}(t) × \\\\bm{{\\\\tilde {x}}}(t)^T \\\\Delta \\\\bm{f}(t) uses multiplication between the two terms instead of addition. It should be -\\\\bm{{\\\\tilde {x}}}(t)^T \\\\bm{L}\\\\bm{{\\\\tilde {x}}}(t) + \\\\bm{{\\\\tilde {x}}}(t)^T \\\\Delta \\\\bm{f}(t).\"\n}",
+      "response_length": 415,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0216>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0208>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0134>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"The second term uses an opening bracket without a matching opening delimiter: \\\\geft[ ... ] is closed with \\\\right], but there is no corresponding \\\\left[ for this term, indicating missing/mismatched parentheses/brackets in the TeX expression.\"\n}",
+      "response_length": 332,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0184>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The sum over the input cost l_u(u_i, u_i^r) uses i = 1..N, but u_i is defined for i = 0..N-1; the index should be i = 0..N-1 (or i = 1..N-1) to match the horizon.\"\n}",
+      "response_length": 244,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0130>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Left-hand side uses t_j while the right-hand side uses t_{k-1}; inconsistent time indexing. Should be the same time index (e.g., both t_{k-1} or both t_j).\"\n}",
+      "response_length": 237,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0218>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0123>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"In the computation of \\\\dot V(t), the expression is written as -\\\\bm{\\\\tilde{x}}(t)^T\\\\bm{L}\\\\bm{\\\\tilde{x}}(t) × \\\\bm{\\\\tilde{x}}(t)^T\\\\Delta \\\\bm{f}(t) instead of -\\\\bm{\\\\tilde{x}}(t)^T\\\\bm{L}\\\\bm{\\\\tilde{x}}(t) + \\\\bm{\\\\tilde{x}}(t)^T\\\\Delta \\\\bm{f}(t); the '+' operator between the two terms was replaced by '×'.\"\n}",
+      "response_length": 402,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0167>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"Translational dynamics signs appear inverted: a should be (1/m) Z_B T - g Z_E, not -(1/m) Z_B T + g Z_E (thrust and gravity terms signs reversed).\"\n}",
+      "response_length": 225,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0093>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"In the adjoint equation, the term for ∇_x H is written as ∇_x l_i × (∂ f_neural^d / ∂ x)^T λ_{i+1} instead of the correct sum: ∇_x H = ∇_x l_i + (∂ f_neural^d / ∂ x)^T λ_{i+1}.\"\n}",
+      "response_length": 259,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0220>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The sign of the Delta f(t) term in the Lyapunov derivative is flipped: -\\\\bm{{\\\\tilde {x}}}(t)^T \\\\Delta \\\\bm{f}(t) becomes +\\\\bm{{\\\\tilde {x}}}(t)^T \\\\Delta \\\\bm{f}(t) in the next line.\"\n}",
+      "response_length": 265,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

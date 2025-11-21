@@ -1,0 +1,212 @@
+{
+  "metadata": {
+    "paper_id": "2503.03025",
+    "model": "openrouter/nvidia/nemotron-nano-9b-v2",
+    "context_words": 300,
+    "total_formulas_checked": 20,
+    "timestamp": "2025-10-31T17:32:31.639127",
+    "benchmark_mode": true
+  },
+  "detections": [
+    {
+      "label": "<<FORMULA_0066>>",
+      "formula": "(\\mathbf{Q}^\\star, \\mathbf{R}^\\star)\n&= \\arg\\min_{(\\mathbf{Q}, \\mathbf{R})}\n \\left\\langle \\mathbf{C}, \\mathbf{Q} \\mathrm{diag}(1/ \\mathbf{g}) \\mathbf{R}^\\top\n\\right\\rangle_F \\, \\label{eq:lora_wass_variant}  \\\\\n\\text{s.t.} \\quad & \\mathbf{Q} \\in \\Pi_{\\mathbf{a}, \\mathbf{g}}, \\, \\mathbf{R} \\in \\Pi_{\\mathbf{b}, \\mathbf{g}},  \\,\n  \\mathbf{g} = (1/r)\\mathbf{1}_r  \\nonumber",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 8.66
+    },
+    {
+      "label": "<<FORMULA_0438>>",
+      "formula": "\\label{eq:full_term}\n= \\frac{\\rho_{t\\\\times1}}\n{n^{2}} \n\\left(\n\\sum_{q=1}^{\\rho_t}  \n\\left(\n\\underbrace{\n\\frac{1}{r_{t+1}} \n\\sum_{i \\in \\mathsf{X}_{q}^{(t)}} \n\\sum_{j \\in \\mathsf{X}_{q}^{(t)}} \nc( \\mathbf{x}_{i}, T( \\mathbf{x}_{j}))}\n_{\\text{average ``Monge distortion'' in } \\Gamma_{t,q} \\text{ over next scale}\n} \n-  \n\\underbrace{\n\\sum_{z=1}^{r_{t+1}}\n\\sum_{i \\in \n\\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n\\sum_{j \\in \n\\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \nc(\\mathbf{x}_{i}, T( \\mathbf{x}_{j}))}_\n{\\text{``Monge distortion'' at scale } {t+1}}\n\\right)\n\\right)",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 9.8
+    },
+    {
+      "label": "<<FORMULA_0443>>",
+      "formula": "\\bar{\\mathbf{x}}^{(t)} := \\sum_{\n    \\mathbf{x}_i \\in \n    \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    \\frac{\\mathbf{x}_{i}}{s_{t+1}}, \n    \\quad \n    \\bar{\\mathbf{y}}^{(t)} := \n    \\sum_{\\mathbf{x} \\in \n    \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    \\frac{T(\\mathbf{x}_{i})}{s_{t+1}} \\,,",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 10.0
+    },
+    {
+      "label": "<<FORMULA_0339>>",
+      "formula": "\\la \\mb{C}^\\dagger, \\mb{Q}^\\star \\mb{R}^\\star \\mb{P}^{\\dagger, \\top} \\ra_F &= \\la \\mb{C} \\mb{P}^{\\dagger, \\top} , \\mb{Q}^\\star \\mb{R}^{\\star, \\top} \\mb{P}^{\\dagger, \\top} \\ra_F, \\\\\n    &= \\Tr ( \n    \\mb{P}^\\dagger \\mb{C}^\\top \\mb{Q}^\\star \\mb{R}^{\\star,\\top} \\mb{P}^{\\dagger, \\top} ), \\\\\n    &= \\Tr \\mb{C}^\\top \\mb{Q}^\\star \\mb{R}^{\\star, \\top} = \\la \\mb{C}, \\mb{Q}^\\star \\mb{R}^{\\star, \\top} \\ra_F.",
+      "has_error": true,
+      "error_type": "missing_parentheses",
+      "error_description": "The term P†,⊤ at the end of the trace operation is missing, which is required for the matrix product to be valid.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 10.12
+    },
+    {
+      "label": "<<FORMULA_0441>>",
+      "formula": "\\label{eq:summand_ugly}\n    \\left(\n\\frac{1}{r_{t+1}} \n\\sum_{i \\in \\mathsf{X}_{q}^{(t)}} \n\\sum_{j \\in \\mathsf{X}_{q}^{(t)}} \nc( \\mathbf{x}_{i}, T( \\mathbf{x}_{j}))\n-  \n\\sum_{z=1}^{r_{t+1}}\n\\sum_{i \\in \n\\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n\\sum_{j \\in \n\\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \nc(\\mathbf{x}_{i}, T( \\mathbf{x}_{j}))\n\\right) \\,.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 10.53
+    },
+    {
+      "label": "<<FORMULA_0436>>",
+      "formula": "\\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\equiv \n        \\mathrm{diam}\\bigl(\n        \\mathsf{X}_q^{(t)} \\cup T(\\mathsf{X}_q^{(t)})\\bigr) \n    \\;:=\\;\n    \\max_{ \\mathbf{x}_i,\\, \\mathbf{x}_j,\\, \\mathbf{x}_k,\\, \\mathbf{x}_l \\in \\mathsf{X}_q^{(t)}}\\;\n    \\Bigl\\|\n    \\bigl( \\mathbf{x}_i,\\,T(\\mathbf{x}_j)\\bigr)\n    \\; + \\;\n    \\bigl(\\mathbf{x}_k,\\,T(\\mathbf{x}_l)\\bigr)\n    \\Bigr\\|.",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The formula uses min instead of max for diameter calculation, which should be the maximum distance between points.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 13.7
+    },
+    {
+      "label": "<<FORMULA_0452>>",
+      "formula": "\\leq \\frac{1}{r_{t+1}} \n    \\sum_{\\mathbf{x}_i \\in \\mathsf{X}_{q}^{(t)}} \n    \\sum_{\\mathbf{x}_j \\in \\mathsf{X}_{q}^{(t)}} \n    \\lVert \\nabla c \\rVert_{\\infty} \n    \\Bigl\\| \\bigl( \\mathbf{x}_i,\\,T(\\mathbf{x}_j)\\bigr)\n    \\;-\\;\\bigl(\\bar{\\mathbf{x}}^{(t)},\\, \\bar{\\mathbf{y}}^{(t)} \\bigr)\n    \\Bigr\\|",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 5.84
+    },
+    {
+      "label": "<<FORMULA_0447>>",
+      "formula": "\\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\equiv \n        \\mathrm{diam}\\bigl(\n        \\mathsf{X}_q^{(t)} \\cup T(\\mathsf{X}_q^{(t)})\\bigr) \n    \\;:=\\;\n    \\\\min_{ \\mathbf{x}_i,\\, \\mathbf{x}_j,\\, \\mathbf{x}_k,\\, \\mathbf{x}_l \\in \\mathsf{X}_q^{(t)}}\\;\n    \\Bigl\\|\n    \\bigl( \\mathbf{x}_i,\\,T(\\mathbf{x}_j)\\bigr)\n    \\;-\\;\n    \\bigl(\\mathbf{x}_k,\\,T(\\mathbf{x}_l)\\bigr)\n    \\Bigr\\|,",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 8.16
+    },
+    {
+      "label": "<<FORMULA_0437>>",
+      "formula": "\\langle \\mathbf{C}, \n    \\mathbf{P}^{(t)}\n    \\rangle \n    - \n    \\langle \\mathbf{C}, \n    \\mathbf{P}^{(t + 1)}\n    \\rangle \n    &= \\frac{\\rho_t}{n^{2} } \n    \\sum_{i=1}^{n} \n    \\sum_{j=1}^{n} \n    c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\sum_{q=1}^{\\rho_t} \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\in \\Gamma_{t,q}} \n    - \\frac{\\rho_{t+1}}{n^{2}} \n    \\sum_{i=1}^{n}\n    \\sum_{j=1}^{n} c(x_{i}, y_{j}) \n    \\sum_{q=1}^{\\rho_{t+1}} \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t+1,q}}\\\\\n    &= \\frac{\\rho_t}{n^{2}}\n    \\left(\n     \\sum_{i=1}^{n} \n     \\sum_{j=1}^{n} \n     c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n     \\sum_{q=1}^{ \\rho_t} \n     \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t,q}} - r_{t+1} \n     \\sum_{i=1}^{n} \n     \\sum_{j=1}^{n} \n     c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n     \\sum_{q'=1}^{\\rho_{t\\\\times1}} \n     \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t+1,q'}} \n     \\right) \\\\\n    &= \n    \\frac{\\rho_t}{n^{2}}  \n    \\left(\n    \\sum_{q=1}^{ \\rho_t} \n    \\sum_{i=1}^{n} \n    \\sum_{j=1}^{n} \n    c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t,q}} \n    - r_{t+1} \n    \\sum_{q'=1}^{\\rho_{t+1}} \n    \\sum_{i=1}^{n} \n    \\sum_{j=1}^{n} c(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \n    \\delta_{(\\mathbf{x}_{i}, \\mathbf{y}_{j}) \\in \\Gamma_{t+1,q'}}\n    \\right)\\,.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 19.32
+    },
+    {
+      "label": "<<FORMULA_0453>>",
+      "formula": "&\\leq \\frac{1}{r_{t+1}} \n    \\sum_{i \\in \\mathsf{X}_{q}^{(t)}} \n    \\sum_{j \\in \\mathsf{X}_{q}^{(t)}} \n    \\lVert \\nabla c \\rVert_{\\infty} \n    \\mathrm{diam}\\bigl( \\G^Tamma_{t,q}\\bigr) \\, , \\\\\n    &= \\frac{1}{r_{t+1}} | \\mathsf{X}_{q}^{(t)}|^{2} \\lVert \\nabla c \\rVert_{\\infty} \n    \\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr)  \\, ,\\\\\n    &= \\frac{1}{r_{t+1}} \\frac{n^{2} \\lVert \\nabla c \\rVert_{\\infty}}{\\rho_t^{2} } \n    \\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\,.",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The diameter definition uses a minus operator instead of the plus operator as defined in the context.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 14.03
+    },
+    {
+      "label": "<<FORMULA_0539>>",
+      "formula": "\\mathsf{c}_j\n        ( \\, \n        x_{j,k} , \\, \n        y_{j, k'}\n        \\, ) := \n        \\frac{\n        \\sum_{x \\in C_{j,k}(\\mathsf{X}), y \\in C_{j,k'}(\\mathsf{Y})  }\n        \\mathsf{c}(x,y)\n        }{\n        | C_{j,k}(\\mathsf{X}) | \\, | C_{j,k'}(\\mathsf{Y}) | \n        }",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 7.78
+    },
+    {
+      "label": "<<FORMULA_0445>>",
+      "formula": "\\sum_{z=1}^{r_{t+1}}\n    \\sum_{\n    \\mathbf{x}_i \\in \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    \\sum_{ \\mathbf{x}_j \\in \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    c( \\mathbf{x}_{i}, T( \\mathbf{x}_{j})) \n    &= \n    s_{t+1}^{2} \n    \\sum_{z=1}^{r_{t+1}}\n    \\sum_{\\mathbf{x}_i \\in \\mathsf{X}_{q\\rho_t + z}^{(t+1)}} \n    \\frac{1}{s_{t+1}} \n    \\sum_{j \\in \\mathsf{X}_{q \\rho_t + z}^{(t+1)}} \n    \\frac{1}{s_{t+1}} \n    c(\\mathbf{x}_{i}, T(\\mathbf{x}_{j})) \\\\ \n    & \\\\leq s_{t+1}^{2} r_{t+1} c( \\bar{\\mathbf{x}}^{(t)}, \\bar{\\mathbf{y}}^{(t)} ),\\ \\quad",
+      "has_error": true,
+      "error_type": "sum_product_swap",
+      "error_description": "The sum operator on the left-hand side is incorrectly replaced with a product operator on the right-hand side in the inequality.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 25.01
+    },
+    {
+      "label": "<<FORMULA_0454>>",
+      "formula": "& =\\frac{\\rho_{t+1}}{n^{2}}  \n\\frac{1}{r_{t+1}} \\frac{n^{2} \n\\lVert \\nabla c \\rVert_{\\infty}}{\\rho_t^2 } \n\\sum_{q=1}^{\\rho_t} \n    \\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) \\\\\n    & =  \\lVert \\nabla c \\rVert_{\\infty} \n    \\frac{ 1}{ \\rho_t } \n    \\sum_{q=1}^{\\rho_t } \n    \\mathrm{diam}\\bigl( \\Gamma_{t,q}\\bigr) .",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 15.09
+    },
+    {
+      "label": "<<FORMULA_0540>>",
+      "formula": "\\mathsf{c}_j\n        ( \\, \n        x_{j,k} , \\, \n        y_{j, k'}\n        \\, ) := \n        \\frac{\n        \\sum_{\n        x \\in C_{j,k}(\\mathsf{X}), y \\in C_{j,k'}(\\mathsf{Y})  \n        }\n        \\mathsf{c}(x,y)\n        \\pi_{j-1}^\\star ( x_{j-1, k_1}, y_{j-1, k_1'} ) \n        }{\n        \\\\prod_{\n        x \\in C_{j,k}(\\mathsf{X}), y \\in C_{j,k'}(\\mathsf{Y})  \n        }\n        \\pi_{j-1}^\\star ( x_{j-1, k_1}, y_{j-1, k_1'} ) \n        } \\,,",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 9.95
+    },
+    {
+      "label": "<<FORMULA_0545>>",
+      "formula": "\\label{eq:supp_otscale_j}\n    \\begin{split}\n\\pi_j^\\star \n&:=\n\\argmin_{\n\\pi \\in \\Pi( \\mu_j, \\nu_j) \n}\n\\mathrm{cost}( \\pi_j )\\, , \\quad \\text{where:} \\\\\n\\mathrm{cost}( \\pi_j ) &: = \\\\prod_{\nk \\in [K_j(\\mathsf{X})], \\, \nk' \\in [K_j(\\mathsf{Y})]\n}\nc( x_{j,k}, y_{j,k'} )\n\\pi_j ( x_{j,k}, y_{j,k'} )\n    \\end{split}",
+      "has_error": true,
+      "error_type": "operator_swap",
+      "error_description": "The cost function uses a product operator instead of the required sum operator for optimal transport formulations",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 6.26
+    },
+    {
+      "label": "<<FORMULA_0460>>",
+      "formula": "& \\int_{\\mathsf{X} \\times \\mathsf{Y}} \\lVert T_{\\theta}(x) - y \\rVert_{2}^{p} (\\mathrm{id} \\times T)_{\\sharp} \\sum_{i=1}^{n} \\mu_{i} \\delta_{x_{i}} \\mathrm{d} x \\mathrm{d} y = \\int_{\\mathsf{X} \\times \\mathsf{Y}} \\lVert T_{\\theta}(x) - y \\rVert_{2}^{p} \\sum_{i=1}^{n} \\mu_{i} (\\mathrm{id} \\times T)_{\\sharp} \\delta_{x_{i}} \\mathrm{d}x \\mathrm{d}y  \\\\\n    &= \\sum_{i=1}^{n} \\mu_{i} \\int_{\\mathsf{X} / \\mathsf{Y}} \\lVert T_{\\theta}(x) - y \\rVert_{2}^{p} \\delta_{(x_{i}, T(x_{i}))} \\mathrm{d}y \\mathrm{d}x = \\sum_{i=1}^{n} \\mu_{i} \\lVert T_{\\theta}(x_{i}) - T(x_{i}) \\rVert_{2}^{p} \\, ,",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 17.32
+    },
+    {
+      "label": "<<FORMULA_0457>>",
+      "formula": "\\leq \n    \\frac{\\rho_{t+1}}{n^{2}} \\sum_{q=1}^{\\rho_t} \n    \\left| \\gamma \\frac{| \\mathsf{X}_{q}^{(t)}|^{2}}{r_{t+1}} - \\gamma r_{t+1} | \\mathsf{X}_{q}^{(t - 1)}|^{2}\n    \\right| = \\frac{\\rho_{t+1}}{n^{2}} \\sum_{q=1}^{\\rho_t} \n    \\left| \\gamma \\frac{(n/ \\rho_t )^{2}}{r_{t+1}} - \\gamma r_{t+1} (n/\\rho_{t+1})^{2}\n    \\right| = 0 \\,.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 23.61
+    },
+    {
+      "label": "<<FORMULA_0446>>",
+      "formula": "& \\leq  \n    \\frac{1}{r_{t+1}} \n    \\left(\n    \\sum_{\\mathbf{x}_i \\in \\mathsf{X}_{q}^{(t)}} \n    \\sum_{\\mathbf{x}_j \\in \\mathsf{X}_{q}^{(t)}} \n    c(\\mathbf{x}_{i}, T(\\mathbf{x}_{j})) \n    \\right)\n    -  \n    s_{t+1}^{2} r_{t+1} \n    c( \\bar{\\mathbf{x}}^{(t)}, \\bar{\\mathbf{y}}^{(t)} ) \\\\\n    & = \\frac{1}{r_{t+1}} \n    \\left( \n    \\left(\\sum_{ \\mathbf{x}_i \\in \\mathsf{X}_{q}^{(t)}} \n    \\sum_{ \\mathbf{x}_j \\in \\mathsf{X}_{q}^{(t)}} \n    c(\\mathbf{x}_{i}, T(\\mathbf{x}_{j}))\n    \\right)\n    - \\frac{n^{2}}{\\rho_t} \n    c( \\bar{\\mathbf{x}}^{(t)}, \\bar{\\mathbf{y}}^{(t)} ) \n    \\right) \\\\\n    & = \\frac{1}{r_{t+1}} \n    \\left( \\sum_{ \\mathbf{x}_i \\in \\mathsf{X}_{q}^{(t)}} \n    \\sum_{ \\mathbf{x}_j \\in \\mathsf{X}_{q}^{(t)}} \n    \\left( c( \\mathbf{x}_{i}, T( \\mathbf{x}_{j})) \n    -  c( \\bar{\\mathbf{x}}^{(t)}, \\bar{\\mathbf{y}}^{(t)} ) \\right) \\right)  \\,.",
+      "has_error": true,
+      "error_type": "fraction_inversion",
+      "error_description": "The term s_{t+1}^2 r_{t+1} was incorrectly replaced by n^2/ρ_t in the subtraction, which may not be mathematically equivalent unless specific relationships between s_{t+1}, r_{t+1}, n, and ρ_t hold.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 39.14
+    },
+    {
+      "label": "<<FORMULA_0520>>",
+      "formula": "\\Gamma({\\mathsf{X}})\n    &:= \n    \\{ \\Gamma_m(\\mathsf{X}) \\}_{j=0}^J\n    \\,,  \\quad \\Gamma_j(\\mathsf{X}) := \\{ C_{j,k}(\\mathsf{X}) \\}_{k=1}^{K_j(\\mathsf{X})}\n    \\\\ \n        \\Gamma({\\mathsf{Y}})\n    &:= \n    \\{ \\Gamma_j(\\mathsf{Y}) \\}_{j=0}^J\n    \\,,  \\quad \\Gamma_j(\\mathsf{Y}) := \\{ C_{j,k}(\\mathsf{Y}) \\}_{k=1}^{K_j(\\mathsf{Y})} \\,,",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 90.11
+    },
+    {
+      "label": "<<FORMULA_0303>>",
+      "formula": "\\label{eq:monge_reg_id}\n\\begin{split}\n    \\la \\mb{C}, \\mb{P} \\ra_F\n    &= \\Tr ( \\mb{C}^\\top \\mb{P} )  \\\\\n    &= \\Tr (\\tilde{\\mb{P}}^{-1} \\tilde{\\mb{P}}\\mb{C}^\\top \n     \\mb{P} ) \\\\\n    &=\n    \\Tr ( \\tilde{\\mb{P}} \\mb{C}^\\top \n    \\mb{P} \\tilde{\\mb{P}}^\\top )\n    =\n    \\la \\mb{C} \\tilde{\\mb{P}}^\\top \n    ,\\mb{P}  \\tilde{\\mb{P}}^\\top  \\ra_F. \n\\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 171.22
+    }
+  ]
+}

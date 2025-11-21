@@ -1,0 +1,147 @@
+{
+  "model": "openrouter/deepseek/deepseek-r1-0528",
+  "total_papers": 10,
+  "successful_benchmarks": 10,
+  "papers": [
+    {
+      "paper_id": "2410.10253",
+      "status": "success",
+      "metrics": {
+        "true_positives": 10,
+        "false_positives": 2,
+        "true_negatives": 7,
+        "false_negatives": 1,
+        "accuracy": 0.85,
+        "precision": 0.833,
+        "recall": 0.909,
+        "f1_score": 0.87
+      }
+    },
+    {
+      "paper_id": "2506.04194",
+      "status": "success",
+      "metrics": {
+        "true_positives": 5,
+        "false_positives": 5,
+        "true_negatives": 8,
+        "false_negatives": 2,
+        "accuracy": 0.65,
+        "precision": 0.5,
+        "recall": 0.714,
+        "f1_score": 0.588
+      }
+    },
+    {
+      "paper_id": "2410.14055",
+      "status": "success",
+      "metrics": {
+        "true_positives": 9,
+        "false_positives": 6,
+        "true_negatives": 4,
+        "false_negatives": 0,
+        "accuracy": 0.684,
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1_score": 0.75
+      }
+    },
+    {
+      "paper_id": "2411.00161",
+      "status": "success",
+      "metrics": {
+        "true_positives": 5,
+        "false_positives": 0,
+        "true_negatives": 12,
+        "false_negatives": 1,
+        "accuracy": 0.944,
+        "precision": 1.0,
+        "recall": 0.833,
+        "f1_score": 0.909
+      }
+    },
+    {
+      "paper_id": "2502.02013",
+      "status": "success",
+      "metrics": {
+        "true_positives": 9,
+        "false_positives": 5,
+        "true_negatives": 4,
+        "false_negatives": 1,
+        "accuracy": 0.684,
+        "precision": 0.643,
+        "recall": 0.9,
+        "f1_score": 0.75
+      }
+    },
+    {
+      "paper_id": "2411.12537",
+      "status": "success",
+      "metrics": {
+        "true_positives": 11,
+        "false_positives": 3,
+        "true_negatives": 5,
+        "false_negatives": 0,
+        "accuracy": 0.842,
+        "precision": 0.786,
+        "recall": 1.0,
+        "f1_score": 0.88
+      }
+    },
+    {
+      "paper_id": "2507.09128",
+      "status": "success",
+      "metrics": {
+        "true_positives": 8,
+        "false_positives": 4,
+        "true_negatives": 5,
+        "false_negatives": 0,
+        "accuracy": 0.765,
+        "precision": 0.667,
+        "recall": 1.0,
+        "f1_score": 0.8
+      }
+    },
+    {
+      "paper_id": "2502.05164",
+      "status": "success",
+      "metrics": {
+        "true_positives": 10,
+        "false_positives": 1,
+        "true_negatives": 8,
+        "false_negatives": 1,
+        "accuracy": 0.9,
+        "precision": 0.909,
+        "recall": 0.909,
+        "f1_score": 0.909
+      }
+    },
+    {
+      "paper_id": "2506.08362",
+      "status": "success",
+      "metrics": {
+        "true_positives": 11,
+        "false_positives": 2,
+        "true_negatives": 6,
+        "false_negatives": 0,
+        "accuracy": 0.895,
+        "precision": 0.846,
+        "recall": 1.0,
+        "f1_score": 0.917
+      }
+    },
+    {
+      "paper_id": "2503.03025",
+      "status": "success",
+      "metrics": {
+        "true_positives": 10,
+        "false_positives": 4,
+        "true_negatives": 4,
+        "false_negatives": 0,
+        "accuracy": 0.778,
+        "precision": 0.714,
+        "recall": 1.0,
+        "f1_score": 0.833
+      }
+    }
+  ]
+}

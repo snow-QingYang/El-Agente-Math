@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "error_rate": 0.5,
+    "random_seed": null,
+    "total_formulas_processed": 20,
+    "formulas_modified": 11,
+    "formulas_unmodified": 9,
+    "timestamp": "2025-10-31T16:58:13.384366"
+  },
+  "errors": [
+    {
+      "label": "<<FORMULA_0093>>",
+      "original_formula": "& \\begin{aligned}\n\t\t\tH &= J + \n\t\t\t\\sum_{i=1}^{N-1} \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})\n\t\t\\end{aligned}\\\\\n\t\t&\\bm{x}_{i+1} = \\nabla_{\\bm{\\lambda}} H \n\t\t= \\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta}),\n\t\t\\;\\bm{x}_1 = \\bm{x}(0) \\label{rollout}\\\\\n\t\t& \\bm{\\lambda}_i = \\nabla_{\\bm{x}}H \n\t\t= \\nabla_{\\bm{x}} l_i + (\\frac{\\partial \\bm{f}_{neural}^d}{\\partial{\\bm{x}}})^\\top\n\t\t\\bm{\\lambda}_{i+1} \\label{adjoint},\n\t\t\\;\\bm{\\lambda}_N = \\frac{\\partial{l_N}}{\\partial{\\bm{x}_N}}\\\\\n\t\t& \\begin{aligned}\n\t\t\t\\frac{\\partial{H}}{\\partial{\\bm{\\theta}}}\n\t\t\t= \\sum_{i=1}^{N-1} \\;\\nabla_{\\bm{\\theta}} l_i + \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\nabla_{\\bm{\\theta}} \\bm{f}_{neural}^d = 0\n\t\t\\end{aligned} \\label{gradient}",
+      "modified_formula": "& \\begin{aligned}\n\t\t\tH &= J + \n\t\t\t\\sum_{i=1}^{N-1} \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})\n\t\t\\end{aligned}\\\\\n\t\t&\\bm{x}_{i+1} = \\nabla_{\\bm{\\lambda}} H \n\t\t= \\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta}),\n\t\t\\;\\bm{x}_1 = \\bm{x}(0) \\label{rollout}\\\\\n\t\t& \\bm{\\lambda}_i = \\nabla_{\\bm{x}}H \n\t\t= \\nabla_{\\bm{x}} l_i \\\\times (\\frac{\\partial \\bm{f}_{neural}^d}{\\partial{\\bm{x}}})^\\top\n\t\t\\bm{\\lambda}_{i+1} \\label{adjoint},\n\t\t\\;\\bm{\\lambda}_N = \\frac{\\partial{l_N}}{\\partial{\\bm{x}_N}}\\\\\n\t\t& \\begin{aligned}\n\t\t\t\\frac{\\partial{H}}{\\partial{\\bm{\\theta}}}\n\t\t\t= \\sum_{i=1}^{N-1} \\;\\nabla_{\\bm{\\theta}} l_i + \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\nabla_{\\bm{\\theta}} \\bm{f}_{neural}^d = 0\n\t\t\\end{aligned} \\label{gradient}",
+      "error_type": "operator_swap",
+      "error_description": "Changed '+' to '×'",
+      "line_number": 921,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0220>>",
+      "original_formula": "\\label{lyapunov_devi2}\n\t\t\t\\dot V\\left( t \\right) & = \\textcolor{black}{\\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\dot{{x}}}\\left( t \\right)-\\bm{\\dot{\\hat {x}}}\\left( t \\right)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Gamma}^{-1} {\\bm{\\dot{\\hat \\chi}}}}  \\notag \\\\\n\t\t\t&\\mathop  = \\limits^{(e)} \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t)+ \\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\Xi}(t)\\bm{\\tilde{\\chi}} + \\Delta \\bm{f}(t)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Xi}^T(t)\\bm{\\tilde{x}}(t)} \\notag \\\\\n\t\t\t& = \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag} \\\\",
+      "modified_formula": "\\label{lyapunov_devi2}\n\t\t\t\\dot V\\left( t \\right) & = \\textcolor{black}{\\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\dot{{x}}}\\left( t \\right)-\\bm{\\dot{\\hat {x}}}\\left( t \\right)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Gamma}^{-1} {\\bm{\\dot{\\hat \\chi}}}}  \\notag \\\\\n\t\t\t&\\mathop  = \\limits^{(e)} \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) - \\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\Xi}(t)\\bm{\\tilde{\\chi}} + \\Delta \\bm{f}(t)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Xi}^T(t)\\bm{\\tilde{x}}(t)} \\notag \\\\\n\t\t\t& = \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag} \\\\",
+      "error_type": "sign_flip",
+      "error_description": "Changed '+' to '-'",
+      "line_number": 1202,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0118>>",
+      "original_formula": "\\label{lyapunov_devi}\n\t\t\\dot V\\left( t \\right) & = \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{\\dot{\\tilde {x}}}\\left( t \\right) \\notag \\\\\n\t\t&\\mathop  = \\limits^{(a)} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\left( {- \\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\Delta \\bm{f}(t)} \\right) \\notag \\\\\n\t\t& = -\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag \\\\\n\t\t& \\mathop  \\le \\limits^{(b)} \\textcolor{black}{-\\frac{\\lambda_m(\\bm{L})}{2} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{{\\tilde {x}}}{\\left( t \\right)} + \\frac{1}{2\\lambda_m(\\bm{L})}\\gamma^2}",
+      "modified_formula": "\\label{lyapunov_devi}\n\t\t\\dot V\\left( t \\right) & = \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{\\dot{\\tilde {x}}}\\left( t \\right) \\notag \\\\\n\t\t&\\mathop  = \\limits^{(a)} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\left( {- \\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\Delta \\bm{f}(t)} \\right) \\notag \\\\\n\t\t& = -\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) \\\\times \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag \\\\\n\t\t& \\mathop  \\le \\limits^{(b)} \\textcolor{black}{-\\frac{\\lambda_m(\\bm{L})}{2} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{{\\tilde {x}}}{\\left( t \\right)} + \\frac{1}{2\\lambda_m(\\bm{L})}\\gamma^2}",
+      "error_type": "operator_swap",
+      "error_description": "Changed '+' to '×'",
+      "line_number": 989,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0130>>",
+      "original_formula": "\\label{discrete_error}\n\t\t\\textcolor{black}{{\\bm{\\tilde x}}(t_k)} & = \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) + T_s(\\bm{f}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}))} \\notag \\\\\n\t\t&\\mathop  = \\limits^{(c)} \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) +  T_s(\\bm{{f}}_{neural}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}) + \\Delta \\bm{f}(t) )}\\notag \\\\\n\t\t&\\mathop  = \\limits^{(d)} \\textcolor{black}{(\\bm{I}- T_s\\bm{L}){\\bm{\\tilde x}}(t_{k-1}) + T_s\\Delta \\bm{f}(t)},",
+      "modified_formula": "\\label{discrete_error}\n\t\t\\textcolor{black}{{\\bm{\\tilde x}}(t_j)} & = \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) + T_s(\\bm{f}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}))} \\notag \\\\\n\t\t&\\mathop  = \\limits^{(c)} \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) +  T_s(\\bm{{f}}_{neural}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}) + \\Delta \\bm{f}(t) )}\\notag \\\\\n\t\t&\\mathop  = \\limits^{(d)} \\textcolor{black}{(\\bm{I}- T_s\\bm{L}){\\bm{\\tilde x}}(t_{k-1}) + T_s\\Delta \\bm{f}(t)},",
+      "error_type": "index_change",
+      "error_description": "Changed subscript 'k' to 'j'",
+      "line_number": 1037,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0134>>",
+      "original_formula": "\\bm{\\dot{x}}\\left( t \\right) = \\left[ {\\begin{array}{*{20}{c}}\n\t\t\t\t{ - \\eta }&\\omega \\\\\n\t\t\t\t{ - \\omega }&{ - \\eta }\n\t\t\\end{array}} \\right]\\bm{x}\\left( t \\right) + \\left[ {\\begin{array}{*{20}{c}}\n\t\t\t\t\\varepsilon \\\\\n\t\t\t\t\\varepsilon \n\t\t\\end{array}} \\right]",
+      "modified_formula": "\\bm{\\dot{x}}\\left( t \\right) = \\left[ {\\begin{array}{*{20}{c}}\n\t\t\t\t{ - \\eta }&\\omega \\\\\n\t\t\t\t{ - \\omega }&{ - \\eta }\n\t\t\\end{array}} \\right]\\bm{x}\\left( t \\right) + \\\\geft[ {\\begin{array}{*{20}{c}}\n\t\t\t\t\\varepsilon \\\\\n\t\t\t\t\\varepsilon \n\t\t\\end{array}} \\right]",
+      "error_type": "inequality_flip",
+      "error_description": "Changed '≤' to '≥'",
+      "line_number": 1055,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0119>>",
+      "original_formula": "\\tilde{\\bm{x}}^{T} \\Delta \\bm{f}(t)\\le \\sqrt{\\lambda_{m}(\\bm{L})}\\|\\tilde{\\bm{x}}\\| \\frac{\\gamma}{\\sqrt{\\lambda_{m}(\\bm{L})}}\\le \\frac{\\lambda_{m}(\\bm{L})\\|\\tilde{\\bm{x}}\\|^{2}}{2}+\\frac{\\gamma^{2}}{2 \\lambda_{m}(\\bm{L})}",
+      "modified_formula": "\\tilde{\\bm{x}}^{T} \\Delta \\bm{f}(t)\\le \\sqrt{\\lambda_{m}(\\bm{L})}\\|\\tilde{\\bm{x}}\\| \\frac{\\gamma}{\\sqrt{\\lambda_{m}(\\bm{L})}}\\\\ge \\frac{\\lambda_{m}(\\bm{L})\\|\\tilde{\\bm{x}}\\|^{2}}{2}+\\frac{\\gamma^{2}}{2 \\lambda_{m}(\\bm{L})}",
+      "error_type": "inequality_flip",
+      "error_description": "Changed '≤' to '≥'",
+      "line_number": 995,
+      "formula_type": "inline"
+    },
+    {
+      "label": "<<FORMULA_0084>>",
+      "original_formula": "\\label{eq:oc}\n\t\t&\\min_{\\bm{\\theta}} \\sum_{i=1}^{N-1} \\;l_i(\\bm{x}_i, {\\bm{x}_i}^r, \\bm{\\theta})\n\t\t+ l_N(\\bm{x}_N, {\\bm{x}_N}^r)\\\\\n\t\t& s.t.\\;\\;\\bm{x}_{i+1} = \n\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})",
+      "modified_formula": "\\label{eq:oc}\n\t\t&\\min_{\\bm{\\theta}} \\sum_{i=1}^{N-1} \\;l_i(\\bm{x}_i, {\\bm{x}_i}^r, \\bm{\\theta}) - l_N(\\bm{x}_N, {\\bm{x}_N}^r)\\\\\n\t\t& s.t.\\;\\;\\bm{x}_{i+1} = \n\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})",
+      "error_type": "sign_flip",
+      "error_description": "Changed '+' to '-'",
+      "line_number": 908,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0030>>",
+      "original_formula": "\\label{auxiliary_var}\n\t\t\\bm {\\hat{x}}\\left( {{t}} \\right) = \\bm {\\bar{x}}\\left( {{t}} \\right) - \\sum\\limits_{i = 0}^{k-1} {\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_i}} \\right)} \\right)}",
+      "modified_formula": "\\label{auxiliary_var}\n\t\t\\bm {\\hat{x}}\\left( {{t}} \\right) = \\bm {\\bar{x}}\\left( {{t}} \\right) - \\sum\\limits_{i = 0}^{k-1} {\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_n}} \\right)} \\right)}",
+      "error_type": "index_change",
+      "error_description": "Changed subscript 'i' to 'n'",
+      "line_number": 657,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0025>>",
+      "original_formula": "\\label{sys1_1}\n\t\t\\bm{\\hat{f}}_{neural}(t) = \\bm{f}_{neural}(t) + \\sum\\limits_{i = 0}^k {\\bm{L}\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_i}} \\right)} \\right)}",
+      "modified_formula": "\\label{sys1_1}\n\t\t\\bm{\\hat{f}}_{neural}(t) = \\bm{f}_{neural}(t) + \\sum\\limits_{i = 0}^k {\\bm{L}\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_k}} \\right)} \\right)}",
+      "error_type": "index_change",
+      "error_description": "Changed subscript 'i' to 'k'",
+      "line_number": 647,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0216>>",
+      "original_formula": "\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_m(\\bm{L})}} + \\gamma\\right\\}",
+      "modified_formula": "\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_j(\\bm{L})}} + \\gamma\\right\\}",
+      "error_type": "index_change",
+      "error_description": "Changed subscript 'm' to 'j'",
+      "line_number": 1193,
+      "formula_type": "inline"
+    },
+    {
+      "label": "<<FORMULA_0208>>",
+      "original_formula": "\\label{feedback_NN2}\n\t\t\\textcolor{black}{\\bm{\\hat{f}}_{neural}(t) = \\bm{\\Xi}(t)\\bm{\\hat{\\chi}} + \\bm{L}(\\bm{x}(t)-\\bm{\\hat{x}}(t)),}",
+      "modified_formula": "\\label{feedback_N^TN2}\n\t\t\\textcolor{black}{\\bm{\\hat{f}}_{neural}(t) = \\bm{\\Xi}(t)\\bm{\\hat{\\chi}} + \\bm{L}(\\bm{x}(t)-\\bm{\\hat{x}}(t)),}",
+      "error_type": "transpose_error",
+      "error_description": "Added transpose to N",
+      "line_number": 1183,
+      "formula_type": "align"
+    }
+  ],
+  "unmodified": [
+    "<<FORMULA_0071>>",
+    "<<FORMULA_0184>>",
+    "<<FORMULA_0167>>",
+    "<<FORMULA_0218>>",
+    "<<FORMULA_0010>>",
+    "<<FORMULA_0126>>",
+    "<<FORMULA_0050>>",
+    "<<FORMULA_0011>>",
+    "<<FORMULA_0123>>"
+  ]
+}

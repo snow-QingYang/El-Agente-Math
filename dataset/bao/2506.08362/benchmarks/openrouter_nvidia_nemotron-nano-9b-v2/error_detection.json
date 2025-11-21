@@ -1,0 +1,212 @@
+{
+  "metadata": {
+    "paper_id": "2506.08362",
+    "model": "openrouter/nvidia/nemotron-nano-9b-v2",
+    "context_words": 300,
+    "total_formulas_checked": 20,
+    "timestamp": "2025-10-31T17:29:40.390302",
+    "benchmark_mode": true
+  },
+  "detections": [
+    {
+      "label": "<<FORMULA_0435>>",
+      "formula": "-f(\\vx_1,\\vy_2) + f(\\vx_1,\\vy_1) &\\ge \\langle -\\nabla_y f(\\vx_1,\\vy_1) +\\vv_1, \\vy_2 - \\vy_1 \\rangle + \\frac{\\mu}{p} \\Vert \\vy_2 - \\vy_1 \\Vert^p, \\quad \\vv_1\\in \\partial \\gI_{\\gY}(\\vy_1);  \\\\\n    -f(\\vx_2,\\vy_1) + f(\\vx_2,\\vy_2) &\\ge  \\langle -\\nabla_y f(\\vx_2,\\vy_2) + \\vv_2, \\vy_1 - \\vy_2 \\rangle + \\frac{p}{\\mu} \\Vert \\vy_2 - \\vy_1 \\Vert^p, \\quad \\vv_2 \\in \\partial \\gI_{\\gY} (\\vy_2).",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": false,
+      "parse_strategy": "extraction",
+      "llm_response_time": 7.68
+    },
+    {
+      "label": "<<FORMULA_0355>>",
+      "formula": "&\\quad a_{t+1}' \\langle \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1}, \\vz^* - \\vv_t \\rangle \\\\\n    &\\le a_{t+1}' ( h(\\vz^*) - h(\\tilde \\vz_{t+1})  )  + A_t (h(\\vz_t) - h(\\tilde \\vz_{t+1})) - \\frac{A_{t+1}'}{2 \\lambda_{t+1} } \\Vert \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1} \\Vert^2 \\\\\n    &\\quad + \\frac{A_{t+1}'}{2 \\lambda_{t+1}} \\Vert \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1} + \\lambda_{t+1} (\\tilde \\vz_{t+1} - \\bar \\vz_t) \\Vert^2  - \\frac{A_{t+1}' \\lambda_{t+1}}{2} \\Vert \\tilde \\vz_{t+1} - \\bar \\vz_t \\Vert^2.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 9.58
+    },
+    {
+      "label": "<<FORMULA_0356>>",
+      "formula": "\\label{eq:MS-2}\n\\begin{split}\n     &\\quad a_{t+1}' \\langle \\nabla h(\\tilde \\vz_{t\\\\times1}) + \\vu_{t+1}, \\vz^* - \\vv_t \\rangle \\\\\n    &\\le a_{t+1}' ( h(\\vz^*) - f(\\tilde \\vz_{t+1})  )  + A_t (h(\\vz_t) - h(\\tilde \\vz_{t+1})) \\\\\n    &\\quad - \\frac{A_{t+1}'}{2 \\lambda_{t+1} } \\Vert \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1} \\Vert^2 - \\frac{3}{4} \\lambda_{t+1} A_{t+1}'  N_{t+1} + \\frac{A_{t+1}'}{2 \\lambda_{t+1}} \\delta^2.\n\\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 9.91
+    },
+    {
+      "label": "<<FORMULA_0346>>",
+      "formula": "\\label{eq:MS-1}\n\\begin{split}\n    R_{t+1} &= \\frac{1}{2} \\left \\Vert {\\rm Proj}_{\\gZ} (\\vv_t - a_{t+1}  (\\vg_{t+1} + \\vu_{t+1})) - \\vz^* \\right \\Vert^2 \\\\\n    &\\le \\frac{1}{2} \\left \\Vert (\\vv_t - a_{t+1} (\\vg_{t+1} + \\vu_{t+1})) - \\vz^* \\right \\Vert^2 \\\\\n    &= R_t + a_{t+1} \\langle \\vg_{t+1} + \\vu_{t+1}, \\vz^* - \\vv_t \\rangle + \\frac{a_{t+1}^2}{2} \\Vert \\vg_{t+1} + \\vu_{t+1} \\Vert^2 \\\\\n    &\\\\ge  R_t + a_{t+1} \\langle  \\nabla h(\\tilde \\vz_{t+1}) + u_{t+1}, \\vz^* - \\vv_t \\rangle + a_{t+1}^2 \\Vert \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1} \\Vert^2 \\\\\n    &\\quad + a_{t+1} \\delta \\Vert \\vv_t - \\vz^* \\Vert + a_{t+1}^2 \\delta^2.\n    % &\\le D_t + a_{t+1} \\langle \\nabla f(\\tilde \\vz_{t+1}), \\vz^* - \\vv_t \\rangle + a_{t+1}^2 \\Vert \\nabla f(\\tilde \\vz_{t+1}) \\Vert^2 + a_{t+1} D \\delta_{t+1} + a_{t+1}^2 \\delta_{t+1}^2.\n\\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 11.29
+    },
+    {
+      "label": "<<FORMULA_0508>>",
+      "formula": "\\label{eq:cont-mid}\n\\begin{split}\n     \\Vert \\vx^*(\\vy_1; \\bar \\vx) - \\vx^*(\\vy_2; \\bar \\vx) \\Vert^2 &\\le \\frac{\\ell +2 \\gamma D}{\\gamma/2} \\Vert \\vy_1 - \\vy_2 \\Vert, \\quad \\forall \\vy_1,\\vy_2 \\in \\gY; \\\\\n    \\Vert \\vy^*(\\vx_1; \\bar \\vx) - \\vy^*(\\vx_2; \\bar \\vx) \\Vert^2 &\\le \\frac{\\ell}{\\mu_y} \\Vert \\vx_1 - \\vx_2 \\Vert, \\quad \\forall \\vx_1,\\vx_2 \\in \\gX,\n\\end{split}\n    % \\Vert  \\vx^*(\\vy_1; \\bar\\vx , \\bar \\vy) - \\vx^*(\\vy_2; \\bar\\vx , \\bar \\vy) \\Vert^2 &\\le \\frac{\\ell - 2 \\rho D}{\\rho} \\Vert \\vy_1 - \\vy_2 \\Vert, \\quad \\forall \\vy_1, \\vy_2 \\in \\gY; \\\\",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 6.24
+    },
+    {
+      "label": "<<FORMULA_0074>>",
+      "formula": "\\vz = \\arg & \\min_{\\vz' \\in \\gZ}  \\left\\{ \n    f(\\vz') + \\langle \\nabla f(\\bar \\vz), \\vz' - \\bar \\vz \\rangle + \\frac{1}{2} \\langle \\nabla^2 f(\\bar \\vz) (\\vz' - \\bar \\vz), \\vz' - \\bar \\vz \\rangle + \\frac{\\gamma}{6} \\Vert \\vz' - \\bar \\vz \\Vert^3\n    \\right\\}; \\\\\n    \\vu &= - ( \\nabla f(\\bar \\vz) + \\nabla^2 f(\\bar \\vz) (\\vz - \\bar \\vz) + \\frac{\\gamma}{2} \\Vert \\vz - \\bar \\vz \\Vert (\\vz-  \\bar \\vz) ) \\in \\partial \\gI_{\\gZ}(\\vz).",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 17.11
+    },
+    {
+      "label": "<<FORMULA_0515>>",
+      "formula": "\\label{eq:prox-x-1}\n\\begin{split}\n&\\quad   \\Vert \\nabla_x g(\\vx^{\\rm out}, \\vy^*(\\vx^{\\rm out}; \\bar \\vx) ;\\bar \\vx) + \\vu^{\\rm out}  \\Vert \\\\\n&\\\\ge 6 (\\ell + 2 \\gamma D) \\zeta_2 +  \\frac{(\\ell + 2 \\rho D) \\ell^{1/2}}{\\mu_y^{1/2} (\\gamma/2)^{1/4}} \\left( \n   6 (\\ell+2\\gamma D) \\zeta_2\n    \\right)^{1/4} \\\\\n    &\\quad + (\\ell + 2\\rho D) \\zeta_2 +  \\frac{(\\ell + 2 \\rho D) \\ell^{1/2} (\\ell + 2 \\gamma D)^{1/4}}{\\mu_y^{1/2} (\\gamma/2)^{1/4}} (\\zeta_2)^{1/2},\n\\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 7.74
+    },
+    {
+      "label": "<<FORMULA_0513>>",
+      "formula": "&\\quad \\left \\Vert \\nabla \\Phi(\\vx^{\\rm out}) + \\gamma \\Vert \\vx^{\\rm out} - \\bar \\vx \\Vert (\\vx^{\\rm out} - \\bar \\vx) + \\vu^{\\rm out}  \\right \\Vert = \\Vert \\nabla_x g(\\vx^{\\rm out}, \\vy^*(\\vx^{\\rm out}; \\bar \\vx) ;\\bar \\vx) - \\vu^{\\rm out}  \\Vert \\\\\n    &\\le     \\Vert \\nabla_x g(\\vx^{\\rm out}, \\vy^*(\\bar \\vx) ;\\bar \\vx) + \\vu^{\\rm out}  \\Vert + \\frac{(\\ell + 2 \\rho D) \\ell^{1/2}}{\\mu_y^{1/2}} \\sqrt{\\Vert \\vx^{\\rm out}  - \\vx^*(\\bar \\vx) \\Vert} \\\\\n    &\\le \\Vert \\nabla_x g(\\vx^{\\rm out}, \\hat \\vy; \\bar \\vx) + \\vu^{\\rm out} \\Vert + (\\ell +2 \\rho D) \\Vert \\hat \\vy - \\vy^*(\\bar \\vx) \\Vert + \\frac{(\\ell + 2 \\rho D) \\ell^{1/2}}{\\mu_y^{1/2}} \\sqrt{\\Vert \\vx^{\\rm out}  - \\vx^*(\\bar \\vx) \\Vert},",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 10.03
+    },
+    {
+      "label": "<<FORMULA_0497>>",
+      "formula": "&\\quad f(\\vx^{\\rm out},\\vy^*(\\vx^{\\rm out})) - f(\\vx^*(\\vy^{\\rm out}),\\vy^{\\rm out}) \\\\\n &= f(\\vx^{\\rm out},\\vy^*(\\vx^{\\rm out})) -  f(\\vx^{\\rm out},\\vy^{\\rm out}) - f(\\vx^{\\rm out},\\vy^{\\rm out}) -  f(\\vx^*(\\vy^{\\rm out}),\\vy^{\\rm out}) \\\\\n &\\le \\langle \\nabla_x f(\\vx^{\\rm out},\\vy^{\\rm out}) + \\vu^{\\rm out}, \\vx^*(\\vy^{\\rm out}) -\\vx^{\\rm out} \\rangle \\\\\n &\\quad + \\langle - \\nabla_y f(\\vx^{\\rm out},\\vy^{\\rm out}) + \\vv^{\\rm out},  \\vy^*(\\vx^{\\rm out}) - \\vy^{\\rm out} \\rangle.",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The right-hand side incorrectly subtracts f(vx^out, vy^out) twice instead of once, leading to an invalid decomposition of the left-hand side.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 20.85
+    },
+    {
+      "label": "<<FORMULA_0525>>",
+      "formula": "\\Vert  \\vx^*(\\vy_1; \\bar\\vx , \\bar \\vy) - \\vx^*(\\vy_2; \\bar\\vx , \\bar \\vy) \\Vert^2 &\\le \\frac{\\gamma /2 }{\\ell + 2 \\gamma D} \\Vert \\vy_1 - \\vy_2 \\Vert, \\quad \\forall \\vy_1, \\vy_2 \\in \\gY,\n    % \\\\\n    % \\Vert \\vx^*(\\vy_1; \\bar \\vx) - \\vx^*(\\vy_2; \\bar \\vx) \\Vert^2 &\\le \\frac{\\ell +2 \\rho D}{\\rho} \\Vert \\vy_1 - \\vy_2 \\Vert, \\quad \\forall \\vy_1,\\vy_2 \\in \\gY; \\\\\n    % \\Vert \\vy^*(\\vx_1; \\bar \\vx) - \\vy^*(\\vx_2; \\bar \\vx) \\Vert^2 &\\le \\frac{\\ell}{\\mu_y} \\Vert \\vx_1 - \\vx_2 \\Vert, \\quad \\forall \\vx_1,\\vx_2 \\in \\gX.",
+      "has_error": true,
+      "error_type": "fraction_inversion",
+      "error_description": "The numerator and denominator in the fraction are swapped compared to the referenced lemma.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 7.45
+    },
+    {
+      "label": "<<FORMULA_0071>>",
+      "formula": "\\langle \\mF(\\bar \\vz) + \\nabla \\mF(\\bar \\vz)(\\vz - \\bar \\vz) + \\frac{\\gamma}{2} \\Vert \\vz - \\bar \\vz \\Vert (\\vz - \\bar \\vz), \\vz' - \\vz  \\rangle \\ge 0, ~\\forall \\vz' \\in \\gZ; \\\\\n    \\vu =  -\\left(\\mF(\\bar\\vz) + \\nabla \\mF(\\bar \\vz) (\\vz - \\bar \\vz) + \\frac{\\gamma}{2} \\Vert \\vz - \\bar \\vz \\Vert \n    (\\vz- \\bar \\vz)  \\right) \\in \n    \\begin{bmatrix}\n        \\partial \\gI_{\\gX} (\\vx) \\\\\n        -\\partial \\gI_{\\gY}(\\vy)\n    \\end{bmatrix},",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 23.94
+    },
+    {
+      "label": "<<FORMULA_0527>>",
+      "formula": "\\label{eq:prox-xy-1}\n\\begin{split}\n    &\\quad \\left \\Vert \\nabla \\Psi(\\vy^{\\rm out}; \\bar \\vx) + \\gamma \\Vert \\vy^{\\rm out} - \\bar \\vy \\Vert ( \\vy^{\\rm out} - \\bar \\vy) + \\vv^{\\rm out} \\right \\Vert = \\Vert \\nabla_y h(\\vx^*(\\vy^{\\rm out}; \\bar \\vx, \\bar \\vy),\\vy^{\\rm out}; \\bar \\vx, \\bar \\vy) + \\vv^{\\rm out} \\Vert \\\\\n    &\\le  \\Vert \\nabla_y h(\\vx^*(\\bar \\vx, \\bar \\vy), \\vy^{\\rm out};\\bar \\vx, \\bar \\vy) + \\vv^{\\rm out} \\Vert +  \\frac{(\\ell +2 \\gamma D)^{3/2}}{(\\gamma/2)^{1/2}} \\Vert \\vy^{\\rm out} - \\vy^*(\\bar \\vx, \\bar \\vy) \\Vert \\\\\n    &\\le \\Vert \\nabla_y h(\\vx^{\\rm out}, \\vy^{\\rm out}; \\bar \\vx, \\bar \\vy) +\\vv^{\\rm out} \\Vert + (\\ell +2 \\gamma D) \\Vert \\vx^{\\rm out} - \\vx^*(\\bar \\vx, \\bar \\vy) \\Vert \\\\\n    &\\quad + \\frac{(\\ell +2 \\gamma D)^{3/2}}{(\\gamma/2)^{1/2}} \\sqrt{\\Vert \\vy^{\\rm out} - \\vy^*(\\bar \\vx, \\bar \\vy) \\Vert} \\\\\n    &\\le 6 (\\ell + 2 \\gamma D) \\zeta_3\n    + \\frac{\\ell + 2\\gamma D}{(\\gamma/2)^{1/2}}   \\left( 6 (\\ell+2 \\gamma D) \\zeta_3 \\right)^{1/2}  +\\frac{(\\ell +2 \\gamma D)^{3/2}}{(\\gamma/2)^{3/4}} \\left( 6 (\\ell+2 \\gamma D) \\zeta_3 \\right)^{1/4},\n\\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 6.98
+    },
+    {
+      "label": "<<FORMULA_0589>>",
+      "formula": "\\label{eq:eg-1}\n\\begin{split}\n     &\\quad \\eta_t \\langle \\mF(\\vz_{t+1/2}), \\vz_{t+1/2} - \\vz \\rangle \\\\\n    &= \\eta_t \\langle \\mF(\\vz_{t+1/2}), \\vz_{t+1} - \\vz \\rangle + \\eta_t \\langle \\mF(\\vz_{t+1/2}), \\vz_{t+1/2} - \\vz_{t+1}   \\rangle \\\\ \n    &= \\eta_t \\langle \\mF(\\vz_{t+1/2}), \\vz_{t+1} - \\vz \\rangle + \\eta_t \\langle \\tilde \\mF(\\vz_{t+1/2}), \\vz_{t+1/2} - \\vz_{t+1}   \\rangle \\\\\n    &\\quad + \\eta_t \\langle \\mF(\\vz_{t+1/2}) - \\tilde \\mF(\\vz_{t+1/2}), \\vz_{t+1/2} - \\vz_{t+1} \\rangle  \\\\\n    &\\\\ge \\langle \\vz_{t+1} - \\vz_t, \\vz - \\vz_{t+1} \\rangle + \\langle  \\vz_{t+1/2} - \\vz_t, \\vz_{t+1} - \\vz_{t+1/2}  \\rangle \\\\\n    &\\quad + \\eta_t \\langle \\mF(\\vz_{t+1/2}) - \\tilde \\mF(\\vz_{t+1/2}), \\vz_{t+1/2} - \\vz_{t+1} \\rangle.\n\\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 8.81
+    },
+    {
+      "label": "<<FORMULA_0511>>",
+      "formula": "\\label{eq:xxx-plug}\n\\begin{split}\n\\Vert \\vx^{\\rm out} - \\vx^*(\\bar \\vx) \\Vert &\\le \\Vert \\vx^{\\rm out} - \\vx^*(\\hat \\vy; \\bar \\vx) \\Vert +  \\frac{(\\ell + 2 \\gamma D )^{1/2}}{(\\gamma/2)^{1/2}} \\sqrt{ \\Vert \\hat \\vy - \\vy^*(\\bar \\vx) \\Vert} \\\\\n&\\le \\frac{1}{\\gamma/2^{1/2}} \\sqrt{ \\Vert \\nabla_x g(\\vx^{\\rm out},\\hat \\vy; \\bar \\vx) + \\vu^{\\rm out} \\Vert } + \\frac{(\\ell + 2 \\gamma D )^{1/2}}{(\\gamma/2)^{1/2}} \\sqrt{ \\Vert \\hat \\vy - \\vy^*(\\bar \\vx) \\Vert},\n\\end{split}",
+      "has_error": true,
+      "error_type": "exponent_order",
+      "error_description": "The denominator in the first term should be (γ/2)^{1/2} instead of γ/2^{1/2}, leading to inconsistent exponent placement.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 20.93
+    },
+    {
+      "label": "<<FORMULA_0574>>",
+      "formula": "\\langle \\mF(\\bar \\vz) + \\nabla \\mF(\\vz_{\\rm ss})(\\vz - \\bar \\vz) + \\frac{\\gamma}{2} \\Vert \\vz - \\bar \\vz \\Vert (\\vz - \\bar \\vz), \\vz' - \\vz  \\rangle \\ge 0, ~\\forall \\vz' \\in \\gZ; \\\\\n    \\vu =  -\\left(\\mF(\\bar\\vz) + \\nabla \\mF(\\vz_{\\rm ss}) (\\vz - \\bar \\vz) + \\frac{\\gamma}{2} \\Vert \\vz - \\bar \\vz \\Vert \n    (\\vz- \\bar \\vz)  \\right) \\in \n    \\begin{bmatrix}\n        \\partial \\gI_{\\gX} (\\vx) \\\\\n        -\\partial \\gI_{\\gY}(\\vy)\n    \\end{bmatrix}.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 17.39
+    },
+    {
+      "label": "<<FORMULA_0591>>",
+      "formula": "&\\quad \\eta_t \\langle \\mF(\\vz_{t+1/2}), \\vz_{t+1/2} - \\vz \\rangle \\\\\n    &\\le \\frac{1}{2} \\Vert \\vz - \\vz_t \\Vert^2 \\bcancel{- \\frac{1}{2} \\Vert \\vz_{t+1} - \\vz_t \\Vert^2} - \\frac{1}{2} \\Vert \\vz - \\vz_{t+1} \\Vert^2 \\\\\n    &\\quad + \\bcancel{\\frac{1}{2} \\Vert \\vz_{t+1} - \\vz_t \\Vert^2} - \\frac{1}{2} \\Vert \\vz_{t+1/2} - \\vz_t \\Vert^2 - \\frac{1}{2} \\Vert \\vz_{t+1} - \\vz_{t+1/2} \\Vert^2 \\\\\n    &\\quad + \\underbrace{\\eta_t^2 \\Vert \\mF(\\vz_{t+1/2}) - \\tilde \\mF(\\vz_{t+1/2}) \\Vert^2}_{(*)} + \\frac{4}{1} \\Vert \\vz_{t+1} - \\vz_{t+1/2} \\Vert^2.\n    %  - \\frac{\\eta_t}{2} \\Vert \\Vert \n    % + \\frac{\\eta_t}{2} \\Vert \\vz - \\vz_{t+1} \\Vert^2 + \n    % \\frac{\\eta_t}{2} \\Vert \\vz - \\vz_t \\Vert^2 \\bcancel{-\\frac{\\eta_t}{2} \\Vert \\vz_{t+1} - \\vz_t \\Vert^2}  \\\\\n    % &\\quad + \\frac{\\eta_t}{2} \\Vert \\vz_{t+1/2} - \\vz_t \\Vert^2 + \\frac{\\eta_t}{2} \\Vert \\vz_{t+1/2} - \\vz_{t+1} \\Vert^2 \\bcancel {- \\frac{\\eta_t}{2} \\Vert \\vz_{t} - \\vz_{t+1} \\Vert^2} \\\\",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The term -1/2 ||z_{t+1} - z_t||^2 was canceled via bcancel, effectively changing its sign to positive, which may not align with the intended mathematical expression.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 17.42
+    },
+    {
+      "label": "<<FORMULA_0592>>",
+      "formula": "&\\quad \\eta_t^2 \\Vert \\mF(\\vz_{t+1/2}) - \\tilde \\mF(\\vz_{t+1/2}) \\Vert^2 \\\\\n    &\\le 2 \\eta_t^2 \\Vert \\mF(\\vz_{t+1/2}) - \\mF(\\vz_t) - \\nabla \\mF(\\vz_t) (\\vz_{t+1/2} - \\vz_t) \\Vert^2 \\\\\n    &\\quad + 2 \\eta_t^2 \\Vert (\\nabla \\mF(\\vz_t) - \\nabla \\mF(\\vz_{\\pi(t)}) (\\vz_{t+1/2} - \\vz_t) \\Vert^2 \\\\\n    &\\le \\frac{\\eta_t^2 \\rho^2}{2} \\Vert \\vz_{t+1/2} - \\vz_t \\Vert^4  + 2 \\eta_t^2 \\rho^2 \\Vert \\vz_t - \\vz_{\\pi(t)} \\Vert^2 \\Vert \\vz_{t+1/2} - \\vz_t \\Vert^2  \\\\\n    &= \\frac{\\rho^2}{8 \\gamma^2} \\Vert \\vz_{t+1/2} - \\vz_t \\Vert^2 + \\frac{\\rho^2}{2\\gamma^2} \\Vert \\vz_t - \\vz_{\\pi(t)} \\Vert^2.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 18.62
+    },
+    {
+      "label": "<<FORMULA_0352>>",
+      "formula": "\\label{eq:to-plug}\n\\begin{split} \n    &\\quad a_{t+1}' \\langle \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1}, \\vz^* - \\vv_t \\rangle \\\\\n&= \\langle \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1}, a_{t+1}'  ( \\vz^*-  \\tilde \\vz_{t+1}) + A_t (\\vz_t - \\tilde \\vz_{t+1})  + A_{t+1}' (\\tilde \\vz_{t+1}- \\bar \\vz_t) \\rangle  \\\\\n&\\le a_{t+1}' ( h(\\vz^*) - h(\\tilde \\vz_{t+1})  )  + A_t (h(\\vz_t) - h(\\tilde \\vz_{t+1})) + A_{t+1}' \\langle \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1}, \\tilde \\vz_{t+1} - \\bar \\vz_t \\rangle,\n\\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "Parse error - assuming no error",
+      "parse_success": false,
+      "parse_strategy": "failed",
+      "llm_response_time": 53.05
+    },
+    {
+      "label": "<<FORMULA_0354>>",
+      "formula": "&\\quad \\langle \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1}, \\tilde \\vz_{t+1} - \\bar \\vz_t \\rangle \\\\\n     &=\\frac{1}{2 \\lambda_{t+1}} \\Vert \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1} + \\lambda_{t+1} (\\tilde \\vz_{t\\\\times1} - \\bar \\vz_t) \\Vert^2 \\\\\n     &\\quad - \\frac{1}{2 \\lambda_{t+1} } \\Vert \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1} \\Vert^2  - \\frac{\\lambda_{t+1}}{2} \\Vert \\tilde \\vz_{t+1} - \\bar \\vz_t \\Vert^2.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 85.24
+    },
+    {
+      "label": "<<FORMULA_0434>>",
+      "formula": "f(\\vx_2,\\vy_1) - f(\\vx_1,\\vy_1) &\\ge \\langle \\nabla_x f(\\vx_1,\\vy_1) + \\vu_1, \\vx_2 - \\vx_1 \\rangle + \\frac{\\mu}{p} \\Vert \\vx_2 - \\vx_1 \\Vert^p, \\quad \\vu_1 \\in \\partial \\gI_{\\gX} (\\vx_1); \\\\\n    f(\\vx_1,\\vy_2) - f(\\vx_2,\\vy_2) &\\ge \\langle \\nabla_x f(\\vx_2, \\vy_2) + \\vu_2, \\vx_1 - \\vx_2 \\rangle + \\frac{\\mu}{p} \\Vert \\vx_2 - \\vx_1 \\Vert^p, \\quad \\vu_2 \\in \\partial \\gI_{\\gX} (\\vx_2).",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 107.83
+    }
+  ]
+}

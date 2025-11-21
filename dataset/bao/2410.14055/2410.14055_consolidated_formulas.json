@@ -1,0 +1,2306 @@
+{
+  "<<FORMULA_0288>>": {
+    "formula": "L2-\\text{norm}/(1024\\times 1024)",
+    "raw_latex": "$L2-\\text{norm}/(1024\\times 1024)$",
+    "formula_type": "inline",
+    "line_number": 2676,
+    "start_pos": 165852,
+    "end_pos": 165886
+  },
+  "<<FORMULA_0287>>": {
+    "formula": "a(x,y,\\xi_t)",
+    "raw_latex": "$a(x,y,\\xi_t)$",
+    "formula_type": "inline",
+    "line_number": 2652,
+    "start_pos": 163138,
+    "end_pos": 163152
+  },
+  "<<FORMULA_0286>>": {
+    "formula": "\\bar y := \\frac{y}{\\|y\\|^{\\frac{1}{2}}}",
+    "raw_latex": "$\\bar y := \\frac{y}{\\|y\\|^{\\frac{1}{2}}}$",
+    "formula_type": "inline",
+    "line_number": 2652,
+    "start_pos": 163092,
+    "end_pos": 163133
+  },
+  "<<FORMULA_0285>>": {
+    "formula": "x, y",
+    "raw_latex": "$x, y$",
+    "formula_type": "inline",
+    "line_number": 2652,
+    "start_pos": 163067,
+    "end_pos": 163073
+  },
+  "<<FORMULA_0284>>": {
+    "formula": "f(x; p_t, \\xi_t) := \\mathbb{E}_{y\\sim p_t}[a(x,y,\\xi_t)\\bar{y}],\n    ~~a(x,y,\\xi_t) :=\n    \\begin{cases}\n        1  & \\text{if } \\sign(\\langle x,\\xi_t \\rangle) = \\sign(\\langle y,\\xi_t \\rangle) \\\\\n        -1 & \\text{otherwise}\n    \\end{cases},\n    \\label{eq:f-opinion}",
+    "raw_latex": "\\begin{align}\n    f(x; p_t, \\xi_t) := \\mathbb{E}_{y\\sim p_t}[a(x,y,\\xi_t)\\bar{y}],\n    ~~a(x,y,\\xi_t) :=\n    \\begin{cases}\n        1  & \\text{if } \\sign(\\langle x,\\xi_t \\rangle) = \\sign(\\langle y,\\xi_t \\rangle) \\\\\n        -1 & \\text{otherwise}\n    \\end{cases},\n    \\label{eq:f-opinion}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2643,
+    "start_pos": 162763,
+    "end_pos": 163060
+  },
+  "<<FORMULA_0283>>": {
+    "formula": "\\xi_t\\in \\R^d",
+    "raw_latex": "$\\xi_t\\in \\R^d$",
+    "formula_type": "inline",
+    "line_number": 2641,
+    "start_pos": 162669,
+    "end_pos": 162684
+  },
+  "<<FORMULA_0282>>": {
+    "formula": "dX_t = f_{\\text{polarize}}(X_t, t)dt +\\sigma dW_t",
+    "raw_latex": "\\begin{equation}\n    dX_t = f_{\\text{polarize}}(X_t, t)dt +\\sigma dW_t\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 2635,
+    "start_pos": 162250,
+    "end_pos": 162335
+  },
+  "<<FORMULA_0281>>": {
+    "formula": "X_t\\in\\sR^{100}",
+    "raw_latex": "$X_t\\in\\sR^{100}$",
+    "formula_type": "inline",
+    "line_number": 2634,
+    "start_pos": 162192,
+    "end_pos": 162209
+  },
+  "<<FORMULA_0280>>": {
+    "formula": "[\\mu_1, \\mu_2]",
+    "raw_latex": "$[\\mu_1, \\mu_2]$",
+    "formula_type": "inline",
+    "line_number": 2549,
+    "start_pos": 156852,
+    "end_pos": 156868
+  },
+  "<<FORMULA_0279>>": {
+    "formula": "\\gN([\\mu_1, \\mu_2], \\sigma^2)",
+    "raw_latex": "$\\gN([\\mu_1, \\mu_2], \\sigma^2)$",
+    "formula_type": "inline",
+    "line_number": 2549,
+    "start_pos": 156778,
+    "end_pos": 156809
+  },
+  "<<FORMULA_0278>>": {
+    "formula": "\\gN\\Bigr([-11, -1], 3\\Bigr)",
+    "raw_latex": "$\\gN\\Bigr([-11, -1], 3\\Bigr)$",
+    "formula_type": "inline",
+    "line_number": 2546,
+    "start_pos": 156665,
+    "end_pos": 156694
+  },
+  "<<FORMULA_0277>>": {
+    "formula": "\\gN\\Bigr([-11, -4], 0.5)",
+    "raw_latex": "$\\gN\\Bigr([-11, -4], 0.5)$",
+    "formula_type": "inline",
+    "line_number": 2545,
+    "start_pos": 156613,
+    "end_pos": 156639
+  },
+  "<<FORMULA_0276>>": {
+    "formula": "\\gN\\Bigr([-11, -1], 0.5\\Bigr)",
+    "raw_latex": "$\\gN\\Bigr([-11, -1], 0.5\\Bigr)$",
+    "formula_type": "inline",
+    "line_number": 2544,
+    "start_pos": 156555,
+    "end_pos": 156586
+  },
+  "<<FORMULA_0275>>": {
+    "formula": "\\pi_0 = \\gN(\\mu_0, \\sigma_0)",
+    "raw_latex": "$\\pi_0 = \\gN(\\mu_0, \\sigma_0)$",
+    "formula_type": "inline",
+    "line_number": 2541,
+    "start_pos": 156255,
+    "end_pos": 156285
+  },
+  "<<FORMULA_0274>>": {
+    "formula": "X_1\\sim \\pi_1",
+    "raw_latex": "$X_1\\sim \\pi_1$",
+    "formula_type": "inline",
+    "line_number": 2540,
+    "start_pos": 155962,
+    "end_pos": 155977
+  },
+  "<<FORMULA_0273>>": {
+    "formula": "X_0\\sim\\pi_0",
+    "raw_latex": "$X_0\\sim\\pi_0$",
+    "formula_type": "inline",
+    "line_number": 2540,
+    "start_pos": 155944,
+    "end_pos": 155958
+  },
+  "<<FORMULA_0272>>": {
+    "formula": "t=0",
+    "raw_latex": "$t=0$",
+    "formula_type": "inline",
+    "line_number": 2511,
+    "start_pos": 150023,
+    "end_pos": 150028
+  },
+  "<<FORMULA_0271>>": {
+    "formula": "i^\\text{th}",
+    "raw_latex": "$i^\\text{th}$",
+    "formula_type": "inline",
+    "line_number": 2511,
+    "start_pos": 149920,
+    "end_pos": 149933
+  },
+  "<<FORMULA_0270>>": {
+    "formula": "d(X_t, x_t^i) = \\|X_t - x_t^{i}\\|_{L1}",
+    "raw_latex": "$d(X_t, x_t^i) = \\|X_t - x_t^{i}\\|_{L1}$",
+    "formula_type": "inline",
+    "line_number": 2511,
+    "start_pos": 149874,
+    "end_pos": 149914
+  },
+  "<<FORMULA_0269>>": {
+    "formula": "\\alpha\\in\\sR",
+    "raw_latex": "$\\alpha\\in\\sR$",
+    "formula_type": "inline",
+    "line_number": 2510,
+    "start_pos": 149533,
+    "end_pos": 149547
+  },
+  "<<FORMULA_0268>>": {
+    "formula": "\\label{eq:G_app}\n    G(X_0, X_t) = \\alpha\\cdot(d(X_t, x_t^{i}) - d(X_0, x_0^{i}))^2",
+    "raw_latex": "\\begin{equation}\\label{eq:G_app}\n    G(X_0, X_t) = \\alpha\\cdot(d(X_t, x_t^{i}) - d(X_0, x_0^{i}))^2\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 2507,
+    "start_pos": 149412,
+    "end_pos": 149526
+  },
+  "<<FORMULA_0267>>": {
+    "formula": "(x_0, x_1) \\sim p_{0,1}^\\theta",
+    "raw_latex": "$(x_0, x_1) \\sim p_{0,1}^\\theta$",
+    "formula_type": "inline",
+    "line_number": 2417,
+    "start_pos": 144503,
+    "end_pos": 144535
+  },
+  "<<FORMULA_0266>>": {
+    "formula": "\\{X_{t_k},\\sigma_{t_k}\\}",
+    "raw_latex": "$\\{X_{t_k},\\sigma_{t_k}\\}$",
+    "formula_type": "inline",
+    "line_number": 2409,
+    "start_pos": 144003,
+    "end_pos": 144029
+  },
+  "<<FORMULA_0265>>": {
+    "formula": "u_t(X_t|x_0,x_1)",
+    "raw_latex": "$u_t(X_t|x_0,x_1)$",
+    "formula_type": "inline",
+    "line_number": 2408,
+    "start_pos": 143904,
+    "end_pos": 143922
+  },
+  "<<FORMULA_0264>>": {
+    "formula": "G(X_t, x_0)",
+    "raw_latex": "$G(X_t, x_0)$",
+    "formula_type": "inline",
+    "line_number": 2407,
+    "start_pos": 143814,
+    "end_pos": 143827
+  },
+  "<<FORMULA_0263>>": {
+    "formula": "X_t \\sim \\gN(I_t, \\sigma_t^2 I_d)",
+    "raw_latex": "$X_t \\sim \\gN(I_t, \\sigma_t^2 I_d)$",
+    "formula_type": "inline",
+    "line_number": 2406,
+    "start_pos": 143727,
+    "end_pos": 143762
+  },
+  "<<FORMULA_0262>>": {
+    "formula": "\\{x_0^{n}, x_1^{n}\\}_{n=1}^N",
+    "raw_latex": "$\\{x_0^{n}, x_1^{n}\\}_{n=1}^N$",
+    "formula_type": "inline",
+    "line_number": 2402,
+    "start_pos": 143513,
+    "end_pos": 143543
+  },
+  "<<FORMULA_0261>>": {
+    "formula": "0 {<} t_1 {<} \\cdots {<} t_K {<} 1",
+    "raw_latex": "$0 {<} t_1 {<} \\cdots {<} t_K {<} 1$",
+    "formula_type": "inline",
+    "line_number": 2402,
+    "start_pos": 143433,
+    "end_pos": 143469
+  },
+  "<<FORMULA_0260>>": {
+    "formula": "x_0, x_1, \\{X_{t_k}\\}",
+    "raw_latex": "$x_0, x_1, \\{X_{t_k}\\}$",
+    "formula_type": "inline",
+    "line_number": 2402,
+    "start_pos": 143403,
+    "end_pos": 143426
+  },
+  "<<FORMULA_0259>>": {
+    "formula": "K{\\le}",
+    "raw_latex": "$K{\\le}$",
+    "formula_type": "inline",
+    "line_number": 2396,
+    "start_pos": 143065,
+    "end_pos": 143073
+  },
+  "<<FORMULA_0258>>": {
+    "formula": "\\label{eq:splines}\n   I_t := \\mathrm{Spline}(t;~x_0, \\{X_{t_k}\\}, x_1) \\qquad\n   \\sigma_t := \\mathrm{Spline}(t;~\\sigma_0{=}0, \\{\\sigma_{t_k}\\}, \\sigma_1{=}0).",
+    "raw_latex": "\\begin{align}\\label{eq:splines}\n   I_t := \\mathrm{Spline}(t;~x_0, \\{X_{t_k}\\}, x_1) \\qquad\n   \\sigma_t := \\mathrm{Spline}(t;~\\sigma_0{=}0, \\{\\sigma_{t_k}\\}, \\sigma_1{=}0).\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2390,
+    "start_pos": 142647,
+    "end_pos": 142830
+  },
+  "<<FORMULA_0257>>": {
+    "formula": "\\sigma_{t_k} \\in \\sR",
+    "raw_latex": "$\\sigma_{t_k} \\in \\sR$",
+    "formula_type": "inline",
+    "line_number": 2389,
+    "start_pos": 142512,
+    "end_pos": 142534
+  },
+  "<<FORMULA_0256>>": {
+    "formula": "X_{t_k} \\in \\sR^d",
+    "raw_latex": "$X_{t_k} \\in \\sR^d$",
+    "formula_type": "inline",
+    "line_number": 2389,
+    "start_pos": 142488,
+    "end_pos": 142507
+  },
+  "<<FORMULA_0255>>": {
+    "formula": "0 < t_1 < ... < t_K < 1",
+    "raw_latex": "$0 < t_1 < ... < t_K < 1$",
+    "formula_type": "inline",
+    "line_number": 2389,
+    "start_pos": 142461,
+    "end_pos": 142486
+  },
+  "<<FORMULA_0254>>": {
+    "formula": "I_t,\\sigma_t",
+    "raw_latex": "$I_t,\\sigma_t$",
+    "formula_type": "inline",
+    "line_number": 2389,
+    "start_pos": 142312,
+    "end_pos": 142326
+  },
+  "<<FORMULA_0253>>": {
+    "formula": "\\frac{x_1 - X_t}{1-t}",
+    "raw_latex": "$\\frac{x_1 - X_t}{1-t}$",
+    "formula_type": "inline",
+    "line_number": 2385,
+    "start_pos": 142202,
+    "end_pos": 142225
+  },
+  "<<FORMULA_0252>>": {
+    "formula": "\\sigma_t := \\nu \\sqrt{t(1-t)}",
+    "raw_latex": "$\\sigma_t := \\nu \\sqrt{t(1-t)}$",
+    "formula_type": "inline",
+    "line_number": 2385,
+    "start_pos": 142078,
+    "end_pos": 142109
+  },
+  "<<FORMULA_0251>>": {
+    "formula": "I_t := (1-t)x_0 + t x_1",
+    "raw_latex": "$I_t := (1-t)x_0 + t x_1$",
+    "formula_type": "inline",
+    "line_number": 2385,
+    "start_pos": 142048,
+    "end_pos": 142073
+  },
+  "<<FORMULA_0250>>": {
+    "formula": "\\sigma_t=\\nu\\sqrt{t(1-t)}",
+    "raw_latex": "$\\sigma_t=\\nu\\sqrt{t(1-t)}$",
+    "formula_type": "inline",
+    "line_number": 2385,
+    "start_pos": 141987,
+    "end_pos": 142014
+  },
+  "<<FORMULA_0249>>": {
+    "formula": "u_t(X_t|x_0,x_1) = \\partial_t I_t + \\frac{\\partial_t \\sigma_t}{\\sigma_t}(X_t-I_t)- \\frac{\\nu^2}{2\\sigma_t^2}(X_t-I_t)",
+    "raw_latex": "$$\nu_t(X_t|x_0,x_1) = \\partial_t I_t + \\frac{\\partial_t \\sigma_t}{\\sigma_t}(X_t-I_t)- \\frac{\\nu^2}{2\\sigma_t^2}(X_t-I_t)\n$$",
+    "formula_type": "display",
+    "line_number": 2382,
+    "start_pos": 141821,
+    "end_pos": 141944
+  },
+  "<<FORMULA_0248>>": {
+    "formula": "\\partial_t X_t = \\partial I_t + \\frac{\\partial_t \\sigma_t}{\\sigma_t} (X_t-I_t), \\ \\ \\nabla \\log p_t(X_t) = -\\frac{1}{\\sigma_t^2}(X_t-I_t)",
+    "raw_latex": "$$\n\\partial_t X_t = \\partial I_t + \\frac{\\partial_t \\sigma_t}{\\sigma_t} (X_t-I_t), \\ \\ \\nabla \\log p_t(X_t) = -\\frac{1}{\\sigma_t^2}(X_t-I_t)\n$$",
+    "formula_type": "display",
+    "line_number": 2378,
+    "start_pos": 141583,
+    "end_pos": 141726
+  },
+  "<<FORMULA_0247>>": {
+    "formula": "Z\\sim\\gN(0, \\mathbf{I}_d)",
+    "raw_latex": "$Z\\sim\\gN(0, \\mathbf{I}_d)$",
+    "formula_type": "inline",
+    "line_number": 2376,
+    "start_pos": 141397,
+    "end_pos": 141424
+  },
+  "<<FORMULA_0246>>": {
+    "formula": "I_{t|0,1}\\equiv I(t, x_0,x_1)",
+    "raw_latex": "$I_{t|0,1}\\equiv I(t, x_0,x_1)$",
+    "formula_type": "inline",
+    "line_number": 2376,
+    "start_pos": 141303,
+    "end_pos": 141334
+  },
+  "<<FORMULA_0245>>": {
+    "formula": "X_t = I_{t|0,1} + \\sigma_t Z",
+    "raw_latex": "$$X_t = I_{t|0,1} + \\sigma_t Z$$",
+    "formula_type": "display",
+    "line_number": 2375,
+    "start_pos": 141263,
+    "end_pos": 141295
+  },
+  "<<FORMULA_0244>>": {
+    "formula": "\\label{eq:gauss_path}\n    p_{t|0,1}\\approx \\gN(I_{t|0,1}, \\sigma_t \\mathbf{I}_d)",
+    "raw_latex": "\\begin{equation}\\label{eq:gauss_path}\n    p_{t|0,1}\\approx \\gN(I_{t|0,1}, \\sigma_t \\mathbf{I}_d)\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 2371,
+    "start_pos": 141116,
+    "end_pos": 141227
+  },
+  "<<FORMULA_0243>>": {
+    "formula": "\\min_\\theta \\int_0^1 \\int_{\\sR^d} \\frac{1}{2}||u^\\star_{t|0,1} - u_t^\\theta||^2p_t \\mathrm{d}x \\mathrm{d}t",
+    "raw_latex": "\\begin{equation}\n    \\min_\\theta \\int_0^1 \\int_{\\sR^d} \\frac{1}{2}||u^\\star_{t|0,1} - u_t^\\theta||^2p_t \\mathrm{d}x \\mathrm{d}t\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 2197,
+    "start_pos": 125358,
+    "end_pos": 125500
+  },
+  "<<FORMULA_0242>>": {
+    "formula": "u_{t}^\\theta =  a_t^\\theta - g(a_t^\\theta, \\nabla G_{t_{|0}})\\nabla G_{t_{|0}}",
+    "raw_latex": "$u_{t}^\\theta =  a_t^\\theta - g(a_t^\\theta, \\nabla G_{t_{|0}})\\nabla G_{t_{|0}}$",
+    "formula_type": "inline",
+    "line_number": 2196,
+    "start_pos": 125189,
+    "end_pos": 125269
+  },
+  "<<FORMULA_0241>>": {
+    "formula": "u_t^\\theta",
+    "raw_latex": "$u_t^\\theta$",
+    "formula_type": "inline",
+    "line_number": 2196,
+    "start_pos": 125142,
+    "end_pos": 125154
+  },
+  "<<FORMULA_0240>>": {
+    "formula": "\\label{eq:Breg.Div}\n    \\min_\\theta \\mathbb{E}_{\\pi_{0,1}}[ \\gL^\\theta - \\gL^\\star] = \\min_\\theta \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta - g(a_t^\\theta, \\nabla G_t)\\nabla G_t - u^\\star_{t|0,1}\\|^2) p_t dxdt",
+    "raw_latex": "\\begin{equation}\\label{eq:Breg.Div}\n    \\min_\\theta \\mathbb{E}_{\\pi_{0,1}}[ \\gL^\\theta - \\gL^\\star] = \\min_\\theta \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta - g(a_t^\\theta, \\nabla G_t)\\nabla G_t - u^\\star_{t|0,1}\\|^2) p_t dxdt\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 2193,
+    "start_pos": 124858,
+    "end_pos": 125104
+  },
+  "<<FORMULA_0239>>": {
+    "formula": "\\lambda u_{t|0,1}^\\star\\nabla G_t = 0",
+    "raw_latex": "$\\lambda u_{t|0,1}^\\star\\nabla G_t = 0$",
+    "formula_type": "inline",
+    "line_number": 2191,
+    "start_pos": 124724,
+    "end_pos": 124763
+  },
+  "<<FORMULA_0238>>": {
+    "formula": "\\begin{split}\\label{eq:OG3}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 + \\lambda {u_{t|0,1}^\\star}^\\intercal\\nabla G_t -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta + \\lambda \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta - \\lambda \\nabla G_t - u_{t|0,1}^\\star|^2) p_t dxdt\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:OG3}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\lambda\\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 + \\lambda {u_{t|0,1}^\\star}^\\intercal\\nabla G_t -   \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta + \\lambda \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta - \\lambda \\nabla G_t - u_{t|0,1}^\\star|^2) p_t dxdt\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2182,
+    "start_pos": 123808,
+    "end_pos": 124650
+  },
+  "<<FORMULA_0237>>": {
+    "formula": "\\lambda\\in [-1,1]",
+    "raw_latex": "$\\lambda\\in [-1,1]$",
+    "formula_type": "inline",
+    "line_number": 2181,
+    "start_pos": 123787,
+    "end_pos": 123806
+  },
+  "<<FORMULA_0236>>": {
+    "formula": "g(a_t^\\intercal\\nabla G_t) = \\lambda",
+    "raw_latex": "$g(a_t^\\intercal\\nabla G_t) = \\lambda$",
+    "formula_type": "inline",
+    "line_number": 2181,
+    "start_pos": 123741,
+    "end_pos": 123779
+  },
+  "<<FORMULA_0235>>": {
+    "formula": "(u^\\star_t \\nabla G_t) = 0",
+    "raw_latex": "$(u^\\star_t \\nabla G_t) = 0$",
+    "formula_type": "inline",
+    "line_number": 2181,
+    "start_pos": 123705,
+    "end_pos": 123733
+  },
+  "<<FORMULA_0234>>": {
+    "formula": "\\begin{split}\\label{eq:OG2}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta + \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  {u_{t|0,1}^\\star}^\\intercal \\nabla G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta + \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta + \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta + \\nabla G_t - u_{t|0,1}^\\star\\|^2) p_t dxdt\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:OG2}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta + \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  {u_{t|0,1}^\\star}^\\intercal \\nabla G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta + \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta + \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta + \\nabla G_t - u_{t|0,1}^\\star\\|^2) p_t dxdt\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2173,
+    "start_pos": 123057,
+    "end_pos": 123688
+  },
+  "<<FORMULA_0233>>": {
+    "formula": "g(a_t^\\intercal\\nabla G_t) = -1",
+    "raw_latex": "$g(a_t^\\intercal\\nabla G_t) = -1$",
+    "formula_type": "inline",
+    "line_number": 2172,
+    "start_pos": 123022,
+    "end_pos": 123055
+  },
+  "<<FORMULA_0232>>": {
+    "formula": "sgn( a_t \\nabla G_t) = sgn(u^\\star_t \\nabla G_t) < 0",
+    "raw_latex": "$sgn( a_t \\nabla G_t) = sgn(u^\\star_t \\nabla G_t) < 0$",
+    "formula_type": "inline",
+    "line_number": 2172,
+    "start_pos": 122962,
+    "end_pos": 123016
+  },
+  "<<FORMULA_0231>>": {
+    "formula": "\\begin{split}\\label{eq:OG1}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 +  {u_{t|0,1}^\\star}^\\intercal\\nabla G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta - \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta - \\nabla G_t - u_{t|0,1}^\\star\\|^2 ) p_t dxdt\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:OG1}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]\n        &= \\int_0^1 \\int_{\\sR^d}  (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 +  {u_{t|0,1}^\\star}^\\intercal\\nabla G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}|| a_t^\\theta - \\nabla G_t||^2 + \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 -  \\langle u_{t|0,1}^\\star,  a_t^\\theta - \\nabla G_t \\rangle) p_t dxdt \\\\\n        &= \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\| a_t^\\theta - \\nabla G_t - u_{t|0,1}^\\star\\|^2 ) p_t dxdt\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2164,
+    "start_pos": 122312,
+    "end_pos": 122943
+  },
+  "<<FORMULA_0230>>": {
+    "formula": "g(a_t^\\intercal\\nabla G_t) = 1",
+    "raw_latex": "$g(a_t^\\intercal\\nabla G_t) = 1$",
+    "formula_type": "inline",
+    "line_number": 2163,
+    "start_pos": 122278,
+    "end_pos": 122310
+  },
+  "<<FORMULA_0229>>": {
+    "formula": "sgn( a_t^\\intercal\\nabla G_t) = sgn(u^{\\star, \\intercal}_t \\nabla G_t) > 0",
+    "raw_latex": "$sgn( a_t^\\intercal\\nabla G_t) = sgn(u^{\\star, \\intercal}_t \\nabla G_t) > 0$",
+    "formula_type": "inline",
+    "line_number": 2163,
+    "start_pos": 122196,
+    "end_pos": 122272
+  },
+  "<<FORMULA_0228>>": {
+    "formula": "\\begin{split}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star] &= \\int_0^1 \\int_{\\sR^d}  \\Bigr(\\frac{1}{2}|| a_t^\\theta - g_t\\cdot\\nabla G_t||^2 - \\frac{\\sigma^2}{2}\\Delta G_t \\\\ &+ \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 +  |{u_{t|0,1}^\\star}^\\intercal\\nabla G_t| + \\frac{\\sigma^2}{2}\\Delta G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle\\Bigr) p_{t|0,1} \\pi_{0,1} dxdt \\\\\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\n        \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star] &= \\int_0^1 \\int_{\\sR^d}  \\Bigr(\\frac{1}{2}|| a_t^\\theta - g_t\\cdot\\nabla G_t||^2 - \\frac{\\sigma^2}{2}\\Delta G_t \\\\ &+ \\frac{1}{2}\\|u_{t|0,1}^\\star\\|^2 +  |{u_{t|0,1}^\\star}^\\intercal\\nabla G_t| + \\frac{\\sigma^2}{2}\\Delta G_t - \\langle  a_t^\\theta, u_{t|0,1}^\\star \\rangle\\Bigr) p_{t|0,1} \\pi_{0,1} dxdt \\\\\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2157,
+    "start_pos": 121691,
+    "end_pos": 122112
+  },
+  "<<FORMULA_0227>>": {
+    "formula": "L, \\text{ and } H",
+    "raw_latex": "$L, \\text{ and } H$",
+    "formula_type": "inline",
+    "line_number": 2156,
+    "start_pos": 121660,
+    "end_pos": 121679
+  },
+  "<<FORMULA_0226>>": {
+    "formula": "\\begin{split}\n        \\min_\\theta \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]  &= \\min_\\theta  \\mathbb{E}_{\\pi_{0,1}}\\Bigr[ \\int_0^1 \\int_{\\sR^d}  H(x_t,  a_t^\\theta, t) + L(x_t, u_{t|0,1}^\\star, t)  - \\langle  a_t^\\theta , u^\\star_t \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\\Bigr]\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\n        \\min_\\theta \\mathbb{E}_{\\pi_{0,1}}[\\gL^\\theta - \\gL^\\star]  &= \\min_\\theta  \\mathbb{E}_{\\pi_{0,1}}\\Bigr[ \\int_0^1 \\int_{\\sR^d}  H(x_t,  a_t^\\theta, t) + L(x_t, u_{t|0,1}^\\star, t)  - \\langle  a_t^\\theta , u^\\star_t \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\\Bigr]\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2150,
+    "start_pos": 121270,
+    "end_pos": 121599
+  },
+  "<<FORMULA_0225>>": {
+    "formula": "u_t^\\star",
+    "raw_latex": "$u_t^\\star$",
+    "formula_type": "inline",
+    "line_number": 2149,
+    "start_pos": 121129,
+    "end_pos": 121140
+  },
+  "<<FORMULA_0224>>": {
+    "formula": "a_t\\rightarrow a_t^\\theta",
+    "raw_latex": "$a_t\\rightarrow a_t^\\theta$",
+    "formula_type": "inline",
+    "line_number": 2149,
+    "start_pos": 121027,
+    "end_pos": 121054
+  },
+  "<<FORMULA_0223>>": {
+    "formula": "(x_0, x_1)",
+    "raw_latex": "$(x_0, x_1)$",
+    "formula_type": "inline",
+    "line_number": 2149,
+    "start_pos": 120977,
+    "end_pos": 120989
+  },
+  "<<FORMULA_0222>>": {
+    "formula": "L(x_t, u_t^\\star, t)",
+    "raw_latex": "$L(x_t, u_t^\\star, t)$",
+    "formula_type": "inline",
+    "line_number": 2147,
+    "start_pos": 120702,
+    "end_pos": 120724
+  },
+  "<<FORMULA_0221>>": {
+    "formula": "\\langle a_t^\\star, u^\\star_t\\rangle - H(x_t, a^\\star_t, t)",
+    "raw_latex": "$\\langle a_t^\\star, u^\\star_t\\rangle - H(x_t, a^\\star_t, t)$",
+    "formula_type": "inline",
+    "line_number": 2147,
+    "start_pos": 120636,
+    "end_pos": 120696
+  },
+  "<<FORMULA_0220>>": {
+    "formula": "H(x_t, a_t^\\star, t) = \\langle a_t^\\star, u_t^\\star\\rangle - L(x_t, u_t^\\star, t)",
+    "raw_latex": "$H(x_t, a_t^\\star, t) = \\langle a_t^\\star, u_t^\\star\\rangle - L(x_t, u_t^\\star, t)$",
+    "formula_type": "inline",
+    "line_number": 2146,
+    "start_pos": 120432,
+    "end_pos": 120515
+  },
+  "<<FORMULA_0219>>": {
+    "formula": "a_t^\\star, u_t^\\star",
+    "raw_latex": "$a_t^\\star, u_t^\\star$",
+    "formula_type": "inline",
+    "line_number": 2146,
+    "start_pos": 120393,
+    "end_pos": 120415
+  },
+  "<<FORMULA_0218>>": {
+    "formula": "\\begin{split}\n        \\gL^\\theta - \\gL^\\star &= \\int_0^1 \\int_{\\sR^d}  H(x_t,  a_t, t) + L(x_t, u_{t|0,1}^\\star, t) ) - \\langle  a_t , u^\\star_{t|0,1} \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t \\\\\n        &= \\int_0^1 \\int_{\\sR^d} D_{L,H}[ a_t:u^\\star_{t|0,1}] p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\n        \\gL^\\theta - \\gL^\\star &= \\int_0^1 \\int_{\\sR^d}  H(x_t,  a_t, t) + L(x_t, u_{t|0,1}^\\star, t) ) - \\langle  a_t , u^\\star_{t|0,1} \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t \\\\\n        &= \\int_0^1 \\int_{\\sR^d} D_{L,H}[ a_t:u^\\star_{t|0,1}] p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2140,
+    "start_pos": 119984,
+    "end_pos": 120320
+  },
+  "<<FORMULA_0217>>": {
+    "formula": "\\nabla s_t = a_t",
+    "raw_latex": "$\\nabla s_t = a_t$",
+    "formula_type": "inline",
+    "line_number": 2139,
+    "start_pos": 119943,
+    "end_pos": 119961
+  },
+  "<<FORMULA_0216>>": {
+    "formula": "a_t(X_t):\\sR^d\\rightarrow\\sR^d",
+    "raw_latex": "$a_t(X_t):\\sR^d\\rightarrow\\sR^d$",
+    "formula_type": "inline",
+    "line_number": 2139,
+    "start_pos": 119891,
+    "end_pos": 119923
+  },
+  "<<FORMULA_0215>>": {
+    "formula": "\\begin{split}\\label{eq:gap}\n        \\gL^\\theta - \\gL^\\star &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) + \\frac{\\partial s_t}{\\partial t}  +\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n                        &- \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s^\\star_t, t) + \\frac{\\partial  s^\\star_t}{\\partial t}  +\\Delta  s^\\star_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{\\sigma^2}{2}\\int \\oint  s^\\star_t \\langle p_{t|0,1}, d\\rvn\\rangle\\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial s_t}{\\partial t}p_{t|0,1} \\mathrm{d}x\\mathrm{d}t +\\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1]}_{ - \\int_0^1 \\int_{\\sR^d} \\frac{\\partial p_{t|0,1}}{\\partial t}s_t \\mathrm{d}x \\mathrm{d}t} \\\\ \n                        &- \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial  s^\\star_t}{\\partial t}p_{t|0,1} \\mathrm{d}x\\mathrm{d}t +\\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1]}_{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial p_{t|0,1}}{\\partial t} s^\\star_t \\mathrm{d}x \\mathrm{d}t} \n                        + \\underbrace{\\int_0^1 \\int_{\\sR^d} \\Delta s_t p_{t|0,1} \\mathrm{d}x \\mathrm{d}t - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle}_{\\int_0^1 \\int_{\\sR^d} \\Delta p_{t|0,1} s_t \\mathrm{d}x \\mathrm{d}t} \\\\\n                        &- \\underbrace{\\int_0^1 \\int_{\\sR^d} \\Delta  s^\\star_t p_{t|0,1} \\mathrm{d}x \\mathrm{d}t - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle}_{\\int_0^1 \\int_{\\sR^d} \\Delta p_{t|0,1}  s^\\star_t \\mathrm{d}x \\mathrm{d}t} \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} (s_t -  s^\\star_t) (-\\frac{\\partial p_{t|0,1}}{\\partial t}+\\Delta p_{t|0,1})\\mathrm{d}x\\mathrm{d}t \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} (s_t -  s^\\star_t) (\\nabla\\cdot(p_{t|0,1} u^\\star_{t|0,1})) \\mathrm{d}x\\mathrm{d}t \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) - \\langle \\nabla(s_t -  s^\\star_t), u^\\star_{t|0,1} \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:gap}\n        \\gL^\\theta - \\gL^\\star &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) + \\frac{\\partial s_t}{\\partial t}  +\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n                        &- \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s^\\star_t, t) + \\frac{\\partial  s^\\star_t}{\\partial t}  +\\Delta  s^\\star_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{\\sigma^2}{2}\\int \\oint  s^\\star_t \\langle p_{t|0,1}, d\\rvn\\rangle\\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial s_t}{\\partial t}p_{t|0,1} \\mathrm{d}x\\mathrm{d}t +\\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1]}_{ - \\int_0^1 \\int_{\\sR^d} \\frac{\\partial p_{t|0,1}}{\\partial t}s_t \\mathrm{d}x \\mathrm{d}t} \\\\ \n                        &- \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial  s^\\star_t}{\\partial t}p_{t|0,1} \\mathrm{d}x\\mathrm{d}t +\\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1]}_{\\int_0^1 \\int_{\\sR^d} \\frac{\\partial p_{t|0,1}}{\\partial t} s^\\star_t \\mathrm{d}x \\mathrm{d}t} \n                        + \\underbrace{\\int_0^1 \\int_{\\sR^d} \\Delta s_t p_{t|0,1} \\mathrm{d}x \\mathrm{d}t - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle}_{\\int_0^1 \\int_{\\sR^d} \\Delta p_{t|0,1} s_t \\mathrm{d}x \\mathrm{d}t} \\\\\n                        &- \\underbrace{\\int_0^1 \\int_{\\sR^d} \\Delta  s^\\star_t p_{t|0,1} \\mathrm{d}x \\mathrm{d}t - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle}_{\\int_0^1 \\int_{\\sR^d} \\Delta p_{t|0,1}  s^\\star_t \\mathrm{d}x \\mathrm{d}t} \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} (s_t -  s^\\star_t) (-\\frac{\\partial p_{t|0,1}}{\\partial t}+\\Delta p_{t|0,1})\\mathrm{d}x\\mathrm{d}t \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) p_{t|0,1} \\mathrm{d}x \\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} (s_t -  s^\\star_t) (\\nabla\\cdot(p_{t|0,1} u^\\star_{t|0,1})) \\mathrm{d}x\\mathrm{d}t \\\\\n                        &= \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) - H(x_t,  \\nabla s^\\star_t, t) ) - \\langle \\nabla(s_t -  s^\\star_t), u^\\star_{t|0,1} \\rangle p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2126,
+    "start_pos": 117287,
+    "end_pos": 119837
+  },
+  "<<FORMULA_0214>>": {
+    "formula": "s_t^\\star",
+    "raw_latex": "$s_t^\\star$",
+    "formula_type": "inline",
+    "line_number": 2124,
+    "start_pos": 117190,
+    "end_pos": 117201
+  },
+  "<<FORMULA_0213>>": {
+    "formula": "H(x_t, \\nabla s_t, t) = \\sup \\langle u_t, \\nabla s_t \\rangle - L(x_t, u_t, t)",
+    "raw_latex": "$H(x_t, \\nabla s_t, t) = \\sup \\langle u_t, \\nabla s_t \\rangle - L(x_t, u_t, t)$",
+    "formula_type": "inline",
+    "line_number": 2123,
+    "start_pos": 117006,
+    "end_pos": 117085
+  },
+  "<<FORMULA_0212>>": {
+    "formula": "L(x_t, u_t, t)",
+    "raw_latex": "$L(x_t, u_t, t)$",
+    "formula_type": "inline",
+    "line_number": 2122,
+    "start_pos": 116937,
+    "end_pos": 116953
+  },
+  "<<FORMULA_0211>>": {
+    "formula": "\\begin{split}\n\\gL =&\\sup_{s_t}\\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d}  (L(x_t, u_{t|0,1}, t) - \\frac{\\partial s_t}{\\partial t} - \\langle  \\nabla s_t, u\\rangle -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] \\\\ \n    &+ \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\sup_{s_t} \\int_0^1 \\int_{\\sR^d}  ( - H(x_t,  \\nabla s_t, t) - \\frac{\\partial s_t}{\\partial t}  -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] + \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\min_{s_t} \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) + \\frac{\\partial s_t}{\\partial t}  +\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle\n\\end{split}",
+    "raw_latex": "\\begin{align}\n\\begin{split}\n\\gL =&\\sup_{s_t}\\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d}  (L(x_t, u_{t|0,1}, t) - \\frac{\\partial s_t}{\\partial t} - \\langle  \\nabla s_t, u\\rangle -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] \\\\ \n    &+ \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\sup_{s_t} \\int_0^1 \\int_{\\sR^d}  ( - H(x_t,  \\nabla s_t, t) - \\frac{\\partial s_t}{\\partial t}  -\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t - \\mathbb{E}_{p_0}[x_0] + \\mathbb{E}_{p_1}[x_1] + \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle \\\\\n    =&\\min_{s_t} \\int_0^1 \\int_{\\sR^d}  ( H(x_t,  \\nabla s_t, t) + \\frac{\\partial s_t}{\\partial t}  +\\Delta s_t) \\ p_{t|0,1} \\mathrm{d}x\\mathrm{d}t + \\mathbb{E}_{p_0}[x_0] - \\mathbb{E}_{p_1}[x_1] - \\frac{\\sigma^2}{2}\\int \\oint  s_t \\langle p_{t|0,1}, d\\rvn\\rangle\n\\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2114,
+    "start_pos": 115951,
+    "end_pos": 116855
+  },
+  "<<FORMULA_0210>>": {
+    "formula": "I_4 = \\oint s_t\\langle \\nabla p_{t|0,1}, d\\rvn\\rangle \\mathrm{d}t - \\int_0^1 \\int_{\\sR^d} s_t\\Delta p_{t|0,1} \\mathrm{d}t \\mathrm{d}x = \\int_0^1 \\int_{\\sR^d} \\langle  \\nabla s_t, \\nabla p_{t|0,1}\\rangle \\mathrm{d}x = - \\int_0^1 \\int_{\\sR^d} \\Delta s_t \\ p_{t|0,1} \\mathrm{d}x + \\frac{\\sigma^2}{2}\\oint s_t \\langle p_{t|0,1}, d\\rvn\\rangle",
+    "raw_latex": "$I_4 = \\oint s_t\\langle \\nabla p_{t|0,1}, d\\rvn\\rangle \\mathrm{d}t - \\int_0^1 \\int_{\\sR^d} s_t\\Delta p_{t|0,1} \\mathrm{d}t \\mathrm{d}x = \\int_0^1 \\int_{\\sR^d} \\langle  \\nabla s_t, \\nabla p_{t|0,1}\\rangle \\mathrm{d}x = - \\int_0^1 \\int_{\\sR^d} \\Delta s_t \\ p_{t|0,1} \\mathrm{d}x + \\frac{\\sigma^2}{2}\\oint s_t \\langle p_{t|0,1}, d\\rvn\\rangle$",
+    "formula_type": "inline",
+    "line_number": 2110,
+    "start_pos": 115524,
+    "end_pos": 115863
+  },
+  "<<FORMULA_0209>>": {
+    "formula": "I_3 = \\int_0^1 \\int_{\\sR^d} s_t \\nabla\\cdot(p_{t|0,1} u_{t|0,1})\\mathrm{d}x\\mathrm{d}t = -\\int_0^1 \\int_{\\sR^d} \\langle  \\nabla s_t, u\\rangle p_{t|0,1} \\mathrm{d}t\\mathrm{d}x + \\frac{\\sigma^2}{2} \\int_0^1 \\oint s_t \\langle \\nabla p_{t|0,1}, d\\rvn\\rangle \\mathrm{d}t",
+    "raw_latex": "$I_3 = \\int_0^1 \\int_{\\sR^d} s_t \\nabla\\cdot(p_{t|0,1} u_{t|0,1})\\mathrm{d}x\\mathrm{d}t = -\\int_0^1 \\int_{\\sR^d} \\langle  \\nabla s_t, u\\rangle p_{t|0,1} \\mathrm{d}t\\mathrm{d}x + \\frac{\\sigma^2}{2} \\int_0^1 \\oint s_t \\langle \\nabla p_{t|0,1}, d\\rvn\\rangle \\mathrm{d}t$",
+    "formula_type": "inline",
+    "line_number": 2108,
+    "start_pos": 115239,
+    "end_pos": 115506
+  },
+  "<<FORMULA_0208>>": {
+    "formula": "I_2 = \\int_0^1 \\int_{\\sR^d} s_t \\frac{\\partial p_{t|0,1}}{\\partial t} \\mathrm{d}x\\mathrm{d}t =  [s_t p_{t|0,1}]_{0}^1  - \\int_0^1 \\int_{\\sR^d} p_{t|0,1} \\frac{\\partial s_t}{\\partial t} \\mathrm{d}x\\mathrm{d}t",
+    "raw_latex": "$I_2 = \\int_0^1 \\int_{\\sR^d} s_t \\frac{\\partial p_{t|0,1}}{\\partial t} \\mathrm{d}x\\mathrm{d}t =  [s_t p_{t|0,1}]_{0}^1  - \\int_0^1 \\int_{\\sR^d} p_{t|0,1} \\frac{\\partial s_t}{\\partial t} \\mathrm{d}x\\mathrm{d}t$",
+    "formula_type": "inline",
+    "line_number": 2106,
+    "start_pos": 115010,
+    "end_pos": 115219
+  },
+  "<<FORMULA_0207>>": {
+    "formula": "\\label{eq:Lagr.integration_by_parts}\n    \\begin{split}\n        \\gL(\\theta) &= \\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t,\\ \\ \\text{ subj.: } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla\\cdot(p_{t|0,1} u_{t|0,1}) + \\frac{1}{2}\\sigma^2\\Delta p_{t|0,1} \\\\\n                    &=  \\sup_{s_t}\\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} s_t( \\frac{\\partial p_{t|0,1}}{\\partial t} + \\nabla\\cdot(p_{t|0,1} u_{t|0,1}) - \\frac{1}{2}\\sigma^2\\Delta p_{t|0,1}) \\mathrm{d}x\\mathrm{d}t \\\\\n                    &= \n                    \\sup_{s_t}\\min_{u_{t|0,1}} \n                    \\underbrace{\\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t}_{I_1}\n                    +\\underbrace{\\int_0^1 \\int_{\\sR^d} s_t \\frac{\\partial p_{t|0,1}}{\\partial t} \\mathrm{d}x\\mathrm{d}t}_{I_2} \\\\\n                    &+\\underbrace{\\int_0^1 \\int_{\\sR^d} s_t \\nabla\\cdot(p_{t|0,1} u_{t|0,1})\\mathrm{d}x\\mathrm{d}t}_{I_3}\n                    - \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{s_t}{2}\\sigma^2\\Delta p_{t|0,1}\\mathrm{d}x\\mathrm{d}t}_{I_4}\n    \\end{split}",
+    "raw_latex": "\\begin{align}\\label{eq:Lagr.integration_by_parts}\n    \\begin{split}\n        \\gL(\\theta) &= \\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t,\\ \\ \\text{ subj.: } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla\\cdot(p_{t|0,1} u_{t|0,1}) + \\frac{1}{2}\\sigma^2\\Delta p_{t|0,1} \\\\\n                    &=  \\sup_{s_t}\\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t + \\int_0^1 \\int_{\\sR^d} s_t( \\frac{\\partial p_{t|0,1}}{\\partial t} + \\nabla\\cdot(p_{t|0,1} u_{t|0,1}) - \\frac{1}{2}\\sigma^2\\Delta p_{t|0,1}) \\mathrm{d}x\\mathrm{d}t \\\\\n                    &= \n                    \\sup_{s_t}\\min_{u_{t|0,1}} \n                    \\underbrace{\\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t}_{I_1}\n                    +\\underbrace{\\int_0^1 \\int_{\\sR^d} s_t \\frac{\\partial p_{t|0,1}}{\\partial t} \\mathrm{d}x\\mathrm{d}t}_{I_2} \\\\\n                    &+\\underbrace{\\int_0^1 \\int_{\\sR^d} s_t \\nabla\\cdot(p_{t|0,1} u_{t|0,1})\\mathrm{d}x\\mathrm{d}t}_{I_3}\n                    - \\underbrace{\\int_0^1 \\int_{\\sR^d} \\frac{s_t}{2}\\sigma^2\\Delta p_{t|0,1}\\mathrm{d}x\\mathrm{d}t}_{I_4}\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2091,
+    "start_pos": 113715,
+    "end_pos": 114911
+  },
+  "<<FORMULA_0206>>": {
+    "formula": "\\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t, \\text{ subj.: } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla\\cdot(p_{t|0,1} u_{t|0,1}) + \\frac{1}{2}\\sigma^2\\Delta p_{t|0,1}, \\text{ and } p_0 = x_0, p_1 = x_1",
+    "raw_latex": "\\begin{equation}\n    \\min_{u_{t|0,1}} \\int_0^1 \\int_{\\sR^d} L(x_t, u_{t|0,1}, t)p_{t|0,1}\\mathrm{d}x\\mathrm{d}t, \\text{ subj.: } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla\\cdot(p_{t|0,1} u_{t|0,1}) + \\frac{1}{2}\\sigma^2\\Delta p_{t|0,1}, \\text{ and } p_0 = x_0, p_1 = x_1\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 2087,
+    "start_pos": 113278,
+    "end_pos": 113568
+  },
+  "<<FORMULA_0205>>": {
+    "formula": "\\begin{split}\n        \\gL^\\theta - \\gL^\\star &= \\int_0^1 \\int_{\\sR^d} D_{L,H}[ a_t:u^\\star_{t|0,1}] p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\n        \\gL^\\theta - \\gL^\\star &= \\int_0^1 \\int_{\\sR^d} D_{L,H}[ a_t:u^\\star_{t|0,1}] p_{t|0,1} \\mathrm{d}x\\mathrm{d}t\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2078,
+    "start_pos": 112977,
+    "end_pos": 113155
+  },
+  "<<FORMULA_0204>>": {
+    "formula": "H(x_t, a_t, t) = \\sup \\langle a_t, u_t\\rangle - L(x_t, u_t, t)",
+    "raw_latex": "$H(x_t, a_t, t) = \\sup \\langle a_t, u_t\\rangle - L(x_t, u_t, t)$",
+    "formula_type": "inline",
+    "line_number": 2076,
+    "start_pos": 112739,
+    "end_pos": 112803
+  },
+  "<<FORMULA_0203>>": {
+    "formula": "L(X_t, u_t, t)",
+    "raw_latex": "$L(X_t, u_t, t)$",
+    "formula_type": "inline",
+    "line_number": 2076,
+    "start_pos": 112671,
+    "end_pos": 112687
+  },
+  "<<FORMULA_0202>>": {
+    "formula": "\\label{eq:BM_app}\n        \\min_\\theta \\int_0^1 \\mathbb{E}_{p_{t}} ||u_{t|0,1}^\\star -u_t^\\theta||^2 \\rm{d}t",
+    "raw_latex": "\\begin{equation}\\label{eq:BM_app}\n        \\min_\\theta \\int_0^1 \\mathbb{E}_{p_{t}} ||u_{t|0,1}^\\star -u_t^\\theta||^2 \\rm{d}t\n    \\end{equation}",
+    "formula_type": "equation",
+    "line_number": 2069,
+    "start_pos": 111909,
+    "end_pos": 112051
+  },
+  "<<FORMULA_0201>>": {
+    "formula": "u_t^\\theta =  a_t^\\theta - g(a_t^\\intercal\\nabla G_t)\\cdot\\nabla G_{t|0}",
+    "raw_latex": "$u_t^\\theta =  a_t^\\theta - g(a_t^\\intercal\\nabla G_t)\\cdot\\nabla G_{t|0}$",
+    "formula_type": "inline",
+    "line_number": 2067,
+    "start_pos": 111751,
+    "end_pos": 111825
+  },
+  "<<FORMULA_0200>>": {
+    "formula": "\\label{eq:BD_app}\n        \\begin{split}\n                \\min_\\theta \\int_0^1 \\mathbb{E}_{p_{0,1}}\\mathbb{E}_{p_{t|0,1}}\\| a_t^\\theta - u_{t|0,1}^\\star - g(a_t^\\intercal\\nabla G_t)\\cdot\\nabla  G_{t|0}\\|^2 \\mathrm{d}t \n        \\end{split}",
+    "raw_latex": "\\begin{align}\\label{eq:BD_app}\n        \\begin{split}\n                \\min_\\theta \\int_0^1 \\mathbb{E}_{p_{0,1}}\\mathbb{E}_{p_{t|0,1}}\\| a_t^\\theta - u_{t|0,1}^\\star - g(a_t^\\intercal\\nabla G_t)\\cdot\\nabla  G_{t|0}\\|^2 \\mathrm{d}t \n        \\end{split}\n    \\end{align}",
+    "formula_type": "align",
+    "line_number": 2062,
+    "start_pos": 111382,
+    "end_pos": 111647
+  },
+  "<<FORMULA_0199>>": {
+    "formula": "u_t^\\theta",
+    "raw_latex": "$u_t^\\theta$",
+    "formula_type": "inline",
+    "line_number": 2061,
+    "start_pos": 111269,
+    "end_pos": 111281
+  },
+  "<<FORMULA_0198>>": {
+    "formula": "u_{t|0,1}^\\star",
+    "raw_latex": "$u_{t|0,1}^\\star$",
+    "formula_type": "inline",
+    "line_number": 2061,
+    "start_pos": 111217,
+    "end_pos": 111234
+  },
+  "<<FORMULA_0197>>": {
+    "formula": "H(x_t,  a_t, t) = \\frac{1}{2}|| a_t - g(a_t^\\intercal\\nabla G_t)\\cdot \\nabla G_t||^2 - \\frac{\\sigma^2}{2}\\Delta G_t",
+    "raw_latex": "\\begin{equation}\n        H(x_t,  a_t, t) = \\frac{1}{2}|| a_t - g(a_t^\\intercal\\nabla G_t)\\cdot \\nabla G_t||^2 - \\frac{\\sigma^2}{2}\\Delta G_t\n    \\end{equation}",
+    "formula_type": "equation",
+    "line_number": 2055,
+    "start_pos": 110927,
+    "end_pos": 111086
+  },
+  "<<FORMULA_0196>>": {
+    "formula": "\\begin{split}\n        H(x_t, a_t, t) &= \\langle a_t  -  g_t\\nabla G_t, a_t\\rangle - \\bigg( \\frac{1}{2}\\|a_t  -  g_t\\nabla G_t\\|^2 -\\langle a_t  -  g_t\\nabla G_t, \\nabla G_t\\rangle\\bigg) - \\frac{\\sigma^2}{2}\\Delta G_t \\\\\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\n        H(x_t, a_t, t) &= \\langle a_t  -  g_t\\nabla G_t, a_t\\rangle - \\bigg( \\frac{1}{2}\\|a_t  -  g_t\\nabla G_t\\|^2 -\\langle a_t  -  g_t\\nabla G_t, \\nabla G_t\\rangle\\bigg) - \\frac{\\sigma^2}{2}\\Delta G_t \\\\\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 2048,
+    "start_pos": 110591,
+    "end_pos": 110856
+  },
+  "<<FORMULA_0195>>": {
+    "formula": "\\nabla G_t(X_t, x_0)",
+    "raw_latex": "$\\nabla G_t(X_t, x_0)$",
+    "formula_type": "inline",
+    "line_number": 2047,
+    "start_pos": 110566,
+    "end_pos": 110588
+  },
+  "<<FORMULA_0194>>": {
+    "formula": "\\label{eq:drift_grad.field}\n    u_{t|0,1} = a_t  -  g(a_t^\\intercal\\nabla G_t)\\cdot \\nabla G_t",
+    "raw_latex": "\\begin{equation}\\label{eq:drift_grad.field}\n    u_{t|0,1} = a_t  -  g(a_t^\\intercal\\nabla G_t)\\cdot \\nabla G_t\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 2044,
+    "start_pos": 110320,
+    "end_pos": 110445
+  },
+  "<<FORMULA_0193>>": {
+    "formula": "g(a_t^\\intercal\\nabla G_t) = \\begin{cases} sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{   for     } \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n\\frac{a_t^\\intercal\\nabla G_t}{\\nabla \\|G_t\\|^2}, \\quad \\text{ for } \\quad  \n|a_t^\\intercal\\nabla G_t| \\leq \\|\\nabla G_t\\|^2\n\\end{cases}",
+    "raw_latex": "$$g(a_t^\\intercal\\nabla G_t) = \\begin{cases} sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{   for     } \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n\\frac{a_t^\\intercal\\nabla G_t}{\\nabla \\|G_t\\|^2}, \\quad \\text{ for } \\quad  \n|a_t^\\intercal\\nabla G_t| \\leq \\|\\nabla G_t\\|^2\n\\end{cases}$$",
+    "formula_type": "display",
+    "line_number": 2039,
+    "start_pos": 109910,
+    "end_pos": 110206
+  },
+  "<<FORMULA_0192>>": {
+    "formula": "g:\\sR\\rightarrow\\sR",
+    "raw_latex": "$g:\\sR\\rightarrow\\sR$",
+    "formula_type": "inline",
+    "line_number": 2038,
+    "start_pos": 109871,
+    "end_pos": 109892
+  },
+  "<<FORMULA_0191>>": {
+    "formula": "\\begin{cases}\n        \\partial(u_t^\\intercal\\nabla G_t) = sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{      for         }  \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n        \\partial(u_t^\\intercal\\nabla G_t) = \\frac{a_t^\\intercal\\nabla G_t}{\\nabla \\|G_t\\|^2}, \\quad  \\text{    for     } \\quad |a_t^\\intercal\\nabla G_t| \\leq \\|\\nabla G_t\\|^2\n     \\end{cases}",
+    "raw_latex": "\\[\n    \\begin{cases}\n        \\partial(u_t^\\intercal\\nabla G_t) = sgn(a_t^\\intercal\\nabla G_t), \\quad \\text{      for         }  \\quad |a_t^\\intercal\\nabla G_t| \\geq \\|\\nabla G_t\\|^2  \\\\\n        \\partial(u_t^\\intercal\\nabla G_t) = \\frac{a_t^\\intercal\\nabla G_t}{\\nabla \\|G_t\\|^2}, \\quad  \\text{    for     } \\quad |a_t^\\intercal\\nabla G_t| \\leq \\|\\nabla G_t\\|^2\n     \\end{cases}\n\\]",
+    "formula_type": "display",
+    "line_number": 2032,
+    "start_pos": 109470,
+    "end_pos": 109850
+  },
+  "<<FORMULA_0190>>": {
+    "formula": "a_t^\\intercal\\nabla G_t = \\alpha \\|\\nabla G_t\\|^2",
+    "raw_latex": "$a_t^\\intercal\\nabla G_t = \\alpha \\|\\nabla G_t\\|^2$",
+    "formula_type": "inline",
+    "line_number": 2031,
+    "start_pos": 109416,
+    "end_pos": 109467
+  },
+  "<<FORMULA_0189>>": {
+    "formula": "u_t^\\intercal\\nabla G_t \\neq 0",
+    "raw_latex": "$u_t^\\intercal\\nabla G_t \\neq 0$",
+    "formula_type": "inline",
+    "line_number": 2031,
+    "start_pos": 109371,
+    "end_pos": 109403
+  },
+  "<<FORMULA_0188>>": {
+    "formula": "sgn(u_t^\\intercal\\nabla G_t) = sgn(a_t^\\intercal\\nabla G_t)",
+    "raw_latex": "$sgn(u_t^\\intercal\\nabla G_t) = sgn(a_t^\\intercal\\nabla G_t)$",
+    "formula_type": "inline",
+    "line_number": 2031,
+    "start_pos": 109303,
+    "end_pos": 109364
+  },
+  "<<FORMULA_0187>>": {
+    "formula": "a_t^\\intercal \\nabla G_t",
+    "raw_latex": "$a_t^\\intercal \\nabla G_t$",
+    "formula_type": "inline",
+    "line_number": 2031,
+    "start_pos": 109248,
+    "end_pos": 109274
+  },
+  "<<FORMULA_0186>>": {
+    "formula": "u_t^\\intercal\\nabla G_t",
+    "raw_latex": "$u_t^\\intercal\\nabla G_t$",
+    "formula_type": "inline",
+    "line_number": 2031,
+    "start_pos": 109217,
+    "end_pos": 109242
+  },
+  "<<FORMULA_0185>>": {
+    "formula": "\\begin{cases}\n        u_t^\\intercal\\nabla G_t > 0 : u_t = a_t  - (\\nabla G_t)\\Rightarrow (a_t  - (\\nabla G_t))^\\intercal\\nabla G_t \\geq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\geq \\|\\nabla G_t\\|^2 \\geq 0 \\\\\n        u_t^\\intercal\\nabla G_t < 0 : u_t = a_t  + (\\nabla G_t)\\Rightarrow (a_t  + (\\nabla G_t))^\\intercal\\nabla G_t \\leq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\leq -\\|\\nabla G_t\\|^2 \\leq 0\\\\\n        u_t^\\intercal\\nabla G_t = 0 : \\partial(u_t^\\intercal\\nabla G_t) = [-1,1], \\text{ from which we infer } a_t^\\intercal\\nabla G_t = \\alpha \\|\\nabla G_t\\|^2, \\text{ for } \\alpha \\in [-1,1].\n     \\end{cases}",
+    "raw_latex": "\\[\n    \\begin{cases}\n        u_t^\\intercal\\nabla G_t > 0 : u_t = a_t  - (\\nabla G_t)\\Rightarrow (a_t  - (\\nabla G_t))^\\intercal\\nabla G_t \\geq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\geq \\|\\nabla G_t\\|^2 \\geq 0 \\\\\n        u_t^\\intercal\\nabla G_t < 0 : u_t = a_t  + (\\nabla G_t)\\Rightarrow (a_t  + (\\nabla G_t))^\\intercal\\nabla G_t \\leq 0 \\Rightarrow a_t^\\intercal\\nabla G_t \\leq -\\|\\nabla G_t\\|^2 \\leq 0\\\\\n        u_t^\\intercal\\nabla G_t = 0 : \\partial(u_t^\\intercal\\nabla G_t) = [-1,1], \\text{ from which we infer } a_t^\\intercal\\nabla G_t = \\alpha \\|\\nabla G_t\\|^2, \\text{ for } \\alpha \\in [-1,1].\n     \\end{cases}\n\\]",
+    "formula_type": "display",
+    "line_number": 2024,
+    "start_pos": 108550,
+    "end_pos": 109168
+  },
+  "<<FORMULA_0184>>": {
+    "formula": "\\partial(\\cdot)",
+    "raw_latex": "$\\partial(\\cdot)$",
+    "formula_type": "inline",
+    "line_number": 2023,
+    "start_pos": 108496,
+    "end_pos": 108513
+  },
+  "<<FORMULA_0183>>": {
+    "formula": "\\label{eq:Ham.opt.}\n        0  =  a_t  - (u_t +  \\partial(u_t^\\intercal\\nabla G_t)(\\nabla G_t)) \\Rightarrow u_{t|0,1}^\\star =  a_t  -  \\partial(u_t^\\intercal\\nabla G_t)\\cdot(\\nabla G_t)",
+    "raw_latex": "\\begin{equation}\\label{eq:Ham.opt.}\n        0  =  a_t  - (u_t +  \\partial(u_t^\\intercal\\nabla G_t)(\\nabla G_t)) \\Rightarrow u_{t|0,1}^\\star =  a_t  -  \\partial(u_t^\\intercal\\nabla G_t)\\cdot(\\nabla G_t)\n    \\end{equation}",
+    "formula_type": "equation",
+    "line_number": 2020,
+    "start_pos": 108265,
+    "end_pos": 108485
+  },
+  "<<FORMULA_0182>>": {
+    "formula": "\\partial(|u_t^\\intercal\\nabla G|)",
+    "raw_latex": "$\\partial(|u_t^\\intercal\\nabla G|)$",
+    "formula_type": "inline",
+    "line_number": 2018,
+    "start_pos": 108142,
+    "end_pos": 108177
+  },
+  "<<FORMULA_0181>>": {
+    "formula": "\\label{eq:Ham.def.app.}\n        H(x_t, a_t, t) = \\sup_{u_{t|0,1}}\\langle u_{t|0,1}, a_t\\rangle - L(x_t, u_{t|0,1}, t)",
+    "raw_latex": "\\begin{equation}\\label{eq:Ham.def.app.}\n        H(x_t, a_t, t) = \\sup_{u_{t|0,1}}\\langle u_{t|0,1}, a_t\\rangle - L(x_t, u_{t|0,1}, t)\n    \\end{equation}",
+    "formula_type": "equation",
+    "line_number": 2014,
+    "start_pos": 107786,
+    "end_pos": 107938
+  },
+  "<<FORMULA_0180>>": {
+    "formula": "\\begin{split}\\label{eq:hamiltonian}\n        H(x_t, a_t, t) &= \\frac{1}{2}||a_t - g(a_t^\\intercal \\nabla G_{t|0})\\cdot\\nabla G_{t|0}||^2 - \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0)\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:hamiltonian}\n        H(x_t, a_t, t) &= \\frac{1}{2}||a_t - g(a_t^\\intercal \\nabla G_{t|0})\\cdot\\nabla G_{t|0}||^2 - \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0)\n    \\end{split}\n    \\end{align}",
+    "formula_type": "align",
+    "line_number": 2007,
+    "start_pos": 107453,
+    "end_pos": 107677
+  },
+  "<<FORMULA_0179>>": {
+    "formula": "g(a_t^\\intercal \\nabla G_{t|0}) = \\begin{cases} \n        \\frac{a_t^\\intercal \\nabla G_{t|0}}{\\|\\nabla G_{t|0}\\|^2} \\quad \\text{   if   } \\quad |a_t^\\intercal \\nabla G_{t|0}|\\leq\\|\\nabla G_{t|0}\\|^2 \\\\\n        sgn(a_t^\\intercal \\nabla G_{t|0}) \\quad \\text{else}\n        \\end{cases}",
+    "raw_latex": "$$\n        g(a_t^\\intercal \\nabla G_{t|0}) = \\begin{cases} \n        \\frac{a_t^\\intercal \\nabla G_{t|0}}{\\|\\nabla G_{t|0}\\|^2} \\quad \\text{   if   } \\quad |a_t^\\intercal \\nabla G_{t|0}|\\leq\\|\\nabla G_{t|0}\\|^2 \\\\\n        sgn(a_t^\\intercal \\nabla G_{t|0}) \\quad \\text{else}\n        \\end{cases}\n$$",
+    "formula_type": "display",
+    "line_number": 2000,
+    "start_pos": 107065,
+    "end_pos": 107359
+  },
+  "<<FORMULA_0178>>": {
+    "formula": "\\nabla G_{t|0} \\equiv G(X_t, x_0)",
+    "raw_latex": "$\\nabla G_{t|0} \\equiv G(X_t, x_0)$",
+    "formula_type": "inline",
+    "line_number": 1999,
+    "start_pos": 107023,
+    "end_pos": 107058
+  },
+  "<<FORMULA_0177>>": {
+    "formula": "u_{t|0,1} = a_t - g(a_t^\\intercal \\nabla G_{t|0}) \\nabla G_{t|0}",
+    "raw_latex": "$u_{t|0,1} = a_t - g(a_t^\\intercal \\nabla G_{t|0}) \\nabla G_{t|0}$",
+    "formula_type": "inline",
+    "line_number": 1999,
+    "start_pos": 106949,
+    "end_pos": 107015
+  },
+  "<<FORMULA_0176>>": {
+    "formula": "H(x_t, a_t, t) = \\sup_{u_{t|0,1}}\\langle u_{t|0,1}, a_t\\rangle - L(x_t, u_{t|0,1}, t)",
+    "raw_latex": "$H(x_t, a_t, t) = \\sup_{u_{t|0,1}}\\langle u_{t|0,1}, a_t\\rangle - L(x_t, u_{t|0,1}, t)$",
+    "formula_type": "inline",
+    "line_number": 1998,
+    "start_pos": 106797,
+    "end_pos": 106884
+  },
+  "<<FORMULA_0175>>": {
+    "formula": "\\begin{split}\n   \\min_{p_{t|0,1}} \\int \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 &+ \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr],\\\\ \\text{  s.t.  } &\\frac{\\partial p_{t|0,1}}{\\partial t} = - \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) + \\frac{\\sigma^2}{2}\\Delta p_{t|0,1}\n\\end{split}",
+    "raw_latex": "\\begin{align}\n\\begin{split}\n   \\min_{p_{t|0,1}} \\int \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 &+ \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr],\\\\ \\text{  s.t.  } &\\frac{\\partial p_{t|0,1}}{\\partial t} = - \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) + \\frac{\\sigma^2}{2}\\Delta p_{t|0,1}\n\\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1989,
+    "start_pos": 106244,
+    "end_pos": 106605
+  },
+  "<<FORMULA_0174>>": {
+    "formula": "\\Delta p_t = \\nabla \\cdot \\nabla p_t = \\nabla \\cdot \\nabla \\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1 = \\int \\nabla \\cdot \\nabla  p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1 = \\mathbb{E}_{\\pi_{0,1}}[\\Delta p_{t|0,1}]",
+    "raw_latex": "$\\Delta p_t = \\nabla \\cdot \\nabla p_t = \\nabla \\cdot \\nabla \\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1 = \\int \\nabla \\cdot \\nabla  p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1 = \\mathbb{E}_{\\pi_{0,1}}[\\Delta p_{t|0,1}]$",
+    "formula_type": "inline",
+    "line_number": 1985,
+    "start_pos": 105760,
+    "end_pos": 105972
+  },
+  "<<FORMULA_0173>>": {
+    "formula": "\\nabla \\cdot (u_{t|0,1} p_t) = \\nabla \\cdot (u_{t|0,1} \\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1) =  \\int  \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) \\pi_{0,1} \\rm{d}x_0\\rm{d}x_1 = \\mathbb{E}_{\\pi_{0,1}}[\\nabla \\cdot (u_{t|0,1} p_{t|0,1})]",
+    "raw_latex": "$\\nabla \\cdot (u_{t|0,1} p_t) = \\nabla \\cdot (u_{t|0,1} \\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1) =  \\int  \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) \\pi_{0,1} \\rm{d}x_0\\rm{d}x_1 = \\mathbb{E}_{\\pi_{0,1}}[\\nabla \\cdot (u_{t|0,1} p_{t|0,1})]$",
+    "formula_type": "inline",
+    "line_number": 1984,
+    "start_pos": 105515,
+    "end_pos": 105749
+  },
+  "<<FORMULA_0172>>": {
+    "formula": "\\frac{\\partial p_t}{\\partial t} = \\frac{\\partial}{\\partial t}\\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1 = \\int \\frac{\\partial p_{t|0,1}}{\\partial t}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1 = \\mathbb{E}_{\\pi_{0,1}}[\\frac{\\partial p_{t|0,1}}{\\partial t}]",
+    "raw_latex": "$\\frac{\\partial p_t}{\\partial t} = \\frac{\\partial}{\\partial t}\\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1 = \\int \\frac{\\partial p_{t|0,1}}{\\partial t}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1 = \\mathbb{E}_{\\pi_{0,1}}[\\frac{\\partial p_{t|0,1}}{\\partial t}]$",
+    "formula_type": "inline",
+    "line_number": 1983,
+    "start_pos": 105262,
+    "end_pos": 105504
+  },
+  "<<FORMULA_0171>>": {
+    "formula": "\\label{eq:sum_of_G}\n    \\min_{p_t}\\min_{X_t} \\mathbb{E}_{p_{t_{i|0,1}}}\\sum_{i=0}^N G(X_{t_i}, X_{t_{i+1}})",
+    "raw_latex": "\\begin{equation}\\label{eq:sum_of_G}\n    \\min_{p_t}\\min_{X_t} \\mathbb{E}_{p_{t_{i|0,1}}}\\sum_{i=0}^N G(X_{t_i}, X_{t_{i+1}})\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1977,
+    "start_pos": 104841,
+    "end_pos": 104979
+  },
+  "<<FORMULA_0170>>": {
+    "formula": "G_{t|0}\\equiv G(X_t, x_0)",
+    "raw_latex": "$G_{t|0}\\equiv G(X_t, x_0)$",
+    "formula_type": "inline",
+    "line_number": 1976,
+    "start_pos": 104711,
+    "end_pos": 104738
+  },
+  "<<FORMULA_0169>>": {
+    "formula": "\\min_{p_{t|0,1}} \\int \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr]\\mathrm{d}t",
+    "raw_latex": "\\begin{equation}\n   \\min_{p_{t|0,1}} \\int \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr]\\mathrm{d}t\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1973,
+    "start_pos": 104390,
+    "end_pos": 104607
+  },
+  "<<FORMULA_0168>>": {
+    "formula": "x_0, x_1",
+    "raw_latex": "$x_0, x_1$",
+    "formula_type": "inline",
+    "line_number": 1972,
+    "start_pos": 104207,
+    "end_pos": 104217
+  },
+  "<<FORMULA_0167>>": {
+    "formula": "p_t = \\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1",
+    "raw_latex": "$p_t = \\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1$",
+    "formula_type": "inline",
+    "line_number": 1971,
+    "start_pos": 104131,
+    "end_pos": 104181
+  },
+  "<<FORMULA_0166>>": {
+    "formula": "\\min_{p_t} \\min_{u_t} \\int_0^1 \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u\\|^2 + \\mathbb{E}_{p_{0|t}}\\bigr[| u_t^\\intercal\\nabla G_{t, 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t, 0} \\bigr]  \\Bigr]\\mathrm{d}t",
+    "raw_latex": "\\begin{equation}\n   \\min_{p_t} \\min_{u_t} \\int_0^1 \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u\\|^2 + \\mathbb{E}_{p_{0|t}}\\bigr[| u_t^\\intercal\\nabla G_{t, 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t, 0} \\bigr]  \\Bigr]\\mathrm{d}t\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1967,
+    "start_pos": 103823,
+    "end_pos": 104055
+  },
+  "<<FORMULA_0165>>": {
+    "formula": "\\begin{split}\\label{eq:cond.lagrang.app.}\n        \\min_{p_{t|0,1}} \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr|u_{t|0,1}^\\intercal \\nabla G(X_t, x_0)\\bigr| + \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0) \\ p_{t|0,1} \\mathrm{d}x \\mathrm{d}t, \\quad \\\\ \\text{ s.t. } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla \\cdot (p_{t|0,1} u_{t}) + \\frac{1}{2} \\sigma^2 \\Delta p_{t|0,1}\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:cond.lagrang.app.}\n        \\min_{p_{t|0,1}} \\int_0^1 \\int_{\\sR^d} (\\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr|u_{t|0,1}^\\intercal \\nabla G(X_t, x_0)\\bigr| + \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0) \\ p_{t|0,1} \\mathrm{d}x \\mathrm{d}t, \\quad \\\\ \\text{ s.t. } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla \\cdot (p_{t|0,1} u_{t}) + \\frac{1}{2} \\sigma^2 \\Delta p_{t|0,1}\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1960,
+    "start_pos": 103309,
+    "end_pos": 103735
+  },
+  "<<FORMULA_0164>>": {
+    "formula": "p_t = \\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1",
+    "raw_latex": "$p_t = \\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1$",
+    "formula_type": "inline",
+    "line_number": 1959,
+    "start_pos": 103080,
+    "end_pos": 103130
+  },
+  "<<FORMULA_0163>>": {
+    "formula": "p_1=\\pi_1",
+    "raw_latex": "$p_1=\\pi_1$",
+    "formula_type": "inline",
+    "line_number": 1954,
+    "start_pos": 102899,
+    "end_pos": 102910
+  },
+  "<<FORMULA_0162>>": {
+    "formula": "p_0=\\pi_0",
+    "raw_latex": "$p_0=\\pi_0$",
+    "formula_type": "inline",
+    "line_number": 1954,
+    "start_pos": 102882,
+    "end_pos": 102893
+  },
+  "<<FORMULA_0161>>": {
+    "formula": "\\frac{\\partial p_t}{\\partial t} = - \\nabla \\cdot (u_t p_t) + \\frac{1}{2}\\sigma^2\\Delta p_t",
+    "raw_latex": "$\\frac{\\partial p_t}{\\partial t} = - \\nabla \\cdot (u_t p_t) + \\frac{1}{2}\\sigma^2\\Delta p_t$",
+    "formula_type": "inline",
+    "line_number": 1954,
+    "start_pos": 102752,
+    "end_pos": 102844
+  },
+  "<<FORMULA_0160>>": {
+    "formula": "\\label{eq:lagrangian_app}\n    \\min_{p_t} \\min_{u_t} \\int_0^1 \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_t\\|^2 + \\mathbb{E}_{p_{0|t}}\\bigr[| u_t^\\intercal\\nabla G_{t, 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t, 0} \\bigr]  \\Bigr] \\mathrm{d}t",
+    "raw_latex": "\\begin{equation}\\label{eq:lagrangian_app}\n    \\min_{p_t} \\min_{u_t} \\int_0^1 \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_t\\|^2 + \\mathbb{E}_{p_{0|t}}\\bigr[| u_t^\\intercal\\nabla G_{t, 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t, 0} \\bigr]  \\Bigr] \\mathrm{d}t\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1951,
+    "start_pos": 102468,
+    "end_pos": 102729
+  },
+  "<<FORMULA_0159>>": {
+    "formula": "G_{t, 0} = G(X_t, X_0)",
+    "raw_latex": "$G_{t, 0} = G(X_t, X_0)$",
+    "formula_type": "inline",
+    "line_number": 1950,
+    "start_pos": 102377,
+    "end_pos": 102401
+  },
+  "<<FORMULA_0158>>": {
+    "formula": "\\label{eq:2nd_term}\n    \\min_{p_t} \\min_{u_t}  \\int_0^1 \\mathbb{E}_{p_{t}}[\\|u_t\\|^2] + \\mathbb{E}_{p_{t, 0}}\\Bigr[ \\bigr(| u_t^\\intercal\\nabla G_{t, 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t, 0} \\bigr)  \\Bigr] \\mathrm{d}t",
+    "raw_latex": "\\begin{equation}\\label{eq:2nd_term}\n    \\min_{p_t} \\min_{u_t}  \\int_0^1 \\mathbb{E}_{p_{t}}[\\|u_t\\|^2] + \\mathbb{E}_{p_{t, 0}}\\Bigr[ \\bigr(| u_t^\\intercal\\nabla G_{t, 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t, 0} \\bigr)  \\Bigr] \\mathrm{d}t\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1947,
+    "start_pos": 102122,
+    "end_pos": 102370
+  },
+  "<<FORMULA_0157>>": {
+    "formula": "\\label{eq:del_g}\n                 \\mathbb{E}_{p_{t_{i\\rightarrow i+1,0}}}\\sum_{i=0}^{N-1} G(X_{t_i}, X_{t_{i+1}})  \\leq \\sum_{i=0}^{N-1} \\mathbb{E}_{p_{t_{i\\rightarrow i+1,0}}}\\Bigr[ \\bigr(| u_t^\\intercal\\nabla G | + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})\\bigr)\\Delta t  \\Bigr]",
+    "raw_latex": "\\begin{equation}\\label{eq:del_g}\n                 \\mathbb{E}_{p_{t_{i\\rightarrow i+1,0}}}\\sum_{i=0}^{N-1} G(X_{t_i}, X_{t_{i+1}})  \\leq \\sum_{i=0}^{N-1} \\mathbb{E}_{p_{t_{i\\rightarrow i+1,0}}}\\Bigr[ \\bigr(| u_t^\\intercal\\nabla G | + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})\\bigr)\\Delta t  \\Bigr]\n    \\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1942,
+    "start_pos": 101653,
+    "end_pos": 101974
+  },
+  "<<FORMULA_0156>>": {
+    "formula": "\\frac{\\sigma^2}{2}\\mathrm{Tr}( \\nabla^2 G ) \\geq 0",
+    "raw_latex": "$\\frac{\\sigma^2}{2}\\mathrm{Tr}( \\nabla^2 G ) \\geq 0$",
+    "formula_type": "inline",
+    "line_number": 1941,
+    "start_pos": 101522,
+    "end_pos": 101574
+  },
+  "<<FORMULA_0155>>": {
+    "formula": "\\begin{split}\n            \\sum_{i=0}^{N-1} \\bigg| \\mathbb{E}\\Bigr[ u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) )\\Delta t \\Bigr] \\bigg|\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ \\bigr| (u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) ) \\bigr| \\Delta t \\Bigr]\\\\\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ (\\bigr| u_t^\\intercal\\nabla G \\bigr| + \\bigr|\\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) \\Delta t  \\Bigr] \n        \\end{split}",
+    "raw_latex": "\\begin{align}\n        \\begin{split}\n            \\sum_{i=0}^{N-1} \\bigg| \\mathbb{E}\\Bigr[ u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) )\\Delta t \\Bigr] \\bigg|\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ \\bigr| (u_t^\\intercal\\nabla G + \\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) ) \\bigr| \\Delta t \\Bigr]\\\\\n            &\\leq \\sum_{i=0}^{N-1} \\mathbb{E}\\Bigr[ (\\bigr| u_t^\\intercal\\nabla G \\bigr| + \\bigr|\\frac{\\sigma^2}{2}\\mathrm{Tr}(\\nabla^2 G_{t_i})) \\Delta t  \\Bigr] \n        \\end{split}\n    \\end{align}",
+    "formula_type": "align",
+    "line_number": 1934,
+    "start_pos": 100940,
+    "end_pos": 101485
+  },
+  "<<FORMULA_0154>>": {
+    "formula": "|\\mathbb{E}[f(x)]|\\leq\\mathbb{E}[|f(x)|]",
+    "raw_latex": "$|\\mathbb{E}[f(x)]|\\leq\\mathbb{E}[|f(x)|]$",
+    "formula_type": "inline",
+    "line_number": 1933,
+    "start_pos": 100841,
+    "end_pos": 100883
+  },
+  "<<FORMULA_0153>>": {
+    "formula": "\\sum_{i=0}^{N-1} \\Bigr|\\mathbb{E}[(u_t^\\intercal \\nabla G_{t_i} + \\frac{1}{2}\\sigma_{t_i}^2 \\mathrm{Tr}(\\nabla^2 G_{t_i}))\\Delta t_i]\\Bigr|",
+    "raw_latex": "\\begin{equation}\n    \\sum_{i=0}^{N-1} \\Bigr|\\mathbb{E}[(u_t^\\intercal \\nabla G_{t_i} + \\frac{1}{2}\\sigma_{t_i}^2 \\mathrm{Tr}(\\nabla^2 G_{t_i}))\\Delta t_i]\\Bigr|\n    \\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1930,
+    "start_pos": 100623,
+    "end_pos": 100802
+  },
+  "<<FORMULA_0152>>": {
+    "formula": "\\frac{\\partial G_{t_i}}{\\partial t_i} = 0",
+    "raw_latex": "$\\frac{\\partial G_{t_i}}{\\partial t_i} = 0$",
+    "formula_type": "inline",
+    "line_number": 1929,
+    "start_pos": 100415,
+    "end_pos": 100458
+  },
+  "<<FORMULA_0151>>": {
+    "formula": "\\sum_{i=0}^{N-1} \\Bigr| \\mathbb{E}_{p_{t_{i\\rightarrow i+1,0}}}[(\\frac{\\partial G_{t_i}}{\\partial t} + u_t^\\intercal \\nabla G_{t_i} + \\frac{1}{2}\\sigma_{t_i}^2 \\mathrm{Tr}(\\nabla^2 G_{t_i}))\\Delta t_i + (\\sigma_{t_i}\\nabla G_{t_i})\\Delta W_{t_i}]\\Bigr|",
+    "raw_latex": "\\begin{equation}\n     \\sum_{i=0}^{N-1} \\Bigr| \\mathbb{E}_{p_{t_{i\\rightarrow i+1,0}}}[(\\frac{\\partial G_{t_i}}{\\partial t} + u_t^\\intercal \\nabla G_{t_i} + \\frac{1}{2}\\sigma_{t_i}^2 \\mathrm{Tr}(\\nabla^2 G_{t_i}))\\Delta t_i + (\\sigma_{t_i}\\nabla G_{t_i})\\Delta W_{t_i}]\\Bigr|\n    \\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1926,
+    "start_pos": 100103,
+    "end_pos": 100396
+  },
+  "<<FORMULA_0150>>": {
+    "formula": "X_{t_{i+1}} = X_{t_i} + u_{t_i}\\Delta t_i + \\sigma_{t_i}\\Delta W_{t_i}",
+    "raw_latex": "$X_{t_{i+1}} = X_{t_i} + u_{t_i}\\Delta t_i + \\sigma_{t_i}\\Delta W_{t_i}$",
+    "formula_type": "inline",
+    "line_number": 1925,
+    "start_pos": 99963,
+    "end_pos": 100035
+  },
+  "<<FORMULA_0149>>": {
+    "formula": "\\Bigr|\\mathbb{E}_{p_{t_{i\\rightarrow i+1,0}}}[G(X_{t_{i+1}}, X_0) - G(X_{t_{i}}, X_0)]\\Bigr|",
+    "raw_latex": "$$\n\\Bigr|\\mathbb{E}_{p_{t_{i\\rightarrow i+1,0}}}[G(X_{t_{i+1}}, X_0) - G(X_{t_{i}}, X_0)]\\Bigr|\n$$",
+    "formula_type": "display",
+    "line_number": 1909,
+    "start_pos": 98943,
+    "end_pos": 99041
+  },
+  "<<FORMULA_0148>>": {
+    "formula": "\\label{eq:kl_girs}\n    KL(p_{i, i+1}|q_{i, i+1}) = \\int_{t_i}^{t_{i+1}} \\|u_{t_i}\\|^2 dt = \\|u_{t_i}\\|^2 \\Delta t_i",
+    "raw_latex": "\\begin{equation}\\label{eq:kl_girs}\n    KL(p_{i, i+1}|q_{i, i+1}) = \\int_{t_i}^{t_{i+1}} \\|u_{t_i}\\|^2 dt = \\|u_{t_i}\\|^2 \\Delta t_i\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1904,
+    "start_pos": 98765,
+    "end_pos": 98911
+  },
+  "<<FORMULA_0147>>": {
+    "formula": "i\\rightarrow i+1",
+    "raw_latex": "$i\\rightarrow i+1$",
+    "formula_type": "inline",
+    "line_number": 1903,
+    "start_pos": 98744,
+    "end_pos": 98762
+  },
+  "<<FORMULA_0146>>": {
+    "formula": "\\label{eq:modified_kin}\n    \\min_{p_t, X_t}\\sum_{i=0}^{N-1} \\Bigr|\\mathbb{E}_{p_{t_{i, i+1,0}}}G(X_{t_i}, X_0) - G(X_{t_{i+1}}, X_0)\\Bigr| + \\sum_{i=0}^{N-1} KL(p_{t_{i\\rightarrow i+1}}|q_{i\\rightarrow i+1})",
+    "raw_latex": "\\begin{align}\\label{eq:modified_kin}\n    \\min_{p_t, X_t}\\sum_{i=0}^{N-1} \\Bigr|\\mathbb{E}_{p_{t_{i, i+1,0}}}G(X_{t_i}, X_0) - G(X_{t_{i+1}}, X_0)\\Bigr| + \\sum_{i=0}^{N-1} KL(p_{t_{i\\rightarrow i+1}}|q_{i\\rightarrow i+1})\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1900,
+    "start_pos": 98369,
+    "end_pos": 98601
+  },
+  "<<FORMULA_0145>>": {
+    "formula": "G(X_{t_i}, X_0) - G(X_{t_{i+1}}, X_0)",
+    "raw_latex": "$ G(X_{t_i}, X_0) - G(X_{t_{i+1}}, X_0) $",
+    "formula_type": "inline",
+    "line_number": 1899,
+    "start_pos": 98196,
+    "end_pos": 98237
+  },
+  "<<FORMULA_0144>>": {
+    "formula": "\\mathbb{E}_{p_{t_{i+1}, 0}}[c(X_{t_{i+1}}, X_0)] - \\mathbb{E}_{p_{t_{i}, 0}}[c(X_{t_{i}}, X_0)] \\leq \\mathbb{E}_{p_{t_{i\\rightarrow i+1,0}}}[c(X_{t_i}, X_0) - c(X_{t_{i+1}}, X_0)]",
+    "raw_latex": "$$\n\\mathbb{E}_{p_{t_{i+1}, 0}}[c(X_{t_{i+1}}, X_0)] - \\mathbb{E}_{p_{t_{i}, 0}}[c(X_{t_{i}}, X_0)] \\leq \\mathbb{E}_{p_{t_{i\\rightarrow i+1,0}}}[c(X_{t_i}, X_0) - c(X_{t_{i+1}}, X_0)]\n$$",
+    "formula_type": "display",
+    "line_number": 1896,
+    "start_pos": 97953,
+    "end_pos": 98138
+  },
+  "<<FORMULA_0143>>": {
+    "formula": "KL(p_{t_{0, i+1}}|q_{0, i+1}) - KL(p_{t_{0, i}}|q_{0,i})\\leq KL(p_{t_{i\\rightarrow i+1}}|q_{i\\rightarrow i+1})",
+    "raw_latex": "$KL(p_{t_{0, i+1}}|q_{0, i+1}) - KL(p_{t_{0, i}}|q_{0,i})\\leq KL(p_{t_{i\\rightarrow i+1}}|q_{i\\rightarrow i+1})$",
+    "formula_type": "inline",
+    "line_number": 1894,
+    "start_pos": 97750,
+    "end_pos": 97862
+  },
+  "<<FORMULA_0142>>": {
+    "formula": "\\begin{split}\n     \\min_{p_t}\\min_{X_t} &\\sum_{i=0}^{N-1} KL(p_{t_{0, i+1}}|q_{0, i+1}) - KL(p_{t_{0, i}}|q_{0,i}) \\\\+ &\\sum_{i=0}^{N-1} \\mathbb{E}_{p_{t_{i+1}, 0}}[G(X_{t_{i+1}}, X_0)] - \\mathbb{E}_{p_{t_{i}, 0}}[G(X_{t_{i}}, X_0)]\n\\end{split}",
+    "raw_latex": "\\begin{align}\n\\begin{split}\n     \\min_{p_t}\\min_{X_t} &\\sum_{i=0}^{N-1} KL(p_{t_{0, i+1}}|q_{0, i+1}) - KL(p_{t_{0, i}}|q_{0,i}) \\\\+ &\\sum_{i=0}^{N-1} \\mathbb{E}_{p_{t_{i+1}, 0}}[G(X_{t_{i+1}}, X_0)] - \\mathbb{E}_{p_{t_{i}, 0}}[G(X_{t_{i}}, X_0)]\n\\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1888,
+    "start_pos": 97458,
+    "end_pos": 97728
+  },
+  "<<FORMULA_0141>>": {
+    "formula": "\\min_{p_t}\\min_{X_t} \\mathbb{E}_{p_t}c(X_i, X_{i+1}) = \\min_{p_t}\\min_{X_t} \\mathbb{E}_{p_t}c(X_0, X_{i+1})-\\mathbb{E}_{p_t}c(X_0, X_{i})",
+    "raw_latex": "\\begin{equation}\n    \\min_{p_t}\\min_{X_t} \\mathbb{E}_{p_t}c(X_i, X_{i+1}) = \\min_{p_t}\\min_{X_t} \\mathbb{E}_{p_t}c(X_0, X_{i+1})-\\mathbb{E}_{p_t}c(X_0, X_{i})\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1884,
+    "start_pos": 97227,
+    "end_pos": 97400
+  },
+  "<<FORMULA_0140>>": {
+    "formula": "\\mathbb{E}_{p_t}c(x_i, x_{i+1})\\geq \\mathbb{E}_{p_t}c(x_0, x_{i+1})-\\mathbb{E}_{p_t}c(x_0, x_{i})",
+    "raw_latex": "$ \\mathbb{E}_{p_t}c(x_i, x_{i+1})\\geq \\mathbb{E}_{p_t}c(x_0, x_{i+1})-\\mathbb{E}_{p_t}c(x_0, x_{i})$",
+    "formula_type": "inline",
+    "line_number": 1882,
+    "start_pos": 97042,
+    "end_pos": 97142
+  },
+  "<<FORMULA_0139>>": {
+    "formula": "p_N = \\pi_N",
+    "raw_latex": "$p_N = \\pi_N$",
+    "formula_type": "inline",
+    "line_number": 1881,
+    "start_pos": 97007,
+    "end_pos": 97020
+  },
+  "<<FORMULA_0138>>": {
+    "formula": "p_0=\\pi_0",
+    "raw_latex": "$p_0=\\pi_0$",
+    "formula_type": "inline",
+    "line_number": 1881,
+    "start_pos": 96990,
+    "end_pos": 97001
+  },
+  "<<FORMULA_0137>>": {
+    "formula": "\\label{eq:sum_of_G}\n    \\min_{p_t}\\min_{X_t} \\sum_{i=0}^{N-1} KL(p_{t_{i\\rightarrow i+1}}|q_{i\\rightarrow i+1}) + \\mathbb{E}_{p_t}\\sum_{i=0}^{N-1} G(X_{t_i}, X_{t_{i+1}})",
+    "raw_latex": "\\begin{equation}\\label{eq:sum_of_G}\n    \\min_{p_t}\\min_{X_t} \\sum_{i=0}^{N-1} KL(p_{t_{i\\rightarrow i+1}}|q_{i\\rightarrow i+1}) + \\mathbb{E}_{p_t}\\sum_{i=0}^{N-1} G(X_{t_i}, X_{t_{i+1}})\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1878,
+    "start_pos": 96779,
+    "end_pos": 96980
+  },
+  "<<FORMULA_0136>>": {
+    "formula": "(X_{t_i}, X_{t_{i+1}})",
+    "raw_latex": "$(X_{t_i}, X_{t_{i+1}})$",
+    "formula_type": "inline",
+    "line_number": 1877,
+    "start_pos": 96667,
+    "end_pos": 96691
+  },
+  "<<FORMULA_0135>>": {
+    "formula": "\\label{eq:FPE}\n    \\frac{\\partial p_t}{\\partial t} = - \\nabla \\cdot (u_t p_t) + \\frac{1}{2}\\sigma^2\\Delta p_t",
+    "raw_latex": "\\begin{equation}\\label{eq:FPE}\n    \\frac{\\partial p_t}{\\partial t} = - \\nabla \\cdot (u_t p_t) + \\frac{1}{2}\\sigma^2\\Delta p_t\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1872,
+    "start_pos": 96250,
+    "end_pos": 96390
+  },
+  "<<FORMULA_0134>>": {
+    "formula": "\\label{eq:SDE_app}\n    dX_t = u_t dt + \\sigma dW_t",
+    "raw_latex": "\\begin{equation}\\label{eq:SDE_app}\n    dX_t = u_t dt + \\sigma dW_t\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1868,
+    "start_pos": 95967,
+    "end_pos": 96048
+  },
+  "<<FORMULA_0133>>": {
+    "formula": "X_1\\sim\\pi_1",
+    "raw_latex": "$X_1\\sim\\pi_1$",
+    "formula_type": "inline",
+    "line_number": 1867,
+    "start_pos": 95825,
+    "end_pos": 95839
+  },
+  "<<FORMULA_0132>>": {
+    "formula": "X_0\\sim\\pi_0",
+    "raw_latex": "$X_0\\sim\\pi_0$",
+    "formula_type": "inline",
+    "line_number": 1867,
+    "start_pos": 95807,
+    "end_pos": 95821
+  },
+  "<<FORMULA_0131>>": {
+    "formula": "\\label{eq:starting_point}\n    \\min_\\pi KL(\\pi_{0,1}|\\pi_{0,1}^\\sQ) + \\int G(X_0,X_1)\\pi_{0,1} dx_0dx_1",
+    "raw_latex": "\\begin{equation}\\label{eq:starting_point}\n    \\min_\\pi KL(\\pi_{0,1}|\\pi_{0,1}^\\sQ) + \\int G(X_0,X_1)\\pi_{0,1} dx_0dx_1\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1863,
+    "start_pos": 95203,
+    "end_pos": 95336
+  },
+  "<<FORMULA_0130>>": {
+    "formula": "KL(\\pi_{0,1}|\\pi_{0,1}^\\sQ) + \\int G(x_0, x_1)\\pi_{0,1} dx_0dx_1",
+    "raw_latex": "$ KL(\\pi_{0,1}|\\pi_{0,1}^\\sQ) + \\int G(x_0, x_1)\\pi_{0,1} dx_0dx_1$",
+    "formula_type": "inline",
+    "line_number": 1861,
+    "start_pos": 95082,
+    "end_pos": 95149
+  },
+  "<<FORMULA_0129>>": {
+    "formula": "\\pi^\\sQ \\propto e^{\\|X_0-X_1\\|^2/\\epsilon}",
+    "raw_latex": "$\\pi^\\sQ \\propto e^{\\|X_0-X_1\\|^2/\\epsilon}$",
+    "formula_type": "inline",
+    "line_number": 1860,
+    "start_pos": 94984,
+    "end_pos": 95028
+  },
+  "<<FORMULA_0128>>": {
+    "formula": "\\log\\pi^{\\sQ}_{0,1} \\propto \\|X_0-X_1\\|^2/\\epsilon",
+    "raw_latex": "$\\log\\pi^{\\sQ}_{0,1} \\propto \\|X_0-X_1\\|^2/\\epsilon$",
+    "formula_type": "inline",
+    "line_number": 1860,
+    "start_pos": 94924,
+    "end_pos": 94976
+  },
+  "<<FORMULA_0127>>": {
+    "formula": "KL(\\pi_{0,1}|\\pi_{0,1}^\\sQ)",
+    "raw_latex": "$KL(\\pi_{0,1}|\\pi_{0,1}^\\sQ)$",
+    "formula_type": "inline",
+    "line_number": 1859,
+    "start_pos": 94791,
+    "end_pos": 94820
+  },
+  "<<FORMULA_0126>>": {
+    "formula": "\\|X_0-X_1\\|^2",
+    "raw_latex": "$\\|X_0-X_1\\|^2$",
+    "formula_type": "inline",
+    "line_number": 1859,
+    "start_pos": 94771,
+    "end_pos": 94786
+  },
+  "<<FORMULA_0125>>": {
+    "formula": "KL(\\pi_{0,1}|\\pi_0\\otimes\\pi_1)",
+    "raw_latex": "$KL(\\pi_{0,1}|\\pi_0\\otimes\\pi_1)$",
+    "formula_type": "inline",
+    "line_number": 1859,
+    "start_pos": 94713,
+    "end_pos": 94746
+  },
+  "<<FORMULA_0124>>": {
+    "formula": "c(X_0,X_1) = ||X_0-X_1||^2 + G(X_0,X_1)",
+    "raw_latex": "$c(X_0,X_1) = ||X_0-X_1||^2 + G(X_0,X_1)$",
+    "formula_type": "inline",
+    "line_number": 1858,
+    "start_pos": 94639,
+    "end_pos": 94680
+  },
+  "<<FORMULA_0123>>": {
+    "formula": "\\min_{\\pi} \\int \\|X_0-X_1\\|^2 + G(X_0,X_1) + \\epsilon KL(\\pi_{0,1}|\\pi_0\\otimes\\pi_1)",
+    "raw_latex": "$\\min_{\\pi} \\int \\|X_0-X_1\\|^2 + G(X_0,X_1) + \\epsilon KL(\\pi_{0,1}|\\pi_0\\otimes\\pi_1)$",
+    "formula_type": "inline",
+    "line_number": 1857,
+    "start_pos": 94451,
+    "end_pos": 94538
+  },
+  "<<FORMULA_0122>>": {
+    "formula": "\\pi_0, \\pi_1",
+    "raw_latex": "$\\pi_0, \\pi_1$",
+    "formula_type": "inline",
+    "line_number": 1855,
+    "start_pos": 94372,
+    "end_pos": 94386
+  },
+  "<<FORMULA_0121>>": {
+    "formula": "c(X_0,X_1)",
+    "raw_latex": "$c(X_0,X_1)$",
+    "formula_type": "inline",
+    "line_number": 1855,
+    "start_pos": 94293,
+    "end_pos": 94305
+  },
+  "<<FORMULA_0120>>": {
+    "formula": "\\min_{p_{t|0,1}} \\int \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr],\\\\ \\text{  s.t.  } \\frac{\\partial p_{t|0,1}}{\\partial t} = - \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) + \\frac{\\sigma^2}{2}\\Delta p_{t|0,1}",
+    "raw_latex": "$$\n   \\min_{p_{t|0,1}} \\int \\mathbb{E}_{p_{t}}\\Bigr[ \\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr[| u_{t|0,1}^\\intercal\\nabla G_{t| 0} | + \\frac{\\sigma^2}{2}\\Delta G_{t| 0} \\bigr]  \\Bigr],\\\\ \\text{  s.t.  } \\frac{\\partial p_{t|0,1}}{\\partial t} = - \\nabla \\cdot (u_{t|0,1} p_{t|0,1}) + \\frac{\\sigma^2}{2}\\Delta p_{t|0,1}\n$$",
+    "formula_type": "display",
+    "line_number": 1849,
+    "start_pos": 93948,
+    "end_pos": 94261
+  },
+  "<<FORMULA_0119>>": {
+    "formula": "N\\rightarrow\\infty",
+    "raw_latex": "$N\\rightarrow\\infty$",
+    "formula_type": "inline",
+    "line_number": 1847,
+    "start_pos": 93877,
+    "end_pos": 93897
+  },
+  "<<FORMULA_0118>>": {
+    "formula": "G(X_{t_{i+1}}, X_0) - G(X_{t_i}, X_0)",
+    "raw_latex": "$G(X_{t_{i+1}}, X_0) - G(X_{t_i}, X_0)$",
+    "formula_type": "inline",
+    "line_number": 1845,
+    "start_pos": 93690,
+    "end_pos": 93729
+  },
+  "<<FORMULA_0117>>": {
+    "formula": "\\min_{p_t, X_t}\\sum_{i=0}^{N-1} \\Bigr|\\mathbb{E}_{p_{t_{i, i+1,0}}}G(X_{t_i}, X_0) - G(X_{t_{i+1}}, X_0)\\Bigr| + \\sum_{i=0}^{N-1} KL(p_{t_{i\\rightarrow i+1}}|q_{i\\rightarrow i+1})",
+    "raw_latex": "$$\n\\min_{p_t, X_t}\\sum_{i=0}^{N-1} \\Bigr|\\mathbb{E}_{p_{t_{i, i+1,0}}}G(X_{t_i}, X_0) - G(X_{t_{i+1}}, X_0)\\Bigr| + \\sum_{i=0}^{N-1} KL(p_{t_{i\\rightarrow i+1}}|q_{i\\rightarrow i+1})\n$$",
+    "formula_type": "display",
+    "line_number": 1841,
+    "start_pos": 93409,
+    "end_pos": 93594
+  },
+  "<<FORMULA_0116>>": {
+    "formula": "G(X_{t_{i+1}}, X_0) - G(X_{t_i}, X_0)",
+    "raw_latex": "$G(X_{t_{i+1}}, X_0) - G(X_{t_i}, X_0)$",
+    "formula_type": "inline",
+    "line_number": 1839,
+    "start_pos": 93191,
+    "end_pos": 93230
+  },
+  "<<FORMULA_0115>>": {
+    "formula": "G:\\mathbb{R}^d\\times\\mathbb{R}^d\\rightarrow\\mathbb{R}",
+    "raw_latex": "$G:\\mathbb{R}^d\\times\\mathbb{R}^d\\rightarrow\\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 1839,
+    "start_pos": 92961,
+    "end_pos": 93016
+  },
+  "<<FORMULA_0114>>": {
+    "formula": "\\min_{p_t}\\min_{X_t} \\sum_{i=0}^{N-1} KL(p_{t_{i\\rightarrow i+1}}|q_{i\\rightarrow i+1}) + \\mathbb{E}_{p_t}\\sum_{i=0}^{N-1} G(X_{t_i}, X_{t_{i+1}})",
+    "raw_latex": "$$\n\\min_{p_t}\\min_{X_t} \\sum_{i=0}^{N-1} KL(p_{t_{i\\rightarrow i+1}}|q_{i\\rightarrow i+1}) + \\mathbb{E}_{p_t}\\sum_{i=0}^{N-1} G(X_{t_i}, X_{t_{i+1}})\n$$",
+    "formula_type": "display",
+    "line_number": 1835,
+    "start_pos": 92778,
+    "end_pos": 92930
+  },
+  "<<FORMULA_0113>>": {
+    "formula": "N\\rightarrow \\infty",
+    "raw_latex": "$N\\rightarrow \\infty$",
+    "formula_type": "inline",
+    "line_number": 1833,
+    "start_pos": 92347,
+    "end_pos": 92368
+  },
+  "<<FORMULA_0112>>": {
+    "formula": "p_2^\\star",
+    "raw_latex": "$p_2^\\star$",
+    "formula_type": "inline",
+    "line_number": 1833,
+    "start_pos": 92019,
+    "end_pos": 92030
+  },
+  "<<FORMULA_0111>>": {
+    "formula": "p_1^\\star",
+    "raw_latex": "$p_1^\\star$",
+    "formula_type": "inline",
+    "line_number": 1833,
+    "start_pos": 92006,
+    "end_pos": 92017
+  },
+  "<<FORMULA_0110>>": {
+    "formula": "t_N=1",
+    "raw_latex": "$t_N=1$",
+    "formula_type": "inline",
+    "line_number": 1833,
+    "start_pos": 91925,
+    "end_pos": 91932
+  },
+  "<<FORMULA_0109>>": {
+    "formula": "t_0=0",
+    "raw_latex": "$t_0=0$",
+    "formula_type": "inline",
+    "line_number": 1833,
+    "start_pos": 91913,
+    "end_pos": 91920
+  },
+  "<<FORMULA_0108>>": {
+    "formula": "\\min_\\pi KL(\\pi_{0,1}|\\pi_{0,1}^\\mathbb{Q}) + \\int G(X_0,X_1)\\pi_{0,1} dx_0dx_1",
+    "raw_latex": "$$\n\\min_\\pi KL(\\pi_{0,1}|\\pi_{0,1}^\\mathbb{Q}) + \\int G(X_0,X_1)\\pi_{0,1} dx_0dx_1\n$$",
+    "formula_type": "display",
+    "line_number": 1829,
+    "start_pos": 91790,
+    "end_pos": 91875
+  },
+  "<<FORMULA_0107>>": {
+    "formula": "\\min_{\\pi} \\int \\|X_0-X_1\\|^2 + G(X_0,X_1) + \\epsilon KL(\\pi_{0,1}|\\pi_0\\otimes\\pi_1)",
+    "raw_latex": "$\\min_{\\pi} \\int \\|X_0-X_1\\|^2 + G(X_0,X_1) + \\epsilon KL(\\pi_{0,1}|\\pi_0\\otimes\\pi_1)$",
+    "formula_type": "inline",
+    "line_number": 1826,
+    "start_pos": 91473,
+    "end_pos": 91560
+  },
+  "<<FORMULA_0106>>": {
+    "formula": "\\pi_0, \\pi_1",
+    "raw_latex": "$\\pi_0, \\pi_1$",
+    "formula_type": "inline",
+    "line_number": 1825,
+    "start_pos": 91394,
+    "end_pos": 91408
+  },
+  "<<FORMULA_0105>>": {
+    "formula": "\\label{eq:lagrangian_app}\n    \\begin{split}\n        &\\min_{p_{t},u_t} \\int_{\\sR^d\\times [0,1]} \\Bigr( \\frac{1}{2}\\|u_t\\|^2 +  \\mathbb{E}_{p_{0|t}}\\bigr[|u_t^\\intercal G_{t,0}| + \\frac{\\sigma^2}{2}\\Delta G_{t,0}\\bigr]\\Bigr) p_t \\mathrm{d}x \\mathrm{d}t, \\\\\n        \\text{ s.t. }  &\\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\text{ and } p_0 = \\pi_0, p_1 = \\pi_1\n    \\end{split}",
+    "raw_latex": "\\begin{align}\\label{eq:lagrangian_app}\n    \\begin{split}\n        &\\min_{p_{t},u_t} \\int_{\\sR^d\\times [0,1]} \\Bigr( \\frac{1}{2}\\|u_t\\|^2 +  \\mathbb{E}_{p_{0|t}}\\bigr[|u_t^\\intercal G_{t,0}| + \\frac{\\sigma^2}{2}\\Delta G_{t,0}\\bigr]\\Bigr) p_t \\mathrm{d}x \\mathrm{d}t, \\\\\n        \\text{ s.t. }  &\\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\text{ and } p_0 = \\pi_0, p_1 = \\pi_1\n    \\end{split}\n    \\end{align}",
+    "formula_type": "align",
+    "line_number": 1816,
+    "start_pos": 90773,
+    "end_pos": 91231
+  },
+  "<<FORMULA_0104>>": {
+    "formula": "\\pi_0, \\text{ and } \\pi_1",
+    "raw_latex": "$\\pi_0, \\text{ and } \\pi_1$",
+    "formula_type": "inline",
+    "line_number": 1815,
+    "start_pos": 90569,
+    "end_pos": 90596
+  },
+  "<<FORMULA_0103>>": {
+    "formula": "X_1\\sim\\pi_1",
+    "raw_latex": "$X_1\\sim\\pi_1$",
+    "formula_type": "inline",
+    "line_number": 1815,
+    "start_pos": 90409,
+    "end_pos": 90423
+  },
+  "<<FORMULA_0102>>": {
+    "formula": "X_0\\sim\\pi_0",
+    "raw_latex": "$X_0\\sim\\pi_0$",
+    "formula_type": "inline",
+    "line_number": 1815,
+    "start_pos": 90389,
+    "end_pos": 90403
+  },
+  "<<FORMULA_0101>>": {
+    "formula": "X_0, X_1 \\in\\sR^d",
+    "raw_latex": "$X_0, X_1 \\in\\sR^d$",
+    "formula_type": "inline",
+    "line_number": 1815,
+    "start_pos": 90363,
+    "end_pos": 90382
+  },
+  "<<FORMULA_0100>>": {
+    "formula": "\\gW_2(p_1^\\theta, \\pi_1)",
+    "raw_latex": "$\\gW_2(p_1^\\theta, \\pi_1)$",
+    "formula_type": "inline",
+    "line_number": 1677,
+    "start_pos": 82231,
+    "end_pos": 82257
+  },
+  "<<FORMULA_0099>>": {
+    "formula": "p_1^\\theta",
+    "raw_latex": "$p_1^\\theta$",
+    "formula_type": "inline",
+    "line_number": 1677,
+    "start_pos": 82187,
+    "end_pos": 82199
+  },
+  "<<FORMULA_0098>>": {
+    "formula": "X_t\\in\\sR^{100}",
+    "raw_latex": "$X_t\\in\\sR^{100}$",
+    "formula_type": "inline",
+    "line_number": 1668,
+    "start_pos": 80914,
+    "end_pos": 80931
+  },
+  "<<FORMULA_0097>>": {
+    "formula": "(X\\in\\sR^{100})",
+    "raw_latex": "$(X\\in\\sR^{100})$",
+    "formula_type": "inline",
+    "line_number": 1641,
+    "start_pos": 79855,
+    "end_pos": 79872
+  },
+  "<<FORMULA_0096>>": {
+    "formula": "\\gW_2 (p_1^\\theta, \\pi_1)",
+    "raw_latex": "$\\gW_2 (p_1^\\theta, \\pi_1)$",
+    "formula_type": "inline",
+    "line_number": 1641,
+    "start_pos": 79738,
+    "end_pos": 79765
+  },
+  "<<FORMULA_0095>>": {
+    "formula": "\\gW_2(p_1^\\theta, \\pi_1)",
+    "raw_latex": "$\\gW_2(p_1^\\theta, \\pi_1)$",
+    "formula_type": "inline",
+    "line_number": 1629,
+    "start_pos": 78739,
+    "end_pos": 78765
+  },
+  "<<FORMULA_0094>>": {
+    "formula": "p_1^\\theta",
+    "raw_latex": "$p_1^\\theta$",
+    "formula_type": "inline",
+    "line_number": 1629,
+    "start_pos": 78607,
+    "end_pos": 78619
+  },
+  "<<FORMULA_0093>>": {
+    "formula": "u_t^\\theta",
+    "raw_latex": "$u_t^\\theta$",
+    "formula_type": "inline",
+    "line_number": 1573,
+    "start_pos": 74840,
+    "end_pos": 74852
+  },
+  "<<FORMULA_0092>>": {
+    "formula": "p_{t|0,1}^\\star",
+    "raw_latex": "$p_{t|0,1}^\\star$",
+    "formula_type": "inline",
+    "line_number": 1571,
+    "start_pos": 74695,
+    "end_pos": 74712
+  },
+  "<<FORMULA_0091>>": {
+    "formula": "x_0, x_1",
+    "raw_latex": "$x_0, x_1$",
+    "formula_type": "inline",
+    "line_number": 1571,
+    "start_pos": 74672,
+    "end_pos": 74682
+  },
+  "<<FORMULA_0090>>": {
+    "formula": "G(X_{t_k}, x_0)",
+    "raw_latex": "$G(X_{t_k}, x_0)$",
+    "formula_type": "inline",
+    "line_number": 1570,
+    "start_pos": 74604,
+    "end_pos": 74621
+  },
+  "<<FORMULA_0089>>": {
+    "formula": "d(X_{t_k}, x_{t_k}^{i})",
+    "raw_latex": "$d(X_{t_k}, x_{t_k}^{i})$",
+    "formula_type": "inline",
+    "line_number": 1569,
+    "start_pos": 74552,
+    "end_pos": 74577
+  },
+  "<<FORMULA_0088>>": {
+    "formula": "i^\\text{th}",
+    "raw_latex": "$i^\\text{th}$",
+    "formula_type": "inline",
+    "line_number": 1569,
+    "start_pos": 74500,
+    "end_pos": 74513
+  },
+  "<<FORMULA_0087>>": {
+    "formula": "d(x_0, x_0^{i})",
+    "raw_latex": "$d(x_0, x_0^{i})$",
+    "formula_type": "inline",
+    "line_number": 1568,
+    "start_pos": 74441,
+    "end_pos": 74458
+  },
+  "<<FORMULA_0086>>": {
+    "formula": "0<t_1<\\dots<t_K<1",
+    "raw_latex": "$0<t_1<\\dots<t_K<1$",
+    "formula_type": "inline",
+    "line_number": 1567,
+    "start_pos": 74333,
+    "end_pos": 74352
+  },
+  "<<FORMULA_0085>>": {
+    "formula": "u_t^\\theta",
+    "raw_latex": "$u_t^\\theta$",
+    "formula_type": "inline",
+    "line_number": 1567,
+    "start_pos": 74305,
+    "end_pos": 74317
+  },
+  "<<FORMULA_0084>>": {
+    "formula": "x_0, x_1, X_{t_k}",
+    "raw_latex": "$x_0, x_1, X_{t_k}$",
+    "formula_type": "inline",
+    "line_number": 1567,
+    "start_pos": 74256,
+    "end_pos": 74275
+  },
+  "<<FORMULA_0083>>": {
+    "formula": "\\pi_0\\otimes\\pi_1",
+    "raw_latex": "$\\pi_0\\otimes\\pi_1$",
+    "formula_type": "inline",
+    "line_number": 1565,
+    "start_pos": 74172,
+    "end_pos": 74191
+  },
+  "<<FORMULA_0082>>": {
+    "formula": "u_t^\\theta",
+    "raw_latex": "$u_t^\\theta$",
+    "formula_type": "inline",
+    "line_number": 1565,
+    "start_pos": 74118,
+    "end_pos": 74130
+  },
+  "<<FORMULA_0081>>": {
+    "formula": "\\{x_0^{n}, x_1^{n}\\}_{n=1}^N",
+    "raw_latex": "$\\{x_0^{n}, x_1^{n}\\}_{n=1}^N$",
+    "formula_type": "inline",
+    "line_number": 1564,
+    "start_pos": 74034,
+    "end_pos": 74064
+  },
+  "<<FORMULA_0080>>": {
+    "formula": "u_t^\\theta",
+    "raw_latex": "$u_t^\\theta$",
+    "formula_type": "inline",
+    "line_number": 1558,
+    "start_pos": 73644,
+    "end_pos": 73656
+  },
+  "<<FORMULA_0079>>": {
+    "formula": "u_{t|0,1}^\\star",
+    "raw_latex": "$u_{t|0,1}^\\star$",
+    "formula_type": "inline",
+    "line_number": 1556,
+    "start_pos": 73521,
+    "end_pos": 73538
+  },
+  "<<FORMULA_0078>>": {
+    "formula": "u_t^\\theta",
+    "raw_latex": "$u_t^\\theta$",
+    "formula_type": "inline",
+    "line_number": 1555,
+    "start_pos": 73459,
+    "end_pos": 73471
+  },
+  "<<FORMULA_0077>>": {
+    "formula": "u_{t|0,1}^\\star",
+    "raw_latex": "$u_{t|0,1}^\\star$",
+    "formula_type": "inline",
+    "line_number": 1554,
+    "start_pos": 73234,
+    "end_pos": 73251
+  },
+  "<<FORMULA_0076>>": {
+    "formula": "p_{t|0,1}^\\star",
+    "raw_latex": "$p_{t|0,1}^\\star$",
+    "formula_type": "inline",
+    "line_number": 1554,
+    "start_pos": 73189,
+    "end_pos": 73206
+  },
+  "<<FORMULA_0075>>": {
+    "formula": "(x_0, x_1)",
+    "raw_latex": "$(x_0, x_1)$",
+    "formula_type": "inline",
+    "line_number": 1554,
+    "start_pos": 73119,
+    "end_pos": 73131
+  },
+  "<<FORMULA_0074>>": {
+    "formula": "G(X_{t_k}, x_0)",
+    "raw_latex": "$G(X_{t_k}, x_0)$",
+    "formula_type": "inline",
+    "line_number": 1553,
+    "start_pos": 73041,
+    "end_pos": 73058
+  },
+  "<<FORMULA_0073>>": {
+    "formula": "d(X_{t_k}, X_{t_k}^i)",
+    "raw_latex": "$d(X_{t_k}, X_{t_k}^i)$",
+    "formula_type": "inline",
+    "line_number": 1553,
+    "start_pos": 72966,
+    "end_pos": 72989
+  },
+  "<<FORMULA_0072>>": {
+    "formula": "d(x_0, x_0^i)",
+    "raw_latex": "$d(x_0, x_0^i)$",
+    "formula_type": "inline",
+    "line_number": 1553,
+    "start_pos": 72845,
+    "end_pos": 72860
+  },
+  "<<FORMULA_0071>>": {
+    "formula": "x_0^i \\in\\gK",
+    "raw_latex": "$x_0^i \\in\\gK$",
+    "formula_type": "inline",
+    "line_number": 1553,
+    "start_pos": 72769,
+    "end_pos": 72783
+  },
+  "<<FORMULA_0070>>": {
+    "formula": "i^\\text{th}",
+    "raw_latex": "$i^\\text{th}$",
+    "formula_type": "inline",
+    "line_number": 1553,
+    "start_pos": 72727,
+    "end_pos": 72740
+  },
+  "<<FORMULA_0069>>": {
+    "formula": "(x_0, x_1)",
+    "raw_latex": "$(x_0, x_1)$",
+    "formula_type": "inline",
+    "line_number": 1552,
+    "start_pos": 72602,
+    "end_pos": 72614
+  },
+  "<<FORMULA_0068>>": {
+    "formula": "(p_t^\\star, u_t^\\star)",
+    "raw_latex": "$(p_t^\\star, u_t^\\star)$",
+    "formula_type": "inline",
+    "line_number": 1551,
+    "start_pos": 72477,
+    "end_pos": 72501
+  },
+  "<<FORMULA_0067>>": {
+    "formula": "\\label{eq:BM}\n        \\min_\\theta \\int_0^1 \\mathbb{E}_{p_{t}} ||u_{t|0,1}^\\star -u_t^\\theta||^2 \\rm{d}t",
+    "raw_latex": "\\begin{equation}\\label{eq:BM}\n        \\min_\\theta \\int_0^1 \\mathbb{E}_{p_{t}} ||u_{t|0,1}^\\star -u_t^\\theta||^2 \\rm{d}t\n    \\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1543,
+    "start_pos": 72128,
+    "end_pos": 72266
+  },
+  "<<FORMULA_0066>>": {
+    "formula": "u_t^\\theta =  a_t^\\theta - g(a_t^\\intercal \\nabla G_{t|0})\\cdot\\nabla G_{t|0}",
+    "raw_latex": "$u_t^\\theta =  a_t^\\theta - g(a_t^\\intercal \\nabla G_{t|0})\\cdot\\nabla G_{t|0}$",
+    "formula_type": "inline",
+    "line_number": 1541,
+    "start_pos": 71944,
+    "end_pos": 72023
+  },
+  "<<FORMULA_0065>>": {
+    "formula": "\\label{eq:BD}\n        \\begin{split}\n                \\min_\\theta \\int_0^1 \\mathbb{E}_{p_{0,1}}\\mathbb{E}_{p_{t|0,1}}\\| a_t^\\theta - u_{t|0,1}^\\star - g(a_t^\\intercal \\nabla  G_{t|0})\\cdot\\nabla  G_{t|0}\\|^2 \\mathrm{d}t \n        \\end{split}",
+    "raw_latex": "\\begin{align}\\label{eq:BD}\n        \\begin{split}\n                \\min_\\theta \\int_0^1 \\mathbb{E}_{p_{0,1}}\\mathbb{E}_{p_{t|0,1}}\\| a_t^\\theta - u_{t|0,1}^\\star - g(a_t^\\intercal \\nabla  G_{t|0})\\cdot\\nabla  G_{t|0}\\|^2 \\mathrm{d}t \n        \\end{split}\n    \\end{align}",
+    "formula_type": "align",
+    "line_number": 1536,
+    "start_pos": 71585,
+    "end_pos": 71852
+  },
+  "<<FORMULA_0064>>": {
+    "formula": "D_{\\text{L, H}} = L(X_t,u_t, t) + H(X_t, a_t, t) - \\langle a_t, u_t\\rangle",
+    "raw_latex": "$D_{\\text{L, H}} = L(X_t,u_t, t) + H(X_t, a_t, t) - \\langle a_t, u_t\\rangle$",
+    "formula_type": "inline",
+    "line_number": 1535,
+    "start_pos": 71504,
+    "end_pos": 71580
+  },
+  "<<FORMULA_0063>>": {
+    "formula": "u_{t|0,1}^\\star",
+    "raw_latex": "$u_{t|0,1}^\\star$",
+    "formula_type": "inline",
+    "line_number": 1535,
+    "start_pos": 71375,
+    "end_pos": 71392
+  },
+  "<<FORMULA_0062>>": {
+    "formula": "u_t^\\theta",
+    "raw_latex": "$u_t^\\theta$",
+    "formula_type": "inline",
+    "line_number": 1535,
+    "start_pos": 71348,
+    "end_pos": 71360
+  },
+  "<<FORMULA_0061>>": {
+    "formula": "u_{t|0,1}^\\star",
+    "raw_latex": "$u_{t|0,1}^\\star$",
+    "formula_type": "inline",
+    "line_number": 1534,
+    "start_pos": 71251,
+    "end_pos": 71268
+  },
+  "<<FORMULA_0060>>": {
+    "formula": "\\begin{split}\\label{eq:hamiltonian_main}\n        H(x_t, a_t, t) &= \\frac{1}{2}||a_t - g(a_t^\\intercal \\nabla G_{t|0})\\cdot\\nabla G_{t|0}||^2 - \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0)\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:hamiltonian_main}\n        H(x_t, a_t, t) &= \\frac{1}{2}||a_t - g(a_t^\\intercal \\nabla G_{t|0})\\cdot\\nabla G_{t|0}||^2 - \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0)\n    \\end{split}\n    \\end{align}",
+    "formula_type": "align",
+    "line_number": 1523,
+    "start_pos": 70665,
+    "end_pos": 70894
+  },
+  "<<FORMULA_0059>>": {
+    "formula": "g(a_t^\\intercal \\nabla G_{t|0}) = \\begin{cases} \n        \\frac{a_t^\\intercal \\nabla G_{t|0}}{\\|\\nabla G_{t|0}\\|^2} \\quad \\text{   if   } \\quad |a_t^\\intercal \\nabla G_{t|0}|\\leq\\|\\nabla G_{t|0}\\|^2 \\\\\n        sgn(a_t^\\intercal \\nabla G_{t|0}) \\quad \\text{else}\n        \\end{cases}",
+    "raw_latex": "$$\n        g(a_t^\\intercal \\nabla G_{t|0}) = \\begin{cases} \n        \\frac{a_t^\\intercal \\nabla G_{t|0}}{\\|\\nabla G_{t|0}\\|^2} \\quad \\text{   if   } \\quad |a_t^\\intercal \\nabla G_{t|0}|\\leq\\|\\nabla G_{t|0}\\|^2 \\\\\n        sgn(a_t^\\intercal \\nabla G_{t|0}) \\quad \\text{else}\n        \\end{cases}\n$$",
+    "formula_type": "display",
+    "line_number": 1516,
+    "start_pos": 70277,
+    "end_pos": 70571
+  },
+  "<<FORMULA_0058>>": {
+    "formula": "g(\\cdot):\\sR\\rightarrow\\sR",
+    "raw_latex": "$g(\\cdot):\\sR\\rightarrow\\sR$",
+    "formula_type": "inline",
+    "line_number": 1515,
+    "start_pos": 70236,
+    "end_pos": 70264
+  },
+  "<<FORMULA_0057>>": {
+    "formula": "\\nabla G_{t|0} \\equiv G(X_t, x_0)",
+    "raw_latex": "$\\nabla G_{t|0} \\equiv G(X_t, x_0)$",
+    "formula_type": "inline",
+    "line_number": 1515,
+    "start_pos": 70195,
+    "end_pos": 70230
+  },
+  "<<FORMULA_0056>>": {
+    "formula": "u_{t|0,1} = a_t - g(a_t^\\intercal \\nabla G_{t|0}) \\nabla G_{t|0}",
+    "raw_latex": "$u_{t|0,1} = a_t - g(a_t^\\intercal \\nabla G_{t|0}) \\nabla G_{t|0}$",
+    "formula_type": "inline",
+    "line_number": 1515,
+    "start_pos": 70121,
+    "end_pos": 70187
+  },
+  "<<FORMULA_0055>>": {
+    "formula": "H(x_t, a_t, t) = \\sup_{u_{t|0,1}}\\langle u_{t|0,1}, a_t\\rangle - L(x_t, u_{t|0,1}, t)",
+    "raw_latex": "$H(x_t, a_t, t) = \\sup_{u_{t|0,1}}\\langle u_{t|0,1}, a_t\\rangle - L(x_t, u_{t|0,1}, t)$",
+    "formula_type": "inline",
+    "line_number": 1514,
+    "start_pos": 69981,
+    "end_pos": 70068
+  },
+  "<<FORMULA_0054>>": {
+    "formula": "u_t^\\theta",
+    "raw_latex": "$u_t^\\theta$",
+    "formula_type": "inline",
+    "line_number": 1509,
+    "start_pos": 69133,
+    "end_pos": 69145
+  },
+  "<<FORMULA_0053>>": {
+    "formula": "\\sigma_t=\\nu\\sqrt{t(1-t)}",
+    "raw_latex": "$\\sigma_t=\\nu\\sqrt{t(1-t)}$",
+    "formula_type": "inline",
+    "line_number": 1503,
+    "start_pos": 68714,
+    "end_pos": 68741
+  },
+  "<<FORMULA_0052>>": {
+    "formula": "\\label{eq:cond.drift}\n    u_{t|0,1} =  \\partial_t I_{t|0,1} + \\Bigr(\\frac{\\partial_t\\sigma_t}{\\sigma_t} - \\frac{\\nu^2}{2\\sigma_t^2}\\Bigr) (X_t - I_t)",
+    "raw_latex": "\\begin{equation}\\label{eq:cond.drift}\n    u_{t|0,1} =  \\partial_t I_{t|0,1} + \\Bigr(\\frac{\\partial_t\\sigma_t}{\\sigma_t} - \\frac{\\nu^2}{2\\sigma_t^2}\\Bigr) (X_t - I_t)\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1500,
+    "start_pos": 68501,
+    "end_pos": 68681
+  },
+  "<<FORMULA_0051>>": {
+    "formula": "\\sigma_0 = \\sigma_1 = 0",
+    "raw_latex": "$\\sigma_0 = \\sigma_1 = 0$",
+    "formula_type": "inline",
+    "line_number": 1498,
+    "start_pos": 68323,
+    "end_pos": 68348
+  },
+  "<<FORMULA_0050>>": {
+    "formula": "I_1=x_1",
+    "raw_latex": "$I_1=x_1$",
+    "formula_type": "inline",
+    "line_number": 1498,
+    "start_pos": 68268,
+    "end_pos": 68277
+  },
+  "<<FORMULA_0049>>": {
+    "formula": "I_0=x_0",
+    "raw_latex": "$I_0=x_0$",
+    "formula_type": "inline",
+    "line_number": 1498,
+    "start_pos": 68257,
+    "end_pos": 68266
+  },
+  "<<FORMULA_0048>>": {
+    "formula": "I_{t|0,1}\\equiv I(t, x_0,x_1)",
+    "raw_latex": "$I_{t|0,1}\\equiv I(t, x_0,x_1)$",
+    "formula_type": "inline",
+    "line_number": 1498,
+    "start_pos": 68168,
+    "end_pos": 68199
+  },
+  "<<FORMULA_0047>>": {
+    "formula": "p_{t|0,1}\\approx \\gN(I_{t|0,1}, \\sigma_t \\mathbf{I}_d)",
+    "raw_latex": "$p_{t|0,1}\\approx \\gN(I_{t|0,1}, \\sigma_t \\mathbf{I}_d)$",
+    "formula_type": "inline",
+    "line_number": 1498,
+    "start_pos": 68104,
+    "end_pos": 68160
+  },
+  "<<FORMULA_0046>>": {
+    "formula": "(x_0, x_1) \\sim p_{0,1}^\\theta",
+    "raw_latex": "$(x_0, x_1) \\sim p_{0,1}^\\theta$",
+    "formula_type": "inline",
+    "line_number": 1497,
+    "start_pos": 67933,
+    "end_pos": 67965
+  },
+  "<<FORMULA_0045>>": {
+    "formula": "\\nabla G",
+    "raw_latex": "$\\nabla G$",
+    "formula_type": "inline",
+    "line_number": 1492,
+    "start_pos": 67696,
+    "end_pos": 67706
+  },
+  "<<FORMULA_0044>>": {
+    "formula": "|\\nabla G_{t|0}^\\intercal u_{t|0,1}|",
+    "raw_latex": "$|\\nabla G_{t|0}^\\intercal u_{t|0,1}|$",
+    "formula_type": "inline",
+    "line_number": 1481,
+    "start_pos": 66930,
+    "end_pos": 66968
+  },
+  "<<FORMULA_0043>>": {
+    "formula": "I^2 SB",
+    "raw_latex": "$I^2 SB$",
+    "formula_type": "inline",
+    "line_number": 1467,
+    "start_pos": 66225,
+    "end_pos": 66233
+  },
+  "<<FORMULA_0042>>": {
+    "formula": "\\begin{split}\\label{eq:cond.lagrang.}\n        \\min_{p_{t|0,1}} \\int_{\\sR^d\\times [0,1]} (\\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr|u_{t|0,1}^\\intercal \\nabla G(X_t, x_0)\\bigr| + \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0) \\ p_{t|0,1} \\mathrm{d}x \\mathrm{d}t, \\quad \\\\ \\text{ s.t. } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla \\cdot (p_{t|0,1} u_{t}) + \\frac{1}{2} \\sigma^2 \\Delta p_{t|0,1}, \\quad X_0=x_0, \\quad X_1=x_1\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:cond.lagrang.}\n        \\min_{p_{t|0,1}} \\int_{\\sR^d\\times [0,1]} (\\frac{1}{2}\\|u_{t|0,1}\\|^2 + \\bigr|u_{t|0,1}^\\intercal \\nabla G(X_t, x_0)\\bigr| + \\frac{\\sigma^2}{2}\\Delta G(X_t, x_0) \\ p_{t|0,1} \\mathrm{d}x \\mathrm{d}t, \\quad \\\\ \\text{ s.t. } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla \\cdot (p_{t|0,1} u_{t}) + \\frac{1}{2} \\sigma^2 \\Delta p_{t|0,1}, \\quad X_0=x_0, \\quad X_1=x_1\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1455,
+    "start_pos": 64991,
+    "end_pos": 65446
+  },
+  "<<FORMULA_0041>>": {
+    "formula": "p_t = \\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1",
+    "raw_latex": "$p_t = \\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1$",
+    "formula_type": "inline",
+    "line_number": 1454,
+    "start_pos": 64794,
+    "end_pos": 64844
+  },
+  "<<FORMULA_0040>>": {
+    "formula": "(x_0, x_1)",
+    "raw_latex": "$(x_0, x_1)$",
+    "formula_type": "inline",
+    "line_number": 1451,
+    "start_pos": 64275,
+    "end_pos": 64287
+  },
+  "<<FORMULA_0039>>": {
+    "formula": "p_t = \\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1",
+    "raw_latex": "$p_t = \\int p_{t|0,1}\\pi_{0,1} \\rm{d}x_0\\rm{d}x_1$",
+    "formula_type": "inline",
+    "line_number": 1451,
+    "start_pos": 64178,
+    "end_pos": 64228
+  },
+  "<<FORMULA_0038>>": {
+    "formula": "(G\\equiv 0)",
+    "raw_latex": "$(G\\equiv 0)$",
+    "formula_type": "inline",
+    "line_number": 1446,
+    "start_pos": 63664,
+    "end_pos": 63677
+  },
+  "<<FORMULA_0037>>": {
+    "formula": "\\label{eq:lagrangian}\n    \\begin{split}\n        &\\min_{p_{t},u_t} \\int_{\\sR^d\\times [0,1]} \\Bigr( \\frac{1}{2}\\|u_t\\|^2 +  \\mathbb{E}_{p_{0|t}}\\bigr[|u_t^\\intercal \\nabla G_{t,0}| + \\frac{\\sigma^2}{2}\\Delta G_{t,0}\\bigr]\\Bigr) p_t \\mathrm{d}x \\mathrm{d}t, \\\\\n        \\text{ s.t. }  &\\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\text{ and } p_0 = \\pi_0, p_1 = \\pi_1\n    \\end{split}",
+    "raw_latex": "\\begin{align}\\label{eq:lagrangian}\n    \\begin{split}\n        &\\min_{p_{t},u_t} \\int_{\\sR^d\\times [0,1]} \\Bigr( \\frac{1}{2}\\|u_t\\|^2 +  \\mathbb{E}_{p_{0|t}}\\bigr[|u_t^\\intercal \\nabla G_{t,0}| + \\frac{\\sigma^2}{2}\\Delta G_{t,0}\\bigr]\\Bigr) p_t \\mathrm{d}x \\mathrm{d}t, \\\\\n        \\text{ s.t. }  &\\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\text{ and } p_0 = \\pi_0, p_1 = \\pi_1\n    \\end{split}\n    \\end{align}",
+    "formula_type": "align",
+    "line_number": 1438,
+    "start_pos": 62968,
+    "end_pos": 63429
+  },
+  "<<FORMULA_0036>>": {
+    "formula": "\\{x_0^n, x_1^n\\}_{n=1}^N",
+    "raw_latex": "$\\{x_0^n, x_1^n\\}_{n=1}^N$",
+    "formula_type": "inline",
+    "line_number": 1436,
+    "start_pos": 62752,
+    "end_pos": 62778
+  },
+  "<<FORMULA_0035>>": {
+    "formula": "\\pi_0, \\text{ and } \\pi_1",
+    "raw_latex": "$\\pi_0, \\text{ and } \\pi_1$",
+    "formula_type": "inline",
+    "line_number": 1435,
+    "start_pos": 62682,
+    "end_pos": 62709
+  },
+  "<<FORMULA_0034>>": {
+    "formula": "X_1\\sim\\pi_1",
+    "raw_latex": "$X_1\\sim\\pi_1$",
+    "formula_type": "inline",
+    "line_number": 1435,
+    "start_pos": 62522,
+    "end_pos": 62536
+  },
+  "<<FORMULA_0033>>": {
+    "formula": "X_0\\sim\\pi_0",
+    "raw_latex": "$X_0\\sim\\pi_0$",
+    "formula_type": "inline",
+    "line_number": 1435,
+    "start_pos": 62502,
+    "end_pos": 62516
+  },
+  "<<FORMULA_0032>>": {
+    "formula": "X_0, X_1 \\in\\sR^d",
+    "raw_latex": "$X_0, X_1 \\in\\sR^d$",
+    "formula_type": "inline",
+    "line_number": 1435,
+    "start_pos": 62476,
+    "end_pos": 62495
+  },
+  "<<FORMULA_0031>>": {
+    "formula": "(x_0, x_1)",
+    "raw_latex": "$(x_0, x_1)$",
+    "formula_type": "inline",
+    "line_number": 1430,
+    "start_pos": 62056,
+    "end_pos": 62068
+  },
+  "<<FORMULA_0030>>": {
+    "formula": "\\label{eq:static_SSOT}\n    \\min_{\\pi\\in\\Pi(\\pi_0, \\pi_1)}\\int \\bigr( ||X_0-X_1||^2 + G(X_0, X_1)\\bigr) d\\pi(x_0, x_1) + \\epsilon KL(\\pi|\\pi_0\\otimes\\pi_1)",
+    "raw_latex": "\\begin{equation}\\label{eq:static_SSOT}\n    \\min_{\\pi\\in\\Pi(\\pi_0, \\pi_1)}\\int \\bigr( ||X_0-X_1||^2 + G(X_0, X_1)\\bigr) d\\pi(x_0, x_1) + \\epsilon KL(\\pi|\\pi_0\\otimes\\pi_1)\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1423,
+    "start_pos": 60558,
+    "end_pos": 60743
+  },
+  "<<FORMULA_0029>>": {
+    "formula": "\\label{eq:G-fun}\n    G(X_0, X_1) = (d(X_1, x_1^{i}) - d(X_0, x_0^{i}))^2",
+    "raw_latex": "\\begin{equation}\\label{eq:G-fun}\n    G(X_0, X_1) = (d(X_1, x_1^{i}) - d(X_0, x_0^{i}))^2\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1416,
+    "start_pos": 59931,
+    "end_pos": 60034
+  },
+  "<<FORMULA_0028>>": {
+    "formula": "(X_0, X_1)",
+    "raw_latex": "$(X_0, X_1)$",
+    "formula_type": "inline",
+    "line_number": 1415,
+    "start_pos": 59908,
+    "end_pos": 59920
+  },
+  "<<FORMULA_0027>>": {
+    "formula": "(x_0^i, x_1^i)\\in \\gK",
+    "raw_latex": "$(x_0^i, x_1^i)\\in \\gK$",
+    "formula_type": "inline",
+    "line_number": 1415,
+    "start_pos": 59826,
+    "end_pos": 59849
+  },
+  "<<FORMULA_0026>>": {
+    "formula": "d(X_1, x_1^i)",
+    "raw_latex": "$d(X_1, x_1^i)$",
+    "formula_type": "inline",
+    "line_number": 1414,
+    "start_pos": 59776,
+    "end_pos": 59791
+  },
+  "<<FORMULA_0025>>": {
+    "formula": "d(X_0, x_0^i)",
+    "raw_latex": "$d(X_0, x_0^i)$",
+    "formula_type": "inline",
+    "line_number": 1414,
+    "start_pos": 59709,
+    "end_pos": 59724
+  },
+  "<<FORMULA_0024>>": {
+    "formula": "x_0^i \\in\\gK",
+    "raw_latex": "$x_0^i \\in\\gK$",
+    "formula_type": "inline",
+    "line_number": 1414,
+    "start_pos": 59627,
+    "end_pos": 59641
+  },
+  "<<FORMULA_0023>>": {
+    "formula": "i^\\text{th}",
+    "raw_latex": "$i^\\text{th}$",
+    "formula_type": "inline",
+    "line_number": 1414,
+    "start_pos": 59590,
+    "end_pos": 59603
+  },
+  "<<FORMULA_0022>>": {
+    "formula": "(X_0, X_1)",
+    "raw_latex": "$(X_0, X_1)$",
+    "formula_type": "inline",
+    "line_number": 1413,
+    "start_pos": 59553,
+    "end_pos": 59565
+  },
+  "<<FORMULA_0021>>": {
+    "formula": "N\\ll M",
+    "raw_latex": "$N\\ll M$",
+    "formula_type": "inline",
+    "line_number": 1407,
+    "start_pos": 58847,
+    "end_pos": 58855
+  },
+  "<<FORMULA_0020>>": {
+    "formula": "\\gK = \\{x_0^n, x_1^n\\}_{n=1}^N",
+    "raw_latex": "$\\gK = \\{x_0^n, x_1^n\\}_{n=1}^N$",
+    "formula_type": "inline",
+    "line_number": 1407,
+    "start_pos": 58702,
+    "end_pos": 58734
+  },
+  "<<FORMULA_0019>>": {
+    "formula": "(x_0, x_1)\\sim\\pi_{0,1}^\\theta",
+    "raw_latex": "$(x_0, x_1)\\sim\\pi_{0,1}^\\theta$",
+    "formula_type": "inline",
+    "line_number": 1374,
+    "start_pos": 55998,
+    "end_pos": 56030
+  },
+  "<<FORMULA_0018>>": {
+    "formula": "\\label{eq:SDE_prel}\n    dX_t = u_t^\\theta dt +\\sigma dW_t, \\quad X_0\\sim\\pi_0, \\ X_1\\sim\\pi_1",
+    "raw_latex": "\\begin{equation}\\label{eq:SDE_prel}\n    dX_t = u_t^\\theta dt +\\sigma dW_t, \\quad X_0\\sim\\pi_0, \\ X_1\\sim\\pi_1\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1370,
+    "start_pos": 55715,
+    "end_pos": 55839
+  },
+  "<<FORMULA_0017>>": {
+    "formula": "u_t^\\theta:\\sR^d\\times[0,1]\\rightarrow \\sR",
+    "raw_latex": "$u_t^\\theta:\\sR^d\\times[0,1]\\rightarrow \\sR$",
+    "formula_type": "inline",
+    "line_number": 1369,
+    "start_pos": 55669,
+    "end_pos": 55713
+  },
+  "<<FORMULA_0016>>": {
+    "formula": "u_t^\\star",
+    "raw_latex": "$u_t^\\star$",
+    "formula_type": "inline",
+    "line_number": 1369,
+    "start_pos": 55531,
+    "end_pos": 55542
+  },
+  "<<FORMULA_0015>>": {
+    "formula": "\\label{eq:expl_bm}\n    \\min_\\theta \\int_0^1 \\mathbb{E}_{p_t} [\\|u_t^\\star - u_t^\\theta\\|^2] dt",
+    "raw_latex": "\\begin{equation}\\label{eq:expl_bm}\n    \\min_\\theta \\int_0^1 \\mathbb{E}_{p_t} [\\|u_t^\\star - u_t^\\theta\\|^2] dt\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1366,
+    "start_pos": 55399,
+    "end_pos": 55524
+  },
+  "<<FORMULA_0014>>": {
+    "formula": "u_t^\\theta",
+    "raw_latex": "$u_t^\\theta$",
+    "formula_type": "inline",
+    "line_number": 1365,
+    "start_pos": 55271,
+    "end_pos": 55283
+  },
+  "<<FORMULA_0013>>": {
+    "formula": "\\begin{split}\\label{eq:van_cond_DSB}\n    \\min_{u_{t|0,1}} \\int_0^1 &\\mathbb{E}_{p_{t|0,1}}[\\|u_{t|0,1}\\|^2] dt \\quad \\\\ \\text{ s.t. } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla \\cdot (p_{t|0,1} u_{t}) &+ \\frac{1}{2} \\sigma^2 \\Delta p_{t|0,1}, \\quad X_0=x_0, \\quad X_1=x_1\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n\\begin{split}\\label{eq:van_cond_DSB}\n    \\min_{u_{t|0,1}} \\int_0^1 &\\mathbb{E}_{p_{t|0,1}}[\\|u_{t|0,1}\\|^2] dt \\quad \\\\ \\text{ s.t. } \\frac{\\partial p_{t|0,1}}{\\partial t} = -\\nabla \\cdot (p_{t|0,1} u_{t}) &+ \\frac{1}{2} \\sigma^2 \\Delta p_{t|0,1}, \\quad X_0=x_0, \\quad X_1=x_1\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1359,
+    "start_pos": 54819,
+    "end_pos": 55137
+  },
+  "<<FORMULA_0012>>": {
+    "formula": "(x_0, x_1)",
+    "raw_latex": "$(x_0, x_1)$",
+    "formula_type": "inline",
+    "line_number": 1358,
+    "start_pos": 54805,
+    "end_pos": 54817
+  },
+  "<<FORMULA_0011>>": {
+    "formula": "\\label{eq:EOT}\n    \\min_{\\pi\\in\\Pi(\\pi_0, \\pi_1)}\\int_{\\sR^d\\times\\sR^d} \\|X_0-X_1\\|^2 d\\pi(X_0, X_1) + \\epsilon KL(\\pi|\\pi_0\\otimes\\pi_1)",
+    "raw_latex": "\\begin{equation}\\label{eq:EOT}\n    \\min_{\\pi\\in\\Pi(\\pi_0, \\pi_1)}\\int_{\\sR^d\\times\\sR^d} \\|X_0-X_1\\|^2 d\\pi(X_0, X_1) + \\epsilon KL(\\pi|\\pi_0\\otimes\\pi_1)\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1351,
+    "start_pos": 53736,
+    "end_pos": 53905
+  },
+  "<<FORMULA_0010>>": {
+    "formula": "\\begin{split}\\label{eq:van_DSB}\n    \\min_{u_t, p_t} \\int_0^1 \\mathbb{E}_{p_t}&[\\|u_t\\|^2] dt \\quad\n        \\text{ s.t. }  \\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\quad \\text{ and } \\quad p_0 = \\pi_0,\\quad p_1 = \\pi_1\n    \\end{split}",
+    "raw_latex": "\\begin{align}\n    \\begin{split}\\label{eq:van_DSB}\n    \\min_{u_t, p_t} \\int_0^1 \\mathbb{E}_{p_t}&[\\|u_t\\|^2] dt \\quad\n        \\text{ s.t. }  \\ \\frac{\\partial p_{t}}{\\partial t} = -\\nabla\\cdot (u_t p_{t}) + \\frac{\\sigma^2}{2}\\Delta p_{t}, \\quad \\text{ and } \\quad p_0 = \\pi_0,\\quad p_1 = \\pi_1\n    \\end{split}\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1344,
+    "start_pos": 53282,
+    "end_pos": 53601
+  },
+  "<<FORMULA_0009>>": {
+    "formula": "(x_0, x_1)",
+    "raw_latex": "$(x_0, x_1)$",
+    "formula_type": "inline",
+    "line_number": 1342,
+    "start_pos": 53142,
+    "end_pos": 53154
+  },
+  "<<FORMULA_0008>>": {
+    "formula": "\\min_{\\pi\\in\\Pi(\\pi_0,\\pi_1)}KL(\\pi|R)",
+    "raw_latex": "$\\min_{\\pi\\in\\Pi(\\pi_0,\\pi_1)}KL(\\pi|R)$",
+    "formula_type": "inline",
+    "line_number": 1342,
+    "start_pos": 53028,
+    "end_pos": 53068
+  },
+  "<<FORMULA_0007>>": {
+    "formula": "P^\\star = \\int_{\\sR^d\\times\\sR^d} \\sQ_{|0,1}d\\pi^\\star(x_0,x_1)",
+    "raw_latex": "$P^\\star = \\int_{\\sR^d\\times\\sR^d} \\sQ_{|0,1}d\\pi^\\star(x_0,x_1)$",
+    "formula_type": "inline",
+    "line_number": 1342,
+    "start_pos": 52910,
+    "end_pos": 52975
+  },
+  "<<FORMULA_0006>>": {
+    "formula": "\\label{eq:SB}\n    \\min_\\sP KL(\\sP|\\sQ),      \\quad \\sP_0=\\pi_0,  \\ \\sP_1 = \\pi_1",
+    "raw_latex": "\\begin{equation}\\label{eq:SB}\n    \\min_\\sP KL(\\sP|\\sQ),      \\quad \\sP_0=\\pi_0,  \\ \\sP_1 = \\pi_1\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1339,
+    "start_pos": 52564,
+    "end_pos": 52675
+  },
+  "<<FORMULA_0005>>": {
+    "formula": "I^2 SB",
+    "raw_latex": "$I^2 SB$",
+    "formula_type": "inline",
+    "line_number": 1258,
+    "start_pos": 38583,
+    "end_pos": 38591
+  },
+  "<<FORMULA_0004>>": {
+    "formula": "(x_0, x_1)\\sim \\pi_{0,1}",
+    "raw_latex": "$(x_0, x_1)\\sim \\pi_{0,1}$",
+    "formula_type": "inline",
+    "line_number": 1258,
+    "start_pos": 38200,
+    "end_pos": 38226
+  },
+  "<<FORMULA_0003>>": {
+    "formula": "\\pi_0, \\pi_1",
+    "raw_latex": "$\\pi_0, \\pi_1$",
+    "formula_type": "inline",
+    "line_number": 1256,
+    "start_pos": 37752,
+    "end_pos": 37766
+  },
+  "<<FORMULA_0002>>": {
+    "formula": "\\pi_0, \\pi_1",
+    "raw_latex": "$\\pi_0, \\pi_1$",
+    "formula_type": "inline",
+    "line_number": 1247,
+    "start_pos": 36466,
+    "end_pos": 36480
+  },
+  "<<FORMULA_0001>>": {
+    "formula": "<8\\%",
+    "raw_latex": "$<8\\%$",
+    "formula_type": "inline",
+    "line_number": 1223,
+    "start_pos": 31995,
+    "end_pos": 32001
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "error_rate": 0.5,
+    "random_seed": null,
+    "total_formulas_processed": 20,
+    "formulas_modified": 11,
+    "formulas_unmodified": 9,
+    "timestamp": "2025-10-31T16:50:44.282885"
+  },
+  "errors": [
+    {
+      "label": "<<FORMULA_0174>>",
+      "original_formula": "\\begin{aligned}\n  \\E \\left[ \\Vert X - f(\\tilde X) \\rVert^2 \\right] \n  & = \\E_{\\tilde X} \\left[ \n        \\E_{X \\mid \\tilde X} \\bigl[ \\lVert X - f(\\tilde X) \\rVert^2 \\mid \\tilde X \\bigr] \n      \\right] \\\\ \n  & = \\E_{\\tilde X} \\Bigl[ \n        \\E_{X\\mid \\tilde X} \\bigl[ \\lVert X - \\E [X \\mid \\tilde X] \\rVert^2 \\mid \\tilde X \\bigr]  \\\\\n         & \\:\\:\\:\\:\\:\\:\\:\\:\\:\\:\\:\\: + \\lVert \\E [X \\mid \\tilde X] - f(\\tilde X) \\rVert^2 \\Bigr] \\\\\n  & \\ge \\E_{\\tilde X} \\left[ \n        \\E_{X\\mid \\tilde X} \\bigl[ \\lVert X - \\E [X \\mid \\tilde X] \\rVert^2 \\mid \\tilde X \\bigr]\n    \\right] \\\\\n  & = \\E_{\\tilde X} \\left[ \\Tr{ \\Cov (X \\mid \\tilde X)} \\right].\n\\end{aligned}",
+      "modified_formula": "\\begin{aligned}\n  \\E \\left[ \\Vert X - f(\\tilde X) \\rVert^2 \\right] \n  & = \\E_{\\tilde X} \\left[ \n        \\E_{X \\mid \\tilde X} \\bigl[ \\lVert X - f(\\tilde X) \\rVert^2 \\mid \\tilde X \\bigr] \n      \\right] \\\\ \n  & = \\E_{\\tilde X} \\Bigl[ \n        \\E_{X\\mid \\tilde X} \\bigl[ \\lVert X - \\E [X \\mid \\tilde X] \\rVert^2 \\mid \\tilde X \\bigr]  \\\\\n         & \\:\\:\\:\\:\\:\\:\\:\\:\\:\\:\\:\\: + \\lVert \\E [X \\mid \\tilde X] - f(\\tilde X) \\rVert^2 \\Bigr] \\\\\n  & \\ge \\E_{\\tilde X} \\\\geft[ \n        \\E_{X\\mid \\tilde X} \\bigl[ \\lVert X - \\E [X \\mid \\tilde X] \\rVert^2 \\mid \\tilde X \\bigr]\n    \\right] \\\\\n  & = \\E_{\\tilde X} \\left[ \\Tr{ \\Cov (X \\mid \\tilde X)} \\right].\n\\end{aligned}",
+      "error_type": "inequality_flip",
+      "error_description": "Changed '≤' to '≥'",
+      "line_number": 1542,
+      "formula_type": "equation*"
+    },
+    {
+      "label": "<<FORMULA_0183>>",
+      "original_formula": "\\begin{aligned}\np_X(x)e^{- \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2} {2 \\sigma_{Z}^2}}\n  & \\propto e^{- \\frac{\\lVert x \\rVert ^2}{ 2 \\sigma_{0}^2}\n         - \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2} }\\\\\n  & \\propto \\exp \n    \\left( - \\frac{\\lVert x - \\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} \\tilde x_{\\paral} \\rVert ^2}\n                   {2 \\frac{\\sigma_{0}^2 \\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2}\n                  } \n    \\right). \n\\end{aligned}",
+      "modified_formula": "\\begin{aligned}\np_X(x)e^{- \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2} {2 \\sigma_{Z}^2}}\n  & \\propto e^{- \\frac{\\lVert x \\rVert ^2}{ 2 \\sigma_{0}^2}\n         - \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2} }\\\\\n  & \\propto \\exp \n    \\left( - \\frac{\\lVert x - \\frac{\\sigma_{0}^2}{\\sigma_{0}^2 - \\sigma_{Z}^2} \\tilde x_{\\paral} \\rVert ^2}\n                   {2 \\frac{\\sigma_{0}^2 \\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2}\n                  } \n    \\right). \n\\end{aligned}",
+      "error_type": "sign_flip",
+      "error_description": "Changed '+' to '-'",
+      "line_number": 1589,
+      "formula_type": "equation*"
+    },
+    {
+      "label": "<<FORMULA_0054>>",
+      "original_formula": "&f_\\text{opt}(\\tilde X)=\\E [ X \\mid \\tilde X ]  \\nonumber\\\\\n  & = \n  \\frac{\\int e^{\\langle x, \\tilde X_{\\paral} \\rangle / \\sigma_{Z}^2} \\:x\\, d S_x}\n       {\\int e^{\\langle x, \\tilde X_{\\paral} \\rangle / \\sigma_{Z}^2} \\: d S_x}\\\\\n  &= \n  \\frac{I_\\frac{d+1}{2} \\left(R \\frac{\\lVert \\tilde X_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)}\n       {I_\\frac{d-1}{2} \\left(R \\frac{\\lVert \\tilde X_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)} \n  R \\frac{\\tilde X_{\\paral}}{\\lVert \\tilde X_{\\paral} \\rVert},",
+      "modified_formula": "&f_\\text{opt}(\\tilde X)=\\E [ X \\mid \\tilde X ]  \\nonumber\\\\\n  & = \n  \\frac{\\int e^{\\langle x, \\tilde X_{\\paral} \\rangle / \\sigma_{Z}^2} \\:x\\, d S_x}\n       {\\int e^{\\langle x, \\tilde X_{\\paral} \\rangle / \\sigma_{Z}^2} \\: d S_x}\\\\\n  &= \n  \\frac{I_\\frac{d - 1}{2} \\left(R \\frac{\\lVert \\tilde X_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)}\n       {I_\\frac{d-1}{2} \\left(R \\frac{\\lVert \\tilde X_{\\paral} \\rVert}{\\sigma_{Z}^2} \\right)} \n  R \\frac{\\tilde X_{\\paral}}{\\lVert \\tilde X_{\\paral} \\rVert},",
+      "error_type": "sign_flip",
+      "error_description": "Changed '+' to '-'",
+      "line_number": 866,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0203>>",
+      "original_formula": "\\E [X \\mid \\tilde X = \\tilde x] \n   = \n  \\frac\n   {\\sum_{a} w_{a}\\big(\\frac{\\sigma_Z^2+\\sigma_a^2} {\\sigma_a^2}\\big)^{n/2} \\exp\\big(-\\frac{\\lVert \\tilde x - \\mu_{a}\\rVert^2}{2 (\\sigma_Z^2 + \\sigma_a^2)}\\big) \\big(\\frac{\\sigma_a^2 \\, \\tilde{x} + \\sigma_Z^2 \\,\\mu_a}\n     {\\sigma_a^2 + \\sigma_Z^2} \\big)}\n   {\\sum_{a} w_{a} \\big(\\frac{\\sigma_Z^2+\\sigma_a^2} {\\sigma_a^2}\\big)^{n/2} \\exp\\big(-\\frac{\\lVert \\tilde x - \\mu_{a}\\rVert^2}{2 (\\sigma_Z^2 + \\sigma_a^2)}\\big)}",
+      "modified_formula": "\\E [X \\mid \\tilde X = \\tilde x] \n   = \n  \\frac\n   {\\sum_{a} w_{a}\\big((\\frac{\\sigma_Z^2+\\sigma_a^2} {\\sigma_a^2}\\big)^{n/2}) \\exp\\big(-\\frac{\\lVert \\tilde x - \\mu_{a}\\rVert^2}{2 (\\sigma_Z^2 + \\sigma_a^2)}\\big) \\big(\\frac{\\sigma_a^2 \\, \\tilde{x} + \\sigma_Z^2 \\,\\mu_a}\n     {\\sigma_a^2 + \\sigma_Z^2} \\big)}\n   {\\sum_{a} w_{a} \\big(\\frac{\\sigma_Z^2+\\sigma_a^2} {\\sigma_a^2}\\big)^{n/2} \\exp\\big(-\\frac{\\lVert \\tilde x - \\mu_{a}\\rVert^2}{2 (\\sigma_Z^2 + \\sigma_a^2)}\\big)}",
+      "error_type": "exponent_order",
+      "error_description": "Moved exponent inside \\big()",
+      "line_number": 1700,
+      "formula_type": "equation*"
+    },
+    {
+      "label": "<<FORMULA_0189>>",
+      "original_formula": "\\begin{aligned}\n\\E [ X \\mid \\tilde X = \\tilde x ] \n  & = \n  \\frac{\\int e^{- \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2}} \\: x\\: p_X(x) dx}\n       {\\int e^{- \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2}} \\: p_X(x) dx} \\\\\n  & = \n  \\frac{\\int e^{\\langle x, \\tilde x_{\\paral} \\rangle / \\sigma_{Z}^2} \\:x\\, d S_x}\n       {\\int e^{\\langle x, \\tilde x_{\\paral} \\rangle / \\sigma_{Z}^2} \\: d S_x}.\n\\end{aligned}",
+      "modified_formula": "\\begin{aligned}\n\\E [ X \\mid \\tilde X = \\tilde x ] \n  & = \n  \\frac{\\int e^{ + \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2}} \\: x\\: p_X(x) dx}\n       {\\int e^{- \\frac{\\lVert x - \\tilde x_{\\paral} \\rVert ^2 }{ 2 \\sigma_{Z}^2}} \\: p_X(x) dx} \\\\\n  & = \n  \\frac{\\int e^{\\langle x, \\tilde x_{\\paral} \\rangle / \\sigma_{Z}^2} \\:x\\, d S_x}\n       {\\int e^{\\langle x, \\tilde x_{\\paral} \\rangle / \\sigma_{Z}^2} \\: d S_x}.\n\\end{aligned}",
+      "error_type": "sign_flip",
+      "error_description": "Changed '-' to '+'",
+      "line_number": 1618,
+      "formula_type": "equation*"
+    },
+    {
+      "label": "<<FORMULA_0296>>",
+      "original_formula": "\\textrm{Pr}\\Bigg[\\Big|\\frac{1}{L}\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ e^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|\\ge \\epsilon]\\le 2\\exp\\Bigg[-\\frac{2L\\epsilon^2}{\\Big(\\exp\\big(\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\big)-\\exp\\big(-\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\big)\\Big)^2}\\Bigg]=2\\exp\\Bigg[-\\frac{L\\epsilon^2}{2\\sinh^2\\big(\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\big)}\\Bigg].",
+      "modified_formula": "\\textrm{Pr}\\Bigg[\\Big|\\frac{1}{L}\\sum_{t=1}^Le^{\\langle X_t,\\tilde x\\rangle/\\sigma_Z^2}-\\E[ e^{\\langle X, \\tilde x \\rangle / \\sigma_{Z}^2}]\\Big|\\ge \\epsilon]\\le 2\\exp\\Bigg[-\\frac{2L\\epsilon^2}{\\Big(\\exp\\big(\\frac{\\sigma_Z^2}{R||\\tilde x||_2}\\big)-\\exp\\big(-\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\big)\\Big)^2}\\Bigg]=2\\exp\\Bigg[-\\frac{L\\epsilon^2}{2\\sinh^2\\big(\\frac{R||\\tilde x||_2}{\\sigma_Z^2}\\big)}\\Bigg].",
+      "error_type": "fraction_inversion",
+      "error_description": "Inverted fraction (swapped numerator and denominator)",
+      "line_number": 1932,
+      "formula_type": "display"
+    },
+    {
+      "label": "<<FORMULA_0187>>",
+      "original_formula": "\\E\\Big[\\lVert X-\\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} P \\tilde X \\rVert^2\\Big] =  \\E\\Big[\\lVert\\frac{\\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2}PX\\rVert^2\\Big]+\\E\\Big[\\lVert\\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} PZ \\rVert^2\\Big]=\\frac{\\sigma_Z^4d\\sigma_{0}^2+\\sigma_0^4d\\sigma_{Z}^2}{(\\sigma_{0}^2 + \\sigma_{Z}^2)^2}=\\frac{d\\sigma_0^2\\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2}.",
+      "modified_formula": "\\E\\Big[\\lVert X-\\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} P \\tilde X \\rVert^2\\Big] =  \\E\\Big[\\lVert\\frac{\\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2}PX\\rVert^2\\Big]+\\E\\Big[\\lVert\\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} PZ \\rVert^2\\Big]=\\frac{\\sigma_Z^4d\\sigma_{0}^2+\\sigma_0^4d\\sigma_{Z}^2}{(\\sigma_{0}^2 + \\sigma_{Z}^2)^2}=\\frac{d\\sigma_0^2\\sigma_{Z}^2}{\\sigma_{0}^2 \\\\times \\sigma_{Z}^2}.",
+      "error_type": "operator_swap",
+      "error_description": "Changed '+' to '×'",
+      "line_number": 1607,
+      "formula_type": "display"
+    },
+    {
+      "label": "<<FORMULA_0060>>",
+      "original_formula": "&f_\\text{opt}(\\tilde X)=\\E[X|\\tilde X] \\nonumber\\\\\n    &= \\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} \\tilde X \n    +\\frac{\\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} \\frac\n    {\\sum_{a } w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle /(\\sigma_0^2 +\\sigma_{Z}^2)}\n        \\:\\: \\mu_{a}\n        }\n    {\\sum_{a }w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / (\\sigma_0^2 +\\sigma_{Z}^2)}}.",
+      "modified_formula": "&f_\\text{opt}(\\tilde X)=\\E[X|\\tilde X] \\nonumber\\\\\n    &= \\frac{\\sigma_{0}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} \\tilde X - \\frac{\\sigma_{Z}^2}{\\sigma_{0}^2 + \\sigma_{Z}^2} \\frac\n    {\\sum_{a } w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle /(\\sigma_0^2 +\\sigma_{Z}^2)}\n        \\:\\: \\mu_{a}\n        }\n    {\\sum_{a }w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / (\\sigma_0^2 +\\sigma_{Z}^2)}}.",
+      "error_type": "sign_flip",
+      "error_description": "Changed '+' to '-'",
+      "line_number": 888,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0309>>",
+      "original_formula": "&F\\Big(E,\\big(\\frac{1}{\\epsilon}W_{PV},\\epsilon W_{KQ}\\big)\\Big)=\\frac{1}{\\epsilon}W_{PV} X_{1:L}\\Bigg[\\frac{1}{L}\\left( \\mathbbm{1}_L +\\epsilon \\big( X_{1:L}^T W_{KQ}\\tilde X-(\\frac{1}{L}\\sum_t X_t^TW_{KQ}\\tilde X)\\mathbbm{1}_L\\big) + O(\\epsilon^2)\\right)\\Bigg]\\nonumber\\\\\n&=\\frac{1}{\\epsilon} W_{PV}\\bar X\n+ \\frac{1}{L}W_{PV}\\sum_{t=1}^LX_t(X_t-\\bar X)^TW_{KQ}\\tilde X+O(\\epsilon),",
+      "modified_formula": "&F\\Big(E,\\big(\\frac{1}{\\epsilon}W_{PV},\\epsilon W_{KQ}\\big)\\Big)=\\frac{1}{\\epsilon}W_{PV} X_{1:L}\\Bigg[\\frac{1}{L}\\\\geft( \\mathbbm{1}_L +\\epsilon \\big( X_{1:L}^T W_{KQ}\\tilde X-(\\frac{1}{L}\\sum_t X_t^TW_{KQ}\\tilde X)\\mathbbm{1}_L\\big) + O(\\epsilon^2)\\right)\\Bigg]\\nonumber\\\\\n&=\\frac{1}{\\epsilon} W_{PV}\\bar X\n+ \\frac{1}{L}W_{PV}\\sum_{t=1}^LX_t(X_t-\\bar X)^TW_{KQ}\\tilde X+O(\\epsilon),",
+      "error_type": "inequality_flip",
+      "error_description": "Changed '≤' to '≥'",
+      "line_number": 1977,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0062>>",
+      "original_formula": "\\label{eq:bayes-case3-zerolimit}\n f_\\text{opt}(\\tilde X)=\\E [X \\mid \\tilde X]  = \\frac\n    {\\sum_{a } w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / \\sigma_{Z}^2}\n        \\:\\: \\mu_{a}\n        }\n    {\\sum_{a }w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / \\sigma_{Z}^2}}.",
+      "modified_formula": "\\label{eq:bayes-case3-zerolimit}\n f_\\text{opt}(\\tilde X)=\\E [X \\mid \\tilde X]  = \\frac\n    {\\\\prod_{a } w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / \\sigma_{Z}^2}\n        \\:\\: \\mu_{a}\n        }\n    {\\sum_{a }w_a\n         e^{\\langle \\mu_{a}, \\tilde X \\rangle / \\sigma_{Z}^2}}.",
+      "error_type": "sum_product_swap",
+      "error_description": "Changed '∑' to '∏'",
+      "line_number": 901,
+      "formula_type": "equation"
+    },
+    {
+      "label": "<<FORMULA_0201>>",
+      "original_formula": "m_a \n% =\n% \\frac{\\frac{1}{\\sigma_\\eta^2} \\,\\tilde{x} + \\frac{1}{\\sigma_\\alpha^2}\\,\\mu_\\alpha}\n%      {\\frac{1}{\\sigma_\\eta^2} + \\frac{1}{\\sigma_\\alpha^2}}\n = \\frac{\\sigma_a^2 \\, \\tilde{x} + \\sigma_Z^2 \\,\\mu_a}\n     {\\sigma_a^2 + \\sigma_Z^2}.",
+      "modified_formula": "m_a \n% =\n% \\frac{\\frac{1}{\\sigma_\\eta^2} \\,\\tilde{x} + \\frac{1}{\\sigma_\\alpha^2}\\,\\mu_\\alpha}\n%      {\\frac{\\sigma_\\eta^2}{1} + \\frac{1}{\\sigma_\\alpha^2}}\n = \\frac{\\sigma_a^2 \\, \\tilde{x} + \\sigma_Z^2 \\,\\mu_a}\n     {\\sigma_a^2 + \\sigma_Z^2}.",
+      "error_type": "fraction_inversion",
+      "error_description": "Inverted fraction (swapped numerator and denominator)",
+      "line_number": 1690,
+      "formula_type": "equation*"
+    }
+  ],
+  "unmodified": [
+    "<<FORMULA_0206>>",
+    "<<FORMULA_0193>>",
+    "<<FORMULA_0173>>",
+    "<<FORMULA_0172>>",
+    "<<FORMULA_0197>>",
+    "<<FORMULA_0245>>",
+    "<<FORMULA_0301>>",
+    "<<FORMULA_0294>>",
+    "<<FORMULA_0293>>"
+  ]
+}

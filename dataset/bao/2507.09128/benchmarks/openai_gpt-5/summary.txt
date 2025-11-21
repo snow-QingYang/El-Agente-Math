@@ -1,0 +1,38 @@
+Benchmark Summary
+Model: openai/gpt-5
+Paper: 2507.09128
+Timestamp: 2025-10-31T18:01:18.100664
+
+
+======================================================================
+Benchmark Metrics Summary
+======================================================================
+
+Evaluation Coverage:
+  Total detections: 20
+  Parsing failures: 0 (excluded from metrics)
+  Valid evaluations: 20
+
+Binary Classification:
+  Accuracy:  75.0%
+  Precision: 64.3%
+  Recall:    100.0%
+  F1 Score:  78.3%
+
+Confusion Matrix (n=20):
+  TP: 9     FP: 5
+  FN: 0     TN: 6
+
+Error Type Identification:
+  Correct types: 8/9 (88.9%)
+
+📊 Instruction Following (JSON Format Compliance):
+  Perfect JSON:     20/20 (100.0%)
+  Required fallback: 0/20 (0.0%)
+  Parse failures:    0/20 (0.0%)
+
+Per-Error-Type Recall:
+  index_change         2/2 (100.0%)
+  inequality_flip      2/2 (100.0%)
+  sign_flip            3/3 (100.0%)
+  sum_product_swap     2/2 (100.0%)

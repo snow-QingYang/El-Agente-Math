@@ -1,0 +1,90 @@
+{
+  "metadata": {
+    "error_rate": 0.5,
+    "random_seed": null,
+    "total_formulas_processed": 20,
+    "formulas_modified": 7,
+    "formulas_unmodified": 13,
+    "timestamp": "2025-10-31T16:42:43.137333"
+  },
+  "errors": [
+    {
+      "label": "<<FORMULA_1061>>",
+      "original_formula": "\\iint_{x\\in \\wh{S}_1\\cap B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\leq \\frac{1}{c-\\sqrt{\\eps}}\\cP\\inparen{\\wh{S}_1\\cap B}\n                    + \\cP\\inparen{\\wh{S}_1\\cap B}\n                    \\leq \\frac{2 \\sqrt{\\eps}}{c-\\sqrt{\\eps}}\\,.\n                    \\yesnum\\label{eq:est:scenario3:bound3}",
+      "modified_formula": "\\iint_{x\\in \\wh{S}_1\\cap B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\leq \\frac{1}{c-\\sqrt{\\eps}}\\cP\\inparen{\\wh{S}_1\\cap B} - \\cP\\inparen{\\wh{S}_1\\cap B}\n                    \\leq \\frac{2 \\sqrt{\\eps}}{c-\\sqrt{\\eps}}\\,.\n                    \\yesnum\\label{eq:est:scenario3:bound3}",
+      "error_type": "sign_flip",
+      "error_description": "Changed '+' to '-'",
+      "line_number": 2815,
+      "formula_type": "display"
+    },
+    {
+      "label": "<<FORMULA_1056>>",
+      "original_formula": "\\iint_{x\\in \\wh{S}_1\\setminus B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\leq \n                    \\sqrt{\\eps}\n                    \\cdot \\iint_{x\\in \\wh{S}_1\\setminus B}\\abs{ \\cP(x,y) }\\d x\\d y\n                    \\leq \\sqrt{\\eps}\\,.\n                    \\yesnum\\label{eq:est:scenario3:bound2}",
+      "modified_formula": "\\iint_{x\\in \\wh{S}_1\\setminus B}\\abs{\n                        \\frac{\n                            {p}(x,y)\\cdot {\\cP}(x,y)\n                        }{  \n                            \\wh{e}(x)\n                        }\n                        -\n                        \\cP(x,y)\n                    }\\d x\\d y\n                    \\leq \n                    \\sqrt{\\eps}\n                    \\cdot \\iint_{x\\in \\wh{S}_1\\setminus B}\\abs{ \\cP(x,y) }\\d x\\d y\n                    \\\\geq \\sqrt{\\eps}\\,.\n                    \\yesnum\\label{eq:est:scenario3:bound2}",
+      "error_type": "inequality_flip",
+      "error_description": "Changed '≤' to '≥'",
+      "line_number": 2798,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_1035>>",
+      "original_formula": "\\iint_{x\\in \\wh{S}_1} \n                            \\abs{\n                                \\cP'(x,y)\n                                -\n                                \\frac{\n                                    \\wh{p}(x,y)\\wh{\\cP}(x,y)\n                                }{  \n                                    \\wh{e}(x)\n                                }\n                            }\\d x \\d y < O\\inparen{\\frac{\\sqrt{\\eps}}{c}}\\,.\n                            \\yesnum\\label{eq:est:scenario3:accuracyTruncated}",
+      "modified_formula": "\\iint_{x\\in \\wh{S^T}_1} \n                            \\abs{\n                                \\cP'(x,y)\n                                -\n                                \\frac{\n                                    \\wh{p}(x,y)\\wh{\\cP}(x,y)\n                                }{  \n                                    \\wh{e}(x)\n                                }\n                            }\\d x \\d y < O\\inparen{\\frac{\\sqrt{\\eps}}{c}}\\,.\n                            \\yesnum\\label{eq:est:scenario3:accuracyTruncated}",
+      "error_type": "transpose_error",
+      "error_description": "Added transpose to S",
+      "line_number": 2695,
+      "formula_type": "display"
+    },
+    {
+      "label": "<<FORMULA_0706>>",
+      "original_formula": "\\hyPunconf(c) \\coloneqq \n            \\inbrace{\n                p\\colon \\R^d\\times \\R\\to [0,1]\\given  \n                \\begin{array}{c}\n                     ~\\forall_{x\\in \\R^d},~~\\forall_{y_1,y_2\\in \\R}\\,,\\quad \n                            p(x,y_1)=p(x,y_2)\\,,\\\\\n                            \\exists S~~\\text{with}~~\\vol(S)\\geq c ~~\\text{such that,}~~ \\forall_{(x,y)\\in S\\times \\R}\\,,~~ p(x,y) > c \n                \\end{array}\n            }\\,.",
+      "modified_formula": "\\hyPunconf(c) \\coloneqq \n            \\inbrace{\n                p\\colon \\R^d\\times \\R\\to [0,1]\\given  \n                \\begin{array}{c}\n                     ~\\forall_{x\\in \\R^d},~~\\forall_{y_1,y_2\\in \\R}\\,,\\quad \n                            p(x,y_1)=p(x,y_2)\\,,\\\\\n                            \\exists S^T~~\\text{with}~~\\vol(S)\\geq c ~~\\text{such that,}~~ \\forall_{(x,y)\\in S\\times \\R}\\,,~~ p(x,y) > c \n                \\end{array}\n            }\\,.",
+      "error_type": "transpose_error",
+      "error_description": "Added transpose to S",
+      "line_number": 1920,
+      "formula_type": "display"
+    },
+    {
+      "label": "<<FORMULA_0287>>",
+      "original_formula": "\\forall_{x\\in \\R^d}\\,,~~\n                \\forall_{y\\in \\R}\\,,~~\\quad \n                    p(x,y) \\cdot \\cP(x,y)\n                    &= \n                    \\Phi(\\cC_\\cD)(x,y)\n                \\,,\n                \\yesnum\\label{eq:def_Sg}\\\\\n                \\forall_{x\\in \\R^d}\\,,\\qquad\\qquad\\quad\n                    \\cP_X(x) &= \\cD_X(x)\\,.\n                \\yesnum\\label{eq:def_Sg:2}",
+      "modified_formula": "\\forall_{x\\in \\R^d}\\,,~~\n                \\forall_{y\\in \\R}\\,,~~\\quad \n                    p(x,y) \\cdot \\cP(x,y)\n                    &= \n                    \\Phi(\\cC_\\cD)(x,y)\n                \\,,\n                \\yesnum\\label{eq:def_Sg}\\\\\n                \\forall_{x\\in \\R^T^d}\\,,\\qquad\\qquad\\quad\n                    \\cP_X(x) &= \\cD_X(x)\\,.\n                \\yesnum\\label{eq:def_Sg:2}",
+      "error_type": "transpose_error",
+      "error_description": "Added transpose to R",
+      "line_number": 1187,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_0740>>",
+      "original_formula": "n = \n                O\\inparen{\n                    \\frac{C^2}{(c^2 \\eps)^4 }\n                    \\cdot \n                    \\inparen{\n                        \\mathrm{fat}_{\\eta\\sigma c^3\\eps/C}(\\hyP)\\cdot \n                            \\log{\\frac{C}{\\sigma c^3\\eps}}\n                        +\\log{\\frac{N_{\\eta c^3\\eps/C}(\\hyD)}{\\delta}}\n                    }\n                }\\,.",
+      "modified_formula": "n = \n                O\\inparen{\n                    \\frac{C^2}{(c^2 \\eps)^4 }\n                    \\cdot \n                    \\inparen{\n                        \\mathrm{fat}_{\\eta\\sigma c^3\\eps/C}(\\hyP)\\cdot \n                            \\log{\\frac{C}{\\sigma c^3\\eps}} - \\log{\\frac{N_{\\eta c^3\\eps/C}(\\hyD)}{\\delta}}\n                    }\n                }\\,.",
+      "error_type": "sign_flip",
+      "error_description": "Changed '+' to '-'",
+      "line_number": 1966,
+      "formula_type": "display"
+    },
+    {
+      "label": "<<FORMULA_0497>>",
+      "original_formula": "\\forall_{x\\in \\R^d}\\,~~ \n                    \\forall_{y\\in \\R}\\,,~~ \n                        \\forall_{t\\in \\zo}\\,,\\qquad \n                    \\frac{1}{\\Lambda} \\leq {\\frac{\\inparen{1-e(x)}p_0(x,y)}{e(x) \\inparen{1-p_0(x,y)}}, \\frac{e(x)\\inparen{1-p_1(x,y)}}{\\inparen{1-e(x)}p_1(x,y)}}\n                \\leq \\Lambda\\,.\n                \\yesnum\\label{eq:ratioOfTan}",
+      "modified_formula": "\\forall_{x\\in \\R^d}\\,~~ \n                    \\forall_{y\\in \\R}\\,,~~ \n                        \\forall_{t\\in \\zo}\\,,\\qquad \n                    \\frac{1}{\\Lambda} \\leq {\\frac{\\inparen{1-e(x)}p_0(x,y)}{e(x) \\inparen{1-p_0(x,y)}}, \\frac{e(x)\\inparen{1-p_1(x,y)}}{\\inparen{1-e(x)}p_1(x,y)}}\n                \\\\geq \\Lambda\\,.\n                \\yesnum\\label{eq:ratioOfTan}",
+      "error_type": "inequality_flip",
+      "error_description": "Changed '≤' to '≥'",
+      "line_number": 1506,
+      "formula_type": "display"
+    }
+  ],
+  "unmodified": [
+    "<<FORMULA_1050>>",
+    "<<FORMULA_1046>>",
+    "<<FORMULA_0932>>",
+    "<<FORMULA_0829>>",
+    "<<FORMULA_0417>>",
+    "<<FORMULA_0558>>",
+    "<<FORMULA_0797>>",
+    "<<FORMULA_0959>>",
+    "<<FORMULA_0855>>",
+    "<<FORMULA_0654>>",
+    "<<FORMULA_1027>>",
+    "<<FORMULA_0356>>",
+    "<<FORMULA_0789>>"
+  ]
+}

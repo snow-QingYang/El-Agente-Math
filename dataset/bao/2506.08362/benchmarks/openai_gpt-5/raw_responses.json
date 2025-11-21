@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2506.08362",
+    "model": "openai/gpt-5",
+    "total_responses": 20,
+    "timestamp": "2025-10-31T18:04:57.863376"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0354>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The index inside the norm uses \\\\tilde{\\\\vz}_{t\\\\times1} instead of \\\\tilde{\\\\vz}_{t+1}.\"\n}",
+      "response_length": 170,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0497>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"When adding and subtracting f(x_out, y_out), the second occurrence has the wrong sign; it should be +f(x_out, y_out) (i.e., A - B = A - C + C - B), not -f(x_out, y_out).\"\n}",
+      "response_length": 248,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0435>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"In the second inequality, the uniform concavity term is written as (p/µ)||y2−y1||^p, but it should be (µ/p)||y2−y1||^p (same as the first inequality).\"\n}",
+      "response_length": 238,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0434>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0071>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The normal-cone term is written with a negative sign on the Y block: u ∈ [∂I_X(x); -∂I_Y(y)]. It should be u ∈ ∂I_Z(z) = [∂I_X(x); ∂I_Y(y)] without the minus.\"\n}",
+      "response_length": 237,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0356>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"The term uses f(tilde z_{t+1}) where it should be h(tilde z_{t+1}); additionally, the gradient is evaluated at tilde z_{t×1} instead of tilde z_{t+1} (index typo).\"\n}",
+      "response_length": 246,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0346>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The inequality after the equality is reversed: replacing g_{t+1} with ∇h(\\\\tilde z_{t+1}) and bounding the error terms by δ should produce an upper bound (≤), not a lower bound (≥).\"\n}",
+      "response_length": 266,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0355>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0525>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The coefficient is inverted; it should be (ell + 2 γ D)/(γ/2) rather than (γ/2)/(ell + 2 γ D).\"\n}",
+      "response_length": 182,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0074>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the cubic model, the first term should be the constant f(\\\\bar \\\\vz), but it is written as f(\\\\vz'). This conflicts with the subsequent optimality condition (which lacks a \\\\nabla f(\\\\vz) term).\"\n}",
+      "response_length": 279,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0508>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"Both inequalities have a squared norm on the left but only a first-power norm on the right; the RHS norms should be squared (or the LHS unsquared) to be consistent.\"\n}",
+      "response_length": 248,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0511>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"In the second inequality, the coefficient is written as 1/\\\\gamma/2^{1/2} instead of 1/(\\\\gamma/2)^{1/2}, altering the intended scaling.\"\n}",
+      "response_length": 225,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0352>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0513>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the equality, the term involving u_out has opposite signs: the left side uses + u_out while the right side uses - u_out; it should be + u_out on both sides.\"\n}",
+      "response_length": 238,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0515>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The inequality is written as a lower bound (≥), but the surrounding derivation establishes an upper bound (≤) on the gradient norm.\"\n}",
+      "response_length": 216,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0527>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"In the second line, the term ((ell+2γD)^{3/2}/(γ/2)^{1/2})‖y^{out}−y^*(⋯)‖ should involve a square root of the norm (i.e., proportional to √‖y^{out}−y^*(⋯)‖), consistent with the continuity bound and the subsequent line. The exponent on the norm is incorrect.\"\n}",
+      "response_length": 343,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0592>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"In the third line, the Jacobian-difference product lacks closing parentheses; it should read || (∇F(z_t) − ∇F(z_{π(t)})) (z_{t+1/2} − z_t) ||^2.\"\n}",
+      "response_length": 233,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0574>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The subdifferential inclusion incorrectly uses −∂I_Y(y); it should be u ∈ [∂I_X(x); ∂I_Y(y)] to match the VI condition and F(z) = [∇_x f; −∇_y f].\"\n}",
+      "response_length": 225,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0591>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The displayed step uses ≤, but from the preceding derivation one obtains a ≥ bound; the inequality direction is flipped without justification.\"\n}",
+      "response_length": 227,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0589>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The final inequality sign is reversed. From the first-order optimality conditions, one should obtain ≤ (not ≥): η_t⟨F(z_{t+1/2}), z_{t+1}−z⟩ ≤ ⟨z_{t+1}−z_t, z−z_{t+1}⟩ and η_t⟨˜F(z_{t+1/2}), z_{t+1/2}−z_{t+1}⟩ ≤ ⟨z_{t+1/2}−z_t, z_{t+1}−z_{t+1/2}⟩.\"\n}",
+      "response_length": 332,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

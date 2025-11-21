@@ -1,0 +1,214 @@
+{
+  "metadata": {
+    "paper_id": "2503.03025",
+    "model": "openrouter/nvidia/nemotron-nano-9b-v2",
+    "total_detections_attempted": 20,
+    "parsing_failures": 5,
+    "valid_evaluations": 15,
+    "formulas_with_errors_injected": 11,
+    "formulas_unmodified": 9,
+    "timestamp": "2025-10-31T17:32:31.644892"
+  },
+  "binary_classification": {
+    "true_positives": 4,
+    "false_positives": 2,
+    "true_negatives": 4,
+    "false_negatives": 5,
+    "accuracy": 0.533,
+    "precision": 0.667,
+    "recall": 0.444,
+    "f1_score": 0.533
+  },
+  "error_type_matching": {
+    "total_errors_detected": 4,
+    "correct_type_identified": 1,
+    "incorrect_type_identified": 3,
+    "type_accuracy": 0.25
+  },
+  "instruction_following": {
+    "perfect_json_responses": 15,
+    "fallback_parsing_required": 0,
+    "parsing_failures": 5,
+    "perfect_json_rate": 0.75,
+    "fallback_rate": 0.0,
+    "failure_rate": 0.25,
+    "strategy_breakdown": {
+      "direct": 15,
+      "failed": 5
+    }
+  },
+  "per_error_type_performance": {
+    "operator_swap": {
+      "detected": 0,
+      "total": 2,
+      "recall": 0.0
+    },
+    "sign_flip": {
+      "detected": 1,
+      "total": 2,
+      "recall": 0.5
+    },
+    "function_swap": {
+      "detected": 0,
+      "total": 1,
+      "recall": 0.0
+    },
+    "transpose_error": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    },
+    "inequality_flip": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    },
+    "sum_product_swap": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    },
+    "index_change": {
+      "detected": 0,
+      "total": 1,
+      "recall": 0.0
+    }
+  },
+  "detailed_results": [
+    {
+      "label": "<<FORMULA_0066>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0438>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "operator_swap",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0339>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0441>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0436>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0447>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "function_swap",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0437>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "operator_swap",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0453>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "transpose_error",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0539>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0445>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "inequality_flip",
+      "detected_has_error": true,
+      "detected_error_type": "sum_product_swap",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0545>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sum_product_swap",
+      "detected_has_error": true,
+      "detected_error_type": "operator_swap",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0457>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0446>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "fraction_inversion",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0520>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "index_change",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0303>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    }
+  ]
+}

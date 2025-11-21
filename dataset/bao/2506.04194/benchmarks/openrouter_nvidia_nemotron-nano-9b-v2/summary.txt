@@ -1,0 +1,37 @@
+Benchmark Summary
+Model: openrouter/nvidia/nemotron-nano-9b-v2
+Paper: 2506.04194
+Timestamp: 2025-10-31T17:17:01.424933
+
+
+======================================================================
+Benchmark Metrics Summary
+======================================================================
+
+Evaluation Coverage:
+  Total detections: 20
+  Parsing failures: 5 (excluded from metrics)
+  Valid evaluations: 15
+
+Binary Classification:
+  Accuracy:  73.3%
+  Precision: 75.0%
+  Recall:    50.0%
+  F1 Score:  60.0%
+
+Confusion Matrix (n=15):
+  TP: 3     FP: 1
+  FN: 3     TN: 8
+
+Error Type Identification:
+  Correct types: 1/3 (33.3%)
+
+📊 Instruction Following (JSON Format Compliance):
+  Perfect JSON:     14/20 (70.0%)
+  Required fallback: 1/20 (5.0%)
+  Parse failures:    5/20 (25.0%)
+
+Per-Error-Type Recall:
+  inequality_flip      1/2 (50.0%)
+  sign_flip            0/1 (0.0%)
+  transpose_error      2/3 (66.7%)

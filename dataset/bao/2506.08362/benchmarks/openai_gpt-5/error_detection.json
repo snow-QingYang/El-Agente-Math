@@ -1,0 +1,212 @@
+{
+  "metadata": {
+    "paper_id": "2506.08362",
+    "model": "openai/gpt-5",
+    "context_words": 300,
+    "total_formulas_checked": 20,
+    "timestamp": "2025-10-31T18:04:57.860423",
+    "benchmark_mode": true
+  },
+  "detections": [
+    {
+      "label": "<<FORMULA_0354>>",
+      "formula": "&\\quad \\langle \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1}, \\tilde \\vz_{t+1} - \\bar \\vz_t \\rangle \\\\\n     &=\\frac{1}{2 \\lambda_{t+1}} \\Vert \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1} + \\lambda_{t+1} (\\tilde \\vz_{t\\\\times1} - \\bar \\vz_t) \\Vert^2 \\\\\n     &\\quad - \\frac{1}{2 \\lambda_{t+1} } \\Vert \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1} \\Vert^2  - \\frac{\\lambda_{t+1}}{2} \\Vert \\tilde \\vz_{t+1} - \\bar \\vz_t \\Vert^2.",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "The index inside the norm uses \\tilde{\\vz}_{t\\times1} instead of \\tilde{\\vz}_{t+1}.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 9.38
+    },
+    {
+      "label": "<<FORMULA_0497>>",
+      "formula": "&\\quad f(\\vx^{\\rm out},\\vy^*(\\vx^{\\rm out})) - f(\\vx^*(\\vy^{\\rm out}),\\vy^{\\rm out}) \\\\\n &= f(\\vx^{\\rm out},\\vy^*(\\vx^{\\rm out})) -  f(\\vx^{\\rm out},\\vy^{\\rm out}) - f(\\vx^{\\rm out},\\vy^{\\rm out}) -  f(\\vx^*(\\vy^{\\rm out}),\\vy^{\\rm out}) \\\\\n &\\le \\langle \\nabla_x f(\\vx^{\\rm out},\\vy^{\\rm out}) + \\vu^{\\rm out}, \\vx^*(\\vy^{\\rm out}) -\\vx^{\\rm out} \\rangle \\\\\n &\\quad + \\langle - \\nabla_y f(\\vx^{\\rm out},\\vy^{\\rm out}) + \\vv^{\\rm out},  \\vy^*(\\vx^{\\rm out}) - \\vy^{\\rm out} \\rangle.",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "When adding and subtracting f(x_out, y_out), the second occurrence has the wrong sign; it should be +f(x_out, y_out) (i.e., A - B = A - C + C - B), not -f(x_out, y_out).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 11.22
+    },
+    {
+      "label": "<<FORMULA_0435>>",
+      "formula": "-f(\\vx_1,\\vy_2) + f(\\vx_1,\\vy_1) &\\ge \\langle -\\nabla_y f(\\vx_1,\\vy_1) +\\vv_1, \\vy_2 - \\vy_1 \\rangle + \\frac{\\mu}{p} \\Vert \\vy_2 - \\vy_1 \\Vert^p, \\quad \\vv_1\\in \\partial \\gI_{\\gY}(\\vy_1);  \\\\\n    -f(\\vx_2,\\vy_1) + f(\\vx_2,\\vy_2) &\\ge  \\langle -\\nabla_y f(\\vx_2,\\vy_2) + \\vv_2, \\vy_1 - \\vy_2 \\rangle + \\frac{p}{\\mu} \\Vert \\vy_2 - \\vy_1 \\Vert^p, \\quad \\vv_2 \\in \\partial \\gI_{\\gY} (\\vy_2).",
+      "has_error": true,
+      "error_type": "fraction_inversion",
+      "error_description": "In the second inequality, the uniform concavity term is written as (p/µ)||y2−y1||^p, but it should be (µ/p)||y2−y1||^p (same as the first inequality).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 21.45
+    },
+    {
+      "label": "<<FORMULA_0434>>",
+      "formula": "f(\\vx_2,\\vy_1) - f(\\vx_1,\\vy_1) &\\ge \\langle \\nabla_x f(\\vx_1,\\vy_1) + \\vu_1, \\vx_2 - \\vx_1 \\rangle + \\frac{\\mu}{p} \\Vert \\vx_2 - \\vx_1 \\Vert^p, \\quad \\vu_1 \\in \\partial \\gI_{\\gX} (\\vx_1); \\\\\n    f(\\vx_1,\\vy_2) - f(\\vx_2,\\vy_2) &\\ge \\langle \\nabla_x f(\\vx_2, \\vy_2) + \\vu_2, \\vx_1 - \\vx_2 \\rangle + \\frac{\\mu}{p} \\Vert \\vx_2 - \\vx_1 \\Vert^p, \\quad \\vu_2 \\in \\partial \\gI_{\\gX} (\\vx_2).",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 24.43
+    },
+    {
+      "label": "<<FORMULA_0071>>",
+      "formula": "\\langle \\mF(\\bar \\vz) + \\nabla \\mF(\\bar \\vz)(\\vz - \\bar \\vz) + \\frac{\\gamma}{2} \\Vert \\vz - \\bar \\vz \\Vert (\\vz - \\bar \\vz), \\vz' - \\vz  \\rangle \\ge 0, ~\\forall \\vz' \\in \\gZ; \\\\\n    \\vu =  -\\left(\\mF(\\bar\\vz) + \\nabla \\mF(\\bar \\vz) (\\vz - \\bar \\vz) + \\frac{\\gamma}{2} \\Vert \\vz - \\bar \\vz \\Vert \n    (\\vz- \\bar \\vz)  \\right) \\in \n    \\begin{bmatrix}\n        \\partial \\gI_{\\gX} (\\vx) \\\\\n        -\\partial \\gI_{\\gY}(\\vy)\n    \\end{bmatrix},",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The normal-cone term is written with a negative sign on the Y block: u ∈ [∂I_X(x); -∂I_Y(y)]. It should be u ∈ ∂I_Z(z) = [∂I_X(x); ∂I_Y(y)] without the minus.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 26.43
+    },
+    {
+      "label": "<<FORMULA_0356>>",
+      "formula": "\\label{eq:MS-2}\n\\begin{split}\n     &\\quad a_{t+1}' \\langle \\nabla h(\\tilde \\vz_{t\\\\times1}) + \\vu_{t+1}, \\vz^* - \\vv_t \\rangle \\\\\n    &\\le a_{t+1}' ( h(\\vz^*) - f(\\tilde \\vz_{t+1})  )  + A_t (h(\\vz_t) - h(\\tilde \\vz_{t+1})) \\\\\n    &\\quad - \\frac{A_{t+1}'}{2 \\lambda_{t+1} } \\Vert \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1} \\Vert^2 - \\frac{3}{4} \\lambda_{t+1} A_{t+1}'  N_{t+1} + \\frac{A_{t+1}'}{2 \\lambda_{t+1}} \\delta^2.\n\\end{split}",
+      "has_error": true,
+      "error_type": "function_swap",
+      "error_description": "The term uses f(tilde z_{t+1}) where it should be h(tilde z_{t+1}); additionally, the gradient is evaluated at tilde z_{t×1} instead of tilde z_{t+1} (index typo).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 27.8
+    },
+    {
+      "label": "<<FORMULA_0346>>",
+      "formula": "\\label{eq:MS-1}\n\\begin{split}\n    R_{t+1} &= \\frac{1}{2} \\left \\Vert {\\rm Proj}_{\\gZ} (\\vv_t - a_{t+1}  (\\vg_{t+1} + \\vu_{t+1})) - \\vz^* \\right \\Vert^2 \\\\\n    &\\le \\frac{1}{2} \\left \\Vert (\\vv_t - a_{t+1} (\\vg_{t+1} + \\vu_{t+1})) - \\vz^* \\right \\Vert^2 \\\\\n    &= R_t + a_{t+1} \\langle \\vg_{t+1} + \\vu_{t+1}, \\vz^* - \\vv_t \\rangle + \\frac{a_{t+1}^2}{2} \\Vert \\vg_{t+1} + \\vu_{t+1} \\Vert^2 \\\\\n    &\\\\ge  R_t + a_{t+1} \\langle  \\nabla h(\\tilde \\vz_{t+1}) + u_{t+1}, \\vz^* - \\vv_t \\rangle + a_{t+1}^2 \\Vert \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1} \\Vert^2 \\\\\n    &\\quad + a_{t+1} \\delta \\Vert \\vv_t - \\vz^* \\Vert + a_{t+1}^2 \\delta^2.\n    % &\\le D_t + a_{t+1} \\langle \\nabla f(\\tilde \\vz_{t+1}), \\vz^* - \\vv_t \\rangle + a_{t+1}^2 \\Vert \\nabla f(\\tilde \\vz_{t+1}) \\Vert^2 + a_{t+1} D \\delta_{t+1} + a_{t+1}^2 \\delta_{t+1}^2.\n\\end{split}",
+      "has_error": true,
+      "error_type": "inequality_flip",
+      "error_description": "The inequality after the equality is reversed: replacing g_{t+1} with ∇h(\\tilde z_{t+1}) and bounding the error terms by δ should produce an upper bound (≤), not a lower bound (≥).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 34.54
+    },
+    {
+      "label": "<<FORMULA_0355>>",
+      "formula": "&\\quad a_{t+1}' \\langle \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1}, \\vz^* - \\vv_t \\rangle \\\\\n    &\\le a_{t+1}' ( h(\\vz^*) - h(\\tilde \\vz_{t+1})  )  + A_t (h(\\vz_t) - h(\\tilde \\vz_{t+1})) - \\frac{A_{t+1}'}{2 \\lambda_{t+1} } \\Vert \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1} \\Vert^2 \\\\\n    &\\quad + \\frac{A_{t+1}'}{2 \\lambda_{t+1}} \\Vert \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1} + \\lambda_{t+1} (\\tilde \\vz_{t+1} - \\bar \\vz_t) \\Vert^2  - \\frac{A_{t+1}' \\lambda_{t+1}}{2} \\Vert \\tilde \\vz_{t+1} - \\bar \\vz_t \\Vert^2.",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 35.36
+    },
+    {
+      "label": "<<FORMULA_0525>>",
+      "formula": "\\Vert  \\vx^*(\\vy_1; \\bar\\vx , \\bar \\vy) - \\vx^*(\\vy_2; \\bar\\vx , \\bar \\vy) \\Vert^2 &\\le \\frac{\\gamma /2 }{\\ell + 2 \\gamma D} \\Vert \\vy_1 - \\vy_2 \\Vert, \\quad \\forall \\vy_1, \\vy_2 \\in \\gY,\n    % \\\\\n    % \\Vert \\vx^*(\\vy_1; \\bar \\vx) - \\vx^*(\\vy_2; \\bar \\vx) \\Vert^2 &\\le \\frac{\\ell +2 \\rho D}{\\rho} \\Vert \\vy_1 - \\vy_2 \\Vert, \\quad \\forall \\vy_1,\\vy_2 \\in \\gY; \\\\\n    % \\Vert \\vy^*(\\vx_1; \\bar \\vx) - \\vy^*(\\vx_2; \\bar \\vx) \\Vert^2 &\\le \\frac{\\ell}{\\mu_y} \\Vert \\vx_1 - \\vx_2 \\Vert, \\quad \\forall \\vx_1,\\vx_2 \\in \\gX.",
+      "has_error": true,
+      "error_type": "fraction_inversion",
+      "error_description": "The coefficient is inverted; it should be (ell + 2 γ D)/(γ/2) rather than (γ/2)/(ell + 2 γ D).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 10.78
+    },
+    {
+      "label": "<<FORMULA_0074>>",
+      "formula": "\\vz = \\arg & \\min_{\\vz' \\in \\gZ}  \\left\\{ \n    f(\\vz') + \\langle \\nabla f(\\bar \\vz), \\vz' - \\bar \\vz \\rangle + \\frac{1}{2} \\langle \\nabla^2 f(\\bar \\vz) (\\vz' - \\bar \\vz), \\vz' - \\bar \\vz \\rangle + \\frac{\\gamma}{6} \\Vert \\vz' - \\bar \\vz \\Vert^3\n    \\right\\}; \\\\\n    \\vu &= - ( \\nabla f(\\bar \\vz) + \\nabla^2 f(\\bar \\vz) (\\vz - \\bar \\vz) + \\frac{\\gamma}{2} \\Vert \\vz - \\bar \\vz \\Vert (\\vz-  \\bar \\vz) ) \\in \\partial \\gI_{\\gZ}(\\vz).",
+      "has_error": true,
+      "error_type": "index_change",
+      "error_description": "In the cubic model, the first term should be the constant f(\\bar \\vz), but it is written as f(\\vz'). This conflicts with the subsequent optimality condition (which lacks a \\nabla f(\\vz) term).",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 38.37
+    },
+    {
+      "label": "<<FORMULA_0508>>",
+      "formula": "\\label{eq:cont-mid}\n\\begin{split}\n     \\Vert \\vx^*(\\vy_1; \\bar \\vx) - \\vx^*(\\vy_2; \\bar \\vx) \\Vert^2 &\\le \\frac{\\ell +2 \\gamma D}{\\gamma/2} \\Vert \\vy_1 - \\vy_2 \\Vert, \\quad \\forall \\vy_1,\\vy_2 \\in \\gY; \\\\\n    \\Vert \\vy^*(\\vx_1; \\bar \\vx) - \\vy^*(\\vx_2; \\bar \\vx) \\Vert^2 &\\le \\frac{\\ell}{\\mu_y} \\Vert \\vx_1 - \\vx_2 \\Vert, \\quad \\forall \\vx_1,\\vx_2 \\in \\gX,\n\\end{split}\n    % \\Vert  \\vx^*(\\vy_1; \\bar\\vx , \\bar \\vy) - \\vx^*(\\vy_2; \\bar\\vx , \\bar \\vy) \\Vert^2 &\\le \\frac{\\ell - 2 \\rho D}{\\rho} \\Vert \\vy_1 - \\vy_2 \\Vert, \\quad \\forall \\vy_1, \\vy_2 \\in \\gY; \\\\",
+      "has_error": true,
+      "error_type": "exponent_order",
+      "error_description": "Both inequalities have a squared norm on the left but only a first-power norm on the right; the RHS norms should be squared (or the LHS unsquared) to be consistent.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 39.01
+    },
+    {
+      "label": "<<FORMULA_0511>>",
+      "formula": "\\label{eq:xxx-plug}\n\\begin{split}\n\\Vert \\vx^{\\rm out} - \\vx^*(\\bar \\vx) \\Vert &\\le \\Vert \\vx^{\\rm out} - \\vx^*(\\hat \\vy; \\bar \\vx) \\Vert +  \\frac{(\\ell + 2 \\gamma D )^{1/2}}{(\\gamma/2)^{1/2}} \\sqrt{ \\Vert \\hat \\vy - \\vy^*(\\bar \\vx) \\Vert} \\\\\n&\\le \\frac{1}{\\gamma/2^{1/2}} \\sqrt{ \\Vert \\nabla_x g(\\vx^{\\rm out},\\hat \\vy; \\bar \\vx) + \\vu^{\\rm out} \\Vert } + \\frac{(\\ell + 2 \\gamma D )^{1/2}}{(\\gamma/2)^{1/2}} \\sqrt{ \\Vert \\hat \\vy - \\vy^*(\\bar \\vx) \\Vert},\n\\end{split}",
+      "has_error": true,
+      "error_type": "missing_parentheses",
+      "error_description": "In the second inequality, the coefficient is written as 1/\\gamma/2^{1/2} instead of 1/(\\gamma/2)^{1/2}, altering the intended scaling.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 39.93
+    },
+    {
+      "label": "<<FORMULA_0352>>",
+      "formula": "\\label{eq:to-plug}\n\\begin{split} \n    &\\quad a_{t+1}' \\langle \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1}, \\vz^* - \\vv_t \\rangle \\\\\n&= \\langle \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1}, a_{t+1}'  ( \\vz^*-  \\tilde \\vz_{t+1}) + A_t (\\vz_t - \\tilde \\vz_{t+1})  + A_{t+1}' (\\tilde \\vz_{t+1}- \\bar \\vz_t) \\rangle  \\\\\n&\\le a_{t+1}' ( h(\\vz^*) - h(\\tilde \\vz_{t+1})  )  + A_t (h(\\vz_t) - h(\\tilde \\vz_{t+1})) + A_{t+1}' \\langle \\nabla h(\\tilde \\vz_{t+1}) + \\vu_{t+1}, \\tilde \\vz_{t+1} - \\bar \\vz_t \\rangle,\n\\end{split}",
+      "has_error": false,
+      "error_type": "none",
+      "error_description": "",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 52.97
+    },
+    {
+      "label": "<<FORMULA_0513>>",
+      "formula": "&\\quad \\left \\Vert \\nabla \\Phi(\\vx^{\\rm out}) + \\gamma \\Vert \\vx^{\\rm out} - \\bar \\vx \\Vert (\\vx^{\\rm out} - \\bar \\vx) + \\vu^{\\rm out}  \\right \\Vert = \\Vert \\nabla_x g(\\vx^{\\rm out}, \\vy^*(\\vx^{\\rm out}; \\bar \\vx) ;\\bar \\vx) - \\vu^{\\rm out}  \\Vert \\\\\n    &\\le     \\Vert \\nabla_x g(\\vx^{\\rm out}, \\vy^*(\\bar \\vx) ;\\bar \\vx) + \\vu^{\\rm out}  \\Vert + \\frac{(\\ell + 2 \\rho D) \\ell^{1/2}}{\\mu_y^{1/2}} \\sqrt{\\Vert \\vx^{\\rm out}  - \\vx^*(\\bar \\vx) \\Vert} \\\\\n    &\\le \\Vert \\nabla_x g(\\vx^{\\rm out}, \\hat \\vy; \\bar \\vx) + \\vu^{\\rm out} \\Vert + (\\ell +2 \\rho D) \\Vert \\hat \\vy - \\vy^*(\\bar \\vx) \\Vert + \\frac{(\\ell + 2 \\rho D) \\ell^{1/2}}{\\mu_y^{1/2}} \\sqrt{\\Vert \\vx^{\\rm out}  - \\vx^*(\\bar \\vx) \\Vert},",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "In the equality, the term involving u_out has opposite signs: the left side uses + u_out while the right side uses - u_out; it should be + u_out on both sides.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 32.16
+    },
+    {
+      "label": "<<FORMULA_0515>>",
+      "formula": "\\label{eq:prox-x-1}\n\\begin{split}\n&\\quad   \\Vert \\nabla_x g(\\vx^{\\rm out}, \\vy^*(\\vx^{\\rm out}; \\bar \\vx) ;\\bar \\vx) + \\vu^{\\rm out}  \\Vert \\\\\n&\\\\ge 6 (\\ell + 2 \\gamma D) \\zeta_2 +  \\frac{(\\ell + 2 \\rho D) \\ell^{1/2}}{\\mu_y^{1/2} (\\gamma/2)^{1/4}} \\left( \n   6 (\\ell+2\\gamma D) \\zeta_2\n    \\right)^{1/4} \\\\\n    &\\quad + (\\ell + 2\\rho D) \\zeta_2 +  \\frac{(\\ell + 2 \\rho D) \\ell^{1/2} (\\ell + 2 \\gamma D)^{1/4}}{\\mu_y^{1/2} (\\gamma/2)^{1/4}} (\\zeta_2)^{1/2},\n\\end{split}",
+      "has_error": true,
+      "error_type": "inequality_flip",
+      "error_description": "The inequality is written as a lower bound (≥), but the surrounding derivation establishes an upper bound (≤) on the gradient norm.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 32.39
+    },
+    {
+      "label": "<<FORMULA_0527>>",
+      "formula": "\\label{eq:prox-xy-1}\n\\begin{split}\n    &\\quad \\left \\Vert \\nabla \\Psi(\\vy^{\\rm out}; \\bar \\vx) + \\gamma \\Vert \\vy^{\\rm out} - \\bar \\vy \\Vert ( \\vy^{\\rm out} - \\bar \\vy) + \\vv^{\\rm out} \\right \\Vert = \\Vert \\nabla_y h(\\vx^*(\\vy^{\\rm out}; \\bar \\vx, \\bar \\vy),\\vy^{\\rm out}; \\bar \\vx, \\bar \\vy) + \\vv^{\\rm out} \\Vert \\\\\n    &\\le  \\Vert \\nabla_y h(\\vx^*(\\bar \\vx, \\bar \\vy), \\vy^{\\rm out};\\bar \\vx, \\bar \\vy) + \\vv^{\\rm out} \\Vert +  \\frac{(\\ell +2 \\gamma D)^{3/2}}{(\\gamma/2)^{1/2}} \\Vert \\vy^{\\rm out} - \\vy^*(\\bar \\vx, \\bar \\vy) \\Vert \\\\\n    &\\le \\Vert \\nabla_y h(\\vx^{\\rm out}, \\vy^{\\rm out}; \\bar \\vx, \\bar \\vy) +\\vv^{\\rm out} \\Vert + (\\ell +2 \\gamma D) \\Vert \\vx^{\\rm out} - \\vx^*(\\bar \\vx, \\bar \\vy) \\Vert \\\\\n    &\\quad + \\frac{(\\ell +2 \\gamma D)^{3/2}}{(\\gamma/2)^{1/2}} \\sqrt{\\Vert \\vy^{\\rm out} - \\vy^*(\\bar \\vx, \\bar \\vy) \\Vert} \\\\\n    &\\le 6 (\\ell + 2 \\gamma D) \\zeta_3\n    + \\frac{\\ell + 2\\gamma D}{(\\gamma/2)^{1/2}}   \\left( 6 (\\ell+2 \\gamma D) \\zeta_3 \\right)^{1/2}  +\\frac{(\\ell +2 \\gamma D)^{3/2}}{(\\gamma/2)^{3/4}} \\left( 6 (\\ell+2 \\gamma D) \\zeta_3 \\right)^{1/4},\n\\end{split}",
+      "has_error": true,
+      "error_type": "exponent_order",
+      "error_description": "In the second line, the term ((ell+2γD)^{3/2}/(γ/2)^{1/2})‖y^{out}−y^*(⋯)‖ should involve a square root of the norm (i.e., proportional to √‖y^{out}−y^*(⋯)‖), consistent with the continuity bound and the subsequent line. The exponent on the norm is incorrect.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 47.47
+    },
+    {
+      "label": "<<FORMULA_0592>>",
+      "formula": "&\\quad \\eta_t^2 \\Vert \\mF(\\vz_{t+1/2}) - \\tilde \\mF(\\vz_{t+1/2}) \\Vert^2 \\\\\n    &\\le 2 \\eta_t^2 \\Vert \\mF(\\vz_{t+1/2}) - \\mF(\\vz_t) - \\nabla \\mF(\\vz_t) (\\vz_{t+1/2} - \\vz_t) \\Vert^2 \\\\\n    &\\quad + 2 \\eta_t^2 \\Vert (\\nabla \\mF(\\vz_t) - \\nabla \\mF(\\vz_{\\pi(t)}) (\\vz_{t+1/2} - \\vz_t) \\Vert^2 \\\\\n    &\\le \\frac{\\eta_t^2 \\rho^2}{2} \\Vert \\vz_{t+1/2} - \\vz_t \\Vert^4  + 2 \\eta_t^2 \\rho^2 \\Vert \\vz_t - \\vz_{\\pi(t)} \\Vert^2 \\Vert \\vz_{t+1/2} - \\vz_t \\Vert^2  \\\\\n    &= \\frac{\\rho^2}{8 \\gamma^2} \\Vert \\vz_{t+1/2} - \\vz_t \\Vert^2 + \\frac{\\rho^2}{2\\gamma^2} \\Vert \\vz_t - \\vz_{\\pi(t)} \\Vert^2.",
+      "has_error": true,
+      "error_type": "missing_parentheses",
+      "error_description": "In the third line, the Jacobian-difference product lacks closing parentheses; it should read || (∇F(z_t) − ∇F(z_{π(t)})) (z_{t+1/2} − z_t) ||^2.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 55.49
+    },
+    {
+      "label": "<<FORMULA_0574>>",
+      "formula": "\\langle \\mF(\\bar \\vz) + \\nabla \\mF(\\vz_{\\rm ss})(\\vz - \\bar \\vz) + \\frac{\\gamma}{2} \\Vert \\vz - \\bar \\vz \\Vert (\\vz - \\bar \\vz), \\vz' - \\vz  \\rangle \\ge 0, ~\\forall \\vz' \\in \\gZ; \\\\\n    \\vu =  -\\left(\\mF(\\bar\\vz) + \\nabla \\mF(\\vz_{\\rm ss}) (\\vz - \\bar \\vz) + \\frac{\\gamma}{2} \\Vert \\vz - \\bar \\vz \\Vert \n    (\\vz- \\bar \\vz)  \\right) \\in \n    \\begin{bmatrix}\n        \\partial \\gI_{\\gX} (\\vx) \\\\\n        -\\partial \\gI_{\\gY}(\\vy)\n    \\end{bmatrix}.",
+      "has_error": true,
+      "error_type": "sign_flip",
+      "error_description": "The subdifferential inclusion incorrectly uses −∂I_Y(y); it should be u ∈ [∂I_X(x); ∂I_Y(y)] to match the VI condition and F(z) = [∇_x f; −∇_y f].",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 70.07
+    },
+    {
+      "label": "<<FORMULA_0591>>",
+      "formula": "&\\quad \\eta_t \\langle \\mF(\\vz_{t+1/2}), \\vz_{t+1/2} - \\vz \\rangle \\\\\n    &\\le \\frac{1}{2} \\Vert \\vz - \\vz_t \\Vert^2 \\bcancel{- \\frac{1}{2} \\Vert \\vz_{t+1} - \\vz_t \\Vert^2} - \\frac{1}{2} \\Vert \\vz - \\vz_{t+1} \\Vert^2 \\\\\n    &\\quad + \\bcancel{\\frac{1}{2} \\Vert \\vz_{t+1} - \\vz_t \\Vert^2} - \\frac{1}{2} \\Vert \\vz_{t+1/2} - \\vz_t \\Vert^2 - \\frac{1}{2} \\Vert \\vz_{t+1} - \\vz_{t+1/2} \\Vert^2 \\\\\n    &\\quad + \\underbrace{\\eta_t^2 \\Vert \\mF(\\vz_{t+1/2}) - \\tilde \\mF(\\vz_{t+1/2}) \\Vert^2}_{(*)} + \\frac{4}{1} \\Vert \\vz_{t+1} - \\vz_{t+1/2} \\Vert^2.\n    %  - \\frac{\\eta_t}{2} \\Vert \\Vert \n    % + \\frac{\\eta_t}{2} \\Vert \\vz - \\vz_{t+1} \\Vert^2 + \n    % \\frac{\\eta_t}{2} \\Vert \\vz - \\vz_t \\Vert^2 \\bcancel{-\\frac{\\eta_t}{2} \\Vert \\vz_{t+1} - \\vz_t \\Vert^2}  \\\\\n    % &\\quad + \\frac{\\eta_t}{2} \\Vert \\vz_{t+1/2} - \\vz_t \\Vert^2 + \\frac{\\eta_t}{2} \\Vert \\vz_{t+1/2} - \\vz_{t+1} \\Vert^2 \\bcancel {- \\frac{\\eta_t}{2} \\Vert \\vz_{t} - \\vz_{t+1} \\Vert^2} \\\\",
+      "has_error": true,
+      "error_type": "inequality_flip",
+      "error_description": "The displayed step uses ≤, but from the preceding derivation one obtains a ≥ bound; the inequality direction is flipped without justification.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 85.24
+    },
+    {
+      "label": "<<FORMULA_0589>>",
+      "formula": "\\label{eq:eg-1}\n\\begin{split}\n     &\\quad \\eta_t \\langle \\mF(\\vz_{t+1/2}), \\vz_{t+1/2} - \\vz \\rangle \\\\\n    &= \\eta_t \\langle \\mF(\\vz_{t+1/2}), \\vz_{t+1} - \\vz \\rangle + \\eta_t \\langle \\mF(\\vz_{t+1/2}), \\vz_{t+1/2} - \\vz_{t+1}   \\rangle \\\\ \n    &= \\eta_t \\langle \\mF(\\vz_{t+1/2}), \\vz_{t+1} - \\vz \\rangle + \\eta_t \\langle \\tilde \\mF(\\vz_{t+1/2}), \\vz_{t+1/2} - \\vz_{t+1}   \\rangle \\\\\n    &\\quad + \\eta_t \\langle \\mF(\\vz_{t+1/2}) - \\tilde \\mF(\\vz_{t+1/2}), \\vz_{t+1/2} - \\vz_{t+1} \\rangle  \\\\\n    &\\\\ge \\langle \\vz_{t+1} - \\vz_t, \\vz - \\vz_{t+1} \\rangle + \\langle  \\vz_{t+1/2} - \\vz_t, \\vz_{t+1} - \\vz_{t+1/2}  \\rangle \\\\\n    &\\quad + \\eta_t \\langle \\mF(\\vz_{t+1/2}) - \\tilde \\mF(\\vz_{t+1/2}), \\vz_{t+1/2} - \\vz_{t+1} \\rangle.\n\\end{split}",
+      "has_error": true,
+      "error_type": "inequality_flip",
+      "error_description": "The final inequality sign is reversed. From the first-order optimality conditions, one should obtain ≤ (not ≥): η_t⟨F(z_{t+1/2}), z_{t+1}−z⟩ ≤ ⟨z_{t+1}−z_t, z−z_{t+1}⟩ and η_t⟨˜F(z_{t+1/2}), z_{t+1/2}−z_{t+1}⟩ ≤ ⟨z_{t+1/2}−z_t, z_{t+1}−z_{t+1/2}⟩.",
+      "parse_success": true,
+      "parse_strategy": "direct",
+      "llm_response_time": 95.56
+    }
+  ]
+}

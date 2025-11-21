@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2503.03025",
+    "model": "openrouter/deepseek/deepseek-r1-0528",
+    "total_responses": 20,
+    "timestamp": "2025-11-01T17:06:48.743548"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0066>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0339>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"transpose_error\",\n  \"error_description\": \"In the left-hand side of the first equality, R^* lacks a transpose compared to R^{*,⊤} used in subsequent steps\"\n}",
+      "response_length": 196,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0437>>",
+      "raw_response": "",
+      "response_length": 0,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0446>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"In the second line, the denominator ρ_t should be ρ_t^2 for the term c( \\\\bar{\\\\mathbf{x}}^{(t)}, \\\\bar{\\\\mathbf{y}}^{(t)} ) to match the first line and context\"\n}",
+      "response_length": 244,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0436>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The plus operator should be a minus inside the norm for distance computation between points\"\n}",
+      "response_length": 170,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0443>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the definition of \\\\bar{\\\\mathbf{y}}^{(t)}, the summation index is \\\\mathbf{x} but the term uses \\\\mathbf{x}_{i}. It should be \\\\mathbf{x}_i for consistency with the first sum and context.\"\n}",
+      "response_length": 273,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0453>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"transpose_error\",\n  \"error_description\": \"The symbol \\\\G^Tamma_{t,q} incorrectly includes a transpose superscript; it should be \\\\Gamma_{t,q} as defined in the context\"\n}",
+      "response_length": 210,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0441>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The index for the refined clusters should be (q-1)*r_{t+1} + z instead of qρ_t + z to correctly enumerate subclusters within the coarse cluster q\"\n}",
+      "response_length": 227,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0303>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"transpose_error\",\n  \"error_description\": \"The transpose was incorrectly added to \\(\\tilde{\\mb{P}}\\) in the trace expression \\(\\Tr(\\tilde{\\mb{P}} \\mb{C}^\\top \\mb{P} \\tilde{\\mb{P}}^\\top)\\), making it unequal to the previous line without justification\"\n}",
+      "response_length": 291,
+      "parse_strategy": "failed",
+      "parse_success": false
+    },
+    {
+      "label": "<<FORMULA_0520>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In Γ(X) definition, subscript uses m instead of j inconsistent with the index j in {}_{j=0}^J and Γ_j(X) definition\"\n}",
+      "response_length": 197,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0545>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The cost function uses product operator ∏ where a summation ∑ is required for optimal transport cost calculation\"\n}",
+      "response_length": 198,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0539>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0457>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The subscript index for the cluster size should be t+1 instead of t-1 in |\\\\mathsf{X}_{q}^{(t-1)}|^{2}\"\n}",
+      "response_length": 184,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0438>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The index for refined clusters at scale t+1 should be (q-1)r_{t+1} + z instead of qρ_t + z to maintain contiguous block structure without gaps/overlaps\"\n}",
+      "response_length": 233,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0447>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"The min operator is used instead of max for the diameter definition\"\n}",
+      "response_length": 150,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0460>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"The domain of integration should be '\\\\mathsf{X} \\\\times \\\\mathsf{Y}' but is incorrectly written as '\\\\mathsf{X} / \\\\mathsf{Y}' in the second integral\"\n}",
+      "response_length": 233,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0452>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0540>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"The denominator uses a product operator (∏) instead of a sum operator (∑) for the weights π_{j-1}^⋆\"\n}",
+      "response_length": 185,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0454>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0445>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The inequality \\\\leq should be \\\\geq because Jensen's inequality for convex functions gives a lower bound, not an upper bound\"\n}",
+      "response_length": 210,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "model": "openrouter/deepseek/deepseek-r1-0528",
+  "timestamp": "2025-11-01T17:06:48.792110",
+  "metadata": {
+    "total_papers_in_directory": 10,
+    "successful_benchmarks": 10,
+    "failed_benchmarks": 0,
+    "no_ground_truth": 0
+  },
+  "aggregate_metrics": {
+    "binary_classification": {
+      "mean_accuracy": 0.7992,
+      "mean_precision": 0.7498,
+      "mean_recall": 0.9265,
+      "mean_f1_score": 0.8206,
+      "std_accuracy": 0.10281569270625307,
+      "std_precision": 0.1526854428046251,
+      "std_recall": 0.09558271577830145,
+      "std_f1_score": 0.10303203385355451,
+      "min_accuracy": 0.65,
+      "max_accuracy": 0.944
+    },
+    "error_type_matching": {
+      "mean_type_accuracy": 0.6792,
+      "std_type_accuracy": 0.14461658119163084
+    },
+    "instruction_following": {
+      "mean_perfect_json_rate": 0.9597,
+      "mean_fallback_rate": 0.0,
+      "mean_failure_rate": 0.0403
+    }
+  },
+  "per_error_type_performance": {
+    "operator_swap": {
+      "detected": 10,
+      "total": 11,
+      "recall": 0.9090909090909091
+    },
+    "sign_flip": {
+      "detected": 20,
+      "total": 22,
+      "recall": 0.9090909090909091
+    },
+    "index_change": {
+      "detected": 12,
+      "total": 13,
+      "recall": 0.9230769230769231
+    },
+    "inequality_flip": {
+      "detected": 16,
+      "total": 16,
+      "recall": 1.0
+    },
+    "transpose_error": {
+      "detected": 7,
+      "total": 8,
+      "recall": 0.875
+    },
+    "fraction_inversion": {
+      "detected": 9,
+      "total": 10,
+      "recall": 0.9
+    },
+    "sum_product_swap": {
+      "detected": 8,
+      "total": 8,
+      "recall": 1.0
+    },
+    "exponent_order": {
+      "detected": 3,
+      "total": 3,
+      "recall": 1.0
+    },
+    "function_swap": {
+      "detected": 3,
+      "total": 3,
+      "recall": 1.0
+    }
+  },
+  "paper_ids": [
+    "2410.10253",
+    "2506.04194",
+    "2410.14055",
+    "2411.00161",
+    "2502.02013",
+    "2411.12537",
+    "2507.09128",
+    "2502.05164",
+    "2506.08362",
+    "2503.03025"
+  ]
+}

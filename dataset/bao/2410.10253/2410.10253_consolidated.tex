@@ -1,0 +1,1338 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{iclr2025_conference,times}
+\iclrfinalcopy
+
+% Optional math commands from https://github.com/goodfeli/dlbook_notation.
+
+% BEGIN INCLUDE: math_commands.tex
+%%%%% NEW MATH DEFINITIONS %%%%%
+
+\usepackage{amsmath,amsfonts,bm}
+
+% Mark sections of captions for referring to divisions of figures
+\newcommand{\figleft}{{\em (Left)}}
+\newcommand{\figcenter}{{\em (Center)}}
+\newcommand{\figright}{{\em (Right)}}
+\newcommand{\figtop}{{\em (Top)}}
+\newcommand{\figbottom}{{\em (Bottom)}}
+\newcommand{\captiona}{{\em (a)}}
+\newcommand{\captionb}{{\em (b)}}
+\newcommand{\captionc}{{\em (c)}}
+\newcommand{\captiond}{{\em (d)}}
+
+% Highlight a newly defined term
+\newcommand{\newterm}[1]{{\bf #1}}
+
+
+% Figure reference, lower-case.
+\def\figref#1{figure~\ref{#1}}
+% Figure reference, capital. For start of sentence
+\def\Figref#1{Figure~\ref{#1}}
+\def\twofigref#1#2{figures \ref{#1} and \ref{#2}}
+\def\quadfigref#1#2#3#4{figures \ref{#1}, \ref{#2}, \ref{#3} and \ref{#4}}
+% Section reference, lower-case.
+\def\secref#1{section~\ref{#1}}
+% Section reference, capital.
+\def\Secref#1{Section~\ref{#1}}
+% Reference to two sections.
+\def\twosecrefs#1#2{sections \ref{#1} and \ref{#2}}
+% Reference to three sections.
+\def\secrefs#1#2#3{sections \ref{#1}, \ref{#2} and \ref{#3}}
+% Reference to an equation, lower-case.
+\def\eqref#1{equation~\ref{#1}}
+% Reference to an equation, upper case
+\def\Eqref#1{Equation~\ref{#1}}
+% A raw reference to an equation---avoid using if possible
+\def\plaineqref#1{\ref{#1}}
+% Reference to a chapter, lower-case.
+\def\chapref#1{chapter~\ref{#1}}
+% Reference to an equation, upper case.
+\def\Chapref#1{Chapter~\ref{#1}}
+% Reference to a range of chapters
+\def\rangechapref#1#2{chapters\ref{#1}--\ref{#2}}
+% Reference to an algorithm, lower-case.
+\def\algref#1{algorithm~\ref{#1}}
+% Reference to an algorithm, upper case.
+\def\Algref#1{Algorithm~\ref{#1}}
+\def\twoalgref#1#2{algorithms \ref{#1} and \ref{#2}}
+\def\Twoalgref#1#2{Algorithms \ref{#1} and \ref{#2}}
+% Reference to a part, lower case
+\def\partref#1{part~\ref{#1}}
+% Reference to a part, upper case
+\def\Partref#1{Part~\ref{#1}}
+\def\twopartref#1#2{parts \ref{#1} and \ref{#2}}
+
+\def\ceil#1{\lceil #1 \rceil}
+\def\floor#1{\lfloor #1 \rfloor}
+\def\1{\bm{1}}
+\newcommand{\train}{\mathcal{D}}
+\newcommand{\valid}{\mathcal{D_{\mathrm{valid}}}}
+\newcommand{\test}{\mathcal{D_{\mathrm{test}}}}
+
+\def\eps{{\epsilon}}
+
+
+% Random variables
+\def\reta{{\textnormal{$\eta$}}}
+\def\ra{{\textnormal{a}}}
+\def\rb{{\textnormal{b}}}
+\def\rc{{\textnormal{c}}}
+\def\rd{{\textnormal{d}}}
+\def\re{{\textnormal{e}}}
+\def\rf{{\textnormal{f}}}
+\def\rg{{\textnormal{g}}}
+\def\rh{{\textnormal{h}}}
+\def\ri{{\textnormal{i}}}
+\def\rj{{\textnormal{j}}}
+\def\rk{{\textnormal{k}}}
+\def\rl{{\textnormal{l}}}
+% rm is already a command, just don't name any random variables m
+\def\rn{{\textnormal{n}}}
+\def\ro{{\textnormal{o}}}
+\def\rp{{\textnormal{p}}}
+\def\rq{{\textnormal{q}}}
+\def\rr{{\textnormal{r}}}
+\def\rs{{\textnormal{s}}}
+\def\rt{{\textnormal{t}}}
+\def\ru{{\textnormal{u}}}
+\def\rv{{\textnormal{v}}}
+\def\rw{{\textnormal{w}}}
+\def\rx{{\textnormal{x}}}
+\def\ry{{\textnormal{y}}}
+\def\rz{{\textnormal{z}}}
+
+% Random vectors
+\def\rvepsilon{{\mathbf{\epsilon}}}
+\def\rvtheta{{\mathbf{\theta}}}
+\def\rva{{\mathbf{a}}}
+\def\rvb{{\mathbf{b}}}
+\def\rvc{{\mathbf{c}}}
+\def\rvd{{\mathbf{d}}}
+\def\rve{{\mathbf{e}}}
+\def\rvf{{\mathbf{f}}}
+\def\rvg{{\mathbf{g}}}
+\def\rvh{{\mathbf{h}}}
+\def\rvu{{\mathbf{i}}}
+\def\rvj{{\mathbf{j}}}
+\def\rvk{{\mathbf{k}}}
+\def\rvl{{\mathbf{l}}}
+\def\rvm{{\mathbf{m}}}
+\def\rvn{{\mathbf{n}}}
+\def\rvo{{\mathbf{o}}}
+\def\rvp{{\mathbf{p}}}
+\def\rvq{{\mathbf{q}}}
+\def\rvr{{\mathbf{r}}}
+\def\rvs{{\mathbf{s}}}
+\def\rvt{{\mathbf{t}}}
+\def\rvu{{\mathbf{u}}}
+\def\rvv{{\mathbf{v}}}
+\def\rvw{{\mathbf{w}}}
+\def\rvx{{\mathbf{x}}}
+\def\rvy{{\mathbf{y}}}
+\def\rvz{{\mathbf{z}}}
+
+% Elements of random vectors
+\def\erva{{\textnormal{a}}}
+\def\ervb{{\textnormal{b}}}
+\def\ervc{{\textnormal{c}}}
+\def\ervd{{\textnormal{d}}}
+\def\erve{{\textnormal{e}}}
+\def\ervf{{\textnormal{f}}}
+\def\ervg{{\textnormal{g}}}
+\def\ervh{{\textnormal{h}}}
+\def\ervi{{\textnormal{i}}}
+\def\ervj{{\textnormal{j}}}
+\def\ervk{{\textnormal{k}}}
+\def\ervl{{\textnormal{l}}}
+\def\ervm{{\textnormal{m}}}
+\def\ervn{{\textnormal{n}}}
+\def\ervo{{\textnormal{o}}}
+\def\ervp{{\textnormal{p}}}
+\def\ervq{{\textnormal{q}}}
+\def\ervr{{\textnormal{r}}}
+\def\ervs{{\textnormal{s}}}
+\def\ervt{{\textnormal{t}}}
+\def\ervu{{\textnormal{u}}}
+\def\ervv{{\textnormal{v}}}
+\def\ervw{{\textnormal{w}}}
+\def\ervx{{\textnormal{x}}}
+\def\ervy{{\textnormal{y}}}
+\def\ervz{{\textnormal{z}}}
+
+% Random matrices
+\def\rmA{{\mathbf{A}}}
+\def\rmB{{\mathbf{B}}}
+\def\rmC{{\mathbf{C}}}
+\def\rmD{{\mathbf{D}}}
+\def\rmE{{\mathbf{E}}}
+\def\rmF{{\mathbf{F}}}
+\def\rmG{{\mathbf{G}}}
+\def\rmH{{\mathbf{H}}}
+\def\rmI{{\mathbf{I}}}
+\def\rmJ{{\mathbf{J}}}
+\def\rmK{{\mathbf{K}}}
+\def\rmL{{\mathbf{L}}}
+\def\rmM{{\mathbf{M}}}
+\def\rmN{{\mathbf{N}}}
+\def\rmO{{\mathbf{O}}}
+\def\rmP{{\mathbf{P}}}
+\def\rmQ{{\mathbf{Q}}}
+\def\rmR{{\mathbf{R}}}
+\def\rmS{{\mathbf{S}}}
+\def\rmT{{\mathbf{T}}}
+\def\rmU{{\mathbf{U}}}
+\def\rmV{{\mathbf{V}}}
+\def\rmW{{\mathbf{W}}}
+\def\rmX{{\mathbf{X}}}
+\def\rmY{{\mathbf{Y}}}
+\def\rmZ{{\mathbf{Z}}}
+
+% Elements of random matrices
+\def\ermA{{\textnormal{A}}}
+\def\ermB{{\textnormal{B}}}
+\def\ermC{{\textnormal{C}}}
+\def\ermD{{\textnormal{D}}}
+\def\ermE{{\textnormal{E}}}
+\def\ermF{{\textnormal{F}}}
+\def\ermG{{\textnormal{G}}}
+\def\ermH{{\textnormal{H}}}
+\def\ermI{{\textnormal{I}}}
+\def\ermJ{{\textnormal{J}}}
+\def\ermK{{\textnormal{K}}}
+\def\ermL{{\textnormal{L}}}
+\def\ermM{{\textnormal{M}}}
+\def\ermN{{\textnormal{N}}}
+\def\ermO{{\textnormal{O}}}
+\def\ermP{{\textnormal{P}}}
+\def\ermQ{{\textnormal{Q}}}
+\def\ermR{{\textnormal{R}}}
+\def\ermS{{\textnormal{S}}}
+\def\ermT{{\textnormal{T}}}
+\def\ermU{{\textnormal{U}}}
+\def\ermV{{\textnormal{V}}}
+\def\ermW{{\textnormal{W}}}
+\def\ermX{{\textnormal{X}}}
+\def\ermY{{\textnormal{Y}}}
+\def\ermZ{{\textnormal{Z}}}
+
+% Vectors
+\def\vzero{{\bm{0}}}
+\def\vone{{\bm{1}}}
+\def\vmu{{\bm{\mu}}}
+\def\vtheta{{\bm{\theta}}}
+\def\va{{\bm{a}}}
+\def\vb{{\bm{b}}}
+\def\vc{{\bm{c}}}
+\def\vd{{\bm{d}}}
+\def\ve{{\bm{e}}}
+\def\vf{{\bm{f}}}
+\def\vg{{\bm{g}}}
+\def\vh{{\bm{h}}}
+\def\vi{{\bm{i}}}
+\def\vj{{\bm{j}}}
+\def\vk{{\bm{k}}}
+\def\vl{{\bm{l}}}
+\def\vm{{\bm{m}}}
+\def\vn{{\bm{n}}}
+\def\vo{{\bm{o}}}
+\def\vp{{\bm{p}}}
+\def\vq{{\bm{q}}}
+\def\vr{{\bm{r}}}
+\def\vs{{\bm{s}}}
+\def\vt{{\bm{t}}}
+\def\vu{{\bm{u}}}
+\def\vv{{\bm{v}}}
+\def\vw{{\bm{w}}}
+\def\vx{{\bm{x}}}
+\def\vy{{\bm{y}}}
+\def\vz{{\bm{z}}}
+
+% Elements of vectors
+\def\evalpha{{\alpha}}
+\def\evbeta{{\beta}}
+\def\evepsilon{{\epsilon}}
+\def\evlambda{{\lambda}}
+\def\evomega{{\omega}}
+\def\evmu{{\mu}}
+\def\evpsi{{\psi}}
+\def\evsigma{{\sigma}}
+\def\evtheta{{\theta}}
+\def\eva{{a}}
+\def\evb{{b}}
+\def\evc{{c}}
+\def\evd{{d}}
+\def\eve{{e}}
+\def\evf{{f}}
+\def\evg{{g}}
+\def\evh{{h}}
+\def\evi{{i}}
+\def\evj{{j}}
+\def\evk{{k}}
+\def\evl{{l}}
+\def\evm{{m}}
+\def\evn{{n}}
+\def\evo{{o}}
+\def\evp{{p}}
+\def\evq{{q}}
+\def\evr{{r}}
+\def\evs{{s}}
+\def\evt{{t}}
+\def\evu{{u}}
+\def\evv{{v}}
+\def\evw{{w}}
+\def\evx{{x}}
+\def\evy{{y}}
+\def\evz{{z}}
+
+% Matrix
+\def\mA{{\bm{A}}}
+\def\mB{{\bm{B}}}
+\def\mC{{\bm{C}}}
+\def\mD{{\bm{D}}}
+\def\mE{{\bm{E}}}
+\def\mF{{\bm{F}}}
+\def\mG{{\bm{G}}}
+\def\mH{{\bm{H}}}
+\def\mI{{\bm{I}}}
+\def\mJ{{\bm{J}}}
+\def\mK{{\bm{K}}}
+\def\mL{{\bm{L}}}
+\def\mM{{\bm{M}}}
+\def\mN{{\bm{N}}}
+\def\mO{{\bm{O}}}
+\def\mP{{\bm{P}}}
+\def\mQ{{\bm{Q}}}
+\def\mR{{\bm{R}}}
+\def\mS{{\bm{S}}}
+\def\mT{{\bm{T}}}
+\def\mU{{\bm{U}}}
+\def\mV{{\bm{V}}}
+\def\mW{{\bm{W}}}
+\def\mX{{\bm{X}}}
+\def\mY{{\bm{Y}}}
+\def\mZ{{\bm{Z}}}
+\def\mBeta{{\bm{\beta}}}
+\def\mPhi{{\bm{\Phi}}}
+\def\mLambda{{\bm{\Lambda}}}
+\def\mSigma{{\bm{\Sigma}}}
+
+% Tensor
+\DeclareMathAlphabet{\mathsfit}{\encodingdefault}{\sfdefault}{m}{sl}
+\SetMathAlphabet{\mathsfit}{bold}{\encodingdefault}{\sfdefault}{bx}{n}
+\newcommand{\tens}[1]{\bm{\mathsfit{#1}}}
+\def\tA{{\tens{A}}}
+\def\tB{{\tens{B}}}
+\def\tC{{\tens{C}}}
+\def\tD{{\tens{D}}}
+\def\tE{{\tens{E}}}
+\def\tF{{\tens{F}}}
+\def\tG{{\tens{G}}}
+\def\tH{{\tens{H}}}
+\def\tI{{\tens{I}}}
+\def\tJ{{\tens{J}}}
+\def\tK{{\tens{K}}}
+\def\tL{{\tens{L}}}
+\def\tM{{\tens{M}}}
+\def\tN{{\tens{N}}}
+\def\tO{{\tens{O}}}
+\def\tP{{\tens{P}}}
+\def\tQ{{\tens{Q}}}
+\def\tR{{\tens{R}}}
+\def\tS{{\tens{S}}}
+\def\tT{{\tens{T}}}
+\def\tU{{\tens{U}}}
+\def\tV{{\tens{V}}}
+\def\tW{{\tens{W}}}
+\def\tX{{\tens{X}}}
+\def\tY{{\tens{Y}}}
+\def\tZ{{\tens{Z}}}
+
+
+% Graph
+\def\gA{{\mathcal{A}}}
+\def\gB{{\mathcal{B}}}
+\def\gC{{\mathcal{C}}}
+\def\gD{{\mathcal{D}}}
+\def\gE{{\mathcal{E}}}
+\def\gF{{\mathcal{F}}}
+\def\gG{{\mathcal{G}}}
+\def\gH{{\mathcal{H}}}
+\def\gI{{\mathcal{I}}}
+\def\gJ{{\mathcal{J}}}
+\def\gK{{\mathcal{K}}}
+\def\gL{{\mathcal{L}}}
+\def\gM{{\mathcal{M}}}
+\def\gN{{\mathcal{N}}}
+\def\gO{{\mathcal{O}}}
+\def\gP{{\mathcal{P}}}
+\def\gQ{{\mathcal{Q}}}
+\def\gR{{\mathcal{R}}}
+\def\gS{{\mathcal{S}}}
+\def\gT{{\mathcal{T}}}
+\def\gU{{\mathcal{U}}}
+\def\gV{{\mathcal{V}}}
+\def\gW{{\mathcal{W}}}
+\def\gX{{\mathcal{X}}}
+\def\gY{{\mathcal{Y}}}
+\def\gZ{{\mathcal{Z}}}
+
+% Sets
+\def\sA{{\mathbb{A}}}
+\def\sB{{\mathbb{B}}}
+\def\sC{{\mathbb{C}}}
+\def\sD{{\mathbb{D}}}
+% Don't use a set called E, because this would be the same as our symbol
+% for expectation.
+\def\sF{{\mathbb{F}}}
+\def\sG{{\mathbb{G}}}
+\def\sH{{\mathbb{H}}}
+\def\sI{{\mathbb{I}}}
+\def\sJ{{\mathbb{J}}}
+\def\sK{{\mathbb{K}}}
+\def\sL{{\mathbb{L}}}
+\def\sM{{\mathbb{M}}}
+\def\sN{{\mathbb{N}}}
+\def\sO{{\mathbb{O}}}
+\def\sP{{\mathbb{P}}}
+\def\sQ{{\mathbb{Q}}}
+\def\sR{{\mathbb{R}}}
+\def\sS{{\mathbb{S}}}
+\def\sT{{\mathbb{T}}}
+\def\sU{{\mathbb{U}}}
+\def\sV{{\mathbb{V}}}
+\def\sW{{\mathbb{W}}}
+\def\sX{{\mathbb{X}}}
+\def\sY{{\mathbb{Y}}}
+\def\sZ{{\mathbb{Z}}}
+
+% Entries of a matrix
+\def\emLambda{{\Lambda}}
+\def\emA{{A}}
+\def\emB{{B}}
+\def\emC{{C}}
+\def\emD{{D}}
+\def\emE{{E}}
+\def\emF{{F}}
+\def\emG{{G}}
+\def\emH{{H}}
+\def\emI{{I}}
+\def\emJ{{J}}
+\def\emK{{K}}
+\def\emL{{L}}
+\def\emM{{M}}
+\def\emN{{N}}
+\def\emO{{O}}
+\def\emP{{P}}
+\def\emQ{{Q}}
+\def\emR{{R}}
+\def\emS{{S}}
+\def\emT{{T}}
+\def\emU{{U}}
+\def\emV{{V}}
+\def\emW{{W}}
+\def\emX{{X}}
+\def\emY{{Y}}
+\def\emZ{{Z}}
+\def\emSigma{{\Sigma}}
+
+% entries of a tensor
+% Same font as tensor, without \bm wrapper
+\newcommand{\etens}[1]{\mathsfit{#1}}
+\def\etLambda{{\etens{\Lambda}}}
+\def\etA{{\etens{A}}}
+\def\etB{{\etens{B}}}
+\def\etC{{\etens{C}}}
+\def\etD{{\etens{D}}}
+\def\etE{{\etens{E}}}
+\def\etF{{\etens{F}}}
+\def\etG{{\etens{G}}}
+\def\etH{{\etens{H}}}
+\def\etI{{\etens{I}}}
+\def\etJ{{\etens{J}}}
+\def\etK{{\etens{K}}}
+\def\etL{{\etens{L}}}
+\def\etM{{\etens{M}}}
+\def\etN{{\etens{N}}}
+\def\etO{{\etens{O}}}
+\def\etP{{\etens{P}}}
+\def\etQ{{\etens{Q}}}
+\def\etR{{\etens{R}}}
+\def\etS{{\etens{S}}}
+\def\etT{{\etens{T}}}
+\def\etU{{\etens{U}}}
+\def\etV{{\etens{V}}}
+\def\etW{{\etens{W}}}
+\def\etX{{\etens{X}}}
+\def\etY{{\etens{Y}}}
+\def\etZ{{\etens{Z}}}
+
+% The true underlying data generating distribution
+\newcommand{\pdata}{p_{\rm{data}}}
+% The empirical distribution defined by the training set
+\newcommand{\ptrain}{\hat{p}_{\rm{data}}}
+\newcommand{\Ptrain}{\hat{P}_{\rm{data}}}
+% The model distribution
+\newcommand{\pmodel}{p_{\rm{model}}}
+\newcommand{\Pmodel}{P_{\rm{model}}}
+\newcommand{\ptildemodel}{\tilde{p}_{\rm{model}}}
+% Stochastic autoencoder distributions
+\newcommand{\pencode}{p_{\rm{encoder}}}
+\newcommand{\pdecode}{p_{\rm{decoder}}}
+\newcommand{\precons}{p_{\rm{reconstruct}}}
+
+\newcommand{\laplace}{\mathrm{Laplace}} % Laplace distribution
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Ls}{\mathcal{L}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\emp}{\tilde{p}}
+\newcommand{\lr}{\alpha}
+\newcommand{\reg}{\lambda}
+\newcommand{\rect}{\mathrm{rectifier}}
+\newcommand{\softmax}{\mathrm{softmax}}
+\newcommand{\sigmoid}{\sigma}
+\newcommand{\softplus}{\zeta}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\standarderror}{\mathrm{SE}}
+\newcommand{\Cov}{\mathrm{Cov}}
+% Wolfram Mathworld says $L^2$ is for function spaces and $\ell^2$ is for vectors
+% But then they seem to use $L^2$ for vectors throughout the site, and so does
+% wikipedia.
+\newcommand{\normlzero}{L^0}
+\newcommand{\normlone}{L^1}
+\newcommand{\normltwo}{L^2}
+\newcommand{\normlp}{L^p}
+\newcommand{\normmax}{L^\infty}
+
+\newcommand{\parents}{Pa} % See usage in notation.tex. Chosen to match Daphne's book.
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Tr}{Tr}
+\let\ab\allowbreak
+
+% END INCLUDE: math_commands.tex
+
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colorsiclr2025_conference
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}         % colors
+
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{wrapfig}
+
+\usepackage{amsthm}
+\newtheorem{thm}{Theorem}
+\newtheorem{assum}{Assumption}
+
+\usepackage{algorithm}
+\usepackage{threeparttable}
+\usepackage{multirow}
+\usepackage{algorithmic}
+\renewcommand{\algorithmicrequire}{ \textbf{Input:}} %Use Input in the format of Algorithm
+\renewcommand{\algorithmiccomment}{ \textbf{Initialize:}} %Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{ \textbf{Result:}} %UseOutput in the format of Algorithm
+
+
+\title{Feedback Favors the Generalization of \\ Neural ODEs}
+
+% Authors must not appear in the submitted version. They should be hidden
+% as long as the \iclrfinalcopy macro remains commented out below.
+% Non-anonymous submissions will be rejected without review.
+
+\author{Jindou Jia$^1$\thanks{Equal contribution.} , Zihan Yang$^1$$^{*}$, Meng Wang$^1$, Kexin Guo$^1$\thanks{Corresponding authors (\texttt{\{kxguo, xiangyu\_buaa\}@buaa.edu.cn}).}  \\
+	\textbf{Jianfei Yang}$^2$, \textbf{Xiang Yu}$^1$$^{\dagger}$, \textbf{Lei Guo}$^1$ \\
+	$^1$Beihang University $\ $$^2$Nanyang Technological University\\
+	%\texttt{\{jdjia, snrt\_zzhan, SY2003127\}@buaa.edu.cn} \\
+	%\texttt{\{kxguo, xiangyu, lguo\}@buaa.edu.cn} \\
+	%\AND
+	%Zihan Yang$^{*}$ \& Kexin Guo \\
+	%School of Aeronautic Science and Engineering\\
+	%Beihang University\\
+	%Beijing, China \\
+	%\texttt{\{snrt\_zzhan, kxguo\}@buaa.edu.cn} \\
+}
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+%\iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
+\begin{document}
+	
+	
+	\maketitle
+	
+	\begin{abstract}
+		\textcolor{black}{The well-known generalization problem hinders the application of artificial neural networks in continuous-time prediction tasks with varying latent dynamics. In sharp contrast, biological systems can neatly adapt to evolving environments benefiting from real-time feedback mechanisms. Inspired by the feedback philosophy, we present feedback neural networks, showing that a feedback loop can flexibly correct the learned latent dynamics of neural ordinary differential equations (neural ODEs), leading to a prominent generalization improvement. The feedback neural network is a novel two-DOF neural network, which possesses robust performance in unseen scenarios with no loss of accuracy performance on previous tasks.} A linear feedback form is presented to correct the learned latent dynamics firstly, with a convergence guarantee. Then, domain randomization is utilized to learn a nonlinear neural feedback form. Finally, extensive tests including trajectory prediction of a real irregular object and model predictive control of a quadrotor with various uncertainties, are implemented, indicating significant improvements over state-of-the-art model-based and learning-based methods. \footnote[3]{Codes are available at \url{https://sites.google.com/view/feedbacknn}.}
+	\end{abstract}
+	
+	\section{Introduction}
+	
+	\begin{wrapfigure}{r}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{Figs/diagram.png}
+		\caption{\textcolor{black}{Neural network architectures. \textit{Left:} Neural ODE developed in \citet{chen2018neural}. \textit{Right:} Proposed feedback neural network.}}
+		\label{diagram}
+	\end{wrapfigure}
+	
+	%The \textit{prediction} strategy can adopt various modern ODE solvers. In our framework, the learned latent ODE model is corrected according to real-time state feedback.
+	
+	Stemming from residual neural networks \citep{he2016deep}, neural ordinary differential equation (neural ODE) \citep{chen2018neural} emerges as a novel learning strategy aiming at learning the latent dynamic model of an unknown system. Recently, neural ODEs have been successfully applied to various scenarios, especially continuous-time missions \citep{liu2024application, verma2024climode, greydanus2019hamiltonian, cranmer2020lagrangian}. However, like traditional neural networks, the generalization problem limits the application of neural ODEs in real-world applications. 
+	
+	Traditional strategies like model simplification, fit coarsening, data augmentation, and transfer learning have considerably improved the generalization performance of neural networks on unseen tasks \citep{rohlfs2022generalization}. However, these strategies usually reduce the accuracy performance on previous tasks, and large-scale training data and network structures are often required to approximate previous accuracy. \textcolor{black}{The objective of this work is to develop a novel network architecture, acquiring the generalization improvement while preserving the accuracy performance.} 
+	
+	\textcolor{black}{Living beings can neatly adapt to unseen environments, even with limited neurons and computing power. One reason can be attributed to the existence of internal feedback \citep{aoki2019universal}. Internal feedback has been shown to exist in biological control, perception, and communication systems, handling external disturbances, internal uncertainties, and noises \citep{sarma2022internal, markov2021cerebellar}. In neural circuits, feedback inhibition is able to regulate the duration and magnitude of excitatory signals \citep{luo2021architectures}. In engineering systems, internal feedback indicates impressive effects across filtering and control tasks, such as \textit{Kalman} filter \citep{kalman1960new}, \textit{Luenberger} observer \citep{luenberger1966observers}, extended state observer \citep{guo2020multiple}, and proportional-integral-derivative control \citep{ang2005pid}. The effectiveness of feedback lies in its ability to harness real-time deviations between internal predictions/estimations and external measurements to infer dynamical uncertainties. The cognitive corrections are then performed timely. However, existing neural networks rarely incorporate such a real-time feedback mechanism.}
+	
+	\textcolor{black}{In this work, we attempt to enhance the generalization of neural ODEs by incorporating the feedback scheme. The key idea is to correct the learned latent dynamical model of a Neural ODE according to the deviation between measured and predicted states, as illustrated in Figure \ref{diagram}. We introduce two types of feedback: linear form and nonlinear neural form. Unlike previous training methods that compromise accuracy for generalization, the developed feedback neural network is a two-DOF framework that exhibits generalization performance on unseen tasks while maintaining accuracy on previous tasks. The effectiveness of the presented feedback neural network is demonstrated through several intuitional and practical examples, including trajectory prediction of a spiral curve, trajectory prediction of an irregular object and model predictive control (MPC) of a quadrotor.}
+	
+	% We first present a linear feedback form with a convergence guarantee and develop an accurate multi-step prediction strategy (Section \ref{linear_feedback_sec},). A nonlinear feedback form modeled by networks is proposed subsequently (Section \ref{Domain_rand}). 
+	
+	\section{Neural ODEs and learning residues}
+	A significant application of artificial neural networks ‌centers around the prediction task., $\bm{x}(t) \mapsto \bm{x}(t+\Delta t)$. Note that $t$ indicates the input $\bm{x}$ evolves with time. \citet{chen2018neural} utilize neural networks to directly learn latent ODEs of target systems, named Neural ODEs. Neural ODEs greatly improve the modeling ability of neural networks, especially for continuous-time dynamic systems \citep{massaroli2020dissecting}, while maintaining a constant memory cost. The ODE describes the instantaneous change of a state \textcolor{black}{$\bm{x}(t)\in \mathbb{R}^n$}
+	\begin{align} \label{ODE}
+		\frac{{d\bm{x}}(t)}{{dt}} = \bm{f}\left( {\bm{x}(t),\bm{I}(t), t} \right)
+	\end{align} 
+	where \textcolor{black}{$\bm{f}(\cdot): \mathbb{R}^n \times \mathbb{R}^m \times\ \mathbb{R} \rightarrow \mathbb{R}^n$} represents a latent nonlinear mapping, and \textcolor{black}{$\bm{I}(t)\in \mathbb{R}^m$} denotes external input. Note that compared with \citet{chen2018neural}, we further consider $\bm{I}(t)$ that can extend the ODE to controlled dynamics. The \textit{adjoint sensitive method} is employed in \citet{chen2018neural} to train neural ODEs without considering $\bm{I}(t)$. In Appendix \ref{train_input}, we provide an alternative training strategy in the presence of $\bm{I}(t)$, from the view of optimal control.s
+	
+	Given the ODE (\ref{ODE}) and an initial state $\bm{x}(t)$, future state can be predicted as an initial value problem
+	\begin{align} \label{prediction_ODE}
+		\bm{x}(t + \Delta t) = \bm{x}(t) + \int_t^{t + \Delta t} {\bm{f}\left( {\bm{x}\left( \tau \right), \bm{I}\left( \tau \right),\tau} \right)d\tau}. 
+	\end{align}
+	
+	%ODEs have a wide range of applications to describe the dynamic evolution in fields of mechanics, circuitry, biology, economics and so on. Traditional establishments of ODEs usually depend on \textit{a priori} expert knowledge, which maybe intractable for some intricate cases. \citet{chen2018neural} proposed to learn the ODE \eqref{ODE} through neural networks with the aid of \textit{adjoint sensitive method}, which bridges the gap between continuous-time dynamics systems and deep learning \citep{massaroli2020dissecting}. However, like traditional learning methods, generalization is still a major bottleneck for neural ODEs \citep{marion2024generalization}. 
+	
+	The workflow of neural ODEs is depicted in Figure \ref{diagram}. However, like traditional learning methods, generalization is a major bottleneck for neural ODEs \citep{marion2024generalization}. Learning residuals will appear if the network has not been trained properly (e.g., underfitting and overfitting) or the applied scenario has a slightly different latent dynamic model. Take a spiral function as an example (Appendix \ref{spiral_dyna}). When a network trained from a given training set (Figure \ref{Spiral_curve} (a)) is transferred to a new case (Figure \ref{Spiral_curve} (b)), the learning performance will dramatically degrade (Figure \ref{Spiral_curve} (d)). Without loss of generality, the learning residual error is formalized as 
+	\begin{align} \label{pure_NN}
+		\bm{f}\left( {\bm{x}(t),\bm{I}(t), t} \right) = \bm{f}_{neural}\left( {\bm{x}(t),\bm{I}(t), t,\bm{\theta}} \right) + \Delta \bm{f}(t) 
+	\end{align}
+	where \textcolor{black}{$\bm{f}_{neural}\left( \cdot \right): \mathbb{R}^n \times \mathbb{R}^m \times\ \mathbb{R} \rightarrow \mathbb{R}^n$} represents the learned ODE model parameterized by $\bm{\theta}$, and  \textcolor{black}{$\Delta \bm{f}(t)\in \mathbb{R}^n$} denotes the unknown learning residual error. In the presence of $\Delta \bm{f}(t)$, the prediction error of (\ref{prediction_ODE}) will accumulate over time. The objective of this work is to improve neural ODEs with as few modifications as possible to suppress the effects of $\Delta \bm{f}(t)$. 
+	
+	\section{Neural ODEs with a linear feedback} \label{linear_feedback_sec}
+	
+	\subsection{Correcting latent dynamics through feedback}
+	
+	Even though learned experiences are encoded by neurons in the brain, living organisms can still adeptly handle unexpected internal and external disturbances with the assistance of feedback mechanisms \citep{aoki2019universal, sarma2022internal}. The feedback scheme has also proven effective in traditional control systems, facilitating high-performance estimation and control objectives. Examples include \textit{Kalman} filter \citep{kalman1960new}, \textit{Luenberger} observer \citep{luenberger1966observers}, extended state observer \citep{guo2020multiple}, and proportional-integral-derivative control \citep{ang2005pid}.
+	
+	\begin{wrapfigure}{l}{0.4\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{Figs/sketch.png}
+		\caption{The learned latent dynamics are modified through accumulative evaluation errors to approach the truth one.}
+		\label{sketch}
+	\end{wrapfigure}
+	
+	We attempt to introduce the feedback scheme into neural ODEs, named feedback neural networks, as shown in Figure \ref{diagram}. Neural ODEs have exploited latent dynamical models $\bm{f}_{neural}(t)$ of target systems in training set. The key idea of feedback neural networks is to further correct $\bm{f}_{neural}(t)$ according to state feedback. Denote $t_i$ as the historical evaluation moment satisfying $t_i \le t$. At current moment $t$, we collect \textcolor{black}{$k+1$ state measurements} $\left\{\bm{x}(t_0), \bm{x}(t_1), \cdots, \bm{x}(t_k)\right\}$, in which $t_k = t$. As portrayed in Figure \ref{sketch}, $\bm{f}_{neural}(t)$ is modified by historical evaluation errors to approach its truth dynamics $\bm{f}(t)$, i.e.,
+	\begin{align} \label{sys1_1}
+		\bm{\hat{f}}_{neural}(t) = \bm{f}_{neural}(t) + \sum\limits_{i = 0}^k {\bm{L}\left( {\bm{x}\left( {{t_i}} \right) - \bm {\bar{x}}\left( {{t_i}} \right)} \right)} 
+	\end{align} 
+	where \textcolor{black}{$\bm{L} \in \mathbb{R}^{n\times n}$} represents the positive definite matrix and \textcolor{black}{$\bm {\bar{x}}\left( {{t_i}} \right) \in \mathbb{R}^n$} represents the predicted state from the last evaluation moment, e.g., an \textit{Euler} integration
+	\begin{align} \label{sys1_2}
+		\bm {\bar{x}}\left( {{t_i}} \right) = \bm{x}\left( {{t_{i-1}}} \right) + T_s\bm{\hat{f}}_{neural}(t_{i-1})
+	\end{align}
+	with the prediction step \textcolor{black}{$T_s \in \mathbb{R}$}.
+	
+	To avoid storing more and more historical measurements over time, define an auxiliary variable 
+	\begin{align}  \label{auxiliary_var}
+		\bm {\hat{x}}\left( {{t}} \right) = \bm {\bar{x}}\left( {{t}} \right) - \sum\limits_{i = 0}^{k-1} {\left( {\bm{x}\left( {{t_i}} \right) - \bm {\bar{x}}\left( {{t_i}} \right)} \right)}
+	\end{align}
+	where \textcolor{black}{$\bm {\hat{x}}\left( {{t}} \right) \in \mathbb{R}^n$} can be regarded as an estimation of $\bm {{x}}\left( {{t}} \right)$. Combining (\ref{sys1_1}) and (\ref{auxiliary_var}), can lead to
+	\begin{align} \label{feedback_NN}
+		\bm{\hat{f}}_{neural}(t) = \bm{f}_{neural}(t) + \bm{L}(\bm{x}(t)-\bm{\hat{x}}(t)).
+	\end{align}
+	From (\ref{sys1_2}) and (\ref{auxiliary_var}), it can be further rendered that
+	\begin{align} \label{sys2_2}
+		\bm {\hat{x}}\left( {{t_k}} \right) = \bm {\hat{x}}\left( {{t_{k-1}}} \right) + T_s\bm{\hat{f}}_{neural}(t_{k-1}).
+	\end{align}
+	By continuating the above \textit{Euler} integration, it can be seen that $\bm{\hat{x}}(t)$ is the continuous state of the modified dynamics, i.e., $\bm{\dot{\hat{x}}}(t) = \bm{\hat{f}}_{neural}(t)$. Finally, $	\bm{\hat{f}}_{neural}(t)$ can be persistently obtained through (\ref{feedback_NN}) and (\ref{sys2_2}) recursively, instead of (\ref{sys1_1}) and (\ref{sys1_2}) accumulatively.
+	
+	\subsection{Convergence analysis}
+	
+	In this part, the convergence property of the feedback neural network is analyzed. The state observation error of the feedback neural network is defined as ${\bm{\tilde x}}(t) = \bm{{x}}(t) - \bm{\hat{x}}(t)$, and its derivative ${\bm{\dot{\tilde x}}}(t)$, i.e., the approximated error of latent dynamics is defied as ${\bm{\tilde f}}(t) = \bm{{f}}(t) - \bm{\hat{f}}_{neural}(t)$. Substitute (\ref{ODE}) and (\ref{pure_NN}) into (\ref{feedback_NN}), one can obtain the error dynamics
+	\begin{align} \label{error_dyna}
+		{\bm{\dot{\tilde {x}}}}(t) = - \bm{L}{\bm{{\tilde {x}}}}(t) + \Delta \bm{f}(t).
+	\end{align}
+	
+	Before proceeding, a reasonable bounded assumption on the learning residual error $\Delta \bm{f}(t)$ is made.
+	\begin{assum} \label{assum}
+		There exists an unknown upper bound such that
+		\begin{align} \label{bounded_assum}
+			\| \Delta \bm{f}(t) \| \le \gamma
+		\end{align}
+		where $\|\cdot\|$ denotes the \textit{Euclidean} norm and \textcolor{black}{$\gamma\in \mathbb{R}$} is an unknown positive value.
+	\end{assum}
+	\textcolor{black}{Note that the above assumption can cover common step disturbances (Figure \ref{step_disturbance}).}
+	%Then the following convergence theorem can be established.
+	
+	\begin{thm} \label{thm1}
+		\textcolor{black}{Consider the nonlinear system (\ref{ODE}). Under the linear state feedback (\ref{feedback_NN}) and the bounded Assumption \ref{assum}, the state observation error ${\bm{\tilde x}}(t)$ and its derivative ${\bm{\dot{\tilde x}}}(t)$ (i.e., ${\bm{\tilde f}}(t)$) can exponentially converge to bounded sets $\mathcal{B}_1 = \left\{{\bm{\tilde x}}(t)\in\mathbb{R}^n:\left\|{\bm{\tilde x}}(t)\right\|\le{\gamma}/{{\lambda_m(\bm{L})}}\right\}$ and $\mathcal{B}_2 = \left\{{\bm{\dot{\tilde x}}}(t)\in\mathbb{R}^n:\left\|{\bm{\dot{\tilde x}}}(t)\right\|\le{\gamma}\lambda_M(\bm{L})/{{\lambda_m(\bm{L})}} + \gamma\right\}$, respectively, which can be regulated by $\bm{L}$.}
+	\end{thm}
+	\begin{proof}
+		See Appendix \ref{proof_thm1}.
+	\end{proof}
+	%It can be seen that the upper bound can be regulated to arbitrarily small by increasing $\lambda_m(\bm{L})$.
+	
+	\subsection{Multi-step prediction}
+	
+	\begin{wrapfigure}{r}{0.2\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{Figs/multi_prediction.png}
+		\caption{The multi-step prediction.}
+		\label{multi_prediction}
+	\end{wrapfigure}
+	
+	With the modified dynamics ${\bm{\hat f}}(t)$ and current $\bm{x}(t)$, the next step is to predict $\bm{x}(t+\Delta t)$ as in (\ref{prediction_ODE}). By defining \textcolor{black}{$\bm{z}(t) = \left[\bm{x}^T(t), {\bm{\hat x}}^T(t)\right]^T \in \mathbb{R}^{2n}$}, from (\ref{sys2_2}), we have \textcolor{black}{$\bm{\dot{z}}(t) = \left[{\bm{f}}^T(t), {\bm{\hat f}}^T(t)\right]^T$}. One intuitional means to obtain $\bm{z}(t+\Delta t)$ is to solve the ODE problem with modern solvers. However, as shown in Theorem \ref{thm1}, the convergence of $\bm{\tilde f}(t)$ can only be guaranteed as current $t$. In other words, the one-step prediction result by solving the above ODE is accurate, while the error will accumulate in the long-term prediction. In this part, an alternative multi-step prediction strategy is developed to circumvent this problem.
+	
+	The proposed multi-step prediction strategy is portrayed in Figure \ref{multi_prediction}, which can be regarded as a cascaded form of one-step prediction. The output of each feedback neural network is regarded as the input of the next layer. Take the first two layers as an example. The first-step prediction $\bm{x}(t+T_s)$ is obtained by $\bm{{x}}(t+T_s) = \bm{{x}}(t) + \bm{\hat{f}}(\bm{{x}}(t), \bm{\hat{x}}(t), \theta) T_s$. The second layer with the input of $\bm{{x}}(t+T_s)$ will output $\bm{{x}}(t+2T_s)$. In such a framework, the convergence of later layers will not affect the convergence of previous layers. Thus, the prediction error will converge from top to bottom in order. 
+	
+	Note that the cascaded prediction strategy can amplify the data noise in case of large $\bm{L}$. A gain decay strategy is designed to alleviate this issue. Denote the feedback gain of $i$-th later as $\bm{L}_i$, which decays as $i$ increases
+	\begin{align}
+		\bm{L}_i = \bm{L} \odot e^{-\beta i}
+	\end{align}
+	where $\beta$ represents the decay rate. The efficiency of the decay strategy is presented in Figure \ref{Spiral_curve}(g). The involvement of the decay factor in the multi-step prediction process significantly enhances the robustness to data noise.
+	
+	%\begin{thm} \label{thm2}
+	%	Consider the nonlinear system \eqref{ODE}, Under the feedback neural network \eqref{feedback_NN} and the bounded Assumption \ref{assum}, the multi-step prediction error can converge to a bounded set $N{\gamma}/\sqrt{\left[{4\lambda_m(\bm{L})-2}\right]}$ exponentially, where $N$ represents predicted steps.
+	%\end{thm}
+	%\begin{proof}
+	%	See Appendix \ref{proof_thm2}
+	%\end{proof}
+	\subsection{\textcolor{black}{Ablation study on observer gain}} \label{gain_sec}
+	
+	The adjustment of linear feedback gain $\bm{L}$ can be separated from the training of neural ODEs, which can increase the flexibility of the structure. 
+	
+	The gain adjustment strategy is intuitional. \textcolor{black}{Theorem \ref{thm1} indicates that the prediction error will converge to a bounded set as the minimum eigenvalue of feedback gain is positive.} And the converged set can shrink with the increase of the minimum eigenvalue. In reality, the amplitude of $\lambda_m(\bm{L})$ is limited since the feedback $\bm{x}$ is usually noised. The manual adjustment of $\lambda_m(\bm{L})$ needs the trade-off between prediction accuracy and noise amplification. \textcolor{black}{Thus, an ablation study on $(\bm{L})$ to show practical implications of Theorem \ref{thm1} under Assumption \ref{error_dyna} is implemented.}
+	
+	Figure \ref{ablation_gain} shows the multi-step prediction errors  ($N$ = 50)  with different levels of feedback gains and uncertainties. \textcolor{black}{Two phenomena can be observed from the heatmap. The one is that the prediction error increases with the level of uncertainty. The other is that the prediction error decreases with the gain at the beginning, but due to noise amplification, the prediction error worsens if the gain is set too large.}
+	
+	\section{Neural ODEs with a neural feedback} \label{Domain_rand}
+	
+	\begin{wrapfigure}{r}{0.66\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{Figs/ablation_gain_comp.png}
+		\caption{\textcolor{black}{Prediction errors of the spiral curve with different levels of feedback gains and uncertainties to show practical implications of Theorem \ref{thm1} udner Assumption \ref{error_dyna}. The \textit{right} image is a partial enlargement of the \textit{left} one. The blue star denotes the case without uncertainty, and the uncertainty increases along both the left and right directions. When the gain is set as $0$, the feedback neural network will equal the neural ODE. The related simulation setup is detailed in {Appendix \ref{appen_gain}}.}}
+		\label{ablation_gain}
+	\end{wrapfigure}
+	
+	
+	Section \ref{linear_feedback_sec} has shown a linear feedback form can promptly improve the adaptability of neural ODEs in unseen scenarios. However, two improvements could be further made. At first, it will be more practical if the gain tuning procedure could be avoided. Moreover, the linear feedback form can be extended to a nonlinear one \textcolor{black}{$\bm{h}(\bm{x}(t)-\bm{\hat{x}}(t)):\mathbb{R}^n \rightarrow \mathbb{R}^n $} to adopt more intricate scenes, as experienced in the control field \citep{ESO}. 
+	
+	An effectual solution is to model the feedback part using another neural network, i.e., $\bm{h}_{neural}(\bm{x}(t)-\bm{\hat{x}}(t), \bm{\xi })$ parameterized by $\bm{\xi}$. Here we design a separate learning strategy to learn $\bm{\xi}$. At first, the neural ODE is trained on the nominal task without considering the feedback part. Then the feedback part is trained through domain randomization by freezing the neural ODE. In this way, the obtained feedback neural network is skillfully considered as a two-DOF network. On the one hand, the original neural ODE preserves the accuracy on the previous nominal task. On the other hand, with the aid of feedback, the generalization performance is available in the presence of unknown uncertainties.
+	
+	\subsection{Domain randomization}
+	
+	The key idea of domain randomization \citep{tobin2017domain, peng2018sim} is to randomize the system parameters, noises, and perturbations as collecting training data so that the real applied case can be covered as much as possible. Taking the spiral example as an example (Figure \ref{Spiral_curve} (a)), training with domain randomization requires datasets collected under various periods, decay rates, and bias parameters, so that the learned networks are robust to the real case with a certain of uncertainty.
+	
+	Two shortcomings exist when employing domain randomization. On the one hand, the existing trained network needs to be retrained and the computation burden of training is dramatically increased. On the other hand, the training objective is forced to focus on the average performance among different parameters, such that the prediction ability on the previous nominal task will degraded, as shown in Figure \ref{domain_test} (a). To maintain the previous accuracy performance, larger-scale network designs are often required. In other words, the domain randomization trades precision for robustness. In the proposed learning strategy, the generalization ability is endowed to the feedback loop independently, so that the above shortcomings can be circumvented.
+	
+	\subsection{Learning a neural feedback}
+	
+	In this work, we specialize the virtue from domain randomization to the feedback part $\bm{h}_{neural}(t)$ rather than the previous neural network $\bm{f}_{neural}(t)$. The training framework is formalized as follows
+	\begin{align} \label{learn_feedback_part}
+		{\bm{\xi} ^ * } & = \mathop {\arg \min }\limits_{\bm{\xi}}  \sum\limits_{i = 1}^{{n_{case}}} {\sum\limits_{j \in \mathcal{D}_i^{tra}} {\left\| {\bm{x}_{i,j}^ *  - \bm{x}_{i,j} } \right\|}} \notag \\
+		s.t.\quad {\bm{x}_{i,j}} & = {\bm{x}_{i,j - 1}} + {T_s}\left( {{\bm{f}_{neural}}({\bm{x}_{i,j - 1}}) + \bm{h}_{neural}\left( {{\bm{x}_{i,j - 1}} - {\bm{\hat x}_{i,j - 1}},\bm{\xi} } \right)} \right)
+	\end{align}
+	where $n_{case}$ denotes the number of randomized cases, $\mathcal{D}_i^{tra}= \{{\bm{x}_{i,j - 1}}, {\bm{\hat x}_{i,j - 1}}, \bm{x}_{i,j}^ *| j = 1, \dots, m\}$ denotes the training set of the $i$-th case with $m$ samples, ${\bm{x}}_{i,j}^*$ denotes the labeled \textcolor{black}{state}, and ${\bm{x}}_{i,j}$ denotes one-step prediction of state, which is approximated by \textit{Euler} integration method here. 
+	
+	The learning procedure of the feedback part $\bm{h}_{neural}(t)$ is summarized as Algorithm \ref{algorithm}. After training the neural ODE $\bm{f}_{neural}(t)$ on the nominal task, the parameters of simulation model are randomized to produce $n_{case}$ cases. Subsequently, the feedback neural network is implemented in these cases and the training set $\mathcal{D}_i^{tra}$ of each case is constructed. The training loss is then calculated through (\ref{learn_feedback_part}), which favors the update of parameter $\bm{\xi}$ by backpropagation. The above steps are repeated until the expected training loss is achieved or the maximum number of iterations was reached.
+	
+	% Note that the datasets of each case depict a convergence procedure. Thus, the initial segment of the datasets needs to be modified to reveal the convergence, to avoid a poor learning performance in the initial stage (\textcolor{black}{Appendix ??}).
+	% \STATE Modify the labels in initial segments to reveal the convergence procedure;
+	
+	\begin{algorithm}[htb]
+		\caption{Learning neural feedback through domain randomization}
+		\label{algorithm}
+		\begin{algorithmic}[1] %这个1 表示每一行都显示数字
+			\REQUIRE Randomize parameters to produce $n_{case}$ cases; trained neural ODE  $\bm{f}_{neural}$ on nominal task.
+			\ENSURE Neural feedback $\bm{h}_{neural}$.\\
+			\COMMENT \ Network parameter $\bm{\xi}$; \textit{Adam} optimizer.
+			\REPEAT 
+			\STATE Run feedback neural network among $n_{case}$ cases to produce ${\bm{\hat {x}}_{i,j}}$;
+			\STATE Construct datasets $\mathcal{D}_i^{tra}$;
+			\STATE Evaluate loss through (\ref{learn_feedback_part}) on randomly selected mini-batch data;
+			\STATE Update $\bm{\xi}$ by backpropagation;
+			\UNTIL{\textbf{convergence}}
+		\end{algorithmic}
+	\end{algorithm}
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{Figs/Spiral_curve_comp.png}
+		\caption{\textcolor{black}{A toy example is presented to intuitively illustrate the developed linear feedback}. The mission is to predict the future trajectory of a spiral curve with a given initial state $\{\bm{x}(t), \bm{y}(t)\}$. The neural ODE is trained on a given training set (a), yielding an approving learning result (c). Note that the pentagrams denote start points. The trained network is then transferred to a test set (b), which model is significantly different from the training one. \textcolor{black}{With the linear feedback mechanism}, the feedback neural network can achieve a better approximated accuracy of the change rate (e), in comparison with the neural ODE (d). As a result, a smaller multi-step prediction error (f) can be attained by benefiting from the feedback neural network. (g) shows that the noise amplification issue in multi-step prediction can be alleviated by the gain-decay strategy. (h) further presents the prediction results with different prediction steps $N$. $N$ in (f)-(g) is set as $50$.}
+		\label{Spiral_curve}
+	\end{figure}
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.9\linewidth,trim=0 0 0 0,clip]{Figs/domain_test.png}
+		\caption{Learning with domain randomization. (a): Train the neural ODE through domain randomization. It can be seen that the learning performance of latent dynamics on the nominal task (Figure \ref{Spiral_curve} (a)) degrades as inducing domain randomization, in comparison with Figure \ref{Spiral_curve} (c). Previous works usually try to scale up neural networks to approach the previous performance. (b): Freeze the neural ODE after training on the nominal task and train the feedback part through domain randomization. The feedback neural network maintains the previous performance on the nominal task. (c) The training loss of the feedback part. Note that the neural ODE employed in (a) and (b) have the same architectures as the one in Figure \ref{Spiral_curve} (c).}
+		\label{domain_test}
+	\end{figure}
+	
+	For the spiral example, Figure \ref{domain_test} (b) presents the learning performance of the feedback neural network on the nominal task. It can be seen that the feedback neural network can precisely capture the latent dynamics, maintaining the previous accuracy performance of Figure \ref{Spiral_curve} (c). Moreover, the feedback neural network also has the generalization performance on randomized cases, as shown in Appendix Figure \ref{Feedback_neuro_test}. Figure \ref{domain_test} (c) further provides the evolution of training loss of the feedback part on the spiral example. More training details are provided in {Appendix \ref{appen_feedback}}.
+	
+	
+	\section{Empirical study} \label{Experiments}
+	\subsection{Trajectory prediction of an irregular object} \label{trj_pre_exam}
+	
+	\begin{wrapfigure}{r}{0.68\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{Figs/exp1_error_comp.png}
+		\caption{\textcolor{black}{Trajectory prediction results of an irregular bottle. \textit{Left:} The irregular bottle is thrown out by hand and performs an approximate parabolic motion. \textit{Right:} The prediction errors with different methods. The prediction horizon is set as $0.5\ s$. The colored shaded area represents the standard deviations of all $9$ test trajectories.}}
+		\label{exp1_error}
+	\end{wrapfigure}
+	
+	Precise trajectory prediction of a free-flying irregular object is a challenging task due to the complicated aerodynamic effects. Previous methods can be mainly classified into model-based scheme \citep{2001ICRA, 2011ICRA_ETH, 2012ICRA_MPC} and learning-based scheme \citep{2014TR0_EPEL, 2021neural}. With historical data, model-based methods aim at accurately fitting the drag coefficient of an analytical drag model, while learning-based ones try to directly learn an acceleration model using specific basis functions. However, the above methods lack of online adaptive ability as employing. Benefiting from the feedback mechanism, our feedback neural network can correct the learned model in real time, leading to a more generalized performance in cases out of training datasets. 
+	
+	We test the effectiveness of the proposed method on an open-source dataset \citep{10288520}, in comparison with the model-based method \citep{2001ICRA, 2011ICRA_ETH, 2012ICRA_MPC} and the learning-based method \citep{chen2018neural}. The objective of this mission is to accurately predict the object's position after $0.5\ s$, as it is thrown by hand. $21$ trajectories are used for training, while $9$ trajectories are used for testing. The prediction result is presented in Figure \ref{exp1_error}. It can be seen that the proposed feedback neural network achieves the best prediction performance. Moreover, the predicted positions and learned latent accelerations of all test trajectories are provided in Figure \ref{exp1_pos} and Figure \ref{exp1_acc}, respectively. Implementation details are provided in Appendix \ref{appen_traj}.
+	
+	
+	\subsection{\textcolor{black}{Model predictive control of a quadrotor}}
+	
+	MPC works in the form of receding-horizon trajectory optimizations with a dynamic model, and then determines the current optimal control input. Approving optimization results highly rely on accurate dynamical models. Befitting from the powerful representation capability of neural networks for complex real-world physics, noticeable works \citep{torrenteDataDrivenMPCQuadrotors2021, salzmannRealtimeNeuralMPCDeep2023, sukhijaGradientBasedTrajectoryOptimization2022} have demonstrated that models incorporating first principles with learning-based components can enhance control performance. However, as the above models are offline-learned within fixed environments, the control performance would degrade under uncertainties in unseen environments.
+	
+	In this part, the proposed feedback neural network is employed on the quadrotor trajectory tracking scenario concerning model uncertainties and external disturbances, to demonstrate its online adaptive capability. In offline training, a neural ODE is augmented with the nominal dynamics firstly to account for aerodynamic residuals. The augmented model is then integrated with an MPC controller. Note that parameter uncertainties of mass, inertia, and aerodynamic coefficients, and external disturbances are all applied in tests, despite the neural ODE only capture aerodynamic residuals in training. For the feedback neural network, the proposed multi-step prediction strategy is embedded into the model prediction process in MPC. Therefore, the formed feedback-enhanced hybrid model can effectively improve prediction results, further leading to a precise tracking performance. More implementation details refer to Appendix \ref{appen_mpc}.
+	
+	\subsubsection{Learning aerodynamic effects}
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.7\linewidth]{Figs/aero_learning.png}
+		\caption{\textcolor{black}{Training sets and convergence procedures. \textit{Left:} Collected trajectories used for training. We first randomly sample positional waypoints in a limited space, followed by optimizing polynomials that connect these waypoints through the minimum snap method \citep{mellingerMinimumSnapTrajectory2011a}. Then the quadrotor with the baseline controller from \cite{jia2022RAL} is commended to follow planned trajectories, yielding real fly results as the training set. $40$ trajectories are collected with the length of $200$ discrete nodes each.} \textit{Right:} Training curves of $6$ random trials. All training trials converged rapidly thanks to stable integration and end-to-end analytic gradients. 
+		}
+		\label{aero_learn}
+	\end{figure}
+	
+	While learning the dynamics, the augmented model requires the participation of external control inputs, i.e., motor thrusts. Earning a quadrotor model augmented with a neural ODE could be tricky with end-to-end learning patterns since the open-loop model are intensively unstable, leading to the diverge of numerical integration. To address this problem, a baseline controller from \cite{jia2022RAL} is applied to form a stable closed-loop system. The \textit{adjoint sensitive method} is employed in \citet{chen2018neural} to train neural ODEs without considering external control inputs. We provide an alternative training strategy concerning external inputs in Appendix \ref{train_input}, from the view of optimal control. \textcolor{black}{Figure \ref{aero_learn} shows training trajectories and convergence procedures.} $5$ trials of training are carried out, each with distinct initial values for network parameters. The trajectory validations are carried out using $3$ randomly generated trajectories (Figures \ref{traj_val_poseatt}-\ref{traj_val_states3}). More learning details refer to Appendix \ref{appen_aerolearn}.
+	
+	\subsubsection{Flight tests}
+	%\begin{figure}
+	%	\centering
+	%	\includegraphics[width=1\linewidth]{Figs/simulation_result2.png}
+	%	\caption{Tracking the \textit{Lissajous} trajectory using MPC with different prediction models.}
+	%	\label{sim_mpc}
+	%\end{figure}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.9\linewidth]{Figs/simulation_result.png}
+		\caption{\textcolor{black}{Tracking the \textit{Lissajous} trajectory using MPC with different prediction models.}}
+		\label{sim_mpc}
+	\end{figure}
+	
+	\textcolor{black}{In tests, MPC is implemented with six different models: the nominal model (\ref{quadrotor_model}), the neural ODE augmented model (Section \ref{appen_aerolearn}), the feedforward neural network augmented model \citep{saviolo2023learning}, the feedback enhanced nominal model, the adaptive neural network augmented model \citep{cheng2019human} and the proposed feedback neural network, abbreviated as Nomi-MPC, Neural-MPC, MLP-MPC, FB-MPC, AdapNN-MPC, and FNN-MPC, for the sake of simplification. More details of all compared methods refer to Section \ref{benchmark_MPC}.} Moreover, $37.6 \%$ mass uncertainty, $[40 \%, 40 \%, 0]$ inertia uncertainties, $[14.3 \%, 14.3 \%, 25.0 \%]$ drag coefficient uncertainties, and $[0.3, 0.3, 0.3] N$ translational disturbances are applied. \textcolor{black}{The flight results on a \textit{Lissajous} trajectory (out of training set) are presented in Figure \ref{sim_mpc}. The tracking performance is evaluated by root mean square error (RMSE).}
+	
+	\textcolor{black}{It can be seen the Neural-MPC outperforms the Nomi-MPC since intricate aerodynamic effects are captured by the neural ODE. Moreover, the performance of MLP-MPC is relatively unsatisfactory compared with the Neural-MPC. The reason can be attributed to its single-step training manner instead of the multi-step one of the Neural-MPC, leading to a poor multi-step prediction. However, because unseen parameter uncertainties and external disturbances are not involved in the training set, the Neural-MPC still has considerable tracking errors. Due to the adaptive ability of the last layer, AdapNN-MPC can handle a certain level of uncertainty. In contrast, FNN-MPC achieves the best tracking performance. The reason can be attributed to the multi-step prediction of the feedback neural network improves the prediction accuracy subject to multiple uncertainties, as shown in Figure \ref{dx_pred1}.}
+	
+	\section{Related work}
+	
+	\subsection{Neural ODEs}
+	Most dynamical systems can be described by ODEs. The establishments of ODEs rely on analytical physics laws and expert experiences previously. To avoid such laborious procedures, \citet{chen2018neural} propose to approximate ODEs by directly using neural networks, named neural ODEs. The prevalent residual neural networks \citep{he2016deep} can be regarded as an \textit{Euler} discretization of neural ODEs \cite{marion2024implicit}. The universal approximation property of neural ODEs has been studied theoretically \citep{zhang2020approximation, teshima2020universal, li2022deep}, which show the \textit{sup-universality} for $C^2$ diffeomorphisms maps \citep{teshima2020universal} and $L^p$\textit{-universality} for general continuous maps \citep{li2022deep}. \citet{marion2024generalization} further provides the generalization bound (i.e., upper bound on the difference between the theoretical and empirical risks) for a wide range of parameterized ODEs.
+	
+	% \paragraph{Training faster.} The gradient for training ODE is obtained by the \textit{adjoint sensitive method} \citep{pontryagin2018mathematical}, which needs to solve another augmented ODE backwards \citep{chen2018neural}. To avoid the need for expensive numerical solvers, \citet{kelly2020learning} introduce a differentiated surrogate by utilizing higher-order derivatives of solution trajectories. A regularized neural ODE is proposed in \citet{Finlay2020HowTT} to encourage well-behaved learning dynamics, leading to a reduction in training time. Instead of modeling the differential equations itself, \citet{bilovs2021neural} approximate the solution curves directly, which can avoid the requirement of ODE solvers. 
+	
+	% Recently, plenty of neural ODE variants have been developed concerning different purposes. Considering the discrete and instantaneous changes in dynamics systems (e.g., a bouncing ball), neural ODEs can be extended by employing auxiliary neural event functions to model the switching moments \citep{chen2020learning}. From the point of view of conservation, \textit{Hamiltonian} neural networks are designed to learn the \textit{Hamiltonian} of a dynamics system in an unsupervised way \citep{greydanus2019hamiltonian}. However, canonical coordinates are needed for \textit{Hamiltonian} neural networks. \textit{Lagrangian} neural networks are subsequently developed to circumvent the requirement of canonical coordinates \citep{cranmer2020lagrangian}. Concerning dynamical systems modeled by integro-differential equations (e.g., brain activity), the neural networks employed in \citet{zappala2023neural} can capture both Markovian and non-Markovian behaviors. Other variants include neural controlled differential equations \citep{kidger2020neural}, neural stochastic differential equations \citep{oh2024stable}, and characteristic neural ODEs \cite{xu2023characteristic}. Different from our feedback scheme, all of the above methods belong to the forward propagation mechanism. 
+	
+	% Other variants like neural controlled differential equations \citep{kidger2020neural} and neural stochastic differential equations \citep{tzen2019neural} were also investigated. 
+	% Inspired by the synaptic transmission mechanisms, Liquid constant networks were introduced in \cite{hasani2021liquid} by modeling dynamical systems with linear ODEs modulated via nonlinear interlinked gates. Liquid constant networks have been successfully applied for robust flight navigation of drone \citep{chahine2023robust} and autonomous control of vehicle \citep{lechner2020neural}.
+	
+	\subsection{Generalization of neural networks}
+	In classification tasks, neural network models face the generalization problem across samples, distributions, domains, tasks, modalities, and scopes \citep{rohlfs2022generalization}. Plenty of empirical strategies have been developed to improve the generalization of neural networks, such as model simplification, fit coarsening, and data augmentation for sample generalization, identification of causal relationships for distribution generalization, and transfer learning for domain generalization. %More details of these approaches on classification tasks can refer to \citet{rohlfs2022generalization}. Here, we mainly review state-of-the-art research related to continuous-time prediction missions.
+	% We mainly focus on the first three forms, in which the samples and objective functions in test cases are unseen in the training set, while the input and output formats are consistent with the training set. 
+	%\paragraph{Regulation} Recently, \citet{rohlfs2022generalization} has shown despite many regularization methods have been used in various classified neural networks on the ImageNet-V2 task, the overfitting phenomenon has been stubbornly persistent on the test set.
+	
+%	\subsection{Domain randomization}
+	Domain randomization \citep{tobin2017domain, peng2018sim} has shown promising effects to improve the generalization for sim-to-real transfer applications, such as drone racing \citep{kaufmann2023champion}, quadrupedal locomotion \citep{choi2023learning}, and humanoid locomotion \citep{radosavovic2024real}. The key idea is to randomize the system parameters, noises, and perturbations in simulation so that the real-world case can be covered as much as possible. Although the system's robustness can be improved, there are two costs to pay. One is that the computation burden in the training process is dramatically increased. The other is that the training result has a certain of conservativeness since the training performance is an average of different scenarios, instead of a specific case. 
+	
+	% Recently, domain randomization has proven inadequate to cope with unexpected disturbances \citep{shi2024rethinking}. An adversarial learning framework is formalized in \citet{shi2024rethinking} to exploit sequential adversarial attacks for quadrupedal robots, and further utilize them to finetune previous reinforcement learning-based controllers. Brain-inspired neural networks have shown striking generalization performance in new environments with drastic changes \citep{chahine2023robust, lechner2020neural}, benefiting from its attention concentration feature. By incorporating symbolic knowledge, \citet{wang2024imperative} show the generalization of neural networks can be enhanced across different robot tasks.
+	
+	% All of the above strategies try to learn a powerful model for coping with diverse scenarios, which may be laborious and computationally intensive. In this work, it is shown that only a closed-loop feedback adjustment is sufficient to improve the generalization, without changing the original feedforward network structure or training algorithm. The proposed strategy is simple but efficient.
+	
+	% \subsection{Feedback in engineering systems}
+	
+	% The feedback scheme has also been employed in traditional control communities, leading to high-performance estimation or control objectives. For example, the \textit{Kalman} filter \citep{kalman1960new} utilizes real-time noised measurements to improve imprecise model predictions, the \textit{Luenberger} observer \citep{luenberger1966observers} utilizes real-time output measurements and system model to infer unknown inner states, the extended state observer \citep{guo2020multiple} utilizes real-time state measurements to estimate unknown external disturbances, and the proportional-integral-derivative control \citep{ang2005pid} utilizes real-time state measurements to correct control actions so that the desired control object can be achieved. Existing neural network architectures seldom incorporate a feedback mechanism.
+	
+	\subsection{\textcolor{black}{Real-time retraining and adaptation}}
+	
+	\textcolor{black}{Recently, online continual learning \citep{ghunaim2023real} and test-time adaptation \citep{liang2024comprehensive} have emerged as promising solutions to handle unknown test distribution shifts. Online continual learning focuses on the reduction of real-time training load, aiming at generalizing across new tasks while maintaining performance on previous tasks. Test-time adaptation tries to utilize real-time unlabeled data to obtain self-adapted models. For example, an extended \textit{kalman} filter-based adaptation algorithm with a forgetting factor is developed by \cite{abuduweili2020robust} to generalize neural network-based models. Moreover, in order to improve the flexibility of neural networks, the last layer of networks can be regarded as a weighted vector, which can be adjusted adaptively according to real-time state feedback \citep{cheng2019human, o2022neural, richards2022control, saviolo2022active}. The training for separating the last layer and front structure can be carried out within a bi-level optimization framework. In such a paradigm, the uncertainty out of training sets is reflected on the last layer of networks, which can be online adjusted in a control-oriented \citep{richards2022control} or regression-oriented \citep{cheng2019human,o2022neural} fashion. \citet{9650517} further develops real-time weight adaptation laws for all layers of feedforward neural networks, with stability guarantees.}
+	% However, the performance of this strategy is limited by the inherent shortcoming of adaptive control, i.e., the time-invariant assumption on the weighted vector.
+	
+	\textcolor{black}{Different from the above retraining or adaptation strategy, the presented method directly corrects the learned latent dynamics of neural ODEs with real-time feedback, yielding a two-DOF network structure. Moreover, the feedback can be learned in a neural form. Integrating adaptive neural ODEs with the developed feedback mechanism may be a valuable research direction (Section \ref{sec_adaptFNN}).}
+	% \paragraph{Other techniques.} To accurately predict unknown uncertainties in a dynamical system, \citet{10288520} developed a uncertainty observer, which employed the learned uncertainty modeled by Koopman operator to direct the prediction direction and the state feedback to attenuate learning residues. 
+	
+	%\section{Limitations}
+	
+	% \paragraph{Constrained to cases with continuous-time input.} The feedback efficacy requires a continuous-time input $\bm{x}(t)$, so that the learned ODE model can be constantly adjusted according to the difference between the measured and predicted state. Thus, the developed feedback neural network is limited to continuous-time prediction tasks that evolve over time. For discretely operated tasks like image recognition, the feedback neural network needs further improvement. 
+	
+	% \paragraph{Construction of training datasets.} In this work, the datasets for training the neural feedback are collected through domain randomization, which requires a known simulation model in advance, albeit potentially inaccurate. For cases lacking simulation models, the training datasets can be constructed by perturbing the real system artificially. 
+	
+	\section{Conclusion}
+	Inspired by the feedback philosophy in biological and engineering systems, we proposed to incorporate a feedback loop into the neural network structure for the first time, as far as we known. In such a way, the learned latent dynamics can be corrected flexibly according to real-time feedback, leading to better generalization performance in continuous-time missions. The convergence property under a linear feedback form was analyzed. Subsequently, domain randomization was employed to learn a nonlinear neural feedback, resulting in a two-DOF neural network. Finally, applications on trajectory prediction of irregular objects and MPC of robots were shown.
+	
+	\paragraph{Limitations.} \textcolor{black}{First, the feedback gain and decay rate for the linear feedback neural network need to be tuned manually. Future work will try to build a bi-level optimization framework to train neural ODE while searching the optimal gains. Such joint optimization manner can also capture the coupled information between feedforward neural ODE and feedback network.} Morevoer, the presented nonlinear neural form is preliminarily tested in Section \ref{Domain_rand}. Future work will pursue to exploit its potential in more complex tasks. 
+	
+	% As analyzed in Theorem \ref{thm1}, accurate prediction necessitates a convergence time. Specifically, the convergence time for multi-step prediction scales linearly with the prediction horizon. While experimental results on selected examples indicate that a satisfactory prediction performance can be attained after a short convergence period, future demonstrations across a broader range of cases, particularly those demanding transient performance, are necessary.
+	
+	% \subsubsection*{Acknowledgments}
+	
+	\bibliography{iclr2025_conference}
+	\bibliographystyle{iclr2025_conference}
+	
+	\clearpage
+	
+	\appendix
+	\section{Appendix}
+	
+	\subsection{Training neural ODEs with external inputs} \label{train_input}
+	Firstly, we formulate the learning problem as an optimization problem:
+	\begin{align}
+		\label{eq:oc}
+		&\min_{\bm{\theta}} \sum_{i=1}^{N-1} \;l_i(\bm{x}_i, {\bm{x}_i}^r, \bm{\theta})
+		+ l_N(\bm{x}_N, {\bm{x}_N}^r)\\
+		& s.t.\;\;\bm{x}_{i+1} = 
+		\bm{f}_{neural}^d(\bm{x}_i, \bm{I}_i, t_i, \bm{\theta})
+	\end{align}
+	where \textcolor{black}{$\bm{x}_i \in \mathbb{R}^n$} and \textcolor{black}{$\bm{I}_i \in \mathbb{R}^m$} denotes the model rollout state and the real sample at time $t_i$ respectively, $\bm{x}_{i+1} = 
+	\bm{f}_{neural}^d(\bm{x}_i, \bm{I}_i, t_i, \bm{\theta})$
+	refers to the discretized integration of $\bm{f}_{neural}\left( {\bm{x}(t),\bm{I}(t), t,\bm{\theta}} \right)$ with fixed discrete step since real-world state trajectories \textcolor{black}{${\bm{x}_{i}}^r \in \mathbb{R}^n$} are sequentially recorded with fixed timestep based on the onboard working frequency. \textcolor{black}{$l_i(\cdot)\in \mathbb{R}$, $l_N(\cdot)\in \mathbb{R}$} are defined to quantify  the state differences between model rollout $\bm{x}_i$ and real-world state ${\bm{x}_{i}}^r$. In this article, we select the functions in a weighted quadratic form, i.e., $({\bm{x}_{i}}^r-{\bm{x}_{i}})^\top \bm{L}_i
+	({\bm{x}_{i}}^r-{\bm{x}_{i}})$. 
+	
+	By utilizing the optimal control theory and variational method, the first-order optimality conditions of the learning problem could be derived as
+	\begin{align}
+		& \begin{aligned}
+			H &= J + 
+			\sum_{i=1}^{N-1} \bm{\lambda}_{i+1}^\top
+			\bm{f}_{neural}^d(\bm{x}_i, \bm{I}_i, t_i, \bm{\theta})
+		\end{aligned}\\
+		&\bm{x}_{i+1} = \nabla_{\bm{\lambda}} H 
+		= \bm{f}_{neural}^d(\bm{x}_i, \bm{I}_i, t_i, \bm{\theta}),
+		\;\bm{x}_1 = \bm{x}(0) \label{rollout}\\
+		& \bm{\lambda}_i = \nabla_{\bm{x}}H 
+		= \nabla_{\bm{x}} l_i + (\frac{\partial \bm{f}_{neural}^d}{\partial{\bm{x}}})^\top
+		\bm{\lambda}_{i+1} \label{adjoint},
+		\;\bm{\lambda}_N = \frac{\partial{l_N}}{\partial{\bm{x}_N}}\\
+		& \begin{aligned}
+			\frac{\partial{H}}{\partial{\bm{\theta}}}
+			= \sum_{i=1}^{N-1} \;\nabla_{\bm{\theta}} l_i + \bm{\lambda}_{i+1}^\top
+			\nabla_{\bm{\theta}} \bm{f}_{neural}^d = 0
+		\end{aligned} \label{gradient}
+	\end{align}
+	where \textcolor{black}{$H\in \mathbb{R}$} stands for the \textit{Hamiltonian} of this problem, 
+	$J$ is the objective function in (\ref{eq:oc}). Solving (\ref{gradient}) could be done by applying gradient descent on $\bm{\theta}$. The gradient is analytic and available (summarized in Algorithm \ref{gradient_algo}) by sequentially doing forward rollout (\ref{rollout}) of $\bm{x}$ and backward rollout (\ref{adjoint}) of $\bm{\lambda}$, where the latter one is also known as the term \textit{adjoint solve}  or \textit{reverse-mode differentiation}.
+	
+	\begin{algorithm}[htb]
+		\caption{Analytic gradient computation}
+		\label{gradient_algo}
+		\begin{algorithmic}[1]
+			\REQUIRE Learning objective $l_i(\cdot), l_N(\cdot)$; model $\bm{f}_{neural}^d$; 
+			continuous trajectories $\{\bm{x}^r(t), \bm{I}(t), t\}$.
+			\ENSURE Gradient ${\partial H}/{\partial\bm{\theta}}$.
+			\STATE $\bm{x} \leftarrow$ Forward rollout of $\bm{f}_{neural}^d$ using (\ref{rollout});
+			\STATE Compute $\nabla_{\bm{x}} l_i$, $\nabla_{\bm{x}} \bm{f}_{neural}^d$, $\nabla_{\bm{x}_N} l_N$, $\nabla_{\bm{\theta}} l_i$, $\nabla_{\bm{\theta}} \bm{f}_{neural}^d$;
+			\STATE $\bm{\lambda} \leftarrow$ Reverse rollout of $\nabla_{\bm{x}}H$ using (\ref{adjoint}) ;
+			\STATE ${\partial H}/ {\partial\bm{\theta}} \leftarrow$ Compute gradient using (\ref{gradient}).
+		\end{algorithmic}
+	\end{algorithm}
+	
+	\begin{algorithm}[htb]
+		\caption{Training neural ODEs with external inputs}
+		\label{learning algorithm}
+		\begin{algorithmic}[1]
+			\REQUIRE{Learning objective $l_k(\cdot), l_N(\cdot)$;
+				mini-batch size $s$; trajectories $\mathcal{D}^{tra} = \{\bm{x}^r(t), \bm{I}(t), t\}$.}
+			\ENSURE{Neural ODE $\bm{f}_{neural}^d$.} \\
+			\COMMENT\ {Network parameters $\bm{\theta}$; slice $\mathcal{D}^{tra}$ into $M$ segments $\{\mathcal{D}^{tra}_{j = 1, \cdots, M}\}$ with $s$ length each.}
+			\REPEAT 
+			\FOR{$\{{\bm{x}^r}_{1:s}, \bm{I}_{1:s}, t_{1:s}\}$ in $\{\mathcal{D}^{tra}_{j = 1, \cdots, M}\}$}
+			\STATE Compute analytic gradient ${\partial H}/{\partial\bm{\theta}}$ using Algorithm \ref{gradient_algo};
+			\STATE Compute learning rate $\alpha$ using \textit{Adam} or other methods;
+			\STATE $\bm{\theta} \leftarrow \bm{\theta} 
+			- \alpha \cdot {\partial{H}}/{\partial{\bm{\theta}}}$;
+			\ENDFOR
+			\UNTIL{\textbf{convergence}}
+		\end{algorithmic}
+	\end{algorithm}
+	
+	The gradient computing only supports for a single continuous state trajectory, and the computational complexity scales linearly with the trajectory length. However, in real-world applications, multiple trajectory segments with a long horizon might be produced. We introduce mini-batching as well as stochastic optimization methods to deal with the drawback, as summarized in Algorithm \ref{learning algorithm}.
+	The learning rate could be determined using \textit{Adam} or other stochastic gradient descent-related methods.
+	
+	\subsection{Proof of Theorem \ref{thm1}} \label{proof_thm1}
+	
+	\subsubsection{Continuous-time stability}
+	
+	The proof procedure requires the \textit{Lyapunov} stability analysis arising from the traditional control field \citep{slotine1991applied}. At first, define a \textit{Lyapunov} function
+	\begin{align} \label{lyapunov}
+		V(t) = \frac{1}{2}{\bm{{\tilde {x}}}}(t)^T{\bm{{\tilde {x}}}}(t).
+	\end{align}
+	
+	Differentiate \textcolor{black}{$V(t)\in \mathbb{R}$}, yielding
+	\begin{align} \label{lyapunov_devi}
+		\dot V\left( t \right) & = \bm{{\tilde {x}}}{\left( t \right)^T}\bm{\dot{\tilde {x}}}\left( t \right) \notag \\
+		&\mathop  = \limits^{(a)} \bm{{\tilde {x}}}{\left( t \right)^T}\left( {- \bm{L}{\bm{{\tilde {x}}}}(t) + \Delta \bm{f}(t)} \right) \notag \\
+		& = -\bm{{\tilde {x}}}{\left( t \right)^T}\bm{L}{\bm{{\tilde {x}}}}(t) + \bm{{\tilde {x}}}{\left( t \right)^T}\Delta \bm{f}(t) \notag \\
+		& \mathop  \le \limits^{(b)} \textcolor{black}{-\frac{\lambda_m(\bm{L})}{2} \bm{{\tilde {x}}}{\left( t \right)^T}\bm{{\tilde {x}}}{\left( t \right)} + \frac{1}{2\lambda_m(\bm{L})}\gamma^2}
+	\end{align}
+	\textcolor{black}{where $(a)$ and $(b)$ are driven by substituting (\ref{error_dyna}) and using \textit{Young}'s inequality $\tilde{\bm{x}}^{T} \Delta \bm{f}(t)\le \sqrt{\lambda_{m}(\bm{L})}\|\tilde{\bm{x}}\| \frac{\gamma}{\sqrt{\lambda_{m}(\bm{L})}}\le \frac{\lambda_{m}(\bm{L})\|\tilde{\bm{x}}\|^{2}}{2}+\frac{\gamma^{2}}{2 \lambda_{m}(\bm{L})}$, respectively.} By combing (\ref{lyapunov}) and (\ref{lyapunov_devi}), it can be rendered that 
+	\begin{align}
+		\textcolor{black}{\dot V\left( t \right) \le -\lambda_m(\bm{L})V(t) + \frac{1}{2\lambda_m(\bm{L})}\gamma^2.}
+	\end{align}
+	
+	By solving the first-order ordinary differential inequality, one can achieve
+	\begin{align}
+		\textcolor{black}{0 \le V(t) \le e^{-\lambda_m(\bm{L})t}\left[V(0)- \delta\right] + \delta}
+	\end{align}
+	with \textcolor{black}{$\delta = \frac{{\gamma}^2}{\left[2\lambda_m(\bm{L})^2\right]}\in \mathbb{R}$}. It can be further implied that
+	
+	\begin{align} \label{bounded_converg}
+		\textcolor{black}{\mathop {\lim }\limits_{t \to \infty }\|\bm{\tilde{x}}(t)\|\le \frac{\gamma}{{\lambda_m(\bm{L})}}}
+	\end{align}
+	which shows that even with learning residuals, the state observation error can converge to a bounded set \textcolor{black}{$\mathcal{B}_1 = \left\{{\bm{\tilde x}}(t)\in\mathbb{R}^n:\left\|{\bm{\tilde x}}(t)\right\|\le{\gamma}/{{\lambda_m(\bm{L})}}\right\}$} with the feedback modification. It can be seen that the upper bound can be regulated to arbitrarily small by increasing $\lambda_m(\bm{L})$.
+	
+	Finally, from (\ref{error_dyna}), it can be concluded that the derivative of the state observation error can also converge to a bounded set \textcolor{black}{$\mathcal{B}_2 = \left\{{\bm{\dot{\tilde x}}}(t)\in\mathbb{R}^n:\left\|{\bm{\dot{\tilde x}}}(t)\right\|\le{\gamma}\lambda_M(\bm{L})/{{\lambda_m(\bm{L})}} + \gamma\right\}$} with the maximum eigenvalue of feedback gain $\lambda_M(\bm{L})$.
+	
+	\renewcommand*{\thefigure}{S1}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.8\linewidth,trim=0 0 0 0,clip]{Figs/bound_describe.png}
+		\caption{\textcolor{black}{In the spiral curve example, the state observation error can converge to the theoretical bounded set.}}
+		\label{bound_fig}
+	\end{figure}
+	
+	\textcolor{black}{Figure \ref{bound_fig} shows the convergence of the state observation error in the spiral curve example. Related simulational setup is the same as Figure \ref{Spiral_curve}. It can be seen that the theoretical bounded set is relatively conservative, as the result of the sufficiency of \textit{Lyapunov} theorem.}
+	
+	\textcolor{black}{As for unbounded learning residuals violating Assumption \ref{assum}, we think it is still a major challenge in learning fields. It reveals that neural networks have completely lost the representational ability to target uncertainties. The best strategy may be retraining the networks based on fresh datasets, like an online continual learning mission \citep{ghunaim2023real}.}
+	
+	%It can be seen from Figure \ref{Spiral_curve_comp}(d), the upper bound of uncertainty norm, i.e., $\gamma$ is approximately $21.9$. ${\lambda_m(\bm{L})}$ is set as $20$. Thus the upper bound of convergence set is 
+	
+	\subsubsection{\textcolor{black}{Discrete-time stability}}
+	
+	\textcolor{black}{As the developed procedure in (\ref{sys1_1})-(\ref{sys2_2}) is discrete-time, we further provide the convergence analysis in a discrete-time form.}
+	
+	\textcolor{black}{Discretizing (\ref{prediction_ODE}), it can be obtained that}
+	\begin{align} \label{prediction_ODE_dis}
+		\textcolor{black}{\bm{x}(t_{k}) = \bm{x}(t_{k-1}) + T_s\bm{f}(t_{k-1}).}
+	\end{align}
+	
+	\textcolor{black}{Define state observer error ${\bm{\tilde x}}(t_k) = \bm{{x}}(t_k) - \bm{\hat{x}}(t_k)$. By making a difference between (\ref{prediction_ODE_dis}) and (\ref{sys2_2}), one can achieve}
+	\begin{align} \label{discrete_error}
+		\textcolor{black}{{\bm{\tilde x}}(t_k)} & = \textcolor{black}{{\bm{\tilde x}}(t_{k-1}) + T_s(\bm{f}(t_{k-1}) - \bm{\hat{f}}_{neural}(t_{k-1}))} \notag \\
+		&\mathop  = \limits^{(c)} \textcolor{black}{{\bm{\tilde x}}(t_{k-1}) +  T_s(\bm{{f}}_{neural}(t_{k-1}) - \bm{\hat{f}}_{neural}(t_{k-1}) + \Delta \bm{f}(t) )}\notag \\
+		&\mathop  = \limits^{(d)} \textcolor{black}{(\bm{I}- T_s\bm{L}){\bm{\tilde x}}(t_{k-1}) + T_s\Delta \bm{f}(t)},
+	\end{align}
+	\textcolor{black}{where $(c)$ and $(d)$ are driven by substituting (\ref{pure_NN}) and (\ref{feedback_NN}), respectively. With the bounded Assumption \ref{assum}, if the observer gain $\bm{L}$ makes $(\bm{I}- T_s\bm{L})$ stable, i.e., $\rho(\bm{I}- T_s\bm{L}) < 1$, system (\ref{discrete_error}) is input-to-state stable (ISS) \citep{YAN2023111238}. $\rho(\cdot)$ denotes the spectral radius.}
+	
+	%Finally, from (\ref{error_dyna}), it can be concluded that the derivative of the state observation error can also converge to a bounded set, i.e.,
+	%\begin{align}
+	%	\textcolor{black}{\mathop {\lim }\limits_{t \to \infty }\|\bm{\dot{\tilde {x}}}(t)\|  \le 2\gamma.}
+	%\end{align}
+	
+	% We then recall that $\bm{\tilde{x}}(t+T_s) = \bm{{x}}(t+T_s)-\bm{\hat{x}}(t+T_s)$ with one-step prediction. From \eqref{feed_ODE}, $\bm{\hat{x}}(t+T_s)$ can be predicted with last state $\bm{\hat{x}}(t)$ and current measurements $\bm{{x}}(t)$. Hence, it can be seen that the one-step prediction error $\bm{\tilde{x}}(t+T_s)$ will converge to the upper bound in \eqref{bounded_converg}. Moreover, 
+	
+	\subsection{Implementation details of spiral case}
+	
+	\subsubsection{Spiral dynamics} \label{spiral_dyna}
+	The adopted spiral model is formalized as
+	\begin{align}
+		\bm{\dot{x}}\left( t \right) = \left[ {\begin{array}{*{20}{c}}
+				{ - \eta }&\omega \\
+				{ - \omega }&{ - \eta }
+		\end{array}} \right]\bm{x}\left( t \right) + \left[ {\begin{array}{*{20}{c}}
+				\varepsilon \\
+				\varepsilon 
+		\end{array}} \right]
+	\end{align}
+	with period \textcolor{black}{$\omega\in \mathbb{R}$, decay rate $\eta\in \mathbb{R}$, and bias ${\varepsilon}\in \mathbb{R}$}.
+	
+	In tests, the initial value is set as $\bm{x}(0) = \left[9, 0\right]^T$. For the nominal task, $\omega$, $\eta$, and ${\varepsilon}$ are set as $2$, $0.1$, and $0$, respectively.
+	
+	\subsubsection{Training details of neural ODE}
+	
+	The adopted MLP for training ODE has $3$ layers with $50$ hidden units and ReLU activation functions. The training datasets consist of $1000$ samples, discretized from $0\ s$ to $10\ s$ with $0.01\ s$ step size. In training, we use \textit{RMSprop} optimizer with the default learning rate of $0.001$. The network is trained with a batch size of $20$ for $400$ iterations. 
+	
+	\subsubsection{Training details of feedback part} \label{appen_feedback}
+	
+	As for the feedback part, we adopt MLP with $2$ hidden layers with $50$ hidden units each and ReLU activation functions. The training datasets are collected through domain randomization, with $20$ randomized cases, i.e., $\omega= \left\{0.8: +0.12: 3.08\right\}$, $\eta= \left\{0.04: +0.005: 0.135\right\}$, ${\varepsilon}= \left\{-24: +2.4: 21.6\right\}$. Each case consists of $1000$ samples, discretized from $0\ s$ to $20\ s$ with $0.02\ s$ step size. In training, we use \textit{RMSprop} optimizer with the learning rate of $0.01$. The network is trained with a batch size of $100$ for $2000$ iterations. 
+	
+	\subsubsection{Setup of gain adjustment test} \label{appen_gain}
+	
+	Figure \ref{ablation_gain} shows the ablation study on linear feedback gain and degree of uncertainty. In this test, feedback gain is selected from $\left\{0: +5: 45\right\}$ in order, and uncertainties are set as $\omega= \left\{0.8: +0.4: 4.4\right\}$, $\eta= \left\{0.04: +0.02: 0.22\right\}$, ${\varepsilon}= \left\{-24: +8: 96\right\}$ in order. The prediction step is set as $50$. The prediction results are evaluated using the means of $2$-$norm$ prediction errors.
+	
+	\subsection{\textcolor{black}{Implementation details of trajectory prediction of irregular objects}} \label{appen_traj}
+	
+	The input state of neural ODE consists of position and velocity. The adopted MLP for training latent ODE has $3$ hidden layers with $100$ hidden units each and ReLU activation functions. The training datasets consist of $21$ trajectories, with $1058$ samples each. The step size is $0.001\ s$. In training, we use \textit{Adam} optimizer with the default learning rate of $0.001$. The network is trained with a batch size of $20$ for $1000$ iterations. 
+	
+	Different from the one-step prediction strategy utilized in \citet{10288520} (modeled as dynamical systems concerning attitude), this work predicts future states in a forward-rolling way, learning a more precise result. For the compared drag model-based method, the drag coefficient comes from \citet{10288520} fitted by least squares. The prediction error in Figure \ref{exp1_error} is evaluated by the $2$-$norm$ of position prediction error.
+	
+	\subsection{Implementation details of model predictive control of a quadrotor} 
+	
+	\subsubsection{Quadrotor Preliminaries}
+	A quadrotor dynamics can be defined as a state-space model with a $12$-dimensional state vector \textcolor{black}{$\bm{x} = [\bm{p}, \bm{v}, \bm{\Theta}, \bm{\omega}]^\top \in \mathbb{R}^{12}$} and a $4$-dimensional input vector \textcolor{black}{$\bm{u} = [T_1, T_2, T_3, T_4]^\top \in \mathbb{R}^4$} of motor thrusts.
+	Two coordinate systems are defined, the earth-fixed frame $\bm{\mathcal{E}} = 
+	\left\{\bm{X}_E, \bm{Y}_E, \bm{Z}_E\right\}$  and the body-fixed frame $\bm{\mathcal{B}} = \left\{\bm{X}_B, \bm{Y}_B, \bm{Z}_B\right\}$. The position \textcolor{black}{$\bm{p}\in \mathbb{R}^3$} and the velocity \textcolor{black}{$\bm{v}\in \mathbb{R}^3$} are defined in $\bm{\mathcal{E}}$ while the body rate \textcolor{black}{$\bm{\omega}\in \mathbb{R}^3$} is defined in $\bm{\mathcal{B}}$. The relationship between $\bm{\mathcal{E}}$ and $\bm{\mathcal{B}}$ is decided by the Euler angle \textcolor{black}{$\bm{\Theta}\in \mathbb{R}^3$}. The translational and rotational dynamics can be formalized as
+	\begin{equation} \label{quadrotor_model}
+		\begin{aligned}
+			&\dot {\bm p} = \bm v, \quad \dot {\bm v} = \bm a = 
+			-\frac{1}{m}\bm Z_B T + g\bm Z_E\\
+			& \dot {\bm{\Theta}} = \bm{W}(\bm{\Theta})\bm{\omega},\quad
+			\bm J \dot {\bm \omega}= 
+			-\bm \omega \times (\bm J \bm \omega) 
+			+ \bm \tau\\
+			& [T, \bm \tau]^\top = \bm{C} 
+			[T_1, T_2, T_3, T_4]^\top
+		\end{aligned}
+	\end{equation}
+	where $g$ stands for the magnitude of gravitational acceleration, $\bm{W}(\cdot)$ refers to the rotational mapping matrix of \textit{Euler} angle dynamics and $\bm{C}$ is the control allocation matrix. We note the nominal dynamics of quadrotor as  $\bm{\dot x} = \bm{f}(\bm{x}, \bm{u})$.
+	
+	Next, differential flatness-based controller (DFBC) \citep{mellingerMinimumSnapTrajectory2011a} for the quadrotor is introduced, which is adopted here to form a closed-loop system for end-to-end learning that remains stable and differentiable numerical integration. By receiving the flat outputs \textcolor{black}{$\bar{\bm{\Psi}} = [\bm{p}, \bm{v}, \bm{a}, \bm{j}]\in \mathbb{R}^{12}$}, the positional signal and its higher-order derivatives, as the command signal, DFBC computes the desired motor thrusts for the actuators under the $12$-dimensional state feedback. By virtue of the differential flatness property of the quadrotor, one can covert the flat outputs into nominal states $\bm{x}$ and inputs $\bm{u}$ using related differential flatness mappings if the yaw motion remains zero.
+	We note this controller as $[\bm{\dot z}, \bm{u}]^\top = \bm{\pi}(\bm{z}, \bm{x}, \bm{\bar \Psi})$, where $\bm{z}$ is auxiliary state of controller for the expression integrators and approximated derivatives in the rotational controller.
+	
+	\subsubsection{Implemention of learning aerodynamics effects} \label{appen_aerolearn}
+	\textcolor{black}{In training, no external wind and parameter uncertainties exist, and the aerodynamic drag is modeled as $\bm{R}\bm{D}\bm{R}^\top \bm{v}$ \citep{faesslerDifferentialFlatnessQuadrotor2018}, where $\bm{R}$ refers to the current rotational matrix that maps the frame $\bm{\mathcal{B}}$ to the frame $\bm{\mathcal{E}}$, and $\bm{D} = diag\{[0.6, 0.6, 0.1]\}$ is a coefficient matrix which is fitted by real flight data from \cite{jia2022RAL}.}
+	
+	A neural ODE $\bm{f}_{neural}$ (with parameters $\bm{\theta}$) is augmented with the nominal dynamics to capture the aerodynamic effect, i.e., $\dot{\bm v} = \bm a = -\frac{1}{m}\bm Z_B T + g\bm Z_E + \bm{f}_{neural}(\bm{v}, \bm{\Theta}, \bm{\theta})$. A MLP with $2$ hidden layers with $36$ hidden units is adopted.
+	
+	End-to-end learning of $\bm{f}_{neural}$ could be done using the algorithm \ref{learning algorithm}, but a stable numerical integration is necessary. A closed-loop system of the augmented dynamics using DFBC is employed, noted as $[\dot{\bm{x}}, \dot{\bm{z}}]^\top = \bm{\Phi}([\bm{x}, \bm{z}]^\top, \bm{\bar \Psi})$. In the proposed algorithm, $[\dot{\bm{x}}, \dot{\bm{z}}]^\top$ turns out to be the new state and $\bm{\bar \Psi}$ becomes the auxiliary input instead of the input of the augmented dynamics $\bm{u}$.
+	
+	We generate $40$ $\bm{\bar \Psi}$ trajectories with the discrete nodes of $200$ each for learning by randomly sampling the positional waypoints in a limited space, followed by optimizing polynomials that connect these waypoints, as shown in Figure \ref{aero_learn}. For validations of the learned neural ODE, we generate another $3$ random $\bm{\bar \Psi}$ trajectories $2.5\times$ longer than that used in training, the result illustrated in Figures \ref{traj_val_poseatt}-\ref{traj_val_states3} indicates a good prediction on all $12$ states.
+	
+	\subsubsection{Implementation of MPC with Feedback Neural Networks} \label{appen_mpc}
+	MPC works in the form of trajectory optimization (\ref{Standard_MPC}) with receding-horizon $N$ with a discrete dynamic model $\bm{f}_d$, to obtain the current optimal control input $\bm{u}_{0}$, while maintaining feasibility constraints $\bm{u}_i \in \mathbb{U}, \bm{x}_i \in \mathbb{X}$, i.e.,
+	\begin{equation}
+		\begin{aligned}
+			& \min_{\bm{x}_{1:N}, \bm{u}_{0:N-1}}\;
+			l_N(\bm{x}_N, \bm{x}_N^r) +
+			\sum_{i=1}^{N}\; l_x(\bm{x}_i, \bm{x}_i^r) + 
+			l_u(\bm{u}_i, \bm{u}_i^r)\\
+			&\begin{aligned}
+				s.t.\;\;
+				&\bm{{x}}_{i+1}
+				= \bm{f}_d(\bm{x}_i, \bm{u}_i),\; \bm{x}_0 = \bm{x}(0)\\
+				&\bm{u}_i \in \mathbb{U},\;\bm{x}_i \in \mathbb{X}
+			\end{aligned}
+		\end{aligned}
+		\label{Standard_MPC}
+	\end{equation}
+	where the objective functions \textcolor{black}{$l_x(\cdot)\in \mathbb{R}, l_u(\cdot)\in \mathbb{R}, l_N(\cdot)\in \mathbb{R}$} penalize the tracking error between model predicted trajectory $\{\bm{x}_{1:N}, \bm{u}_{1:N}\}$ and the up-comming reference trajectory $\{\bm{x}_{1:N}^r, \bm{u}_{1:N}^r\}$, where quadratic loss are often adopted. In this application, we make $l_x(\cdot) = l_N(\cdot) = (\bm{x} - \bm{x}^r)^\top \bm{Q}
+	(\bm{x} - \bm{x}^r)$, $l_u(\cdot) = (\bm{u} - \bm{u}^r)^\top \bm{R} (\bm{u} - \bm{u}^r)$, where \textcolor{black}{$\bm{Q} = diag\{[\bm{100}_{3\times1},\bm{50}_{6\times1},\bm{1}_{3\times1}]\}\in \mathbb{R}^{12 \times 12}$} and \textcolor{black}{$\bm{R} = diag\{\bm{1}_{4\times1}\}\in \mathbb{R}^{4 \times 4}$}. The feasibility constraints $\bm{u}_i \in \mathbb{U}$ and $\bm{x}_i \in \mathbb{X}$ are normally designed using box constraints.  We make $\bm{0}_{4\times1} \leq \bm{u} \leq \bm{4}_{4\times1}$ to avoid control saturation and $|\bm{\Theta}| \leq \bm{{\pi}/{2}}_{3\times1}$ to avoid singularities while using \textit{Euler} angle-based attitude representation. The receding horizon length $N$ is set to be $10$.
+	
+	The key idea of using a feedback neural network augmented model is to apply the multi-step prediction mechanism to the model prediction process in MPC. The multi-step prediction algorithm requires the current feedback state $\bm{x}_0$ and current input $\bm{u}_1$ to update the sequence of $\hat{\bm{x}}_{1:N}$. The updated $\hat{\bm{x}}_{1:N}$ can be directly applied for the next receding horizon optimization. We choose a linear feedback gain of \textcolor{black}{$\bm{L} = diag\{\bm{3}_{12\times1}\}\in \mathbb{R}^{12 \times 12}$} with a decay rate of $0.1$. 
+	
+	\subsubsection{Benchmark comparisons} \label{benchmark_MPC}
+	\textcolor{black}{In the quadrotor example, in order to show the effectiveness of the proposed feedback neural network, five other models are compared: the nominal model (\ref{quadrotor_model}), the neural ODE augmented model (Section \ref{appen_aerolearn}), the feedforward neural network augmented model \citep{saviolo2023learning}, the feedback enhanced nominal model, and the adaptive neural network augmented model \citep{cheng2019human}, abbreviated as Nomi-MPC, Neural-MPC, MLP-MPC, FB-MPC, and AdapNN-MPC, for the sake of simplification.}
+	
+	\textcolor{black}{The MLP augmented model employs the fully connected neural network to learn aerodynamic drag \citep{saviolo2023learning}. The feedback enhanced nominal model refers to the analytic model (\ref{quadrotor_model}) strengthened by proposed feedback mechanism. The adaptive neural network augmented model \citep{cheng2019human} uses the feedforward neural network to learn aerodynamic drag in which the last layer is regarded as a weighted vector, being adjusted adaptively according to real-time state feedback. Similar idea is also proposed in \citet{o2022neural, richards2022control, saviolo2022active}. In tests, all learning-based methods have the same hidden layers, and the parameters of the AdapNN-MPC are adjusted for optimal performance.}
+	
+	\textcolor{black}{The training loss on the training set, the validation set, and the test set of MLP augmented model is provided in Figure \ref{MLP_training}.}
+	
+	\subsubsection{Test results}
+	
+	A periodic $3D$ \textit{Lissajous} trajectory is used for comparative tests, where a variety of attitude-velocity combination is exploited. The position trajectory can be written as $\bm{p}(t) = [r_x sin(2\pi t/T_x),\; r_y sin(2\pi t/T_y),\; h + r_z cos(2\pi t/T_z)]$, where the parameters are $[r_x, r_y, r_z, T_x, T_y, T_z, h] = [3.0, 3.0, 0.5, 6.0, 3.0, 3.0, 0.5]$. Tracking such trajectory requires a conversion of the flat outputs to the nominal $12$-dimensional state $\bm{x}$ of the quadrotor using differential flatness-based mapping.
+	
+	During trajectory tracking, it could be seen from Figure \ref{dx_pred1} that the prediction accuracy of latent dynamics at the first step is improved significantly under the multi-step prediction. Although the learning-based model provides more solid results on dynamics prediction than just using the nominal model, with the help of feedback, a convergence property of prediction error can be achieved, leading to a better tracking performance (Figure \ref{sim_mpc}).
+	
+	\subsection{\textcolor{black}{Ablation study}}
+	\textcolor{black}{Section \ref{gain_sec} has analyzed the sensitivity of observer gain at different levels of uncertainties. In this part, we further conduct the ablation studies on linear and nonlinear neural feedback units, and decay rate.}
+	
+	\subsubsection{\textcolor{black}{Linear feedback unit}}
+	\textcolor{black}{We test the performance of correcting the latent dynamics of spiral curves at $12$ different levels of learning residuals, with or without linear feedback unit. The parameter uncertainties cover $\Delta \omega= \left\{-0.72: +0.12: 0.6\right\}$, $\Delta \eta= \left\{-0.03: +0.005: 0.025\right\}$, $\Delta {\varepsilon}= \left\{-14.4: +2.4: 12\right\}$. All compared results are summarized in Figure \ref{Feedback_linear_test}, which indicates the effectiveness of the linear feedback unit.}
+	
+	\subsubsection{\textcolor{black}{Neural feedback unit}}
+	\textcolor{black}{Similar to the last test, we further test the performance of the neural feedback unit at $12$ different levels of learning residuals. All compared results are summarized in Figure \ref{Feedback_neuro_test}. It can be found that the developed feedback neural network shows better generalization performance by enabling the neural feedback unit.}
+	
+	\textcolor{black}{It can be seen from Figure \ref{Feedback_linear_test} and Figure \ref{Feedback_neuro_test}, both methods can achieve comparative learning performance. Compared with the linear feedback, no prior gain tunning is required for the neural feedback at the cost of training cost.}
+	
+	\subsubsection{\textcolor{black}{Decay rate}}
+	\textcolor{black}{Ablation study on decay rate: The performance of the decay rate is examined in the spiral curve example. In tests, the decay rate is set as  $\beta= \left\{0: +0.01: 0.06\right\}$ in sequence, and the multi-step prediction errors (Figure \ref{Spiral_curve}(g)) are calculated in RMSE. The test results are shown in the Figure \ref{ablation_decay_rate}. It can be seen that the prediction error decreases with the increase of $\beta$ at the beginning due to noise mitigation. However, as $\beta$ continues to increase, the convergence time becomes slower, leading to a gradual increase in prediction error.}
+	
+	\textcolor{black}{In practice, the tunning of feedback gain and decay rate is very intuitive. They can be increased slowly from a small value until the critical value with the best estimation performance is reached.}
+	
+	
+	
+	%that the linear feedback slightly reduces the learning accuracy when there is no uncertainty
+	
+	\subsection{\textcolor{black}{Training cost}}
+	
+	\textcolor{black}{For the training of neural ODEs, two strategies are employed in this work: the adjoint sensitive method developed in \citet{chen2018neural} without considering external inputs, and the alternative training method developed in Appendix \ref{train_input} concerning external inputs. The adjoint sensitive method is utilized in the spiral curve and irregular object examples, and its computational resource and training time are the same as \citet{chen2018neural}. The alternative training method concerning external inputs is employed in the quadrotor example to learn residual dynamics. It takes around 30 mins to run 50 epochs on a laptop with 13th Gen Intel(R) Core(TM) i9-13900H. The alternative training method is derived from the view of optimal control, and its computational resource and training time are comparable to the adjoint sensitive method theoretically.}
+	
+	\textcolor{black}{Two feedback forms are presented. No prior training is required for the linear feedback form, showing its advantage over traditional learning-based generalization methods. Moreover, the linear feedback consists of several analytic equations, consuming almost no computing resources. As for the neural feedback form, due to the optimization problem being non-convex, a satisfactory result usually takes 10 mins to 1 hour of training time on a laptop with Intel(R) Core(TM) Ultra 9 185H 2.30 GHz.}
+	
+	
+	\subsection{\textcolor{black}{Combination with adaptive neural ODE}} \label{sec_adaptFNN}
+	
+	\textcolor{black}{In this part, we further explore the combination potential of the developed linear feedback neural network with the test-time adaptation \citep{cheng2019human, o2022neural, richards2022control, saviolo2022active}. Let $\bm{f}_{neural}({\bm{x}(t),\bm{I}(t), t,\bm{\theta}}) = \bm{\Xi}({\bm{x}(t),\bm{I}(t), t,\bm{\theta}})\bm{\chi}$, where $\bm{\Xi}\left( \cdot \right): \mathbb{R}^n \times \mathbb{R}^m \times\ \mathbb{R} \rightarrow \mathbb{R}^n \times \mathbb{R}^l$ represents front layers of neural network, and $\bm{\chi} \in \mathbb{R}^l$ denotes the weighted vector of the last layer of neural network, which is constant in a test case and can be adjusted adaptively according to real-time state feedback. Integrating with the adaptive scheme, (\ref{feedback_NN}) can be adjust to}
+	\begin{align} \label{feedback_NN2}
+		\textcolor{black}{\bm{\hat{f}}_{neural}(t) = \bm{\Xi}(t)\bm{\hat{\chi}} + \bm{L}(\bm{x}(t)-\bm{\hat{x}}(t)),}
+	\end{align}
+	\textcolor{black}{where $\bm{\hat{\chi}}$ is updated through an adaptive law}
+	\begin{align} \label{adaptive_law}
+		\textcolor{black}{\bm{\dot{\hat{\chi}}} = \bm{\Gamma}\bm{\Xi}^T(t)\bm{\tilde{x}}(t)}
+	\end{align}
+	\textcolor{black}{with a positive definite observer gain $\bm{\Gamma} \in \mathbb{R}^l \times \mathbb{R}^l$.}
+	
+	\begin{thm} \label{thm2}
+		\textcolor{black}{Consider the nonlinear system (\ref{ODE}). Under the linear state feedback (\ref{feedback_NN2}), the adaptive law (\ref{adaptive_law}), and the bounded Assumption \ref{assum}, the state observation error ${\bm{\tilde x}}(t)$ and its derivative ${\bm{\dot{\tilde x}}}(t)$ (i.e., ${\bm{\tilde f}}(t)$) can exponentially converge to bounded sets $\mathcal{B}_1 = \left\{{\bm{\tilde x}}(t)\in\mathbb{R}^n:\left\|{\bm{\tilde x}}(t)\right\|\le{\gamma}/{{\lambda_m(\bm{L})}}\right\}$ and $\mathcal{B}_2 = \left\{{\bm{\dot{\tilde x}}}(t)\in\mathbb{R}^n:\left\|{\bm{\dot{\tilde x}}}(t)\right\|\le{\gamma}\lambda_M(\bm{L})/{{\lambda_m(\bm{L})}} + \gamma\right\}$, respectively, which can be regulated by $\bm{L}$.}
+	\end{thm}
+	\begin{proof}
+		\textcolor{black}{Define the estimation error ${\bm{\tilde \chi}} = {\bm{\chi}} - {\bm{\hat \chi}}$ and a \textit{Lyapunov} function}
+		\begin{align} \label{lyapunov2}
+			\textcolor{black}{V(t) = \frac{1}{2}{\bm{{\tilde {x}}}}(t)^T{\bm{{\tilde {x}}}}(t) + \frac{1}{2}{\bm{\tilde \chi}}^T \bm{\Gamma}^{-1}{\bm{\tilde \chi}}.}
+		\end{align}
+		
+		\textcolor{black}{Differentiate $V(t)\in \mathbb{R}$, yielding}
+		\begin{align} \label{lyapunov_devi2}
+			\dot V\left( t \right) & = \textcolor{black}{\bm{{\tilde {x}}}{\left( t \right)^T}(\bm{\dot{{x}}}\left( t \right)-\bm{\dot{\hat {x}}}\left( t \right)) - {\bm{\tilde \chi}}^T \bm{\Gamma}^{-1} {\bm{\dot{\hat \chi}}}}  \notag \\
+			&\mathop  = \limits^{(e)} \textcolor{black}{-\bm{{\tilde {x}}}{\left( t \right)^T}\bm{L}{\bm{{\tilde {x}}}}(t)+ \bm{{\tilde {x}}}{\left( t \right)^T}(\bm{\Xi}(t)\bm{\tilde{\chi}} + \Delta \bm{f}(t)) - {\bm{\tilde \chi}}^T \bm{\Xi}^T(t)\bm{\tilde{x}}(t)} \notag \\
+			& = \textcolor{black}{-\bm{{\tilde {x}}}{\left( t \right)^T}\bm{L}{\bm{{\tilde {x}}}}(t) + \bm{{\tilde {x}}}{\left( t \right)^T}\Delta \bm{f}(t) \notag} \\
+		\end{align}
+		\textcolor{black}{where $(e)$ is driven by substituting (\ref{error_dyna}), (\ref{feedback_NN2}), and (\ref{adaptive_law}). The following proof process is consistent with (\ref{lyapunov_devi}), which is omitted here.}
+		
+		\textcolor{black}{Compared (\ref{feedback_NN}), (\ref{feedback_NN2}) further increases the flexibility of the neural network by inducing the adaptive mechanism. We further test this scheme in the quadrotor example, as shown in Figure \ref{adapFNN}. Note that the feedback gain is set the same as that of the previous feedback neural network. It can seen that the adaptation-enhanced feedback neural network (abbreviated as AdapFNN) achieves performance comparable to the previous feedback neural network, with a slightly larger RMSE.}
+		
+		\textcolor{black}{We think that the possible reason why the AdapFNN does not bring significant performance improvement is that the last layer of the neural network is not trained analytically. In other words, the uncertainty of the test scenario is not reflected in the last layer. The bilevel training strategy \citep{o2022neural, richards2022control} may help improve AdapFNN's performance.}
+	\end{proof}
+	
+	
+	
+	\renewcommand*{\thefigure}{S2}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth,trim=50 50 50 50,clip]{Figs/exp1_pos.png}
+		\caption{Trajectory prediction results of all $9$ test trajectories in Section \ref{trj_pre_exam}. It can be seen that the predicted trajectories almost overlap with the truth ones.}
+		\label{exp1_pos}
+	\end{figure}
+	
+	\renewcommand*{\thefigure}{S3}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.8\linewidth,trim=0 0 0 0,clip]{Figs/exp1_acc.png}
+		\caption{The learning performance of latent accelerations of all $9$ test trajectories in Section \ref{trj_pre_exam}. It can be seen that the feedback neural network can accurately capture the latent dynamics of test trajectories out of the training set.}
+		\label{exp1_acc}
+	\end{figure}
+	
+	\renewcommand*{\thefigure}{S4}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.8\linewidth]{Figs/traj_validate.png}
+		\caption{$3$ random trajectories generated for validations of the learned neural ODE, named traj-\#$1$, traj-\#$2$, and traj-\#$3$. All trajectories show well-predicted motions on pose and attitude. Detailed results on all $12$ states are provided in Figures \ref{traj_val_states1}-\ref{traj_val_states3}.}
+		\label{traj_val_poseatt}
+	\end{figure}
+	
+	\renewcommand*{\thefigure}{S5}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{Figs/val_state_plot_1.png}
+		\caption{Validation of learned neural ODE. Prediction on all $12$ states of traj-\#$1$.}
+		\label{traj_val_states1}
+	\end{figure}
+	
+	\renewcommand*{\thefigure}{S6}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{Figs/val_state_plot_2.png}
+		\caption{Validation of learned neural ODE. Prediction on all $12$ states of traj-\#$2$.}
+		\label{traj_val_states2}
+	\end{figure}
+	
+	\renewcommand*{\thefigure}{S7}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{Figs/val_state_plot_3.png}
+		\caption{Validation of learned neural ODE. Prediction on all $12$ states of traj-\#$3$.}
+		\label{traj_val_states3}
+	\end{figure}
+	
+	\renewcommand*{\thefigure}{S8}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.65\linewidth]{Figs/sim_dx_plot.png}
+		\caption{Test on the \textit{Lissajous} trajectory. Prediction on the translational latent dynamics (i.e., acceleration) at the first step using different prediction models. The feedback neural network augmented model achieve the best prediction performance.}
+		\label{dx_pred1}
+	\end{figure}
+	
+	\renewcommand*{\thefigure}{S9}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth,trim=0 0 0 0,clip]{Figs/Feedback_linear_test_comp.png}
+		\caption{\textcolor{black}{Test the linear feedback form on $12$ randomized cases in the spiral curve example. It can be found that the developed feedback neural network shows better generalization performance as enabling the linear feedback unit.}}
+		\label{Feedback_linear_test}
+	\end{figure}
+	
+	\renewcommand*{\thefigure}{S10}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth,trim=0 0 0 0,clip]{Figs/Feedback_neuro_test_comp.png}
+		\caption{\textcolor{black}{Test the neural feedback form on $12$ randomized cases in the spiral curve example. The developed feedback neural network with the neural feedback unit shows better generalization performance than the neural ODE.}}
+		\label{Feedback_neuro_test}
+	\end{figure}
+	
+	\renewcommand*{\thefigure}{S11}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.5\linewidth,trim=0 0 0 0,clip]{Figs/ablation_decay_rate.png}
+		\caption{\textcolor{black}{Ablation study on decay rate.}}
+		\label{ablation_decay_rate}
+	\end{figure}
+	
+	\renewcommand*{\thefigure}{S12}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.8\linewidth,trim=0 0 0 0,clip]{Figs/step_disturbance.png}
+		\caption{\textcolor{black}{Test on step disturbance in the spiral curve example. The test setup is the same as Figure \ref{Spiral_curve} except for the induce of step disturbance. As $t = 7\ s$ (denoted by a yellow diamond symbol), the latent dynamics is changed suddenly ($\omega: 3 \rightarrow 1$, $\eta: -0.05 \rightarrow -0.12$, ${\varepsilon}: 10 \rightarrow 5$). It can be seen that the proposed feedback neural network can attenuate the step disturbance quickly.}}
+		\label{step_disturbance}
+	\end{figure}
+	
+	
+	\renewcommand*{\thefigure}{S13}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.5\linewidth,trim=0 0 0 0,clip]{Figs/MLP_training.png}
+		\caption{\textcolor{black}{The training loss on the training set, the validation set, and the test set of the compared MLP augmented model.}}
+		\label{MLP_training}
+	\end{figure}
+	
+	\renewcommand*{\thefigure}{S14}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.8\linewidth,trim=0 0 0 0,clip]{Figs/AdapFNN.png}
+		\caption{\textcolor{black}{Tracking the \textit{Lissajous} trajectory using MPC with adaptation-enhanced feedback neural network.}}
+		\label{adapFNN}
+	\end{figure}
+	
+	%\renewcommand*{\thefigure}{S9}
+	%\begin{figure}
+	%	\centering
+	%	\includegraphics[width=1\linewidth]{Figs/sim_dx_plot2.png}
+	%	\caption{Test on the \textit{Lissajous} trajectory. Prediction on the derivatives all $12$ states at the first step using neural ODE augmented model.}
+	%	\label{dx_pred2}
+	%\end{figure}
+	%
+	%\renewcommand*{\thefigure}{S10}
+	%\begin{figure}
+	%	\centering
+	%	\includegraphics[width=1\linewidth]{Figs/sim_dx_plot4.png}
+	%	\caption{Test on the \textit{Lissajous} trajectory. Prediction on the derivatives all $12$ states at the first step using feedback neural ODE augmented model.}
+	%	\label{dx_pred3}
+	%\end{figure}
+	
+	
+\end{document}

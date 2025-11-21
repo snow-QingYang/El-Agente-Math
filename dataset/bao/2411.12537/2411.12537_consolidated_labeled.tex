@@ -1,0 +1,1823 @@
+\documentclass{article} %
+\usepackage{iclr2025_conference_old,times}
+
+
+% BEGIN INCLUDE: math_commands.tex
+
+\usepackage{amsmath,amsfonts,bm}
+
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\indic}[1]{\mathbf{1}\{#1\}}
+\newcommand{\mon}{M}
+
+\newcommand{\figleft}{{\em (Left)}}
+\newcommand{\figcenter}{{\em (Center)}}
+\newcommand{\figright}{{\em (Right)}}
+\newcommand{\figtop}{{\em (Top)}}
+\newcommand{\figbottom}{{\em (Bottom)}}
+\newcommand{\captiona}{{\em (a)}}
+\newcommand{\captionb}{{\em (b)}}
+\newcommand{\captionc}{{\em (c)}}
+\newcommand{\captiond}{{\em (d)}}
+
+\newcommand{\newterm}[1]{{\bf #1}}
+
+
+\def\figref#1{figure~\ref{#1}}
+\def\Figref#1{Figure~\ref{#1}}
+\def\twofigref#1#2{figures \ref{#1} and \ref{#2}}
+\def\quadfigref#1#2#3#4{figures \ref{#1}, \ref{#2}, \ref{#3} and \ref{#4}}
+\def\secref#1{section~\ref{#1}}
+\def\Secref#1{Section~\ref{#1}}
+\def\twosecrefs#1#2{sections \ref{#1} and \ref{#2}}
+\def\secrefs#1#2#3{sections \ref{#1}, \ref{#2} and \ref{#3}}
+\def\eqref#1{equation~\ref{#1}}
+\def\Eqref#1{Equation~\ref{#1}}
+\def\plaineqref#1{\ref{#1}}
+\def\chapref#1{chapter~\ref{#1}}
+\def\Chapref#1{Chapter~\ref{#1}}
+\def\rangechapref#1#2{chapters\ref{#1}--\ref{#2}}
+\def\algref#1{algorithm~\ref{#1}}
+\def\Algref#1{Algorithm~\ref{#1}}
+\def\twoalgref#1#2{algorithms \ref{#1} and \ref{#2}}
+\def\Twoalgref#1#2{Algorithms \ref{#1} and \ref{#2}}
+\def\partref#1{part~\ref{#1}}
+\def\Partref#1{Part~\ref{#1}}
+\def\twopartref#1#2{parts \ref{#1} and \ref{#2}}
+
+\def\ceil#1{\lceil #1 \rceil}
+\def\floor#1{\lfloor #1 \rfloor}
+\def\1{\bm{1}}
+\newcommand{\train}{\mathcal{D}}
+\newcommand{\valid}{\mathcal{D_{\mathrm{valid}}}}
+\newcommand{\test}{\mathcal{D_{\mathrm{test}}}}
+
+\def\eps{{\epsilon}}
+
+
+\def\reta{{\textnormal{$\eta$}}}
+\def\ra{{\textnormal{a}}}
+\def\rb{{\textnormal{b}}}
+\def\rc{{\textnormal{c}}}
+\def\rd{{\textnormal{d}}}
+\def\re{{\textnormal{e}}}
+\def\rf{{\textnormal{f}}}
+\def\rg{{\textnormal{g}}}
+\def\rh{{\textnormal{h}}}
+\def\ri{{\textnormal{i}}}
+\def\rj{{\textnormal{j}}}
+\def\rk{{\textnormal{k}}}
+\def\rl{{\textnormal{l}}}
+\def\rn{{\textnormal{n}}}
+\def\ro{{\textnormal{o}}}
+\def\rp{{\textnormal{p}}}
+\def\rq{{\textnormal{q}}}
+\def\rr{{\textnormal{r}}}
+\def\rs{{\textnormal{s}}}
+\def\rt{{\textnormal{t}}}
+\def\ru{{\textnormal{u}}}
+\def\rv{{\textnormal{v}}}
+\def\rw{{\textnormal{w}}}
+\def\rx{{\textnormal{x}}}
+\def\ry{{\textnormal{y}}}
+\def\rz{{\textnormal{z}}}
+
+\def\rvepsilon{{\mathbf{\epsilon}}}
+\def\rvtheta{{\mathbf{\theta}}}
+\def\rva{{\mathbf{a}}}
+\def\rvb{{\mathbf{b}}}
+\def\rvc{{\mathbf{c}}}
+\def\rvd{{\mathbf{d}}}
+\def\rve{{\mathbf{e}}}
+\def\rvf{{\mathbf{f}}}
+\def\rvg{{\mathbf{g}}}
+\def\rvh{{\mathbf{h}}}
+\def\rvu{{\mathbf{i}}}
+\def\rvj{{\mathbf{j}}}
+\def\rvk{{\mathbf{k}}}
+\def\rvl{{\mathbf{l}}}
+\def\rvm{{\mathbf{m}}}
+\def\rvn{{\mathbf{n}}}
+\def\rvo{{\mathbf{o}}}
+\def\rvp{{\mathbf{p}}}
+\def\rvq{{\mathbf{q}}}
+\def\rvr{{\mathbf{r}}}
+\def\rvs{{\mathbf{s}}}
+\def\rvt{{\mathbf{t}}}
+\def\rvu{{\mathbf{u}}}
+\def\rvv{{\mathbf{v}}}
+\def\rvw{{\mathbf{w}}}
+\def\rvx{{\mathbf{x}}}
+\def\rvy{{\mathbf{y}}}
+\def\rvz{{\mathbf{z}}}
+
+\def\erva{{\textnormal{a}}}
+\def\ervb{{\textnormal{b}}}
+\def\ervc{{\textnormal{c}}}
+\def\ervd{{\textnormal{d}}}
+\def\erve{{\textnormal{e}}}
+\def\ervf{{\textnormal{f}}}
+\def\ervg{{\textnormal{g}}}
+\def\ervh{{\textnormal{h}}}
+\def\ervi{{\textnormal{i}}}
+\def\ervj{{\textnormal{j}}}
+\def\ervk{{\textnormal{k}}}
+\def\ervl{{\textnormal{l}}}
+\def\ervm{{\textnormal{m}}}
+\def\ervn{{\textnormal{n}}}
+\def\ervo{{\textnormal{o}}}
+\def\ervp{{\textnormal{p}}}
+\def\ervq{{\textnormal{q}}}
+\def\ervr{{\textnormal{r}}}
+\def\ervs{{\textnormal{s}}}
+\def\ervt{{\textnormal{t}}}
+\def\ervu{{\textnormal{u}}}
+\def\ervv{{\textnormal{v}}}
+\def\ervw{{\textnormal{w}}}
+\def\ervx{{\textnormal{x}}}
+\def\ervy{{\textnormal{y}}}
+\def\ervz{{\textnormal{z}}}
+
+\def\rmA{{\mathbf{A}}}
+\def\rmB{{\mathbf{B}}}
+\def\rmC{{\mathbf{C}}}
+\def\rmD{{\mathbf{D}}}
+\def\rmE{{\mathbf{E}}}
+\def\rmF{{\mathbf{F}}}
+\def\rmG{{\mathbf{G}}}
+\def\rmH{{\mathbf{H}}}
+\def\rmI{{\mathbf{I}}}
+\def\rmJ{{\mathbf{J}}}
+\def\rmK{{\mathbf{K}}}
+\def\rmL{{\mathbf{L}}}
+\def\rmM{{\mathbf{M}}}
+\def\rmN{{\mathbf{N}}}
+\def\rmO{{\mathbf{O}}}
+\def\rmP{{\mathbf{P}}}
+\def\rmQ{{\mathbf{Q}}}
+\def\rmR{{\mathbf{R}}}
+\def\rmS{{\mathbf{S}}}
+\def\rmT{{\mathbf{T}}}
+\def\rmU{{\mathbf{U}}}
+\def\rmV{{\mathbf{V}}}
+\def\rmW{{\mathbf{W}}}
+\def\rmX{{\mathbf{X}}}
+\def\rmY{{\mathbf{Y}}}
+\def\rmZ{{\mathbf{Z}}}
+
+\def\ermA{{\textnormal{A}}}
+\def\ermB{{\textnormal{B}}}
+\def\ermC{{\textnormal{C}}}
+\def\ermD{{\textnormal{D}}}
+\def\ermE{{\textnormal{E}}}
+\def\ermF{{\textnormal{F}}}
+\def\ermG{{\textnormal{G}}}
+\def\ermH{{\textnormal{H}}}
+\def\ermI{{\textnormal{I}}}
+\def\ermJ{{\textnormal{J}}}
+\def\ermK{{\textnormal{K}}}
+\def\ermL{{\textnormal{L}}}
+\def\ermM{{\textnormal{M}}}
+\def\ermN{{\textnormal{N}}}
+\def\ermO{{\textnormal{O}}}
+\def\ermP{{\textnormal{P}}}
+\def\ermQ{{\textnormal{Q}}}
+\def\ermR{{\textnormal{R}}}
+\def\ermS{{\textnormal{S}}}
+\def\ermT{{\textnormal{T}}}
+\def\ermU{{\textnormal{U}}}
+\def\ermV{{\textnormal{V}}}
+\def\ermW{{\textnormal{W}}}
+\def\ermX{{\textnormal{X}}}
+\def\ermY{{\textnormal{Y}}}
+\def\ermZ{{\textnormal{Z}}}
+
+\def\vzero{{\bm{0}}}
+\def\vone{{\bm{1}}}
+\def\vmu{{\bm{\mu}}}
+\def\vtheta{{\bm{\theta}}}
+\def\va{{\bm{a}}}
+\def\vb{{\bm{b}}}
+\def\vc{{\bm{c}}}
+\def\vd{{\bm{d}}}
+\def\ve{{\bm{e}}}
+\def\vf{{\bm{f}}}
+\def\vg{{\bm{g}}}
+\def\vh{{\bm{h}}}
+\def\vi{{\bm{i}}}
+\def\vj{{\bm{j}}}
+\def\vk{{\bm{k}}}
+\def\vl{{\bm{l}}}
+\def\vm{{\bm{m}}}
+\def\vn{{\bm{n}}}
+\def\vo{{\bm{o}}}
+\def\vp{{\bm{p}}}
+\def\vq{{\bm{q}}}
+\def\vr{{\bm{r}}}
+\def\vs{{\bm{s}}}
+\def\vt{{\bm{t}}}
+\def\vu{{\bm{u}}}
+\def\vv{{\bm{v}}}
+\def\vw{{\bm{w}}}
+\def\vx{{\bm{x}}}
+\def\vy{{\bm{y}}}
+\def\vz{{\bm{z}}}
+
+\def\evalpha{{\alpha}}
+\def\evbeta{{\beta}}
+\def\evepsilon{{\epsilon}}
+\def\evlambda{{\lambda}}
+\def\evomega{{\omega}}
+\def\evmu{{\mu}}
+\def\evpsi{{\psi}}
+\def\evsigma{{\sigma}}
+\def\evtheta{{\theta}}
+\def\eva{{a}}
+\def\evb{{b}}
+\def\evc{{c}}
+\def\evd{{d}}
+\def\eve{{e}}
+\def\evf{{f}}
+\def\evg{{g}}
+\def\evh{{h}}
+\def\evi{{i}}
+\def\evj{{j}}
+\def\evk{{k}}
+\def\evl{{l}}
+\def\evm{{m}}
+\def\evn{{n}}
+\def\evo{{o}}
+\def\evp{{p}}
+\def\evq{{q}}
+\def\evr{{r}}
+\def\evs{{s}}
+\def\evt{{t}}
+\def\evu{{u}}
+\def\evv{{v}}
+\def\evw{{w}}
+\def\evx{{x}}
+\def\evy{{y}}
+\def\evz{{z}}
+
+\def\mA{{\bm{A}}}
+\def\mB{{\bm{B}}}
+\def\mC{{\bm{C}}}
+\def\mD{{\bm{D}}}
+\def\mE{{\bm{E}}}
+\def\mF{{\bm{F}}}
+\def\mG{{\bm{G}}}
+\def\mH{{\bm{H}}}
+\def\mI{{\bm{I}}}
+\def\mJ{{\bm{J}}}
+\def\mK{{\bm{K}}}
+\def\mL{{\bm{L}}}
+\def\mM{{\bm{M}}}
+\def\mN{{\bm{N}}}
+\def\mO{{\bm{O}}}
+\def\mP{{\bm{P}}}
+\def\mQ{{\bm{Q}}}
+\def\mR{{\bm{R}}}
+\def\mS{{\bm{S}}}
+\def\mT{{\bm{T}}}
+\def\mU{{\bm{U}}}
+\def\mV{{\bm{V}}}
+\def\mW{{\bm{W}}}
+\def\mX{{\bm{X}}}
+\def\mY{{\bm{Y}}}
+\def\mZ{{\bm{Z}}}
+\def\mBeta{{\bm{\beta}}}
+\def\mPhi{{\bm{\Phi}}}
+\def\mLambda{{\bm{\Lambda}}}
+\def\mSigma{{\bm{\Sigma}}}
+
+\DeclareMathAlphabet{\mathsfit}{\encodingdefault}{\sfdefault}{m}{sl}
+\SetMathAlphabet{\mathsfit}{bold}{\encodingdefault}{\sfdefault}{bx}{n}
+\newcommand{\tens}[1]{\bm{\mathsfit{#1}}}
+\def\tA{{\tens{A}}}
+\def\tB{{\tens{B}}}
+\def\tC{{\tens{C}}}
+\def\tD{{\tens{D}}}
+\def\tE{{\tens{E}}}
+\def\tF{{\tens{F}}}
+\def\tG{{\tens{G}}}
+\def\tH{{\tens{H}}}
+\def\tI{{\tens{I}}}
+\def\tJ{{\tens{J}}}
+\def\tK{{\tens{K}}}
+\def\tL{{\tens{L}}}
+\def\tM{{\tens{M}}}
+\def\tN{{\tens{N}}}
+\def\tO{{\tens{O}}}
+\def\tP{{\tens{P}}}
+\def\tQ{{\tens{Q}}}
+\def\tR{{\tens{R}}}
+\def\tS{{\tens{S}}}
+\def\tT{{\tens{T}}}
+\def\tU{{\tens{U}}}
+\def\tV{{\tens{V}}}
+\def\tW{{\tens{W}}}
+\def\tX{{\tens{X}}}
+\def\tY{{\tens{Y}}}
+\def\tZ{{\tens{Z}}}
+
+
+\def\gA{{\mathcal{A}}}
+\def\gB{{\mathcal{B}}}
+\def\gC{{\mathcal{C}}}
+\def\gD{{\mathcal{D}}}
+\def\gE{{\mathcal{E}}}
+\def\gF{{\mathcal{F}}}
+\def\gG{{\mathcal{G}}}
+\def\gH{{\mathcal{H}}}
+\def\gI{{\mathcal{I}}}
+\def\gJ{{\mathcal{J}}}
+\def\gK{{\mathcal{K}}}
+\def\gL{{\mathcal{L}}}
+\def\gM{{\mathcal{M}}}
+\def\gN{{\mathcal{N}}}
+\def\gO{{\mathcal{O}}}
+\def\gP{{\mathcal{P}}}
+\def\gQ{{\mathcal{Q}}}
+\def\gR{{\mathcal{R}}}
+\def\gS{{\mathcal{S}}}
+\def\gT{{\mathcal{T}}}
+\def\gU{{\mathcal{U}}}
+\def\gV{{\mathcal{V}}}
+\def\gW{{\mathcal{W}}}
+\def\gX{{\mathcal{X}}}
+\def\gY{{\mathcal{Y}}}
+\def\gZ{{\mathcal{Z}}}
+
+\def\sA{{\mathbb{A}}}
+\def\sB{{\mathbb{B}}}
+\def\sC{{\mathbb{C}}}
+\def\sD{{\mathbb{D}}}
+\def\sF{{\mathbb{F}}}
+\def\sG{{\mathbb{G}}}
+\def\sH{{\mathbb{H}}}
+\def\sI{{\mathbb{I}}}
+\def\sJ{{\mathbb{J}}}
+\def\sK{{\mathbb{K}}}
+\def\sL{{\mathbb{L}}}
+\def\sM{{\mathbb{M}}}
+\def\sN{{\mathbb{N}}}
+\def\sO{{\mathbb{O}}}
+\def\sP{{\mathbb{P}}}
+\def\sQ{{\mathbb{Q}}}
+\def\sR{{\mathbb{R}}}
+\def\sS{{\mathbb{S}}}
+\def\sT{{\mathbb{T}}}
+\def\sU{{\mathbb{U}}}
+\def\sV{{\mathbb{V}}}
+\def\sW{{\mathbb{W}}}
+\def\sX{{\mathbb{X}}}
+\def\sY{{\mathbb{Y}}}
+\def\sZ{{\mathbb{Z}}}
+
+\def\emLambda{{\Lambda}}
+\def\emA{{A}}
+\def\emB{{B}}
+\def\emC{{C}}
+\def\emD{{D}}
+\def\emE{{E}}
+\def\emF{{F}}
+\def\emG{{G}}
+\def\emH{{H}}
+\def\emI{{I}}
+\def\emJ{{J}}
+\def\emK{{K}}
+\def\emL{{L}}
+\def\emM{{M}}
+\def\emN{{N}}
+\def\emO{{O}}
+\def\emP{{P}}
+\def\emQ{{Q}}
+\def\emR{{R}}
+\def\emS{{S}}
+\def\emT{{T}}
+\def\emU{{U}}
+\def\emV{{V}}
+\def\emW{{W}}
+\def\emX{{X}}
+\def\emY{{Y}}
+\def\emZ{{Z}}
+\def\emSigma{{\Sigma}}
+
+\newcommand{\etens}[1]{\mathsfit{#1}}
+\def\etLambda{{\etens{\Lambda}}}
+\def\etA{{\etens{A}}}
+\def\etB{{\etens{B}}}
+\def\etC{{\etens{C}}}
+\def\etD{{\etens{D}}}
+\def\etE{{\etens{E}}}
+\def\etF{{\etens{F}}}
+\def\etG{{\etens{G}}}
+\def\etH{{\etens{H}}}
+\def\etI{{\etens{I}}}
+\def\etJ{{\etens{J}}}
+\def\etK{{\etens{K}}}
+\def\etL{{\etens{L}}}
+\def\etM{{\etens{M}}}
+\def\etN{{\etens{N}}}
+\def\etO{{\etens{O}}}
+\def\etP{{\etens{P}}}
+\def\etQ{{\etens{Q}}}
+\def\etR{{\etens{R}}}
+\def\etS{{\etens{S}}}
+\def\etT{{\etens{T}}}
+\def\etU{{\etens{U}}}
+\def\etV{{\etens{V}}}
+\def\etW{{\etens{W}}}
+\def\etX{{\etens{X}}}
+\def\etY{{\etens{Y}}}
+\def\etZ{{\etens{Z}}}
+
+\newcommand{\pdata}{p_{\rm{data}}}
+\newcommand{\ptrain}{\hat{p}_{\rm{data}}}
+\newcommand{\Ptrain}{\hat{P}_{\rm{data}}}
+\newcommand{\pmodel}{p_{\rm{model}}}
+\newcommand{\Pmodel}{P_{\rm{model}}}
+\newcommand{\ptildemodel}{\tilde{p}_{\rm{model}}}
+\newcommand{\pencode}{p_{\rm{encoder}}}
+\newcommand{\pdecode}{p_{\rm{decoder}}}
+\newcommand{\precons}{p_{\rm{reconstruct}}}
+
+\newcommand{\laplace}{\mathrm{Laplace}} %
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Ls}{\mathcal{L}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\emp}{\tilde{p}}
+\newcommand{\lr}{\alpha}
+\newcommand{\reg}{\lambda}
+\newcommand{\rect}{\mathrm{rectifier}}
+\newcommand{\softmax}{\mathrm{softmax}}
+\newcommand{\sigmoid}{\sigma}
+\newcommand{\softplus}{\zeta}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\standarderror}{\mathrm{SE}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\normlzero}{L^0}
+\newcommand{\normlone}{L^1}
+\newcommand{\normltwo}{L^2}
+\newcommand{\normlp}{L^p}
+\newcommand{\normmax}{L^\infty}
+
+\newcommand{\parents}{Pa} %
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Tr}{Tr}
+\let\ab\allowbreak
+
+% END INCLUDE: math_commands.tex
+
+
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{adjustbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{framed}
+\usepackage{subcaption}  %
+\usepackage{tikz}
+\usetikzlibrary{automata,angles,quotes,calc, matrix, positioning,decorations.pathreplacing,shadows,shapes}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[numbered,framed]{matlab-prettifier}
+
+\definecolor{light-gray}{gray}{0.95}
+\definecolor{dark-red}{rgb}{0.6,0,0}
+\definecolor{dark-green}{rgb}{0,0.6,0}
+\definecolor{code-blue}{rgb}{0,0.4,0.6}
+\definecolor{cuda-green}{rgb}{0,0.5,0}
+
+\lstdefinelanguage{cuda}[]{C++}{
+  morekeywords={__global__, __host__, __device__, __shared__, __constant__, __restrict__, threadIdx, blockIdx, blockDim, gridDim},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+}
+
+\lstdefinestyle{diffstyle}{
+    backgroundcolor=\color{light-gray},
+    basicstyle=\ttfamily\scriptsize,  %
+    breaklines=true,
+    columns=fullflexible,
+    frame=single,
+    rulecolor=\color{black},
+    numbers=left,
+    numberstyle=\tiny\color{gray},  %
+    numbersep=5pt,
+    firstnumber=220,
+    keywordstyle=\color{code-blue},
+    commentstyle=\color{dark-green},
+    stringstyle=\color{dark-red},
+    showstringspaces=false,
+    language=C++,
+    otherkeywords={constexpr, make_float2},
+    morekeywords=[2]{constexpr, make_float2},
+    keywordstyle=[2]{\color{cuda-green}},
+}
+
+\lstdefinelanguage{diff}{
+    morecomment=[f][\color{dark-red}]{-},
+    morecomment=[f][\color{dark-green}]{+},
+}
+
+
+
+\setlength {\marginparwidth }{2cm} %
+\usepackage[textwidth=0.7in,textsize=tiny,disable]{todonotes}
+
+
+\title{Unlocking State-Tracking in Linear RNNs\\ Through Negative Eigenvalues}
+
+
+\author{Riccardo Grazzi$^{*\heartsuit}$,~~Julien Siems$^{*\diamondsuit}$,~~Arber Zela$^{\diamondsuit}$,\\  \textbf{Jörg K.H. Franke$^{\diamondsuit}$,~~Frank Hutter$^{\diamondsuit \clubsuit}$,~~Massimiliano Pontil$^{\heartsuit\spadesuit}$} \\
+Equal contribution$^*$,~~ CSML, Istituto Italiano di Tecnologia$^{\heartsuit}$,~~ University of Freiburg$^{\diamondsuit}$, \\ELLIS Institute Tübingen$^{\clubsuit}$,~~ AI Centre, University College London$^{\spadesuit}$ \\
+{\small \texttt{riccardograzzi4@gmail.com}} \qquad
+{\small \texttt{juliensiems@gmail.com}}}
+
+
+
+\newenvironment{hiddenproof}{\renewcommand{\qedsymbol}{}}{}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\newcommand{\ric}[1]{\textcolor{blue}{#1}}
+\newcommand{\jul}[1]{\textcolor{red}{#1}}
+\newcommand{\massi}[1]{\textcolor{brown}{#1}}
+\newcommand{\arb}[1]{\textcolor{orange}{#1}}
+
+\newcommand{\RG}[1]{\todo{\textbf{RG:} #1}}
+\newcommand{\JS}[1]{\todo{\textbf{JS:} #1}}
+\newcommand{\MP}[1]{\todo{\textbf{MP:} #1}}
+\newcommand{\AZ}[1]{\todo{\textbf{AZ:} #1}}
+
+\iclrfinalcopy %
+\begin{document}
+
+
+\maketitle
+
+\begin{abstract}
+Linear Recurrent Neural Networks (LRNNs) such as Mamba, RWKV, GLA, mLSTM, and DeltaNet have emerged as efficient alternatives to Transformers for long sequences. However, both Transformers and LRNNs struggle to perform state-tracking, which may impair performance in tasks such as code evaluation. In one forward pass, current architectures are unable to solve even parity, the simplest state-tracking task, which non-linear RNNs can handle effectively. Recently, \citet{sarrof2024expressive} demonstrated that the failure of LRNNs like Mamba to solve parity stems from restricting the value range of their diagonal state-transition matrices to $[0, 1]$ and that incorporating negative values can resolve this issue. We extend this result to non-diagonal LRNNs such as DeltaNet. We prove that finite precision LRNNs with state-transition matrices having only positive eigenvalues cannot solve parity, while non-triangular matrices are needed to count modulo $3$. Notably, we also prove that LRNNs can learn any regular language when their state-transition matrices are products of identity minus vector outer product matrices, each with eigenvalues in the range $[-1, 1]$. Our experiments confirm that extending the eigenvalue range of Mamba and DeltaNet to include negative values not only enables them to solve parity but consistently improves their performance on state-tracking tasks. We also show that state-tracking enabled LRNNs can be pretrained  stably and efficiently at scale (1.3B parameters), achieving competitive performance on language modeling and showing promise on code and math tasks.
+\end{abstract}
+
+\section{Introduction}
+
+
+
+
+
+    \begin{wrapfigure}[17]{r}{0.3618\textwidth}
+        \vspace{-4.25mm}
+    \centering
+    \includegraphics[width=1.0\linewidth, trim={3.5 3 8 0}, clip=true]{figure/parity/parity_activation_function_comparison.pdf}
+            \vspace{-5mm}
+    \caption{
+    Extending the eigenvalue range of the state transition matrices of diagonal LRNNs improves performance from random guessing  (range $[0,1]$) to perfect score (range $[-1,1]$) on learning parity.
+    Trained on sequences up to length 40; Tested on lengths 40–256 (3 seeds). 
+    }
+    \label{fig:parity_motivation}
+\end{wrapfigure}
+    Transformer architectures~\citep{vaswani_trans} have revolutionized NLP but scale quadratically in sequence length, posing computational challenges for long sequences. To address this, Linear Recurrent Neural Networks (LRNNs) have emerged as promising alternatives that offer linear scaling while maintaining competitive performance~\citep{gu2023mamba, dao2024transformers, yanggated, peng2023rwkv, deletangneural, sun2024learning, poppel2024xlstm}. 
+    LRNNs update their state via matrix-vector products with structured and often input-dependent state-transition matrices.
+    The structure of the state-transition matrices largely determines the expressivity of LRNNs. 
+    While successful models like Mamba~\citep{gu2023mamba} and GLA~\citep{yanggated} use diagonal matrices (diagonal LRNN) which only mix tokens along the sequence dimension, recent work explores more complex forms. 
+    Notably,  non-diagonal matrices using generalized Householder (GH) transformations, defined as <<FORMULA_0001>> where $\vu$ is a learnable vector and $\mI$ is the identity, enable models like DeltaNet~\citep{schlag2021linear,yang2024parallelizing} and TTT-Linear~\citep{sun2024learning} to achieve richer expressiveness through simultaneous token-channel mixing while maintaining efficiency.
+
+    Surprisingly, both Transformers and current LRNNs face a fundamental limitation: they struggle to learn how to track the state of even simple finite-state machines from sequences of state-transitions \citep{deletangneural}. This limitation may impair performance on tasks such as entity tracking in narratives, handling nested structures in code, and reasoning tasks that can benefit from maintaining and updating an internal state over time~\citep{merrillillusion}.
+    Even the simplest state-tracking task, computing the parity of a sequence of bits, cannot be solved by modern architectures, while non-linear RNNs like LSTM~\citep{hochreiter1997long} and sLSTM~\citep{poppel2024xlstm} can effectively track the state of any finite state machine. %
+    However, parallelizing non-linear RNNs across the sequence length presents significant challenges~\citep{lim2024parallelizing, gonzalez2024towards}.
+
+    
+    Recently, \citet{sarrof2024expressive} demonstrated that the inability of diagonal LRNNs to solve the \textit{parity} problem stems from the fact that the eigenvalues of their state-transition matrices are constrained to be positive. Specifically, they proved that finite precision diagonal LRNNs with exclusively positive real eigenvalues, cannot solve the parity problem in one forward pass for sequences of arbitrary length. However, their work did not provide empirical evidence showing that diagonal LRNNs with negative eigenvalues can be successfully trained to overcome this limitation.
+    We prove that the same limitation also affects LRNNs with non-diagonal state-transition matrices,
+    and further prove that additionally, non-triangular matrices are necessary to solve the more challenging task of modular counting (when the modulus is not a power of two). 
+    Our findings also apply to the GH matrices used by DeltaNet, as they share the same eigenvalue limitations. To overcome this, we propose a simple yet powerful solution: extend the range of possible eigenvalues from $[0,1]$ to $[-1,1]$. This change enables state-tracking and significantly improves the expressivity of LRNNs without compromising their efficiency and training stability. 
+    As illustrated in~\Cref{fig:parity_motivation}, it allows diagonal LRNNs to learn parity successfully. The code for part of our experiments is available at~\href{https://github.com/automl/unlocking_state_tracking}{https://github.com/automl/unlocking\_state\_tracking}
+
+In summary, we make the following \textit{contributions:}
+\begin{enumerate}[leftmargin=12pt]
+    \vspace{-3mm}
+    \item We prove that any finite precision LRNN with only positive real eigenvalues in the state-transition matrices (most LRNNs used in practice) cannot solve parity at arbitrary sequence lengths (\Cref{thm:parity}), while non-triangular matrices are also required to learn counting modulo $3$ (\Cref{thm:modcount}).
+    \item By extending the eigenvalue range, we significantly improve the state-tracking capabilities of LRNNs. We prove that LRNNs with state-transition matrices formed by products of generalized Householder (GH) matrices, each with eigenvalues in the range $[-1,1]$, can learn any regular language (\Cref{thm:regular}), in some cases with just one layer (\Cref{thm:groups}). Notably, this range extension allows LRNNs using just one GH matrix (like DeltaNet), to learn substantially harder tasks, as the repeated composition of permutations of two (over n) elements, compared to diagonal LRNNs.
+    \item We show that the eigenvalue range of Mamba and DeltaNet can be extended to $[-1,1]$ without compromising efficiency or training stability. We test the modified methods on parity, modular arithmetic, and permutation composition, demonstrating improved state-tracking performance. 
+    \item We pre-train modified versions of DeltaNet and Mamba (up to 1.3B parameters) and show that they reach performance comparable to the original models on generative language modeling tasks, while DeltaNet shows improved perplexity on code and math datasets. 
+\end{enumerate}
+
+
+
+
+\vspace{-3mm}
+\section{Related Work}\label{sec:related_work}
+\vspace{-1mm}
+\noindent \textbf{Linear RNNs.~} Linear RNNs encompass state-space models and causal, linear attention mechanisms. State-space models, originally used for continuous dynamical systems, inspired LRNN variants like S4 \citep{guefficiently} and H4 \citep{fuhungry} (see \citet{tiezzi2024statespacemodelinglongsequence} for a survey). Recent advancements, such as Mamba \citep{gu2023mamba, dao2024transformers}, introduced input-dependent gating of the hidden state, significantly improving language modeling performance. Concurrently, linear attention has emerged as an alternative to classical softmax attention, with \citet{katharopoulos2020transformers} demonstrating that causal linear attention Transformers can be reformulated as RNNs with linear scaling in sequence length. Building on this, \citet{yanggated} proposed Gated Linear Attention (GLA), adding a gating mechanism similar to Mamba, while DeltaNet \citep{schlag2021linear,yang2024parallelizing} and TTT-Linear \citep{sun2024learning} explored more expressive recurrences with non-diagonal state-transition matrices.
+\cite{poppel2024xlstm} recently proposed xLSTM, a successor to LSTM \citep{hochreiter1997long} which combines non-linear and linear RNNs.
+
+\textbf{Expressivity Results.~} 
+Several studies have explored the expressive power of Transformers  and RNNs (see e.g.\@ \citep{merrill2020formal,strobl2024formal,bhattamishra2024separations}). Here, we \mbox{focus} on the ones most relevant to our work.
+While \citet{hahn2020theoretical}  proved that Transformers cannot model periodic languages such as parity, see also \citep[Lemma C.4]{bhattamishra2020ability}, and some context-free languages at arbitrary sequence lengths,
+\citet{liu2022transformers} demonstrated that Transformers can learn shortcut solutions for \textit{solvable} finite state automata, though these solutions lack generalizability to arbitrary sequence lengths and perform poorly out-of-distribution. Unlike RNNs, the high parallelizability of Transformers prevents them from learning \textit{unsolvable} finite state automata \citep{merrill2023parallelism}. These findings typically use techniques from algebraic formal language theory (we refer to \citet{liu2022transformers} for a short tutorial) and circuit complexity, using the \textit{log-precision assumption} and a number of layers scaling linearly or logarithmically with sequence length. While earlier research established Transformers' Turing completeness, it relied on either arbitrary precision \citep{perez2021attention} or arbitrary depth and weight sharing \citep{giannou2023looped}. 
+Diagonal LRNNs can simulate any RNN with infinite depth \citep{gu2021combining} and approximate regular enough functions when the state dimension grows linearly with sequence length  \citep{orvieto2024universality}. 
+However, things change when depth and state size are fixed. \citet{merrillillusion} proved that finite-depth diagonal LRNNs, like Transformers, struggle to learn unsolvable finite state automata when restricted to log-precision arithmetic. 
+The work by \cite{fan2024advancing} highlights a similar limitation, while in a finite precision setting, \citet{sarrof2024expressive} showed that diagonal LRNNs with positive values in the state-transition matrix, while capable of learning all star-free languages, cannot solve even the simple \textit{parity} problem, a non-star-free language recognizable by an automaton with two states.  However, their analysis was limited to the diagonal case and they did not test the benefit of negative eigenvalues in practice.
+Using a continuous time framework, also \cite{muca2025theoretical} pointed out the limitations of diagonal state transition matrices.
+\cite{irie2021going,irie2023practical} empirically showed how state-tracking can be enabled by modifying DeltaNet as a fast weight programmer \citep{schmidhuber1992learning}, but this makes its recurrence non-linear, hence hard to parallelize. \\
+Unlike previous work, we demonstrate that non-diagonal LRNNs like DeltaNet can achieve robust state-tracking through a minimal modification while maintaining efficient large-scale training.
+
+\section{Background}\label{sec:background}
+\subsection{Linear Recurrent Neural Networks (LRNNs)}
+We describe LRNNs using notation inspired by \citet{sarrof2024expressive}, focusing on the core linear recurrences while abstracting away the non-linear computations for each token. 
+LRNNs are stacks of layers that share a common structure but have distinct learnable parameters.
+Each layer takes input vectors <<FORMULA_0002>> (outputs of the previous layer) and outputs <<FORMULA_0003>> as:
+<<FORMULA_0004>>
+Here, <<FORMULA_0005>> and $\mathrm{dec}$ are learnable, generally non-linear functions, with $\mathrm{dec}$ usually containing a feed-forward neural network. This definition encompasses most LRNN variants, which differ in the form of $\mA$, $\mB$ and $\mathrm{dec}$.
+\Cref{tab:LRNNs} illustrates how three popular LRNNs fit this framework. For other architectures see \citep[Table 4]{yang2024parallelizing}. Additional details on the notation are in \Cref{app:notation}.
+
+\begin{table}[h]
+\caption{
+Instances of LRNN layers in (\ref{eq:linrnn}), where <<FORMULA_0006>>, <<FORMULA_0007>>, <<FORMULA_0008>>, while  <<FORMULA_0009>> are output of learnable functions of $\vx_t$. Also, <<FORMULA_0010>> is another learnable function usually containing an MLP and a normalization, while <<FORMULA_0011>>, <<FORMULA_0012>>, <<FORMULA_0013>>, <<FORMULA_0014>> and <<FORMULA_0015>> are learnable parameters. For simplicity, we omitted 1D convolutions. 
+For Mamba, the matrices in the first two columns represent the recurrence for the i-th row of
+$\mH_t$ and we set <<FORMULA_0016>>, <<FORMULA_0017>>, and <<FORMULA_0018>>.} %
+\label{tab:LRNNs}
+\vspace{-3mm}
+\centering
+\adjustbox{width=0.8\textwidth}{
+\begin{tabular}{c c c c}
+\toprule
+ & <<FORMULA_0019>> & <<FORMULA_0020>> & %
+ <<FORMULA_0021>>\\ \midrule
+\textbf{Mamba} & <<FORMULA_0022>> & <<FORMULA_0023>> & <<FORMULA_0024>> \\ 
+\textbf{GLA} & <<FORMULA_0025>> & <<FORMULA_0026>> & <<FORMULA_0027>> \\ 
+\textbf{DeltaNet} & <<FORMULA_0028>> & <<FORMULA_0029>> & <<FORMULA_0030>> \\ \bottomrule
+\end{tabular}}
+\end{table}
+\vspace{-1mm}
+The \textit{state-transition matrices} <<FORMULA_0031>> 
+are typically diagonal or generalized Householder (GH), i.e., identity minus vector outer product, as shown in \Cref{tab:LRNNs}, to enable efficient matrix-vector products 
+on modern hardware. These matrices consistently have eigenvalues (and norm) in the range $[0,1]$. 
+\vspace{-1mm}
+\subsection{Formal Language Theory}
+\vspace{-1mm}
+\textbf{Finite State Automata and Regular Languages.~} A (deterministic) finite state automaton (FSA) is a tuple <<FORMULA_0032>> where $\Sigma$ is a finite set of letters called alphabet, $Q$ is a finite set of states, <<FORMULA_0033>> is the starting state and <<FORMULA_0034>> is the state-transition function \citep[see][for an introduction]{hopcroft2001introduction}.~We define the set $\Sigma^*,$ whose elements are sequences called words, as the smallest superset of $\Sigma$ that contains the empty word $\varepsilon$ and is closed under word concatenation.~We extend the state-transition function to <<FORMULA_0035>> by defining <<FORMULA_0036>> and <<FORMULA_0037>> for any <<FORMULA_0038>> with <<FORMULA_0039>>.~We say that <<FORMULA_0040>> is the state that $\mathcal{A}$ reaches after reading the word <<FORMULA_0041>>.~A \textit{language} <<FORMULA_0042>> is said to be recognized by $\mathcal{A}$ if there exists a recognizing set <<FORMULA_0043>> such that <<FORMULA_0044>>. 
+Regular languages are the ones that can be recognized by an FSA.
+Given an FSA $\mathcal{A}$, the set <<FORMULA_0045>> of functions <<FORMULA_0046>>, together with the function composition operation 
+forms a \textit{monoid} 
+called \textit{transition monoid}, i.e. it is associative, closed and contains the identity <<FORMULA_0047>>. This monoid has a finite number of elements, since <<FORMULA_0048>>. Moreover, if <<FORMULA_0049>> is bijective for every <<FORMULA_0050>>, then <<FORMULA_0051>> forms a \textit{group}, i.e. it contains the inverse of each element.
+
+\textbf{State-Tracking and Monoid Word Problems.~} State-tracking is the problem of determining the state of a system only by observing a sequence of updates applied to it.  Formally, it can be expressed as a \textit{monoid word problem} \citep{merrillillusion}, where given a monoid <<FORMULA_0052>> ($M$ is the set and $\cdot$ is the associative operation), we want to send words <<FORMULA_0053>>, describing the sequence of updates, to their product <<FORMULA_0054>>, representing the state of the system after the updates. If $M$ is finite there is a corresponding FSA <<FORMULA_0055>> that solves the word problem, where 
+the starting state is $e$ (the identity element), and the transition function is <<FORMULA_0056>> for <<FORMULA_0057>>. 
+In this work, we focus on group word problems, i.e. problems where the monoid is also a group.
+In particular, on the cyclic group $\mathbb{Z}_m$, i.e. addition modulo $m$, and the symmetric group $S_m$, i.e. the group of permutations on $m$ elements.
+Parity is equivalent to the $S_2$ word problem, while many state-tracking problems such as tracking chess moves or code evaluation, can be shown to be harder than the $S_5$ word problem, which cannot be solved by Transformers and diagonal LRNNs even in log-precision for arbitrary word lengths \citep{merrillillusion,merrill2023parallelism}.
+
+\textbf{One LRNN Layer is an automaton.~} Given an alphabet <<FORMULA_0058>>, we can view one layer of an LRNN in (\ref{eq:linrnn}) as the automaton <<FORMULA_0059>>, where <<FORMULA_0060>>, which is extended as we saw previously\footnote{We let <<FORMULA_0061>> and extend it to <<FORMULA_0062>>, then we define $\mathcal{H}$.}, and <<FORMULA_0063>>.
+We say that an LRNN layer in (\ref{eq:linrnn}) \textit{implements} the FSA <<FORMULA_0064>> if  $\mathcal{A}_{\mathrm{lin}}$ can mimic the state transitions of $\mathcal{A}$\footnote{This definition is equivalent to that of FSA homomorphism, see \cite[Definition 3]{maler1994cascaded}.}. Formally, if there exists 
+a surjective function <<FORMULA_0065>>, such that for any <<FORMULA_0066>>, <<FORMULA_0067>>
+<<FORMULA_0068>>.
+Every language $L$ recognized by $\mathcal{A}$ can also be recognized by this LRNN layer with a sufficiently powerful $\mathrm{dec}$. In particular if <<FORMULA_0069>> is the recognizing set for $L$ and <<FORMULA_0070>>, then the decoder <<FORMULA_0071>>,
+will correctly determine if <<FORMULA_0072>>. 
+Therefore, implementing $\mathcal{A}$ is at least as hard as recognizing $L$. A principal goal of this work is to show that current LRNNs cannot recognize simple languages such as parity (negative results) while appropriate modifications to the state-transition matrices, enable LRNNs to implement broader classes of FSA (positive results), with certain classes of FSA requiring a single layer. Note, that while LRNNs with one layer can recognize any regular language, the state transition matrices might not fit into the structure imposed by current LRNNs, such as those in \Cref{tab:LRNNs} (see \Cref{app:rnnregular} for more details).
+
+\section{Theoretical Analysis}
+
+
+
+
+
+\subsection{Limitations of Current LRNNs}\label{sec:parity}
+
+\begin{figure}[t]
+\centering
+\adjustbox{width=1\linewidth}{
+\begin{tikzpicture}[scale=0.8, transform shape, trim left=0.6mm]
+    \tikzset{
+        state/.style={circle, draw, thick, minimum size=1.2cm, fill=gray!10},
+        transition/.style={->, thick, bend left=30},
+        annotation/.style={draw, thick, rounded corners, fill=blue!5, text width=3.5cm, align=center},
+        datapoint/.style={circle, fill, inner sep=1.5pt},
+        evenstate/.style={red!60!black, fill=red!10},
+        oddstate/.style={blue!60!black, fill=blue!10},
+        inputbox/.style={draw, rounded corners, fill=yellow!10, text width=8cm, align=center, font=\small},
+        connectarrow/.style={<->, >=stealth, thick, black!50!black}
+    }
+    
+    \begin{scope}[local bounding box=case1]
+        
+        \draw[->] (0,0) -- (4.5,0) node[right] {t};
+        \draw[->] (0,0) -- (0,1.5) node[above] {};
+        
+        \def\xcoords{0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4, 4.25, 4.5}
+        
+        \draw[black!70!black, thick, dotted] 
+            plot[mark=o, mark size=2.5pt] coordinates {
+            (0,0.20) (0.5,0.3626)  (1,0.54) 
+             (1.5,0.63) (2,0.675) 
+             (2.5,0.6975) (3,0.7) 
+             (3.5,0.705) (4,0.71) (4.5,0.725)
+        };
+
+        \draw[black!70!black, opacity=0.7] 
+            plot[mark=o, mark size=1.5pt] coordinates {
+            (0,0.20) (3.5,1.1) 
+        };
+
+        \draw[black!50!black, opacity=0.7, dashed] 
+            plot[mark=o, mark size=2.5pt] coordinates {
+            (0,0.20) (4.5,0.15)
+        };
+        
+        \foreach \x in {0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4} {
+            \draw (\x,-0.1) -- (\x,0.1);
+            \node[font=\small, below] at (\x,-0.1) {};
+        }
+
+
+        \draw[thick, decorate, black!70!black] 
+            (4.3,0.725) -- (4.3,0.725) node[right=6pt, midway, text width=2cm] {States\\converge \\ or diverge};
+
+        \node at (2.9,1.8) {<<FORMULA_0073>>, <<FORMULA_0074>>};
+
+            
+    \end{scope}
+    
+    \begin{scope}[xshift=7.0cm, local bounding box=case2]
+        \fill[blue!20, opacity=0.3] (0,0) rectangle (4.5,0.725);
+        \fill[red!20, opacity=0.3] (0,0.725) rectangle (4.5,1.5);
+
+        \draw[->] (0,0) -- (4.5,0) node[right] {t};
+        \draw[->] (0,0) -- (0,1.5) node[above] {};
+        
+        \draw[black!50!black, thick, opacity=0.5] 
+            plot[mark=o, mark size=2.5pt] coordinates {
+            (0,0.15) (0.25,0.8) (0.5,1.45) (0.75,0.8) (1,0.15) 
+            (1.25,0.8) (1.5,1.45) (1.75,0.8) (2,0.15) 
+            (2.25,0.8) (2.5,1.45) (2.75,0.8) (3,0.15) 
+            (3.25,0.8) (3.5,1.45) (3.75,0.8) (4,0.15) (4.25,0.8) (4.5,1.45)
+        };
+        
+        \draw[black!50!black, opacity=0.3] 
+            plot[mark=o, mark size=2.5pt] coordinates {
+            (0,0.725) (4.5,0.725)
+        };     
+       \node[anchor=north east, red, fill=white] at (4.5,1.5) {Odd};
+        \node[anchor=south east, blue, fill=white] at (4.5,0) {Even};
+        \foreach \x in {0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4} {
+            \draw (\x,-0.1) -- (\x,0.1);
+            \node[font=\small, below] at (\x,-0.1){};
+        }
+                
+        \draw[thick, black!50!black] (4.6,0.725) -- (4.6,0.725) 
+            node[right=-2.5pt, midway, text width=2cm] {Clear state separation};
+            
+       \node at (2.35,1.8) {<<FORMULA_0075>>};
+
+        
+    \end{scope};
+     
+    \begin{scope}[xshift=14.5cm,yshift=0.5cm]
+        \node[state, fill=blue!20] (C) at (0,0) {$\mathbf{Even}$};
+        \node[state, fill=red!20] (D) at (2,0) {$\mathbf{Odd}$};
+        
+        \draw[transition] (C) to node[above] {$1$} (D);
+        \draw[transition] (D) to node[below] {$1$} (C);
+        
+        
+        \node at (0.985,1.2) {Parity automaton};
+    \end{scope};
+    
+    \draw[connectarrow] (12.2,-0.1) to[out=0,in=180] (13.7,-0.1);
+\end{tikzpicture}}
+\vspace{-6mm}
+\caption{
+\textit{Parity requires negative eigenvalues.} 
+States of one-layer LRNNs with the sequence $1111\ldots$ as input. 
+If the eigenvalues of $\mathbf{A}(1)$ are nonnegative, the states either diverge or converge monotonically, and so, for large enough $t$ and in finite precision, cannot be distinguished. 
+In contrast, the LRNN with <<FORMULA_0076>> alternates between two states like the parity automaton.
+}
+\label{fig:negative_eigenvalues_mechanism}
+\end{figure}
+In this section, we describe how positive eigenvalues and non-triangular state transition matrices limit LRNNs state-tracking capabitlies. In particular, we focus on parity and modular addition. 
+The parity <<FORMULA_0077>> of a sequence of ones and zeros <<FORMULA_0078>> is 1 if the total number of ones in the sequence is odd, and 0 if it's even. Equivalent to addition modulo 2, it can be computed by summing the values in the input sequence and then applying the modulo 2 function: <<FORMULA_0079>>. 
+This solution can be implemented by an LRNN with one layer and scalar states by setting <<FORMULA_0080>>, <<FORMULA_0081>>, <<FORMULA_0082>>, and <<FORMULA_0083>> in (\ref{eq:linrnn}). However, implementing such a solution with finite precision presents an issue: the state $h_t$ can grow indefinitely with $t$, eventually reaching the limit of our precision range. Indeed, <<FORMULA_0084>>, requiring <<FORMULA_0085>> bits for storage.
+Moreover, in practice $\mathrm{dec}$ must approximate the modulus 2 function, which is challenging to learn due to its discontinuous and periodic nature. 
+
+A more efficient solution, which implements the two-state FSA solving this problem, can still be realized by a finite precision LRNN with one layer and scalar states (and consequently also with vector states and diagonal state-transition matrices) using the recurrence
+ <<FORMULA_0086>>.
+Note that the state-transition scalar $a(1)$ is negative, while 
+current diagonal LRNNs do not allow negative values. 
+\citep[Theorem 2]{sarrof2024expressive} states that this fact makes real-valued diagonal LRNNs unable to solve parity,  which raises the question:  \textit{can non-diagonal LRNNs which allow only positive eigenvalues, such as DeltaNet, solve parity?}
+The following result answers this question negatively by generalizing \citet[Theorem 2]{sarrof2024expressive} to non-diagonal matrices. To solve parity, the state transition matrices must allow at least one eigenvalue to be neither real nor positive. For non-diagonal  matrices, this eigenvalue could simply have nonzero imaginary part. The main idea of the theorem is illustrated in \Cref{fig:negative_eigenvalues_mechanism}.
+
+\begin{theorem}[Parity]\label{thm:parity}
+A finite precision LRNN with finitely many layers as in (\ref{eq:linrnn}) can solve parity for arbitrary input lengths, in particular, it can recognize the language $(11)^*$, only if in at least one layer, there exist $\vx$ such that <<FORMULA_0087>> has at least one eigenvalue <<FORMULA_0088>>. 
+\end{theorem}
+The proof in \Cref{proof:parity} uses the same core idea as the one in \citep[Theorem 2]{sarrof2024expressive}. For one layer, we show that when <<FORMULA_0089>> and the conditions for the eigenvalues of $\mA(1)$ are not met, the mapping <<FORMULA_0090>> and consequently also the one <<FORMULA_0091>> will be constant (in finite precision and for large enough $k$), while <<FORMULA_0092>>, with $y_k$ being the parity of $\vx$, alternates between $0$ and $1$. %
+To show this, we use the expression for the powers of the Jordan canonical form of $\mA(1)$.
+
+We now study the problem of counting modulo $m$, an easier version of addition modulo $m$ where the input of length $k$ never changes and is <<FORMULA_0093>>, while the correct output is <<FORMULA_0094>>. 
+The following theorem shows that to solve this problem, products of state-transition matrices must have at least one eigenvalue with nonzero imaginary part. 
+\begin{theorem}[Modular Counting]\label{thm:modcount}
+A finite precision LRNN with $L$ layers, each as in (\ref{eq:linrnn}), can count modulo $m$, i.e.\@ it can recognize the language $(1^m)^*$, with $m$ not a power of two, only if there exist <<FORMULA_0095>> and <<FORMULA_0096>> such that for the $i$-th layer the product <<FORMULA_0097>> has at least one  eigenvalue $\lambda$ with
+nonzero imaginary part, i.e.\@ <<FORMULA_0098>>. 
+\end{theorem}
+
+The proof is in \Cref{proof:modcount}. When <<FORMULA_0099>> a key step is to show that if $\mA(1)$ has real (even negative) eigenvalues, the map <<FORMULA_0100>> will alternate between two values (in finite precision and for large enough $k$), not enough to count modulo <<FORMULA_0101>>. For <<FORMULA_0102>>, we proceed by induction using our assumption on the eigenvalues of the product of state-transition matrices.
+
+
+\textbf{Discussion} \Cref{thm:parity,thm:modcount} identify a fundamental limitation of current design choices on the structure of the state-transition matrices of LRNNs. 
+Specifically, current LRNNs, as the ones outlined in \Cref{tab:LRNNs}, are incapable of solving parity, as the eigenvalues of their state-transition matrices are confined to the interval $[0,1]$. 
+Further, even if we allow negative eigenvalues, LRNNs using common structures for the state transition matrices, such as diagonal or triangular with real entries,  cannot solve counting modulo $m$. In contrast, as we will show, LRNNs with state-transition matrices that are (products of) generalized Householder matrices, each with eigenvalues in the range $[-1,1]$, are much more expressive.
+
+
+ 
+
+
+
+
+
+
+
+
+\subsection{Allowing Negative Eigenvalues}\label{sec:negative}
+We focus on two classes of LRNNs determined by the structure of their state-transition matrices: diagonal (such as Mamba, Mamba2, and GLA) and generalized Householder (GH, as in DeltaNet).
+In particular, if we let <<FORMULA_0103>>, <<FORMULA_0104>> and <<FORMULA_0105>>, being learnable functions such that <<FORMULA_0106>> for every <<FORMULA_0107>>, then the state transition matrices of each layer of many LRNNs, such as those in \Cref{tab:LRNNs}, can be written as either 
+<<FORMULA_0108>>
+where <<FORMULA_0109>> is diagonal with eigenvalues <<FORMULA_0110>>, while <<FORMULA_0111>> is GH with all eigenvalues equal to one except for the one associated to the eigenvector <<FORMULA_0112>>, which is equal to <<FORMULA_0113>>.
+To address the limitations discussed in the previous section, we propose the following modification that can be easily applied to LRNNs belonging to either class.
+<<FORMULA_0114>>
+Hence, <<FORMULA_0115>> has eigenvalues <<FORMULA_0116>> and <<FORMULA_0117>> has one eigenvalue equal to <<FORMULA_0118>>. Thus, we have extended the eigenvalues range from $[0,1]$ to $[-1,1]$. The norm of the matrix is still less than or equal to one, keeping the recurrence stable at long sequence lengths.
+
+LRNNs with the modified state transition matrices can implement the solution to parity in (\ref{eq:change}) by setting <<FORMULA_0119>> and <<FORMULA_0120>> so that if we consider a scalar recursion, then <<FORMULA_0121>>. However, \Cref{thm:modcount} shows that we cannot count modulo $3$ with triangular state transition matrices, even when allowing negative eigenvalues. Therefore, in the next section, we examine the impact of our change to the eigenvalue range on non-triangular state-transition matrices. 
+
+\subsection{Expressivity of Products of Generalized Householder Matrices}\label{sec:ghprod}
+We focus on state-transition matrices that are products of $k$ GH matrices. For DeltaNet <<FORMULA_0122>>.
+For any <<FORMULA_0123>>, we define the set of all matrices in $\R^{n \times n}$ that can be expressed as a product of $k$ GH matrices, each having the only interesting eigenvalue in the range <<FORMULA_0124>>, as
+<<FORMULA_0125>>
+Intuitively, higher $k$ means higher expressivity but also higher cost for matrix-vector products. Furthermore, as long as <<FORMULA_0126>>, the norm of the matrices is bounded by one, which guarantees that repeated matrix product do not diverge.
+We observe that if <<FORMULA_0127>>, then $\mM$ is a reflection (or Householder) matrix, and that for any <<FORMULA_0128>>, <<FORMULA_0129>> and <<FORMULA_0130>> so that with our change we also include reflections. Moreover, <<FORMULA_0131>> if <<FORMULA_0132>> and either <<FORMULA_0133>> or <<FORMULA_0134>>, <<FORMULA_0135>>. 
+
+
+Our next result shows that products of GH matrices can represent any matrix with Euclidean norm less than or equal to 1, but only when <<FORMULA_0136>>. %
+In contrast, repeated products of (e.g.\@ upper)  triangular matrices with eigenvalues in $[-1,1]$ remain triangular, with eigenvalues in the same range. 
+
+\begin{proposition}[Expressivity of products of GH matrices]\label{th:ghexpress}
+The following hold for $\mathcal{M}_k^n$ in (\ref{eq:GHset}):
+
+\begin{enumerate}
+\vspace{-.25truecm}
+    \item For any <<FORMULA_0137>>, <<FORMULA_0138>>. 
+    \vspace{-.15truecm}
+    \item For any <<FORMULA_0139>> with <<FORMULA_0140>>, then <<FORMULA_0141>> and if $\mM$ is orthogonal then <<FORMULA_0142>>, while <<FORMULA_0143>> when $\mM$ is a permutation matrix.\vspace{-.15truecm}
+    \item Any eigenvalue $\lambda$ of any matrix  <<FORMULA_0144>> is either $1$ or satisfies <<FORMULA_0145>> and  if in addition <<FORMULA_0146>> and <<FORMULA_0147>>, then <<FORMULA_0148>>.  %
+\end{enumerate}
+\end{proposition}
+The proof in \Cref{proof:ghexpress} uses mainly linear algebra arguments such as the SVD decomposition and the fact that every <<FORMULA_0149>> orthogonal matrix can be written as a product of $n$ reflections, due to the Cartan–Dieudonné Theorem~\citep{gallier2011cartan}.
+
+A consequence of \Cref{th:ghexpress}.3 is that LRNNs with layers of the form (\ref{eq:linrnn}), where <<FORMULA_0150>>, have state transition matrices that are either the identity or not orthogonal, and hence cannot be reflections or rotations. Also, if <<FORMULA_0151>> the eigenvalues are positive and hence the LRNN cannot learn parity due to \Cref{thm:parity}.
+In contrast, if we allow <<FORMULA_0152>> and $k$ is large enough, the following theorem shows that an LRNN with one layer can implement any FSA whose transition monoid is a group, and that <<FORMULA_0153>> is enough for cyclic groups (modular addition).
+
+\begin{figure}
+    \centering
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}%
+\vspace{-3pt}%
+\adjustbox{width=1.0\linewidth, valign=t}{
+    \begin{tikzpicture}[scale=1.0]
+    \tikzset{
+        cup/.style={
+            trapezium,
+            trapezium left angle=75,
+            trapezium right angle=75,
+            trapezium stretches=true,
+            minimum height=0.6cm,
+            minimum width=0.6cm,
+            draw=black!70,
+            thick,
+            rounded corners=1pt,
+            rotate=0,
+            path picture={
+                \fill[#1!30] ([xshift=-0.2cm, yshift=-0.15cm]path picture bounding box.south west) -- 
+                              ([xshift=0.2cm, yshift=-0.15cm]path picture bounding box.south east) -- 
+                              ([xshift=0.07cm, yshift=0.15cm]path picture bounding box.north east) --
+                              ([xshift=-0.07cm, yshift=0.15cm]path picture bounding box.north west) -- cycle;
+            }
+        },
+        swap arrow/.style={<->, thick, red, line width=1pt, shorten >=4pt, shorten <=4pt},
+        uni arrow/.style={->, thick, red, line width=1pt, shorten >=4pt, shorten <=4pt},
+        uni3 arrow/.style={->, thick, red, line width=1pt, shorten >=4pt, shorten <=4pt},
+        uni2 arrow/.style={->, thick, red, line width=1pt, shorten >=4pt, shorten <=4pt},
+    }
+    
+    \node[cup=red] (cup1-1) at (0,0) {\large 2};
+    \node[cup=blue] (cup1-2) at (1,0) {\large 1};
+    \node[cup=yellow] (cup1-3) at (2,0) {\large 3};
+    
+    \node[cup=blue] (cup2-1) at (3.5,0) {\large 1};
+    \node[cup=yellow] (cup2-2) at (4.5,0) {\large 3};
+    \node[cup=red] (cup2-3) at (5.5,0) {\large 2};
+    
+    \node[cup=blue] (cup3-1) at (7.5,0) {\large 2};
+    \node[cup=yellow] (cup3-2) at (8.5,0) {\large 3};
+    \node[cup=red] (cup3-3) at (9.5,0) {\large 1};
+    
+    
+
+    \draw[swap arrow] (cup1-1.north) -- ++(0,0.4) -- ++(1,0) node[midway, below] {\small swap} -- (cup1-2.north);
+    \draw[swap arrow] (cup2-2.north) -- ++(0,0.4) -- ++(1,0) node[midway, below] {\small swap} -- (cup2-3.north);
+    
+
+    \draw[uni arrow] ([xshift=4pt]cup3-3.north) -- ++(0,0.3) -- ++(-1,0) -- ([xshift=4pt]cup3-2.north);
+    \draw[uni3 arrow] ([xshift=-4pt]cup3-2.north) -- ++(0,0.3) -- ++(-1,0) -- ([xshift=-4pt]cup3-1.north);
+    \draw[uni2 arrow] ([xshift=4pt]cup3-1.north) -- ++(0,0.4) -- ++(1.72,0) -- ([xshift=-4pt]cup3-3.north);
+    
+    \node (m1) at ([yshift=-30]cup1-2.south) {\large <<FORMULA_0154>>};
+    \node at ([yshift=-10]m1.south) {\large <<FORMULA_0155>>};
+    
+    \node (m2) at ([yshift=-30]cup2-2.south) {\large <<FORMULA_0156>>};
+    \node at ([yshift=-10]m2.south) {\large <<FORMULA_0157>>};
+    
+    \node (m3) at ([yshift=-30]cup3-2.south) {\large <<FORMULA_0158>>};
+
+    \node at (<<FORMULA_0159>>) {\Large $\times$};
+
+    \node at (<<FORMULA_0160>>) {\Large $=$};
+    
+\end{tikzpicture}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.43\textwidth}
+\vspace{0pt}%
+\vspace{-1.5pt}%
+  \caption{
+A permutation of $k$ elements is also a composition of at most <<FORMULA_0161>> swaps. This maps to a product of <<FORMULA_0162>> Hoseholders, each representing a swap.
+Illustrated for <<FORMULA_0163>>.\\
+<<FORMULA_0164>>, <<FORMULA_0165>>.
+  }
+  \label{fig:twoswaps}
+\end{minipage}
+\end{figure}
+
+\begin{theorem}\label{thm:groups}
+Every FSA <<FORMULA_0166>> whose transition monoid <<FORMULA_0167>> is a group, can be implemented by a finite precision LRNN with one layer and <<FORMULA_0168>>, where $n$ is the smallest natural number such that <<FORMULA_0169>> is isomorphic to a subgroup of $S_n$, 
+and <<FORMULA_0170>> is the maximum number of changed states after applying a single transition.
+Moreover, if <<FORMULA_0171>> is isomorphic to the cyclic group $\mathbb{Z}_m$, then we can set <<FORMULA_0172>> and if <<FORMULA_0173>> (parity) we can set <<FORMULA_0174>>.
+\end{theorem}
+
+In the proof in \Cref{proof:groups}, we map each state-transition function to a matrix representation. This can always be done using permutation matrices, but for cyclic groups, we can also use rotation matrices (\Cref{app:twohousemodcount}). For permutations, if every state-transition permutes at most $k$ states then the corresponding permutation matrix will be in  <<FORMULA_0175>>, since it is either the identity or can be written as a product of at most <<FORMULA_0176>> permutations of two elements (swaps), each in <<FORMULA_0177>> (see \Cref{fig:twoswaps}). 
+A consequence of \Cref{thm:groups} is that if every transition function of the FSA has a permutation representation corresponding to a swap or the identity, then an LRNN layer with <<FORMULA_0178>>, can implement it. This is useful in practice because the time complexity of an LRNN having a product of $k$ GH matrices as one state-transition matrix increases linearly with $k$. Also, for natural language tasks,
+the state-transitions for the FSA might be either simple or encoded using multiple letters. For example, for addition modulo $5$, a word may look like ``3+2+4=4'' (two letters per addition). This allows an LRNN with state-transition matrices in <<FORMULA_0179>> to model complex transitions. Indeed, if each transition uses $k$ letters and we set <<FORMULA_0180>> and <<FORMULA_0181>> in (\ref{eq:linrnn}), then the LRNN layer can model permutations that change up to <<FORMULA_0182>> elements since
+<<FORMULA_0183>>
+
+
+In \Cref{sec:modreflections} we also show that, interestingly, an LRNN with two layers (instead of just one), each having only reflections (instead of rotations) as state-transition matrices, can solve addition modulo $m$.
+We now present an important result on the expressivity of LRNNs with multiple layers.
+
+\begin{theorem}\label{thm:regular}
+LRNNs with state transition matrices that are repeated products of GH matrices, each with eigenvalues in the range $[-1,1]$, can recognize any regular language.
+In particular, every FSA <<FORMULA_0184>> 
+can be implemented by a finite precision LRNN with <<FORMULA_0185>> layers, each of the form \ref{eq:linrnn}, where  <<FORMULA_0186>>, <<FORMULA_0187>>, <<FORMULA_0188>>, <<FORMULA_0189>>  and <<FORMULA_0190>>. 
+\end{theorem}
+
+The proof in \Cref{proof:regular} exploits the landmark  Theorem by \citet{krohn1965algebraic}, which states that every FSA can be decomposed as a \textit{cascade} of simpler FSAs whose state-transition functions are either one-to-one or constant. Each layer of the LRNN will implement one FSA (with $n$ states) of the cascade using <<FORMULA_0191>> permutation matrices, which are in <<FORMULA_0192>>, for the one-to-one transitions, while for constant (state-independent) transitions it will set the corresponding state-transition matrix to <<FORMULA_0193>> and the function $\mB$ appropriately. 
+Note that we can obtain the zero matrix only inefficiently as a product of $n$ GH matrices, while it could also be obtained with a single diagonal matrix. This points towards LRNNs using a mix of GH and diagonal matrices, as recently explored by Gated DeltaNet~\citep{yang2024gatedeltanet} and~\href{https://github.com/BlinkDL/modded-nanogpt-rwkv}{RWKV-7}.
+
+\textbf{Discussion} The results in \Cref{thm:groups,thm:regular} for LRNNs are in sharp contrast with the ones for Transformers \citep{liu2022transformers,merrill2023parallelism} and diagonal LRNNs \citep{merrillillusion}, which require either the number of layers or the precision growing with the input sequence length, and can only implement an FSA if all groups in its transition monoid are \textit{solvable}, i.e. excluding groups isomorphic to $S_n$ with <<FORMULA_0194>>. However, compared to LRNNs without any restriction to the norm of the state-transition matrices, which need only one layer to recognize any regular language, our result requires both the number of layers and the width of the LRNN to be (in the worst case) exponential in the number of states of the FSA, although we conjecture that the number of layers might be reduced to at most linear using a more refined decomposition. 
+
+
+\section{Experiments}\label{sec:experiments}
+\begin{wraptable}[10]{R}{.45\textwidth}
+\vspace{-4.6mm}
+\caption{Summary of modifications to the state-transition matrices <<FORMULA_0195>> to extend the eigenvalue range from $[0, 1]$ (\Cref{tab:LRNNs}) to $[-1, 1]$. We set <<FORMULA_0196>>.} \label{tab:eigenvalue_range}
+\vspace{-2.5mm}
+\centering
+\resizebox{1.0\linewidth}{!}{
+\begin{tabular}{@{}lll@{}}
+\toprule
+&$[0, 1]$       & $[-1, 1]$     \\ \midrule
+Mamba & <<FORMULA_0197>>  &  <<FORMULA_0198>> \\
+DeltaNet & <<FORMULA_0199>> & <<FORMULA_0200>> \\ \bottomrule
+\end{tabular}}
+\end{wraptable}
+We investigate the effects of expanding the eigenvalue range of state-transition matrices from $[0, 1]$ to $[-1, 1]$, as explained in \Cref{sec:negative}, on both synthetic tasks and language modeling. Our experiments involve Mamba, and DeltaNet, with variants trained using both the original and extended eigenvalue ranges, as shown in Table \ref{tab:eigenvalue_range}. We label these variants accordingly. Note that the changes increase the expressivity of Mamba and DeltaNet while coming at no additional computational cost. Detailed information on the implementation can be found in \Cref{app:implementation}.
+
+
+
+
+
+\subsection{Chomsky Hierarchy}\label{subsec:chomsky-hierarchy}
+
+\begin{wraptable}[19]{R}{.55\textwidth}
+\vspace{-4.62mm}
+\caption{Performance comparison of various recurrent models on formal language tasks. We report the best of 3 runs (Table~\ref{tab:chomsky-median} in the Appendix reports the median). Scores are scaled accuracy, with 1.0 indicating perfect performance and 0.0 random guessing. The positive impact of allowing negative eigenvalues ($[-1, 1]$ range) versus restricting to positive eigenvalues ($[0, 1]$ range) is evident for both Mamba and DeltaNet. Results in parenthesis are as reported in \citet{poppel2024xlstm}.}
+\vspace{-3.25mm}
+\label{tab:chomsky}
+\centering
+\vspace{1.5mm}
+\resizebox{\linewidth}{!}{
+\begin{tabular}{@{}l >{\centering\arraybackslash}p{1.8cm} >{\centering\arraybackslash}p{1.9cm} >{\centering\arraybackslash}p{1.9cm} >{\centering\arraybackslash}p{2.1cm}@{}}
+\toprule
+& \textbf{Parity} & \begin{tabular}[c]{@{}c@{}} \textbf{Mod. Arithm.}\\ \textbf{(w/o brackets)}\end{tabular} & \begin{tabular}[c]{@{}c@{}} \textbf{Mod. Arithm.} \\ \textbf{(w/ brackets)}\end{tabular}  \\ \midrule
+Transformer & 0.022 & 0.031 & 0.067 \\ \midrule
+mLSTM & 0.087 (0.04) & 0.040 (0.04) & 0.114 (0.03) \\
+sLSTM & \textbf{1.000} (1.00) & \textbf{0.787} (1.00) &  \textbf{0.178} (0.57)  \\ \midrule
+Mamba $[0, 1]$ & 0.000  & 0.095 & \textbf{0.123} \\
+Mamba $[-1, 1]$ & \textbf{1.000} & \textbf{0.241} & 0.116  \\ \midrule
+DeltaNet $[0, 1]$ & 0.017 & 0.314 & 0.194  \\
+DeltaNet $[-1, 1]$ & \textbf{1.000} & \textbf{0.971} & \textbf{0.260} \\ \bottomrule
+\end{tabular}
+}
+\end{wraptable} 
+
+
+We conducted experiments with some of the formal language tasks proposed by~\citet{deletangneural} and similarly used to benchmark xLSTM~\citep{poppel2024xlstm}. Our focus was on tasks where mLSTM (an LRNN) previously underperformed while sLSTM (a non-linear RNN) succeeded, specifically parity, modular arithmetic without brackets (both regular languages) and modular arithmetic with brackets (context-free language). As in~\citet{poppel2024xlstm}, we trained each model with sequence lengths ranging from 3 to 40 and evaluated on lengths from 40 to 256, to assess length generalization. Note that our theoretical results cover just regular languages, excluding modular arithmetic with brackets.
+We compared a Transformer, mLSTM and sLSTM against two variants each of Mamba and DeltaNet - with and without eigenvalue range extension. 
+
+\textbf{Results} Our findings, presented in \Cref{tab:chomsky}, demonstrate that expanding the range of eigenvalues from $[0, 1]$ to $[-1, 1]$ enables all examined models to fully solve the parity task, confirming \Cref{thm:parity}. For both modular arithmetic tasks, this expansion led to substantial performance improvements for Mamba and especially DeltaNet, since the latter has non-diagonal state-transition matrices that are more suited for these tasks (see \Cref{thm:groups}).  %
+In \Cref{fig:chomsky_deltanet_length_extrapolation_all} in the Appendix, we visualize the length extrapolation performance of each model on all considered tasks.
+Note that we were unable to reproduce the sLSTM results reported by~\citet{poppel2024xlstm} for the modular arithmetic tasks. Additional experiments and details on the tasks in \Cref{app:chomsky-hierarchy}.
+
+
+
+\subsection{State-Tracking}\label{sec:statetracking}
+We perform experiments on group word problems, relying on the code provided by \citealp{merrillillusion}. 
+We focus on the \( S_5 \) group---the first \textit{unsolvable} symmetric group where current LRNNs and Transformers are known to underperform. We also report results for addition modulo \( 60 \) (i.e., the cyclic group \( \mathbb{Z}_{60} \)) in \Cref{app:cyclic}, and note that parity corresponds to \( S_2 \). In these experiments, the model receives a sequence of group elements as input, and the supervision is another sequence of group elements, each representing the product of the preceding input elements. Since solving \( S_5 \) might need LRNNs with state-transition matrices formed by repeated products of four GH matrices (see \Cref{thm:groups}), each with eigenvalues in \([-1,1]\), we also consider three simplified setups: (i) allowing only permutations of up to 2 elements (identity and swaps), (ii) allowing only permutations of up to 3 elements, and (iii) using 4 tokens for each permutation.
+Additional details are in \Cref{app:state-tracking}.
+We stress that, even when restricting the inputs to only identity and swaps, the group elements for the supervision still cover the entire group, because swaps are generators of the group.
+
+\textbf{Results} \Cref{fig:s5} shows that, as predicted by \Cref{thm:groups}, restricting the inputs to only swap permutations allows DeltaNet $[-1,1]$ with even one layer to fully learn the task (since its state-transition matrices can model swaps), while DeltaNet $[0,1]$ with 5 layers generalizes just slightly beyond the training length. In contrast, by including also permutations of $3$ elements, we notice a substantial decrease in the performance of all models. Interestingly, extending the range is still advantageous in this case and DeltaNet $[-1,1]$ with 5 layers reaches a good length generalization. Moreover, using 4 tokens per group element seems also beneficial compared to standard $S_5$, since DeltaNet $[-1,1]$ with 5 layers manages to extrapolate very well until around length $200$, which corresponds to $50$ group elements, while on standard $S_5$ all models have $0$ sequence accuracy prior to sequence length $30$. 
+We also report that Mamba, a diagonal LRNN, performs poorly on all setups, with and without increased eigenvalue range.
+
+
+
+
+
+\begin{figure}
+    \centering
+    \vspace{-4mm}
+    \adjustbox{width=1.0\linewidth}{
+    \includegraphics[width=0.36\linewidth, trim={47 0 6.5 0}, clip=true]{figure/permutations/S5_only_swaps.pdf}
+    \includegraphics[width=0.20\linewidth, trim={11.5 0 6.5 0}, clip=true]{figure/permutations/S5_limit_to3.pdf}
+    \includegraphics[width=0.203\linewidth, trim={11.5 0 4.6 0}, clip=true]{figure/permutations/S5_4_tokens_s_token_only_input.pdf}
+    \includegraphics[width=0.20\linewidth, trim={11.5 0 6.5 0}, clip=true]{figure/permutations/S5.pdf}
+    }
+    \vspace{-9mm}
+    \caption{Sequence accuracy for varying sequence lengths on $S_5$ after 100 epochs of training. We report the best of 3 seeds for each method (in \Cref{fig:s5_large} we report all seeds). The dashed vertical line indicates the sequence length used during training (32 except for the third plot from the left where it is 64). Each method is labeled with name, eigenvalue range, and number of layers. The dashed vertical line indicates the sequence length used during training. "Full matrix simple" is a one-layer baseline where the state update matrices are full and we have no control over the eigenvalue range. 
+    }\label{fig:s5}
+\end{figure}
+
+
+\subsection{Language Modeling}
+
+\textbf{Experimental Setup}
+We train DeltaNet models with 340M and 1.3B parameters and Mamba models with 370M parameters, each using both original and extended eigenvalue ranges. Training is done on the full FineWeb-100B dataset \citep{penedo2024finewebdatasetsdecantingweb}. We chose FineWeb rather than FineWeb-Edu since it contains more code. We aligned our training pipeline with~\citet{yang2024parallelizing}; see~\Cref{app:llm_experimental_details} for details.
+Given our previous theoretical and experimental findings, we hypothesize that models (especially DeltaNet) with extended eigenvalue range will perform better on language modeling tasks linked to state-tracking such as coding or mathematics, compared to unmodified models. 
+To test this hypothesis, we evaluate the perplexity of these models in a length extrapolation setup using various datasets: CodeParrot~\citep{tunstall2022natural} for coding, Math-Hard~\citep{hendrycksmath2021} for mathematics, TriviaQA~\citep{2017arXivtriviaqa}, and SlimPajama~\citep{cerebras2023slimpajama}. %
+
+
+\begin{figure}
+    \vspace{-2mm}
+    \centering
+    \includegraphics[width=\linewidth, trim={3 2 8 3}, clip=true]{figure/nlp/length_extrapolation/perplexity_comparison_grid.pdf}
+    \vspace{-6mm}
+    \caption{
+    Performance vs sequence length of
+    DeltaNet variants (340M (top) and 1.3B (bottom) parameters) on four datasets. DeltaNet with eigenvalue range $[-1, 1]$ improves perplexity in coding and math compared to the $[0, 1]$ baseline. Dashed vertical line at training context length (2048).}
+\label{fig:deltanet_length_extrapolation}
+\vspace{-5mm}
+\end{figure}
+
+\textbf{Results~} All models trained stably with our modification and without changing the learning rate. 
+The validation perplexity of the proposed variants was comparable, albeit slightly worse than that of the original models throughout training (see \Cref{fig:training_curves} in the Appendix).
+The 
+experiments in~\Cref{fig:deltanet_length_extrapolation} demonstrate that on coding and math datasets, DeltaNet with an eigenvalue range of $[-1, 1]$ achieves lower perplexity than the baseline with range $[0, 1]$ for both model sizes. For TriviaQA, the perplexity of DeltaNet $[-1, 1]$ is slightly higher. Note, that this is a task relying on memorization, not linked to state-tracking, and hence we do not expect an improvement. On SlimPajama, we also observe slight improvement with our modification. 
+For Mamba instead, our modifications consistently degrades the performance on these tasks (\Cref{fig:mamba_length_extrapolation} in the Appendix).
+
+To ensure that our 
+models are comparable with those obtained by~\citet{yang2024parallelizing}, we evaluate them on the same benchmark tasks from lm-harness~\citep{eval-harness} in Table~\ref{tab:lm_harness}. Note, that we trained on 100B tokens of FineWeb, while~\citet{yang2024parallelizing} reported results from training on 15B and 100B tokens of SlimPajama. 
+At 340-370M parameters, with the extended range both architectures show enhanced performance in some of the tasks: Mamba in the second subset of tasks (+2.1\% average accuracy) and DeltaNet in retrieval tasks (+2\% SWDE, +4.4\% SQUAD). At 1.3B parameters, extending the eigenvalue range of DeltaNet
+shows mixed results, suggesting that the increased expressivity may need training beyond 100B tokens to fully unlock the model's capacity.
+
+
+\begin{table*}[t!]
+\caption{Performance comparison using lm-harness benchmark~\citep{eval-harness} (SlimPajama (SPJ) reproduced from~\citet{yang2024parallelizing}, Fine-Web (FW) ours). Results are shown for the original and extended eigenvalue range. Our models show comparable performance across tasks.
+}
+\vspace{-3mm}
+\adjustbox{width=\textwidth}{
+\centering
+\begin{tabular}{c|l|cc|ccccccc|ccc}
+\toprule
+\textbf{} & \multirow{2}{*}{\hspace{5mm}\textbf{Model}}  & \textbf{Wiki.}  &  \textbf{LMB.} &  \textbf{LMB.} & \textbf{PIQA} &    \textbf{Hella.} & \textbf{Wino.} & \textbf{ARC-e} &  \textbf{ARC-c} &  \textbf{Avg.}  & \textbf{SWDE} & \textbf{SQUAD} & \textbf{FDA} \\
+\textbf{} &  & ppl $\downarrow$  &  ppl $\downarrow$  &  acc $\uparrow$  & acc $\uparrow$ &   acc\_n $\uparrow$  & acc $\uparrow$  & acc $\uparrow$ & acc\_n $\uparrow$ & $\uparrow$ & cont. $\uparrow$  & cont. $\uparrow$ &  cont. $\uparrow$   \\
+\midrule
+\multirow{5}{*}{\rotatebox{90}{\scriptsize\textit{SlimPajama 15B}}} 
+& \hspace{-1mm} {\textit{340M params}} & & & & & & & & & & & & \\
+& \hspace{4mm} Transformer++ & \underline{28.39} & 42.69 & 31.0 & 63.3 & 34.0 & 50.4 & 44.5 & \underline{24.2} & 41.2  & \textbf{42.2} & 22.1 & \textbf{21.4} \\
+& \hspace{4mm} Mamba  $[0, 1]$ & \underline{28.39} & \underline{39.66} & 30.6 & \underline{65.0} & \textbf{35.4} & 50.1 & \textbf{46.3} & 23.6 & \underline{41.8} & 12.4 & 23.0 & 2.1 \\ 
+& \hspace{4mm} GLA $[0, 1]$ & 29.47 & 45.53 & \underline{31.3} & \textbf{65.1} & 33.8 & \underline{51.6} & 44.4 & \textbf{24.6} & \underline{41.8} & 24.0 & \underline{24.7} & 7.3 \\
+& \hspace{4mm} DeltaNet $[0, 1]$ & \textbf{28.24} & \textbf{37.37} & \textbf{32.1} & 64.8 & \underline{34.3} & \textbf{52.2} & \underline{45.8} & 23.5 & \textbf{42.1} & \underline{26.4} & \textbf{28.9} & \underline{12.8}  \\ 
+\midrule
+\multirow{6}{*}{\rotatebox{90}{\scriptsize\textit{ FineWeb 100B~~~~}}} 
+& \hspace{-1mm} {\textit{340M params}} & & & & & & & & & & & & \\
+& \hspace{4mm} DeltaNet $[0, 1]$  & \underline{24.68} & 31.49 & 33.7 & 70.3 & 45.1 & 51.3 & 50.0 & \underline{26.1} & 46.1 & \underline{35.2} & \underline{28.7} & \textbf{11.8} \\
+& \hspace{4mm} DeltaNet $[-1, 1]$ & \textbf{24.54} & 31.15 & 34.0 & 69.9 & 44.6 & \underline{51.9} & 50.0 & 24.4 & 45.8 & \textbf{37.2} & \textbf{33.1} & \underline{6.6} \\
+& \hspace{-1mm} {\textit{370M params}} & & & & & & & & & & & & \\
+& \hspace{4mm} Mamba $[0, 1]$ & 24.84 & \textbf{24.69} & \underline{35.6} & \textbf{70.6} & \textbf{48.4} & 51.2 & \underline{53.4} & 24.8 & \underline{47.3} & 21.6 & 27.7 & 2.8 \\
+& \hspace{4mm} Mamba $[-1, 1]$ & 25.02 & \underline{24.71} & \textbf{36.2} & \underline{70.5} & \underline{47.8} & \textbf{53.3} & \textbf{54.7} & \textbf{26.7} & \textbf{48.2} & 20.9 & 24.8 & 2.5  \\
+\midrule
+\multirow{6}{*}{\rotatebox{90}{~~~~\scriptsize\textit{SlimPajama 100B}}} & \hspace{-1mm} {\textit{1.3B params}} & & & & & & & & & & & & \\
+& \hspace{2mm}  Transformer++ & \textbf{16.85} & \underline{13.44} &  \textbf{48.9} & 70.8 & 49.6 & 53.6 & 56.0 & 26.5 & 50.9 & \textbf{66.6} & 31.5 & \textbf{27.4}\\
+& \hspace{2mm}  Mamba $[0, 1]$ & 17.06 & 13.89 & 46.2 & \textbf{72.2} &  40.1 & \textbf{54.1} &  \textbf{59.0} & \underline{28.2} & 50.0 & 41.4 & 35.2 & 6.2 \\
+& \hspace{2mm} GLA $[0, 1]$ & 17.22 & 14.47 & \underline{46.9} & \underline{71.8} & \underline{49.8} & \underline{53.9} & \underline{57.2} & 26.6 & \underline{51.0} & \underline{50.6} & \textbf{42.6} & \underline{19.9}  \\
+& \hspace{2mm} DeltaNet $[0, 1]$  & \underline{16.87} & \textbf{12.21} & \textbf{48.9} & 71.2 & \textbf{50.2} & 53.6 & \underline{57.2} & \textbf{28.3} & \textbf{51.6} & 49.5& \underline{37.4} & 17.2  \\
+\midrule 
+\multirow{2}{*}{\rotatebox{90}{\scriptsize\textit{FW 100B~~}}} & \hspace{-1mm} {\textit{1.3B params}} & & & & & & & & & & & & \\
+& \hspace{2mm} DeltaNet $[0, 1]$  & \textbf{18.54} & \underline{14.32} & \underline{43.5} & \textbf{73.7} & \textbf{56.2} & \textbf{56.9} & \textbf{58.2} & \textbf{29.9} & \textbf{53.1} & \textbf{49.1} & \textbf{35.1} & \underline{8.6}  \\
+& \hspace{2mm} DeltaNet $[-1, 1]$  & \underline{18.57} & \textbf{12.73} & \textbf{43.7} & \underline{73.3} & \underline{55.8} & \underline{56.8} & \underline{56.9} & \underline{27.9} & \underline{52.4} & \underline{48.8} & \underline{33.9} & \textbf{12.3}  \\
+\bottomrule
+\end{tabular}
+}
+\vspace{-5mm}
+\addtolength{\tabcolsep}{2.5pt}    
+\centering
+\label{tab:lm_harness}
+\end{table*}
+
+
+
+
+
+
+\vspace{-1mm}
+\section{Conclusion}
+\vspace{-1mm}
+In this work, we showed the substantial impact of extending the eigenvalue range of state-transition matrices in LRNNs from $[0,1]$ to $[-1,1]$. This modification provably enhances LRNN expressivity in state-tracking tasks, without adding overhead in training or inference. 
+While Mamba successfully solves the parity problem, its diagonal matrix structure limits further gains. In contrast, DeltaNet, thanks to its non-diagonal state transition matrices which enable simultaneous token and channel mixing, excels across a broader spectrum of tasks. %
+Our results underscore the critical role of non-diagonal state-transition matrices in augmenting state-tracking capabilities, highlighting a promising direction for future LRNN advancements.
+
+\textbf{Limitations and Future work~} 
+Our modification is not directly compatible with a numerical technique used by some diagonal LRNNs such as Mamba2, GLA and mLSTM. In particular, these models rely on positive state-transition matrices to compute cumulative products in log space, which improves numerical accuracy and potentially training stability (see
+\Cref{app:implementation} for details). 
+Further research is needed to assess the impact of training large-scale language models with state-tracking capabilities. 
+To this end, we aim to understand the potential downsides of increased expressivity. For example, we hypothesize a fundamental trade-off between state-tracking and associative recall, which is also of theoretical interest and could guide hybrid model design.
+Moreover, the theoretical expressivity of DeltaNet $[-1,1]$ with multiple layers is still unclear. We showed that it can solve addition modulo $m$ (in \Cref{sec:modreflections}) which is equivalent to the $\mathbb{Z}_3$ group word problem, but we do not know if it can also solve other word problems, such as the ones for the symmetric groups $S_n$ with <<FORMULA_0201>>.
+
+
+
+
+\section*{Acknowledgments}
+We would like to thank David Salinas, 	
+Herilalaina Rakotoarison, Eric Alcaide, Arya Akhavan, Matia Bojovic, Erfan Mirzaei and the active members of the Flash Linear Attention discord channel for their constructive discussions and feedback. We acknowledge the support and assistance of the Data Science and Computation Facility and its Support Team, in particular Mattia Pini, in utilizing the IIT High-Performance Computing Infrastructure, on which we run our largest experiments. This research was partially supported by the following sources:  PNRR MUR Project PE000013 CUP J53C22003010006 “Future Artificial Intelligence Research (FAIR)“, funded by the European Union – NextGenerationEU, and EU Project ELSA under grant agreement No. 101070617.
+TAILOR, a project funded by EU Horizon 2020 research and innovation programme under GA No 952215; the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under grant number 417962828; the European Research Council (ERC) Consolidator Grant “Deep Learning 2.0” (grant no. 101045765). Frank Hutter acknowledges financial support by the Hector Foundation. The authors acknowledge support from ELLIS and ELIZA. Funded by the European Union. The authors gratefully acknowledge the Gauss Center for Supercomputing eV (\url{www.gauss-centre.eu}) for funding this project by providing computing time on the GCS supercomputer JUWELS at Jülich Supercomputing Center (JSC).
+The MATH-HARD dataset which we use in one of our experiments was compiled from AoPS \& the AoPS Community, MATHCOUNTS, the MAA, the Centre for Education in Mathematics and Computing, the Harvard-MIT Math Tournament, the Math Prize for Girls, MOEMS, the Mandelbrot Competition, and the Institute of Mathematics and Applications.
+Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or the ERC. Neither the European Union nor the ERC can be held responsible for them.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.3\linewidth]{figure/ERC_grant.jpeg}
+\end{figure}
+
+
+\bibliography{ref}
+\bibliographystyle{iclr2025_conference}
+
+\newpage
+
+\appendix
+\section*{\textbf{Supplementary Material}}
+The supplementary material is structured as follows.
+\begin{itemize}
+    \item \Cref{app:background} contains additional details on the notation used, on \Cref{tab:LRNNs}, on the relationship between RNNs and regular languages, on the assumption of finite precision, on the states, and on the function $\mathrm{dec}$.
+    \item \Cref{app:parity,app:ghprod} contain the proofs for the theoretical results in \Cref{sec:parity,sec:ghprod}.
+    \item \Cref{sec:modreflections} contains a theorem showing that a 2 Layer LRNN having reflections as state-transition matrices can solve addition modulo $m$.
+    \item \Cref{app:exps} contains additional details on the experiments and additonal results.
+\end{itemize}
+
+\section{Additional Background}\label{app:background}
+
+\subsection{Notation}\label{app:notation}
+We denote with <<FORMULA_0202>> the sets of complex, real, and natural numbers, respectively.
+We use lowercase letters for scalar quantities (e.g. <<FORMULA_0203>>), bold lowercase letters for (column) vectors (e.g. <<FORMULA_0204>>), and bold uppercase letters for matrices (e.g. <<FORMULA_0205>>). Some functions with matrix (vector) outputs, such as $\mA$ and $\mB$ in (\ref{eq:linrnn}), are also bold upper (lower) case letters to emphasize the fact that they output matrices (vectors). We use $\odot$ to indicate the element-wise (Hadamard)  product between two vectors or matrices. We denote with <<FORMULA_0206>> the Euclidean norm of the vector <<FORMULA_0207>>. When <<FORMULA_0208>>, <<FORMULA_0209>> also refers to the Euclidean norm, corresponding to the largest singular value. The vector <<FORMULA_0210>> is the $i$-th vector of the canonical bases in $\R^n$, i.e. the one-hot vector with $1$ only in the $i$-th component and $0$ in the others. We define the binomial coefficient for every <<FORMULA_0211>> with <<FORMULA_0212>> as
+<<FORMULA_0213>>
+
+We  also define for a Boolean $s$ and <<FORMULA_0214>> 
+<<FORMULA_0215>>
+We define <<FORMULA_0216>> and <<FORMULA_0217>>.
+
+
+We sometimes use regular expressions \citep[see e.g.][]{hopcroft2001introduction}, to represent their corresponding regular language. So that e.g. <<FORMULA_0218>>, where <<FORMULA_0219>> is the set containing the word $11$ and $*$ is the \textit{Kleene star} operation, is the language containing the empty word $\epsilon$ and all the words with an even number of ones, while <<FORMULA_0220>> is the language containing the words with a number of ones divisible by $m$ since $1^m$ indicates the word containing $1$ repeated $m$ times. A language is \textit{star-free} if it can be expressed with a regular expression that does not contain the Kleene star.
+
+\subsection{Details of \Cref{tab:LRNNs}}
+The Mamba recurrence in Equations 3 and 4 in~\citep{gu2023mamba} is applied independently to each channel of the input sequence.
+Expressing the full recurrence in the matrix-form of (\ref{eq:linrnn}) is challenging, as it would require concatenating the rows of the matrix $\mH_t$.
+For simplicity, in \Cref{tab:LRNNs} we  write instead the recurrence for each row of $\mH_t$.
+In particular, Let <<FORMULA_0221>> be the input of the layer, <<FORMULA_0222>>, <<FORMULA_0223>>, <<FORMULA_0224>> be learnable parameters, <<FORMULA_0225>> be learnable functions of the input and <<FORMULA_0226>>. Then, if we set <<FORMULA_0227>> and <<FORMULA_0228>>, we can write the recurrence for the $i$-th row of $\mH_t$ and the output as
+<<FORMULA_0229>>
+where <<FORMULA_0230>> and <<FORMULA_0231>> are the matrices stated in~\Cref{tab:LRNNs}, i.e.\@
+<<FORMULA_0232>>
+
+Alternatively, as done in \cite[Table 4]{yang2024parallelizing}, one could  write the full matrix recurrence as:
+<<FORMULA_0233>>
+where $\mathbf{1}$ is the vector of $n$ ones. However, such a recurrence is not in the form  (\ref{eq:linrnn}), since we have replaced the matrix-matrix product <<FORMULA_0234>> with the element-wise product <<FORMULA_0235>>.
+Note that we follow the implementation of <<FORMULA_0236>> used in the official Mamba codebase, which simplifies the expression originally presented in Equation 4 of~\citep{gu2023mamba} as described by the authors in a GitHub Issue\footnote{\url{https://github.com/state-spaces/mamba/issues/19}}.
+
+\subsection{Regular Languages and Recurrent Neural Networks}\label{app:rnnregular}
+
+\textbf{RNNs Can Recognize Any Regular Language~} A layer of a general RNN can be formulated similarly to (\ref{eq:linrnn}) just by replacing the linear state update with a generic state-transition function $g$ as:
+<<FORMULA_0237>>
+Clearly, any FSA can be implemented by an RNN layer if $g$ is sufficiently expressive to model its state transition function.
+
+\textbf{LRNNs Can Recognize Any Regular Language~} As explained in \citep[Appendix A.2]{liu2022transformers} and in the proof of \cite[Theorem 5]{merrillillusion}, we can implement any FSA <<FORMULA_0238>>, and thus recognize any regular language, using matrix-vector multiplication. As a result,  a single-layer LRNN by using one-hot vectors as the LRNN states and having boolean state transition matrices can recognize any language.
+More specifically, in (\ref{eq:linrnn}), we can set  <<FORMULA_0239>>, <<FORMULA_0240>> and for any letter <<FORMULA_0241>>, ~<<FORMULA_0242>> and <<FORMULA_0243>> being the matrix with entries <<FORMULA_0244>>. 
+Note that in such a construction, the matrix <<FORMULA_0245>> can have norm greater than one, and enabling the state-transition matrix of LRNNs to have norm greater than one can make the recurrence unstable and is therefore never done in language models (see e.g. \Cref{tab:LRNNs}). 
+
+
+\subsection{Finite Precision}\label{app:finiteprecision}
+For our positive results on LRNNs expressivity (\Cref{thm:groups,thm:regular}), by finite precision we mean that since we have a finite number of quantities involved in the computations, then there exists a finite set <<FORMULA_0246>> that contains them and thus we do not require computations to be done in the reals but we can use $\mathbb{D}$ as datatype. In particular, $\mathbb{D}$ does not depend on the length of the input sequence. In practice, such data type is chosen beforehand, e.g. floating point numbers requiring a given number of bits of precision, which may not capture all quantities in our constructions.
+
+In our negative results of \Cref{thm:parity,thm:modcount} instead, we can pick the finite set <<FORMULA_0247>> arbitrarily, e.g. floating point numbers, and we also make the use of the function <<FORMULA_0248>>, defined in (\ref{eq:cast}).
+that we extend to $\C$ by applying it separately to the real and imaginary part and to vector and matrices by applying it element-wise. The $\mathrm{cast}$ function is used because some computations of the state of the LRNN will be allowed to be in infinite precision and then transformed to finite precision using $\mathrm{cast}$ as specified in the proofs. This function provides a simplification of the actual conversion that happens in practice.
+
+
+We believe that the finite precision setup is not only realistic but also allows a better focus on the drawbacks of modern LRNN. 
+Note that for Transformers, results usually rely instead on the weaker notion of log-precision \citep{liu2022transformers}, meaning that the size of $\mathbb{D}$ grows logarithmically with the sequence length. This is mainly due to their limited expressivity compared to LRNNs. We also note that concerning the state-transition matrices of modern LRNNs (see \Cref{tab:LRNNs}), the values at the extremes of the eigenvalue range are technically not included (because of the use of the $\mathrm{sigmoid}$ and $\mathrm{softplus}$ functions). However, since we are working with finite precision, we can still include them by choosing the appropriate datatype $\mathbb{D}$, which in practice includes key values such as $0$, $1$, and $-1$.
+
+\subsubsection{Initial State, Matrix-valued States, and The Decoder function}
+When introducing the LRNN layer in (\ref{eq:linrnn}), we mention that $\mA$, $\mB$ and $\mathrm{dec}$ are learnable functions. However, to learn the constructions in our theoretical results, we need also <<FORMULA_0249>> to be learnable. We do this only to simplify the results, since the same effect can also be achieved by using a special token $\$$ at the beginning of each sequence input to the model, called the beginning of sequence token and setting, <<FORMULA_0250>> for each LRNN layer so that <<FORMULA_0251>> will have the same role as the learnable $\mH_0$ in our constructions. This practice is standard and used in all our experiments.
+
+While we mention that the states $\mH_t$ are generally matrices of dimension <<FORMULA_0252>>,  for our theoretical constructions (excluding the first two theorems), we set <<FORMULA_0253>>, so that states are vector-valued. Hence, for the problems that we consider, we find that having a matrix-valued state (<<FORMULA_0254>>) brings no theoretical advantage, while it is very important for associative recall.
+
+To compute the output <<FORMULA_0255>> from the state $\mH_t$ and the vector $\vx_t$ of an LRNN layer in (\ref{eq:linrnn}), we use the function $\mathrm{dec}$, to abstract away the computations that are done on $\mH_t$ and $\vx_t$, since they are not part of the recurrence. In this work, we do not consider the internal structure of $\mathrm{dec}$, but it usually contains a normalization and a feed-forward neural network and it can approximate any continuous function. 
+
+In our negative results on LRNNs expressivity in \Cref{thm:parity,thm:modcount}, our choice of an arbitrary decoder guarantees the stronger results. For our positive results instead, we either do not consider the decoder (\Cref{thm:groups}) or we make use of a linear decoder (\Cref{thm:regular}). We point out that to recognize regular languages efficiently and with a smaller LRNN state it is beneficial to have a more powerful (non-linear) decoder, as in the case of word problems for cyclic or permutation groups. However, such a decoder may be hard to learn. 
+
+
+\section{Parity and Modular Counting -- Proofs}\label{app:parity}
+We report the proofs for the theorems in \Cref{sec:parity}. We start by defining the function <<FORMULA_0256>>, for a finite set <<FORMULA_0257>>, which provides a simple model for the conversion of real numbers into a finite precision representation.
+<<FORMULA_0258>>
+Note that $\mathcal{D}_{\min}$ might not be a singleton. We naturally extend this function on complex numbers by applying it separately to the real and imaginary part, and then to complex-valued matrices by applying it element-wise.
+The following lemma is a key element of the proofs of \Cref{thm:parity,thm:modcount}. 
+There, the sequence $a_k$ in the lemma takes the form of the imaginary or real part of the elements of the $k$-th power of a matrix with real eigenvalues ($\lambda_i$ will be one eigenvalue), expressed using the Jordan canonical form. See \Cref{proof:parity} for more details on the Jordan Canonical Form.
+Intuitively, the lemma shows that if some of the $\lambda_i$-s are negative then for $k$ large enough, $a_k$ in finite precision will alternate between two values. Instead, if the $\lambda_i$-s  are only nonnegative, $a_k$ in finite precision becomes constant for large enough $k$. 
+\begin{lemma}\label{lm:finitetime}
+Let <<FORMULA_0259>> and for every <<FORMULA_0260>> let
+<<FORMULA_0261>>
+ then there exist <<FORMULA_0262>> such that for every <<FORMULA_0263>> there exist <<FORMULA_0264>> such that
+ <<FORMULA_0265>>
+ Furthermore, if <<FORMULA_0266>> for every <<FORMULA_0267>>, then <<FORMULA_0268>> for <<FORMULA_0269>>. 
+\end{lemma}
+\begin{proof}
+If <<FORMULA_0270>> for every $i$, or <<FORMULA_0271>> for every $i$, then <<FORMULA_0272>> for all $k$ and the statement is trivially satisfied. Without loss of generality we can assume that that <<FORMULA_0273>> and <<FORMULA_0274>> for every <<FORMULA_0275>>, since for each $i$ where this is not true we can remove the corresponding term in the sum (since it will be 0) and use smaller value for $n$. We divide the proof into two parts.
+
+\textbf{Positive powers:} Assume that <<FORMULA_0276>> for all <<FORMULA_0277>>. This yields that for every $i$ and every <<FORMULA_0278>>, <<FORMULA_0279>>.  Since the $\mathrm{cast}$ function is piecewise constant with a finite number of pieces, we can divide the real line into a finite number of intervals where $\mathrm{cast}$ is constant. We now show that for $k$ large enough, the interval where $a_k$ belongs, and hence <<FORMULA_0280>>,  does not vary with $k$.
+
+Without loss of generality we assume that for every <<FORMULA_0281>> we have that <<FORMULA_0282>>, since otherwise we can factor out <<FORMULA_0283>> and use a smaller $n$. Note that <<FORMULA_0284>> and hence <<FORMULA_0285>> for large $k$ behaves like the function <<FORMULA_0286>>, i.e. the product of a polynomial and an exponential function of $k$. Without loss of generality, we therefore take the order of the indices of the terms in the sum such that the functions $g_i$ are in decreasing order of growth:
+<<FORMULA_0287>>
+By factoring out <<FORMULA_0288>>, i.e.\@ the fastest growing term, from $a_k$ we get
+<<FORMULA_0289>>
+with <<FORMULA_0290>> and therefore, since for every $i$ and every <<FORMULA_0291>>, <<FORMULA_0292>> and <<FORMULA_0293>>, there exist <<FORMULA_0294>> such that for every <<FORMULA_0295>>, <<FORMULA_0296>>. Now let <<FORMULA_0297>> with <<FORMULA_0298>> and let <<FORMULA_0299>>, <<FORMULA_0300>> and <<FORMULA_0301>> for <<FORMULA_0302>>. From its definition,  $\mathrm{cast}$ is a piecewise constant function such that <<FORMULA_0303>> for every <<FORMULA_0304>>.
+We now consider three cases according to the values of $\lambda_1$ and $m_1$.
+
+\textbf{1)}
+If <<FORMULA_0305>> or <<FORMULA_0306>>, then <<FORMULA_0307>> and there exists <<FORMULA_0308>> such that for every <<FORMULA_0309>>, either <<FORMULA_0310>> (if <<FORMULA_0311>>) or <<FORMULA_0312>> (if <<FORMULA_0313>>)  and hence <<FORMULA_0314>>.
+
+
+\textbf{2)} If <<FORMULA_0315>> then <<FORMULA_0316>> and hence there exist <<FORMULA_0317>>, <<FORMULA_0318>>, <<FORMULA_0319>> such that for every <<FORMULA_0320>>, <<FORMULA_0321>>, where <<FORMULA_0322>> if <<FORMULA_0323>> and  <<FORMULA_0324>> if  <<FORMULA_0325>>. Therefore, <<FORMULA_0326>> for every <<FORMULA_0327>>.
+
+\textbf{3)} If <<FORMULA_0328>>, then <<FORMULA_0329>> for every $k$  and hence
+<<FORMULA_0330>>
+Note that $b_k$ has now the same structure as $a_k$, just with one less term in the sum, therefore we can factor out the term <<FORMULA_0331>> and, since <<FORMULA_0332>>, apply the same reasoning as for the second case (<<FORMULA_0333>>) to <<FORMULA_0334>> and prove that there exist <<FORMULA_0335>>, <<FORMULA_0336>>, <<FORMULA_0337>> such that for every <<FORMULA_0338>>, we have that <<FORMULA_0339>>, <<FORMULA_0340>>, where <<FORMULA_0341>> if <<FORMULA_0342>> and  <<FORMULA_0343>> if  <<FORMULA_0344>>. Therefore <<FORMULA_0345>> for every <<FORMULA_0346>>. 
+
+In summary, we proved that when <<FORMULA_0347>> for every $i$,  there exist <<FORMULA_0348>>, <<FORMULA_0349>> such that for every <<FORMULA_0350>> <<FORMULA_0351>>, which concludes the first part of the proof.
+
+\textbf{Some powers can be negative:} Consider the general case where <<FORMULA_0352>> can be negative. We can write
+<<FORMULA_0353>>
+Since <<FORMULA_0354>> and <<FORMULA_0355>> do not vary with $k$ we consider the two subsequences
+<<FORMULA_0356>>
+and we can apply the same proof as for the case when <<FORMULA_0357>> for every $i$ to each of the subsequences above, which gives the final result in the case <<FORMULA_0358>> for every $i$.
+\end{proof}
+
+\subsection{Proof of \Cref{thm:parity}}\label{proof:parity}
+
+
+The language $(11)^*$ contains all sequences with an even number of ones. An FSA recognizing the language, for the sequence $1^k$ will output <<FORMULA_0359>> if $k$ is even and <<FORMULA_0360>> if $k$ is odd.  
+ Consider an LRNN with one layer as in (\ref{eq:linrnn}). We will prove that if $\mA(1)$ has only nonnegative eigenvalues, then there exists a <<FORMULA_0361>> such that for every <<FORMULA_0362>>, the finite precision version of the state $\mH_k$ corresponding to the sequence $1^k$ does not depend on $k$ and is equal to <<FORMULA_0363>>. Hence, no matter the choice of $\mathrm{dec}$, also the finite precision version of <<FORMULA_0364>> will not vary with $k$ and thus for some <<FORMULA_0365>>, <<FORMULA_0366>>. An inductive argument can then be used for the case of LRNNs with multiple  (finitely many) layers, using the fact that the input of the next layer will be constant for $k$ large enough, as the input of the first layers.
+
+
+ By unrolling the recursion in \ref{eq:linrnn} we obtain a closed-form expression for the state
+ <<FORMULA_0367>>
+where we set <<FORMULA_0368>> to avoid clutter. We follow \citet{merrillillusion} and make the simplifying assumption that in finite precision the state at time $k$ is computed by first evaluating all products involving the matrices <<FORMULA_0369>> separately and in infinite precision, followed by casting them into finite precision, and finally executing the sum also in infinite precision and casting the result in finite precision. This avoids having to deal with the individual matrix sums and products in finite precision, which would break associativity and be harder to analyze.
+Hence, if we set <<FORMULA_0370>>, we get the following exact and finite precision expressions for the state at time $k$.
+ <<FORMULA_0371>>
+where $\text{cast}$, defined in (\ref{eq:cast}), is an operation that converts matrices with complex values element-wise into finite precision by e.g.\@ separately converting real and imaginary parts.
+ 
+Using the Jordan canonical form theorem \citep[see e.g.][Chap.~3.1]{Horn2012}, we can write <<FORMULA_0372>>, where $\mJ$ is block diagonal made of the Jordan blocks <<FORMULA_0373>> with <<FORMULA_0374>>, <<FORMULA_0375>> and with corresponding complex eigenvalues <<FORMULA_0376>> (with multiplicity taken into account). Such decomposition is useful because it allows, for <<FORMULA_0377>>, to write 
+ <<FORMULA_0378>>
+Then, from the structure of the Jordan decomposition, the imaginary and real part of each element of the matrices <<FORMULA_0379>> and <<FORMULA_0380>>  will be a linear combination of elements of the Jordan blocks taking the same form of $a_k$ in \Cref{lm:finitetime}. Therefore since <<FORMULA_0381>> for every $i$, we can apply \Cref{lm:finitetime} component-wise
+and conclude that there exists <<FORMULA_0382>>, <<FORMULA_0383>> and <<FORMULA_0384>>  such that for every <<FORMULA_0385>>,  <<FORMULA_0386>> and <<FORMULA_0387>>
+and hence
+<<FORMULA_0388>>
+Note that only the matrix <<FORMULA_0389>> varies with $k$ and for large enough $k$, the real and imaginary parts of each element of <<FORMULA_0390>> will be either $0$, smaller than <<FORMULA_0391>> or larger than <<FORMULA_0392>>. Therefore, we obtain that there exists <<FORMULA_0393>> and <<FORMULA_0394>> such that for every <<FORMULA_0395>> we have <<FORMULA_0396>>, which concludes the proof.
+\qed %
+
+\subsection{Proof of \Cref{thm:modcount}}\label{proof:modcount}
+
+
+\textbf{One Layer} Let <<FORMULA_0397>> and <<FORMULA_0398>> be the finite precision versions of the state $\mH_k$ and (scalar) output of a one-layer LRNN  on the input <<FORMULA_0399>>. Let also <<FORMULA_0400>> be the correct output recognizing the word $\vx$. We will show that if the assumptions on the eigenvalues are not satisfied, i.e.\@ if for any $x$, every eigenvalue $\lambda$ of <<FORMULA_0401>> is  real, then there exist <<FORMULA_0402>>, <<FORMULA_0403>> and <<FORMULA_0404>> such that for all <<FORMULA_0405>>
+<<FORMULA_0406>>
+where without loss of generality we take <<FORMULA_0407>>. If <<FORMULA_0408>>, then, similarly to parity, <<FORMULA_0409>> for all <<FORMULA_0410>>, while since <<FORMULA_0411>>, if <<FORMULA_0412>>, then <<FORMULA_0413>>. Otherwise if <<FORMULA_0414>> then if we assume that <<FORMULA_0415>> and <<FORMULA_0416>>, then <<FORMULA_0417>> since <<FORMULA_0418>>. This will prove the result for a one-layer LRNN. Then, we will proceed with the proof of finitely many layers.
+
+To prove (\ref{eq:hoscillating}), we set
+ <<FORMULA_0419>>
+and proceed similarly to \Cref{thm:parity}. 
+Indeed, using the $k$-th power formula for the Jordan Decomposition of the matrix $\mA(1)$ with eigenvalues <<FORMULA_0420>>, the imaginary and real part of each element of the matrices <<FORMULA_0421>> and <<FORMULA_0422>>  will be a linear combination of elements of the Jordan blocks taking the same form of $a_k$ in \Cref{lm:finitetime}. Therefore since our assumptions with <<FORMULA_0423>> imply that <<FORMULA_0424>> for every $i$, we can apply \Cref{lm:finitetime}
+to show that there exist <<FORMULA_0425>>, <<FORMULA_0426>> such that for every <<FORMULA_0427>> we have
+<<FORMULA_0428>>
+Finally, if for simplicity we consider <<FORMULA_0429>>, we have that for <<FORMULA_0430>>
+<<FORMULA_0431>>
+where by factoring out $k$ inside $\mathrm{cast}$, we note that for large enough $k$, the real and imaginary parts of each element of the matrices inside $\mathrm{cast}$ will be either constant, smaller than <<FORMULA_0432>> or larger than <<FORMULA_0433>>.
+Thus there exist <<FORMULA_0434>> and <<FORMULA_0435>> such that (\ref{eq:hoscillating}) is satisfied, concluding the proof for the case of a single layer.
+
+\textbf{Multiple Layers~} Note that for one layer we have two subsequences (one of even and one of odd elements) of the output sequence <<FORMULA_0436>> converging after a finite number of elements. This means that there exist <<FORMULA_0437>> such that for all <<FORMULA_0438>> we have
+<<FORMULA_0439>>
+Now, consider an additional layer that takes as input <<FORMULA_0440>>, with <<FORMULA_0441>> and outputs <<FORMULA_0442>> as
+<<FORMULA_0443>>
+Without loss of generality, assume for simplicity that <<FORMULA_0444>> and that <<FORMULA_0445>> and <<FORMULA_0446>> for all $k$. If we set 
+<<FORMULA_0447>>
+then we can write the states of the second layer at even indices as
+<<FORMULA_0448>>
+Furthermore, for the states at odd indices, we have 
+<<FORMULA_0449>>
+We notice that the sequences $\mH_{2k}^{(2)}$ and $\mH_{2k+1}^{(2)}$ are in a form similar to $\mH_{k}$  of the first layer. If the assumption on the eigenvalues of the state-transition matrices of the second layer does not hold, this means that for all <<FORMULA_0450>>  each eigenvalue of  <<FORMULA_0451>>, including $\mC_1$, is real (but possibly negative).
+Therefore, we can proceed similarly to the case of one layer, i.e. using the powers of the Jordan canonical form of $\mC_1$, to show that if we let <<FORMULA_0452>> and <<FORMULA_0453>> being the finite precision counterparts of $\mH_{2k}^{(2)}$ and $\mH_{2k+1}^{(2)}$, then  there exist <<FORMULA_0454>>, <<FORMULA_0455>> such that for every <<FORMULA_0456>>
+<<FORMULA_0457>>
+Therefore, for <<FORMULA_0458>>, the function <<FORMULA_0459>> will be periodic with period a divisor of four and hence no matter the choice of $\mathrm{dec}^{(2)}$, also the function <<FORMULA_0460>> will be periodic with period a divisor of $4$. Consequently, with two layers one can recognize the language $(1^m)^*$ only when <<FORMULA_0461>>, <<FORMULA_0462>>, or <<FORMULA_0463>>, since those are the only cases where <<FORMULA_0464>> has a period which is a divisor of $4$. Thanks to the assumption on the eigenvalues of the products of state-transition matrices, we can extend this argument inductively to the case of an LRNN with $L$ layers. 
+In particular, for the $i$-th layer, the induction hypothesis is that we assume <<FORMULA_0465>>, mapping $k$ to the $k$-th input to the layer, to be periodic with period a divisor of $2^{i-1}$ for $k$ large enough. Hence, there will be $2^{i-1}$ subsequences of states, each containing powers of the product of $2^{i-1}$ state-transition matrices. From our hypothesis on the eigenvalues of products of state-transition matrices, such product will have only real eigenvalues and hence each subsequence will have 2 converging subsequences resulting in  <<FORMULA_0466>> and consequently <<FORMULA_0467>> and hence <<FORMULA_0468>>, for $k$ large enough, being periodic with period a divisor of $2^{i}$.
+Therefore, for the $L$-th layer, there exists <<FORMULA_0469>> such that for every <<FORMULA_0470>>, 
+the function <<FORMULA_0471>> is periodic with a period which is a divisor of $2^L$ and thus it can recognize the language $(1^m)^*$ only when <<FORMULA_0472>>, which happens only when there exists <<FORMULA_0473>> such that <<FORMULA_0474>> and hence $m$ is a power of two, ending the proof. \qed
+
+\section{Products of Generalized Householder Matrices -- Proofs}\label{app:ghprod}
+We provide proofs for the results stated in  \Cref{sec:ghprod}. Before that, we illustrate how a linear RNN with one layer and state transition matrices that are products of 2 Householder matrices can count modulo $m$.
+
+\subsection{Products of Two Householders and Modular Counting}\label{app:twohousemodcount}
+Counting modulo $m$ can be achieved by rotating a vector in $\R^2$ by an angle of <<FORMULA_0475>> radians, and we can express a rotation matrix as a product of two reflection matrices, which are GH matrices with eigenvalues in <<FORMULA_0476>> (see \Cref{app:twohousemodcount}).
+Inded, for any <<FORMULA_0477>> there exist unit norm vectors <<FORMULA_0478>> such that
+<<FORMULA_0479>>
+If we set the state-transition matrix in (\ref{eq:linrnn}) to <<FORMULA_0480>>, an LRNN with one layer can count modulo $m$, since if we also set  <<FORMULA_0481>>
+and <<FORMULA_0482>>, with <<FORMULA_0483>> for all <<FORMULA_0484>>, then for the input <<FORMULA_0485>> and since $\mR$ has period $2\pi$, we get
+<<FORMULA_0486>>
+
+
+\subsection{Proof of \Cref{th:ghexpress}}\label{proof:ghexpress}
+
+
+
+
+\textbf{First item} It can be shown by noting that if <<FORMULA_0487>>, then <<FORMULA_0488>> and using the sub-multiplicative property of the Euclidean norm, i.e the fact that <<FORMULA_0489>>.
+
+
+
+
+\textbf{Second item} Note that any real matrix has a singular value decomposition. Hence we can write
+<<FORMULA_0490>>
+with <<FORMULA_0491>> orthogonal and <<FORMULA_0492>> with <<FORMULA_0493>>, since <<FORMULA_0494>>. It follows from the $n$-reflections theorem\footnote{This is a specialization of the Cartan–Dieudonn\'e Theorem to $\R^n$, see Theorem 3 in \url{https://faculty.uml.edu/dklain/orthogonal.pdf} for a proof.} that we can write $\mU$ and $\mV$ as either the identity <<FORMULA_0495>> or the product of at most $n$ reflections, each of which is in <<FORMULA_0496>>. Hence <<FORMULA_0497>>. We can also write the matrix $\mS$ as the product of $n$ GH matrices as
+<<FORMULA_0498>>
+where $\ve_i$ is the $i$-th element of the canonical basis of $\R^n$. Hence, <<FORMULA_0499>>. The proof of the first part is concluded since we wrote each of <<FORMULA_0500>> as a product of at most $n$ GH matrices. If $\mM$ is orthogonal, we apply the $n$-reflections theorem directly. We also note that if <<FORMULA_0501>> with $\mP$ being a permutation matrix different from the identity, it can be written as products of at most <<FORMULA_0502>> \textit{swaps}, i.e. permutation matrices permuting only two elements. Therefore we have that there exists an integer <<FORMULA_0503>> and indices <<FORMULA_0504>> and <<FORMULA_0505>> such that <<FORMULA_0506>> and
+<<FORMULA_0507>> 
+where we set <<FORMULA_0508>>. Note that since <<FORMULA_0509>>, <<FORMULA_0510>> with <<FORMULA_0511>>. For the the case where <<FORMULA_0512>> we can use the fact that <<FORMULA_0513>>. 
+
+\textbf{Third item}  Let <<FORMULA_0514>>, with <<FORMULA_0515>> with <<FORMULA_0516>> and <<FORMULA_0517>>. 
+If <<FORMULA_0518>> the statement is satisfied, otherwise, let   <<FORMULA_0519>>.
+Any unit vector <<FORMULA_0520>> can then be written as <<FORMULA_0521>> with <<FORMULA_0522>>, <<FORMULA_0523>> and <<FORMULA_0524>>.
+Now, if <<FORMULA_0525>>, then <<FORMULA_0526>>, and hence $\vv$ is an eigenvector with eigenvalue $1$. Instead, if <<FORMULA_0527>>, then there exists <<FORMULA_0528>> (we take the largest one) such that <<FORMULA_0529>> and <<FORMULA_0530>>. Therefore, if <<FORMULA_0531>>, then either <<FORMULA_0532>> or <<FORMULA_0533>> so that <<FORMULA_0534>> for all <<FORMULA_0535>>. Moreover, we have that
+<<FORMULA_0536>>
+where the last line comes from the fact that <<FORMULA_0537>> and is only reached at <<FORMULA_0538>> and <<FORMULA_0539>>, while <<FORMULA_0540>>.
+Therefore, since for every $i$, <<FORMULA_0541>> and the Euclidean norm is sub-multiplicative we have
+<<FORMULA_0542>>
+Therefore, if $\vv$ is also an eigenvector with eigenvalue <<FORMULA_0543>>, then <<FORMULA_0544>>.
+Hence, we proved that for every eigenvector with eigenvalue $\lambda$ either <<FORMULA_0545>> or <<FORMULA_0546>>.
+
+It remains to show that all eigenvalues of <<FORMULA_0547>> are in $[0,1]$. From the assumptions <<FORMULA_0548>> with <<FORMULA_0549>> symmetric and positive semi-definite, therefore $\mC_1$ has a unique symmetric and positive semi-definite square root $\mC_1^{1/2}$ such that <<FORMULA_0550>>. If $\mC_1$ is non-singular (invertible) then
+<<FORMULA_0551>>
+Thus, <<FORMULA_0552>> is similar to <<FORMULA_0553>> and shares its eigenvalues. Moreover <<FORMULA_0554>> is symmetric positive  semi-definite (having real nonnegative eigenvalues) because $\mC_1^{1/2}$ and $\mC_2$ are symmetric and <<FORMULA_0555>> with <<FORMULA_0556>> since $\mC_2$ is positive semi-definite. Instead, if $\mC_1$ is singular, for <<FORMULA_0557>> the matrix <<FORMULA_0558>> is positive definite and non-singular. Hence <<FORMULA_0559>> has real and nonnegative eigenvalues. Since <<FORMULA_0560>> and the eigenvalues are a continuous function of the entry of the matrix, <<FORMULA_0561>> has positive real eigenvalues. Since the modulus of any eigenvalue is smaller or equal than the euclidean norm of the matrix, which is smaller than one from the first point of the theorem, the statement follows.
+\qed
+
+\subsection{Proof of \Cref{thm:groups}}\label{proof:groups}
+We first recall the notion of group isomorphism.
+Two groups <<FORMULA_0562>> and <<FORMULA_0563>> where <<FORMULA_0564>> are the sets and $\star$ and $\cdot$ are the associative operations, are isomorphic, if there exists a bijective map <<FORMULA_0565>> such that for every <<FORMULA_0566>>, <<FORMULA_0567>>
+<<FORMULA_0568>>
+
+We view the LRNN layer in (\ref{eq:linrnn}) as the automaton <<FORMULA_0569>>, where <<FORMULA_0570>>, which is extended in the usual way, and <<FORMULA_0571>>.
+Since we assumed that <<FORMULA_0572>> is a group, from Cayley’s theorem we have that it is isomorphic to a subgroup of $S_n$, which is the set of permutations on a set of $n$ elements. Furthermore, each element in $S_n$ can be represented as an <<FORMULA_0573>> permutation matrix.
+Since in general <<FORMULA_0574>>, we cannot let $\mathcal{H}$ to be a set of one hot vectors each corresponding to states in $Q$. Instead, we let <<FORMULA_0575>>, <<FORMULA_0576>> be the set of permutation matrices and set <<FORMULA_0577>> and <<FORMULA_0578>> to be the function mapping each letter <<FORMULA_0579>> to the permutation matrix corresponding to <<FORMULA_0580>>. With this choice we can see that the function <<FORMULA_0581>> such that <<FORMULA_0582>> for every <<FORMULA_0583>> is one-to-one (bijective), and from our choice of $\mH_0$, the map <<FORMULA_0584>> such that for every <<FORMULA_0585>>, <<FORMULA_0586>> is also bijective. Moreover, the map <<FORMULA_0587>> such that <<FORMULA_0588>> is surjective because without loss of generality we can consider states that are only reachable from the initial state $q_0$, i.e.\@ <<FORMULA_0589>>. Hence if we set <<FORMULA_0590>>, then <<FORMULA_0591>> is surjective and for every <<FORMULA_0592>> and <<FORMULA_0593>> we have that
+<<FORMULA_0594>>
+
+
+Thus, we have shown that such an LRNN implements $\mathcal{A}$ and it does so with finite precision because the entries of all vectors and matrices are bounded integers.
+Moreover, Let <<FORMULA_0595>> be the maximum number of displaced element of the permutation associated with the alphabet $\Sigma$.
+Then, this means that each permutation can be written as a product of at most <<FORMULA_0596>> permutations of two elements. Hence, for every <<FORMULA_0597>>, <<FORMULA_0598>>.
+
+If in addition there exists <<FORMULA_0599>> such that <<FORMULA_0600>> is isomorphic to a subgroup of the cyclic group $\mathbb{Z}_m$ with elements <<FORMULA_0601>>, we can modify the construction above to use a smaller dimension.
+If <<FORMULA_0602>>, then $\mathbb{Z}_2$ has elements <<FORMULA_0603>>, and $\mathcal{A}$ implements the parity automaton. Thus, we can set <<FORMULA_0604>>, <<FORMULA_0605>>, <<FORMULA_0606>> and <<FORMULA_0607>> while <<FORMULA_0608>>, which means that we can use a scalar recursion. 
+Otherwise, if <<FORMULA_0609>>, we can modify the construction above by setting <<FORMULA_0610>> and, if for simplicity we assume <<FORMULA_0611>>, for every <<FORMULA_0612>>  we let <<FORMULA_0613>> be the $2 \times 2$ rotation matrix corresponding to <<FORMULA_0614>>:
+<<FORMULA_0615>>
+such that <<FORMULA_0616>> (from \Cref{th:ghexpress}). This concludes the proof. \qed
+
+\subsection{Krohn-Rhodes Theorem}
+Before presenting the proof for \Cref{thm:regular}, we provide the statement for the landmark result of Krohn-Rhodes \citep{krohn1965algebraic}, after giving the definition of the cascade product of two FSA.
+
+\begin{definition}[Cascade product] Given two FSA <<FORMULA_0617>> and <<FORMULA_0618>>, we define the cascade product FSA as <<FORMULA_0619>> where for any <<FORMULA_0620>>
+<<FORMULA_0621>>
+\end{definition}
+
+
+\begin{theorem}[Krohn-Rhodes, Theorem 4 in \citet{maler1994cascaded}]\label{thm:KR}
+For every FSA <<FORMULA_0622>> there exists <<FORMULA_0623>> and a \textit{cascade product} FSA <<FORMULA_0624>>, with <<FORMULA_0625>>, with <<FORMULA_0626>>, 
+and a function <<FORMULA_0627>> such that for any <<FORMULA_0628>>, <<FORMULA_0629>> and each $\mathcal{A}^{(i)}$ is \textit{ permutation-reset} automaton, which means that for every <<FORMULA_0630>>, <<FORMULA_0631>> is either a bijection (i.e. a permutation over $Q$) or constant, ie. <<FORMULA_0632>>.  %
+\end{theorem}
+
+\subsection{Proof of \Cref{thm:regular}}\label{proof:regular}
+
+
+
+
+We apply the Krohn-Rhodes theorem (\Cref{thm:KR}) to write $\mathcal{A}$ as the cascade product FSA <<FORMULA_0633>> with each FSA <<FORMULA_0634>> being permutation-reset and we show how the LRNN can implement $\mathcal{C}$ by first showing how its $i$-th layer, with the structure in (\ref{eq:linrnn}), can implement $\mathcal{A}^{(i)}$. 
+
+
+
+Let <<FORMULA_0635>> and without loss of generality assume that <<FORMULA_0636>> and  <<FORMULA_0637>> with <<FORMULA_0638>>.  
+ For every <<FORMULA_0639>>
+ we set <<FORMULA_0640>>, <<FORMULA_0641>> such that for every <<FORMULA_0642>>
+<<FORMULA_0643>>
+
+Then, for every word <<FORMULA_0644>>, we set <<FORMULA_0645>>, such that <<FORMULA_0646>> and 
+<<FORMULA_0647>>
+So that such construction implements $\mathcal{A}^{(i)}$. In addition, by letting <<FORMULA_0648>> be the input to the LRNN, i.e. <<FORMULA_0649>>, and setting the output of each layer as the input to the next, i.e. <<FORMULA_0650>> for <<FORMULA_0651>>, for the output of the last layer we get
+<<FORMULA_0652>>
+where we removed the nested parenthesis for simplicity.
+Hence, the first $s$ elements of $y_t^{(s)}$ are exactly the output of the cascade FSA $\mathcal{C}$. Note that our construction can be implemented in finite precision since we only used matrices/vectors with entries either in <<FORMULA_0653>>, requiring only one bit, or in <<FORMULA_0654>>, that can also be implemented using finite precision with $|Q^{(i)}|$ integers, requiring <<FORMULA_0655>> bits. Also note that we can exclude $w_t$ from the output $y_t^{(s)}$ by changing $ \mathrm{dec}^{(s)}$,  to bring the dimension of the output, end hence the width of the LRNN, to $\N^{s}$.
+
+It is also the case that <<FORMULA_0656>> for every <<FORMULA_0657>> since <<FORMULA_0658>> is either a permutation matrix (<<FORMULA_0659>> ) or the zero matrix (<<FORMULA_0660>>). 
+Also, for every permutation matrix <<FORMULA_0661>> which permutes only <<FORMULA_0662>> elements we have that <<FORMULA_0663>>. 
+
+Furthermore, for the zero matrix, we have
+<<FORMULA_0664>>
+
+It follows that <<FORMULA_0665>> for every  <<FORMULA_0666>> and <<FORMULA_0667>>.
+\qed %
+\section{LRNNs Can Do Modular Addition Using Only Reflections}\label{sec:modreflections}
+In this section, we explain how an LRNN with two layers and using only Householder state transition matrices (reflections) can compute addition modulo <<FORMULA_0668>>, i.e it can map words <<FORMULA_0669>> with <<FORMULA_0670>> into <<FORMULA_0671>> for arbitrary <<FORMULA_0672>>. This corresponds to solving the group word problem associated with the cyclic group $\mathbb{Z}_m$. 
+We note that our modification of DeltaNet, namely DeltaNet $[-1,1]$ can therefore solve addition modulo $m$ with 2 layers.
+
+If the state transition matrices can be generic rotation matrices, then an LRNN can perform addition modulo $m$ using just one layer by mapping each element of $\mathbb{Z}_m$ to the corresponding $2 \times 2$ rotation matrix as shown in \Cref{proof:groups}. Such construction requires a number of states for the LRNN equal to $m$, i.e. the number of elements of the group $\mathbb{Z}_m$. However, since here we assume that state transition matrices are reflections,  we cannot map each element of the group to a rotation (since those are a product of 2 reflections) and our construction for the LRNN will require two layers. Specifically, the first layer will count modulo $2$, i.e. it will output the sequence <<FORMULA_0673>> where <<FORMULA_0674>>, while the second layer will have $2m$ states and will use two different reflection matrices for each group element, depending on the value of <<FORMULA_0675>>. Formally, we have the following result.
+
+\begin{theorem}[Modular addition with reflections] An LRNN with two layers in the form (\ref{eq:linrnn}), where <<FORMULA_0676>> for the first layer and <<FORMULA_0677>> for the second layer, with $\mathcal{M}_1^2$ defined in (\ref{eq:GHset}), can perform addition modulo $m$ for any <<FORMULA_0678>>. In particular, the LRNN will have 2 scalar states in the first layer and $2m$ states, each being a vector in $\R^2$, in the second layer. 
+\end{theorem}
+\begin{proof}
+The first layer of the LRNN will implement counting modulo $2$ as follows.
+<<FORMULA_0679>>
+We note that the state-transition matrix (the scalar $-1$) is a reflection since <<FORMULA_0680>>.
+For the second layer, we have instead
+<<FORMULA_0681>>
+where <<FORMULA_0682>>,  <<FORMULA_0683>> is the $2 \times 2$ reflection matrix that reflects all vectors by a line having an angle of <<FORMULA_0684>> with the line passing from the origin and the vector <<FORMULA_0685>> and <<FORMULA_0686>> determines the angle of the reflection and is defined as
+<<FORMULA_0687>> 
+Moreover <<FORMULA_0688>> and <<FORMULA_0689>> are the two sets of states corresponding to reflections and rotations respectively and are defined as
+<<FORMULA_0690>>
+where <<FORMULA_0691>> is a rotation matrix with angle <<FORMULA_0692>>.  
+
+Let <<FORMULA_0693>>, the following are standard identities of products of 2D rotations and reflections.
+<<FORMULA_0694>>
+From our choice of $\theta$, $\vd_i$ and $\vc_i$, using the identities above and the the fact that $\mR$ is a periodic function with period $2\pi$ we have that
+<<FORMULA_0695>>
+ and similarly
+<<FORMULA_0696>>
+for every <<FORMULA_0697>>.
+We will now prove by induction that
+<<FORMULA_0698>>
+where we recall that <<FORMULA_0699>> and that, by definition, <<FORMULA_0700>> and <<FORMULA_0701>>,  since <<FORMULA_0702>>.
+For the base case we have that 
+<<FORMULA_0703>>
+where we have used (\ref{eq:dtoc}) and (\ref{eq:ctod}).
+As induction hypothesis, suppose that for <<FORMULA_0704>>
+<<FORMULA_0705>>
+then, using again (\ref{eq:dtoc}) and (\ref{eq:ctod}), we obtain
+<<FORMULA_0706>>
+which completes our proof by induction yielding (\ref{eq:hind}).
+Finally, using the definition of $\mathrm{dec}^{(2)}$, (\ref{eq:hind}) and as long as <<FORMULA_0707>>, <<FORMULA_0708>> and <<FORMULA_0709>> for every <<FORMULA_0710>> with <<FORMULA_0711>>, which is guaranteed by our choice of $\theta$, we have that <<FORMULA_0712>>, ending the proof.
+\end{proof}
+
+
+
+
+
+
+\section{Experiments}\label{app:exps}
+
+\subsection{Chomsky Hierarchy}\label{app:chomsky-hierarchy}
+
+Here, we provide details on the formal language tasks and experimental protocol of Section~\ref{subsec:chomsky-hierarchy}.
+
+\subsubsection{Details on the experimental setup}
+
+Like~\citet{poppel2024xlstm}, we trained each model with sequence lengths ranging from 3 to 40 and evaluated on lengths from 40 to 256, to understand the length generalization capabilities. We compared mLSTM and sLSTM with two models: Mamba~\citep{gu2023mamba} and DeltaNet~\citep{yang2024parallelizing}. Moreover, we also include a Transformer~\citep{vaswani_trans} baseline. For parity, all models contain 2 blocks (layers), with 4 heads for the xLSTM and DeltaNet models. We set the embedding and heads' dimensions to 128. For Mamba and DeltaNet, we also enable the 1-D depthwise-separable convolution layer with kernel size equal to 4 after the query/key/value projection. For modular arithmetic, we increase the number of layers to 3 and use a gradient clipping norm of 1.0 for Transformer, Mamba, and DeltaNet, while for mLSTM and sLSTM we decrease the embedding size and number of heads to 64 and 1, respectively, as well as use a standard initialization for the bias parameters.
+We train each model using AdamW~\citep{Loshchilov2017DecoupledWD} without gradient clipping, using 3 different learning rates (1e-2, 1e-3, 5e-4 1e-4), with 3 different seeds each. We pick the best based on the median of the 3 seeds for every learning rate value. We use a batch size of 1024 (except for mLSTM, where we use 512 due to OOM error) and a cosine annealing learning rate schedule~\citep{loshchilov2022sgdr} (minimum learning rate: 1e-6) after 10\% warm-up steps. The weight decay is set to 0.1 during training. We train on every task for 100k steps in total. At each training step, we make sure to generate a valid random sample from the task at hand (see below).
+
+\subsubsection{Details on the evaluated tasks}
+In Section~\ref{subsec:chomsky-hierarchy} we conducted empirical evaluations on 3 tasks --parity, modular arithmetic without brackets and with brackets -- from various levels of the Chomsky Hierarchy, as proposed by~\citet{deletangneural} and similarly used in xLSTM~\citep{poppel2024xlstm}. Details for each task are given below, where $|\Sigma|$ is the vocabulary size and <<FORMULA_0713>> is the accuracy of random guessing:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Parity (<<FORMULA_0714>>, <<FORMULA_0715>>).} The parity <<FORMULA_0716>> of a sequence of ones and zeros <<FORMULA_0717>> is equal to $1$ (resp. $0$) if the total number of ones in the sequence is odd (resp. even). 
+It is equivalent to addition modulo 2, it can be computed by summing all previous values and then using the modulo 2 function as <<FORMULA_0718>>.
+    \item \textbf{Modular Arithmetic w/o Brackets (<<FORMULA_0719>>, <<FORMULA_0720>>).} Given a set of special tokens <<FORMULA_0721>> and a modulus <<FORMULA_0722>>, we set <<FORMULA_0723>> and $y_t$ is equal to the result of the operations modulo $m$ in the sequence <<FORMULA_0724>> with <<FORMULA_0725>>.
+    In our experiments <<FORMULA_0726>>. An example sequence is as follows:
+    <<FORMULA_0727>>
+    \item \textbf{Modular Arithmetic w/ Brackets, (<<FORMULA_0728>>, <<FORMULA_0729>>).} Same definition as the modular arithmetic without brackets with a set of special tokens <<FORMULA_0730>>. In our experiments <<FORMULA_0731>>. An example sequence is as follows:
+    <<FORMULA_0732>>
+    \end{itemize}
+
+
+\begin{table}
+\vspace{-8mm}
+\caption{Performance comparison of various 
+recurrent models on regular and context-free language tasks. 
+recurrent models on formal language tasks. 
+We report the median $\pm$ median absolute deviation (\emph{left table}) and best score (\emph{right table}) of 3 independent runs with different random seeds. Scores represent scaled accuracy, with 1.0 indicating perfect performance and 0.0 random guessing. The positive impact of allowing negative eigenvalues ($[-1, 1]$ range) versus restricting to positive eigenvalues ($[0, 1]$ range) is evident across different model architectures.}
+\label{tab:chomsky-median}
+\centering
+\vspace{2mm}
+\resizebox{0.8\linewidth}{!}{
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+                   & \textbf{Parity} & \begin{tabular}[c]{@{}l@{}}\textbf{Mod. Arithmetic}\\ \textbf{(w/o brackets)}\end{tabular} & \begin{tabular}[c]{@{}l@{}}\textbf{Mod. Arithmetic} \\ \textbf{(w/ brackets)}\end{tabular} & \begin{tabular}[c]{@{}c@{}} \textbf{Mod. Arithm.} \\ \textbf{(w/ brackets,} \\ \textbf{no mult)}\end{tabular} \\ \midrule
+Transformer & 0.003 $\pm$ \tiny{0.013}     & 0.018 $\pm$ \tiny{0.009}                                                                      & 0.064 $\pm$ \tiny{0.003}  & 0.025 $\pm$ \tiny{0.000}                                                                     \\ \midrule
+mLSTM & 0.018 $\pm$ \tiny{0.035}     & 0.027 $\pm$ \tiny{0.013}                                                                      & 0.114 $\pm$ \tiny{0.000}  &0.034 $\pm$ \tiny{0.001}                                                                     \\
+sLSTM & 1.000 $\pm$ \tiny{0.000}   & 0.124 $\pm$ \tiny{0.000}                                                                  & 0.163 $\pm$ \tiny{0.015}  &0.153 $\pm$ \tiny{0.020}                                                                     \\ \midrule
+Mamba $[0, 1]$     & 0.000 $\pm$ \tiny{0.000}    & 0.066 $\pm$ \tiny{0.029}                                                                     &   0.116 $\pm$ \tiny{0.007}  &  0.072 $\pm$ \tiny{0.008}                                                                     \\
+Mamba $[-1, 1]$    & 1.000 $\pm$ \tiny{0.000}    & 0.214 $\pm$ \tiny{0.027}                                                                      &   0.098 $\pm$ \tiny{0.009}  &  0.126 $\pm$ \tiny{0.010}                                                                    
+\\ \midrule
+DeltaNet $[0, 1]$  & 0.010 $\pm$ \tiny{0.005}    & 0.214 $\pm$ \tiny{0.056}                                                                     &   0.162 $\pm$ \tiny{0.018}  & 0.113 $\pm$ \tiny{0.009}                                                                       \\
+DeltaNet $[-1, 1]$ & 0.999 $\pm$ \tiny{0.006}    & 0.826 $\pm$ \tiny{0.146}                                                                    &  0.227 $\pm$ \tiny{0.011}  &  0.129 $\pm$ \tiny{0.016}                                                                      \\ \bottomrule
+\end{tabular}
+
+
+}
+\end{table}
+
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \adjustbox{width=1.0\textwidth}{
+        \includegraphics[width=0.222\textwidth, trim={3.5 0 64 0}, clip=true] {figure/chomsky/parity-transformer_a.pdf}
+        \includegraphics[width=0.204\textwidth, trim={16 0 64 0}, clip=true] {figure/chomsky/mod-transformer_b.pdf}
+        \includegraphics[width=0.28\textwidth, trim={16 0 8 0}, clip=true] {figure/chomsky/modbra-transformer_c.pdf}
+        }
+        \caption{Transformer}
+    \end{subfigure}
+    \vspace{2mm} 
+    \begin{subfigure}[b]{\textwidth}
+        \adjustbox{width=1.0\textwidth}{
+        \includegraphics[width=0.222\textwidth, trim={3.5 0 67 0}, clip=true] {figure/chomsky/parity-xlstm10_parity-xlstm01.pdf}
+        \includegraphics[width=0.204\textwidth, trim={16 0 67 0}, clip=true] {figure/chomsky/mod-xlstm10_mod-xlstm01.pdf}
+        \includegraphics[width=0.285\textwidth, trim={16 0 8 0}, clip=true] {figure/chomsky/modbra-xlstm10_modbra-xlstm01.pdf}
+        }
+        \caption{mLSTM and xLSTM}
+    \end{subfigure}
+    \vspace{2mm} 
+    \begin{subfigure}[b]{\textwidth}
+        \adjustbox{width=1.0\textwidth}{
+        \includegraphics[width=0.222\textwidth, trim={3.5 0 59 0}, clip=true] {figure/chomsky/parity-mamba_parity-mamba2.pdf}
+        \includegraphics[width=0.204\textwidth, trim={16 0 60 0}, clip=true] {figure/chomsky/mod-mamba_mod-mamba2.pdf}
+        \includegraphics[width=0.275\textwidth, trim={16 0 8 0}, clip=true] {figure/chomsky/modbra-mamba_modbra-mamba2.pdf}
+        }
+        \caption{Mamba}
+    \end{subfigure}
+    \vspace{2mm}
+    \begin{subfigure}[b]{\textwidth}
+        \adjustbox{width=1.0\textwidth}{
+        \includegraphics[width=0.222\textwidth, trim={3.5 0 59 0}, clip=true] {figure/chomsky/parity-delta_parity-delta2.pdf}
+        \includegraphics[width=0.204\textwidth, trim={16 0 60 0}, clip=true] {figure/chomsky/mod-delta_mod-delta2.pdf}
+        \includegraphics[width=0.275\textwidth, trim={16 0 8 0}, clip=true] {figure/chomsky/modbra-delta_modbra-delta2.pdf}
+        }
+        \caption{DeltaNet}
+    \end{subfigure}
+    \vspace{-9mm}
+    \caption{
+    Performance (scaled accuracy) vs sequence length of \textit{Transformer},
+    \textit{mLSTM}, \textit{sLSTM}, \textit{Mamba} and \textit{DeltaNet} variants on different formal language tasks. Trained on sequences up to length 40 (dashed vertical red line). At test time, we sample uniformly at random 8192 sequences with lengths between 40 and 256. The curves show the mean and 95\% CI. Note, that the Transformer model fails to length extrapolate, but performs nearly perfectly within the training context length.
+    }
+    \label{fig:chomsky_deltanet_length_extrapolation_all}
+\end{figure}
+
+
+\subsection{State-Tracking}\label{app:state-tracking}
+
+\subsubsection{Details of the Experiments}
+
+
+
+For the experiments in \Cref{sec:statetracking},
+we map each element of the group $S_5$ to an integer from $0$ to $119$, where $0$ corresponds to the identity permutation, and then
+construct inputs  and output sequences of integers <<FORMULA_0733>>  and <<FORMULA_0734>> as follows
+\begin{itemize}
+    \item \textbf{$\mathbf{S_5}$} We sample $x_i$ uniformly at random from <<FORMULA_0735>>. $y_i$ is computed as the product of the permutations corresponding to <<FORMULA_0736>> applied in order from $1$ to $i$.
+    \item \textbf{$\mathbf{S_5}$ only swaps} As $S_5$ but $x_i$ is sampled from the permutations that permute up to two elements (swaps and identity).
+    \item \textbf{$\mathbf{S_5}$ swaps, 3-permutations} As $S_5$ but $x_i$ is sampled from the permutations that permute up to three elements.
+    \item \textbf{$\mathbf{S_5}$ 4 tokens per transition} If <<FORMULA_0737>>, then $x_i$ is sampled uniformly at random from <<FORMULA_0738>>, otherwise <<FORMULA_0739>> (special token). For <<FORMULA_0740>>, $y_{i+3}$ is the product of the permutations corresponding to <<FORMULA_0741>>, where $120$ is treated as the identity permutation. <<FORMULA_0742>> for <<FORMULA_0743>>.
+\end{itemize}
+For each setup, we randomly sample $1.6$M examples for and $40K$ examples of length $500$ to construct the train and test dataset. We note that we are using a substantially larger training set compared to \citep{merrill2023parallelism}, to reduce the chances of overfitting. We run 3 seeds for each method, changing the network initialization and sampling of the minibatches. The train and validation datasets are kept the same across runs. 
+
+We train all models using AdamW with weight decay $0.01$, learning rate $0.0001$, gradient clipping to $1.0$, and a batch size of $512$.
+Both DeltaNet and Mamba models use an embedding dimension of $128$ and $4$ heads for DeltaNet. In the case of DeltaNet, we do not use $1$-D convolutions for these experiments. Other parameters are kept as default.
+
+\textbf{Full Matrix Baseline.} For the full matrix baseline we use a single layer and map directly each token $x_i$ to a learnable full state-transition matrix <<FORMULA_0744>> via one-hot encoding. We then compute, for <<FORMULA_0745>> the recursion
+<<FORMULA_0746>>
+where $n$ is set to $32$ for efficiency reasons (memory and compute time grow quickly with $n$).
+After that, we flatten each $\mH_i$ into a vector and apply first a projection on the unit ball and then a linear decoder to get the final outputs. The projection was added to increase stability since we do not bound the norm of <<FORMULA_0747>>. Since this model uses a full matrix, with <<FORMULA_0748>> it should be fully able to learn $S_5$ without restricting the transitions in input or using more tokens per transition. However, in some situations, the performance degrades quickly after some input sequence length, probably because the norm of the learned <<FORMULA_0749>> is not close enough to one and hence part of the state either vanish or explode for long sequences.
+
+\textbf{Plots with all runs.} We report the plots with all 3 runs per method in \Cref{fig:s5_large} (In \Cref{fig:s5} we reported only the best one for each method). Despite our efforts to decrease the variance of the results by increasing training time and dataset size, we report that there is still some variability. For example, one of the runs of DeltaNet $[-1,1]$ (5L) on $S_5$ with 4 tokens per transition did not achieve a good accuracy.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.49\linewidth]{figure/permutations/large_S5_only_swaps.pdf}
+    \includegraphics[width=0.49\linewidth]{figure/permutations/large_S5_limit_to3.pdf}
+    \includegraphics[width=0.49\linewidth]{figure/permutations/large_S5_4_tokens_s_token_only_input.pdf}
+    \includegraphics[width=0.49\linewidth]{figure/permutations/large_S5.pdf}
+    \caption{Validation sequence accuracy across different lengths on $S_5$ after 100 epochs of training (3 seeds). The dashed vertical line indicates the sequence length used during training. Each method is labeled with name, eigenvalue range, and number of layers. The dashed vertical line indicates the sequence length used during training. 
+    }\label{fig:s5_large}
+\end{figure}
+
+\subsubsection{Cyclic Groups}\label{app:cyclic}
+\begin{figure}[t]
+    \centering
+    \vspace{-5mm}
+    \includegraphics[width=0.35\linewidth]{figure/cyclic/Z60_2_tokens_s_token_only_input.pdf}
+    \includegraphics[width=0.35\linewidth]{figure/cyclic/Z60.pdf}
+    \vspace{-5mm}
+    \caption{Validation sequence accuracy at different sequence lengths on the cyclic group $\mathbb{Z}_{60}$ (1 seed). Dashed vertical lines indicate the sequence length used for training (left 32, right 64). Using 2 tokens per transition seems to help only marginally in this case. Mamba $[-1,1]$ is the best-performing model. The variants with eigenvalues in [0,1] performed worse. }\label{fig:z60}
+    \vspace{-3mm}
+\end{figure}
+We report in \Cref{fig:z60} some experiments on group word problems with the group $\mathbb{Z}_{60}$. For this experiment, we also consider the simplified version where each transition is encoded using $2$ tokens. This is done as in the experiments of $S_5$ with $4$ tokens, but using $2$ tokens instead of $4$. 
+Extending the eigenvalue range seems to help in both settings, although surprisingly, Mamba $[-1,1]$, even though it has a diagonal state-transition matrix, seems to perform best. We conjecture that in this case, the models might learn the shortcut solutions, also because they do not generalize very well to longer sequences.
+
+
+
+
+
+\subsection{Language Modeling}\label{app:language_modelling}
+
+\subsubsection{Details on the experimental setup}\label{app:llm_experimental_details}
+We use the training pipeline which is part of the flash-linear-attention library (flame)~\citep{yang2024fla} and which in turn is based on HuggingFace accelerate~\citep{accelerate}. We use stage-2 of the ZeRO optimizer~\citep{rajbhandari2020zero} with gradient clipping set to auto.
+The 1.3B parameter DeltaNet models are trained on 32 Nvidia A100s using a per-device batch size of 6 and 5 gradient accumulation steps for 50,000 steps.
+The 340M parameter DeltaNet models and the 370M parameter Mamba models are trained using a training batch size of 16 and 200,000 steps on 16 Nvidia A100s.
+All models are trained using a context length of 2048, learning rate of 3e-4. For optimization, we use AdamW \citep{Loshchilov2017DecoupledWD}, the learning rate was adjusted using cosine annealing \citep{loshchilov2022sgdr} following a linear warm-up period of 250/500 steps for the 340/370M and 1.3B parameter models respectively. We applied a weight decay of 0.01 throughout the training process.
+\begin{figure}[ht]
+    \centering
+    \adjustbox{width=.9\textwidth}{
+    \begin{subfigure}[b]{0.25\textwidth}
+        \centering
+        \includegraphics[width=1\linewidth, trim={0 0 60 0}, clip=true]{figure/nlp/deltanet_340m.pdf}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3075\textwidth}
+        \centering
+        \includegraphics[width=1\linewidth, trim={13 0 3.5 0}, clip=true]{figure/nlp/mamba_370m.pdf}
+    \end{subfigure}
+    }
+    \adjustbox{width=.5\textwidth}{\begin{subfigure}[b]{0.25\textwidth}
+        \centering
+        \includegraphics[width=1\linewidth, clip=true]{figure/nlp/deltanet_1_3b.pdf}
+    \end{subfigure}}
+    \caption{Learning curves of DeltaNet 340M (top left), Mamba 370M (top right) and DeltaNet 1.3B (bottom),  training on 100B tokens of Fine-Web 100B. 1.3B runs required only 50k optimizer steps versus the 200k of the 340M runs due to the 4x larger batch size. All models trained stably with the same hyperparameters. Training curves were smoothed with a rolling window of 500 steps.}
+    \label{fig:training_curves}
+\end{figure}
+
+
+\subsubsection{Details on the evaluated tasks}
+To produce the results in~\Cref{tab:lm_harness}, we use the lm-harness benchmark~\citep{eval-harness}, focusing on the same tasks as~\citet{yang2024parallelizing}: LAMBADA (LMB)~\citep{paperno2016lambada}, PIQA~\citep{bisk2020piqa}, HellaSwag (Hella.)~\citep{zellers2019hellaswag}, Winogrande (Wino.)~\citep{sakaguchi2021winogrande}, and ARC-easy (ARC-e) and ARC-challenge (ARC-c)~\citep{clark2018think}. Additionally, we evaluate the performance on recall-intensive tasks (like~\citet{yang2024parallelizing}), including FDA~\citep{arora2023language}, SWDE~\citep{lockard2019open}, and SQUAD~\citep{rajpurkar2018know}, to provide a comprehensive evaluation of our models' capabilities.
+
+
+\begin{figure}[ht]
+    \centering
+    \adjustbox{width=\textwidth}{
+    \includegraphics[width=0.2225\textwidth, trim={3 0 60 0}, clip=true] {figure/nlp/length_extrapolation/mamba_370m/perplexity_comparison_codeparrot.pdf}
+    \includegraphics[width=0.204\textwidth, trim={15 0 60 0}, clip=true] {figure/nlp/length_extrapolation/mamba_370m/perplexity_comparison_math_hard.pdf}
+    \includegraphics[width=0.204\textwidth, trim={15 0 60 0}, clip=true] {figure/nlp/length_extrapolation/mamba_370m/perplexity_comparison_trivia_qa.pdf}
+    \includegraphics[width=0.281\textwidth, trim={15 0 8 0}, clip=true] {figure/nlp/length_extrapolation/mamba_370m/perplexity_comparison_slimpajama_6b.pdf}
+    }
+    \caption{Length extrapolation performance of Mamba variants on different datasets. Mamba with eigenvalue range $[-1, 1]$ shows worse perplexity on coding and math tasks compared to the $[0, 1]$ baseline. The dashed, vertical line indicates the training context length of 2048 tokens.}
+\label{fig:mamba_length_extrapolation}
+\vspace{-3mm}
+\end{figure}
+
+
+
+
+\subsection{Implementation}\label{app:implementation}
+We build on the original code for Mamba\footnote{\url{https://github.com/state-spaces/mamba}} and DeltaNet\footnote{\url{https://github.com/sustcsonglin/flash-linear-attention}}.
+For DeltaNet, implementing the extended eigenvalue range is straightforward, since there is no need to modify the Triton kernel. However, Mamba requires modifications to the CUDA code of the associative scan for both forward and backward passes which however had no impact on computational cost. We ensured the accuracy of the modifications by comparing the results with a naive implementation using a for-loop. For initial testing of the extended eigenvalue range, we used the pure PyTorch implementation of Mamba by~\citet{mambapy}. We provide listings of the necessary code changes in Mamba and DeltaNet in~\Cref{app:cuda}. For DeltaNet, this changes also <<FORMULA_0750>> in \Cref{tab:LRNNs}, multiplying it by $2$.
+
+\textbf{Products in Log-space} We note that some diagonal models such as Mamba2 \citep{dao2024transformers}, GLA \citep{yanggated}, and mLSTM \citep{poppel2024xlstm} take advantage of the fact that all values of the state-transition matrices are positive to compute their repeated products in log-space. Our change would not allow us to do this directly, and early tests on the chunkwise parallel form of GLA showed degraded performance. Therefore, for this work, we decided to focus on Mamba and DeltaNet since they do not compute the products in log space. We mention however, that at the cost of increased computation time, it would be possible to do products in log space by converting each value in the diagonal state-transition matrix to the product of its absolute value and sign. This way, absolute values can be multiplied in log space, while products of signs are coincidentally equivalent to addition modulo 2, i.e. parity, and hence can be done stably. We leave the investigation of this approach to future work.
+Furthermore, we also believe that our change may be less suited for methods that use a normalized RNN state, such as mLSTM, since it might happen that the normalization term can be very close to zero due to the negative values.
+\newpage
+\subsubsection{Implementation of Extended Eigenvalue Range}\label{app:cuda}
+
+
+
+\begin{figure}[ht]
+    \centering
+    \adjustbox{width=\textwidth}{
+    \begin{lstlisting}[style=diffstyle, language={C++}, escapechar=@, firstnumber=220]
+if constexpr (!kIsComplex) {
+@\textcolor{dark-red}{-   thread\_data[i] = make\_float2(exp2f(delta\_vals[r][i] * A\_val[r]),}@
+@\textcolor{dark-green}{+   thread\_data[i] = make\_float2(2.0f * exp2f(delta\_vals[r][i] * A\_val[r]) - 1.0f,}@
+                                 !kIsVariableB ? delta_u_vals[r][i] : B_vals[i] * delta_u_vals[r][i]);
+    if constexpr (!Ktraits::kIsEvenLen) {  
+        if (threadIdx.x * kNItems + i >= params.seqlen - chunk * kChunkSize) {
+            thread_data[i] = make_float2(1.f, 0.f);
+        }
+    }
+}
+    \end{lstlisting}}
+    \caption{Modifications to the forward pass of the Mamba associative scan. These changes extend the eigenvalue range from $[0, 1]$ to $[-1, 1]$, enhancing the model's expressive capacity. Adapted from~\href{https://github.com/state-spaces/mamba/blob/main/csrc/selective_scan/selective_scan_bwd_kernel.cuh}{selective\_scan\_fwd\_kernel.cuh}. The original implementation (in red) is replaced with an adjusted version (in green).}
+    \label{fig:mamba_forward_pass_cuda_changes}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \begin{lstlisting}[style=diffstyle, language={C++}, escapechar=@, firstnumber=253]
+@\textcolor{dark-red}{-     const float delta\_a\_exp = exp2f(delta\_vals[i] * A\_scaled)}@
+@\textcolor{dark-green}{+   const float delta\_a\_exp = 2.0f * exp2f(delta\_vals[i] * A\_scaled) - 1.0f}@
+    \end{lstlisting}
+    \begin{lstlisting}[style=diffstyle, language={C++}, escapechar=@, firstnumber=272]
+@\textcolor{dark-red}{-     typename Ktraits::BlockScanT(smem\_scan).InclusiveScan(}@
+@\textcolor{dark-green}{+   typename Ktraits::BlockScanT(smem\_scan).ExclusiveScan(}@
+                    thread_data, thread_data, SSMScanOp<weight_t>(), prefix_op
+                );
+    \end{lstlisting}
+    \begin{lstlisting}[style=diffstyle, language={C++}, escapechar=@, firstnumber=288]
+@\textcolor{dark-red}{-     const float a = thread\_data[i].y - (!kIsVariableB ? delta\_vals[i] * float(u\_vals[i]) : }@
+@\textcolor{dark-red}{- \qquad \qquad delta\_vals[i] * float(u\_vals[i]) * B\_vals[i]);}@
+@\textcolor{dark-green}{+ float delta\_a\_exp = 2.0f * exp2f(delta\_vals[i] * A\_scaled) - 1.0f;}@
+@\textcolor{dark-green}{+ const float ddelta\_a\_exp = delta\_a\_exp + 1;}@
+@\textcolor{dark-green}{+  const float a = ddelta\_a\_exp * thread\_data[i].y; }@
+@\textcolor{dark-green}{+ const float hi = delta\_a\_exp * thread\_data[i].y + (!kIsVariableB ? delta\_vals[i] * }@
+@\textcolor{dark-green}{+ \qquad \qquad float(u\_vals[i]) : delta\_vals[i] * float(u\_vals[i]) * B\_vals[i]);}@
+\end{lstlisting}
+\begin{lstlisting}[style=diffstyle, language={C++}, escapechar=@, firstnumber=291]
+if constexpr (!kIsVariableB || !kIsVariableC) {
+    if constexpr (!kIsVariableB) {  // dBC\_val is dB\_val
+@\textcolor{dark-red}{- dBC\_val += dout\_vals[i] * (!kIsVariableC ? thread\_data[i].y : thread\_data[i].y * C\_vals[i]);}@
+@\textcolor{dark-green}{+        dBC\_val += dout\_vals[i] * (!kIsVariableC ? hi : hi * C\_vals[i]);}@
+    } else {  // dBC\_val is dC\_val
+@\textcolor{dark-red}{- dBC\_val += dout\_vals[i] * thread\_data[i].y;}@
+@\textcolor{dark-green}{+  dBC\_val += dout\_vals[i] * thread\_data[i].y;}@
+    }
+}
+if constexpr (kIsVariableB) { dB_vals[i] = dx * delta_vals[i] * float(u_vals[i]); }
+if constexpr (kIsVariableC) {
+@\textcolor{dark-red}{- dC\_vals[i] = dout\_vals[i] * (!kIsVariableB ? thread\_data[i].y * B\_val : thread\_data[i].y);}@
+@\textcolor{dark-green}{+ dC\_vals[i] = dout\_vals[i] * (!kIsVariableB ? hi * B\_val : hi);}@
+}
+\end{lstlisting}
+    \caption{Necessary changes to \href{https://github.com/state-spaces/mamba/blob/main/csrc/selective_scan/selective_scan_bwd_kernel.cuh}{selective\_scan\_bwd\_kernel.cuh}. The original implementation (in red) is replaced with an adjusted version (in green).}
+    \label{fig:mamba_backward_pass_cuda_changes}
+\end{figure}
+
+
+\begin{figure}[ht]
+    \centering
+    \begin{lstlisting}[style=diffstyle, language={C++}, escapechar=@, firstnumber=196]
+        if self.use_beta:
+@\textcolor{dark-red}{- beta = rearrange(self.b\_proj(hidden\_states), 'b l h -> b h l').sigmoid()}@
+@\textcolor{dark-green}{+  beta = 2 * rearrange(self.b\_proj(hidden\_states), 'b l h -> b h l').sigmoid()}@
+        else:
+            beta = q.new_ones(q.shape[0], q.shape[1], q.shape[2])
+    \end{lstlisting}
+    \caption{Simple modification to the beta calculation in DeltaNet \href{https://github.com/sustcsonglin/flash-linear-attention/blob/3bafa4fcb505391d19cb7c47aa9bc9fa8e598b15/fla/layers/delta_net.py\#L196}{(Source)} allowing the extension of the eigenvalues to the range $[-1, 1]$ . The original implementation (in red) is replaced with an adjusted version (in green).}
+    \label{fig:delta_net_forward_pass_changes}
+\end{figure}
+
+\end{document}

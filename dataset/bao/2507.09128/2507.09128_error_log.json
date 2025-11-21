@@ -1,0 +1,106 @@
+{
+  "metadata": {
+    "error_rate": 0.5,
+    "random_seed": null,
+    "total_formulas_processed": 20,
+    "formulas_modified": 9,
+    "formulas_unmodified": 11,
+    "timestamp": "2025-10-31T16:53:42.032377"
+  },
+  "errors": [
+    {
+      "label": "<<FORMULA_0902>>",
+      "original_formula": "&\\norm{F_\\star}_\\beta^2 \\\\\n    &= \\sum_{i \\in I} \\sum_{j \\in J} \\sum_{k \\in J} \\sum_{l \\in J} \\mu_{X, i}^{-\\beta}\\ip{\\blue{g_k} \\otimes \\red{(\\M_{Z|X} [g_k]_Z)}, \\blue{g_j} \\otimes \\red{[e_{X, i}]_X}}_{\\HS(\\ltwo(Q_X), \\calG)} \\ip{\\blue{g_l} \\otimes \\red{(\\M_{Z|X} [g_l]_Z)}, \\blue{g_j} \\otimes \\red{[e_{X, i}]_X}}_{\\HS(\\ltwo(Q_X), \\calG)}\\\\\n        &= \\sum_{i \\in I} \\sum_{j \\in J} \\sum_{k \\in J} \\sum_{l \\in J} \\mu_{X, i}^{-\\beta}\\blue{\\ip{g_k, g_j}_{\\calG}} \\blue{\\ip{g_l, g_j}_{\\calG}} \\cdot \\red{\\ip{\\M_{Z|X} [g_k]_Z, [e_{X, i}]_X}_{\\ltwo(Q_X)}}\\red{\\ip{\\M_{Z|X} [g_l]_Z, [e_{X, i}]_X}_{\\ltwo(Q_X)}}\\\\\n        &= \\sum_{i \\in I} \\sum_{j \\in J} \\mu_{X, i}^{-\\beta} \\ip{\\M_{Z|X} [g_j]_Z, [e_{X, i}]_X}_{\\ltwo(Q_X)}^2,",
+      "modified_formula": "&\\norm{F_\\star}_\\beta^2 \\\\\n    &= \\sum_{i \\in I} \\sum_{j \\in J} \\sum_{k \\in J} \\sum_{l \\in J} \\mu_{X, i}^{-\\beta}\\ip{\\blue{g_k} \\otimes \\red{(\\M_{Z|X} [g_k]_Z)}, \\blue{g_j} \\otimes \\red{[e_{X, i}]_X}}_{\\HS(\\ltwo(Q_X), \\calG)} \\ip{\\blue{g_l} \\otimes \\red{(\\M_{Z|X} [g_l]_Z)}, \\blue{g_j} \\otimes \\red{[e_{X, i}]_X}}_{\\HS(\\ltwo(Q_X), \\calG)}\\\\\n        &= \\sum_{i \\in I} \\sum_{j \\in J} \\sum_{k \\in J} \\sum_{l \\in J} \\mu_{X, i}^{ + \\beta}\\blue{\\ip{g_k, g_j}_{\\calG}} \\blue{\\ip{g_l, g_j}_{\\calG}} \\cdot \\red{\\ip{\\M_{Z|X} [g_k]_Z, [e_{X, i}]_X}_{\\ltwo(Q_X)}}\\red{\\ip{\\M_{Z|X} [g_l]_Z, [e_{X, i}]_X}_{\\ltwo(Q_X)}}\\\\\n        &= \\sum_{i \\in I} \\sum_{j \\in J} \\mu_{X, i}^{-\\beta} \\ip{\\M_{Z|X} [g_j]_Z, [e_{X, i}]_X}_{\\ltwo(Q_X)}^2,",
+      "error_type": "sign_flip",
+      "error_description": "Changed '-' to '+'",
+      "line_number": 1798,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_0884>>",
+      "original_formula": "&\\norm{\\heta_\\rho - \\eta_\\rho}_{\\ltwo(Q_X)}^2\\notag\\\\\n        &\\leq 3\\norm{g_\\rho}_\\calG^2 \\cdot \\int_\\X \\norm{ \\Fhat(\\x) - F_\\star(\\x)}_\\calG^2 \\d Q_X(\\x) + 3\\p{\\int_{\\X}\\norm{F_\\star(\\x)}_\\calG^2 \\d Q_X(\\x)} \\cdot \\norm{\\hg_\\rho - g_\\rho}_\\calG^2\\notag\\\\\n        &\\quad + 3\\norm{\\hg_\\rho - g_\\rho}_\\calG^2 \\int_\\X \\norm{\\Fhat(\\x) - F_\\star(\\x)}_\\calG^2 \\d Q_X(\\x)\\notag\\\\\n        &= 3\\norm{g_\\rho}_\\calG^2 \\cdot \\norm{\\Fhat - F_\\star}^2_{\\ltwo(Q_X; \\calG)} + 3 \\norm{F_\\star}^2_{\\ltwo(Q_X; \\calG)} \\cdot  \\norm{\\hg_\\rho - g_\\rho}_\\calG^2  \\label{eq:main:est:F_error}\\\\\n        &\\quad + 3\\norm{\\hg_\\rho - g_\\rho}_\\calG^2 \\cdot \\norm{\\Fhat - F_\\star}^2_{\\ltwo(Q_X; \\calG)},\\notag",
+      "modified_formula": "&\\norm{\\heta_\\rho - \\eta_\\rho}_{\\ltwo(Q_X)}^2\\notag\\\\\n        &\\leq 3\\norm{g_\\rho}_\\calG^2 \\cdot \\int_\\X \\norm{ \\Fhat(\\x) - F_\\star(\\x)}_\\calG^2 \\d Q_X(\\x) + 3\\p{\\int_{\\X}\\norm{F_\\star(\\x)}_\\calG^2 \\d Q_X(\\x)} \\cdot \\norm{\\hg_\\rho - g_\\rho}_\\calG^2\\notag\\\\\n        &\\quad + 3\\norm{\\hg_\\rho - g_\\rho}_\\calG^2 \\int_\\X \\norm{\\Fhat(\\x) - F_\\star(\\x)}_\\calG^2 \\d Q_X(\\x)\\notag\\\\\n        &= 3\\norm{g_\\rho}_\\calG^2 \\cdot \\norm{\\Fhat - F_\\star}^2_{\\ltwo(Q_X; \\calG)} + 3 \\norm{F_\\star}^2_{\\ltwo(Q_X; \\calG)} \\cdot  \\norm{\\hg_\\rho - g_\\rho}_\\calG^2  \\label{eq:main:est:F_error}\\\\\n        &\\quad - 3\\norm{\\hg_\\rho - g_\\rho}_\\calG^2 \\cdot \\norm{\\Fhat - F_\\star}^2_{\\ltwo(Q_X; \\calG)},\\notag",
+      "error_type": "sign_flip",
+      "error_description": "Changed '+' to '-'",
+      "line_number": 1752,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_1167>>",
+      "original_formula": "\\risk(\\dec \\circ s) - \\risk(h_\\star) &\\lesssim \\sqrt{C\\E{P_Z}{I(X; Y|Z)} + \\textstyle\\sum_{j=1}^C \\norm{g_\\rho\\pow{c} - g_{P_{Y, Z}}\\pow{c}}_{\\ltwo(P_Z)}^2 + C\\tv(P_X, Q_X)}\\\\\n    &\\quad + \\begin{cases}\n        \\sqrt{C}\\polylog\\p{C/\\delta}\\p{N^{-\\frac{q(t)}{2(q(t) + 1)}} + M^{-\\frac{2\\omega_\\rho - 1}{4\\omega_\\rho + 2}}} &\\text{ (conditional mean)}\\\\\n        \\sqrt{C}\\polylog\\p{C/\\delta} \\p{N^{-\\frac{\\beta}{2(\\beta + 1)}} + M^{-1/2}} + \\sqrt{D_{\\chi^2}(\\rho_Z \\Vert Q_Z)} &\\text{ (information density)}\n    \\end{cases},",
+      "modified_formula": "\\risk(\\dec \\circ s) - \\risk(h_\\star) &\\lesssim \\sqrt{C\\E{P_Z}{I(X; Y|Z)} + \\textstyle\\\\prod_{j=1}^C \\norm{g_\\rho\\pow{c} - g_{P_{Y, Z}}\\pow{c}}_{\\ltwo(P_Z)}^2 + C\\tv(P_X, Q_X)}\\\\\n    &\\quad + \\begin{cases}\n        \\sqrt{C}\\polylog\\p{C/\\delta}\\p{N^{-\\frac{q(t)}{2(q(t) + 1)}} + M^{-\\frac{2\\omega_\\rho - 1}{4\\omega_\\rho + 2}}} &\\text{ (conditional mean)}\\\\\n        \\sqrt{C}\\polylog\\p{C/\\delta} \\p{N^{-\\frac{\\beta}{2(\\beta + 1)}} + M^{-1/2}} + \\sqrt{D_{\\chi^2}(\\rho_Z \\Vert Q_Z)} &\\text{ (information density)}\n    \\end{cases},",
+      "error_type": "sum_product_swap",
+      "error_description": "Changed '∑' to '∏'",
+      "line_number": 2260,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_1022>>",
+      "original_formula": "\\norm{\\heta_\\rho - \\eta_\\rho}_{\\ltwo(Q_X)}^2 &\\leq 3 \\E{Q_X}{\\p{\\Ex_{\\hrho_{Y, Z}}[\\fstar(Y) \\ipsmall{\\varphi(X, Z), \\Rhat - \\Rsans}]^2}} \\label{eq:complexity:rn_decomp1}\\\\\n        &\\quad + 3\\int_{\\X} \\p{\\int_{\\Y \\times \\Z} \\fstar(\\y) \\Rsans(\\x, \\z) \\p{\\d\\hrho_{Y, Z}(\\y, \\z) - \\d\\rho_{Y, Z}(\\y, \\z)}}^2 \\d Q_X(\\x)  \\label{eq:complexity:rn_decomp2}\\\\\n        &\\quad + 3\\int_{\\X} \\p{\\int_{\\Z} g_\\rho(\\z)\\Rsans(\\x, \\z) \\p{\\d Q_Z(\\z) - \\d \\rho_Z(\\z)}}^2 \\d Q_X(\\x).  \\label{eq:complexity:rn_decomp3}",
+      "modified_formula": "\\norm{\\heta_\\rho - \\eta_\\rho}_{\\ltwo(Q_X)}^2 &\\\\geq 3 \\E{Q_X}{\\p{\\Ex_{\\hrho_{Y, Z}}[\\fstar(Y) \\ipsmall{\\varphi(X, Z), \\Rhat - \\Rsans}]^2}} \\label{eq:complexity:rn_decomp1}\\\\\n        &\\quad + 3\\int_{\\X} \\p{\\int_{\\Y \\times \\Z} \\fstar(\\y) \\Rsans(\\x, \\z) \\p{\\d\\hrho_{Y, Z}(\\y, \\z) - \\d\\rho_{Y, Z}(\\y, \\z)}}^2 \\d Q_X(\\x)  \\label{eq:complexity:rn_decomp2}\\\\\n        &\\quad + 3\\int_{\\X} \\p{\\int_{\\Z} g_\\rho(\\z)\\Rsans(\\x, \\z) \\p{\\d Q_Z(\\z) - \\d \\rho_Z(\\z)}}^2 \\d Q_X(\\x).  \\label{eq:complexity:rn_decomp3}",
+      "error_type": "inequality_flip",
+      "error_description": "Changed '≤' to '≥'",
+      "line_number": 1986,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_1063>>",
+      "original_formula": "\\norm{\\M_{Z|X}}_{\\HS(\\ltwo(Q_Z), \\ltwo(Q_X))}^2 = \\sum_{i \\in 1}^\\infty \\sigma_i^2 &= \\sum_{i =1}^\\infty \\mu_i^{2\\beta+1} \\ipsmall{\\Ssans_{Q_{X, Z}}, \\mu_i^{1/2} e_i}_{\\calS}^2 \\notag \\\\\n        &= \\norm{\\Ssans_{Q_{X, Z}}}_\\calS^2 \\sum_{i =1}^\\infty \\mu_i^{2\\beta+1} \\ipsmall{\\Ssans_{Q_{X, Z}} / \\norm{\\Ssans_{Q_{X, Z}}}_\\calS, \\mu_i^{1/2} e_i}_{\\calS}^2 \\notag \\\\\n        &\\leq \\bar{B}^2 \\sum_{i =1}^\\infty \\mu_i^{2(\\beta+1/2)}.\\label{eq:complexity:rn:eigendecay1}",
+      "modified_formula": "\\norm{\\M_{Z|X}}_{\\HS(\\ltwo(Q_Z), \\ltwo(Q_X))}^2 = \\sum_{i \\in 1}^\\infty \\sigma_i^2 &= \\sum_{i =1}^\\infty \\mu_i^{2\\beta+1} \\ipsmall{\\Ssans_{Q_{X, Z}}, \\mu_i^{1/2} e_j}_{\\calS}^2 \\notag \\\\\n        &= \\norm{\\Ssans_{Q_{X, Z}}}_\\calS^2 \\sum_{i =1}^\\infty \\mu_i^{2\\beta+1} \\ipsmall{\\Ssans_{Q_{X, Z}} / \\norm{\\Ssans_{Q_{X, Z}}}_\\calS, \\mu_i^{1/2} e_i}_{\\calS}^2 \\notag \\\\\n        &\\leq \\bar{B}^2 \\sum_{i =1}^\\infty \\mu_i^{2(\\beta+1/2)}.\\label{eq:complexity:rn:eigendecay1}",
+      "error_type": "index_change",
+      "error_description": "Changed subscript 'i' to 'j'",
+      "line_number": 2055,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_0481>>",
+      "original_formula": "\\ip{\\Rsans, \\alpha_j \\beta_k}_{\\ltwo(Q_X \\otimes Q_Z)} &= \\E{Q_X \\otimes Q_Z}{\\Rsans(X, Z) \\alpha_j(X) \\beta_k(Z)}\\\\\n        &= \\E{Q_{X, Z}}{\\alpha_j(X) \\beta_k(Z)}\\\\\n        &= \\E{Q_{X}}{\\alpha_j(X) \\E{Q_{X, Z}}{\\beta_k(Z)|X}}\\\\\n        &= \\ip{\\alpha_j, \\M_{Z|X}\\beta_k}_{\\ltwo(Q_X)}\\\\\n        &= \\begin{cases}\n            \\sigma_i &\\text{ if } j = k = i \\in I\\\\\n            0 & \\text{ otherwise}\n        \\end{cases},",
+      "modified_formula": "\\ip{\\Rsans, \\alpha_j \\beta_k}_{\\ltwo(Q_X \\otimes Q_Z)} &= \\E{Q_X \\otimes Q_Z}{\\Rsans(X, Z) \\alpha_j(X) \\beta_k(Z)}\\\\\n        &= \\E{Q_{X, Z}}{\\alpha_j(X) \\beta_k(Z)}\\\\\n        &= \\E{Q_{X}}{\\alpha_j(X) \\E{Q_{X, Z}}{\\beta_k(Z)|X}}\\\\\n        &= \\ip{\\alpha_j, \\M_{Z|X}\\beta_k}_{\\ltwo(Q_X)}\\\\\n        &= \\begin{cases}\n            \\sigma_m &\\text{ if } j = k = i \\in I\\\\\n            0 & \\text{ otherwise}\n        \\end{cases},",
+      "error_type": "index_change",
+      "error_description": "Changed subscript 'i' to 'm'",
+      "line_number": 1158,
+      "formula_type": "align*"
+    },
+    {
+      "label": "<<FORMULA_0378>>",
+      "original_formula": "\\norm{\\A}_{\\HS(\\calG, \\calH)}^2 &= \\ip{\\A, \\A}_{\\HS(\\calG, \\calH)} \\notag\\\\\n    &= \\sum_{j \\in J} \\ip{\\A g_j, \\A g_j}_\\calH \\notag\\\\\n    &= \\sum_{j \\in J} \\sum_{k \\in K} \\sum_{l \\in K} \\ip{\\A g_j, h_k}_\\calH  \\ip{\\A g_j, h_l}_\\calH \\ip{h_k, h_l}_\\calH \\notag\\\\\n    &= \\sum_{j \\in J} \\sum_{k \\in K} \\ip{h_k, \\A g_j}_{\\calH}^2  = \\sum_{j \\in J} \\sum_{k \\in K} \\ip{\\A^* h_k, g_j}_{\\calG}^2. \\label{eq:compact:hsnorm}",
+      "modified_formula": "\\norm{\\A}_{\\HS(\\calG, \\calH)}^2 &= \\ip{\\A, \\A}_{\\HS(\\calG, \\calH)} \\notag\\\\\n    &= \\sum_{j \\in J} \\ip{\\A g_j, \\A g_j}_\\calH \\notag\\\\\n    &= \\sum_{j \\in J} \\sum_{k \\in K} \\sum_{l \\in K} \\ip{\\A g_j, h_k}_\\calH  \\ip{\\A g_j, h_l}_\\calH \\ip{h_k, h_l}_\\calH \\notag\\\\\n    &= \\\\prod_{j \\in J} \\sum_{k \\in K} \\ip{h_k, \\A g_j}_{\\calH}^2  = \\sum_{j \\in J} \\sum_{k \\in K} \\ip{\\A^* h_k, g_j}_{\\calG}^2. \\label{eq:compact:hsnorm}",
+      "error_type": "sum_product_swap",
+      "error_description": "Changed '∑' to '∏'",
+      "line_number": 1025,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_1302>>",
+      "original_formula": "\\theta = 1 &\\implies \\begin{cases}\n    \\bmu_{X|0} - \\C_{XZ|0} \\C_{ZZ|0}^{-1}\\bmu_{Z|0} = \\bmu_{X|1} - \\C_{XZ|1} \\C_{ZZ|1}^{-1} \\bmu_{Z|1}\\\\\n    \\C_{XZ|0} \\C_{ZZ|0}^{-1} = \\C_{XZ|1} \\C_{ZZ|1}^{-1}\\\\\n    \\C_{XX|0} - \\C_{XZ|0} \\C_{ZZ|0}^{-1} \\C_{ZX|0} = \\C_{XX|1} - \\C_{XZ|1} \\C_{ZZ|1}^{-1} \\C_{ZX|1}\\\\\n    \\end{cases} \\implies X \\indep Y | Z = \\z \\ \\forall \\z, \\label{eq:re:resid}",
+      "modified_formula": "\\theta = 1 &\\implies \\begin{cases}\n    \\bmu_{X|0} - \\C_{XZ|0} \\C_{ZZ|0}^{-1}\\bmu_{Z|0} = \\bmu_{X|1} - \\C_{XZ|1} \\C_{ZZ|1}^{-1} \\bmu_{Z|1}\\\\\n    \\C_{XZ|0} \\C_{ZZ|0}^{-1} = \\C_{XZ|1} \\C_{ZZ|1}^{-1}\\\\\n    \\C_{XX|0} + \\C_{XZ|0} \\C_{ZZ|0}^{-1} \\C_{ZX|0} = \\C_{XX|1} - \\C_{XZ|1} \\C_{ZZ|1}^{-1} \\C_{ZX|1}\\\\\n    \\end{cases} \\implies X \\indep Y | Z = \\z \\ \\forall \\z, \\label{eq:re:resid}",
+      "error_type": "sign_flip",
+      "error_description": "Changed '-' to '+'",
+      "line_number": 2596,
+      "formula_type": "align"
+    },
+    {
+      "label": "<<FORMULA_1029>>",
+      "original_formula": "&\\p{\\int_{\\Z} g_\\rho(\\z)\\Rsans(\\x, \\z) \\p{\\d Q_Z(\\z) - \\d \\rho_Z(\\z)}}^2 \\\\\n        &= \\p{\\int_{\\Z} g_\\rho(\\z)\\Rsans(\\x, \\z) \\p{1 - \\frac{\\d \\rho_Z}{\\d Q_Z}(\\z)} \\d Q_Z(\\z) }^2\\\\\n        &\\leq \\norm{\\fstar}^2 \\norm{\\Rsans(\\x, \\cdot)}_{\\ltwo(Q_Z)}^2 \\underbrace{\\int_Z \\p{1 - \\frac{\\d \\rho_Z}{\\d Q_Z}(\\z)}^2 \\d Q_Z(\\z)}_{\\chi^2(\\rho_Z \\Vert Q_Z)}.",
+      "modified_formula": "&\\p{\\int_{\\Z} g_\\rho(\\z)\\Rsans(\\x, \\z) \\p{\\d Q_Z(\\z) - \\d \\rho_Z(\\z)}}^2 \\\\\n        &= \\p{\\int_{\\Z} g_\\rho(\\z)\\Rsans(\\x, \\z) \\p{1 - \\frac{\\d \\rho_Z}{\\d Q_Z}(\\z)} \\d Q_Z(\\z) }^2\\\\\n        &\\\\geq \\norm{\\fstar}^2 \\norm{\\Rsans(\\x, \\cdot)}_{\\ltwo(Q_Z)}^2 \\underbrace{\\int_Z \\p{1 - \\frac{\\d \\rho_Z}{\\d Q_Z}(\\z)}^2 \\d Q_Z(\\z)}_{\\chi^2(\\rho_Z \\Vert Q_Z)}.",
+      "error_type": "inequality_flip",
+      "error_description": "Changed '≤' to '≥'",
+      "line_number": 1997,
+      "formula_type": "align*"
+    }
+  ],
+  "unmodified": [
+    "<<FORMULA_0963>>",
+    "<<FORMULA_1252>>",
+    "<<FORMULA_0898>>",
+    "<<FORMULA_1021>>",
+    "<<FORMULA_1249>>",
+    "<<FORMULA_0831>>",
+    "<<FORMULA_1240>>",
+    "<<FORMULA_1260>>",
+    "<<FORMULA_0883>>",
+    "<<FORMULA_0824>>",
+    "<<FORMULA_0826>>"
+  ]
+}

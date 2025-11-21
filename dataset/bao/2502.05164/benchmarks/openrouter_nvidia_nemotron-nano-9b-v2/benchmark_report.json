@@ -1,0 +1,228 @@
+{
+  "metadata": {
+    "paper_id": "2502.05164",
+    "model": "openrouter/nvidia/nemotron-nano-9b-v2",
+    "total_detections_attempted": 20,
+    "parsing_failures": 3,
+    "valid_evaluations": 17,
+    "formulas_with_errors_injected": 11,
+    "formulas_unmodified": 9,
+    "timestamp": "2025-10-31T17:27:52.520175"
+  },
+  "binary_classification": {
+    "true_positives": 3,
+    "false_positives": 1,
+    "true_negatives": 6,
+    "false_negatives": 7,
+    "accuracy": 0.529,
+    "precision": 0.75,
+    "recall": 0.3,
+    "f1_score": 0.429
+  },
+  "error_type_matching": {
+    "total_errors_detected": 3,
+    "correct_type_identified": 2,
+    "incorrect_type_identified": 1,
+    "type_accuracy": 0.667
+  },
+  "instruction_following": {
+    "perfect_json_responses": 16,
+    "fallback_parsing_required": 1,
+    "parsing_failures": 3,
+    "perfect_json_rate": 0.8,
+    "fallback_rate": 0.05,
+    "failure_rate": 0.15,
+    "strategy_breakdown": {
+      "direct": 16,
+      "failed": 3,
+      "extraction": 1
+    }
+  },
+  "per_error_type_performance": {
+    "sum_product_swap": {
+      "detected": 0,
+      "total": 1,
+      "recall": 0.0
+    },
+    "inequality_flip": {
+      "detected": 0,
+      "total": 2,
+      "recall": 0.0
+    },
+    "sign_flip": {
+      "detected": 2,
+      "total": 4,
+      "recall": 0.5
+    },
+    "exponent_order": {
+      "detected": 0,
+      "total": 1,
+      "recall": 0.0
+    },
+    "operator_swap": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    },
+    "fraction_inversion": {
+      "detected": 0,
+      "total": 1,
+      "recall": 0.0
+    }
+  },
+  "detailed_results": [
+    {
+      "label": "<<FORMULA_0062>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sum_product_swap",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0172>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0174>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "inequality_flip",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0060>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0193>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0203>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "exponent_order",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0183>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0245>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0054>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0187>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "operator_swap",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0189>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "sign_flip",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0206>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0296>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "fraction_inversion",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0294>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0309>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "inequality_flip",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0293>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "function_swap",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0197>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    }
+  ]
+}

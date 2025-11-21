@@ -1,0 +1,2130 @@
+{
+  "<<FORMULA_0266>>": {
+    "formula": "\\rho, \\tau \\in [-1, 1]",
+    "raw_latex": "$\\rho, \\tau \\in [-1, 1]$",
+    "formula_type": "inline",
+    "line_number": 2166,
+    "start_pos": 186242,
+    "end_pos": 186266
+  },
+  "<<FORMULA_0265>>": {
+    "formula": "I(X; Z) = H(Z) - H(Z|X) \\leq H(Z).",
+    "raw_latex": "\\[\n\tI(X; Z) = H(Z) - H(Z|X) \\leq H(Z).\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2154,
+    "start_pos": 185619,
+    "end_pos": 185661
+  },
+  "<<FORMULA_0264>>": {
+    "formula": "H(Z)",
+    "raw_latex": "$H(Z)$",
+    "formula_type": "inline",
+    "line_number": 2149,
+    "start_pos": 185443,
+    "end_pos": 185449
+  },
+  "<<FORMULA_0263>>": {
+    "formula": "\\log(N) - \\text{InfoNCE} \\leq I(X; Z) \\leq H(Z).",
+    "raw_latex": "\\[\n\t\\log(N) - \\text{InfoNCE} \\leq I(X; Z) \\leq H(Z).\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2146,
+    "start_pos": 185372,
+    "end_pos": 185428
+  },
+  "<<FORMULA_0262>>": {
+    "formula": "X \\to Z",
+    "raw_latex": "$X \\to Z$",
+    "formula_type": "inline",
+    "line_number": 2145,
+    "start_pos": 185225,
+    "end_pos": 185234
+  },
+  "<<FORMULA_0261>>": {
+    "formula": "X\\sim \\textbf{Data}",
+    "raw_latex": "$X\\sim \\textbf{Data}$",
+    "formula_type": "inline",
+    "line_number": 2145,
+    "start_pos": 185121,
+    "end_pos": 185142
+  },
+  "<<FORMULA_0260>>": {
+    "formula": "|e^{-S_2(\\bar Z\\bar Z^\\top)} - \\frac{N^3}{L^2} | \\leq \\epsilon.",
+    "raw_latex": "\\[\n\t|e^{-S_2(\\bar Z\\bar Z^\\top)} - \\frac{N^3}{L^2} | \\leq \\epsilon.\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2139,
+    "start_pos": 184973,
+    "end_pos": 185044
+  },
+  "<<FORMULA_0259>>": {
+    "formula": "|\\|\\bar Z\\bar Z^\\top\\|_F^2  - \\frac{N^3}{L^2}| \\leq \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle |\\mathbf v_i, \\mathbf v_j \\rangle| \\leq \\frac1{L^2}\\sum_{i\\not= j}\\epsilon \\leq \\epsilon.",
+    "raw_latex": "\\[\n    |\\|\\bar Z\\bar Z^\\top\\|_F^2  - \\frac{N^3}{L^2}| \\leq \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle |\\mathbf v_i, \\mathbf v_j \\rangle| \\leq \\frac1{L^2}\\sum_{i\\not= j}\\epsilon \\leq \\epsilon. \n    \\]",
+    "formula_type": "display",
+    "line_number": 2135,
+    "start_pos": 184760,
+    "end_pos": 184954
+  },
+  "<<FORMULA_0258>>": {
+    "formula": "|\\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle| \\leq \\frac{\\epsilon L^2}{N^4}.",
+    "raw_latex": "\\[\n\t\t|\\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle| \\leq \\frac{\\epsilon L^2}{N^4}.\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2131,
+    "start_pos": 184648,
+    "end_pos": 184732
+  },
+  "<<FORMULA_0257>>": {
+    "formula": "i \\not = j",
+    "raw_latex": "$i \\not = j$",
+    "formula_type": "inline",
+    "line_number": 2130,
+    "start_pos": 184632,
+    "end_pos": 184644
+  },
+  "<<FORMULA_0256>>": {
+    "formula": "1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D^3\\epsilon^2}{2N^8}}",
+    "raw_latex": "$1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D^3\\epsilon^2}{2N^8}}$",
+    "formula_type": "inline",
+    "line_number": 2130,
+    "start_pos": 184556,
+    "end_pos": 184608
+  },
+  "<<FORMULA_0255>>": {
+    "formula": "\\|\\bar Z\\bar Z^\\top\\|_F^2 &= \\sum_{i=1}^N \\| \\mathbf q_i\\|^2 + \\sum_{i\\not= j}\\langle \\mathbf q_i,\\mathbf q_j \\rangle \\\\\n\t\t&= \\sum_{i=1}^N \\frac{N^2}{L^2}\\|\\mathbf v_i\\|^2 + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle\\mathbf v_i, \\mathbf v_j \\rangle \\\\\n\t\t&= \\frac{N^3}{L^2} + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle \\mathbf v_i, \\mathbf v_j \\rangle.",
+    "raw_latex": "\\begin{align*}\n\t\t\\|\\bar Z\\bar Z^\\top\\|_F^2 &= \\sum_{i=1}^N \\| \\mathbf q_i\\|^2 + \\sum_{i\\not= j}\\langle \\mathbf q_i,\\mathbf q_j \\rangle \\\\\n\t\t&= \\sum_{i=1}^N \\frac{N^2}{L^2}\\|\\mathbf v_i\\|^2 + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle\\mathbf v_i, \\mathbf v_j \\rangle \\\\\n\t\t&= \\frac{N^3}{L^2} + \\sum_{i\\not= j}\\frac{N^2}{L^2}\\langle \\mathbf v_i, \\mathbf v_j \\rangle.\n\t\\end{align*}",
+    "formula_type": "align*",
+    "line_number": 2125,
+    "start_pos": 184126,
+    "end_pos": 184498
+  },
+  "<<FORMULA_0254>>": {
+    "formula": "\\frac DN \\bar Z",
+    "raw_latex": "$\\frac DN \\bar Z$",
+    "formula_type": "inline",
+    "line_number": 2124,
+    "start_pos": 183988,
+    "end_pos": 184005
+  },
+  "<<FORMULA_0253>>": {
+    "formula": "\\bar Z = (\\mathbf q_1, \\mathbf q_2, \\ldots \\mathbf q_N)^\\top",
+    "raw_latex": "$\\bar Z = (\\mathbf q_1, \\mathbf q_2, \\ldots \\mathbf q_N)^\\top$",
+    "formula_type": "inline",
+    "line_number": 2124,
+    "start_pos": 183899,
+    "end_pos": 183961
+  },
+  "<<FORMULA_0252>>": {
+    "formula": "\\mathbf{q_i} = \\frac1L \\sum_{i=j}^L \\mathbf{z_j^i} = \\frac NL \\mathbf{v}_i.",
+    "raw_latex": "\\[\n\t\t\\mathbf{q_i} = \\frac1L \\sum_{i=j}^L \\mathbf{z_j^i} = \\frac NL \\mathbf{v}_i.\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2121,
+    "start_pos": 183759,
+    "end_pos": 183843
+  },
+  "<<FORMULA_0251>>": {
+    "formula": "Z(X_i) = \\mathbf{v_i}\\mathbf{1}^\\top",
+    "raw_latex": "$Z(X_i) = \\mathbf{v_i}\\mathbf{1}^\\top$",
+    "formula_type": "inline",
+    "line_number": 2120,
+    "start_pos": 183694,
+    "end_pos": 183732
+  },
+  "<<FORMULA_0250>>": {
+    "formula": "Z(X_i)",
+    "raw_latex": "$Z(X_i)$",
+    "formula_type": "inline",
+    "line_number": 2120,
+    "start_pos": 183580,
+    "end_pos": 183588
+  },
+  "<<FORMULA_0249>>": {
+    "formula": "Z(X_i) = \\mathbf{v_i}{\\mathbf{u_i}}^\\top",
+    "raw_latex": "$Z(X_i) = \\mathbf{v_i}{\\mathbf{u_i}}^\\top $",
+    "formula_type": "inline",
+    "line_number": 2120,
+    "start_pos": 183508,
+    "end_pos": 183551
+  },
+  "<<FORMULA_0248>>": {
+    "formula": "Z(X_i)",
+    "raw_latex": "$Z(X_i)$",
+    "formula_type": "inline",
+    "line_number": 2120,
+    "start_pos": 183403,
+    "end_pos": 183411
+  },
+  "<<FORMULA_0247>>": {
+    "formula": "|e^{-S_2(\\bar Z\\bar Z^\\top)} - \\frac{N^3}{L^2} | \\leq \\epsilon.",
+    "raw_latex": "\\[\n\t|e^{-S_2(\\bar Z\\bar Z^\\top)} - \\frac{N^3}{L^2} | \\leq \\epsilon.\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2114,
+    "start_pos": 183230,
+    "end_pos": 183301
+  },
+  "<<FORMULA_0246>>": {
+    "formula": "\\{\\mathbf{x_i}\\}_{i=1}^N \\sim \\mathbf{Data}",
+    "raw_latex": "$\\{\\mathbf{x_i}\\}_{i=1}^N \\sim \\mathbf{Data}$",
+    "formula_type": "inline",
+    "line_number": 2113,
+    "start_pos": 183168,
+    "end_pos": 183213
+  },
+  "<<FORMULA_0245>>": {
+    "formula": "1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D^3\\epsilon^2}{2N^8}}",
+    "raw_latex": "$1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D^3\\epsilon^2}{2N^8}}$",
+    "formula_type": "inline",
+    "line_number": 2113,
+    "start_pos": 183098,
+    "end_pos": 183150
+  },
+  "<<FORMULA_0244>>": {
+    "formula": "Z_i = Z(X_i)",
+    "raw_latex": "$Z_i = Z(X_i)$",
+    "formula_type": "inline",
+    "line_number": 2113,
+    "start_pos": 182868,
+    "end_pos": 182882
+  },
+  "<<FORMULA_0243>>": {
+    "formula": "|e^{-S_2(\\bar Z\\bar Z^\\top)} - \\frac N{L^2} | \\leq\\epsilon.",
+    "raw_latex": "\\[\n\t|e^{-S_2(\\bar Z\\bar Z^\\top)} - \\frac N{L^2} | \\leq\\epsilon.\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2105,
+    "start_pos": 182580,
+    "end_pos": 182647
+  },
+  "<<FORMULA_0242>>": {
+    "formula": "e^{-S_2(\\bar Z\\bar Z^\\top)} = \\|\\bar Z\\bar Z^\\top\\|_F^2",
+    "raw_latex": "$e^{-S_2(\\bar Z\\bar Z^\\top)} = \\|\\bar Z\\bar Z^\\top\\|_F^2$",
+    "formula_type": "inline",
+    "line_number": 2104,
+    "start_pos": 182505,
+    "end_pos": 182562
+  },
+  "<<FORMULA_0241>>": {
+    "formula": "S_2(\\bar Z\\bar Z^\\top) = \\log\\left(\\frac1{\\|\\bar Z\\bar Z^\\top\\|_F^2}\\right),",
+    "raw_latex": "\\[\n\tS_2(\\bar Z\\bar Z^\\top) = \\log\\left(\\frac1{\\|\\bar Z\\bar Z^\\top\\|_F^2}\\right),\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2101,
+    "start_pos": 182405,
+    "end_pos": 182489
+  },
+  "<<FORMULA_0240>>": {
+    "formula": "\\ | \\|\\bar Z\\bar Z^\\top \\|_F^2  \\ - \\ \\frac{N}{L^2}  | \\leq \\epsilon.",
+    "raw_latex": "\\[\n\t\\ | \\|\\bar Z\\bar Z^\\top \\|_F^2  \\ - \\ \\frac{N}{L^2}  | \\leq \\epsilon.\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2097,
+    "start_pos": 182310,
+    "end_pos": 182387
+  },
+  "<<FORMULA_0239>>": {
+    "formula": "1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2N^2}}",
+    "raw_latex": "$1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2N^2}}$",
+    "formula_type": "inline",
+    "line_number": 2096,
+    "start_pos": 182210,
+    "end_pos": 182260
+  },
+  "<<FORMULA_0238>>": {
+    "formula": "\\mathbb P(\\forall i\\not= j : |\\langle \\sqrt D q_i, \\sqrt D q_j \\rangle| \\leq \\frac{\\epsilon}{N^2}) \\geq 1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2N^2}}.",
+    "raw_latex": "\\[\n\t\\mathbb P(\\forall i\\not= j : |\\langle \\sqrt D q_i, \\sqrt D q_j \\rangle| \\leq \\frac{\\epsilon}{N^2}) \\geq 1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2N^2}}.\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2093,
+    "start_pos": 182013,
+    "end_pos": 182174
+  },
+  "<<FORMULA_0237>>": {
+    "formula": "\\forall i\\not=j : \\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle \\leq \\frac \\epsilon N.",
+    "raw_latex": "\\[\n\t\\forall i\\not=j : \\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle \\leq \\frac \\epsilon N.\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2089,
+    "start_pos": 181883,
+    "end_pos": 181974
+  },
+  "<<FORMULA_0236>>": {
+    "formula": "1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2N^2}}",
+    "raw_latex": "$1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2N^2}}$",
+    "formula_type": "inline",
+    "line_number": 2088,
+    "start_pos": 181830,
+    "end_pos": 181880
+  },
+  "<<FORMULA_0235>>": {
+    "formula": "\\|\\bar Z\\bar Z^\\top \\|_F^2  = \\frac{1}{L^2} (N + \\sum_{i\\not= j}\\langle \\sqrt L q_i, \\sqrt L q_j \\rangle ).",
+    "raw_latex": "\\[\n\t\\|\\bar Z\\bar Z^\\top \\|_F^2  = \\frac{1}{L^2} (N + \\sum_{i\\not= j}\\langle \\sqrt L q_i, \\sqrt L q_j \\rangle ).\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2085,
+    "start_pos": 181642,
+    "end_pos": 181757
+  },
+  "<<FORMULA_0234>>": {
+    "formula": "\\sqrt L q_i",
+    "raw_latex": "$\\sqrt L q_i$",
+    "formula_type": "inline",
+    "line_number": 2084,
+    "start_pos": 181587,
+    "end_pos": 181600
+  },
+  "<<FORMULA_0233>>": {
+    "formula": "\\|\\bar Z\\bar Z^\\top \\|_F^2 &= \\frac1{L^2}\\| L \\bar Z\\bar Z^\\top \\|_F^2\\\\ &= \\frac{1}{L^2} (\\sum_{i=1}^N \\|\\sqrt L q_i\\|^2 + \\sum_{i\\not= j}\\langle \\sqrt L q_i, \\sqrt L q_j \\rangle ).",
+    "raw_latex": "\\begin{align*}\n\t    \t\\|\\bar Z\\bar Z^\\top \\|_F^2 &= \\frac1{L^2}\\| L \\bar Z\\bar Z^\\top \\|_F^2\\\\ &= \\frac{1}{L^2} (\\sum_{i=1}^N \\|\\sqrt L q_i\\|^2 + \\sum_{i\\not= j}\\langle \\sqrt L q_i, \\sqrt L q_j \\rangle ).\n\t\\end{align*}",
+    "formula_type": "align*",
+    "line_number": 2081,
+    "start_pos": 181362,
+    "end_pos": 181579
+  },
+  "<<FORMULA_0232>>": {
+    "formula": "\\sqrt{D}\\bar Z",
+    "raw_latex": "$\\sqrt{D}\\bar Z$",
+    "formula_type": "inline",
+    "line_number": 2080,
+    "start_pos": 181256,
+    "end_pos": 181272
+  },
+  "<<FORMULA_0231>>": {
+    "formula": "\\frac{1}{\\sqrt{L}}",
+    "raw_latex": "$\\frac{1}{\\sqrt{L}}$",
+    "formula_type": "inline",
+    "line_number": 2080,
+    "start_pos": 181207,
+    "end_pos": 181227
+  },
+  "<<FORMULA_0230>>": {
+    "formula": "\\{ \\mathbf{q_i} \\}_{i=1}^N",
+    "raw_latex": "$\\{ \\mathbf{q_i} \\}_{i=1}^N$",
+    "formula_type": "inline",
+    "line_number": 2080,
+    "start_pos": 181131,
+    "end_pos": 181159
+  },
+  "<<FORMULA_0229>>": {
+    "formula": "Z(\\cdot)",
+    "raw_latex": "$Z(\\cdot)$",
+    "formula_type": "inline",
+    "line_number": 2080,
+    "start_pos": 181009,
+    "end_pos": 181019
+  },
+  "<<FORMULA_0228>>": {
+    "formula": "\\bar Z = (\\mathbf q_1, \\mathbf q_2, \\ldots \\mathbf q_N)^\\top",
+    "raw_latex": "$\\bar Z = (\\mathbf q_1, \\mathbf q_2, \\ldots \\mathbf q_N)^\\top$",
+    "formula_type": "inline",
+    "line_number": 2080,
+    "start_pos": 180915,
+    "end_pos": 180977
+  },
+  "<<FORMULA_0227>>": {
+    "formula": "\\mathbf{q_i} = \\frac1L \\sum_{i=1}^L\\mathbf{z_i}\t = \\frac1L O_i \\mathbf1.",
+    "raw_latex": "\\[\n\t\\mathbf{q_i} = \\frac1L \\sum_{i=1}^L\\mathbf{z_i}\t = \\frac1L O_i \\mathbf1.\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2077,
+    "start_pos": 180730,
+    "end_pos": 180810
+  },
+  "<<FORMULA_0226>>": {
+    "formula": "Z_iZ_i^\\top",
+    "raw_latex": "$Z_iZ_i^\\top$",
+    "formula_type": "inline",
+    "line_number": 2076,
+    "start_pos": 180585,
+    "end_pos": 180598
+  },
+  "<<FORMULA_0225>>": {
+    "formula": "l,j",
+    "raw_latex": "$l,j$",
+    "formula_type": "inline",
+    "line_number": 2076,
+    "start_pos": 180491,
+    "end_pos": 180496
+  },
+  "<<FORMULA_0224>>": {
+    "formula": "\\sigma_l = \\sigma_j",
+    "raw_latex": "$\\sigma_l = \\sigma_j$",
+    "formula_type": "inline",
+    "line_number": 2076,
+    "start_pos": 180455,
+    "end_pos": 180476
+  },
+  "<<FORMULA_0223>>": {
+    "formula": "\\|Z_i\\|_F^2 = L = \\sum_{k=1}^L \\sigma_k^2",
+    "raw_latex": "$\\|Z_i\\|_F^2 = L = \\sum_{k=1}^L \\sigma_k^2$",
+    "formula_type": "inline",
+    "line_number": 2076,
+    "start_pos": 180378,
+    "end_pos": 180421
+  },
+  "<<FORMULA_0222>>": {
+    "formula": "K_Z = Z_iZ_i^\\top",
+    "raw_latex": "$K_Z = Z_iZ_i^\\top$",
+    "formula_type": "inline",
+    "line_number": 2076,
+    "start_pos": 180273,
+    "end_pos": 180292
+  },
+  "<<FORMULA_0221>>": {
+    "formula": "Z_i = Z(X_i)",
+    "raw_latex": "$Z_i = Z(X_i)$",
+    "formula_type": "inline",
+    "line_number": 2076,
+    "start_pos": 180241,
+    "end_pos": 180255
+  },
+  "<<FORMULA_0220>>": {
+    "formula": "|e^{-S_2(QQ^\\top)} - \\frac N{L^2} | \\leq \\epsilon",
+    "raw_latex": "\\[\n\t|e^{-S_2(QQ^\\top)} - \\frac N{L^2} | \\leq \\epsilon\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2071,
+    "start_pos": 180062,
+    "end_pos": 180119
+  },
+  "<<FORMULA_0219>>": {
+    "formula": "\\{\\mathbf{x_i}\\}_{i=1}^N \\sim \\mathbf{Data}",
+    "raw_latex": "$\\{\\mathbf{x_i}\\}_{i=1}^N \\sim \\mathbf{Data}$",
+    "formula_type": "inline",
+    "line_number": 2070,
+    "start_pos": 180000,
+    "end_pos": 180045
+  },
+  "<<FORMULA_0218>>": {
+    "formula": "1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2N^2}}",
+    "raw_latex": "$1-N^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2N^2}}$",
+    "formula_type": "inline",
+    "line_number": 2070,
+    "start_pos": 179936,
+    "end_pos": 179986
+  },
+  "<<FORMULA_0217>>": {
+    "formula": "L = D",
+    "raw_latex": "$L = D$",
+    "formula_type": "inline",
+    "line_number": 2070,
+    "start_pos": 179878,
+    "end_pos": 179885
+  },
+  "<<FORMULA_0216>>": {
+    "formula": "Z_i = Z(X_i)",
+    "raw_latex": "$Z_i = Z(X_i)$",
+    "formula_type": "inline",
+    "line_number": 2070,
+    "start_pos": 179688,
+    "end_pos": 179702
+  },
+  "<<FORMULA_0215>>": {
+    "formula": "| \\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle | \\leq \\epsilon.",
+    "raw_latex": "\\[\n\t| \\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle | \\leq \\epsilon.\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2063,
+    "start_pos": 179426,
+    "end_pos": 179495
+  },
+  "<<FORMULA_0214>>": {
+    "formula": "i,j",
+    "raw_latex": "$i,j$",
+    "formula_type": "inline",
+    "line_number": 2062,
+    "start_pos": 179418,
+    "end_pos": 179423
+  },
+  "<<FORMULA_0213>>": {
+    "formula": "1-m^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}",
+    "raw_latex": "$1-m^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}$",
+    "formula_type": "inline",
+    "line_number": 2062,
+    "start_pos": 179342,
+    "end_pos": 179389
+  },
+  "<<FORMULA_0212>>": {
+    "formula": "\\mathbb{P}(\\exists i,j : \\langle |\\mathbf{v_i}, \\mathbf{v_j} \\rangle|>\\epsilon) &\\leq \\sum_{i\\not= j}\\mathbb{P}(|\\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle|>\\epsilon)\\\\ &\\leq m^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}.",
+    "raw_latex": "\\begin{align*}\n\t\t\\mathbb{P}(\\exists i,j : \\langle |\\mathbf{v_i}, \\mathbf{v_j} \\rangle|>\\epsilon) &\\leq \\sum_{i\\not= j}\\mathbb{P}(|\\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle|>\\epsilon)\\\\ &\\leq m^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}.    \n\t\\end{align*}",
+    "formula_type": "align*",
+    "line_number": 2059,
+    "start_pos": 179049,
+    "end_pos": 179303
+  },
+  "<<FORMULA_0211>>": {
+    "formula": "i\\not=j",
+    "raw_latex": "$i\\not=j$",
+    "formula_type": "inline",
+    "line_number": 2058,
+    "start_pos": 179024,
+    "end_pos": 179033
+  },
+  "<<FORMULA_0210>>": {
+    "formula": "\\mathbb P(|\\langle \\mathbf{v_i} , \\mathbf{v_j} \\rangle | < \\epsilon) \\leq \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}",
+    "raw_latex": "\\[\n    \\mathbb P(|\\langle \\mathbf{v_i} , \\mathbf{v_j} \\rangle | < \\epsilon) \\leq \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}\n    \\]",
+    "formula_type": "display",
+    "line_number": 2055,
+    "start_pos": 178860,
+    "end_pos": 178987
+  },
+  "<<FORMULA_0209>>": {
+    "formula": "\\mathbf{v_i}, \\mathbf{v_j}",
+    "raw_latex": "$\\mathbf{v_i}, \\mathbf{v_j}$",
+    "formula_type": "inline",
+    "line_number": 2054,
+    "start_pos": 178780,
+    "end_pos": 178808
+  },
+  "<<FORMULA_0208>>": {
+    "formula": "\\mathbb P(T_\\epsilon) \\geq 1- \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}.",
+    "raw_latex": "\\[\n\t\\mathbb P(T_\\epsilon) \\geq 1- \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}.\n\t\\]",
+    "formula_type": "display",
+    "line_number": 2051,
+    "start_pos": 178593,
+    "end_pos": 178671
+  },
+  "<<FORMULA_0207>>": {
+    "formula": "T_\\epsilon \\subset \\mathbb S_{D-1}",
+    "raw_latex": "$T_\\epsilon \\subset \\mathbb S_{D-1}$",
+    "formula_type": "inline",
+    "line_number": 2050,
+    "start_pos": 178536,
+    "end_pos": 178572
+  },
+  "<<FORMULA_0206>>": {
+    "formula": "T_\\epsilon = \\{ z \\in \\mathbb S_{D-1} : |\\langle z,e_1\\rangle| \\leq \\epsilon / 2\\},",
+    "raw_latex": "\\[\n    T_\\epsilon = \\{ z \\in \\mathbb S_{D-1} : |\\langle z,e_1\\rangle| \\leq \\epsilon / 2\\},\n    \\]",
+    "formula_type": "display",
+    "line_number": 2046,
+    "start_pos": 178301,
+    "end_pos": 178398
+  },
+  "<<FORMULA_0205>>": {
+    "formula": "|\\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle|\\leq \\epsilon.",
+    "raw_latex": "\\[\n\t|\\langle \\mathbf{v_i}, \\mathbf{v_j} \\rangle|\\leq \\epsilon.\n\\]",
+    "formula_type": "display",
+    "line_number": 2040,
+    "start_pos": 178086,
+    "end_pos": 178151
+  },
+  "<<FORMULA_0204>>": {
+    "formula": "i\\not=j",
+    "raw_latex": "$i\\not=j$",
+    "formula_type": "inline",
+    "line_number": 2039,
+    "start_pos": 178075,
+    "end_pos": 178084
+  },
+  "<<FORMULA_0203>>": {
+    "formula": "i,j",
+    "raw_latex": "$i,j$",
+    "formula_type": "inline",
+    "line_number": 2039,
+    "start_pos": 178068,
+    "end_pos": 178073
+  },
+  "<<FORMULA_0202>>": {
+    "formula": "1-m^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}",
+    "raw_latex": "$1-m^2 \\sqrt{2\\pi}  e^{\\frac{-D\\epsilon^2}{2}}$",
+    "formula_type": "inline",
+    "line_number": 2039,
+    "start_pos": 177993,
+    "end_pos": 178040
+  },
+  "<<FORMULA_0201>>": {
+    "formula": "S_1(\\sigma) \\leq S_1{(\\lambda)} \\implies \\textrm{effective rank}(Z) \\leq \\exp{S_1{(Z)}}",
+    "raw_latex": "$S_1(\\sigma) \\leq S_1{(\\lambda)} \\implies \\textrm{effective rank}(Z) \\leq \\exp{S_1{(Z)}}$",
+    "formula_type": "inline",
+    "line_number": 2034,
+    "start_pos": 177661,
+    "end_pos": 177750
+  },
+  "<<FORMULA_0200>>": {
+    "formula": "\\lambda \\preccurlyeq \\sigma",
+    "raw_latex": "$\\lambda \\preccurlyeq \\sigma$",
+    "formula_type": "inline",
+    "line_number": 2034,
+    "start_pos": 177619,
+    "end_pos": 177648
+  },
+  "<<FORMULA_0199>>": {
+    "formula": "\\sigma_i \\geq \\lambda_i",
+    "raw_latex": "$\\sigma_i \\geq \\lambda_i$",
+    "formula_type": "inline",
+    "line_number": 2033,
+    "start_pos": 177569,
+    "end_pos": 177594
+  },
+  "<<FORMULA_0198>>": {
+    "formula": "\\forall i \\quad \\sigma_i \\leq 1",
+    "raw_latex": "$\\forall i \\quad \\sigma_i \\leq 1$",
+    "formula_type": "inline",
+    "line_number": 2033,
+    "start_pos": 177521,
+    "end_pos": 177554
+  },
+  "<<FORMULA_0197>>": {
+    "formula": "\\sigma_i^2 = \\lambda_i",
+    "raw_latex": "$\\sigma_i^2 = \\lambda_i$",
+    "formula_type": "inline",
+    "line_number": 2033,
+    "start_pos": 177487,
+    "end_pos": 177511
+  },
+  "<<FORMULA_0196>>": {
+    "formula": "\\lambda_i \\coloneq \\frac{\\lambda_i}{\\sum_{i=1}^N \\lambda_i}",
+    "raw_latex": "$\\lambda_i \\coloneq \\frac{\\lambda_i}{\\sum_{i=1}^N \\lambda_i}$",
+    "formula_type": "inline",
+    "line_number": 2031,
+    "start_pos": 177380,
+    "end_pos": 177441
+  },
+  "<<FORMULA_0195>>": {
+    "formula": "\\sigma_i \\coloneq \\frac{\\sigma_i}{\\sum_{i=1}^N \\sigma_i}",
+    "raw_latex": "$\\sigma_i \\coloneq \\frac{\\sigma_i}{\\sum_{i=1}^N \\sigma_i}$",
+    "formula_type": "inline",
+    "line_number": 2031,
+    "start_pos": 177317,
+    "end_pos": 177375
+  },
+  "<<FORMULA_0194>>": {
+    "formula": "\\sum_{i=1}^N \\sigma_i = \\sum_{i=1}^N \\lambda_i = 1",
+    "raw_latex": "$\\sum_{i=1}^N \\sigma_i = \\sum_{i=1}^N \\lambda_i = 1$",
+    "formula_type": "inline",
+    "line_number": 2031,
+    "start_pos": 177229,
+    "end_pos": 177281
+  },
+  "<<FORMULA_0193>>": {
+    "formula": "\\lambda_1 \\geq \\cdots \\geq \\lambda_{\\min{(N,D)}} \\geq 0",
+    "raw_latex": "$\\lambda_1 \\geq \\cdots \\geq \\lambda_{\\min{(N,D)}} \\geq 0$",
+    "formula_type": "inline",
+    "line_number": 2031,
+    "start_pos": 177130,
+    "end_pos": 177187
+  },
+  "<<FORMULA_0192>>": {
+    "formula": "Z^T Z",
+    "raw_latex": "$Z^T Z$",
+    "formula_type": "inline",
+    "line_number": 2031,
+    "start_pos": 177119,
+    "end_pos": 177126
+  },
+  "<<FORMULA_0191>>": {
+    "formula": "\\sigma_1 \\geq \\cdots \\geq \\sigma_{\\min{(N,D)}} \\geq 0",
+    "raw_latex": "$\\sigma_1 \\geq \\cdots \\geq \\sigma_{\\min{(N,D)}} \\geq 0$",
+    "formula_type": "inline",
+    "line_number": 2031,
+    "start_pos": 177032,
+    "end_pos": 177087
+  },
+  "<<FORMULA_0190>>": {
+    "formula": "\\alpha=1",
+    "raw_latex": "$\\alpha=1$",
+    "formula_type": "inline",
+    "line_number": 2027,
+    "start_pos": 176942,
+    "end_pos": 176952
+  },
+  "<<FORMULA_0189>>": {
+    "formula": "\\exp(S_1(Z))",
+    "raw_latex": "$\\exp(S_1(Z))$",
+    "formula_type": "inline",
+    "line_number": 2027,
+    "start_pos": 176878,
+    "end_pos": 176892
+  },
+  "<<FORMULA_0188>>": {
+    "formula": "Z^T Z",
+    "raw_latex": "$Z^T Z$",
+    "formula_type": "inline",
+    "line_number": 2027,
+    "start_pos": 176817,
+    "end_pos": 176824
+  },
+  "<<FORMULA_0187>>": {
+    "formula": "Z \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$Z \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 2027,
+    "start_pos": 176766,
+    "end_pos": 176797
+  },
+  "<<FORMULA_0186>>": {
+    "formula": "\\alpha>0",
+    "raw_latex": "$\\alpha>0$",
+    "formula_type": "inline",
+    "line_number": 2023,
+    "start_pos": 176577,
+    "end_pos": 176587
+  },
+  "<<FORMULA_0185>>": {
+    "formula": "p \\preccurlyeq q \\implies f(q) \\leq f(p)",
+    "raw_latex": "$p \\preccurlyeq q \\implies f(q) \\leq f(p)$",
+    "formula_type": "inline",
+    "line_number": 2019,
+    "start_pos": 176390,
+    "end_pos": 176432
+  },
+  "<<FORMULA_0184>>": {
+    "formula": "p \\preccurlyeq q \\implies f(p) \\leq f(q)",
+    "raw_latex": "$p \\preccurlyeq q \\implies f(p) \\leq f(q)$",
+    "formula_type": "inline",
+    "line_number": 2019,
+    "start_pos": 176325,
+    "end_pos": 176367
+  },
+  "<<FORMULA_0183>>": {
+    "formula": "\\sum_{i=1}^k p_{[i]} \\leq  \\sum_{i=1}^k q_{[i]} \\textrm{\\quad for \\quad} k = 1, \\cdots, n",
+    "raw_latex": "\\begin{equation}\n    \\sum_{i=1}^k p_{[i]} \\leq  \\sum_{i=1}^k q_{[i]} \\textrm{\\quad for \\quad} k = 1, \\cdots, n \n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 2014,
+    "start_pos": 176071,
+    "end_pos": 176197
+  },
+  "<<FORMULA_0182>>": {
+    "formula": "q_{[1]}  \\geq \\cdots \\geq q_{[n]}",
+    "raw_latex": "$q_{[1]}  \\geq \\cdots \\geq q_{[n]}$",
+    "formula_type": "inline",
+    "line_number": 2012,
+    "start_pos": 176025,
+    "end_pos": 176060
+  },
+  "<<FORMULA_0181>>": {
+    "formula": "p_{[1]} \\geq \\cdots \\geq p_{[n]}",
+    "raw_latex": "$p_{[1]} \\geq \\cdots \\geq p_{[n]}$",
+    "formula_type": "inline",
+    "line_number": 2012,
+    "start_pos": 175986,
+    "end_pos": 176020
+  },
+  "<<FORMULA_0180>>": {
+    "formula": "p \\preccurlyeq q",
+    "raw_latex": "$p \\preccurlyeq q$",
+    "formula_type": "inline",
+    "line_number": 2012,
+    "start_pos": 175939,
+    "end_pos": 175957
+  },
+  "<<FORMULA_0179>>": {
+    "formula": "\\sum_{i=1}^N p_i = \\sum_{i=1}^N q_i",
+    "raw_latex": "$\\sum_{i=1}^N p_i = \\sum_{i=1}^N q_i$",
+    "formula_type": "inline",
+    "line_number": 2012,
+    "start_pos": 175862,
+    "end_pos": 175899
+  },
+  "<<FORMULA_0178>>": {
+    "formula": "p,q \\in \\mathbb{}{R}^n",
+    "raw_latex": "$p,q \\in \\mathbb{}{R}^n$",
+    "formula_type": "inline",
+    "line_number": 2012,
+    "start_pos": 175804,
+    "end_pos": 175828
+  },
+  "<<FORMULA_0177>>": {
+    "formula": "D = 2 - S",
+    "raw_latex": "$D = 2 - S$",
+    "formula_type": "inline",
+    "line_number": 1934,
+    "start_pos": 171066,
+    "end_pos": 171077
+  },
+  "<<FORMULA_0176>>": {
+    "formula": "%     z_t = -\\log p(w_t | w_{t-1}, w_{t-2}, \\cdots, w_{1})\n%",
+    "raw_latex": "\\begin{equation}\n%     z_t = -\\log p(w_t | w_{t-1}, w_{t-2}, \\cdots, w_{1})\n% \\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1921,
+    "start_pos": 166798,
+    "end_pos": 166890
+  },
+  "<<FORMULA_0175>>": {
+    "formula": "(z_1, z_2, \\cdots, z_n)",
+    "raw_latex": "$(z_1, z_2, \\cdots, z_n)$",
+    "formula_type": "inline",
+    "line_number": 1920,
+    "start_pos": 166731,
+    "end_pos": 166756
+  },
+  "<<FORMULA_0174>>": {
+    "formula": "T=16",
+    "raw_latex": "$T=16$",
+    "formula_type": "inline",
+    "line_number": 1896,
+    "start_pos": 164940,
+    "end_pos": 164946
+  },
+  "<<FORMULA_0173>>": {
+    "formula": "p = 1.0",
+    "raw_latex": "$p = 1.0$",
+    "formula_type": "inline",
+    "line_number": 1891,
+    "start_pos": 164619,
+    "end_pos": 164628
+  },
+  "<<FORMULA_0172>>": {
+    "formula": "p = 0.5",
+    "raw_latex": "$p = 0.5$",
+    "formula_type": "inline",
+    "line_number": 1890,
+    "start_pos": 164525,
+    "end_pos": 164534
+  },
+  "<<FORMULA_0171>>": {
+    "formula": "p = 0.1",
+    "raw_latex": "$p = 0.1$",
+    "formula_type": "inline",
+    "line_number": 1889,
+    "start_pos": 164424,
+    "end_pos": 164433
+  },
+  "<<FORMULA_0170>>": {
+    "formula": "p = 0",
+    "raw_latex": "$p = 0$",
+    "formula_type": "inline",
+    "line_number": 1888,
+    "start_pos": 164320,
+    "end_pos": 164327
+  },
+  "<<FORMULA_0169>>": {
+    "formula": "p = 1.0",
+    "raw_latex": "$p = 1.0$",
+    "formula_type": "inline",
+    "line_number": 1881,
+    "start_pos": 163656,
+    "end_pos": 163665
+  },
+  "<<FORMULA_0168>>": {
+    "formula": "p = 0.5",
+    "raw_latex": "$p = 0.5$",
+    "formula_type": "inline",
+    "line_number": 1880,
+    "start_pos": 163568,
+    "end_pos": 163577
+  },
+  "<<FORMULA_0167>>": {
+    "formula": "p = 0.1",
+    "raw_latex": "$p = 0.1$",
+    "formula_type": "inline",
+    "line_number": 1879,
+    "start_pos": 163477,
+    "end_pos": 163486
+  },
+  "<<FORMULA_0166>>": {
+    "formula": "p = 0",
+    "raw_latex": "$p = 0$",
+    "formula_type": "inline",
+    "line_number": 1878,
+    "start_pos": 163373,
+    "end_pos": 163380
+  },
+  "<<FORMULA_0165>>": {
+    "formula": "\\lambda_i = i^{-\\beta}",
+    "raw_latex": "$\\lambda_i = i^{-\\beta}$",
+    "formula_type": "inline",
+    "line_number": 1765,
+    "start_pos": 157037,
+    "end_pos": 157061
+  },
+  "<<FORMULA_0164>>": {
+    "formula": "\\alpha=2",
+    "raw_latex": "$\\alpha=2$",
+    "formula_type": "inline",
+    "line_number": 1765,
+    "start_pos": 156744,
+    "end_pos": 156754
+  },
+  "<<FORMULA_0163>>": {
+    "formula": "\\alpha=2",
+    "raw_latex": "$\\alpha=2$",
+    "formula_type": "inline",
+    "line_number": 1765,
+    "start_pos": 156677,
+    "end_pos": 156687
+  },
+  "<<FORMULA_0162>>": {
+    "formula": "\\lim_{\\alpha \\rightarrow 1}",
+    "raw_latex": "$\\lim_{\\alpha \\rightarrow 1}$",
+    "formula_type": "inline",
+    "line_number": 1765,
+    "start_pos": 156495,
+    "end_pos": 156524
+  },
+  "<<FORMULA_0161>>": {
+    "formula": "A_i, B_i, C_i, D_i",
+    "raw_latex": "$A_i, B_i, C_i, D_i$",
+    "formula_type": "inline",
+    "line_number": 1757,
+    "start_pos": 156163,
+    "end_pos": 156183
+  },
+  "<<FORMULA_0160>>": {
+    "formula": "%    h_{i} &= A_{i}h_{i-1} + B_ix_i \\\\\n%    y_i &= C_ih_i + D_i x_i,\n%",
+    "raw_latex": "\\begin{align}\n%    h_{i} &= A_{i}h_{i-1} + B_ix_i \\\\\n%    y_i &= C_ih_i + D_i x_i,\n%\\end{align}",
+    "formula_type": "align",
+    "line_number": 1752,
+    "start_pos": 155988,
+    "end_pos": 156083
+  },
+  "<<FORMULA_0159>>": {
+    "formula": "\\mathbf{D} \\in \\mathbb{R}^{d \\times d}",
+    "raw_latex": "$\\mathbf{D} \\in \\mathbb{R}^{d \\times d}$",
+    "formula_type": "inline",
+    "line_number": 1746,
+    "start_pos": 155772,
+    "end_pos": 155812
+  },
+  "<<FORMULA_0158>>": {
+    "formula": "\\mathbf{C} \\in \\mathbb{R}^{d \\times n}",
+    "raw_latex": "$\\mathbf{C} \\in \\mathbb{R}^{d \\times n}$",
+    "formula_type": "inline",
+    "line_number": 1746,
+    "start_pos": 155726,
+    "end_pos": 155766
+  },
+  "<<FORMULA_0157>>": {
+    "formula": "\\mathbf{B} \\in \\mathbb{R}^{n \\times d}",
+    "raw_latex": "$\\mathbf{B} \\in \\mathbb{R}^{n \\times d}$",
+    "formula_type": "inline",
+    "line_number": 1746,
+    "start_pos": 155684,
+    "end_pos": 155724
+  },
+  "<<FORMULA_0156>>": {
+    "formula": "\\mathbf{A} \\in \\mathbb{R}^{n \\times n}",
+    "raw_latex": "$\\mathbf{A} \\in \\mathbb{R}^{n \\times n}$",
+    "formula_type": "inline",
+    "line_number": 1746,
+    "start_pos": 155642,
+    "end_pos": 155682
+  },
+  "<<FORMULA_0155>>": {
+    "formula": "%     \\mathbf{h}_t &= \\mathbf{A}\\mathbf{h}_{t-1} + \\mathbf{B}\\mathbf{x}_t, \\\\\n%     \\mathbf{y}_t &= \\mathbf{C}\\mathbf{h}_t + \\mathbf{D}\\mathbf{x}_t,\n%",
+    "raw_latex": "\\begin{align}\n%     \\mathbf{h}_t &= \\mathbf{A}\\mathbf{h}_{t-1} + \\mathbf{B}\\mathbf{x}_t, \\\\\n%     \\mathbf{y}_t &= \\mathbf{C}\\mathbf{h}_t + \\mathbf{D}\\mathbf{x}_t,\n% \\end{align}",
+    "formula_type": "align",
+    "line_number": 1741,
+    "start_pos": 155456,
+    "end_pos": 155632
+  },
+  "<<FORMULA_0154>>": {
+    "formula": "\\label{eqn:attention}\n%    \\mathbf{y} = A \\mathbf{V},\n%",
+    "raw_latex": "\\begin{equation}\\label{eqn:attention}\n%    \\mathbf{y} = A \\mathbf{V},\n%\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1732,
+    "start_pos": 155164,
+    "end_pos": 155249
+  },
+  "<<FORMULA_0153>>": {
+    "formula": "\\label{eqn:attention}\n%    \\mathbf{A} = softmax\\left(\\frac{\\mathbf{Q}\\mathbf{K}^\\top}{\\sqrt{d_k}}\\right),\n%",
+    "raw_latex": "\\begin{equation}\\label{eqn:attention}\n%    \\mathbf{A} = softmax\\left(\\frac{\\mathbf{Q}\\mathbf{K}^\\top}{\\sqrt{d_k}}\\right),\n%\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1725,
+    "start_pos": 154910,
+    "end_pos": 155047
+  },
+  "<<FORMULA_0152>>": {
+    "formula": "%    \\mathbf{Q} = \\mathbf{x}W_Q, \\quad  \\mathbf{K} = \\mathbf{x}W_K, \\quad \\mathbf{V} = \\mathbf{x}W_V.\n%",
+    "raw_latex": "\\begin{equation}\n%    \\mathbf{Q} = \\mathbf{x}W_Q, \\quad  \\mathbf{K} = \\mathbf{x}W_K, \\quad \\mathbf{V} = \\mathbf{x}W_V.\n%\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1720,
+    "start_pos": 154636,
+    "end_pos": 154770
+  },
+  "<<FORMULA_0151>>": {
+    "formula": "W_V \\in \\mathbb{R}^{d \\times d_v}",
+    "raw_latex": "$W_V \\in \\mathbb{R}^{d \\times d_v}$",
+    "formula_type": "inline",
+    "line_number": 1719,
+    "start_pos": 154568,
+    "end_pos": 154603
+  },
+  "<<FORMULA_0150>>": {
+    "formula": "W_K \\in \\mathbb{R}^{d \\times d_k}",
+    "raw_latex": "$W_K \\in \\mathbb{R}^{d \\times d_k}$",
+    "formula_type": "inline",
+    "line_number": 1719,
+    "start_pos": 154528,
+    "end_pos": 154563
+  },
+  "<<FORMULA_0149>>": {
+    "formula": "W_Q \\in \\mathbb{R}^{d \\times d_k}",
+    "raw_latex": "$W_Q \\in \\mathbb{R}^{d \\times d_k}$",
+    "formula_type": "inline",
+    "line_number": 1719,
+    "start_pos": 154491,
+    "end_pos": 154526
+  },
+  "<<FORMULA_0148>>": {
+    "formula": "\\mathbf V \\in \\mathbb R^{L \\times d_v}",
+    "raw_latex": "$\\mathbf V \\in \\mathbb R^{L \\times d_v}$",
+    "formula_type": "inline",
+    "line_number": 1719,
+    "start_pos": 154370,
+    "end_pos": 154410
+  },
+  "<<FORMULA_0147>>": {
+    "formula": "\\mathbf Q \\in \\mathbb{R}^{L \\times d_k}",
+    "raw_latex": "$\\mathbf Q \\in \\mathbb{R}^{L \\times d_k}$",
+    "formula_type": "inline",
+    "line_number": 1719,
+    "start_pos": 154316,
+    "end_pos": 154357
+  },
+  "<<FORMULA_0146>>": {
+    "formula": "\\mathbf K \\in \\mathbb{R}^{L \\times d_k}",
+    "raw_latex": "$\\mathbf K \\in \\mathbb{R}^{L \\times d_k}$",
+    "formula_type": "inline",
+    "line_number": 1719,
+    "start_pos": 154266,
+    "end_pos": 154307
+  },
+  "<<FORMULA_0145>>": {
+    "formula": "\\lambda_i = i^{-\\beta}",
+    "raw_latex": "$\\lambda_i = i^{-\\beta}$",
+    "formula_type": "inline",
+    "line_number": 1716,
+    "start_pos": 154045,
+    "end_pos": 154069
+  },
+  "<<FORMULA_0144>>": {
+    "formula": "\\alpha=2",
+    "raw_latex": "$\\alpha=2$",
+    "formula_type": "inline",
+    "line_number": 1716,
+    "start_pos": 153753,
+    "end_pos": 153763
+  },
+  "<<FORMULA_0143>>": {
+    "formula": "\\alpha=2",
+    "raw_latex": "$\\alpha=2$",
+    "formula_type": "inline",
+    "line_number": 1716,
+    "start_pos": 153686,
+    "end_pos": 153696
+  },
+  "<<FORMULA_0142>>": {
+    "formula": "\\lim_{\\alpha \\rightarrow 1}",
+    "raw_latex": "$\\lim_{\\alpha \\rightarrow 1}$",
+    "formula_type": "inline",
+    "line_number": 1716,
+    "start_pos": 153504,
+    "end_pos": 153533
+  },
+  "<<FORMULA_0141>>": {
+    "formula": "\\lim_{\\alpha \\rightarrow 1}",
+    "raw_latex": "$\\lim_{\\alpha \\rightarrow 1}$",
+    "formula_type": "inline",
+    "line_number": 1714,
+    "start_pos": 153301,
+    "end_pos": 153330
+  },
+  "<<FORMULA_0140>>": {
+    "formula": "S_{\\textrm{LogDet}}(Z) = \\log \\det (\\mathbf{K}_{\\mathbf{Z}}) - \\log 2",
+    "raw_latex": "$S_{\\textrm{LogDet}}(Z) = \\log \\det (\\mathbf{K}_{\\mathbf{Z}}) - \\log 2$",
+    "formula_type": "inline",
+    "line_number": 1714,
+    "start_pos": 153106,
+    "end_pos": 153177
+  },
+  "<<FORMULA_0139>>": {
+    "formula": "\\textrm{tr}(\\cdot) = \\sum_{i=1}^n \\lambda_i(\\cdot)",
+    "raw_latex": "$\\textrm{tr}(\\cdot) = \\sum_{i=1}^n \\lambda_i(\\cdot)$",
+    "formula_type": "inline",
+    "line_number": 1714,
+    "start_pos": 152266,
+    "end_pos": 152318
+  },
+  "<<FORMULA_0138>>": {
+    "formula": "\\textrm{tr}(\\mathbf{K}_{\\mathbf{Z}})",
+    "raw_latex": "$\\textrm{tr}(\\mathbf{K}_{\\mathbf{Z}})$",
+    "formula_type": "inline",
+    "line_number": 1714,
+    "start_pos": 152102,
+    "end_pos": 152140
+  },
+  "<<FORMULA_0137>>": {
+    "formula": "D < N",
+    "raw_latex": "$D < N$",
+    "formula_type": "inline",
+    "line_number": 1714,
+    "start_pos": 152050,
+    "end_pos": 152057
+  },
+  "<<FORMULA_0136>>": {
+    "formula": "Z^T Z",
+    "raw_latex": "$Z^T Z$",
+    "formula_type": "inline",
+    "line_number": 1714,
+    "start_pos": 151888,
+    "end_pos": 151895
+  },
+  "<<FORMULA_0135>>": {
+    "formula": "Z Z^T",
+    "raw_latex": "$Z Z^T$",
+    "formula_type": "inline",
+    "line_number": 1714,
+    "start_pos": 151831,
+    "end_pos": 151838
+  },
+  "<<FORMULA_0134>>": {
+    "formula": "\\kappa(a, b) = a b^T",
+    "raw_latex": "$\\kappa(a, b) = a b^T$",
+    "formula_type": "inline",
+    "line_number": 1712,
+    "start_pos": 151212,
+    "end_pos": 151234
+  },
+  "<<FORMULA_0133>>": {
+    "formula": "\\lambda_i = i^{-\\beta}",
+    "raw_latex": "$\\lambda_i = i^{-\\beta}$",
+    "formula_type": "inline",
+    "line_number": 1706,
+    "start_pos": 150299,
+    "end_pos": 150323
+  },
+  "<<FORMULA_0132>>": {
+    "formula": "\\mathbf{D} \\in \\mathbb{R}^{d \\times d}",
+    "raw_latex": "$\\mathbf{D} \\in \\mathbb{R}^{d \\times d}$",
+    "formula_type": "inline",
+    "line_number": 1695,
+    "start_pos": 149858,
+    "end_pos": 149898
+  },
+  "<<FORMULA_0131>>": {
+    "formula": "\\mathbf{C} \\in \\mathbb{R}^{d \\times n}",
+    "raw_latex": "$\\mathbf{C} \\in \\mathbb{R}^{d \\times n}$",
+    "formula_type": "inline",
+    "line_number": 1695,
+    "start_pos": 149812,
+    "end_pos": 149852
+  },
+  "<<FORMULA_0130>>": {
+    "formula": "\\mathbf{B} \\in \\mathbb{R}^{n \\times d}",
+    "raw_latex": "$\\mathbf{B} \\in \\mathbb{R}^{n \\times d}$",
+    "formula_type": "inline",
+    "line_number": 1695,
+    "start_pos": 149770,
+    "end_pos": 149810
+  },
+  "<<FORMULA_0129>>": {
+    "formula": "\\mathbf{A} \\in \\mathbb{R}^{n \\times n}",
+    "raw_latex": "$\\mathbf{A} \\in \\mathbb{R}^{n \\times n}$",
+    "formula_type": "inline",
+    "line_number": 1695,
+    "start_pos": 149728,
+    "end_pos": 149768
+  },
+  "<<FORMULA_0128>>": {
+    "formula": "\\mathbf{h}_t &= \\mathbf{A}\\mathbf{h}_{t-1} + \\mathbf{B}\\mathbf{x}_t, \\\\\n    \\mathbf{y}_t &= \\mathbf{C}\\mathbf{h}_t + \\mathbf{D}\\mathbf{x}_t,",
+    "raw_latex": "\\begin{align}\n    \\mathbf{h}_t &= \\mathbf{A}\\mathbf{h}_{t-1} + \\mathbf{B}\\mathbf{x}_t, \\\\\n    \\mathbf{y}_t &= \\mathbf{C}\\mathbf{h}_t + \\mathbf{D}\\mathbf{x}_t,\n\\end{align}",
+    "formula_type": "align",
+    "line_number": 1690,
+    "start_pos": 149550,
+    "end_pos": 149720
+  },
+  "<<FORMULA_0127>>": {
+    "formula": "\\mathbf{y} = \\mathbf{A}\\mathbf{V}.",
+    "raw_latex": "\\begin{equation}\n    \\mathbf{y} = \\mathbf{A}\\mathbf{V}.\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1681,
+    "start_pos": 149281,
+    "end_pos": 149351
+  },
+  "<<FORMULA_0126>>": {
+    "formula": "\\mathbf{A} = \\operatorname{softmax}\\left(\\frac{\\mathbf{Q}\\mathbf{K}^\\top}{\\sqrt{d_k}} + \\mathbf{M}\\right),",
+    "raw_latex": "\\begin{equation}\n    \\mathbf{A} = \\operatorname{softmax}\\left(\\frac{\\mathbf{Q}\\mathbf{K}^\\top}{\\sqrt{d_k}} + \\mathbf{M}\\right),\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1673,
+    "start_pos": 149040,
+    "end_pos": 149182
+  },
+  "<<FORMULA_0125>>": {
+    "formula": "\\mathbf{W}_V \\in \\mathbb{R}^{d \\times d_v}",
+    "raw_latex": "$\\mathbf{W}_V \\in \\mathbb{R}^{d \\times d_v}$",
+    "formula_type": "inline",
+    "line_number": 1669,
+    "start_pos": 148928,
+    "end_pos": 148972
+  },
+  "<<FORMULA_0124>>": {
+    "formula": "\\mathbf{W}_Q, \\mathbf{W}_K \\in \\mathbb{R}^{d \\times d_k}",
+    "raw_latex": "$\\mathbf{W}_Q, \\mathbf{W}_K \\in \\mathbb{R}^{d \\times d_k}$",
+    "formula_type": "inline",
+    "line_number": 1669,
+    "start_pos": 148865,
+    "end_pos": 148923
+  },
+  "<<FORMULA_0123>>": {
+    "formula": "\\mathbf{Q} = \\mathbf{x}\\mathbf{W}_Q, \\quad \\mathbf{K} = \\mathbf{x}\\mathbf{W}_K, \\quad \\mathbf{V} = \\mathbf{x}\\mathbf{W}_V,",
+    "raw_latex": "\\begin{equation}\n    \\mathbf{Q} = \\mathbf{x}\\mathbf{W}_Q, \\quad \\mathbf{K} = \\mathbf{x}\\mathbf{W}_K, \\quad \\mathbf{V} = \\mathbf{x}\\mathbf{W}_V,\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1665,
+    "start_pos": 148699,
+    "end_pos": 148857
+  },
+  "<<FORMULA_0122>>": {
+    "formula": "\\rho, \\tau \\in [-1, 1]",
+    "raw_latex": "$\\rho, \\tau \\in [-1, 1]$",
+    "formula_type": "inline",
+    "line_number": 1048,
+    "start_pos": 93456,
+    "end_pos": 93480
+  },
+  "<<FORMULA_0121>>": {
+    "formula": "(Z_1, \\Pi Z_2)",
+    "raw_latex": "$(Z_1, \\Pi Z_2)$",
+    "formula_type": "inline",
+    "line_number": 880,
+    "start_pos": 80095,
+    "end_pos": 80111
+  },
+  "<<FORMULA_0120>>": {
+    "formula": "(Z_1, Z_2)",
+    "raw_latex": "$(Z_1, Z_2)$",
+    "formula_type": "inline",
+    "line_number": 880,
+    "start_pos": 80037,
+    "end_pos": 80049
+  },
+  "<<FORMULA_0119>>": {
+    "formula": "J=2",
+    "raw_latex": "$J=2$",
+    "formula_type": "inline",
+    "line_number": 877,
+    "start_pos": 79564,
+    "end_pos": 79569
+  },
+  "<<FORMULA_0118>>": {
+    "formula": "J=16",
+    "raw_latex": "$J=16$",
+    "formula_type": "inline",
+    "line_number": 877,
+    "start_pos": 79500,
+    "end_pos": 79506
+  },
+  "<<FORMULA_0117>>": {
+    "formula": "Z_2 \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$Z_2 \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 868,
+    "start_pos": 78037,
+    "end_pos": 78070
+  },
+  "<<FORMULA_0116>>": {
+    "formula": "Z_1 \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$Z_1 \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 868,
+    "start_pos": 77999,
+    "end_pos": 78032
+  },
+  "<<FORMULA_0115>>": {
+    "formula": "Z_2 \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$Z_2 \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 865,
+    "start_pos": 77706,
+    "end_pos": 77739
+  },
+  "<<FORMULA_0114>>": {
+    "formula": "Z_1 \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$Z_1 \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 865,
+    "start_pos": 77668,
+    "end_pos": 77701
+  },
+  "<<FORMULA_0113>>": {
+    "formula": "\\bar{C} = \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos\\left( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k+1}\\| \\|\\mathbf{v}_k\\|} \\right).",
+    "raw_latex": "\\begin{equation}\n    \\bar{C} = \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos\\left( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k+1}\\| \\|\\mathbf{v}_k\\|} \\right).\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 850,
+    "start_pos": 76784,
+    "end_pos": 76964
+  },
+  "<<FORMULA_0112>>": {
+    "formula": "\\mathbf{v}_k = \\mathbf{z}_{k+1} - \\mathbf{z}_k",
+    "raw_latex": "$\\mathbf{v}_k = \\mathbf{z}_{k+1} - \\mathbf{z}_k$",
+    "formula_type": "inline",
+    "line_number": 848,
+    "start_pos": 76695,
+    "end_pos": 76743
+  },
+  "<<FORMULA_0111>>": {
+    "formula": "\\alpha=1",
+    "raw_latex": "$\\alpha=1$",
+    "formula_type": "inline",
+    "line_number": 839,
+    "start_pos": 75982,
+    "end_pos": 75992
+  },
+  "<<FORMULA_0110>>": {
+    "formula": "\\label{eq:matrix-based-entropy}\n    S_{\\alpha}(\\mathbf{Z}) = \\frac{1}{1 - \\alpha} \\log \\left( \\sum_{i=1}^{L} \\left( \\frac{\\lambda_i(\\mathbf{K_Z})}{\\operatorname{tr}(\\mathbf{K_Z})} \\right)^{\\alpha} \\right).",
+    "raw_latex": "\\begin{equation}\n\\label{eq:matrix-based-entropy}\n    S_{\\alpha}(\\mathbf{Z}) = \\frac{1}{1 - \\alpha} \\log \\left( \\sum_{i=1}^{L} \\left( \\frac{\\lambda_i(\\mathbf{K_Z})}{\\operatorname{tr}(\\mathbf{K_Z})} \\right)^{\\alpha} \\right).\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 830,
+    "start_pos": 75192,
+    "end_pos": 75429
+  },
+  "<<FORMULA_0109>>": {
+    "formula": "\\mathbf{K_Z} = \\mathbf{Z}\\mathbf{Z}^\\top",
+    "raw_latex": "$\\mathbf{K_Z} = \\mathbf{Z}\\mathbf{Z}^\\top$",
+    "formula_type": "inline",
+    "line_number": 828,
+    "start_pos": 75131,
+    "end_pos": 75173
+  },
+  "<<FORMULA_0108>>": {
+    "formula": "\\mathbf{Z} \\in \\mathbb{R}^{L \\times d}",
+    "raw_latex": "$\\mathbf{Z} \\in \\mathbb{R}^{L \\times d}$",
+    "formula_type": "inline",
+    "line_number": 828,
+    "start_pos": 75070,
+    "end_pos": 75110
+  },
+  "<<FORMULA_0107>>": {
+    "formula": "\\mathbf{y} \\in \\mathbb{R}^{L \\times d}",
+    "raw_latex": "$\\mathbf{y} \\in \\mathbb{R}^{L \\times d}$",
+    "formula_type": "inline",
+    "line_number": 791,
+    "start_pos": 72507,
+    "end_pos": 72547
+  },
+  "<<FORMULA_0106>>": {
+    "formula": "\\mathbf{x} \\in \\mathbb{R}^{L \\times d}",
+    "raw_latex": "$\\mathbf{x} \\in \\mathbb{R}^{L \\times d}$",
+    "formula_type": "inline",
+    "line_number": 791,
+    "start_pos": 72462,
+    "end_pos": 72502
+  },
+  "<<FORMULA_0105>>": {
+    "formula": "(\\mathbf{z}_1, \\mathbf{z}_2)",
+    "raw_latex": "$(\\mathbf{z}_1, \\mathbf{z}_2)$",
+    "formula_type": "inline",
+    "line_number": 765,
+    "start_pos": 70043,
+    "end_pos": 70073
+  },
+  "<<FORMULA_0104>>": {
+    "formula": "\\mathbf{Z}_1,\\mathbf{Z}_2 \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$\\mathbf{Z}_1,\\mathbf{Z}_2 \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 760,
+    "start_pos": 69587,
+    "end_pos": 69642
+  },
+  "<<FORMULA_0103>>": {
+    "formula": "\\{p_i\\}",
+    "raw_latex": "$\\{p_i\\}$",
+    "formula_type": "inline",
+    "line_number": 760,
+    "start_pos": 69392,
+    "end_pos": 69401
+  },
+  "<<FORMULA_0102>>": {
+    "formula": "\\bar{C} \\;=\\; \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos\\!\\Bigl( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_k\\|} \\Bigr).",
+    "raw_latex": "\\begin{equation}\n    \\bar{C} \\;=\\; \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos\\!\\Bigl( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_k\\|} \\Bigr).\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 753,
+    "start_pos": 68869,
+    "end_pos": 69053
+  },
+  "<<FORMULA_0101>>": {
+    "formula": "\\mathbf{v}_k = \\mathbf{z}_{k+1} - \\mathbf{z}_k",
+    "raw_latex": "$\\mathbf{v}_k = \\mathbf{z}_{k+1} - \\mathbf{z}_k$",
+    "formula_type": "inline",
+    "line_number": 752,
+    "start_pos": 68786,
+    "end_pos": 68834
+  },
+  "<<FORMULA_0100>>": {
+    "formula": "\\{\\mathbf{z}_1,\\dots,\\mathbf{z}_L\\}",
+    "raw_latex": "$\\{\\mathbf{z}_1,\\dots,\\mathbf{z}_L\\}$",
+    "formula_type": "inline",
+    "line_number": 752,
+    "start_pos": 68740,
+    "end_pos": 68777
+  },
+  "<<FORMULA_0099>>": {
+    "formula": "\\mathbf{Z} \\in \\mathbb{R}^{N \\times d}",
+    "raw_latex": "$\\mathbf{Z} \\in \\mathbb{R}^{N \\times d}$",
+    "formula_type": "inline",
+    "line_number": 749,
+    "start_pos": 68352,
+    "end_pos": 68392
+  },
+  "<<FORMULA_0098>>": {
+    "formula": "\\alpha=1",
+    "raw_latex": "$\\alpha=1$",
+    "formula_type": "inline",
+    "line_number": 742,
+    "start_pos": 67942,
+    "end_pos": 67952
+  },
+  "<<FORMULA_0097>>": {
+    "formula": "S_\\alpha(\\mathbf{Z})",
+    "raw_latex": "$S_\\alpha(\\mathbf{Z})$",
+    "formula_type": "inline",
+    "line_number": 740,
+    "start_pos": 67628,
+    "end_pos": 67650
+  },
+  "<<FORMULA_0096>>": {
+    "formula": "\\mathbf{K_Z} = \\mathbf{Z}\\mathbf{Z}^\\top",
+    "raw_latex": "$\\mathbf{K_Z} = \\mathbf{Z}\\mathbf{Z}^\\top$",
+    "formula_type": "inline",
+    "line_number": 740,
+    "start_pos": 67562,
+    "end_pos": 67604
+  },
+  "<<FORMULA_0095>>": {
+    "formula": "\\mathbf{Z} \\in \\mathbb{R}^{L \\times d}",
+    "raw_latex": "$\\mathbf{Z} \\in \\mathbb{R}^{L \\times d}$",
+    "formula_type": "inline",
+    "line_number": 740,
+    "start_pos": 67512,
+    "end_pos": 67552
+  },
+  "<<FORMULA_0094>>": {
+    "formula": "S_\\alpha(\\mathbf{Z})",
+    "raw_latex": "$S_\\alpha(\\mathbf{Z})$",
+    "formula_type": "inline",
+    "line_number": 716,
+    "start_pos": 66104,
+    "end_pos": 66126
+  },
+  "<<FORMULA_0093>>": {
+    "formula": "S_\\alpha(\\mathbf{Z})",
+    "raw_latex": "$S_\\alpha(\\mathbf{Z})$",
+    "formula_type": "inline",
+    "line_number": 712,
+    "start_pos": 65842,
+    "end_pos": 65864
+  },
+  "<<FORMULA_0092>>": {
+    "formula": "S_\\alpha",
+    "raw_latex": "$S_\\alpha$",
+    "formula_type": "inline",
+    "line_number": 710,
+    "start_pos": 65471,
+    "end_pos": 65481
+  },
+  "<<FORMULA_0091>>": {
+    "formula": "\\alpha \\to 1",
+    "raw_latex": "$\\alpha \\to 1$",
+    "formula_type": "inline",
+    "line_number": 710,
+    "start_pos": 65455,
+    "end_pos": 65469
+  },
+  "<<FORMULA_0090>>": {
+    "formula": "r = \\operatorname{rank}(\\mathbf{K_Z})",
+    "raw_latex": "$r = \\operatorname{rank}(\\mathbf{K_Z})$",
+    "formula_type": "inline",
+    "line_number": 710,
+    "start_pos": 65411,
+    "end_pos": 65450
+  },
+  "<<FORMULA_0089>>": {
+    "formula": "\\lambda_i(\\mathbf{K_Z})",
+    "raw_latex": "$\\lambda_i(\\mathbf{K_Z})$",
+    "formula_type": "inline",
+    "line_number": 710,
+    "start_pos": 65333,
+    "end_pos": 65358
+  },
+  "<<FORMULA_0088>>": {
+    "formula": "\\label{eq:matrix-based-entropy}\n    S_{\\alpha}(\\mathbf{Z}) \\;=\\; \\frac{1}{1 - \\alpha} \\log \\Biggl(\\sum_{i=1}^{r} \\Bigl(\\frac{\\lambda_i(\\mathbf{K_Z})}{\\operatorname{tr}(\\mathbf{K_Z})}\\Bigr)^\\alpha \\Biggr)",
+    "raw_latex": "\\begin{equation}\n\\label{eq:matrix-based-entropy}\n    S_{\\alpha}(\\mathbf{Z}) \\;=\\; \\frac{1}{1 - \\alpha} \\log \\Biggl(\\sum_{i=1}^{r} \\Bigl(\\frac{\\lambda_i(\\mathbf{K_Z})}{\\operatorname{tr}(\\mathbf{K_Z})}\\Bigr)^\\alpha \\Biggr)\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 706,
+    "start_pos": 65091,
+    "end_pos": 65326
+  },
+  "<<FORMULA_0087>>": {
+    "formula": "\\mathbf{K_Z} = \\mathbf{Z} \\mathbf{Z}^\\top",
+    "raw_latex": "$\\mathbf{K_Z} = \\mathbf{Z} \\mathbf{Z}^\\top$",
+    "formula_type": "inline",
+    "line_number": 702,
+    "start_pos": 64706,
+    "end_pos": 64749
+  },
+  "<<FORMULA_0086>>": {
+    "formula": "\\mathbf{Z} \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$\\mathbf{Z} \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 702,
+    "start_pos": 64534,
+    "end_pos": 64574
+  },
+  "<<FORMULA_0085>>": {
+    "formula": "\\mathbf{Z}\\mathbf{Z}^\\top",
+    "raw_latex": "\\(\\mathbf{Z}\\mathbf{Z}^\\top\\)",
+    "formula_type": "inline",
+    "line_number": 665,
+    "start_pos": 61928,
+    "end_pos": 61957
+  },
+  "<<FORMULA_0084>>": {
+    "formula": "\\mathbf{Z}\\mathbf{Z}^\\top",
+    "raw_latex": "$\\mathbf{Z}\\mathbf{Z}^\\top$",
+    "formula_type": "inline",
+    "line_number": 654,
+    "start_pos": 61216,
+    "end_pos": 61243
+  },
+  "<<FORMULA_0083>>": {
+    "formula": "H(Z)",
+    "raw_latex": "$H(Z)$",
+    "formula_type": "inline",
+    "line_number": 646,
+    "start_pos": 60428,
+    "end_pos": 60434
+  },
+  "<<FORMULA_0082>>": {
+    "formula": "\\log(N) - \\mathrm{InfoNCE} \\;\\;\\le\\;\\; I(X; Z) \\;\\;\\le\\;\\; H(Z),",
+    "raw_latex": "\\[\n\\log(N) - \\mathrm{InfoNCE} \\;\\;\\le\\;\\; I(X; Z) \\;\\;\\le\\;\\; H(Z),\n\\]",
+    "formula_type": "display",
+    "line_number": 643,
+    "start_pos": 60351,
+    "end_pos": 60421
+  },
+  "<<FORMULA_0081>>": {
+    "formula": "Z(X)",
+    "raw_latex": "$Z(X)$",
+    "formula_type": "inline",
+    "line_number": 642,
+    "start_pos": 60300,
+    "end_pos": 60306
+  },
+  "<<FORMULA_0080>>": {
+    "formula": "H(Z)",
+    "raw_latex": "\\(H(Z)\\)",
+    "formula_type": "inline",
+    "line_number": 638,
+    "start_pos": 59918,
+    "end_pos": 59926
+  },
+  "<<FORMULA_0079>>": {
+    "formula": "\\log(N) \\;-\\; \\mathrm{InfoNCE} \\;\\;\\le\\;\\; I(X;Z) \\;\\;\\le\\;\\; H(Z),",
+    "raw_latex": "\\[\n\\log(N) \\;-\\; \\mathrm{InfoNCE} \\;\\;\\le\\;\\; I(X;Z) \\;\\;\\le\\;\\; H(Z),\n\\]",
+    "formula_type": "display",
+    "line_number": 635,
+    "start_pos": 59838,
+    "end_pos": 59911
+  },
+  "<<FORMULA_0078>>": {
+    "formula": "Z(X)",
+    "raw_latex": "\\(Z(X)\\)",
+    "formula_type": "inline",
+    "line_number": 634,
+    "start_pos": 59752,
+    "end_pos": 59760
+  },
+  "<<FORMULA_0077>>": {
+    "formula": "X \\sim \\mathbf{Data}",
+    "raw_latex": "\\(X \\sim \\mathbf{Data}\\)",
+    "formula_type": "inline",
+    "line_number": 634,
+    "start_pos": 59708,
+    "end_pos": 59732
+  },
+  "<<FORMULA_0076>>": {
+    "formula": "\\log \\!\\bigl(\\tfrac{L^2}{N^3}\\bigr).",
+    "raw_latex": "$\n    \\log \\!\\bigl(\\tfrac{L^2}{N^3}\\bigr).\n$",
+    "formula_type": "inline",
+    "line_number": 622,
+    "start_pos": 59115,
+    "end_pos": 59159
+  },
+  "<<FORMULA_0075>>": {
+    "formula": "\\log \\!\\bigl(\\tfrac{L^2}{N}\\bigr).",
+    "raw_latex": "$\n    \\log \\!\\bigl(\\tfrac{L^2}{N}\\bigr).\n$",
+    "formula_type": "inline",
+    "line_number": 618,
+    "start_pos": 58930,
+    "end_pos": 58972
+  },
+  "<<FORMULA_0074>>": {
+    "formula": "S_2\\!\\bigl(\\overline{\\mathbf{Z}} \\,\\overline{\\mathbf{Z}}^{\\top}\\bigr)",
+    "raw_latex": "$S_2\\!\\bigl(\\overline{\\mathbf{Z}} \\,\\overline{\\mathbf{Z}}^{\\top}\\bigr)$",
+    "formula_type": "inline",
+    "line_number": 617,
+    "start_pos": 58835,
+    "end_pos": 58906
+  },
+  "<<FORMULA_0073>>": {
+    "formula": "\\overline{\\mathbf{Z}} \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$\\overline{\\mathbf{Z}} \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 605,
+    "start_pos": 58061,
+    "end_pos": 58112
+  },
+  "<<FORMULA_0072>>": {
+    "formula": "\\mathbf{Z} \\in \\mathbb{R}^{L \\times D}",
+    "raw_latex": "$\\mathbf{Z} \\in \\mathbb{R}^{L \\times D}$",
+    "formula_type": "inline",
+    "line_number": 604,
+    "start_pos": 57839,
+    "end_pos": 57879
+  },
+  "<<FORMULA_0071>>": {
+    "formula": "\\alpha=1",
+    "raw_latex": "\\(\\alpha=1\\)",
+    "formula_type": "inline",
+    "line_number": 596,
+    "start_pos": 57486,
+    "end_pos": 57498
+  },
+  "<<FORMULA_0070>>": {
+    "formula": "\\mathrm{EffRank}(\\mathbf{Z})\n\\;\\le\\;\n\\exp\\bigl(S_1(\\mathbf{Z})\\bigr),",
+    "raw_latex": "\\[\n\\mathrm{EffRank}(\\mathbf{Z})\n\\;\\le\\;\n\\exp\\bigl(S_1(\\mathbf{Z})\\bigr),\n\\]",
+    "formula_type": "display",
+    "line_number": 591,
+    "start_pos": 57397,
+    "end_pos": 57472
+  },
+  "<<FORMULA_0069>>": {
+    "formula": "S_1(\\mathbf{Z})",
+    "raw_latex": "\\(S_1(\\mathbf{Z})\\)",
+    "formula_type": "inline",
+    "line_number": 590,
+    "start_pos": 57371,
+    "end_pos": 57390
+  },
+  "<<FORMULA_0068>>": {
+    "formula": "\\sigma_1\\ge \\dots \\ge \\sigma_D",
+    "raw_latex": "\\(\\sigma_1\\ge \\dots \\ge \\sigma_D\\)",
+    "formula_type": "inline",
+    "line_number": 590,
+    "start_pos": 57296,
+    "end_pos": 57330
+  },
+  "<<FORMULA_0067>>": {
+    "formula": "\\mathbf{Z}^\\top \\mathbf{Z}",
+    "raw_latex": "\\(\\mathbf{Z}^\\top \\mathbf{Z}\\)",
+    "formula_type": "inline",
+    "line_number": 590,
+    "start_pos": 57244,
+    "end_pos": 57274
+  },
+  "<<FORMULA_0066>>": {
+    "formula": "\\mathbf{Z}\\in \\mathbb{R}^{N\\times D}",
+    "raw_latex": "\\(\\mathbf{Z}\\in \\mathbb{R}^{N\\times D}\\)",
+    "formula_type": "inline",
+    "line_number": 590,
+    "start_pos": 57199,
+    "end_pos": 57239
+  },
+  "<<FORMULA_0065>>": {
+    "formula": "\\mathrm{EffRank}(\\mathbf{Z})\n\\;\\le\\;\n\\exp\\bigl(S_1(\\mathbf{Z})\\bigr),",
+    "raw_latex": "\\[\n\\mathrm{EffRank}(\\mathbf{Z})\n\\;\\le\\;\n\\exp\\bigl(S_1(\\mathbf{Z})\\bigr),\n\\]",
+    "formula_type": "display",
+    "line_number": 579,
+    "start_pos": 56958,
+    "end_pos": 57033
+  },
+  "<<FORMULA_0064>>": {
+    "formula": "\\alpha\\to1",
+    "raw_latex": "$\\alpha\\to1$",
+    "formula_type": "inline",
+    "line_number": 578,
+    "start_pos": 56943,
+    "end_pos": 56955
+  },
+  "<<FORMULA_0063>>": {
+    "formula": "\\mathbf{K}=\\mathbf{Z}\\mathbf{Z}^\\top",
+    "raw_latex": "\\(\\mathbf{K}=\\mathbf{Z}\\mathbf{Z}^\\top\\)",
+    "formula_type": "inline",
+    "line_number": 568,
+    "start_pos": 56473,
+    "end_pos": 56513
+  },
+  "<<FORMULA_0062>>": {
+    "formula": "S_\\alpha(\\mathbf{Z})",
+    "raw_latex": "\\(S_\\alpha(\\mathbf{Z})\\)",
+    "formula_type": "inline",
+    "line_number": 568,
+    "start_pos": 56349,
+    "end_pos": 56373
+  },
+  "<<FORMULA_0061>>": {
+    "formula": "\\alpha > 0",
+    "raw_latex": "\\(\\alpha > 0\\)",
+    "formula_type": "inline",
+    "line_number": 568,
+    "start_pos": 56333,
+    "end_pos": 56347
+  },
+  "<<FORMULA_0060>>": {
+    "formula": "(\\mathbf{z}_1, \\mathbf{z}_2)",
+    "raw_latex": "$(\\mathbf{z}_1, \\mathbf{z}_2)$",
+    "formula_type": "inline",
+    "line_number": 541,
+    "start_pos": 53966,
+    "end_pos": 53996
+  },
+  "<<FORMULA_0059>>": {
+    "formula": "\\mathbf{Z}_1,\\mathbf{Z}_2 \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$\\mathbf{Z}_1,\\mathbf{Z}_2 \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 532,
+    "start_pos": 53271,
+    "end_pos": 53326
+  },
+  "<<FORMULA_0058>>": {
+    "formula": "\\{p_i\\}",
+    "raw_latex": "$\\{p_i\\}$",
+    "formula_type": "inline",
+    "line_number": 532,
+    "start_pos": 53076,
+    "end_pos": 53085
+  },
+  "<<FORMULA_0057>>": {
+    "formula": "\\mathbf{Z}_1, \\mathbf{Z}_2 \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$\\mathbf{Z}_1, \\mathbf{Z}_2 \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 528,
+    "start_pos": 52865,
+    "end_pos": 52921
+  },
+  "<<FORMULA_0056>>": {
+    "formula": "\\bar{C} \\;=\\; \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos \\ \\!\\Bigl( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_k\\|} \\Bigr).",
+    "raw_latex": "\\begin{equation}\n    \\bar{C} \\;=\\; \\frac{1}{L-2} \\sum_{k=1}^{L-2} \\arccos \\ \\!\\Bigl( \\frac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}{\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_k\\|} \\Bigr).\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 520,
+    "start_pos": 52156,
+    "end_pos": 52343
+  },
+  "<<FORMULA_0055>>": {
+    "formula": "\\mathbf{v}_k = \\mathbf{z}_{k+1} - \\mathbf{z}_k",
+    "raw_latex": "$\\mathbf{v}_k = \\mathbf{z}_{k+1} - \\mathbf{z}_k$",
+    "formula_type": "inline",
+    "line_number": 519,
+    "start_pos": 52073,
+    "end_pos": 52121
+  },
+  "<<FORMULA_0054>>": {
+    "formula": "\\{\\mathbf{z}_1,\\dots,\\mathbf{z}_L\\}",
+    "raw_latex": "$\\{\\mathbf{z}_1,\\dots,\\mathbf{z}_L\\}$",
+    "formula_type": "inline",
+    "line_number": 519,
+    "start_pos": 52027,
+    "end_pos": 52064
+  },
+  "<<FORMULA_0053>>": {
+    "formula": "\\bar{C} \n    = \\frac{1}{L-2}\\sum_{k=1}^{L-2}\n      \\arccos\\!\\Bigl(\\tfrac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}\n                           {\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_k\\|}\\Bigr).",
+    "raw_latex": "\\[\n    \\bar{C} \n    = \\frac{1}{L-2}\\sum_{k=1}^{L-2}\n      \\arccos\\!\\Bigl(\\tfrac{\\mathbf{v}_{k+1}^\\top \\mathbf{v}_k}\n                           {\\|\\mathbf{v}_{k+1}\\|\\|\\mathbf{v}_k\\|}\\Bigr).\n\\]",
+    "formula_type": "display",
+    "line_number": 509,
+    "start_pos": 51511,
+    "end_pos": 51702
+  },
+  "<<FORMULA_0052>>": {
+    "formula": "\\mathbf{v}_k = \\mathbf{z}_{k+1} - \\mathbf{z}_k",
+    "raw_latex": "$\\mathbf{v}_k = \\mathbf{z}_{k+1} - \\mathbf{z}_k$",
+    "formula_type": "inline",
+    "line_number": 508,
+    "start_pos": 51390,
+    "end_pos": 51438
+  },
+  "<<FORMULA_0051>>": {
+    "formula": "\\mathbf{Z} \\in \\mathbb{R}^{N \\times d}",
+    "raw_latex": "$\\mathbf{Z} \\in \\mathbb{R}^{N \\times d}$",
+    "formula_type": "inline",
+    "line_number": 503,
+    "start_pos": 50924,
+    "end_pos": 50964
+  },
+  "<<FORMULA_0050>>": {
+    "formula": "% \\mathrm{EffRank}(\\mathbf{Z}) \\;\\le\\;\\exp\\!\\bigl(S_1(\\mathbf{Z})\\bigr).\n%",
+    "raw_latex": "\\[\n% \\mathrm{EffRank}(\\mathbf{Z}) \\;\\le\\;\\exp\\!\\bigl(S_1(\\mathbf{Z})\\bigr).\n% \\]",
+    "formula_type": "display",
+    "line_number": 496,
+    "start_pos": 50371,
+    "end_pos": 50451
+  },
+  "<<FORMULA_0049>>": {
+    "formula": "\\exp(S_1(\\mathbf{Z}))",
+    "raw_latex": "\\(\\exp(S_1(\\mathbf{Z}))\\)",
+    "formula_type": "inline",
+    "line_number": 493,
+    "start_pos": 49800,
+    "end_pos": 49825
+  },
+  "<<FORMULA_0048>>": {
+    "formula": "\\overline{\\mathbf{Z}}",
+    "raw_latex": "$\\overline{\\mathbf{Z}}$",
+    "formula_type": "inline",
+    "line_number": 488,
+    "start_pos": 49564,
+    "end_pos": 49587
+  },
+  "<<FORMULA_0047>>": {
+    "formula": "\\overline{\\mathbf{Z}} \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$\\overline{\\mathbf{Z}} \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 488,
+    "start_pos": 49491,
+    "end_pos": 49542
+  },
+  "<<FORMULA_0046>>": {
+    "formula": "\\mathbf{\\overline{Z}}",
+    "raw_latex": "$\\mathbf{\\overline{Z}}$",
+    "formula_type": "inline",
+    "line_number": 486,
+    "start_pos": 49181,
+    "end_pos": 49204
+  },
+  "<<FORMULA_0045>>": {
+    "formula": "\\mathbf{\\overline{Z}} \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$\\mathbf{\\overline{Z}} \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 486,
+    "start_pos": 49001,
+    "end_pos": 49052
+  },
+  "<<FORMULA_0044>>": {
+    "formula": "S_\\alpha(\\mathbf{Z})",
+    "raw_latex": "$S_\\alpha(\\mathbf{Z})$",
+    "formula_type": "inline",
+    "line_number": 481,
+    "start_pos": 48162,
+    "end_pos": 48184
+  },
+  "<<FORMULA_0043>>": {
+    "formula": "\\mathbf{Z} \\in \\mathbb{R}^{L \\times D}",
+    "raw_latex": "$\\mathbf{Z} \\in \\mathbb{R}^{L \\times D}$",
+    "formula_type": "inline",
+    "line_number": 481,
+    "start_pos": 48098,
+    "end_pos": 48138
+  },
+  "<<FORMULA_0042>>": {
+    "formula": "S_\\alpha(\\mathbf{Z})",
+    "raw_latex": "$S_\\alpha(\\mathbf{Z})$",
+    "formula_type": "inline",
+    "line_number": 461,
+    "start_pos": 46707,
+    "end_pos": 46729
+  },
+  "<<FORMULA_0041>>": {
+    "formula": "S_\\alpha(\\mathbf{Z})",
+    "raw_latex": "$S_\\alpha(\\mathbf{Z})$",
+    "formula_type": "inline",
+    "line_number": 458,
+    "start_pos": 46466,
+    "end_pos": 46488
+  },
+  "<<FORMULA_0040>>": {
+    "formula": "\\mathbf{Z}\\mathbf{Z}^\\top",
+    "raw_latex": "$\\mathbf{Z}\\mathbf{Z}^\\top$",
+    "formula_type": "inline",
+    "line_number": 454,
+    "start_pos": 46287,
+    "end_pos": 46314
+  },
+  "<<FORMULA_0039>>": {
+    "formula": "\\mathbf{K}=\\mathbf{Z}\\mathbf{Z}^\\top",
+    "raw_latex": "$\\mathbf{K}=\\mathbf{Z}\\mathbf{Z}^\\top$",
+    "formula_type": "inline",
+    "line_number": 448,
+    "start_pos": 45333,
+    "end_pos": 45371
+  },
+  "<<FORMULA_0038>>": {
+    "formula": "\\mathbf{Z}\\mathbf{Z}^\\top",
+    "raw_latex": "\\(\\mathbf{Z}\\mathbf{Z}^\\top\\)",
+    "formula_type": "inline",
+    "line_number": 431,
+    "start_pos": 44060,
+    "end_pos": 44089
+  },
+  "<<FORMULA_0037>>": {
+    "formula": "\\exp(S_1(\\mathbf{Z}))",
+    "raw_latex": "\\(\\exp(S_1(\\mathbf{Z}))\\)",
+    "formula_type": "inline",
+    "line_number": 428,
+    "start_pos": 43175,
+    "end_pos": 43200
+  },
+  "<<FORMULA_0036>>": {
+    "formula": "S_\\alpha(\\mathbf{Z})",
+    "raw_latex": "\\(S_\\alpha(\\mathbf{Z})\\)",
+    "formula_type": "inline",
+    "line_number": 428,
+    "start_pos": 43065,
+    "end_pos": 43089
+  },
+  "<<FORMULA_0035>>": {
+    "formula": "\\label{eq:alpha1}\nS_1(\\mathbf{Z}) \n\\;=-\\sum_{i=1}^{r} \\lambda_i(\\mathbf{K}) \\log \\lambda_i(\\mathbf{K})",
+    "raw_latex": "\\begin{equation}\n\\label{eq:alpha1}\nS_1(\\mathbf{Z}) \n\\;=-\\sum_{i=1}^{r} \\lambda_i(\\mathbf{K}) \\log \\lambda_i(\\mathbf{K})\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 417,
+    "start_pos": 42771,
+    "end_pos": 42905
+  },
+  "<<FORMULA_0034>>": {
+    "formula": "\\alpha=1",
+    "raw_latex": "$\\alpha=1$",
+    "formula_type": "inline",
+    "line_number": 416,
+    "start_pos": 42702,
+    "end_pos": 42712
+  },
+  "<<FORMULA_0033>>": {
+    "formula": "\\alpha \\to 1",
+    "raw_latex": "\\(\\alpha \\to 1\\)",
+    "formula_type": "inline",
+    "line_number": 416,
+    "start_pos": 42543,
+    "end_pos": 42559
+  },
+  "<<FORMULA_0032>>": {
+    "formula": "S_\\alpha(\\mathbf{Z})",
+    "raw_latex": "\\(S_\\alpha(\\mathbf{Z})\\)",
+    "formula_type": "inline",
+    "line_number": 415,
+    "start_pos": 42213,
+    "end_pos": 42237
+  },
+  "<<FORMULA_0031>>": {
+    "formula": "\\leq \\min{(N, D)}",
+    "raw_latex": "$\\leq \\min{(N, D)}$",
+    "formula_type": "inline",
+    "line_number": 415,
+    "start_pos": 41957,
+    "end_pos": 41976
+  },
+  "<<FORMULA_0030>>": {
+    "formula": "r=\\mathrm{rank}(\\mathbf{K})",
+    "raw_latex": "\\(r=\\mathrm{rank}(\\mathbf{K})\\)",
+    "formula_type": "inline",
+    "line_number": 415,
+    "start_pos": 41925,
+    "end_pos": 41956
+  },
+  "<<FORMULA_0029>>": {
+    "formula": "\\label{eq:matrix-based-entropy}\nS_\\alpha(\\mathbf{Z}) \n\\;=\\; \n\\frac{1}{1-\\alpha}\\,\\log \\Biggl(\\,\\sum_{i=1}^{r} \\Bigl(\\tfrac{\\lambda_i(\\mathbf{K})}{\\mathrm{tr}(\\mathbf{K})}\\Bigr)^\\alpha \\Biggr),",
+    "raw_latex": "\\begin{equation}\n\\label{eq:matrix-based-entropy}\nS_\\alpha(\\mathbf{Z}) \n\\;=\\; \n\\frac{1}{1-\\alpha}\\,\\log \\Biggl(\\,\\sum_{i=1}^{r} \\Bigl(\\tfrac{\\lambda_i(\\mathbf{K})}{\\mathrm{tr}(\\mathbf{K})}\\Bigr)^\\alpha \\Biggr),\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 409,
+    "start_pos": 41694,
+    "end_pos": 41918
+  },
+  "<<FORMULA_0028>>": {
+    "formula": "\\alpha>0",
+    "raw_latex": "\\(\\alpha>0\\)",
+    "formula_type": "inline",
+    "line_number": 408,
+    "start_pos": 41680,
+    "end_pos": 41692
+  },
+  "<<FORMULA_0027>>": {
+    "formula": "\\alpha > 0",
+    "raw_latex": "$\\alpha > 0$",
+    "formula_type": "inline",
+    "line_number": 405,
+    "start_pos": 41521,
+    "end_pos": 41533
+  },
+  "<<FORMULA_0026>>": {
+    "formula": "\\{\\lambda_i(\\mathbf{K})\\}",
+    "raw_latex": "$\\{\\lambda_i(\\mathbf{K})\\}$",
+    "formula_type": "inline",
+    "line_number": 405,
+    "start_pos": 41429,
+    "end_pos": 41456
+  },
+  "<<FORMULA_0025>>": {
+    "formula": "\\mathbf{K} = \\mathbf{Z}\\mathbf{Z}^\\top",
+    "raw_latex": "$\\mathbf{K} = \\mathbf{Z}\\mathbf{Z}^\\top$",
+    "formula_type": "inline",
+    "line_number": 405,
+    "start_pos": 41383,
+    "end_pos": 41423
+  },
+  "<<FORMULA_0024>>": {
+    "formula": "\\alpha=1",
+    "raw_latex": "$\\alpha=1$",
+    "formula_type": "inline",
+    "line_number": 396,
+    "start_pos": 41159,
+    "end_pos": 41169
+  },
+  "<<FORMULA_0023>>": {
+    "formula": "\\alpha\\to 1",
+    "raw_latex": "$\\alpha\\to 1$",
+    "formula_type": "inline",
+    "line_number": 396,
+    "start_pos": 41121,
+    "end_pos": 41134
+  },
+  "<<FORMULA_0022>>": {
+    "formula": "\\alpha=2",
+    "raw_latex": "$\\alpha=2$",
+    "formula_type": "inline",
+    "line_number": 396,
+    "start_pos": 41084,
+    "end_pos": 41094
+  },
+  "<<FORMULA_0021>>": {
+    "formula": "S_\\alpha(\\mathbf{Z})",
+    "raw_latex": "$S_\\alpha(\\mathbf{Z})$",
+    "formula_type": "inline",
+    "line_number": 396,
+    "start_pos": 40958,
+    "end_pos": 40980
+  },
+  "<<FORMULA_0020>>": {
+    "formula": "S_\\alpha(\\mathbf{Z})",
+    "raw_latex": "$S_\\alpha(\\mathbf{Z})$",
+    "formula_type": "inline",
+    "line_number": 396,
+    "start_pos": 40796,
+    "end_pos": 40818
+  },
+  "<<FORMULA_0019>>": {
+    "formula": "r = \\mathrm{rank}(\\mathbf{K}) \\le \\min(N,D)",
+    "raw_latex": "$r = \\mathrm{rank}(\\mathbf{K}) \\le \\min(N,D)$",
+    "formula_type": "inline",
+    "line_number": 396,
+    "start_pos": 40700,
+    "end_pos": 40745
+  },
+  "<<FORMULA_0018>>": {
+    "formula": "\\label{eq:matrix-based-entropy}\n    S_\\alpha(\\mathbf{Z}) \\;=\\; \\frac{1}{1-\\alpha} \\,\\log \\!\\biggl(\\,\\sum_{i=1}^{r}\\!\\Bigl(\\tfrac{\\lambda_i(\\mathbf{K})}{\\mathrm{tr}(\\mathbf{K})}\\Bigr)^\\alpha\\biggr),",
+    "raw_latex": "\\begin{equation}\n\\label{eq:matrix-based-entropy}\n    S_\\alpha(\\mathbf{Z}) \\;=\\; \\frac{1}{1-\\alpha} \\,\\log \\!\\biggl(\\,\\sum_{i=1}^{r}\\!\\Bigl(\\tfrac{\\lambda_i(\\mathbf{K})}{\\mathrm{tr}(\\mathbf{K})}\\Bigr)^\\alpha\\biggr),\n\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 392,
+    "start_pos": 40464,
+    "end_pos": 40693
+  },
+  "<<FORMULA_0017>>": {
+    "formula": "\\alpha > 0",
+    "raw_latex": "$\\alpha > 0$",
+    "formula_type": "inline",
+    "line_number": 391,
+    "start_pos": 40442,
+    "end_pos": 40454
+  },
+  "<<FORMULA_0016>>": {
+    "formula": "\\{\\lambda_i(\\mathbf{K})\\}",
+    "raw_latex": "$\\{\\lambda_i(\\mathbf{K})\\}$",
+    "formula_type": "inline",
+    "line_number": 391,
+    "start_pos": 40350,
+    "end_pos": 40377
+  },
+  "<<FORMULA_0015>>": {
+    "formula": "\\mathbf{K} = \\mathbf{Z}\\mathbf{Z}^\\top",
+    "raw_latex": "$\\mathbf{K} = \\mathbf{Z}\\mathbf{Z}^\\top$",
+    "formula_type": "inline",
+    "line_number": 391,
+    "start_pos": 40304,
+    "end_pos": 40344
+  },
+  "<<FORMULA_0014>>": {
+    "formula": "\\{\\lambda_i(\\mathbf{K})\\}",
+    "raw_latex": "\\(\\{\\lambda_i(\\mathbf{K})\\}\\)",
+    "formula_type": "inline",
+    "line_number": 390,
+    "start_pos": 40038,
+    "end_pos": 40067
+  },
+  "<<FORMULA_0013>>": {
+    "formula": "\\mathbf{K} = \\mathbf{Z}\\mathbf{Z}^\\top",
+    "raw_latex": "\\(\\mathbf{K} = \\mathbf{Z}\\mathbf{Z}^\\top\\)",
+    "formula_type": "inline",
+    "line_number": 390,
+    "start_pos": 39976,
+    "end_pos": 40018
+  },
+  "<<FORMULA_0012>>": {
+    "formula": "\\mathbf{Z} \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "\\(\\mathbf{Z} \\in \\mathbb{R}^{N \\times D}\\)",
+    "formula_type": "inline",
+    "line_number": 390,
+    "start_pos": 39795,
+    "end_pos": 39837
+  },
+  "<<FORMULA_0011>>": {
+    "formula": "\\mathbf{y} \\in \\mathbb{R}^{L \\times d}",
+    "raw_latex": "$\\mathbf{y} \\in \\mathbb{R}^{L \\times d}$",
+    "formula_type": "inline",
+    "line_number": 374,
+    "start_pos": 38912,
+    "end_pos": 38952
+  },
+  "<<FORMULA_0010>>": {
+    "formula": "\\mathbf{x} \\in \\mathbb{R}^{L \\times d}",
+    "raw_latex": "$\\mathbf{x} \\in \\mathbb{R}^{L \\times d}$",
+    "formula_type": "inline",
+    "line_number": 374,
+    "start_pos": 38838,
+    "end_pos": 38878
+  },
+  "<<FORMULA_0009>>": {
+    "formula": "\\operatorname{tr}(\\mathbf{M})",
+    "raw_latex": "$\\operatorname{tr}(\\mathbf{M})$",
+    "formula_type": "inline",
+    "line_number": 374,
+    "start_pos": 38749,
+    "end_pos": 38780
+  },
+  "<<FORMULA_0008>>": {
+    "formula": "\\lambda_i(\\mathbf{M})",
+    "raw_latex": "$\\lambda_i(\\mathbf{M})$",
+    "formula_type": "inline",
+    "line_number": 374,
+    "start_pos": 38680,
+    "end_pos": 38703
+  },
+  "<<FORMULA_0007>>": {
+    "formula": "\\mathbf{Z} \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$\\mathbf{Z} \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 374,
+    "start_pos": 38519,
+    "end_pos": 38559
+  },
+  "<<FORMULA_0006>>": {
+    "formula": "\\mathbf{Z}\\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$\\mathbf{Z}\\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 373,
+    "start_pos": 38302,
+    "end_pos": 38341
+  },
+  "<<FORMULA_0005>>": {
+    "formula": "\\mathbf{y} \\in \\mathbb{R}^{L \\times d}",
+    "raw_latex": "$\\mathbf{y} \\in \\mathbb{R}^{L \\times d}$",
+    "formula_type": "inline",
+    "line_number": 358,
+    "start_pos": 36608,
+    "end_pos": 36648
+  },
+  "<<FORMULA_0004>>": {
+    "formula": "\\mathbf{x} \\in \\mathbb{R}^{L \\times d}",
+    "raw_latex": "$\\mathbf{x} \\in \\mathbb{R}^{L \\times d}$",
+    "formula_type": "inline",
+    "line_number": 358,
+    "start_pos": 36543,
+    "end_pos": 36583
+  },
+  "<<FORMULA_0003>>": {
+    "formula": "\\operatorname{tr}(\\mathbf{M})",
+    "raw_latex": "$\\operatorname{tr}(\\mathbf{M})$",
+    "formula_type": "inline",
+    "line_number": 358,
+    "start_pos": 36479,
+    "end_pos": 36510
+  },
+  "<<FORMULA_0002>>": {
+    "formula": "\\lambda_i(\\mathbf{M})",
+    "raw_latex": "$\\lambda_i(\\mathbf{M})$",
+    "formula_type": "inline",
+    "line_number": 358,
+    "start_pos": 36421,
+    "end_pos": 36444
+  },
+  "<<FORMULA_0001>>": {
+    "formula": "\\mathbf{Z} \\in \\mathbb{R}^{N \\times D}",
+    "raw_latex": "$\\mathbf{Z} \\in \\mathbb{R}^{N \\times D}$",
+    "formula_type": "inline",
+    "line_number": 358,
+    "start_pos": 36200,
+    "end_pos": 36240
+  }
+}

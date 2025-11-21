@@ -1,0 +1,147 @@
+{
+  "model": "openai/gpt-5",
+  "total_papers": 10,
+  "successful_benchmarks": 10,
+  "papers": [
+    {
+      "paper_id": "2410.10253",
+      "status": "success",
+      "metrics": {
+        "true_positives": 8,
+        "false_positives": 1,
+        "true_negatives": 8,
+        "false_negatives": 3,
+        "accuracy": 0.8,
+        "precision": 0.889,
+        "recall": 0.727,
+        "f1_score": 0.8
+      }
+    },
+    {
+      "paper_id": "2506.04194",
+      "status": "success",
+      "metrics": {
+        "true_positives": 5,
+        "false_positives": 2,
+        "true_negatives": 11,
+        "false_negatives": 2,
+        "accuracy": 0.8,
+        "precision": 0.714,
+        "recall": 0.714,
+        "f1_score": 0.714
+      }
+    },
+    {
+      "paper_id": "2410.14055",
+      "status": "success",
+      "metrics": {
+        "true_positives": 8,
+        "false_positives": 7,
+        "true_negatives": 3,
+        "false_negatives": 1,
+        "accuracy": 0.579,
+        "precision": 0.533,
+        "recall": 0.889,
+        "f1_score": 0.667
+      }
+    },
+    {
+      "paper_id": "2411.00161",
+      "status": "success",
+      "metrics": {
+        "true_positives": 6,
+        "false_positives": 0,
+        "true_negatives": 12,
+        "false_negatives": 1,
+        "accuracy": 0.947,
+        "precision": 1.0,
+        "recall": 0.857,
+        "f1_score": 0.923
+      }
+    },
+    {
+      "paper_id": "2502.02013",
+      "status": "success",
+      "metrics": {
+        "true_positives": 8,
+        "false_positives": 5,
+        "true_negatives": 4,
+        "false_negatives": 2,
+        "accuracy": 0.632,
+        "precision": 0.615,
+        "recall": 0.8,
+        "f1_score": 0.696
+      }
+    },
+    {
+      "paper_id": "2411.12537",
+      "status": "success",
+      "metrics": {
+        "true_positives": 12,
+        "false_positives": 2,
+        "true_negatives": 6,
+        "false_negatives": 0,
+        "accuracy": 0.9,
+        "precision": 0.857,
+        "recall": 1.0,
+        "f1_score": 0.923
+      }
+    },
+    {
+      "paper_id": "2507.09128",
+      "status": "success",
+      "metrics": {
+        "true_positives": 9,
+        "false_positives": 5,
+        "true_negatives": 6,
+        "false_negatives": 0,
+        "accuracy": 0.75,
+        "precision": 0.643,
+        "recall": 1.0,
+        "f1_score": 0.783
+      }
+    },
+    {
+      "paper_id": "2502.05164",
+      "status": "success",
+      "metrics": {
+        "true_positives": 10,
+        "false_positives": 1,
+        "true_negatives": 8,
+        "false_negatives": 1,
+        "accuracy": 0.9,
+        "precision": 0.909,
+        "recall": 0.909,
+        "f1_score": 0.909
+      }
+    },
+    {
+      "paper_id": "2506.08362",
+      "status": "success",
+      "metrics": {
+        "true_positives": 12,
+        "false_positives": 5,
+        "true_negatives": 3,
+        "false_negatives": 0,
+        "accuracy": 0.75,
+        "precision": 0.706,
+        "recall": 1.0,
+        "f1_score": 0.828
+      }
+    },
+    {
+      "paper_id": "2503.03025",
+      "status": "success",
+      "metrics": {
+        "true_positives": 11,
+        "false_positives": 4,
+        "true_negatives": 5,
+        "false_negatives": 0,
+        "accuracy": 0.8,
+        "precision": 0.733,
+        "recall": 1.0,
+        "f1_score": 0.846
+      }
+    }
+  ]
+}

@@ -1,0 +1,1786 @@
+{
+  "<<FORMULA_0223>>": {
+    "formula": "{\\varepsilon}: 10 \\rightarrow 5",
+    "raw_latex": "${\\varepsilon}: 10 \\rightarrow 5$",
+    "formula_type": "inline",
+    "line_number": 1300,
+    "start_pos": 102599,
+    "end_pos": 102632
+  },
+  "<<FORMULA_0222>>": {
+    "formula": "\\omega: 3 \\rightarrow 1",
+    "raw_latex": "$\\omega: 3 \\rightarrow 1$",
+    "formula_type": "inline",
+    "line_number": 1300,
+    "start_pos": 102539,
+    "end_pos": 102564
+  },
+  "<<FORMULA_0221>>": {
+    "formula": "t = 7\\ s",
+    "raw_latex": "$t = 7\\ s$",
+    "formula_type": "inline",
+    "line_number": 1300,
+    "start_pos": 102449,
+    "end_pos": 102459
+  },
+  "<<FORMULA_0220>>": {
+    "formula": "\\label{lyapunov_devi2}\n\t\t\t\\dot V\\left( t \\right) & = \\textcolor{black}{\\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\dot{{x}}}\\left( t \\right)-\\bm{\\dot{\\hat {x}}}\\left( t \\right)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Gamma}^{-1} {\\bm{\\dot{\\hat \\chi}}}}  \\notag \\\\\n\t\t\t&\\mathop  = \\limits^{(e)} \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t)+ \\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\Xi}(t)\\bm{\\tilde{\\chi}} + \\Delta \\bm{f}(t)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Xi}^T(t)\\bm{\\tilde{x}}(t)} \\notag \\\\\n\t\t\t& = \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag} \\\\",
+    "raw_latex": "\\begin{align} \\label{lyapunov_devi2}\n\t\t\t\\dot V\\left( t \\right) & = \\textcolor{black}{\\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\dot{{x}}}\\left( t \\right)-\\bm{\\dot{\\hat {x}}}\\left( t \\right)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Gamma}^{-1} {\\bm{\\dot{\\hat \\chi}}}}  \\notag \\\\\n\t\t\t&\\mathop  = \\limits^{(e)} \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t)+ \\bm{{\\tilde {x}}}{\\left( t \\right)^T}(\\bm{\\Xi}(t)\\bm{\\tilde{\\chi}} + \\Delta \\bm{f}(t)) - {\\bm{\\tilde \\chi}}^T \\bm{\\Xi}^T(t)\\bm{\\tilde{x}}(t)} \\notag \\\\\n\t\t\t& = \\textcolor{black}{-\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag} \\\\\n\t\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1202,
+    "start_pos": 96612,
+    "end_pos": 97317
+  },
+  "<<FORMULA_0219>>": {
+    "formula": "V(t)\\in \\mathbb{R}",
+    "raw_latex": "$V(t)\\in \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 1201,
+    "start_pos": 96578,
+    "end_pos": 96598
+  },
+  "<<FORMULA_0218>>": {
+    "formula": "\\label{lyapunov2}\n\t\t\t\\textcolor{black}{V(t) = \\frac{1}{2}{\\bm{{\\tilde {x}}}}(t)^T{\\bm{{\\tilde {x}}}}(t) + \\frac{1}{2}{\\bm{\\tilde \\chi}}^T \\bm{\\Gamma}^{-1}{\\bm{\\tilde \\chi}}.}",
+    "raw_latex": "\\begin{align} \\label{lyapunov2}\n\t\t\t\\textcolor{black}{V(t) = \\frac{1}{2}{\\bm{{\\tilde {x}}}}(t)^T{\\bm{{\\tilde {x}}}}(t) + \\frac{1}{2}{\\bm{\\tilde \\chi}}^T \\bm{\\Gamma}^{-1}{\\bm{\\tilde \\chi}}.}\n\t\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1197,
+    "start_pos": 96338,
+    "end_pos": 96540
+  },
+  "<<FORMULA_0217>>": {
+    "formula": "{\\bm{\\tilde \\chi}} = {\\bm{\\chi}} - {\\bm{\\hat \\chi}}",
+    "raw_latex": "${\\bm{\\tilde \\chi}} = {\\bm{\\chi}} - {\\bm{\\hat \\chi}}$",
+    "formula_type": "inline",
+    "line_number": 1196,
+    "start_pos": 96248,
+    "end_pos": 96301
+  },
+  "<<FORMULA_0216>>": {
+    "formula": "\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_m(\\bm{L})}} + \\gamma\\right\\}",
+    "raw_latex": "$\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_m(\\bm{L})}} + \\gamma\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1193,
+    "start_pos": 95950,
+    "end_pos": 96121
+  },
+  "<<FORMULA_0215>>": {
+    "formula": "\\mathcal{B}_1 = \\left\\{{\\bm{\\tilde x}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\tilde x}}(t)\\right\\|\\le{\\gamma}/{{\\lambda_m(\\bm{L})}}\\right\\}",
+    "raw_latex": "$\\mathcal{B}_1 = \\left\\{{\\bm{\\tilde x}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\tilde x}}(t)\\right\\|\\le{\\gamma}/{{\\lambda_m(\\bm{L})}}\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1193,
+    "start_pos": 95812,
+    "end_pos": 95945
+  },
+  "<<FORMULA_0214>>": {
+    "formula": "{\\bm{\\tilde f}}(t)",
+    "raw_latex": "${\\bm{\\tilde f}}(t)$",
+    "formula_type": "inline",
+    "line_number": 1193,
+    "start_pos": 95747,
+    "end_pos": 95767
+  },
+  "<<FORMULA_0213>>": {
+    "formula": "{\\bm{\\dot{\\tilde x}}}(t)",
+    "raw_latex": "${\\bm{\\dot{\\tilde x}}}(t)$",
+    "formula_type": "inline",
+    "line_number": 1193,
+    "start_pos": 95713,
+    "end_pos": 95739
+  },
+  "<<FORMULA_0212>>": {
+    "formula": "{\\bm{\\tilde x}}(t)",
+    "raw_latex": "${\\bm{\\tilde x}}(t)$",
+    "formula_type": "inline",
+    "line_number": 1193,
+    "start_pos": 95673,
+    "end_pos": 95693
+  },
+  "<<FORMULA_0211>>": {
+    "formula": "\\bm{\\Gamma} \\in \\mathbb{R}^l \\times \\mathbb{R}^l",
+    "raw_latex": "$\\bm{\\Gamma} \\in \\mathbb{R}^l \\times \\mathbb{R}^l$",
+    "formula_type": "inline",
+    "line_number": 1190,
+    "start_pos": 95368,
+    "end_pos": 95418
+  },
+  "<<FORMULA_0210>>": {
+    "formula": "\\label{adaptive_law}\n\t\t\\textcolor{black}{\\bm{\\dot{\\hat{\\chi}}} = \\bm{\\Gamma}\\bm{\\Xi}^T(t)\\bm{\\tilde{x}}(t)}",
+    "raw_latex": "\\begin{align} \\label{adaptive_law}\n\t\t\\textcolor{black}{\\bm{\\dot{\\hat{\\chi}}} = \\bm{\\Gamma}\\bm{\\Xi}^T(t)\\bm{\\tilde{x}}(t)}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1187,
+    "start_pos": 95175,
+    "end_pos": 95309
+  },
+  "<<FORMULA_0209>>": {
+    "formula": "\\bm{\\hat{\\chi}}",
+    "raw_latex": "$\\bm{\\hat{\\chi}}$",
+    "formula_type": "inline",
+    "line_number": 1186,
+    "start_pos": 95120,
+    "end_pos": 95137
+  },
+  "<<FORMULA_0208>>": {
+    "formula": "\\label{feedback_NN2}\n\t\t\\textcolor{black}{\\bm{\\hat{f}}_{neural}(t) = \\bm{\\Xi}(t)\\bm{\\hat{\\chi}} + \\bm{L}(\\bm{x}(t)-\\bm{\\hat{x}}(t)),}",
+    "raw_latex": "\\begin{align} \\label{feedback_NN2}\n\t\t\\textcolor{black}{\\bm{\\hat{f}}_{neural}(t) = \\bm{\\Xi}(t)\\bm{\\hat{\\chi}} + \\bm{L}(\\bm{x}(t)-\\bm{\\hat{x}}(t)),}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1183,
+    "start_pos": 94935,
+    "end_pos": 95094
+  },
+  "<<FORMULA_0207>>": {
+    "formula": "\\bm{\\chi} \\in \\mathbb{R}^l",
+    "raw_latex": "$\\bm{\\chi} \\in \\mathbb{R}^l$",
+    "formula_type": "inline",
+    "line_number": 1182,
+    "start_pos": 94661,
+    "end_pos": 94689
+  },
+  "<<FORMULA_0206>>": {
+    "formula": "\\bm{\\Xi}\\left( \\cdot \\right): \\mathbb{R}^n \\times \\mathbb{R}^m \\times\\ \\mathbb{R} \\rightarrow \\mathbb{R}^n \\times \\mathbb{R}^l",
+    "raw_latex": "$\\bm{\\Xi}\\left( \\cdot \\right): \\mathbb{R}^n \\times \\mathbb{R}^m \\times\\ \\mathbb{R} \\rightarrow \\mathbb{R}^n \\times \\mathbb{R}^l$",
+    "formula_type": "inline",
+    "line_number": 1182,
+    "start_pos": 94485,
+    "end_pos": 94613
+  },
+  "<<FORMULA_0205>>": {
+    "formula": "\\bm{f}_{neural}({\\bm{x}(t),\\bm{I}(t), t,\\bm{\\theta}}) = \\bm{\\Xi}({\\bm{x}(t),\\bm{I}(t), t,\\bm{\\theta}})\\bm{\\chi}",
+    "raw_latex": "$\\bm{f}_{neural}({\\bm{x}(t),\\bm{I}(t), t,\\bm{\\theta}}) = \\bm{\\Xi}({\\bm{x}(t),\\bm{I}(t), t,\\bm{\\theta}})\\bm{\\chi}$",
+    "formula_type": "inline",
+    "line_number": 1182,
+    "start_pos": 94364,
+    "end_pos": 94477
+  },
+  "<<FORMULA_0204>>": {
+    "formula": "\\beta= \\left\\{0: +0.01: 0.06\\right\\}",
+    "raw_latex": "$\\beta= \\left\\{0: +0.01: 0.06\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1165,
+    "start_pos": 91785,
+    "end_pos": 91823
+  },
+  "<<FORMULA_0203>>": {
+    "formula": "\\Delta {\\varepsilon}= \\left\\{-14.4: +2.4: 12\\right\\}",
+    "raw_latex": "$\\Delta {\\varepsilon}= \\left\\{-14.4: +2.4: 12\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1157,
+    "start_pos": 90663,
+    "end_pos": 90717
+  },
+  "<<FORMULA_0202>>": {
+    "formula": "\\Delta \\eta= \\left\\{-0.03: +0.005: 0.025\\right\\}",
+    "raw_latex": "$\\Delta \\eta= \\left\\{-0.03: +0.005: 0.025\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1157,
+    "start_pos": 90611,
+    "end_pos": 90661
+  },
+  "<<FORMULA_0201>>": {
+    "formula": "\\Delta \\omega= \\left\\{-0.72: +0.12: 0.6\\right\\}",
+    "raw_latex": "$\\Delta \\omega= \\left\\{-0.72: +0.12: 0.6\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1157,
+    "start_pos": 90560,
+    "end_pos": 90609
+  },
+  "<<FORMULA_0200>>": {
+    "formula": "[r_x, r_y, r_z, T_x, T_y, T_z, h] = [3.0, 3.0, 0.5, 6.0, 3.0, 3.0, 0.5]",
+    "raw_latex": "$[r_x, r_y, r_z, T_x, T_y, T_z, h] = [3.0, 3.0, 0.5, 6.0, 3.0, 3.0, 0.5]$",
+    "formula_type": "inline",
+    "line_number": 1149,
+    "start_pos": 89272,
+    "end_pos": 89345
+  },
+  "<<FORMULA_0199>>": {
+    "formula": "\\bm{p}(t) = [r_x sin(2\\pi t/T_x),\\; r_y sin(2\\pi t/T_y),\\; h + r_z cos(2\\pi t/T_z)]",
+    "raw_latex": "$\\bm{p}(t) = [r_x sin(2\\pi t/T_x),\\; r_y sin(2\\pi t/T_y),\\; h + r_z cos(2\\pi t/T_z)]$",
+    "formula_type": "inline",
+    "line_number": 1149,
+    "start_pos": 89160,
+    "end_pos": 89245
+  },
+  "<<FORMULA_0198>>": {
+    "formula": "\\bm{L} = diag\\{\\bm{3}_{12\\times1}\\}\\in \\mathbb{R}^{12 \\times 12}",
+    "raw_latex": "$\\bm{L} = diag\\{\\bm{3}_{12\\times1}\\}\\in \\mathbb{R}^{12 \\times 12}$",
+    "formula_type": "inline",
+    "line_number": 1138,
+    "start_pos": 87307,
+    "end_pos": 87373
+  },
+  "<<FORMULA_0197>>": {
+    "formula": "\\hat{\\bm{x}}_{1:N}",
+    "raw_latex": "$\\hat{\\bm{x}}_{1:N}$",
+    "formula_type": "inline",
+    "line_number": 1138,
+    "start_pos": 87164,
+    "end_pos": 87184
+  },
+  "<<FORMULA_0196>>": {
+    "formula": "\\hat{\\bm{x}}_{1:N}",
+    "raw_latex": "$\\hat{\\bm{x}}_{1:N}$",
+    "formula_type": "inline",
+    "line_number": 1138,
+    "start_pos": 87130,
+    "end_pos": 87150
+  },
+  "<<FORMULA_0195>>": {
+    "formula": "|\\bm{\\Theta}| \\leq \\bm{{\\pi}/{2}}_{3\\times1}",
+    "raw_latex": "$|\\bm{\\Theta}| \\leq \\bm{{\\pi}/{2}}_{3\\times1}$",
+    "formula_type": "inline",
+    "line_number": 1136,
+    "start_pos": 86652,
+    "end_pos": 86698
+  },
+  "<<FORMULA_0194>>": {
+    "formula": "\\bm{0}_{4\\times1} \\leq \\bm{u} \\leq \\bm{4}_{4\\times1}",
+    "raw_latex": "$\\bm{0}_{4\\times1} \\leq \\bm{u} \\leq \\bm{4}_{4\\times1}$",
+    "formula_type": "inline",
+    "line_number": 1136,
+    "start_pos": 86565,
+    "end_pos": 86619
+  },
+  "<<FORMULA_0193>>": {
+    "formula": "\\bm{x}_i \\in \\mathbb{X}",
+    "raw_latex": "$\\bm{x}_i \\in \\mathbb{X}$",
+    "formula_type": "inline",
+    "line_number": 1136,
+    "start_pos": 86485,
+    "end_pos": 86510
+  },
+  "<<FORMULA_0192>>": {
+    "formula": "\\bm{u}_i \\in \\mathbb{U}",
+    "raw_latex": "$\\bm{u}_i \\in \\mathbb{U}$",
+    "formula_type": "inline",
+    "line_number": 1136,
+    "start_pos": 86455,
+    "end_pos": 86480
+  },
+  "<<FORMULA_0191>>": {
+    "formula": "\\bm{R} = diag\\{\\bm{1}_{4\\times1}\\}\\in \\mathbb{R}^{4 \\times 4}",
+    "raw_latex": "$\\bm{R} = diag\\{\\bm{1}_{4\\times1}\\}\\in \\mathbb{R}^{4 \\times 4}$",
+    "formula_type": "inline",
+    "line_number": 1136,
+    "start_pos": 86361,
+    "end_pos": 86424
+  },
+  "<<FORMULA_0190>>": {
+    "formula": "\\bm{Q} = diag\\{[\\bm{100}_{3\\times1},\\bm{50}_{6\\times1},\\bm{1}_{3\\times1}]\\}\\in \\mathbb{R}^{12 \\times 12}",
+    "raw_latex": "$\\bm{Q} = diag\\{[\\bm{100}_{3\\times1},\\bm{50}_{6\\times1},\\bm{1}_{3\\times1}]\\}\\in \\mathbb{R}^{12 \\times 12}$",
+    "formula_type": "inline",
+    "line_number": 1136,
+    "start_pos": 86231,
+    "end_pos": 86337
+  },
+  "<<FORMULA_0189>>": {
+    "formula": "l_u(\\cdot) = (\\bm{u} - \\bm{u}^r)^\\top \\bm{R} (\\bm{u} - \\bm{u}^r)",
+    "raw_latex": "$l_u(\\cdot) = (\\bm{u} - \\bm{u}^r)^\\top \\bm{R} (\\bm{u} - \\bm{u}^r)$",
+    "formula_type": "inline",
+    "line_number": 1136,
+    "start_pos": 86139,
+    "end_pos": 86205
+  },
+  "<<FORMULA_0188>>": {
+    "formula": "l_x(\\cdot) = l_N(\\cdot) = (\\bm{x} - \\bm{x}^r)^\\top \\bm{Q}\n\t(\\bm{x} - \\bm{x}^r)",
+    "raw_latex": "$l_x(\\cdot) = l_N(\\cdot) = (\\bm{x} - \\bm{x}^r)^\\top \\bm{Q}\n\t(\\bm{x} - \\bm{x}^r)$",
+    "formula_type": "inline",
+    "line_number": 1135,
+    "start_pos": 86057,
+    "end_pos": 86137
+  },
+  "<<FORMULA_0187>>": {
+    "formula": "\\{\\bm{x}_{1:N}^r, \\bm{u}_{1:N}^r\\}",
+    "raw_latex": "$\\{\\bm{x}_{1:N}^r, \\bm{u}_{1:N}^r\\}$",
+    "formula_type": "inline",
+    "line_number": 1135,
+    "start_pos": 85950,
+    "end_pos": 85986
+  },
+  "<<FORMULA_0186>>": {
+    "formula": "\\{\\bm{x}_{1:N}, \\bm{u}_{1:N}\\}",
+    "raw_latex": "$\\{\\bm{x}_{1:N}, \\bm{u}_{1:N}\\}$",
+    "formula_type": "inline",
+    "line_number": 1135,
+    "start_pos": 85877,
+    "end_pos": 85909
+  },
+  "<<FORMULA_0185>>": {
+    "formula": "l_x(\\cdot)\\in \\mathbb{R}, l_u(\\cdot)\\in \\mathbb{R}, l_N(\\cdot)\\in \\mathbb{R}",
+    "raw_latex": "$l_x(\\cdot)\\in \\mathbb{R}, l_u(\\cdot)\\in \\mathbb{R}, l_N(\\cdot)\\in \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 1135,
+    "start_pos": 85734,
+    "end_pos": 85812
+  },
+  "<<FORMULA_0184>>": {
+    "formula": "\\begin{aligned}\n\t\t\t& \\min_{\\bm{x}_{1:N}, \\bm{u}_{0:N-1}}\\;\n\t\t\tl_N(\\bm{x}_N, \\bm{x}_N^r) +\n\t\t\t\\sum_{i=1}^{N}\\; l_x(\\bm{x}_i, \\bm{x}_i^r) + \n\t\t\tl_u(\\bm{u}_i, \\bm{u}_i^r)\\\\\n\t\t\t&\\begin{aligned}\n\t\t\t\ts.t.\\;\\;\n\t\t\t\t&\\bm{{x}}_{i+1}\n\t\t\t\t= \\bm{f}_d(\\bm{x}_i, \\bm{u}_i),\\; \\bm{x}_0 = \\bm{x}(0)\\\\\n\t\t\t\t&\\bm{u}_i \\in \\mathbb{U},\\;\\bm{x}_i \\in \\mathbb{X}\n\t\t\t\\end{aligned}\n\t\t\\end{aligned}\n\t\t\\label{Standard_MPC}",
+    "raw_latex": "\\begin{equation}\n\t\t\\begin{aligned}\n\t\t\t& \\min_{\\bm{x}_{1:N}, \\bm{u}_{0:N-1}}\\;\n\t\t\tl_N(\\bm{x}_N, \\bm{x}_N^r) +\n\t\t\t\\sum_{i=1}^{N}\\; l_x(\\bm{x}_i, \\bm{x}_i^r) + \n\t\t\tl_u(\\bm{u}_i, \\bm{u}_i^r)\\\\\n\t\t\t&\\begin{aligned}\n\t\t\t\ts.t.\\;\\;\n\t\t\t\t&\\bm{{x}}_{i+1}\n\t\t\t\t= \\bm{f}_d(\\bm{x}_i, \\bm{u}_i),\\; \\bm{x}_0 = \\bm{x}(0)\\\\\n\t\t\t\t&\\bm{u}_i \\in \\mathbb{U},\\;\\bm{x}_i \\in \\mathbb{X}\n\t\t\t\\end{aligned}\n\t\t\\end{aligned}\n\t\t\\label{Standard_MPC}\n\t\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1120,
+    "start_pos": 85255,
+    "end_pos": 85684
+  },
+  "<<FORMULA_0183>>": {
+    "formula": "\\bm{u}_i \\in \\mathbb{U}, \\bm{x}_i \\in \\mathbb{X}",
+    "raw_latex": "$\\bm{u}_i \\in \\mathbb{U}, \\bm{x}_i \\in \\mathbb{X}$",
+    "formula_type": "inline",
+    "line_number": 1119,
+    "start_pos": 85196,
+    "end_pos": 85246
+  },
+  "<<FORMULA_0182>>": {
+    "formula": "\\bm{\\bar \\Psi}",
+    "raw_latex": "$\\bm{\\bar \\Psi}$",
+    "formula_type": "inline",
+    "line_number": 1116,
+    "start_pos": 84663,
+    "end_pos": 84679
+  },
+  "<<FORMULA_0181>>": {
+    "formula": "\\bm{\\bar \\Psi}",
+    "raw_latex": "$\\bm{\\bar \\Psi}$",
+    "formula_type": "inline",
+    "line_number": 1116,
+    "start_pos": 84340,
+    "end_pos": 84356
+  },
+  "<<FORMULA_0180>>": {
+    "formula": "\\bm{\\bar \\Psi}",
+    "raw_latex": "$\\bm{\\bar \\Psi}$",
+    "formula_type": "inline",
+    "line_number": 1114,
+    "start_pos": 84218,
+    "end_pos": 84234
+  },
+  "<<FORMULA_0179>>": {
+    "formula": "[\\dot{\\bm{x}}, \\dot{\\bm{z}}]^\\top",
+    "raw_latex": "$[\\dot{\\bm{x}}, \\dot{\\bm{z}}]^\\top$",
+    "formula_type": "inline",
+    "line_number": 1114,
+    "start_pos": 84148,
+    "end_pos": 84183
+  },
+  "<<FORMULA_0178>>": {
+    "formula": "[\\dot{\\bm{x}}, \\dot{\\bm{z}}]^\\top = \\bm{\\Phi}([\\bm{x}, \\bm{z}]^\\top, \\bm{\\bar \\Psi})",
+    "raw_latex": "$[\\dot{\\bm{x}}, \\dot{\\bm{z}}]^\\top = \\bm{\\Phi}([\\bm{x}, \\bm{z}]^\\top, \\bm{\\bar \\Psi})$",
+    "formula_type": "inline",
+    "line_number": 1114,
+    "start_pos": 84033,
+    "end_pos": 84119
+  },
+  "<<FORMULA_0177>>": {
+    "formula": "\\dot{\\bm v} = \\bm a = -\\frac{1}{m}\\bm Z_B T + g\\bm Z_E + \\bm{f}_{neural}(\\bm{v}, \\bm{\\Theta}, \\bm{\\theta})",
+    "raw_latex": "$\\dot{\\bm v} = \\bm a = -\\frac{1}{m}\\bm Z_B T + g\\bm Z_E + \\bm{f}_{neural}(\\bm{v}, \\bm{\\Theta}, \\bm{\\theta})$",
+    "formula_type": "inline",
+    "line_number": 1112,
+    "start_pos": 83626,
+    "end_pos": 83734
+  },
+  "<<FORMULA_0176>>": {
+    "formula": "\\bm{\\theta}",
+    "raw_latex": "$\\bm{\\theta}$",
+    "formula_type": "inline",
+    "line_number": 1112,
+    "start_pos": 83531,
+    "end_pos": 83544
+  },
+  "<<FORMULA_0175>>": {
+    "formula": "\\bm{D} = diag\\{[0.6, 0.6, 0.1]\\}",
+    "raw_latex": "$\\bm{D} = diag\\{[0.6, 0.6, 0.1]\\}$",
+    "formula_type": "inline",
+    "line_number": 1110,
+    "start_pos": 83360,
+    "end_pos": 83394
+  },
+  "<<FORMULA_0174>>": {
+    "formula": "\\bm{\\mathcal{E}}",
+    "raw_latex": "$\\bm{\\mathcal{E}}$",
+    "formula_type": "inline",
+    "line_number": 1110,
+    "start_pos": 83336,
+    "end_pos": 83354
+  },
+  "<<FORMULA_0173>>": {
+    "formula": "\\bm{\\mathcal{B}}",
+    "raw_latex": "$\\bm{\\mathcal{B}}$",
+    "formula_type": "inline",
+    "line_number": 1110,
+    "start_pos": 83304,
+    "end_pos": 83322
+  },
+  "<<FORMULA_0172>>": {
+    "formula": "\\bm{R}\\bm{D}\\bm{R}^\\top \\bm{v}",
+    "raw_latex": "$\\bm{R}\\bm{D}\\bm{R}^\\top \\bm{v}$",
+    "formula_type": "inline",
+    "line_number": 1110,
+    "start_pos": 83145,
+    "end_pos": 83177
+  },
+  "<<FORMULA_0171>>": {
+    "formula": "[\\bm{\\dot z}, \\bm{u}]^\\top = \\bm{\\pi}(\\bm{z}, \\bm{x}, \\bm{\\bar \\Psi})",
+    "raw_latex": "$[\\bm{\\dot z}, \\bm{u}]^\\top = \\bm{\\pi}(\\bm{z}, \\bm{x}, \\bm{\\bar \\Psi})$",
+    "formula_type": "inline",
+    "line_number": 1107,
+    "start_pos": 82722,
+    "end_pos": 82793
+  },
+  "<<FORMULA_0170>>": {
+    "formula": "\\bar{\\bm{\\Psi}} = [\\bm{p}, \\bm{v}, \\bm{a}, \\bm{j}]\\in \\mathbb{R}^{12}",
+    "raw_latex": "$\\bar{\\bm{\\Psi}} = [\\bm{p}, \\bm{v}, \\bm{a}, \\bm{j}]\\in \\mathbb{R}^{12}$",
+    "formula_type": "inline",
+    "line_number": 1106,
+    "start_pos": 82216,
+    "end_pos": 82287
+  },
+  "<<FORMULA_0169>>": {
+    "formula": "\\bm{\\dot x} = \\bm{f}(\\bm{x}, \\bm{u})",
+    "raw_latex": "$\\bm{\\dot x} = \\bm{f}(\\bm{x}, \\bm{u})$",
+    "formula_type": "inline",
+    "line_number": 1104,
+    "start_pos": 81859,
+    "end_pos": 81897
+  },
+  "<<FORMULA_0168>>": {
+    "formula": "\\bm{W}(\\cdot)",
+    "raw_latex": "$\\bm{W}(\\cdot)$",
+    "formula_type": "inline",
+    "line_number": 1104,
+    "start_pos": 81677,
+    "end_pos": 81692
+  },
+  "<<FORMULA_0167>>": {
+    "formula": "\\label{quadrotor_model}\n\t\t\\begin{aligned}\n\t\t\t&\\dot {\\bm p} = \\bm v, \\quad \\dot {\\bm v} = \\bm a = \n\t\t\t-\\frac{1}{m}\\bm Z_B T + g\\bm Z_E\\\\\n\t\t\t& \\dot {\\bm{\\Theta}} = \\bm{W}(\\bm{\\Theta})\\bm{\\omega},\\quad\n\t\t\t\\bm J \\dot {\\bm \\omega}= \n\t\t\t-\\bm \\omega \\times (\\bm J \\bm \\omega) \n\t\t\t+ \\bm \\tau\\\\\n\t\t\t& [T, \\bm \\tau]^\\top = \\bm{C} \n\t\t\t[T_1, T_2, T_3, T_4]^\\top\n\t\t\\end{aligned}",
+    "raw_latex": "\\begin{equation} \\label{quadrotor_model}\n\t\t\\begin{aligned}\n\t\t\t&\\dot {\\bm p} = \\bm v, \\quad \\dot {\\bm v} = \\bm a = \n\t\t\t-\\frac{1}{m}\\bm Z_B T + g\\bm Z_E\\\\\n\t\t\t& \\dot {\\bm{\\Theta}} = \\bm{W}(\\bm{\\Theta})\\bm{\\omega},\\quad\n\t\t\t\\bm J \\dot {\\bm \\omega}= \n\t\t\t-\\bm \\omega \\times (\\bm J \\bm \\omega) \n\t\t\t+ \\bm \\tau\\\\\n\t\t\t& [T, \\bm \\tau]^\\top = \\bm{C} \n\t\t\t[T_1, T_2, T_3, T_4]^\\top\n\t\t\\end{aligned}\n\t\\end{equation}",
+    "formula_type": "equation",
+    "line_number": 1092,
+    "start_pos": 81212,
+    "end_pos": 81609
+  },
+  "<<FORMULA_0166>>": {
+    "formula": "\\bm{\\Theta}\\in \\mathbb{R}^3",
+    "raw_latex": "$\\bm{\\Theta}\\in \\mathbb{R}^3$",
+    "formula_type": "inline",
+    "line_number": 1091,
+    "start_pos": 81116,
+    "end_pos": 81145
+  },
+  "<<FORMULA_0165>>": {
+    "formula": "\\bm{\\mathcal{B}}",
+    "raw_latex": "$\\bm{\\mathcal{B}}$",
+    "formula_type": "inline",
+    "line_number": 1091,
+    "start_pos": 81049,
+    "end_pos": 81067
+  },
+  "<<FORMULA_0164>>": {
+    "formula": "\\bm{\\mathcal{E}}",
+    "raw_latex": "$\\bm{\\mathcal{E}}$",
+    "formula_type": "inline",
+    "line_number": 1091,
+    "start_pos": 81026,
+    "end_pos": 81044
+  },
+  "<<FORMULA_0163>>": {
+    "formula": "\\bm{\\mathcal{B}}",
+    "raw_latex": "$\\bm{\\mathcal{B}}$",
+    "formula_type": "inline",
+    "line_number": 1091,
+    "start_pos": 80981,
+    "end_pos": 80999
+  },
+  "<<FORMULA_0162>>": {
+    "formula": "\\bm{\\omega}\\in \\mathbb{R}^3",
+    "raw_latex": "$\\bm{\\omega}\\in \\mathbb{R}^3$",
+    "formula_type": "inline",
+    "line_number": 1091,
+    "start_pos": 80936,
+    "end_pos": 80965
+  },
+  "<<FORMULA_0161>>": {
+    "formula": "\\bm{\\mathcal{E}}",
+    "raw_latex": "$\\bm{\\mathcal{E}}$",
+    "formula_type": "inline",
+    "line_number": 1091,
+    "start_pos": 80879,
+    "end_pos": 80897
+  },
+  "<<FORMULA_0160>>": {
+    "formula": "\\bm{v}\\in \\mathbb{R}^3",
+    "raw_latex": "$\\bm{v}\\in \\mathbb{R}^3$",
+    "formula_type": "inline",
+    "line_number": 1091,
+    "start_pos": 80838,
+    "end_pos": 80862
+  },
+  "<<FORMULA_0159>>": {
+    "formula": "\\bm{p}\\in \\mathbb{R}^3",
+    "raw_latex": "$\\bm{p}\\in \\mathbb{R}^3$",
+    "formula_type": "inline",
+    "line_number": 1091,
+    "start_pos": 80777,
+    "end_pos": 80801
+  },
+  "<<FORMULA_0158>>": {
+    "formula": "\\bm{\\mathcal{B}} = \\left\\{\\bm{X}_B, \\bm{Y}_B, \\bm{Z}_B\\right\\}",
+    "raw_latex": "$\\bm{\\mathcal{B}} = \\left\\{\\bm{X}_B, \\bm{Y}_B, \\bm{Z}_B\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1091,
+    "start_pos": 80680,
+    "end_pos": 80744
+  },
+  "<<FORMULA_0157>>": {
+    "formula": "\\bm{\\mathcal{E}} = \n\t\\left\\{\\bm{X}_E, \\bm{Y}_E, \\bm{Z}_E\\right\\}",
+    "raw_latex": "$\\bm{\\mathcal{E}} = \n\t\\left\\{\\bm{X}_E, \\bm{Y}_E, \\bm{Z}_E\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1090,
+    "start_pos": 80587,
+    "end_pos": 80653
+  },
+  "<<FORMULA_0156>>": {
+    "formula": "\\bm{u} = [T_1, T_2, T_3, T_4]^\\top \\in \\mathbb{R}^4",
+    "raw_latex": "$\\bm{u} = [T_1, T_2, T_3, T_4]^\\top \\in \\mathbb{R}^4$",
+    "formula_type": "inline",
+    "line_number": 1089,
+    "start_pos": 80455,
+    "end_pos": 80508
+  },
+  "<<FORMULA_0155>>": {
+    "formula": "\\bm{x} = [\\bm{p}, \\bm{v}, \\bm{\\Theta}, \\bm{\\omega}]^\\top \\in \\mathbb{R}^{12}",
+    "raw_latex": "$\\bm{x} = [\\bm{p}, \\bm{v}, \\bm{\\Theta}, \\bm{\\omega}]^\\top \\in \\mathbb{R}^{12}$",
+    "formula_type": "inline",
+    "line_number": 1089,
+    "start_pos": 80322,
+    "end_pos": 80400
+  },
+  "<<FORMULA_0154>>": {
+    "formula": "norm",
+    "raw_latex": "$norm$",
+    "formula_type": "inline",
+    "line_number": 1084,
+    "start_pos": 80044,
+    "end_pos": 80050
+  },
+  "<<FORMULA_0153>>": {
+    "formula": "0.001\\ s",
+    "raw_latex": "$0.001\\ s$",
+    "formula_type": "inline",
+    "line_number": 1082,
+    "start_pos": 79461,
+    "end_pos": 79471
+  },
+  "<<FORMULA_0152>>": {
+    "formula": "norm",
+    "raw_latex": "$norm$",
+    "formula_type": "inline",
+    "line_number": 1078,
+    "start_pos": 79027,
+    "end_pos": 79033
+  },
+  "<<FORMULA_0151>>": {
+    "formula": "{\\varepsilon}= \\left\\{-24: +8: 96\\right\\}",
+    "raw_latex": "${\\varepsilon}= \\left\\{-24: +8: 96\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1078,
+    "start_pos": 78877,
+    "end_pos": 78920
+  },
+  "<<FORMULA_0150>>": {
+    "formula": "\\eta= \\left\\{0.04: +0.02: 0.22\\right\\}",
+    "raw_latex": "$\\eta= \\left\\{0.04: +0.02: 0.22\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1078,
+    "start_pos": 78835,
+    "end_pos": 78875
+  },
+  "<<FORMULA_0149>>": {
+    "formula": "\\omega= \\left\\{0.8: +0.4: 4.4\\right\\}",
+    "raw_latex": "$\\omega= \\left\\{0.8: +0.4: 4.4\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1078,
+    "start_pos": 78794,
+    "end_pos": 78833
+  },
+  "<<FORMULA_0148>>": {
+    "formula": "\\left\\{0: +5: 45\\right\\}",
+    "raw_latex": "$\\left\\{0: +5: 45\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1078,
+    "start_pos": 78728,
+    "end_pos": 78754
+  },
+  "<<FORMULA_0147>>": {
+    "formula": "0.02\\ s",
+    "raw_latex": "$0.02\\ s$",
+    "formula_type": "inline",
+    "line_number": 1074,
+    "start_pos": 78333,
+    "end_pos": 78342
+  },
+  "<<FORMULA_0146>>": {
+    "formula": "20\\ s",
+    "raw_latex": "$20\\ s$",
+    "formula_type": "inline",
+    "line_number": 1074,
+    "start_pos": 78320,
+    "end_pos": 78327
+  },
+  "<<FORMULA_0145>>": {
+    "formula": "0\\ s",
+    "raw_latex": "$0\\ s$",
+    "formula_type": "inline",
+    "line_number": 1074,
+    "start_pos": 78310,
+    "end_pos": 78316
+  },
+  "<<FORMULA_0144>>": {
+    "formula": "{\\varepsilon}= \\left\\{-24: +2.4: 21.6\\right\\}",
+    "raw_latex": "${\\varepsilon}= \\left\\{-24: +2.4: 21.6\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1074,
+    "start_pos": 78206,
+    "end_pos": 78253
+  },
+  "<<FORMULA_0143>>": {
+    "formula": "\\eta= \\left\\{0.04: +0.005: 0.135\\right\\}",
+    "raw_latex": "$\\eta= \\left\\{0.04: +0.005: 0.135\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1074,
+    "start_pos": 78162,
+    "end_pos": 78204
+  },
+  "<<FORMULA_0142>>": {
+    "formula": "\\omega= \\left\\{0.8: +0.12: 3.08\\right\\}",
+    "raw_latex": "$\\omega= \\left\\{0.8: +0.12: 3.08\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1074,
+    "start_pos": 78119,
+    "end_pos": 78160
+  },
+  "<<FORMULA_0141>>": {
+    "formula": "0.01\\ s",
+    "raw_latex": "$0.01\\ s$",
+    "formula_type": "inline",
+    "line_number": 1070,
+    "start_pos": 77636,
+    "end_pos": 77645
+  },
+  "<<FORMULA_0140>>": {
+    "formula": "10\\ s",
+    "raw_latex": "$10\\ s$",
+    "formula_type": "inline",
+    "line_number": 1070,
+    "start_pos": 77623,
+    "end_pos": 77630
+  },
+  "<<FORMULA_0139>>": {
+    "formula": "0\\ s",
+    "raw_latex": "$0\\ s$",
+    "formula_type": "inline",
+    "line_number": 1070,
+    "start_pos": 77613,
+    "end_pos": 77619
+  },
+  "<<FORMULA_0138>>": {
+    "formula": "\\bm{x}(0) = \\left[9, 0\\right]^T",
+    "raw_latex": "$\\bm{x}(0) = \\left[9, 0\\right]^T$",
+    "formula_type": "inline",
+    "line_number": 1066,
+    "start_pos": 77251,
+    "end_pos": 77284
+  },
+  "<<FORMULA_0137>>": {
+    "formula": "{\\varepsilon}\\in \\mathbb{R}",
+    "raw_latex": "${\\varepsilon}\\in \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 1064,
+    "start_pos": 77178,
+    "end_pos": 77207
+  },
+  "<<FORMULA_0136>>": {
+    "formula": "\\eta\\in \\mathbb{R}",
+    "raw_latex": "$\\eta\\in \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 1064,
+    "start_pos": 77147,
+    "end_pos": 77167
+  },
+  "<<FORMULA_0135>>": {
+    "formula": "\\omega\\in \\mathbb{R}",
+    "raw_latex": "$\\omega\\in \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 1064,
+    "start_pos": 77112,
+    "end_pos": 77134
+  },
+  "<<FORMULA_0134>>": {
+    "formula": "\\bm{\\dot{x}}\\left( t \\right) = \\left[ {\\begin{array}{*{20}{c}}\n\t\t\t\t{ - \\eta }&\\omega \\\\\n\t\t\t\t{ - \\omega }&{ - \\eta }\n\t\t\\end{array}} \\right]\\bm{x}\\left( t \\right) + \\left[ {\\begin{array}{*{20}{c}}\n\t\t\t\t\\varepsilon \\\\\n\t\t\t\t\\varepsilon \n\t\t\\end{array}} \\right]",
+    "raw_latex": "\\begin{align}\n\t\t\\bm{\\dot{x}}\\left( t \\right) = \\left[ {\\begin{array}{*{20}{c}}\n\t\t\t\t{ - \\eta }&\\omega \\\\\n\t\t\t\t{ - \\omega }&{ - \\eta }\n\t\t\\end{array}} \\right]\\bm{x}\\left( t \\right) + \\left[ {\\begin{array}{*{20}{c}}\n\t\t\t\t\\varepsilon \\\\\n\t\t\t\t\\varepsilon \n\t\t\\end{array}} \\right]\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1055,
+    "start_pos": 76798,
+    "end_pos": 77080
+  },
+  "<<FORMULA_0133>>": {
+    "formula": "\\rho(\\cdot)",
+    "raw_latex": "$\\rho(\\cdot)$",
+    "formula_type": "inline",
+    "line_number": 1042,
+    "start_pos": 75915,
+    "end_pos": 75928
+  },
+  "<<FORMULA_0132>>": {
+    "formula": "\\rho(\\bm{I}- T_s\\bm{L}) < 1",
+    "raw_latex": "$\\rho(\\bm{I}- T_s\\bm{L}) < 1$",
+    "formula_type": "inline",
+    "line_number": 1042,
+    "start_pos": 75800,
+    "end_pos": 75829
+  },
+  "<<FORMULA_0131>>": {
+    "formula": "(\\bm{I}- T_s\\bm{L})",
+    "raw_latex": "$(\\bm{I}- T_s\\bm{L})$",
+    "formula_type": "inline",
+    "line_number": 1042,
+    "start_pos": 75764,
+    "end_pos": 75785
+  },
+  "<<FORMULA_0130>>": {
+    "formula": "\\label{discrete_error}\n\t\t\\textcolor{black}{{\\bm{\\tilde x}}(t_k)} & = \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) + T_s(\\bm{f}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}))} \\notag \\\\\n\t\t&\\mathop  = \\limits^{(c)} \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) +  T_s(\\bm{{f}}_{neural}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}) + \\Delta \\bm{f}(t) )}\\notag \\\\\n\t\t&\\mathop  = \\limits^{(d)} \\textcolor{black}{(\\bm{I}- T_s\\bm{L}){\\bm{\\tilde x}}(t_{k-1}) + T_s\\Delta \\bm{f}(t)},",
+    "raw_latex": "\\begin{align} \\label{discrete_error}\n\t\t\\textcolor{black}{{\\bm{\\tilde x}}(t_k)} & = \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) + T_s(\\bm{f}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}))} \\notag \\\\\n\t\t&\\mathop  = \\limits^{(c)} \\textcolor{black}{{\\bm{\\tilde x}}(t_{k-1}) +  T_s(\\bm{{f}}_{neural}(t_{k-1}) - \\bm{\\hat{f}}_{neural}(t_{k-1}) + \\Delta \\bm{f}(t) )}\\notag \\\\\n\t\t&\\mathop  = \\limits^{(d)} \\textcolor{black}{(\\bm{I}- T_s\\bm{L}){\\bm{\\tilde x}}(t_{k-1}) + T_s\\Delta \\bm{f}(t)},\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1037,
+    "start_pos": 75075,
+    "end_pos": 75563
+  },
+  "<<FORMULA_0129>>": {
+    "formula": "{\\bm{\\tilde x}}(t_k) = \\bm{{x}}(t_k) - \\bm{\\hat{x}}(t_k)",
+    "raw_latex": "${\\bm{\\tilde x}}(t_k) = \\bm{{x}}(t_k) - \\bm{\\hat{x}}(t_k)$",
+    "formula_type": "inline",
+    "line_number": 1036,
+    "start_pos": 74919,
+    "end_pos": 74977
+  },
+  "<<FORMULA_0128>>": {
+    "formula": "\\label{prediction_ODE_dis}\n\t\t\\textcolor{black}{\\bm{x}(t_{k}) = \\bm{x}(t_{k-1}) + T_s\\bm{f}(t_{k-1}).}",
+    "raw_latex": "\\begin{align} \\label{prediction_ODE_dis}\n\t\t\\textcolor{black}{\\bm{x}(t_{k}) = \\bm{x}(t_{k-1}) + T_s\\bm{f}(t_{k-1}).}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1032,
+    "start_pos": 74741,
+    "end_pos": 74869
+  },
+  "<<FORMULA_0127>>": {
+    "formula": "\\lambda_M(\\bm{L})",
+    "raw_latex": "$\\lambda_M(\\bm{L})$",
+    "formula_type": "inline",
+    "line_number": 1011,
+    "start_pos": 73140,
+    "end_pos": 73159
+  },
+  "<<FORMULA_0126>>": {
+    "formula": "\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_m(\\bm{L})}} + \\gamma\\right\\}",
+    "raw_latex": "$\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_m(\\bm{L})}} + \\gamma\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1011,
+    "start_pos": 72922,
+    "end_pos": 73093
+  },
+  "<<FORMULA_0125>>": {
+    "formula": "\\lambda_m(\\bm{L})",
+    "raw_latex": "$\\lambda_m(\\bm{L})$",
+    "formula_type": "inline",
+    "line_number": 1009,
+    "start_pos": 72740,
+    "end_pos": 72759
+  },
+  "<<FORMULA_0124>>": {
+    "formula": "\\mathcal{B}_1 = \\left\\{{\\bm{\\tilde x}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\tilde x}}(t)\\right\\|\\le{\\gamma}/{{\\lambda_m(\\bm{L})}}\\right\\}",
+    "raw_latex": "$\\mathcal{B}_1 = \\left\\{{\\bm{\\tilde x}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\tilde x}}(t)\\right\\|\\le{\\gamma}/{{\\lambda_m(\\bm{L})}}\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 1009,
+    "start_pos": 72485,
+    "end_pos": 72618
+  },
+  "<<FORMULA_0123>>": {
+    "formula": "\\label{bounded_converg}\n\t\t\\textcolor{black}{\\mathop {\\lim }\\limits_{t \\to \\infty }\\|\\bm{\\tilde{x}}(t)\\|\\le \\frac{\\gamma}{{\\lambda_m(\\bm{L})}}}",
+    "raw_latex": "\\begin{align} \\label{bounded_converg}\n\t\t\\textcolor{black}{\\mathop {\\lim }\\limits_{t \\to \\infty }\\|\\bm{\\tilde{x}}(t)\\|\\le \\frac{\\gamma}{{\\lambda_m(\\bm{L})}}}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1006,
+    "start_pos": 72191,
+    "end_pos": 72360
+  },
+  "<<FORMULA_0122>>": {
+    "formula": "\\delta = \\frac{{\\gamma}^2}{\\left[2\\lambda_m(\\bm{L})^2\\right]}\\in \\mathbb{R}",
+    "raw_latex": "$\\delta = \\frac{{\\gamma}^2}{\\left[2\\lambda_m(\\bm{L})^2\\right]}\\in \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 1004,
+    "start_pos": 72077,
+    "end_pos": 72154
+  },
+  "<<FORMULA_0121>>": {
+    "formula": "\\textcolor{black}{0 \\le V(t) \\le e^{-\\lambda_m(\\bm{L})t}\\left[V(0)- \\delta\\right] + \\delta}",
+    "raw_latex": "\\begin{align}\n\t\t\\textcolor{black}{0 \\le V(t) \\le e^{-\\lambda_m(\\bm{L})t}\\left[V(0)- \\delta\\right] + \\delta}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 1001,
+    "start_pos": 71932,
+    "end_pos": 72052
+  },
+  "<<FORMULA_0120>>": {
+    "formula": "\\textcolor{black}{\\dot V\\left( t \\right) \\le -\\lambda_m(\\bm{L})V(t) + \\frac{1}{2\\lambda_m(\\bm{L})}\\gamma^2.}",
+    "raw_latex": "\\begin{align}\n\t\t\\textcolor{black}{\\dot V\\left( t \\right) \\le -\\lambda_m(\\bm{L})V(t) + \\frac{1}{2\\lambda_m(\\bm{L})}\\gamma^2.}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 996,
+    "start_pos": 71713,
+    "end_pos": 71850
+  },
+  "<<FORMULA_0119>>": {
+    "formula": "\\tilde{\\bm{x}}^{T} \\Delta \\bm{f}(t)\\le \\sqrt{\\lambda_{m}(\\bm{L})}\\|\\tilde{\\bm{x}}\\| \\frac{\\gamma}{\\sqrt{\\lambda_{m}(\\bm{L})}}\\le \\frac{\\lambda_{m}(\\bm{L})\\|\\tilde{\\bm{x}}\\|^{2}}{2}+\\frac{\\gamma^{2}}{2 \\lambda_{m}(\\bm{L})}",
+    "raw_latex": "$\\tilde{\\bm{x}}^{T} \\Delta \\bm{f}(t)\\le \\sqrt{\\lambda_{m}(\\bm{L})}\\|\\tilde{\\bm{x}}\\| \\frac{\\gamma}{\\sqrt{\\lambda_{m}(\\bm{L})}}\\le \\frac{\\lambda_{m}(\\bm{L})\\|\\tilde{\\bm{x}}\\|^{2}}{2}+\\frac{\\gamma^{2}}{2 \\lambda_{m}(\\bm{L})}$",
+    "formula_type": "inline",
+    "line_number": 995,
+    "start_pos": 71392,
+    "end_pos": 71615
+  },
+  "<<FORMULA_0118>>": {
+    "formula": "\\label{lyapunov_devi}\n\t\t\\dot V\\left( t \\right) & = \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{\\dot{\\tilde {x}}}\\left( t \\right) \\notag \\\\\n\t\t&\\mathop  = \\limits^{(a)} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\left( {- \\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\Delta \\bm{f}(t)} \\right) \\notag \\\\\n\t\t& = -\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag \\\\\n\t\t& \\mathop  \\le \\limits^{(b)} \\textcolor{black}{-\\frac{\\lambda_m(\\bm{L})}{2} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{{\\tilde {x}}}{\\left( t \\right)} + \\frac{1}{2\\lambda_m(\\bm{L})}\\gamma^2}",
+    "raw_latex": "\\begin{align} \\label{lyapunov_devi}\n\t\t\\dot V\\left( t \\right) & = \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{\\dot{\\tilde {x}}}\\left( t \\right) \\notag \\\\\n\t\t&\\mathop  = \\limits^{(a)} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\left( {- \\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\Delta \\bm{f}(t)} \\right) \\notag \\\\\n\t\t& = -\\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\Delta \\bm{f}(t) \\notag \\\\\n\t\t& \\mathop  \\le \\limits^{(b)} \\textcolor{black}{-\\frac{\\lambda_m(\\bm{L})}{2} \\bm{{\\tilde {x}}}{\\left( t \\right)^T}\\bm{{\\tilde {x}}}{\\left( t \\right)} + \\frac{1}{2\\lambda_m(\\bm{L})}\\gamma^2}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 989,
+    "start_pos": 70632,
+    "end_pos": 71266
+  },
+  "<<FORMULA_0117>>": {
+    "formula": "V(t)\\in \\mathbb{R}",
+    "raw_latex": "$V(t)\\in \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 988,
+    "start_pos": 70599,
+    "end_pos": 70619
+  },
+  "<<FORMULA_0116>>": {
+    "formula": "\\label{lyapunov}\n\t\tV(t) = \\frac{1}{2}{\\bm{{\\tilde {x}}}}(t)^T{\\bm{{\\tilde {x}}}}(t).",
+    "raw_latex": "\\begin{align} \\label{lyapunov}\n\t\tV(t) = \\frac{1}{2}{\\bm{{\\tilde {x}}}}(t)^T{\\bm{{\\tilde {x}}}}(t).\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 984,
+    "start_pos": 70452,
+    "end_pos": 70563
+  },
+  "<<FORMULA_0115>>": {
+    "formula": "\\bm{\\theta} \\leftarrow \\bm{\\theta} \n\t\t\t- \\alpha \\cdot {\\partial{H}}/{\\partial{\\bm{\\theta}}}",
+    "raw_latex": "$\\bm{\\theta} \\leftarrow \\bm{\\theta} \n\t\t\t- \\alpha \\cdot {\\partial{H}}/{\\partial{\\bm{\\theta}}}$",
+    "formula_type": "inline",
+    "line_number": 969,
+    "start_pos": 69451,
+    "end_pos": 69544
+  },
+  "<<FORMULA_0114>>": {
+    "formula": "{\\partial H}/{\\partial\\bm{\\theta}}",
+    "raw_latex": "${\\partial H}/{\\partial\\bm{\\theta}}$",
+    "formula_type": "inline",
+    "line_number": 967,
+    "start_pos": 69288,
+    "end_pos": 69324
+  },
+  "<<FORMULA_0113>>": {
+    "formula": "\\{\\mathcal{D}^{tra}_{j = 1, \\cdots, M}\\}",
+    "raw_latex": "$\\{\\mathcal{D}^{tra}_{j = 1, \\cdots, M}\\}$",
+    "formula_type": "inline",
+    "line_number": 966,
+    "start_pos": 69208,
+    "end_pos": 69250
+  },
+  "<<FORMULA_0112>>": {
+    "formula": "\\{{\\bm{x}^r}_{1:s}, \\bm{I}_{1:s}, t_{1:s}\\}",
+    "raw_latex": "$\\{{\\bm{x}^r}_{1:s}, \\bm{I}_{1:s}, t_{1:s}\\}$",
+    "formula_type": "inline",
+    "line_number": 966,
+    "start_pos": 69159,
+    "end_pos": 69204
+  },
+  "<<FORMULA_0111>>": {
+    "formula": "\\{\\mathcal{D}^{tra}_{j = 1, \\cdots, M}\\}",
+    "raw_latex": "$\\{\\mathcal{D}^{tra}_{j = 1, \\cdots, M}\\}$",
+    "formula_type": "inline",
+    "line_number": 964,
+    "start_pos": 69073,
+    "end_pos": 69115
+  },
+  "<<FORMULA_0110>>": {
+    "formula": "\\bm{\\theta}",
+    "raw_latex": "$\\bm{\\theta}$",
+    "formula_type": "inline",
+    "line_number": 964,
+    "start_pos": 69014,
+    "end_pos": 69027
+  },
+  "<<FORMULA_0109>>": {
+    "formula": "\\mathcal{D}^{tra} = \\{\\bm{x}^r(t), \\bm{I}(t), t\\}",
+    "raw_latex": "$\\mathcal{D}^{tra} = \\{\\bm{x}^r(t), \\bm{I}(t), t\\}$",
+    "formula_type": "inline",
+    "line_number": 962,
+    "start_pos": 68880,
+    "end_pos": 68931
+  },
+  "<<FORMULA_0108>>": {
+    "formula": "l_k(\\cdot), l_N(\\cdot)",
+    "raw_latex": "$l_k(\\cdot), l_N(\\cdot)$",
+    "formula_type": "inline",
+    "line_number": 961,
+    "start_pos": 68816,
+    "end_pos": 68840
+  },
+  "<<FORMULA_0107>>": {
+    "formula": "{\\partial H}/ {\\partial\\bm{\\theta}} \\leftarrow",
+    "raw_latex": "${\\partial H}/ {\\partial\\bm{\\theta}} \\leftarrow$",
+    "formula_type": "inline",
+    "line_number": 953,
+    "start_pos": 68524,
+    "end_pos": 68572
+  },
+  "<<FORMULA_0106>>": {
+    "formula": "\\bm{\\lambda} \\leftarrow",
+    "raw_latex": "$\\bm{\\lambda} \\leftarrow$",
+    "formula_type": "inline",
+    "line_number": 952,
+    "start_pos": 68426,
+    "end_pos": 68451
+  },
+  "<<FORMULA_0105>>": {
+    "formula": "\\nabla_{\\bm{\\theta}} \\bm{f}_{neural}^d",
+    "raw_latex": "$\\nabla_{\\bm{\\theta}} \\bm{f}_{neural}^d$",
+    "formula_type": "inline",
+    "line_number": 951,
+    "start_pos": 68374,
+    "end_pos": 68414
+  },
+  "<<FORMULA_0104>>": {
+    "formula": "\\nabla_{\\bm{\\theta}} l_i",
+    "raw_latex": "$\\nabla_{\\bm{\\theta}} l_i$",
+    "formula_type": "inline",
+    "line_number": 951,
+    "start_pos": 68346,
+    "end_pos": 68372
+  },
+  "<<FORMULA_0103>>": {
+    "formula": "\\nabla_{\\bm{x}_N} l_N",
+    "raw_latex": "$\\nabla_{\\bm{x}_N} l_N$",
+    "formula_type": "inline",
+    "line_number": 951,
+    "start_pos": 68321,
+    "end_pos": 68344
+  },
+  "<<FORMULA_0102>>": {
+    "formula": "\\nabla_{\\bm{x}} \\bm{f}_{neural}^d",
+    "raw_latex": "$\\nabla_{\\bm{x}} \\bm{f}_{neural}^d$",
+    "formula_type": "inline",
+    "line_number": 951,
+    "start_pos": 68284,
+    "end_pos": 68319
+  },
+  "<<FORMULA_0101>>": {
+    "formula": "\\nabla_{\\bm{x}} l_i",
+    "raw_latex": "$\\nabla_{\\bm{x}} l_i$",
+    "formula_type": "inline",
+    "line_number": 951,
+    "start_pos": 68261,
+    "end_pos": 68282
+  },
+  "<<FORMULA_0100>>": {
+    "formula": "\\bm{x} \\leftarrow",
+    "raw_latex": "$\\bm{x} \\leftarrow$",
+    "formula_type": "inline",
+    "line_number": 950,
+    "start_pos": 68161,
+    "end_pos": 68180
+  },
+  "<<FORMULA_0099>>": {
+    "formula": "{\\partial H}/{\\partial\\bm{\\theta}}",
+    "raw_latex": "${\\partial H}/{\\partial\\bm{\\theta}}$",
+    "formula_type": "inline",
+    "line_number": 949,
+    "start_pos": 68113,
+    "end_pos": 68149
+  },
+  "<<FORMULA_0098>>": {
+    "formula": "\\{\\bm{x}^r(t), \\bm{I}(t), t\\}",
+    "raw_latex": "$\\{\\bm{x}^r(t), \\bm{I}(t), t\\}$",
+    "formula_type": "inline",
+    "line_number": 948,
+    "start_pos": 68060,
+    "end_pos": 68091
+  },
+  "<<FORMULA_0097>>": {
+    "formula": "l_i(\\cdot), l_N(\\cdot)",
+    "raw_latex": "$l_i(\\cdot), l_N(\\cdot)$",
+    "formula_type": "inline",
+    "line_number": 947,
+    "start_pos": 67979,
+    "end_pos": 68003
+  },
+  "<<FORMULA_0096>>": {
+    "formula": "\\bm{\\lambda}",
+    "raw_latex": "$\\bm{\\lambda}$",
+    "formula_type": "inline",
+    "line_number": 941,
+    "start_pos": 67702,
+    "end_pos": 67716
+  },
+  "<<FORMULA_0095>>": {
+    "formula": "\\bm{\\theta}",
+    "raw_latex": "$\\bm{\\theta}$",
+    "formula_type": "inline",
+    "line_number": 941,
+    "start_pos": 67496,
+    "end_pos": 67509
+  },
+  "<<FORMULA_0094>>": {
+    "formula": "H\\in \\mathbb{R}",
+    "raw_latex": "$H\\in \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 940,
+    "start_pos": 67303,
+    "end_pos": 67320
+  },
+  "<<FORMULA_0093>>": {
+    "formula": "& \\begin{aligned}\n\t\t\tH &= J + \n\t\t\t\\sum_{i=1}^{N-1} \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})\n\t\t\\end{aligned}\\\\\n\t\t&\\bm{x}_{i+1} = \\nabla_{\\bm{\\lambda}} H \n\t\t= \\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta}),\n\t\t\\;\\bm{x}_1 = \\bm{x}(0) \\label{rollout}\\\\\n\t\t& \\bm{\\lambda}_i = \\nabla_{\\bm{x}}H \n\t\t= \\nabla_{\\bm{x}} l_i + (\\frac{\\partial \\bm{f}_{neural}^d}{\\partial{\\bm{x}}})^\\top\n\t\t\\bm{\\lambda}_{i+1} \\label{adjoint},\n\t\t\\;\\bm{\\lambda}_N = \\frac{\\partial{l_N}}{\\partial{\\bm{x}_N}}\\\\\n\t\t& \\begin{aligned}\n\t\t\t\\frac{\\partial{H}}{\\partial{\\bm{\\theta}}}\n\t\t\t= \\sum_{i=1}^{N-1} \\;\\nabla_{\\bm{\\theta}} l_i + \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\nabla_{\\bm{\\theta}} \\bm{f}_{neural}^d = 0\n\t\t\\end{aligned} \\label{gradient}",
+    "raw_latex": "\\begin{align}\n\t\t& \\begin{aligned}\n\t\t\tH &= J + \n\t\t\t\\sum_{i=1}^{N-1} \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})\n\t\t\\end{aligned}\\\\\n\t\t&\\bm{x}_{i+1} = \\nabla_{\\bm{\\lambda}} H \n\t\t= \\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta}),\n\t\t\\;\\bm{x}_1 = \\bm{x}(0) \\label{rollout}\\\\\n\t\t& \\bm{\\lambda}_i = \\nabla_{\\bm{x}}H \n\t\t= \\nabla_{\\bm{x}} l_i + (\\frac{\\partial \\bm{f}_{neural}^d}{\\partial{\\bm{x}}})^\\top\n\t\t\\bm{\\lambda}_{i+1} \\label{adjoint},\n\t\t\\;\\bm{\\lambda}_N = \\frac{\\partial{l_N}}{\\partial{\\bm{x}_N}}\\\\\n\t\t& \\begin{aligned}\n\t\t\t\\frac{\\partial{H}}{\\partial{\\bm{\\theta}}}\n\t\t\t= \\sum_{i=1}^{N-1} \\;\\nabla_{\\bm{\\theta}} l_i + \\bm{\\lambda}_{i+1}^\\top\n\t\t\t\\nabla_{\\bm{\\theta}} \\bm{f}_{neural}^d = 0\n\t\t\\end{aligned} \\label{gradient}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 921,
+    "start_pos": 66505,
+    "end_pos": 67277
+  },
+  "<<FORMULA_0092>>": {
+    "formula": "({\\bm{x}_{i}}^r-{\\bm{x}_{i}})^\\top \\bm{L}_i\n\t({\\bm{x}_{i}}^r-{\\bm{x}_{i}})",
+    "raw_latex": "$({\\bm{x}_{i}}^r-{\\bm{x}_{i}})^\\top \\bm{L}_i\n\t({\\bm{x}_{i}}^r-{\\bm{x}_{i}})$",
+    "formula_type": "inline",
+    "line_number": 917,
+    "start_pos": 66276,
+    "end_pos": 66352
+  },
+  "<<FORMULA_0091>>": {
+    "formula": "l_N(\\cdot)\\in \\mathbb{R}",
+    "raw_latex": "$l_N(\\cdot)\\in \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 917,
+    "start_pos": 66052,
+    "end_pos": 66078
+  },
+  "<<FORMULA_0090>>": {
+    "formula": "l_i(\\cdot)\\in \\mathbb{R}",
+    "raw_latex": "$l_i(\\cdot)\\in \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 917,
+    "start_pos": 66024,
+    "end_pos": 66050
+  },
+  "<<FORMULA_0089>>": {
+    "formula": "{\\bm{x}_{i}}^r \\in \\mathbb{R}^n",
+    "raw_latex": "${\\bm{x}_{i}}^r \\in \\mathbb{R}^n$",
+    "formula_type": "inline",
+    "line_number": 917,
+    "start_pos": 65885,
+    "end_pos": 65918
+  },
+  "<<FORMULA_0088>>": {
+    "formula": "\\bm{f}_{neural}\\left( {\\bm{x}(t),\\bm{I}(t), t,\\bm{\\theta}} \\right)",
+    "raw_latex": "$\\bm{f}_{neural}\\left( {\\bm{x}(t),\\bm{I}(t), t,\\bm{\\theta}} \\right)$",
+    "formula_type": "inline",
+    "line_number": 917,
+    "start_pos": 65737,
+    "end_pos": 65805
+  },
+  "<<FORMULA_0087>>": {
+    "formula": "\\bm{x}_{i+1} = \n\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})",
+    "raw_latex": "$\\bm{x}_{i+1} = \n\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})$",
+    "formula_type": "inline",
+    "line_number": 915,
+    "start_pos": 65620,
+    "end_pos": 65694
+  },
+  "<<FORMULA_0086>>": {
+    "formula": "\\bm{I}_i \\in \\mathbb{R}^m",
+    "raw_latex": "$\\bm{I}_i \\in \\mathbb{R}^m$",
+    "formula_type": "inline",
+    "line_number": 915,
+    "start_pos": 65511,
+    "end_pos": 65538
+  },
+  "<<FORMULA_0085>>": {
+    "formula": "\\bm{x}_i \\in \\mathbb{R}^n",
+    "raw_latex": "$\\bm{x}_i \\in \\mathbb{R}^n$",
+    "formula_type": "inline",
+    "line_number": 915,
+    "start_pos": 65460,
+    "end_pos": 65487
+  },
+  "<<FORMULA_0084>>": {
+    "formula": "\\label{eq:oc}\n\t\t&\\min_{\\bm{\\theta}} \\sum_{i=1}^{N-1} \\;l_i(\\bm{x}_i, {\\bm{x}_i}^r, \\bm{\\theta})\n\t\t+ l_N(\\bm{x}_N, {\\bm{x}_N}^r)\\\\\n\t\t& s.t.\\;\\;\\bm{x}_{i+1} = \n\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})",
+    "raw_latex": "\\begin{align}\n\t\t\\label{eq:oc}\n\t\t&\\min_{\\bm{\\theta}} \\sum_{i=1}^{N-1} \\;l_i(\\bm{x}_i, {\\bm{x}_i}^r, \\bm{\\theta})\n\t\t+ l_N(\\bm{x}_N, {\\bm{x}_N}^r)\\\\\n\t\t& s.t.\\;\\;\\bm{x}_{i+1} = \n\t\t\\bm{f}_{neural}^d(\\bm{x}_i, \\bm{I}_i, t_i, \\bm{\\theta})\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 908,
+    "start_pos": 65190,
+    "end_pos": 65434
+  },
+  "<<FORMULA_0083>>": {
+    "formula": "[14.3 \\%, 14.3 \\%, 25.0 \\%]",
+    "raw_latex": "$[14.3 \\%, 14.3 \\%, 25.0 \\%]$",
+    "formula_type": "inline",
+    "line_number": 843,
+    "start_pos": 50922,
+    "end_pos": 50951
+  },
+  "<<FORMULA_0082>>": {
+    "formula": "[40 \\%, 40 \\%, 0]",
+    "raw_latex": "$[40 \\%, 40 \\%, 0]$",
+    "formula_type": "inline",
+    "line_number": 843,
+    "start_pos": 50879,
+    "end_pos": 50898
+  },
+  "<<FORMULA_0081>>": {
+    "formula": "0.5\\ s",
+    "raw_latex": "$0.5\\ s$",
+    "formula_type": "inline",
+    "line_number": 808,
+    "start_pos": 45394,
+    "end_pos": 45402
+  },
+  "<<FORMULA_0080>>": {
+    "formula": "0.5\\ s",
+    "raw_latex": "$0.5\\ s$",
+    "formula_type": "inline",
+    "line_number": 802,
+    "start_pos": 44147,
+    "end_pos": 44155
+  },
+  "<<FORMULA_0079>>": {
+    "formula": "\\{\\bm{x}(t), \\bm{y}(t)\\}",
+    "raw_latex": "$\\{\\bm{x}(t), \\bm{y}(t)\\}$",
+    "formula_type": "inline",
+    "line_number": 782,
+    "start_pos": 41167,
+    "end_pos": 41193
+  },
+  "<<FORMULA_0078>>": {
+    "formula": "\\bm{\\xi}",
+    "raw_latex": "$\\bm{\\xi}$",
+    "formula_type": "inline",
+    "line_number": 774,
+    "start_pos": 40763,
+    "end_pos": 40773
+  },
+  "<<FORMULA_0077>>": {
+    "formula": "{\\bm{\\hat {x}}_{i,j}}",
+    "raw_latex": "${\\bm{\\hat {x}}_{i,j}}$",
+    "formula_type": "inline",
+    "line_number": 771,
+    "start_pos": 40571,
+    "end_pos": 40594
+  },
+  "<<FORMULA_0076>>": {
+    "formula": "\\bm{\\xi}",
+    "raw_latex": "$\\bm{\\xi}$",
+    "formula_type": "inline",
+    "line_number": 769,
+    "start_pos": 40450,
+    "end_pos": 40460
+  },
+  "<<FORMULA_0075>>": {
+    "formula": "\\bm{\\xi}",
+    "raw_latex": "$\\bm{\\xi}$",
+    "formula_type": "inline",
+    "line_number": 758,
+    "start_pos": 39606,
+    "end_pos": 39616
+  },
+  "<<FORMULA_0074>>": {
+    "formula": "\\bm{f}_{neural}(t)",
+    "raw_latex": "$\\bm{f}_{neural}(t)$",
+    "formula_type": "inline",
+    "line_number": 758,
+    "start_pos": 39230,
+    "end_pos": 39250
+  },
+  "<<FORMULA_0073>>": {
+    "formula": "\\bm{h}_{neural}(t)",
+    "raw_latex": "$\\bm{h}_{neural}(t)$",
+    "formula_type": "inline",
+    "line_number": 758,
+    "start_pos": 39135,
+    "end_pos": 39155
+  },
+  "<<FORMULA_0072>>": {
+    "formula": "\\mathcal{D}_i^{tra}= \\{{\\bm{x}_{i,j - 1}}, {\\bm{\\hat x}_{i,j - 1}}, \\bm{x}_{i,j}^ *| j = 1, \\dots, m\\}",
+    "raw_latex": "$\\mathcal{D}_i^{tra}= \\{{\\bm{x}_{i,j - 1}}, {\\bm{\\hat x}_{i,j - 1}}, \\bm{x}_{i,j}^ *| j = 1, \\dots, m\\}$",
+    "formula_type": "inline",
+    "line_number": 756,
+    "start_pos": 38731,
+    "end_pos": 38835
+  },
+  "<<FORMULA_0071>>": {
+    "formula": "\\label{learn_feedback_part}\n\t\t{\\bm{\\xi} ^ * } & = \\mathop {\\arg \\min }\\limits_{\\bm{\\xi}}  \\sum\\limits_{i = 1}^{{n_{case}}} {\\sum\\limits_{j \\in \\mathcal{D}_i^{tra}} {\\left\\| {\\bm{x}_{i,j}^ *  - \\bm{x}_{i,j} } \\right\\|}} \\notag \\\\\n\t\ts.t.\\quad {\\bm{x}_{i,j}} & = {\\bm{x}_{i,j - 1}} + {T_s}\\left( {{\\bm{f}_{neural}}({\\bm{x}_{i,j - 1}}) + \\bm{h}_{neural}\\left( {{\\bm{x}_{i,j - 1}} - {\\bm{\\hat x}_{i,j - 1}},\\bm{\\xi} } \\right)} \\right)",
+    "raw_latex": "\\begin{align} \\label{learn_feedback_part}\n\t\t{\\bm{\\xi} ^ * } & = \\mathop {\\arg \\min }\\limits_{\\bm{\\xi}}  \\sum\\limits_{i = 1}^{{n_{case}}} {\\sum\\limits_{j \\in \\mathcal{D}_i^{tra}} {\\left\\| {\\bm{x}_{i,j}^ *  - \\bm{x}_{i,j} } \\right\\|}} \\notag \\\\\n\t\ts.t.\\quad {\\bm{x}_{i,j}} & = {\\bm{x}_{i,j - 1}} + {T_s}\\left( {{\\bm{f}_{neural}}({\\bm{x}_{i,j - 1}}) + \\bm{h}_{neural}\\left( {{\\bm{x}_{i,j - 1}} - {\\bm{\\hat x}_{i,j - 1}},\\bm{\\xi} } \\right)} \\right)\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 752,
+    "start_pos": 38216,
+    "end_pos": 38672
+  },
+  "<<FORMULA_0070>>": {
+    "formula": "\\bm{f}_{neural}(t)",
+    "raw_latex": "$\\bm{f}_{neural}(t)$",
+    "formula_type": "inline",
+    "line_number": 751,
+    "start_pos": 38145,
+    "end_pos": 38165
+  },
+  "<<FORMULA_0069>>": {
+    "formula": "\\bm{h}_{neural}(t)",
+    "raw_latex": "$\\bm{h}_{neural}(t)$",
+    "formula_type": "inline",
+    "line_number": 751,
+    "start_pos": 38084,
+    "end_pos": 38104
+  },
+  "<<FORMULA_0068>>": {
+    "formula": "\\bm{\\xi}",
+    "raw_latex": "$\\bm{\\xi}$",
+    "formula_type": "inline",
+    "line_number": 741,
+    "start_pos": 36115,
+    "end_pos": 36125
+  },
+  "<<FORMULA_0067>>": {
+    "formula": "\\bm{\\xi}",
+    "raw_latex": "$\\bm{\\xi}$",
+    "formula_type": "inline",
+    "line_number": 741,
+    "start_pos": 36050,
+    "end_pos": 36060
+  },
+  "<<FORMULA_0066>>": {
+    "formula": "\\bm{h}_{neural}(\\bm{x}(t)-\\bm{\\hat{x}}(t), \\bm{\\xi })",
+    "raw_latex": "$\\bm{h}_{neural}(\\bm{x}(t)-\\bm{\\hat{x}}(t), \\bm{\\xi })$",
+    "formula_type": "inline",
+    "line_number": 741,
+    "start_pos": 35977,
+    "end_pos": 36032
+  },
+  "<<FORMULA_0065>>": {
+    "formula": "\\bm{h}(\\bm{x}(t)-\\bm{\\hat{x}}(t)):\\mathbb{R}^n \\rightarrow \\mathbb{R}^n",
+    "raw_latex": "$\\bm{h}(\\bm{x}(t)-\\bm{\\hat{x}}(t)):\\mathbb{R}^n \\rightarrow \\mathbb{R}^n $",
+    "formula_type": "inline",
+    "line_number": 739,
+    "start_pos": 35728,
+    "end_pos": 35802
+  },
+  "<<FORMULA_0064>>": {
+    "formula": "\\lambda_m(\\bm{L})",
+    "raw_latex": "$\\lambda_m(\\bm{L})$",
+    "formula_type": "inline",
+    "line_number": 725,
+    "start_pos": 33848,
+    "end_pos": 33867
+  },
+  "<<FORMULA_0063>>": {
+    "formula": "\\lambda_m(\\bm{L})",
+    "raw_latex": "$\\lambda_m(\\bm{L})$",
+    "formula_type": "inline",
+    "line_number": 725,
+    "start_pos": 33745,
+    "end_pos": 33764
+  },
+  "<<FORMULA_0062>>": {
+    "formula": "\\bm{L}_i = \\bm{L} \\odot e^{-\\beta i}",
+    "raw_latex": "\\begin{align}\n\t\t\\bm{L}_i = \\bm{L} \\odot e^{-\\beta i}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 710,
+    "start_pos": 32460,
+    "end_pos": 32525
+  },
+  "<<FORMULA_0061>>": {
+    "formula": "\\bm{{x}}(t+2T_s)",
+    "raw_latex": "$\\bm{{x}}(t+2T_s)$",
+    "formula_type": "inline",
+    "line_number": 707,
+    "start_pos": 32018,
+    "end_pos": 32036
+  },
+  "<<FORMULA_0060>>": {
+    "formula": "\\bm{{x}}(t+T_s)",
+    "raw_latex": "$\\bm{{x}}(t+T_s)$",
+    "formula_type": "inline",
+    "line_number": 707,
+    "start_pos": 31988,
+    "end_pos": 32005
+  },
+  "<<FORMULA_0059>>": {
+    "formula": "\\bm{{x}}(t+T_s) = \\bm{{x}}(t) + \\bm{\\hat{f}}(\\bm{{x}}(t), \\bm{\\hat{x}}(t), \\theta) T_s",
+    "raw_latex": "$\\bm{{x}}(t+T_s) = \\bm{{x}}(t) + \\bm{\\hat{f}}(\\bm{{x}}(t), \\bm{\\hat{x}}(t), \\theta) T_s$",
+    "formula_type": "inline",
+    "line_number": 707,
+    "start_pos": 31863,
+    "end_pos": 31951
+  },
+  "<<FORMULA_0058>>": {
+    "formula": "\\bm{x}(t+T_s)",
+    "raw_latex": "$\\bm{x}(t+T_s)$",
+    "formula_type": "inline",
+    "line_number": 707,
+    "start_pos": 31832,
+    "end_pos": 31847
+  },
+  "<<FORMULA_0057>>": {
+    "formula": "\\bm{\\tilde f}(t)",
+    "raw_latex": "$\\bm{\\tilde f}(t)$",
+    "formula_type": "inline",
+    "line_number": 705,
+    "start_pos": 31214,
+    "end_pos": 31232
+  },
+  "<<FORMULA_0056>>": {
+    "formula": "\\bm{z}(t+\\Delta t)",
+    "raw_latex": "$\\bm{z}(t+\\Delta t)$",
+    "formula_type": "inline",
+    "line_number": 705,
+    "start_pos": 31084,
+    "end_pos": 31104
+  },
+  "<<FORMULA_0055>>": {
+    "formula": "\\bm{\\dot{z}}(t) = \\left[{\\bm{f}}^T(t), {\\bm{\\hat f}}^T(t)\\right]^T",
+    "raw_latex": "$\\bm{\\dot{z}}(t) = \\left[{\\bm{f}}^T(t), {\\bm{\\hat f}}^T(t)\\right]^T$",
+    "formula_type": "inline",
+    "line_number": 705,
+    "start_pos": 30981,
+    "end_pos": 31049
+  },
+  "<<FORMULA_0054>>": {
+    "formula": "\\bm{z}(t) = \\left[\\bm{x}^T(t), {\\bm{\\hat x}}^T(t)\\right]^T \\in \\mathbb{R}^{2n}",
+    "raw_latex": "$\\bm{z}(t) = \\left[\\bm{x}^T(t), {\\bm{\\hat x}}^T(t)\\right]^T \\in \\mathbb{R}^{2n}$",
+    "formula_type": "inline",
+    "line_number": 705,
+    "start_pos": 30851,
+    "end_pos": 30931
+  },
+  "<<FORMULA_0053>>": {
+    "formula": "\\bm{x}(t+\\Delta t)",
+    "raw_latex": "$\\bm{x}(t+\\Delta t)$",
+    "formula_type": "inline",
+    "line_number": 705,
+    "start_pos": 30770,
+    "end_pos": 30790
+  },
+  "<<FORMULA_0052>>": {
+    "formula": "\\bm{x}(t)",
+    "raw_latex": "$\\bm{x}(t)$",
+    "formula_type": "inline",
+    "line_number": 705,
+    "start_pos": 30729,
+    "end_pos": 30740
+  },
+  "<<FORMULA_0051>>": {
+    "formula": "{\\bm{\\hat f}}(t)",
+    "raw_latex": "${\\bm{\\hat f}}(t)$",
+    "formula_type": "inline",
+    "line_number": 705,
+    "start_pos": 30698,
+    "end_pos": 30716
+  },
+  "<<FORMULA_0050>>": {
+    "formula": "\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_m(\\bm{L})}} + \\gamma\\right\\}",
+    "raw_latex": "$\\mathcal{B}_2 = \\left\\{{\\bm{\\dot{\\tilde x}}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\dot{\\tilde x}}}(t)\\right\\|\\le{\\gamma}\\lambda_M(\\bm{L})/{{\\lambda_m(\\bm{L})}} + \\gamma\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 689,
+    "start_pos": 30021,
+    "end_pos": 30192
+  },
+  "<<FORMULA_0049>>": {
+    "formula": "\\mathcal{B}_1 = \\left\\{{\\bm{\\tilde x}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\tilde x}}(t)\\right\\|\\le{\\gamma}/{{\\lambda_m(\\bm{L})}}\\right\\}",
+    "raw_latex": "$\\mathcal{B}_1 = \\left\\{{\\bm{\\tilde x}}(t)\\in\\mathbb{R}^n:\\left\\|{\\bm{\\tilde x}}(t)\\right\\|\\le{\\gamma}/{{\\lambda_m(\\bm{L})}}\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 689,
+    "start_pos": 29883,
+    "end_pos": 30016
+  },
+  "<<FORMULA_0048>>": {
+    "formula": "{\\bm{\\tilde f}}(t)",
+    "raw_latex": "${\\bm{\\tilde f}}(t)$",
+    "formula_type": "inline",
+    "line_number": 689,
+    "start_pos": 29818,
+    "end_pos": 29838
+  },
+  "<<FORMULA_0047>>": {
+    "formula": "{\\bm{\\dot{\\tilde x}}}(t)",
+    "raw_latex": "${\\bm{\\dot{\\tilde x}}}(t)$",
+    "formula_type": "inline",
+    "line_number": 689,
+    "start_pos": 29784,
+    "end_pos": 29810
+  },
+  "<<FORMULA_0046>>": {
+    "formula": "{\\bm{\\tilde x}}(t)",
+    "raw_latex": "${\\bm{\\tilde x}}(t)$",
+    "formula_type": "inline",
+    "line_number": 689,
+    "start_pos": 29744,
+    "end_pos": 29764
+  },
+  "<<FORMULA_0045>>": {
+    "formula": "\\gamma\\in \\mathbb{R}",
+    "raw_latex": "$\\gamma\\in \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 683,
+    "start_pos": 29286,
+    "end_pos": 29308
+  },
+  "<<FORMULA_0044>>": {
+    "formula": "\\|\\cdot\\|",
+    "raw_latex": "$\\|\\cdot\\|$",
+    "formula_type": "inline",
+    "line_number": 683,
+    "start_pos": 29216,
+    "end_pos": 29227
+  },
+  "<<FORMULA_0043>>": {
+    "formula": "\\label{bounded_assum}\n\t\t\t\\| \\Delta \\bm{f}(t) \\| \\le \\gamma",
+    "raw_latex": "\\begin{align} \\label{bounded_assum}\n\t\t\t\\| \\Delta \\bm{f}(t) \\| \\le \\gamma\n\t\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 680,
+    "start_pos": 29121,
+    "end_pos": 29207
+  },
+  "<<FORMULA_0042>>": {
+    "formula": "\\Delta \\bm{f}(t)",
+    "raw_latex": "$\\Delta \\bm{f}(t)$",
+    "formula_type": "inline",
+    "line_number": 677,
+    "start_pos": 29014,
+    "end_pos": 29032
+  },
+  "<<FORMULA_0041>>": {
+    "formula": "\\label{error_dyna}\n\t\t{\\bm{\\dot{\\tilde {x}}}}(t) = - \\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\Delta \\bm{f}(t).",
+    "raw_latex": "\\begin{align} \\label{error_dyna}\n\t\t{\\bm{\\dot{\\tilde {x}}}}(t) = - \\bm{L}{\\bm{{\\tilde {x}}}}(t) + \\Delta \\bm{f}(t).\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 673,
+    "start_pos": 28801,
+    "end_pos": 28928
+  },
+  "<<FORMULA_0040>>": {
+    "formula": "{\\bm{\\tilde f}}(t) = \\bm{{f}}(t) - \\bm{\\hat{f}}_{neural}(t)",
+    "raw_latex": "${\\bm{\\tilde f}}(t) = \\bm{{f}}(t) - \\bm{\\hat{f}}_{neural}(t)$",
+    "formula_type": "inline",
+    "line_number": 672,
+    "start_pos": 28634,
+    "end_pos": 28695
+  },
+  "<<FORMULA_0039>>": {
+    "formula": "{\\bm{\\dot{\\tilde x}}}(t)",
+    "raw_latex": "${\\bm{\\dot{\\tilde x}}}(t)$",
+    "formula_type": "inline",
+    "line_number": 672,
+    "start_pos": 28545,
+    "end_pos": 28571
+  },
+  "<<FORMULA_0038>>": {
+    "formula": "{\\bm{\\tilde x}}(t) = \\bm{{x}}(t) - \\bm{\\hat{x}}(t)",
+    "raw_latex": "${\\bm{\\tilde x}}(t) = \\bm{{x}}(t) - \\bm{\\hat{x}}(t)$",
+    "formula_type": "inline",
+    "line_number": 672,
+    "start_pos": 28472,
+    "end_pos": 28524
+  },
+  "<<FORMULA_0037>>": {
+    "formula": "\\bm{\\hat{f}}_{neural}(t)",
+    "raw_latex": "$\t\\bm{\\hat{f}}_{neural}(t)$",
+    "formula_type": "inline",
+    "line_number": 668,
+    "start_pos": 28098,
+    "end_pos": 28125
+  },
+  "<<FORMULA_0036>>": {
+    "formula": "\\bm{\\dot{\\hat{x}}}(t) = \\bm{\\hat{f}}_{neural}(t)",
+    "raw_latex": "$\\bm{\\dot{\\hat{x}}}(t) = \\bm{\\hat{f}}_{neural}(t)$",
+    "formula_type": "inline",
+    "line_number": 668,
+    "start_pos": 28037,
+    "end_pos": 28087
+  },
+  "<<FORMULA_0035>>": {
+    "formula": "\\bm{\\hat{x}}(t)",
+    "raw_latex": "$\\bm{\\hat{x}}(t)$",
+    "formula_type": "inline",
+    "line_number": 668,
+    "start_pos": 27963,
+    "end_pos": 27980
+  },
+  "<<FORMULA_0034>>": {
+    "formula": "\\label{sys2_2}\n\t\t\\bm {\\hat{x}}\\left( {{t_k}} \\right) = \\bm {\\hat{x}}\\left( {{t_{k-1}}} \\right) + T_s\\bm{\\hat{f}}_{neural}(t_{k-1}).",
+    "raw_latex": "\\begin{align} \\label{sys2_2}\n\t\t\\bm {\\hat{x}}\\left( {{t_k}} \\right) = \\bm {\\hat{x}}\\left( {{t_{k-1}}} \\right) + T_s\\bm{\\hat{f}}_{neural}(t_{k-1}).\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 665,
+    "start_pos": 27729,
+    "end_pos": 27887
+  },
+  "<<FORMULA_0033>>": {
+    "formula": "\\label{feedback_NN}\n\t\t\\bm{\\hat{f}}_{neural}(t) = \\bm{f}_{neural}(t) + \\bm{L}(\\bm{x}(t)-\\bm{\\hat{x}}(t)).",
+    "raw_latex": "\\begin{align} \\label{feedback_NN}\n\t\t\\bm{\\hat{f}}_{neural}(t) = \\bm{f}_{neural}(t) + \\bm{L}(\\bm{x}(t)-\\bm{\\hat{x}}(t)).\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 661,
+    "start_pos": 27516,
+    "end_pos": 27647
+  },
+  "<<FORMULA_0032>>": {
+    "formula": "\\bm {{x}}\\left( {{t}} \\right)",
+    "raw_latex": "$\\bm {{x}}\\left( {{t}} \\right)$",
+    "formula_type": "inline",
+    "line_number": 660,
+    "start_pos": 27418,
+    "end_pos": 27449
+  },
+  "<<FORMULA_0031>>": {
+    "formula": "\\bm {\\hat{x}}\\left( {{t}} \\right) \\in \\mathbb{R}^n",
+    "raw_latex": "$\\bm {\\hat{x}}\\left( {{t}} \\right) \\in \\mathbb{R}^n$",
+    "formula_type": "inline",
+    "line_number": 660,
+    "start_pos": 27328,
+    "end_pos": 27380
+  },
+  "<<FORMULA_0030>>": {
+    "formula": "\\label{auxiliary_var}\n\t\t\\bm {\\hat{x}}\\left( {{t}} \\right) = \\bm {\\bar{x}}\\left( {{t}} \\right) - \\sum\\limits_{i = 0}^{k-1} {\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_i}} \\right)} \\right)}",
+    "raw_latex": "\\begin{align}  \\label{auxiliary_var}\n\t\t\\bm {\\hat{x}}\\left( {{t}} \\right) = \\bm {\\bar{x}}\\left( {{t}} \\right) - \\sum\\limits_{i = 0}^{k-1} {\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_i}} \\right)} \\right)}\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 657,
+    "start_pos": 27067,
+    "end_pos": 27302
+  },
+  "<<FORMULA_0029>>": {
+    "formula": "T_s \\in \\mathbb{R}",
+    "raw_latex": "$T_s \\in \\mathbb{R}$",
+    "formula_type": "inline",
+    "line_number": 654,
+    "start_pos": 26944,
+    "end_pos": 26964
+  },
+  "<<FORMULA_0028>>": {
+    "formula": "\\label{sys1_2}\n\t\t\\bm {\\bar{x}}\\left( {{t_i}} \\right) = \\bm{x}\\left( {{t_{i-1}}} \\right) + T_s\\bm{\\hat{f}}_{neural}(t_{i-1})",
+    "raw_latex": "\\begin{align} \\label{sys1_2}\n\t\t\\bm {\\bar{x}}\\left( {{t_i}} \\right) = \\bm{x}\\left( {{t_{i-1}}} \\right) + T_s\\bm{\\hat{f}}_{neural}(t_{i-1})\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 651,
+    "start_pos": 26749,
+    "end_pos": 26899
+  },
+  "<<FORMULA_0027>>": {
+    "formula": "\\bm {\\bar{x}}\\left( {{t_i}} \\right) \\in \\mathbb{R}^n",
+    "raw_latex": "$\\bm {\\bar{x}}\\left( {{t_i}} \\right) \\in \\mathbb{R}^n$",
+    "formula_type": "inline",
+    "line_number": 650,
+    "start_pos": 26592,
+    "end_pos": 26646
+  },
+  "<<FORMULA_0026>>": {
+    "formula": "\\bm{L} \\in \\mathbb{R}^{n\\times n}",
+    "raw_latex": "$\\bm{L} \\in \\mathbb{R}^{n\\times n}$",
+    "formula_type": "inline",
+    "line_number": 650,
+    "start_pos": 26493,
+    "end_pos": 26528
+  },
+  "<<FORMULA_0025>>": {
+    "formula": "\\label{sys1_1}\n\t\t\\bm{\\hat{f}}_{neural}(t) = \\bm{f}_{neural}(t) + \\sum\\limits_{i = 0}^k {\\bm{L}\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_i}} \\right)} \\right)}",
+    "raw_latex": "\\begin{align} \\label{sys1_1}\n\t\t\\bm{\\hat{f}}_{neural}(t) = \\bm{f}_{neural}(t) + \\sum\\limits_{i = 0}^k {\\bm{L}\\left( {\\bm{x}\\left( {{t_i}} \\right) - \\bm {\\bar{x}}\\left( {{t_i}} \\right)} \\right)} \n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 647,
+    "start_pos": 26260,
+    "end_pos": 26466
+  },
+  "<<FORMULA_0024>>": {
+    "formula": "\\bm{f}(t)",
+    "raw_latex": "$\\bm{f}(t)$",
+    "formula_type": "inline",
+    "line_number": 646,
+    "start_pos": 26240,
+    "end_pos": 26251
+  },
+  "<<FORMULA_0023>>": {
+    "formula": "\\bm{f}_{neural}(t)",
+    "raw_latex": "$\\bm{f}_{neural}(t)$",
+    "formula_type": "inline",
+    "line_number": 646,
+    "start_pos": 26144,
+    "end_pos": 26164
+  },
+  "<<FORMULA_0022>>": {
+    "formula": "t_k = t",
+    "raw_latex": "$t_k = t$",
+    "formula_type": "inline",
+    "line_number": 646,
+    "start_pos": 26096,
+    "end_pos": 26105
+  },
+  "<<FORMULA_0021>>": {
+    "formula": "\\left\\{\\bm{x}(t_0), \\bm{x}(t_1), \\cdots, \\bm{x}(t_k)\\right\\}",
+    "raw_latex": "$\\left\\{\\bm{x}(t_0), \\bm{x}(t_1), \\cdots, \\bm{x}(t_k)\\right\\}$",
+    "formula_type": "inline",
+    "line_number": 646,
+    "start_pos": 26023,
+    "end_pos": 26085
+  },
+  "<<FORMULA_0020>>": {
+    "formula": "k+1",
+    "raw_latex": "$k+1$",
+    "formula_type": "inline",
+    "line_number": 646,
+    "start_pos": 25997,
+    "end_pos": 26002
+  },
+  "<<FORMULA_0019>>": {
+    "formula": "t_i \\le t",
+    "raw_latex": "$t_i \\le t$",
+    "formula_type": "inline",
+    "line_number": 646,
+    "start_pos": 25932,
+    "end_pos": 25943
+  },
+  "<<FORMULA_0018>>": {
+    "formula": "\\bm{f}_{neural}(t)",
+    "raw_latex": "$\\bm{f}_{neural}(t)$",
+    "formula_type": "inline",
+    "line_number": 646,
+    "start_pos": 25822,
+    "end_pos": 25842
+  },
+  "<<FORMULA_0017>>": {
+    "formula": "\\bm{f}_{neural}(t)",
+    "raw_latex": "$\\bm{f}_{neural}(t)$",
+    "formula_type": "inline",
+    "line_number": 646,
+    "start_pos": 25703,
+    "end_pos": 25723
+  },
+  "<<FORMULA_0016>>": {
+    "formula": "\\Delta \\bm{f}(t)",
+    "raw_latex": "$\\Delta \\bm{f}(t)$",
+    "formula_type": "inline",
+    "line_number": 631,
+    "start_pos": 24471,
+    "end_pos": 24489
+  },
+  "<<FORMULA_0015>>": {
+    "formula": "\\Delta \\bm{f}(t)",
+    "raw_latex": "$\\Delta \\bm{f}(t)$",
+    "formula_type": "inline",
+    "line_number": 631,
+    "start_pos": 24259,
+    "end_pos": 24277
+  },
+  "<<FORMULA_0014>>": {
+    "formula": "\\Delta \\bm{f}(t)\\in \\mathbb{R}^n",
+    "raw_latex": "$\\Delta \\bm{f}(t)\\in \\mathbb{R}^n$",
+    "formula_type": "inline",
+    "line_number": 631,
+    "start_pos": 24159,
+    "end_pos": 24193
+  },
+  "<<FORMULA_0013>>": {
+    "formula": "\\bm{\\theta}",
+    "raw_latex": "$\\bm{\\theta}$",
+    "formula_type": "inline",
+    "line_number": 631,
+    "start_pos": 24121,
+    "end_pos": 24134
+  },
+  "<<FORMULA_0012>>": {
+    "formula": "\\bm{f}_{neural}\\left( \\cdot \\right): \\mathbb{R}^n \\times \\mathbb{R}^m \\times\\ \\mathbb{R} \\rightarrow \\mathbb{R}^n",
+    "raw_latex": "$\\bm{f}_{neural}\\left( \\cdot \\right): \\mathbb{R}^n \\times \\mathbb{R}^m \\times\\ \\mathbb{R} \\rightarrow \\mathbb{R}^n$",
+    "formula_type": "inline",
+    "line_number": 631,
+    "start_pos": 23954,
+    "end_pos": 24069
+  },
+  "<<FORMULA_0011>>": {
+    "formula": "\\label{pure_NN}\n\t\t\\bm{f}\\left( {\\bm{x}(t),\\bm{I}(t), t} \\right) = \\bm{f}_{neural}\\left( {\\bm{x}(t),\\bm{I}(t), t,\\bm{\\theta}} \\right) + \\Delta \\bm{f}(t)",
+    "raw_latex": "\\begin{align} \\label{pure_NN}\n\t\t\\bm{f}\\left( {\\bm{x}(t),\\bm{I}(t), t} \\right) = \\bm{f}_{neural}\\left( {\\bm{x}(t),\\bm{I}(t), t,\\bm{\\theta}} \\right) + \\Delta \\bm{f}(t) \n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 628,
+    "start_pos": 23749,
+    "end_pos": 23928
+  },
+  "<<FORMULA_0010>>": {
+    "formula": "\\label{prediction_ODE}\n\t\t\\bm{x}(t + \\Delta t) = \\bm{x}(t) + \\int_t^{t + \\Delta t} {\\bm{f}\\left( {\\bm{x}\\left( \\tau \\right), \\bm{I}\\left( \\tau \\right),\\tau} \\right)d\\tau}.",
+    "raw_latex": "\\begin{align} \\label{prediction_ODE}\n\t\t\\bm{x}(t + \\Delta t) = \\bm{x}(t) + \\int_t^{t + \\Delta t} {\\bm{f}\\left( {\\bm{x}\\left( \\tau \\right), \\bm{I}\\left( \\tau \\right),\\tau} \\right)d\\tau}. \n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 621,
+    "start_pos": 22129,
+    "end_pos": 22327
+  },
+  "<<FORMULA_0009>>": {
+    "formula": "\\bm{x}(t)",
+    "raw_latex": "$\\bm{x}(t)$",
+    "formula_type": "inline",
+    "line_number": 620,
+    "start_pos": 22057,
+    "end_pos": 22068
+  },
+  "<<FORMULA_0008>>": {
+    "formula": "\\bm{I}(t)",
+    "raw_latex": "$\\bm{I}(t)$",
+    "formula_type": "inline",
+    "line_number": 618,
+    "start_pos": 21959,
+    "end_pos": 21970
+  },
+  "<<FORMULA_0007>>": {
+    "formula": "\\bm{I}(t)",
+    "raw_latex": "$\\bm{I}(t)$",
+    "formula_type": "inline",
+    "line_number": 618,
+    "start_pos": 21852,
+    "end_pos": 21863
+  },
+  "<<FORMULA_0006>>": {
+    "formula": "\\bm{I}(t)",
+    "raw_latex": "$\\bm{I}(t)$",
+    "formula_type": "inline",
+    "line_number": 618,
+    "start_pos": 21675,
+    "end_pos": 21686
+  },
+  "<<FORMULA_0005>>": {
+    "formula": "\\bm{I}(t)\\in \\mathbb{R}^m",
+    "raw_latex": "$\\bm{I}(t)\\in \\mathbb{R}^m$",
+    "formula_type": "inline",
+    "line_number": 618,
+    "start_pos": 21554,
+    "end_pos": 21581
+  },
+  "<<FORMULA_0004>>": {
+    "formula": "\\bm{f}(\\cdot): \\mathbb{R}^n \\times \\mathbb{R}^m \\times\\ \\mathbb{R} \\rightarrow \\mathbb{R}^n",
+    "raw_latex": "$\\bm{f}(\\cdot): \\mathbb{R}^n \\times \\mathbb{R}^m \\times\\ \\mathbb{R} \\rightarrow \\mathbb{R}^n$",
+    "formula_type": "inline",
+    "line_number": 618,
+    "start_pos": 21398,
+    "end_pos": 21491
+  },
+  "<<FORMULA_0003>>": {
+    "formula": "\\label{ODE}\n\t\t\\frac{{d\\bm{x}}(t)}{{dt}} = \\bm{f}\\left( {\\bm{x}(t),\\bm{I}(t), t} \\right)",
+    "raw_latex": "\\begin{align} \\label{ODE}\n\t\t\\frac{{d\\bm{x}}(t)}{{dt}} = \\bm{f}\\left( {\\bm{x}(t),\\bm{I}(t), t} \\right)\n\t\\end{align}",
+    "formula_type": "align",
+    "line_number": 615,
+    "start_pos": 21257,
+    "end_pos": 21371
+  },
+  "<<FORMULA_0002>>": {
+    "formula": "\\bm{x}(t)\\in \\mathbb{R}^n",
+    "raw_latex": "$\\bm{x}(t)\\in \\mathbb{R}^n$",
+    "formula_type": "inline",
+    "line_number": 614,
+    "start_pos": 21227,
+    "end_pos": 21254
+  },
+  "<<FORMULA_0001>>": {
+    "formula": "\\bm{x}(t) \\mapsto \\bm{x}(t+\\Delta t)",
+    "raw_latex": "$\\bm{x}(t) \\mapsto \\bm{x}(t+\\Delta t)$",
+    "formula_type": "inline",
+    "line_number": 614,
+    "start_pos": 20747,
+    "end_pos": 20785
+  }
+}

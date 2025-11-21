@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2507.09128",
+    "model": "openai/gpt-5",
+    "total_responses": 20,
+    "timestamp": "2025-10-31T18:01:18.097838"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0378>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sum_product_swap\",\n  \"error_description\": \"A product (\\\\prod) is used over j instead of a sum (\\\\sum) in the Hilbert–Schmidt norm expansion; it should be ∑_{j∈J}∑_{k∈K} ⟨h_k, A g_j⟩_H^2.\"\n}",
+      "response_length": 229,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0824>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0884>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the final equality, the third term is written with a minus sign; it should remain a plus: + 3 ||hg_ρ - g_ρ||_G^2 · ||F̂ - F_*||_{L^2(Q_X; G)}^2.\"\n}",
+      "response_length": 226,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0902>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The factor μ_{X,i}^{-β} was incorrectly changed to μ_{X,i}^{+β} in the second line (exponent sign flipped).\"\n}",
+      "response_length": 186,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0826>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0481>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the final case statement, the singular value is written as σ_m while the condition uses j = k = i ∈ I; the index should be consistent (σ_i).\"\n}",
+      "response_length": 225,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0898>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"The factor mu_{X,i}^{-β} was incorrectly changed to mu_{X,i}^{+β} in the expansion involving M_{Z|X}; the exponent sign should remain negative.\"\n}",
+      "response_length": 227,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0883>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"In the middle integral, the inner product uses Fhat(x) with (hg_rho - g_rho) instead of F_star(x); the correct decomposition requires <F_star(x), hg_rho - g_rho>.\"\n}",
+      "response_length": 245,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1029>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"By Cauchy–Schwarz, the squared integral is bounded above, so the final relation should be ≤, not ≥.\"\n}",
+      "response_length": 184,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1022>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The inequality direction is reversed; by (a+b+c)^2 ≤ 3(a^2+b^2+c^2), the LHS should be ≤ the RHS, not ≥.\"\n}",
+      "response_length": 189,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0831>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1167>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The product is indexed by j (∏_{j=1}^C) but the term inside uses superscript c (g^c); the index is inconsistent and should match (e.g., ∏_{c=1}^C ... or use j consistently).\"\n}",
+      "response_length": 255,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1063>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Index mismatch in the first sum: the inner product uses e_j while summing over i; it should consistently use e_i.\"\n}",
+      "response_length": 195,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1302>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the third line, the conditional covariance should use a minus: C_{XX|0} - C_{XZ|0} C_{ZZ|0}^{-1} C_{ZX|0} = C_{XX|1} - C_{XZ|1} C_{ZZ|1}^{-1} C_{ZX|1}; the LHS currently has a plus.\"\n}",
+      "response_length": 263,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1240>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1021>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1249>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"In the second line, the 1/2 factor from (1/2)∑_i((\\\\hS_{AB})_{ii}-1)^2 was not properly carried through; it should yield (1/2)∑_i(\\\\hS_{AB})_{ii}^2, not ∑_i(\\\\hS_{AB})_{ii}^2.\"\n}",
+      "response_length": 264,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0963>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1260>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"Missing factor of 1/2: (1/(2n))||A−B||_F^2 should equal (1/(2n))∑||α(x_i)−β(z_i)||^2, not (1/n)∑. Accordingly, the final line should have −Tr(Ŝ_AB) (not −2Tr(Ŝ_AB)) with 1/2 factors consistent across terms.\"\n}",
+      "response_length": 289,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_1252>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"Incorrect expansion of the squared term: (⟨α(x_i), β(z_j)⟩)^2 was decomposed into only the centered square plus the mean square, omitting mixed and diagonal correction terms, leading to the unjustified replacement by (1/(n-1))||S_AB||_F^2.\"\n}",
+      "response_length": 323,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

@@ -1,0 +1,993 @@
+\documentclass{article} % For LaTeX2e
+
+\makeatletter
+\@namedef{ver@natbib.sty}{9999/12/31}
+\let\setcitestyle\@gobble
+\usepackage{styles/iclr2025_conference,times}
+\let\setcitestyle\undefined
+\expandafter\let\csname ver@natbib.sty\endcsname\@undefined
+\makeatother
+
+\usepackage{hyperref}
+\usepackage[center]{styles/VABcommands}
+\usepackage{styles/VABenvironments}
+\usepackage[authoryearcomp]{styles/VABcitations}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{cleveref}
+\usepackage{csquotes}
+\MakeOuterQuote{"}
+
+\title{\vspace{-5mm}\hspace{-3mm}\mbox{Residual Deep Gaussian Processes on Manifolds}}
+
+\author{Kacper Wyrwal \\
+ETH Zürich \\ University of Edinburgh\\
+\And
+Andreas Krause \\
+ETH Zürich \\
+\And
+Viacheslav Borovitskiy \\
+ETH Zürich \\
+}
+
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+\usetikzlibrary{shapes,arrows,calc,positioning,fit}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\bigO}{\mathcal{O}}
+
+% \iclrpreprint % Uncomment for arXiv preprint, but NOT for camera-ready version and NOT for submission.
+\iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
+
+\bibliography{references.bib}
+
+\begin{document}
+
+\unanchoredfootnote{<<FORMULA_0001>>Correspondence to \texttt{wyrwal.kacper@gmail.com} and \texttt{viacheslav.borovitskiy@gmail.com}.\newline\hspace*{1em} Code available at \url{https://github.com/KacperWyrwal/residual-deep-gps}.}
+
+\maketitle
+
+\vspace{-3mm}
+\begin{abstract}
+We propose practical deep Gaussian process models on Riemannian manifolds, similar in spirit to residual neural networks.
+With manifold-to-manifold hidden layers and an arbitrary last layer, they can model manifold- and scalar-valued functions, as well as vector fields.
+We target data inherently supported on manifolds, which is too complex for shallow Gaussian processes thereon.
+For example, while the latter perform well on high-altitude wind data, they struggle with the more intricate, nonstationary patterns at low altitudes.
+Our models significantly improve performance in these settings, enhancing prediction quality and uncertainty calibration, and remain robust to overfitting, reverting to shallow models when additional complexity is unneeded.
+We further showcase our models on Bayesian optimisation problems on manifolds, using stylised examples motivated by robotics, and obtain substantial improvements in later stages of the optimisation process.
+Finally, we show our models to have potential for speeding up inference for non-manifold data, when, and if, it can be mapped to a proxy manifold well enough.
+\end{abstract}
+
+\vspace{-1mm}
+\section{Introduction}\label{section:introduction}
+Gaussian processes (GPs) are a widely adopted model class for learning functions within the Bayesian framework \cite{rasmussen2006}.
+They offer accurate uncertainty estimates and perform well even when data is scarce.
+Consequently, GPs have found success in decision-making tasks, where well-calibrated uncertainty is key, including Bayesian optimisation \cite{snoek2012}, active \cite{krause2008} and reinforcement \cite{kamthe2018} learning.
+
+In recent years, substantial work went into developing the analogues of practical GP models on various non-Euclidean domains \cite{borovitskiy2020, borovitskiy2021, borovitskiy2023, fichera2023}.
+By virtue of being geometry-aware, these analogues have demonstrated improved performance in a variety of tasks on non-Euclidean spaces.
+Their notable applications include Bayesian optimisation on manifolds for robotics \cite{jaquier2022}, traffic flow interpolation on road networks \cite{borovitskiy2021}, and wind velocity prediction on the globe \cite{hutchinson2021,robertnicoud2024}.
+These models were also used to speed up inference for Euclidean GPs by transferring data to a \mbox{hypersphere and leveraging the attractive structure GPs thereon possess \cite{dutordoir2020}.}
+
+Despite their advantages, GPs can sometimes fall short in modelling complex, irregular functions.
+To address this, deep Gaussian processes have been introduced as a sequential composition of GPs \cite{damianou2013}, providing improved flexibility through their layered structure \cite{dai2016, mattos2016}.
+Many techniques developed for shallow GPs, such as variational inference \cite{salimbeni2017} and efficient sampling techniques \cite{wilson2020}, can be adapted for deep GPs, enabling them to be efficiently trained and deployed on large datasets.
+This scalability is vital when dealing with data with complex, irregular patterns.
+
+Deep Gaussian processes have demonstrated success in handling complex data of Euclidean nature, often competing with Bayesian neural networks and deep ensembles.
+However, there has been limited work on expressive uncertainty-quantifying models on manifolds beyond shallow GPs.
+This~gap~leads to the natural question: how can we construct deep Gaussian processes on manifolds?
+
+By analogy with the Euclidean case, a deep GP on a manifold should be a composition of GP layers which take inputs and produce outputs on the manifold of interest.
+While significant advancements have been made in handling manifold-input GPs, outputs on manifolds conflict with the fundamental concept of a GP, which dictates that outputs must be Gaussian and thus Euclidean.\footnote{Nevertheless, some practical heuristics for this exist in the literature \cite{mallasto2018}.}
+Designing GPs with inputs or outputs on a manifold is challenging; with both, it is even more so.
+
+Our solution to this problem is in part inspired by residual neural networks, thus we term our models \emph{residual deep Gaussian processes}.
+Instead of constructing a manifold-to-manifold GP layer directly, we represent it as a \emph{Gaussian vector field} (GVF) combined with an exponential map.
+The former represents a displacement vector, a deviation from the identity map, or a \emph{residual}, while the latter translates the input by the given displacement vector.
+The mean of a layer is always the output of the previous layer.
+We visualise this architecture in \Cref{fig:rdgp}, with sphere as the manifold of interest.
+Notably, by changing the last layer only, one can get manifold-valued or vector-valued deep GPs.
+As~\Cref{section:residual-deep-gaussian-processes-on-manifolds} will show, our residual deep Gaussian processes generalise the deep GP architecture of \textcite{salimbeni2017}, perhaps the most successful architecture in the Euclidean case.
+
+\begin{figure}[t]%
+\vspace{-1.0cm}%
+\centering%
+\begin{tikzpicture}[node distance=2cm]%
+
+% Define styles
+\tikzstyle{image} = [rectangle, draw, minimum size=2cm]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+% Place images
+\node (img1) {\includegraphics[width=3cm]{figures/residual_deep_gp_schematic/a.png}};
+\node (img2) [right=0.3cm of img1] {\includegraphics[width=3cm]{figures/residual_deep_gp_schematic/b.png}};
+\node (img3) [right=0.3cm of img2] {\includegraphics[width=3cm]{figures/residual_deep_gp_schematic/c.png}};
+\node (img4) [right=0.7cm of img3] {\includegraphics[width=3cm]{figures/residual_deep_gp_schematic/e.png}};
+
+% Draw rectangle around middle images
+\path ([xshift=-0.15cm, yshift=0.17cm]img1.north west) coordinate (rect-nw);
+\path ([yshift=-0.00cm, xshift=-0.25cm]img3.south east) coordinate (rect-se);
+\draw [rounded corners] (rect-nw) rectangle node[above, yshift=1.53cm] {<<FORMULA_0002>>} (rect-se);
+
+% Draw arrows
+\draw [arrow] ([xshift=-15pt]img1.east) -- node[above, yshift=1pt, xshift=-1pt] {$\mathrm{GVF}$}([xshift=3pt]img2.west);
+\draw [arrow] ([xshift=-15pt]img2.east) -- node[above] {<<FORMULA_0003>>} ([xshift=3pt]img3.west);
+\draw [arrow] ([xshift=2pt]img3.east) -- node[above, yshift=1pt, xshift=-1pt] {$\mathrm{GP}$}([xshift=5pt]img4.west);
+
+\end{tikzpicture}%
+\caption{Schematic illustration of a scalar-valued residual deep GP with $L$ hidden layers. The last layer is a scalar-valued GP on the manifold. If it is not present, the model is manifold-valued. If it is replaced with a Gaussian vector field (GVF), the model is a vector field on the manifold.}%
+\label{fig:rdgp}%
+\end{figure}%
+
+We examine residual deep GPs through synthetic and real-world experiments, demonstrating our models' superior performance over shallow geometry-aware GPs on tasks where complex data inherently lies on a manifold.
+Additionally, we show that our models offer prospective avenues for accelerating inference for inherently Euclidean data in the context of deep GPs.
+Our main focus is on hypersphere manifolds \(\mathbb{S}_d\), due to their importance in key applications such as climate modelling and robotics, as well as their particularly simple structure that allows for more powerful and specialised GVFs \cite{robertnicoud2024}.
+However, the applicability of our model extends to all Riemannian manifolds, including ones represented by meshes, indicating an even broader potential.
+
+\section{Background}\label{section:background}
+
+Mathematically, a Gaussian process (GP) is a real-valued random function $f$ whose marginals are jointly Gaussian.
+The same term is also used for the respective distribution over functions.
+For such $f$ there always exist a mean <<FORMULA_0004>> on the input domain $X$ of $f$ and a kernel <<FORMULA_0005>> such that <<FORMULA_0006>> for all <<FORMULA_0007>>.
+In this case, we write <<FORMULA_0008>>.
+
+GPs define useful priors for learning functions from noisy observations <<FORMULA_0009>> at given input locations <<FORMULA_0010>> within the Bayesian framework.
+In fact, if the observation likelihood is assumed Gaussian <<FORMULA_0011>>, then the posterior is a GP \cite{rasmussen2006} with
+<<FORMULA_0012>>
+
+The input domain $X$ can, in principle, be any set.
+However, a good kernel <<FORMULA_0013>> is necessary to define practical GP models on $X$.
+If <<FORMULA_0014>>, the most widely used kernels are from the Matérn family \cite{rasmussen2006}, including, as a limiting case, the especially popular squared exponential kernel.\footnote{This kernel has many names; it is also known as the RBF, Gaussian, heat, or diffusion kernel.}
+These kernels are attractive because they implement two natural inductive biases: (1) model behaviour should not change under any symmetries of the data---translations, in the case of $\R^d$---and (2) the unknown function possesses a certain degree of smoothness.
+It turns out that the Matérn family can be generalised to various non-Euclidean domains $X$ in such a way that it still implements (1) and (2).
+We now discuss such a generalisation to Riemannian manifolds\footnote{For more details, see \textcite{borovitskiy2020, azangulov2024, hutchinson2021}.}.
+
+\subsection{Gaussian Processes on Riemannian Manifolds}\label{subsection:gaussian_processes_on_riemannian_manifolds}
+A principled way of generalising the family of Matérn kernels to Riemannian manifolds was proposed by \textcite{lindgren2011} based on the ideas dating back to \textcite{whittle1963}.
+\textcite{borovitskiy2020} showed that the resulting kernels can be represented as the following infinite series
+<<FORMULA_0015>>
+where <<FORMULA_0016>> are the eigenpairs of the Laplace--Beltrami operator on $X$, $d$ is the dimension of $X$, and $C_{\nu, \kappa}$ is a normalisation constant ensuring <<FORMULA_0017>>.
+The infinite sum must be truncated for computational tractability; nevertheless, the rapid decay of the coefficients <<FORMULA_0018>> makes this a sensible approximation with convergence guarantees \cite{rosa2023}.
+
+Such models were used, e.g., in robotics \cite{jaquier2022,jaquier2024} and medical \cite{coveney2020} applications.
+Their vector field counterparts, to which we return later in the paper, were used for modelling wind velocities on the globe \cite{hutchinson2021,robertnicoud2024}.
+
+These models tend to perform well, especially when data is scarce and uncertainty quantification is crucial, but they can struggle to capture complex irregular patterns.
+One potential way to improve on this is to consider \emph{deep Gaussian processes}, which---in the Euclidean case---we now review.
+
+\subsection{Deep Gaussian Processes and Approximate Inference}\label{subsection:deep_gaussian_processes_and_approximate_inference}
+
+A deep Gaussian process $F$ is a composition <<FORMULA_0019>> of multiple shallow GPs $f^l$ \cite{damianou2013}.
+To allow for richer structure, the hidden \emph{layers} $f^l$, for <<FORMULA_0020>>, are typically \emph{vector-valued} GPs <<FORMULA_0021>>, i.e. vectors of scalar-valued GPs stacked together and potentially correlated with each other \cite{alvarez2012}.
+The resulting random function $F$ is itself not a GP.
+Thus, even for Gaussian likelihoods <<FORMULA_0022>>, inference for <<FORMULA_0023>> is intractable.
+
+To overcome this, various approximate inference techniques for deep GPs were proposed, perhaps the most popular being \emph{doubly stochastic variational inference} \cite{salimbeni2017}.
+In it, the intractable posterior <<FORMULA_0024>> is approximated in terms of the KL divergence metric $\KL$ by the elements of a certain \emph{variational family} of tractable distributions.
+This family itself consists of deep GPs whose layers are \emph{sparse GPs} \cite{titsias2009, hensman2013} which we now discuss.
+
+Sparse GPs were originally proposed as a variational family for approximating shallow GPs.
+For them, approximate inference helps scale to big datasets or accommodate non-Gaussian likelihoods.
+Take some <<FORMULA_0025>>.
+A sparse GP $f_{\v{z}, \v{m}, \v{S}}$ is a family of GPs parameterised by a set of $m$ \emph{inducing locations} <<FORMULA_0026>>, as well as a mean vector <<FORMULA_0027>> and a covariance matrix <<FORMULA_0028>> which determine the corresponding \emph{inducing variable} distribution <<FORMULA_0029>>.
+Specifically,
+<<FORMULA_0030>>
+where <<FORMULA_0031>> is the prior $f$ conditioned on <<FORMULA_0032>>.
+Intuitively, $\v{z}$ are the pseudo-inputs, $\v{u}$ are random pseudo-observations, and <<FORMULA_0033>> is a kind of pseudo-posterior.
+It is a GP with
+<<FORMULA_0034>>
+These can be readily generalised to the vector-valued setting, with <<FORMULA_0035>> and <<FORMULA_0036>>.
+
+For a deep GP, the respective variational family is the distribution of a composition of sparse GPs:
+<<FORMULA_0037>>
+The variational parameters <<FORMULA_0038>> are found by minimising <<FORMULA_0039>>, which is equivalent \cite{salimbeni2017} to maximising the following evidence lower bound (ELBO)
+<<FORMULA_0040>>
+where <<FORMULA_0041>> and <<FORMULA_0042>>.
+The second term can be computed exactly using the formula for $\KL$ between two Gaussian vectors.
+The first term is intractable, but can be efficiently approximated by drawing a sample from <<FORMULA_0043>>---this can be done in a layerwise fashion, as \textcite{salimbeni2017} suggest---and subsampling the sum over a mini-batch of inputs $\v{x}$.
+This way, optimisation proceeds by stochastic gradient descent.
+
+
+\section{Residual Deep Gaussian Processes on Manifolds}\label{section:residual-deep-gaussian-processes-on-manifolds}
+In this section, we introduce the new model class of \emph{residual deep Gaussian processes on manifolds}.
+It generalises the notion of deep GPs to Riemannian manifolds, allowing for the modelling of scalar- and vector-valued functions, vector fields, and functions taking values in the input manifold itself.
+
+\subsection{The Architecture} \label{sec:the-architecture}
+
+Let $X$ be a Riemannian manifold.
+The key challenge in building a deep Gaussian process $F$ on $X$ is finding a practical notion of manifold-to-manifold GPs $f^l$ to serve as its hidden layers:
+<<FORMULA_0044>>
+where, to simplify exposition, we assume that the last layer $f^L$ is real-valued, although it can just as well be $X$-valued, vector-valued, or it can be a vector field, depending on the problem at hand.
+
+While building a GP with inputs in $X$ amounts to finding an appropriate kernel <<FORMULA_0045>>, handling outputs in $X$ requires redefining the inherently Euclidean notion of a \emph{Gaussian}.
+We aim to circumvent this difficulty.
+To explain how, we start by considering the popular Euclidean deep GP architecture of \textcite{salimbeni2017}.
+There, each layer <<FORMULA_0046>> is of the form
+<<FORMULA_0047>>
+where $g^l$ is a zero-mean GP.
+That is, each layer
+$f^l$ displaces its input $x$ by a \emph{residual} vector <<FORMULA_0048>>, the difference to the identity transform, much like a residual connection in neural networks \cite{he2016}, which is modelled~by~a~GP.
+On a manifold <<FORMULA_0049>>, when <<FORMULA_0050>> and <<FORMULA_0051>>, the addition operation in <<FORMULA_0052>> is undefined.
+However, there is a natural generalisation:
+<<FORMULA_0053>>
+Here, <<FORMULA_0054>> is the \emph{exponential map}, the canonical mapping of the \emph{tangent space} <<FORMULA_0055>> at <<FORMULA_0056>>---i.e., the linear space of vectors tangent to $X$ at point $x$---back to $X$ itself.
+That is, a point $x$ is still displaced by the vector <<FORMULA_0057>>, but in a geometrically sound manner.
+
+The beauty of~\Cref{eqn:geom-layer-form} is that it reduces modelling $f^l$ to modelling $g^l$.
+The latter is vector-valued, and thus compatible with the traditional notion of a Gaussian, making the problem conceptually much simpler.
+Still, a major technical difficulty remains: for different inputs $x$, the value <<FORMULA_0058>> must lie in the different spaces <<FORMULA_0059>>.
+The mappings behaving like this are called \emph{vector fields}, and their random Gaussian counterparts are called \emph{Gaussian vector fields}, which we proceed to discuss.
+
+\subsection{Key Building Blocks: Gaussian Vector Fields} \label{sec:gaussian-vector-fields}
+
+A vector field on a manifold $X$ is a function that takes each <<FORMULA_0060>> to an element of the tangent space <<FORMULA_0061>> of $X$ at the point $x$.
+If $X$ is\footnote{\emph{Nash embedding theorem} proves this is always the case for a large enough ambient space dimension <<FORMULA_0062>>.} a submanifold of $\R^D$---like the $2$-sphere is a submanifold of $\R^3$---the difference between a vector field and a general vector-valued function on $X$ is very intuitive: in the latter, a vector attached to a point <<FORMULA_0063>> can point in any direction, while in the former it must always be tangential to the manifold $X$ at $x$.
+This difference can be seen in \Cref{fig:projected_gvf}, which features a vector-valued function on the left and an actual vector field on the right.
+
+A Gaussian vector field (GVF) can be thus thought of as a vector-valued GP whose outputs always happen to be tangential vectors.
+This notion is rigorously formalised in the appendices of~\textcite{hutchinson2021}.
+However, for simplicity, we do not dwell on the formalism here.
+Instead, we proceed to discuss three practicable GVF constructions that have been put forward in recent research.
+
+\paragraph{Projected GVFs}
+\textcite{hutchinson2021} propose a simple idea, to build a GVF $g$ from any given vector-valued GP <<FORMULA_0064>> by \emph{projecting} its outputs onto the appropriate tangent spaces.
+Such a projection <<FORMULA_0065>> exists because, if $X$ is a submanifold of $\R^D$, then any tangent space <<FORMULA_0066>> can be identified with a linear subspace of $\R^D$.
+Thus, <<FORMULA_0067>> defines a random vector field (see \Cref{fig:projected_gvf}), which turns out to be Gaussian because of the linearity of $P_{(\cdot)}$.
+
+
+\paragraph{Coordinate-frame-based GVFs}
+Given any \emph{coordinate frame} <<FORMULA_0068>>---that is, a set of functions such that <<FORMULA_0069>> is a linear basis of <<FORMULA_0070>>---and a vector-valued GP <<FORMULA_0071>> with components <<FORMULA_0072>>, the equation <<FORMULA_0073>> defines a GVF.
+This is shown in \Cref{fig:coordinate_frame_gvf}.
+
+
+\paragraph{Hodge GVFs}
+Most recently, \textcite{robertnicoud2024} extended the generalisation of Matérn GPs from~\Cref{subsection:gaussian_processes_on_riemannian_manifolds} to the setting of vector fields on compact manifolds.
+They derive an analogue of~\Cref{eq:matern_kernel_eigenvalues_sum}, representing the respective \emph{Hodge Matérn kernels}, as an infinite series\footnote{\textcite{robertnicoud2024} notice that sometimes, by analytically summing the terms corresponding to the same eigenvalue $\lambda_n$, the series convergence can be sped up by many orders of magnitude, improving efficiency.}
+<<FORMULA_0074>>
+Here, $s_j$ are the eigenfields of the Hodge Laplacian on $X$ that correspond to the eigenvalues <<FORMULA_0075>>, $\otimes$~is the tensor product, and $\Phi_{\nu,\kappa}$ is exactly as in~\Cref{eq:matern_kernel_eigenvalues_sum}.
+This family of kernels can be made more expressive by using different hyperparameters $\sigma^2$, $\kappa$, and $\nu$ for different \emph{types} of eigenfields~$s_j$: the \emph{pure-divergence} $s_j$, the \emph{pure-curl} $s_j$, and the harmonic $s_j$.
+The result is called \emph{Hodge-compositional} Matérn kernels \cite{robertnicoud2024, yang2023}.
+For example, it can represent the inductive bias of divergence-free vector fields, i.e. vector fields having no "sinks" and "sources", like the wind velocity field at certain altitudes.
+This can be seen in~ \Cref{fig:intrinsic_gvf}.
+
+\begin{figure}[t]%
+\vspace{-0.5cm}%
+\centering%
+\begin{subfigure}[b]{0.40\textwidth}%
+\begin{tikzpicture}[baseline=(current bounding box.north)]%
+% Define styles
+\tikzstyle{arrow} = [thick, ->, >=stealth]%
+% Place images
+\node (img1) {\includegraphics[width=3cm]{figures/gvf_constructions/aa.png}};%
+\node (img2) [right=-0.1cm of img1] {\includegraphics[width=3cm]{figures/gvf_constructions/ab.png}};%
+% Draw arrow with label
+\draw [arrow] ([xshift=-15pt]img1.east) -- node[above] {$P_{(\cdot)}$} ([xshift=5pt]img2.west);%
+\end{tikzpicture}%
+\vspace{-0.13cm}
+\caption{Projected GVF}%
+\label{fig:projected_gvf}%
+\end{subfigure}%
+\hfill%
+\begin{subfigure}[b]{0.26\textwidth}%
+\includegraphics[width=3cm]{figures/gvf_constructions/b.png}%
+\centering%
+\caption{Coordinate frame GVF}%
+\label{fig:coordinate_frame_gvf}%
+\end{subfigure}%
+\begin{subfigure}[b]{0.26\textwidth}%
+\includegraphics[width=3cm]{figures/gvf_constructions/c.png}%
+\centering%
+\caption{Hodge GVF}%
+\label{fig:intrinsic_gvf}%
+\end{subfigure}%
+\caption{Gaussian vector field constructions on the sphere. In~(\subref{fig:coordinate_frame_gvf}), orange vectors depict the frame.}%
+\end{figure}%
+
+The first two constructions are \emph{universal}.
+This means that by choosing an appropriate $\v{h}$, one can obtain any possible GVF.
+Although this might seem advantageous, this is also a major curse, as it is often unclear which particular $\v{h}$ to take to get good inductive biases.
+What is more, simple solutions, such as $\v{h}$ with IID components, may lead to undesirable artefacts \cite{robertnicoud2024}.
+On the other hand, the third construction is \emph{canonical}, in the same way as the Matérn family is canonical in the scalar Euclidean case, and it is based on the same simple and natural inductive~biases.
+
+Hodge GVFs seem to be the most attractive building blocks for deep GPs.
+However, although they are generally applicable \emph{in theory}, \textcite{robertnicoud2024} only provide practical expressions for the eigenfields $s_n$ when $X$ is the circle $\mathbb{S}_1$, the 2-sphere $\mathbb{S}_2$, or any finite product of those.
+Thus, for the manifolds that go beyond this simple form, other GVF constructions have~to~be~used.
+With this, we finish introducing our models, and proceed to discuss Bayesian inference for them.
+
+\subsection{Inference}  \label{sec:approximate-inference}
+Like their Euclidean counterparts, residual deep GPs constitute complex non-Gaussian priors, making exact Bayesian inference with them impossible.
+However, the doubly stochastic variational inference approach described in~\Cref{subsection:deep_gaussian_processes_and_approximate_inference} is applicable to them after a few adjustments we detail below.
+What is more, for compact manifolds, the approach can be further modified to use certain interdomain inducing variables, which, as~\Cref{section:experiments} shows, tends to offer superior performance.
+
+\paragraph{Doubly stochastic variational inference}
+Consider the analogue of the variational family <<FORMULA_0076>> in~\Cref{eqn:eucl_deep_gp_vf} with the sparse GP layers $f_{\v{z}^l, \v{m}^l, \m{S}^l}$ replaced by
+<<FORMULA_0077>>
+where $g_{\v{z}^l, \v{m}^l, \m{S}^l}$ are \emph{sparse Gaussian vector fields}.
+Again, intuitively and in practice, treating the manifold $X$ as a submanifold of $\R^D$, GVFs can be thought of, and worked with, as a special kind of vector-valued GPs.
+For $g_{\v{z}^l, \v{m}^l, \m{S}^l}$, however, <<FORMULA_0078>> with inducing locations <<FORMULA_0079>>, and
+<<FORMULA_0080>>
+where $\operatorname{im}$ denotes the \emph{image} of a linear operator, and the last two constraints ensure that the random pseudo-observations <<FORMULA_0081>> are tangent vectors which lie in the appropriate tangent spaces.
+
+To satisfy the aforementioned constraints during optimisation, one can represent
+<<FORMULA_0082>>
+with arbitrary <<FORMULA_0083>>, arbitrary positive semi-definite <<FORMULA_0084>>, and <<FORMULA_0085>> denoting the projection of vectors in $\R^D$ onto the tangent space <<FORMULA_0086>>, as discussed in~\Cref{sec:gaussian-vector-fields}.
+
+Instead of using such representations, one can fix a (locally) smooth frame and optimise the coefficients of $\v{m}^l$ and $\m{S}^l$ represented in this frame.
+In any case, one needs to make sure $z^l_{j}$ always remain on the manifold~$X$ during optimisation, which can be done by using specialised libraries, such as \textsc{Pymanopt} \cite{townsend2016} or \textsc{Geoopt} \cite{kochurov2020}.
+For low-dimensional manifolds, a fixed grid on $X$ or a set of cluster centroids can be an effective alternative to optimising~$z^l_{j}$.
+
+Finally, to approximate ELBO, we need to sample <<FORMULA_0087>>.
+As in~\textcite{salimbeni2017}, this can be done sequentially.
+Specifically, if <<FORMULA_0088>> denotes the desired sample, then
+<<FORMULA_0089>>
+and, given $\hat{f}^{l-1}_i$, each individual <<FORMULA_0090>> can be sampled in the usual manner.
+
+\paragraph{Interdomain inducing variables on manifolds}
+On compact manifolds, an alternative variational family can be used that speeds up the inference and can often lead to better predictive performance.
+It is constructed by replacing the inducing locations $\v{z}$ by \emph{inducing linear functionals} <<FORMULA_0091>>.
+Each $\zeta_{j}$ takes in a vector field $g$ and outputs a real number.
+These <<FORMULA_0092>> define a sparse GVF through
+<<FORMULA_0093>>
+where <<FORMULA_0094>> is the prior $g$ conditioned on <<FORMULA_0095>>, where <<FORMULA_0096>>.
+For example, linear functionals of the form <<FORMULA_0097>>---here, <<FORMULA_0098>> is a coordinate frame---can be used to recover the usual doubly stochastic variational inference considered above.
+
+The mean and covariance of $g_{\v{\zeta}, \v{m}, \v{S}}$ are given by \Cref{eq:variational_posterior_mean_and_kernel}, with $\v{z}$ replaced by <<FORMULA_0099>> and
+<<FORMULA_0100>>
+see, for example, \textcite{lazarogredilla2009, vanderwilk2020}.
+
+Now, if the kernel of $g$ can be expressed as <<FORMULA_0101>> where <<FORMULA_0102>> is an orthonormal basis---this is obviously so for Hodge GVFs, but is also often the case for other GVFs on compact manifolds---the inducing functionals <<FORMULA_0103>> yield very simple covariance matrices
+<<FORMULA_0104>>
+In particular, <<FORMULA_0105>> is diagonal, making it trivial to invert.
+\textcite{dutordoir2020} report that this can yield significant acceleration in practice.
+For residual deep GPs, this phenomenon affects every individual layer, thus making the cumulative effect even more pronounced.
+We refer the reader to \Cref{app:inducing_variables_on_manifolds} for further practical and theoretical considerations regarding this variational family.
+
+\paragraph{Posterior mean, variance, and samples}
+Expectations <<FORMULA_0106>> and variances <<FORMULA_0107>> of the approximate posterior $F_{\v{\theta}}$ cannot be computed exactly.
+Instead, they can be estimated by appropriate Monte Carlo averages, with~\Cref{eqn:sequential_sampling} providing a way to sample <<FORMULA_0108>>.
+However, since these estimates ignore the correlation between <<FORMULA_0109>> and <<FORMULA_0110>>, they are not continuous as functions of~$x$.
+When continuity or differentiability of <<FORMULA_0111>> and <<FORMULA_0112>> are desirable, another method can be used.
+The key idea in this case is to draw (approximate) samples from <<FORMULA_0113>> which happen to be actual functions, for example linear combinations of some analytic basis functions or compositions of such.
+This can be done by applying the \emph{pathwise conditioning} of \textcite{wilson2020,wilson2021} in a sequential manner, akin to~\Cref{eqn:sequential_sampling}.
+This approach is useful for visualisation, performance metric estimation, and for working with downstream quantities, such as acquisition functions in Bayesian optimisation, for which differentiability is key for efficiently finding their maxima.
+
+
+\section{Experiments}\label{section:experiments}
+We begin this section by examining how various GVF and variational family choices impact the regression performance of residual deep GPs in synthetic experiments, as discussed in~\Cref{subsection:synthetic_examples}.
+Throughout, we compare our models to a baseline with Euclidean hidden layers.
+Next, in the robotics-inspired experiments of~\Cref{subsection:geometry_aware_bayesian_optimisation}, we demonstrate that residual deep GPs can significantly enhance Bayesian optimisation on a manifold when the optimised function is irregular.
+Following this, in~\Cref{subsection:wind_velocity_modelling_on_the_globe}, we show state-of-the-art predictive and uncertainty calibration performance of residual deep GPs in wind velocity modelling on the globe, achieving interpretable patterns even at low altitudes where data is more complex and irregular.
+Finally, in~\Cref{subsection:euclidean_acceleration}, we explore potential avenues for using residual deep GPs to accelerate inference on inherently Euclidean data.
+
+\subsection{Synthetic Examples}\label{subsection:synthetic_examples}
+
+\begin{figure}[t]%
+\vspace{-1cm}%
+\centering%
+\includegraphics[width=\linewidth]{figures/synthetic/synthetic-nlpd_vs_num_layers_and_num_training-all_models-sd1.pdf}%
+\vspace{-0.25cm}
+\caption{NLPD of different residual deep GP variants and the baseline model, on the regression problem for the synthetic benchmark function visualised in~\Cref{fig:target_function}. Different subplots correspond to different training set sizes $N$. The solid lines represent the mean, while the shaded areas represent the $\pm 1$ standard deviation region around it. All statistics are computed over $5$ randomised runs.%
+}%
+\label{fig:synthetic-nlpd_vs_num_layers_and_num_training-all_models}%
+\end{figure}%
+
+\paragraph{Setup}
+Deep GPs bear the promise of outperforming their shallow counterparts in modelling complex, irregular functions.
+To test this, we construct a benchmark function $f^*$ on the $2$-sphere $\mathbb{S}_2$ with multiple singularities, which is visualised in~\Cref{fig:target_function}.
+We take <<FORMULA_0114>> training inputs $\v{x}$ on a Fibonacci lattice on $\mathbb{S}_2$ and put <<FORMULA_0115>>, <<FORMULA_0116>>.
+Then, we regress $f^*$ from $\v{x}$ and $\v{y}$.
+On this problem, we compare different modifications of the residual deep GPs amongst themselves and to a baseline, in terms of the negative log predictive density (NLPD) and the mean squared error (MSE) metrics on the test set of $5000$ points, also on a Fibonacci lattice.
+All runs are conducted $5$ times with different random seeds for the observation noise <<FORMULA_0117>>.
+
+\paragraph{Models}
+The baseline is a deep GP with Euclidean (rather than manifold-to-manifold) layers.
+It is constructed by composing a vector-valued Matérn GP whose signature is <<FORMULA_0118>> with the Euclidean deep GP of \textcite{salimbeni2017} on $\R^3$.
+For the residual deep GPs, we consider two different types of GVFs, projected and Hodge, and two types of variational families, the one based on inducing locations (IL) and the one based on interdomain variables (IV).
+To ensure comparability, we match the number of optimised parameters between models as closely as possible.
+
+\paragraph{Results} The NLPD values are presented in~\Cref{fig:synthetic-nlpd_vs_num_layers_and_num_training-all_models}. The MSE values exhibit the same trends and can be found in~\Cref{fig:synthetic-mse_vs_num_layers_and_num_training-all_models} in~\Cref{app:additional_experimental_details}.
+We observe three key patterns.
+First, residual deep GPs are never worse than their shallow counterparts, recovering the single-layer solution when data is sparse.
+Second, as data becomes more abundant and thus captures more complexity of $f^*$, residual deep GPs outperform the shallow GPs.
+Third, the IV variational family almost always improves over the IL one, and the best model---with considerable margin---is obtained by combining Hodge GVFs with the IV variational family.
+The residual deep GP based on projected GVFs and using the IV variational family is the second best model, which still outperforms the baseline in most cases.
+
+\subsection{Geometry-aware Bayesian Optimisation}\label{subsection:geometry_aware_bayesian_optimisation}
+
+\begin{figure}%
+\vspace{-1cm}%
+\centering%
+\begin{subfigure}[b]{0.30\linewidth}%
+\centering
+\includegraphics[width=0.75\linewidth]{figures/synthetic/irregular_function}%
+\caption{Irregular benchmark function.}%
+\label{fig:target_function}%
+\end{subfigure}%
+\hspace{0.02\linewidth}%
+\begin{subfigure}[b]{0.68\linewidth}%
+\centering
+\includegraphics{figures/bo/bo-log_regret_vs_step-sd1.pdf}%
+\caption{Bayesian optimisation performance.}%
+\label{fig:bayesian_optimisation-log_regret}%
+\end{subfigure}%
+\caption{The irregular benchmark function, and Bayesian optimisation performance comparison. The target functions for Bayesian optimisation are: the aforementioned benchmark function, modified to have a single global minimum ($\mathbb{S}_2$~Irregular), and the smooth Ackley function on the $3$-sphere ($\mathbb{S}_3$~Ackley). In (\subref{fig:bayesian_optimisation-log_regret}), the solid lines represent the median regret, while the shaded areas around them span $\pm 1$ standard deviation. The statistics are computed over $15$ randomised runs.}%
+\label{fig:target_and_bo}%
+\end{figure}%
+
+\paragraph{Motivation}
+GPs are a widely used model class for Bayesian optimisation, a technique for optimising expensive-to-evaluate black-box functions that leverages uncertainty estimates to balance exploration and exploitation \cite{shahriari2016}.
+In robotics, such problems arise, for example, when a control policy needs to be fine-tuned to a specific real-world environment.
+This task was shown to benefit from treating the optimisation space as a manifold and using geometry-aware Gaussian processes to drive Bayesian optimisation \cite{jaquier2022}.
+The functions upon which the technique was tested are rather regular, which is not always the case in reality, especially when dealing with increasingly complex systems.
+Motivated by this challenge, we explore if residual deep GPs can offer improved performance in optimising complex irregular functions~on~manifolds.
+
+\paragraph{Setup}
+We consider two target functions to optimise.
+The first is the irregular function from \Cref{subsection:synthetic_examples}, visualised in \Cref{fig:target_function}, modified to have only one global minimum.
+The second is the much more regular Ackley function, projected onto $\mathbb{S}_3$, one of the benchmarks in \textcite{jaquier2022}.
+In each Bayesian optimisation run, we perform the first 180 iterations using a shallow geometry-aware GP, followed by 20 iterations using a residual deep GP---both employing the \emph{expected improvement} acquisition function (see, e.g., \textcite{frazier2018}).
+In this experiment, we showcase the coordinate-frame-based GVFs, as described in~\Cref{app:additional_experimental_details}.
+We do not use deep GPs in the initial iterations because, as intuition suggests and \Cref{subsection:synthetic_examples} affirms, deep GPs start outperforming their shallow counterparts only when data becomes more abundant.
+Although deep GPs show comparable performance even for small datasets, training them is more computationally demanding, making their use less efficient in the early stages of optimisation.
+We repeat each run 15 times to account for the stochasticity of initialisation, optimisation of the acquisition function, and training of GP models.
+
+\paragraph{Results}
+The optimisation performance, measured in terms of the logarithm of regret, is reported in~\Cref{fig:bayesian_optimisation-log_regret}.
+We find that residual deep GPs significantly improve performance in the Bayesian optimisation of the irregular function.
+Specifically, switching to a residual deep GP in the latter stages of optimisation greatly, and often immediately, reduces the gap between the true optimum and the found optimum.
+This trend is consistent across most runs, with only one outlier showing no improvement due to insufficient data collection near the singularity during the shallow GP phase.
+In contrast, for the Ackley function, we observe no substantial difference in performance between the two methods: both approaches replicate results from \textcite{jaquier2022}, with nearly identical median regret trajectories.
+This outcome aligns with our expectations, since the region around the minimum, explored during the initial 180 iterations, is smooth and thus modelled equally well by both deep and shallow models.
+
+\subsection{Wind interpolation on the globe}\label{subsection:wind_velocity_modelling_on_the_globe}
+
+\begin{figure}%
+\centering%
+\begin{subfigure}[b]{0.30\linewidth}%
+\includegraphics[width=1.3\linewidth]{figures/wind/aeolus_track_and_ground_truth_3d_1500pts.png}%
+\hspace{-0.3\linewidth}%
+\vspace{-0.65cm}%
+\caption{The ground truth wind velocities as black arrows and the training locations along the Aeolus satellite track as red points.}%
+\label{fig:hodge-aelous_track_and_ground_truth}%
+\end{subfigure}%
+\hspace{0.05\linewidth}%
+\begin{subfigure}[b]{0.65\linewidth}%
+\includegraphics[width=1.0\linewidth]{figures/wind/uncertainty_and_difference-level=15.png}%
+\caption{Difference between the prediction and the ground truth wind velocities, shown as black arrows, and the predictive uncertainty, shown using a colour scale from purple (lowest) to yellow (highest), for a 3-layer residual deep GP and wind velocities for July 2010, at 0.1 km altitude.}%
+\label{fig:hodge-aelous_uncertainty_and_difference}%
+\end{subfigure}%
+\caption{Using residual deep GPs for probabilistic wind velocity modelling on the surface of Earth.}%
+\label{fig:hodge-aelous}%
+\end{figure}%
+
+\paragraph{Motivation}
+Non-Euclidean geometry has a particularly pronounced effect on vector fields, such as wind velocity fields on the globe, more so than on scalar functions.
+For instance, the famous \textit{hairy ball theorem} states that a smooth vector field \textit{must} always have a zero somewhere on the $2$-sphere, i.e. there must always be a location where wind does not blow.
+Wind interpolation is thus an attractive use case for geometry-aware Gaussian vector fields, where they have been shown to perform well \cite{hutchinson2021, robertnicoud2024}.
+Here, we show that residual deep GPs can improve the performance of probabilistic wind velocity models when the data contains complex irregular patterns, which naturally occur in wind fields at lower altitudes.
+
+\paragraph{Setup}
+We consider the task of interpolating the monthly average wind velocity from the ERA5 dataset \cite{era5}, from a set of locations on the Aeolus satellite track \cite{reitebuch2012}, simulating a practical setting of a weather-analysing satellite.
+We use ERA5 data from January to December 2010, as in \textcite{robertnicoud2024}, and sample the Aeolus track locations every minute for a 24-hour period from 9:00 am, January 1st, 2019.
+We choose a 24-hour period instead of a 1-hour period, as in \textcite{hutchinson2021}, because in that time frame, the satellite produces a denser set of observations, crucial for capturing the complexity of wind behaviour at low altitudes.
+The ground truth vector field and the input locations are visualised in \Cref{fig:hodge-aelous_track_and_ground_truth}.
+To assess how decreasing regularity of data associated with decreasing altitude affects our model, we consider data at three altitudes: approximately 5.5 km, 2 km, and 0.1 km.
+In our models, we use Hodge GVFs in hidden layers and as the last layer, and interdomain inducing variables for inference.
+
+\paragraph{Results}
+We report regression performance, in terms of NLPD, in \Cref{fig:hodge-nlpd_vs_num_layers_and_pressure}; MSE follows similar trends and can be found in~\Cref{fig:hodge-mse_vs_num_layers_and_altitude} in~\Cref{app:additional_experimental_details}.
+We find that residual deep GPs improve upon the state-of-the-art shallow Hodge GVFs (1-layer models in the plots, \textcite{robertnicoud2024}) {\parfillskip0pt\par}
+\vspace{-0.2cm}
+\begin{wrapfigure}{R}{0.45\linewidth}%
+\centering%
+\includegraphics{figures/wind/hodge-nlpd_vs_num_layers_and_altitude-sd1-larger.pdf}%
+\vspace{-0.2cm}%
+\caption{
+NLPD of residual deep GPs on the wind modelling task across three altitude levels. Solid lines give the mean NLPD, while the shaded regions around it span $\pm 1$ standard deviation. Statistics are computed from 12 runs---one for each month of 2010.}%
+\label{fig:hodge-nlpd_vs_num_layers_and_pressure}%
+\vspace{-0.5cm}%
+\end{wrapfigure}%
+\noindent both in prediction quality and uncertainty calibration, as evidenced by the significantly lower NLPD and MSE.
+Furthermore, \Cref{fig:hodge-aelous_uncertainty_and_difference} shows that the uncertainty estimates of our deep model at the lowest altitude are interpretable.
+Indeed, regions of high uncertainty follow regions of irregular wind currents, such as boundaries where multiple currents meet or continental boundaries, as well as areas of seasonally high winds, such as India during the peak monsoon season.
+At the same time, low uncertainty is assigned to regions with constant-like currents.
+This is unachievable for shallow GVFs since their posterior covariance depends only on the \emph{locations} of the observations, which are rather uniformly dense in our setup, and not on the observations themselves.
+Additionally, \Cref{fig:hodge-aelous_uncertainty_and_difference} shows predictive uncertainty to be well-calibrated, with areas of highest error corresponding to regions of high~uncertainty.
+
+\subsection{Accelerating Inference for Euclidean Data}\label{subsection:euclidean_acceleration}
+
+\begin{figure}[t]
+\vspace{-1cm}%
+\centering%
+\includegraphics[width=1.0\linewidth]{figures/euclidean/uci-timing.pdf}%
+\caption{
+Wall clock time taken by one training step of Euclidean deep GPs with inducing locations, and residual deep GPs with interdomain variables. We consider 5 UCI datasets, with dimension $d$ and batch size $B$. Solid lines show the mean, computed by averaging over 100 training steps, while the shaded areas span $\pm 1$ standard deviation. However, they are often too narrow to be visible.
+}%
+\label{fig:gradient_step_speed}%
+\end{figure}%
+
+\paragraph{Motivation}
+
+Inspired by their connection to infinitely wide neural networks, \textcite{dutordoir2020} showed that geometry-aware GPs on hyperspheres can be applied to inherently Euclidean data to accelerate variational inference.
+Specifically, they reported that approximate variational inference using the shallow analogue of the interdomain inducing variables applied to data mapped\footnote{Mapping <<FORMULA_0119>>, where <<FORMULA_0120>> is a \emph{bias} term, <<FORMULA_0121>>.} from $\R^d$ to the proxy manifold of $\mathbb{S}_{d}$ can be significantly faster than inducing-location-based variational inference for a Euclidean GP on the original data, while achieving competitive predictive performance.
+We investigate whether this result can be extended to the case of deep Gaussian processes.
+
+\paragraph{Setup}
+As Euclidean data, we use the same UCI datasets as~\textcite{dutordoir2020}, and we use the same mapping from $\R^d$ to the proxy manifold $\mathbb{S}_{d}$.
+We use projected GVFs to accommodate arbitrarily-dimensional hyperspheres.
+Overall, our experimental setup follows~\textcite{dutordoir2020}, except that working with deep models required us to optimise ELBO directly instead of marginalising out the variational mean $\v{m}$ and covariance $\m{S}$ as in \textcite{titsias2009}.
+Additionally, because of high memory requirements of L-BFGS~\cite{nocedal1980} arising from the lack of marginalisation and depth, we switch to Adam~\cite{kingma2015}.
+We use a single~Intel~i7-13700H~CPU.
+
+\paragraph{Results}
+We compare the variational inference speed, measured by wall-clock time for a single optimisation step, in~\Cref{fig:gradient_step_speed}.
+The advantage for shallow 1-layer GPs increases significantly with more layers, offering a considerable edge in deep models.
+However, predictive performance comparisons in~\Cref{fig:uci-nlpd_and_mse_vs_num_layers-euclidean_and_residual} in~\Cref{app:additional_experimental_details} do not show such an optimistic picture: Euclidean deep GPs always outperform residual deep GPs with the same number of layers in terms of NLPD and MSE.
+Possibly, this might be due to the aforementioned differences in optimisation.
+Also, our choice of the mapping from $\R^d$ to a proxy manifold and the choice of the proxy manifold itself might be overly simplistic and thus hinder performance.
+We hypothesise that better mappings or optimisation could potentially make the tested approach a more efficient alternative to Euclidean deep GPs.
+Achieving this, however, will require further work, which is beyond the scope of~this~paper.
+
+\vspace{-0.15cm}
+\section{Conclusion}\label{section:conclusion}
+\vspace{-0.15cm}
+
+In this paper, we proposed a novel model class of \emph{residual deep Gaussian processes} on manifolds.
+We reviewed practical Gaussian vector field constructions for building their hidden layers and discussed two variational inference techniques, including one tailored to the structure of Gaussian vector fields on compact manifolds and based on interdomain inducing variables.
+We evaluated our models in synthetic experiments, examining the impact of Gaussian vector field and variational family choices.
+These experiments supported favouring Hodge Gaussian vector fields and interdomain inducing variables.
+They also demonstrated that increasing the number of layers virtually never degrades our models' performance, though it can quickly saturate and plateau.
+We hypothesize that larger datasets will slow saturation, necessitating more layers' complexity.
+However, we leave this for future work to explore.
+In a robotics-motivated stylised experiment, our models significantly enhanced Bayesian optimisation for an irregular function on the sphere.
+For probabilistic interpolation of wind velocities, we achieved state-of-the-art performance, surpassing the recently proposed shallow Hodge Gaussian vector fields.
+Finally, we showed interdomain inducing variables to be superior in terms of inference time, compared to doubly stochastic variational inference for Euclidean deep Gaussian processes.
+This indicates potential future benefits for Euclidean data if suitable mappings from manifold data to proxy manifolds are found.
+We believe residual deep Gaussian processes will provide a powerful toolset for applications in climate modelling, robotics, and beyond.
+
+\subsubsection*{Acknowledgments}
+VB was supported by ELSA (European Lighthouse on Secure and Safe AI) funded by the European Union under grant agreement No. 101070617.
+KW thanks Edoardo Ponti for his mentorship.
+The Blender rendering scripts we used for plotting were adapted from~\textcite{terenin2022}.
+
+
+\printbibliography
+\newpage
+
+\newpage
+\appendix
+\section{Additional Experimental Details}\label{app:additional_experimental_details}
+\subsection{Implementation}\label{app:implementation}
+\paragraph{Efficient kernel evaluation with the addition theorem}
+In our implementation of manifold Matérn kernels, we utilise the \emph{addition theorem for spherical harmonics} \cite{devito2021, dutordoir2020} to accelerate kernel computation.\footnote{The analogues of this theorem hold for many other manifolds, see, e.g., \textcite{azangulov2024}.}
+On $\mathbb{S}_d$, the eigenfunctions of the Laplace--Beltrami operator are known to be certain special functions called \emph{spherical harmonics}.
+The addition theorem gives a relation between all spherical harmonics  corresponding to the <<FORMULA_0122>>-th largest eigenvalue of the negative Laplace--Beltrami operator <<FORMULA_0123>>, denoted <<FORMULA_0124>>, and Gegenbauer polynomials $C_k^{(\alpha)}$, other special functions:
+<<FORMULA_0125>>
+with the dot product computed after embedding $\mathbb{S}_d$ in $\mathbb{R}^{d+1}$ as the unit sphere centred at the origin, <<FORMULA_0126>>, and $c_{k, d}$ some known absolute constants.
+Thus, when computing the scalar Matérn kernel on $\mathbb{S}_d$, we truncate the infinite sum in \Cref{eq:matern_kernel_eigenvalues_sum} to include all spherical harmonics up to the <<FORMULA_0127>>-th eigenvalue, and apply \Cref{eq:addition_theorem}.
+This gives the following formula
+<<FORMULA_0128>>
+In case of the Hodge Matérn kernel on $\mathbb{S}_2$, we also apply addition theorem, only noting that here $\phi_{k, j}$ are replaced with the normalised vector spherical harmonics: <<FORMULA_0129>> for the divergence-only kernel, and <<FORMULA_0130>> for the curl-only kernel, where $\star$ is the Hodge star operator \cite{robertnicoud2024}.
+In this case, <<FORMULA_0131>>.
+Thus,
+<<FORMULA_0132>>
+
+The Hodge-compositional kernel, which we typically use, is the sum <<FORMULA_0133>>.
+
+\paragraph{Accelerated training with whitened inducing variables}
+In all the models we test, approximate inference requires a variational mean vector $\v{m}$ and a variational covariance matrix $\m{S}$ that parameterise <<FORMULA_0134>>.\footnote{$\m{S}$ is parametrised by its lower Cholesky factor to ensure positive definiteness during optimisation.}
+However, to accelerate convergence during training, instead of working with the inducing variables $\v{u}$ directly, we work with \emph{whitened} inducing variables <<FORMULA_0135>>, where $\m{L}$ is the lower Cholesky factor of <<FORMULA_0136>> or <<FORMULA_0137>> \cite{matthews2016}.
+Thus, in practice, denoting the whitened variational mean and covariance of <<FORMULA_0138>> as $\v{m}'$ and $\m{S}'$, we use a modified version of~\Cref{eq:variational_posterior_mean_and_kernel}:
+<<FORMULA_0139>>
+
+\subsection{Models}
+\paragraph{Mean and kernel}
+In all models, we equip constituent GPs with a zero mean and an appropriate variant of the Matérn kernel, initialised with length scale <<FORMULA_0140>>.
+For kernels of output layers we initialise the variance to <<FORMULA_0141>>, while for kernels in hidden layers of an $L$-layer deep GPs we set <<FORMULA_0142>> at the start of training.
+In \Cref{subsection:synthetic_examples}, \Cref{subsection:euclidean_acceleration}, and \Cref{subsection:wind_velocity_modelling_on_the_globe} we initialise the smoothness parameter to <<FORMULA_0143>>, while in \Cref{subsection:geometry_aware_bayesian_optimisation} we set it to <<FORMULA_0144>> to replicate the setup in \textcite{jaquier2022}.
+We optimise the smoothness of the manifold Matérn kernels during training, owing to their differentiability with respect to $\nu$, except in \Cref{subsection:geometry_aware_bayesian_optimisation}, where we fix $\nu$ to match the setup in \textcite{jaquier2022}.
+Wherever we employ Hodge GVFs we use the Hodge compositional kernel, with separate <<FORMULA_0145>> for the curl-free and divergence-free parts.
+In models utilising interdomain variables, we use the same number of spherical harmonics for the kernel and inducing variables, as per our discussion in \Cref{app:inducing_variables_on_manifolds}.
+
+\paragraph{Vector-valued GPs}
+We model vector-valued GPs as a set of \emph{independent} scalar-valued GPs stacked into a vector.
+We utilise this construction in Euclidean deep GPs and in residual deep GPs with projected GVFs.
+
+\paragraph{Inducing locations}
+Following \textcite{salimbeni2017}, for all models utilising the variational family based on inducing locations $\v{z}^l$, we initialise $\v{z}^l$ for every layer to be the centers of the clusters found via k-means clustering of training data.
+In residual deep GPs, we further project these locations onto the sphere, and we do not optimise them during training.
+In Euclidean deep GPs, we do not normalise the inducing locations and optimise them jointly with all other parameters.
+
+\paragraph{Approximation in training and evaluation of deep models}
+In all experiments, to approximate the ELBO in deep models during training, we use $3$ samples from the posterior.
+In evaluation, we use $10$ samples from the posterior to approximate the MSE and NLPD.
+In visualisation, we also use ten samples from the posterior to approximate the predictive mean and standard deviation.
+
+\subsection{Synthetic Experiments}\label{app:synthetic_experiments}
+\begin{figure}[t]
+\begin{center}
+\includegraphics[width=\linewidth]{figures/synthetic/synthetic-mse_vs_num_layers_and_num_training-all_models-sd1.pdf}
+\end{center}
+\caption{MSE of different residual deep GP variants and the baseline model, on the regression problem for the synthetic benchmark function in~\Cref{fig:target_function}.
+Different subplots correspond to different training set sizes $N$.
+The solid lines represent the mean, while the shaded areas represent the <<FORMULA_0146>> region around it, where $\sigma$ is the standard deviation, and all statistics were computed over $5$ randomised runs.}
+\label{fig:synthetic-mse_vs_num_layers_and_num_training-all_models}
+\end{figure}
+
+
+\paragraph{Data}
+To examine the influence of data density on model performance in a controlled manner, we generate the training sets as approximately uniform grid of points on the 2-sphere $\mathbb{S}_2$.
+This is done using the Fibonacci lattice method, which, for a grid of $n$ points, gives the colatitude and longitude of the $i$-th point as
+<<FORMULA_0147>>
+Because this method gives consistent coverage of $\mathbb{S}_2$ we also use it to generate the test set of 5000 points.
+We define the benchmark function <<FORMULA_0148>> by
+<<FORMULA_0149>>
+where
+<<FORMULA_0150>>
+with $x$ being an element of $\mathbb{S}_2$ embedded into $\mathbb{R}^3$ as the unit sphere centred at the origin.
+<<FORMULA_0151>> are spherical harmonics, smooth functions of their parameters.
+Singularities in <<FORMULA_0152>> are caused by the composition with $\varphi$, which converts $x$ from Cartesian to spherical coordinates, but swaps the positions of the colatitude $\theta$ and longitude $\phi$.
+The function <<FORMULA_0153>> has singularities at the poles, while the function <<FORMULA_0154>> has singularities around the equator.
+
+\paragraph{Variational parameters}
+To make the comparison between models as fair as possible, we set the number of inducing variables for each model in such a way that all models have almost the same total number of optimisable parameters.
+Specifically, we use the following formulae for the number of variational parameters $\alpha$ in a hidden layer, given that each GVF has $m$ inducing variables
+<<FORMULA_0155>>
+In projected GVFs of the residual deep GPs and in vector-valued GPs of the baseline models, we equip each scalar GP with 49 inducing variables, which corresponds to spherical harmonics up to the 7-th negative eigenvalue.
+For Hodge GVFs, we use 70 interdomain inducing variables, corresponding to vector spherical harmonics up to the 6-th negative eigenvalue of the Hodge Laplacian.
+Despite this, residual deep GPs with Hodge GVFs are still at a disadvantage: a single Hodge GVF has $2555$ variational parameters and $2 \cdot 3$ kernel parameters, a single projected GVF and manifold vector-valued GP has $3822$ variational parameters and $3 \cdot 3$ kernel parameters, while one Euclidean vector-valued GP has $3822$ variational parameters and $3 \cdot 4$ kernel parameters (we use automatic relevance determination (ARD), we get $4$ as the sum of $3$ length scale parameters and $1$ prior variance parameter).
+Furthermore, we optimise the inducing locations in the Euclidean vector-valued GPs of the baseline model, so that each of them have an additional $3 \cdot 49$ optimisable parameters.
+
+\paragraph{Training and evaluation}
+We optimise all models using the Adam optimiser \cite{kingma2015} for 1000 iterations with learning rate set to $0.01$.
+
+\paragraph{Additional results} 
+The MSE comparison is presented in~\Cref{fig:synthetic-mse_vs_num_layers_and_num_training-all_models}.
+\Cref{fig:synthetic-hodge_vs_baseline_extended-nlpd} and \Cref{fig:synthetic-hodge_vs_baseline_extended-mse} show an extended comparison between the baseline model and Hodge residual deep GP with up to 10 layers and 10 randomised runs.
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics{figures/synthetic/synthetic-nlpd_vs_num_layers_and_num_training-10_layers-hodge_vs_baseline.pdf}
+\end{center}
+\caption{
+NLPD of the baseline model and Hodge residual deep GP on the regression problem for the synthetic benchmark function in~\Cref{fig:target_function}.
+Different subplots correspond to different training set sizes $N$.
+The solid lines represent the mean, while the shaded areas represent the <<FORMULA_0156>> region around it, where $\sigma$ is the standard deviation; all statistics are computed over $10$ randomised runs.
+}
+\label{fig:synthetic-hodge_vs_baseline_extended-nlpd}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics{figures/synthetic/synthetic-mse_vs_num_layers_and_num_training-10_layers-hodge_vs_baseline.pdf}
+\end{center}
+\caption{
+MSE of the baseline model and Hodge residual deep GP on the regression problem for the synthetic benchmark function in~\Cref{fig:target_function}.
+Different subplots correspond to different training set sizes $N$.
+The solid lines represent the mean, while the shaded areas represent the <<FORMULA_0157>> region around it, where $\sigma$ is the standard deviation; all statistics are computed over $10$ randomised runs.
+}
+\label{fig:synthetic-hodge_vs_baseline_extended-mse}
+\end{figure}
+
+\subsection{Geometry-aware Bayesian optimisation}
+\begin{figure}[t]
+\begin{center}
+\includegraphics{figures/wind/hodge-mse_vs_num_layers_and_altitude-sd1.pdf}
+\end{center}
+\caption{
+MSE of residual deep GPs on the wind modelling task across three altitude levels.
+Solid lines give the mean MSE, while the shaded regions around it span $\pm 1$ standard deviation.
+Statistics are computed from 12 runs---one for each month of 2010.
+}
+\label{fig:hodge-mse_vs_num_layers_and_altitude}
+\end{figure}
+\paragraph{Data}
+To obtain an irregular function <<FORMULA_0158>> on $\mathbb{S}_2$, we modify the target function from \Cref{subsection:synthetic_examples} to have only one global minimum near a singularity point.
+Specifically, <<FORMULA_0159>> was defined by
+<<FORMULA_0160>>
+where $Y_{2, 3}$ and $\varphi$ are as in \Cref{app:synthetic_experiments}.
+The absence of $Y_{1, 2}$ removes the singularities around the equator, while the added scaling factors create a minimum at the north pole and ensure it is global.
+
+\paragraph{Models}
+After a preliminary examination, we found that differences between GVFs variants on this task were not significant.
+Nevertheless, in \Cref{fig:bayesian_optimisation-log_regret} we present the models that performed best in this examination: in the left subplot, a 2-layer residual deep GP using coordinate-frame GVFs and inducing locations; in the right subplot, a 3-layer residual deep GP using projected GVFs and inducing locations.
+We set the hyper-priors for the shallow model according to \textcite{jaquier2022}.
+We do not use hyper-priors for the deep models in this experiment.
+
+\paragraph{Optimisation process}
+Replicating the setup of \textcite{jaquier2022}, we begin each Bayesian optimisation by sampling 5 initial observations uniformly at random on the hypersphere.
+At each step, we minimise the expected improvement acquisition function using the first-order geometry-aware gradient optimisation implemented in \textsc{Pymanopt} \cite{townsend2016}.
+We approximate the expected improvement acquisition function for deep models using Monte Carlo averages driven by pathwise sampling, as described at the very end of~\Cref{sec:approximate-inference}.
+After each optimisation step, we reinitialise the model and fit it to the data for 500 iterations, using the Adam optimiser \cite{kingma2015} with a learning rate of $0.01$ for the deep model, and the BFGS optimiser for the shallow model.
+
+\paragraph{Additional results and analysis}
+In \Cref{fig:bayesian_optimisation-log_regret}, we see that the variance of the logarithm of regret increases after switching from the shallow GP to the residual deep GP.
+This increase can be explained by variation in the initial 180 points acquired by the shallow GP between independent runs.
+The locations of these points determine the quality of fit of the deep GP. 
+Indeed, if the points cluster near the true minimum, the deep model often achieves improvement in 1 or 2 iterations.
+With fewer points around the optimum the fit is poorer and more iterations are required to make an improvement.
+This variance in the number of steps before a better observation is acquired increases the variance of the regret.
+
+We also examined the performance of residual deep GPs on Bayesian optimisation of the irregular target function without the initial shallow GP stage.
+We equip the last layer of the deep GP with the same hyper-priors as the shallow GP; however, instead of using the BFGS optimiser, we use L-BFGS due to memory constraints.
+Note that in the original experiment we did not use hyper-priors or a quasi-newton optimiser for the deep model.
+We use them here because we found that they are important for effective exploration with shallow GPs and they serve the same purpose for our deep~GP.
+
+We report the logarithm of regret achieved by using the residual deep GP model from the very first iteration in \Cref{fig:bo-deep_only_vs_shallow_and_deep}. 
+We find that in 12 out of 15 of the runs, our model improves upon the shallow GP, often even before the 100th iteration.
+This was expected, since we have seen that residual deep GPs recover shallow solutions when data is not abundant enough to capture target complexity. 
+We also see that the variance of the regret is considerably larger than for the shallow GP. 
+This is largely caused by the 3 outlier runs, indicated with a dotted blue line, where the model gets stuck in a local minimum.
+As this experiment is fairly sensitive to the setup setting, this could be due to the fact that the baseline is an exact GP, while our model recovers a sparse GP, and the fact that our model uses the L-BFGS optimiser, while the exact model uses the BFGS optimiser. 
+Thus, using deep GPs exclusively can be more sample-efficient than employing the initial shallow GP stage; however, with the current setup it appears that this poses an increased risk of being stuck in a local minimum. 
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics{figures/bo/bo-deep_only_vs_shallow_and_deep.pdf}
+\end{center}
+\caption{
+Comparison of Bayesian optimisation performed with a shallow GP followed by a residual deep GP vs only with residual deep GP on the irregular target function.
+Solid lines show median logarithm of regret while the shaded areas extend one standard deviation above and below. 
+Blue dotted lines show three optimisation runs with the deep GP only which did not escape a local minimum---these runs contribute strongly to the large variance of its regret. 
+Grey dotted line indicates a transition from the shallow GP to the deep GP at iteration 180. 
+}
+\label{fig:bo-deep_only_vs_shallow_and_deep}
+\end{figure}
+
+
+
+\subsection{Wind interpolation on the globe}
+\paragraph{Data}
+To each location sampled along the track of the Aeolus satellite, we assign the wind velocity from the closest location present in the \textsc{ERA5} dataset.
+Our test set is a grid of 5000 points, same as in \Cref{app:synthetic_experiments}.
+To each location in the test set, we also assign the wind velocity from the closest location in the \textsc{ERA5} dataset.
+
+\paragraph{Variational parameters}
+For each GVF within the layers of the tested models we use $198$ interdomain inducing variables.
+They correspond to all vector spherical harmonics up to, and including, the $10$th negative eigenvalue of the Hodge Laplacian.
+This choice is arbitrary and simply serves to balance quality of fit with training time.
+
+\paragraph{Training and evaluation}
+We fit the models to data using the Adam optimiser for 1000 iterations with the learning rate set to $0.01$.
+To evaluate the models, we compute the MSE and NLPD via Monte Carlo sampling as described in \Cref{eqn:sequential_sampling}, we visualise the predictive uncertainty at a point $x_i$ which is computed as <<FORMULA_0161>>, where $\m{S}^n_i$ is the posterior covariance matrix of the last layer given the $n$-th sample from the penultimate layer, and <<FORMULA_0162>> is the Frobenius norm.
+
+\paragraph{Additional results}
+The MSE comparison is presented in~\Cref{fig:hodge-mse_vs_num_layers_and_altitude}.
+The individual results for each month are shown in \Cref{fig:hodge-nlpd_vs_month_num_layers_and_altitude} and \Cref{fig:hodge-mse_vs_month_num_layers_and_altitude}.
+A larger version of~\Cref{fig:hodge-aelous_uncertainty_and_difference} as well as its analogs for other altitudes are presented in~\Cref{fig:uncertainty_and_error_earth_large}.
+\Cref{fig:earth_5km_alt_large,fig:earth_2km_alt_large,fig:earth_01km_alt_large} present the ground truth vector field, predictive mean and uncertainty, and one posterior sample for July 2010 for the three different altitudes.
+
+Additionally, we compare our model with the baseline model from \Cref{subsection:synthetic_examples}. 
+The final layer of the baseline is a coordinate-frame GVF with independent Matérn 5/2 kernels, where the frame is given by the gradients of the spherical coordinates (with singularities taken care of), this is motivated in part by the approach of \textcite{mallasto2018}. 
+The results are shown in \Cref{fig:hodge-baseline_vs_hodge-nlpd} and \Cref{fig:hodge-baseline_vs_hodge-mse}.
+ 
+\begin{figure}[t]
+\begin{center}
+\includegraphics{figures/wind/hodge-mse_vs_month_num_layers_and_altitude.pdf}
+\end{center}
+\caption{MSE of residual deep GPs on the wind modelling task across the 12 months of 2010.}
+\label{fig:hodge-mse_vs_month_num_layers_and_altitude}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics{figures/wind/hodge-nlpd_vs_month_num_layers_and_altitude.pdf}
+\end{center}
+\caption{NLPD of residual deep GPs on the wind modelling task across the 12 months of 2010.}
+\label{fig:hodge-nlpd_vs_month_num_layers_and_altitude}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics{figures/wind/hodge-baseline_vs_hodge-nlpd.pdf}
+\end{center}
+\caption{Comparison of the NLPD of residual deep GPs and the baseline model for wind field modelling across the 0.1 km, 1.0 km, and 5.0 km altitudes.}
+\label{fig:hodge-baseline_vs_hodge-nlpd}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics{figures/wind/hodge-baseline_vs_hodge-mse.pdf}
+\end{center}
+\caption{Comparison of the MSE of residual deep GPs and the baseline model for wind field modelling across the 0.1 km, 1.0 km, and 5.0 km altitudes.}
+\label{fig:hodge-baseline_vs_hodge-mse}
+\end{figure}
+
+\subsection{Regression on UCI datasets}
+\begin{figure}
+    \centering
+    \begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics{figures/euclidean/uci-nlpd_vs_num_layers-euclidean_and_residual-sd1-size_optimised.pdf}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{\textwidth}
+    \centering
+        \includegraphics{figures/euclidean/uci-mse_vs_num_layers-euclidean_and_residual-sd1.pdf}
+    \end{subfigure}
+    \caption{
+    NLPD and MSE of residual deep GPs with spherical harmonic features and Euclidean deep GPs with inducing points on five UCI datasets.
+    Residual deep GPs had their inputs mapped from $\mathbb{R}^d$ to $\mathbb{S}_{d}$ via <<FORMULA_0163>>.
+    Solid lines give the mean MSE and shaded regions around them span $\pm 1$ standard deviation.
+    All statistics were computed from 5 randomised runs.
+    }
+    \label{fig:uci-nlpd_and_mse_vs_num_layers-euclidean_and_residual}
+\end{figure}
+
+\paragraph{Data}
+In the mapping from $\mathbb{R}^{d}$ to $\mathbb{S}_{d}$, we set $b$ to $1$.
+This is done for all datasets and the bias is kept constant during training.
+Indeed, in our initial examinations, we found that learning the bias often seemed to result in overfitting and worse performance.
+
+\paragraph{Training and evaluation}
+We train each model for 5000 iterations using the Adam optimiser \cite{kingma2015} with the learning rate set to $0.01$, such that the learning curves plateau for both Euclidean deep GPs and residual deep GPs. 
+Each iteration consists of a gradient step using a batch of data.
+When the size of the training set is smaller than 1000 data points---that is, for the Yacht, Concrete, and Energy datasets---a batch is the entire dataset.
+For the Kin8mn and Power datasets, whose training sets are considerably larger, a batch of 1000 data points is sampled with replacement from the training set.
+
+\paragraph{Additional results}
+The test NLPD and MSE of all models can be seen in \Cref{fig:uci-nlpd_and_mse_vs_num_layers-euclidean_and_residual}.
+
+\section{More on Interdomain Inducing Variables on Manifolds}\label{app:inducing_variables_on_manifolds}
+Empirically, we find that when the number of eigenfunctions $K$ used to approximate the manifold Matérn kernels exceeds the number of interdomain inducing variables, performance of residual deep GPs deteriorates.
+This can be surprising, since a higher $K$ yields a better approximation of the true manifold Matérn kernel.
+
+A potential reason for this phenomenon may be identified by examining the kernel of a posterior sparse Matérn GP <<FORMULA_0164>>---more specifically, its whitened reparameterisation (see \Cref{app:implementation}), as that makes equations cleaner.
+In this, it will be helpful to define
+<<FORMULA_0165>>
+which allows us to express the Matérn kernel approximated with <<FORMULA_0166>> eigenfunctions as <<FORMULA_0167>>.
+Now, recalling \Cref{eq:interdomain_covariances}, and denoting the number of interdomain inducing variables by $M$, we see
+<<FORMULA_0168>>
+which we can substitute into \Cref{eq:whitened_variational_posterior_kernel}
+<<FORMULA_0169>>
+For <<FORMULA_0170>>, posterior covariance reduces to the second term only, which is determined by the kernel hyperparameters and the variational covariance matrix.
+However, for <<FORMULA_0171>>, the first term contributes additional variance that can only be reduced by changing the hyperparameters of the prior, like length scale and prior variance, rather than the variational parameters $\v{m}'$ and $\m{S}'$.
+
+With this particular setup, there are two forces at play during optimisation: one which lowers the prior variance to match the posterior variance, and another which modifies $\m{S}'$ to approximate the true posterior covariance by introducing dependencies between basis coefficients.
+In practice, we observe that this can lead to a difficulty if the <<FORMULA_0172>> is already at the desired variance but $\m{S'}$ must still be adjusted to approximate the true covariance, while <<FORMULA_0173>> is still too large.
+In this case, the first mechanism pushes <<FORMULA_0174>> downwards by lowering the prior variance $\sigma^2$, which necessarily also reduces <<FORMULA_0175>>.
+Consequently, $\m{S}'$ must increase to compensate for this.
+This process results in a tug-of-war between the variational parameters and kernel hyperparameters, which seems to make optimisation difficult, and is thus a possible reason for the drop in performance as <<FORMULA_0176>>.
+
+One remedy is to set <<FORMULA_0177>>, which is what we actually do in our experiments.
+However, since this comes at some cost to the kernel approximation, we propose that future work can consider an extended variational family which, in our preliminary tests, helped mitigate this issue at a minimal cost.
+Our extension expands the $\m{S}'$ matrix with a parametrised diagonal $\m{D}'$ corresponding to the <<FORMULA_0178>> eigenfunctions not previously used in the variational family but used in the kernel, giving
+<<FORMULA_0179>>
+This eliminates the aforementioned conflict, allowing the variational parameters to affect both terms in a similar way.
+
+Ostensibly, when <<FORMULA_0180>> is large, it significantly impacts performance.
+However, as we have seen in \Cref{app:implementation}, this can be avoided by applying the addition theorem, which is possible
+if the parameters of $\m{D}'$ corresponding to eigenfunctions with the same eigenvalues are kept equal.
+With this method, the number of additional variational parameters is minimal, and, comparing our extended variational family with its original variant, there is practically no increase in computation time, as <<FORMULA_0181>> is simply substituted for <<FORMULA_0182>>.
+
+\section{Relation to Wrapped Gaussian Processes}
+Wrapped GPs of~\textcite{mallasto2018} are used to model a function of Euclidean data taking values on a Riemannian manifold.
+They are constructed by choosing a base point function, which assigns a point on the manifold to each Euclidean input point, and a coordinate-frame GVF prior (although the latter is implicit in the original paper).
+Inference is done by lifting the training labels from the manifold to the tangent space at the base points assigned to their corresponding inputs, performing inference in the tangent space, and projecting the posterior GVF into the manifold using the exponential map.
+The base point function is chosen either as a constant mapping to a point minimising the squared distance from the training points (i.e. empirical Fréchet mean) or as an auxiliary regression function.
+
+We derived the manifold-to-manifold layers of our model as a generalisation of the linear mean construction of \textcite{salimbeni2017}; however, we may also build them based on the ideas of wrapped GPs.
+The key difference is that our construction is manifold-input---whereas wrapped GPs are Euclidean-input---and the input and output manifolds are identical, allowing layers to be composed.
+Thus, the first non-trivial modification is to replace the Euclidean domain with the manifold domain.
+This requires adapting the GVF from Euclidean kernels to manifold kernels.
+Furthermore, instead of using an auxiliary regression function or Fréchet mean, the natural choice yielding a generalisation of the linear mean is the identity map for the base point function.
+This yields a manifold-to-manifold GP; however, to enable doubly stochastic variational inference, the next modification is to replace the exact GVFs with sparse GVFs using inducing points or interdomain inducing variables. 
+With these modifications, we obtain our manifold-to-manifold GPs, which can be composed sequentially to yield residual deep GPs.
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[height=5.8cm]{figures/wind/uncertainty_and_difference-level=0.png}
+        \caption{5.0 km altitude.}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[height=5.8cm]{figures/wind/uncertainty_and_difference-level=7.png}
+        \caption{2.0 km altitude.}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[height=5.8cm]{figures/wind/uncertainty_and_difference-level=15.png}
+        \caption{0.1 km altitude.}
+    \end{subfigure}
+    \caption{
+    Difference between the prediction and the ground truth wind velocities, shown as black arrows, and the predictive uncertainty, shown using a colour scale from purple (lowest) to yellow (highest), for a 3-layer residual deep GP and wind velocities for July 2010, at three altitude levels.
+    }
+    \label{fig:uncertainty_and_error_earth_large}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[height=5.8cm]{figures/wind/ground_truth-level=0.png}
+        \caption{Ground truth.}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[height=5.8cm]{figures/wind/mean_and_variance-level=0.png}
+        \caption{Predictive mean and uncertainty.}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[height=5.8cm]{figures/wind/pathwise_sample1-level=0.png}
+        \caption{Posterior sample.}
+    \end{subfigure}
+    \caption{
+    Ground truth wind velocity data at an altitude of 5.0 km from July 2010, and the corresponding posterior mean, uncertainty, and sample from a 3-layer residual deep GP. The mean and sample are shown as black arrows, while the predictive uncertainty is shown using a colour scale from purple (lowest) to yellow (highest).
+    }
+    \label{fig:earth_5km_alt_large}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[height=5.8cm]{figures/wind/ground_truth-level=7.png}
+        \caption{Ground truth.}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[height=5.8cm]{figures/wind/mean_and_variance-level=7.png}
+        \caption{Predictive mean and uncertainty.}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[height=5.8cm]{figures/wind/pathwise_sample1-level=7.png}
+        \caption{Posterior sample.}
+    \end{subfigure}
+    \caption{
+    Ground truth wind velocity data at an altitude of 2.0 km from July 2010, and the corresponding posterior mean, uncertainty, and sample from a 3-layer residual deep GP. The mean and sample are shown as black arrows, while the predictive uncertainty is shown using a colour scale from purple (lowest) to yellow (highest).
+    }
+    \label{fig:earth_2km_alt_large}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[height=5.8cm]{figures/wind/ground_truth-level=15.png}
+        \caption{Ground truth.}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[height=5.8cm]{figures/wind/mean_and_variance-level=15.png}
+        \caption{Predictive mean and uncertainty.}
+    \end{subfigure}
+    \par\bigskip
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[height=5.8cm]{figures/wind/pathwise_sample1-level=15.png}
+        \caption{Posterior sample.}
+    \end{subfigure}
+    \caption{
+    Ground truth wind velocity data at an altitude of 0.1 km from July 2010, and the corresponding posterior mean, uncertainty, and sample from a 3-layer residual deep GP. The mean and sample are shown as black arrows, while the predictive uncertainty is shown using a colour scale from purple (lowest) to yellow (highest).
+    }
+    \label{fig:earth_01km_alt_large}
+\end{figure}
+
+\end{document}
+
+

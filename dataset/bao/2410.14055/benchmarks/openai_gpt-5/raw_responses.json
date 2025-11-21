@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "paper_id": "2410.14055",
+    "model": "openai/gpt-5",
+    "total_responses": 19,
+    "timestamp": "2025-10-31T17:54:22.360773"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0193>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"inequality_flip\",\n  \"error_description\": \"The second branch repeats ≥ instead of ≤, making the piecewise cases non-exclusive; it should be |a_t^T ∇G_t| ≤ ||∇G_t||^2.\"\n}",
+      "response_length": 208,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0185>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"In the second case, (a_t × ∇G_t)^T ∇G_t uses a multiplication/cross instead of the intended addition; it should be (a_t + ∇G_t)^T ∇G_t.\"\n}",
+      "response_length": 218,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the second inequality, the index inside Tr(∇^2 G) changes from t_i to t_m, which is inconsistent with the summation over i; it should remain G_{t_i}.\"\n}",
+      "response_length": 234,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0120>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"The absolute value should apply to the whole drift term, i.e., |u_{t|0,1}^T∇G_{t|0} + (σ^2/2)ΔG_{t|0}|, but only |u_{t|0,1}^T∇G_{t|0}| is enclosed.\"\n}",
+      "response_length": 236,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0175>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The expectation is taken with respect to p_t instead of the conditional path p_{t|0,1}, which is the variable being optimized and appears in the FPE; it should be E_{p_{t|0,1}}.\"\n}",
+      "response_length": 259,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0037>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"Mismatched delimiters in the integrand: the closing parenthesis is malformed ('\\\\B^Tigr)') instead of a proper '\\\\Bigr)', causing incorrect/missing closing parentheses around the objective.\"\n}",
+      "response_length": 278,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0165>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"The density p_{t|0,1} should multiply the entire bracketed cost, but due to missing closing parentheses it appears to multiply only the last term (σ^2/2)ΔG.\"\n}",
+      "response_length": 245,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0042>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Inconsistency in drift notation: the objective uses u_{t|0,1} while the PDE constraint uses u_t; the conditioning index changed and should be consistent (e.g., u_{t|0,1}).\"\n}",
+      "response_length": 253,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0226>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"The density p_{t|0,1} multiplies only the inner-product term; it should multiply the entire integrand H + L − ⟨a_t^θ, u_t^*⟩. Parentheses around the sum are missing.\"\n}",
+      "response_length": 254,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0207>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0105>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"Inside the expectation, the term uses the Laplacian ΔG_{t,0}, but for a scalar integrand consistent with u_t^T G_{t,0} (and Ito/Fokker–Planck identities) it should be the divergence ∇·G_{t,0}.\"\n}",
+      "response_length": 275,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0228>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The coefficient of ||u_{t|0,1}^*||^2 is written as 2/1 instead of the expected 1/2.\"\n}",
+      "response_length": 171,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0191>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0234>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0231>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0211>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The boundary integral coefficient changed from +(σ^2/2) to -(2/σ^2) in the last line. It should be -(σ^2/2), not -(2/σ^2).\"\n}",
+      "response_length": 210,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0210>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"Boundary flux terms incorrectly use the scalar p (⟨p, dn⟩) instead of its gradient/normal derivative (⟨∇p, n⟩ or ∂_n p); the σ^2/2 factor is also inconsistently applied across the identity.\"\n}",
+      "response_length": 272,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0215>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The boundary term coefficient is written as -(σ^2/2)∫∮ s_t⟨p_{t|0,1}, dν⟩ instead of the previously derived -(2/σ^2)∫∮ s_t⟨p_{t|0,1}, dν⟩, swapping numerator and denominator.\"\n}",
+      "response_length": 262,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0238>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"In the final equality, the coefficient in front of the squared norm was inverted from 1/2 to 2/1; it should remain 1/2.\"\n}",
+      "response_length": 207,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

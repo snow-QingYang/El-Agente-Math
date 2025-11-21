@@ -1,0 +1,231 @@
+{
+  "metadata": {
+    "paper_id": "2410.14055",
+    "model": "openai/gpt-5-nano",
+    "total_detections_attempted": 19,
+    "parsing_failures": 1,
+    "valid_evaluations": 18,
+    "formulas_with_errors_injected": 9,
+    "formulas_unmodified": 11,
+    "timestamp": "2025-10-31T17:18:17.764460"
+  },
+  "binary_classification": {
+    "true_positives": 8,
+    "false_positives": 8,
+    "true_negatives": 1,
+    "false_negatives": 1,
+    "accuracy": 0.5,
+    "precision": 0.5,
+    "recall": 0.889,
+    "f1_score": 0.64
+  },
+  "error_type_matching": {
+    "total_errors_detected": 8,
+    "correct_type_identified": 5,
+    "incorrect_type_identified": 3,
+    "type_accuracy": 0.625
+  },
+  "instruction_following": {
+    "perfect_json_responses": 18,
+    "fallback_parsing_required": 0,
+    "parsing_failures": 1,
+    "perfect_json_rate": 0.947,
+    "fallback_rate": 0.0,
+    "failure_rate": 0.053,
+    "strategy_breakdown": {
+      "direct": 18,
+      "failed": 1
+    }
+  },
+  "per_error_type_performance": {
+    "inequality_flip": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    },
+    "index_change": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    },
+    "transpose_error": {
+      "detected": 2,
+      "total": 2,
+      "recall": 1.0
+    },
+    "operator_swap": {
+      "detected": 1,
+      "total": 1,
+      "recall": 1.0
+    },
+    "fraction_inversion": {
+      "detected": 3,
+      "total": 4,
+      "recall": 0.75
+    }
+  },
+  "detailed_results": [
+    {
+      "label": "<<FORMULA_0175>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0193>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "inequality_flip",
+      "detected_has_error": true,
+      "detected_error_type": "inequality_flip",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "index_change",
+      "detected_has_error": true,
+      "detected_error_type": "index_change",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0037>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "transpose_error",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0185>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "operator_swap",
+      "detected_has_error": true,
+      "detected_error_type": "operator_swap",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0105>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "TN",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0207>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "inequality_flip",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0165>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0120>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "transpose_error",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0191>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "fraction_inversion",
+      "detected_has_error": true,
+      "detected_error_type": "fraction_inversion",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0042>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0211>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "fraction_inversion",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "TP",
+      "type_match": false
+    },
+    {
+      "label": "<<FORMULA_0210>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0238>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "fraction_inversion",
+      "detected_has_error": true,
+      "detected_error_type": "fraction_inversion",
+      "result": "TP",
+      "type_match": true
+    },
+    {
+      "label": "<<FORMULA_0226>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "missing_parentheses",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0231>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "sign_flip",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0234>>",
+      "ground_truth_has_error": false,
+      "ground_truth_error_type": "none",
+      "detected_has_error": true,
+      "detected_error_type": "exponent_order",
+      "result": "FP",
+      "type_match": null
+    },
+    {
+      "label": "<<FORMULA_0228>>",
+      "ground_truth_has_error": true,
+      "ground_truth_error_type": "fraction_inversion",
+      "detected_has_error": false,
+      "detected_error_type": "none",
+      "result": "FN",
+      "type_match": null
+    }
+  ]
+}

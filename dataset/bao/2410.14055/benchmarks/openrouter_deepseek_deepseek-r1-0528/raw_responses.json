@@ -1,0 +1,143 @@
+{
+  "metadata": {
+    "paper_id": "2410.14055",
+    "model": "openrouter/deepseek/deepseek-r1-0528",
+    "total_responses": 19,
+    "timestamp": "2025-11-01T16:19:56.515578"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0185>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"operator_swap\",\n  \"error_description\": \"In the second case, the operator between a_t and ∇G_t was incorrectly changed from plus to multiplication in the expression (a_t × (∇G_t))ᵀ∇G_t\"\n}",
+      "response_length": 226,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0175>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The expectation uses p_t (marginal distribution) but should use p_{t|0,1} (conditional distribution) as per context\"\n}",
+      "response_length": 197,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0165>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the constraint, u_t should be u_{t|0,1} to match the objective and context\"\n}",
+      "response_length": 159,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0155>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the second line, the Hessian term index changes from t_i to t_m without justification while other instances use t_i\"\n}",
+      "response_length": 200,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0193>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"In the second case, the fraction should have the gradient norm squared in the numerator and the inner product in the denominator\"\n}",
+      "response_length": 216,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0105>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0042>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the constraint, the drift term uses u_t but should be u_{t|0,1} to match the objective and conditional setting\"\n}",
+      "response_length": 195,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0120>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"transpose_error\",\n  \"error_description\": \"The expectation operator has an extraneous transpose (superscript T) that should not be present\"\n}",
+      "response_length": 180,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0037>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"The closing parenthesis after the expectation term is incorrect (typo: \\\\B^Tigr) instead of \\\\Bigr)), breaking the outer parentheses grouping the integrand\"\n}",
+      "response_length": 244,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0211>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The coefficient of the boundary integral term is inverted from σ²/2 to 2/σ² in the third line\"\n}",
+      "response_length": 181,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0215>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The boundary integral coefficient should be 2/σ² but is written as σ²/2\"\n}",
+      "response_length": 159,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0238>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The coefficient in the final integral should be 1/2 but is written as 2/1\"\n}",
+      "response_length": 161,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0226>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The subscript for the optimal drift in the inner product was changed from 't|0,1' to 't' (u_{t|0,1}^⋆ → u_t^⋆)\"\n}",
+      "response_length": 192,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0207>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0191>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"In the second case, the fraction is inverted: the numerator and denominator should be swapped to have the dot product in the numerator and the norm expression in the denominator\"\n}",
+      "response_length": 265,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0234>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0231>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0228>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"fraction_inversion\",\n  \"error_description\": \"The coefficient for the norm term should be 1/2 but is written as 2/1 (inverted fraction)\"\n}",
+      "response_length": 177,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0210>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"In the boundary term, s_t and p_{t|0,1} are incorrectly swapped; should be p_{t|0,1} times the normal derivative of s_t, not s_t times an expression involving p_{t|0,1} and the normal\"\n}",
+      "response_length": 266,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

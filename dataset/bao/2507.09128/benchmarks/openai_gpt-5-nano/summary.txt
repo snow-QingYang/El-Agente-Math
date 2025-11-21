@@ -1,0 +1,38 @@
+Benchmark Summary
+Model: openai/gpt-5-nano
+Paper: 2507.09128
+Timestamp: 2025-10-31T17:23:12.924101
+
+
+======================================================================
+Benchmark Metrics Summary
+======================================================================
+
+Evaluation Coverage:
+  Total detections: 20
+  Parsing failures: 1 (excluded from metrics)
+  Valid evaluations: 19
+
+Binary Classification:
+  Accuracy:  68.4%
+  Precision: 61.5%
+  Recall:    88.9%
+  F1 Score:  72.7%
+
+Confusion Matrix (n=19):
+  TP: 8     FP: 5
+  FN: 1     TN: 5
+
+Error Type Identification:
+  Correct types: 7/8 (87.5%)
+
+📊 Instruction Following (JSON Format Compliance):
+  Perfect JSON:     19/20 (95.0%)
+  Required fallback: 0/20 (0.0%)
+  Parse failures:    1/20 (5.0%)
+
+Per-Error-Type Recall:
+  index_change         2/2 (100.0%)
+  inequality_flip      2/2 (100.0%)
+  sign_flip            3/3 (100.0%)
+  sum_product_swap     1/2 (50.0%)

@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "paper_id": "2506.08362",
+    "model": "openai/gpt-5-nano",
+    "total_responses": 20,
+    "timestamp": "2025-10-31T17:25:39.015862"
+  },
+  "responses": [
+    {
+      "label": "<<FORMULA_0497>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"Expansion of f(out, y*(out)) - f(x*(y_out), y_out) is incorrect: it should be [f(out, y*(out)) - f(out, y_out)] + [f(out, y_out) - f(x*(y_out), y_out)], but the line shows - f(out, y_out) - f(out, y_out) (two negatives) instead of the + f(out, y_out) term.\"\n}",
+      "response_length": 335,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0354>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"In the right-hand side term, the vector inside the parenthesis uses \\\\tilde \\\\vz_{t\\\\times1} instead of the expected \\\\tilde \\\\vz_{t+1}, introducing an inconsistent index for the proximal term.\"\n}",
+      "response_length": 275,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0074>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0355>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"Index/subscript inconsistency: the bound uses tilde z with index t×1 where t+1 is expected, causing mismatch in the norm terms.\"\n}",
+      "response_length": 209,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0508>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"First inequality has a squared norm on the left but the right-hand side scales linearly with ||y1 - y2||; a bound for a squared distance should involve ||y1 - y2||^2 (or the left should be linear).\"\n}",
+      "response_length": 281,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0434>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0071>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the inclusion for u, the second component uses -∂I_Y(y) where it should be ∂I_Y(y) (the normal cone to Y). The sign is flipped in the second block.\"\n}",
+      "response_length": 229,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0435>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"The gradient term is negated: the inequality should involve ⟨ ∇_y f(x1, y1) + v1, y2 - y1 ⟩ (and similarly ⟨ ∇_y f(x2, y2) + v2, y1 - y2 ⟩), not ⟨ -∇_y f(·) + v, ... ⟩.\"\n}",
+      "response_length": 247,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0352>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"function_swap\",\n  \"error_description\": \"In equation MS-2, the bound uses h(z^*) - f(tilde z_{t+1}) instead of h(z^*) - h(tilde z_{t+1}); a different function f is substituted for h, which is inconsistent.\"\n}",
+      "response_length": 247,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0356>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0525>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"exponent_order\",\n  \"error_description\": \"The bound uses ||y1 - y2|| on the right, but the left side is a squared norm. The right-hand side should be proportional to ||y1 - y2||^2 (e.g., multiply by ||y1 - y2||^2) to be dimensionally consistent.\"\n}",
+      "response_length": 287,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0511>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"In the second inequality, the term 1/\\\\gamma/2^{1/2} is ambiguous due to missing parentheses. It should likely read 1/(\\\\gamma/2)^{1/2} (i.e., 1/√(γ/2)) to be consistent with the first line.\"\n}",
+      "response_length": 279,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0513>>",
+      "raw_response": "{\n  \"has_error\": false,\n  \"error_type\": \"none\",\n  \"error_description\": \"\"\n}",
+      "response_length": 75,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0515>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"sign_flip\",\n  \"error_description\": \"In the displayed equality, the term involving u_out changes sign: the left-hand side has + u_out, while the right-hand side uses - u_out (i.e., a sign flip error in the proximal-gradient relation).\"\n}",
+      "response_length": 276,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0346>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"index_change\",\n  \"error_description\": \"The subscript t+1 appears as t×1 (t times 1) in several places (e.g., \\\\tilde z_{t×1}) instead of t+1, indicating an indexing/subscript error.\"\n}",
+      "response_length": 224,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0591>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0574>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0592>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"Missing parentheses around the gradient-difference term: the expression should be ((∇F(z_t) − ∇F(z_{π(t)})) (z_{t+1/2} − z_t)) rather than (∇F(z_t) − ∇F(z_{π(t)}) (z_{t+1/2} − z_t)).\"\n}",
+      "response_length": 271,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0589>>",
+      "raw_response": "{\"has_error\": false, \"error_type\": \"none\", \"error_description\": \"\"}",
+      "response_length": 67,
+      "parse_strategy": "direct",
+      "parse_success": true
+    },
+    {
+      "label": "<<FORMULA_0527>>",
+      "raw_response": "{\n  \"has_error\": true,\n  \"error_type\": \"missing_parentheses\",\n  \"error_description\": \"The denominator is written as γ/2^{1/2}, i.e., 1/(γ/2^{1/2}); the intended grouping is 1/((γ/2)^{1/2}). Missing parentheses around (γ/2) before the exponent 1/2 changes the value.\"\n}",
+      "response_length": 268,
+      "parse_strategy": "direct",
+      "parse_success": true
+    }
+  ]
+}

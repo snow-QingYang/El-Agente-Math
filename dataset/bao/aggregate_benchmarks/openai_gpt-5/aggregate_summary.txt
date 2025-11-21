@@ -1,0 +1,55 @@
+======================================================================
+Aggregate Benchmark Report
+======================================================================
+
+Model: openai/gpt-5
+Timestamp: 2025-10-31T18:06:15.406196
+
+Papers Processed:
+  Total papers: 10
+  Successful benchmarks: 10
+  No ground truth: 0
+  Failed: 0
+
+Binary Classification (Mean ± Std):
+  Accuracy:  78.6% ± 11.6%
+  Precision: 76.0% ± 14.8%
+  Recall:    89.0% ± 11.3%
+  F1 Score:  80.9% ± 9.5%
+
+Accuracy Range:
+  Min: 57.9%
+  Max: 94.7%
+
+Error Type Identification:
+  Mean type accuracy: 75.8% ± 15.0%
+
+📊 Instruction Following (JSON Format Compliance):
+  Mean perfect JSON rate: 100.0%
+  Mean fallback rate: 0.0%
+  Mean failure rate: 0.0%
+
+Aggregated Per-Error-Type Recall:
+  exponent_order       3/3 (100.0%)
+  fraction_inversion   9/10 (90.0%)
+  function_swap        2/3 (66.7%)
+  index_change         12/13 (92.3%)
+  inequality_flip      13/16 (81.2%)
+  operator_swap        12/12 (100.0%)
+  sign_flip            23/25 (92.0%)
+  sum_product_swap     8/8 (100.0%)
+  transpose_error      7/9 (77.8%)
+
+Per-Paper Results:
+  ✓ 2410.10253           Acc: 80.0%, F1: 80.0%
+  ✓ 2506.04194           Acc: 80.0%, F1: 71.4%
+  ✓ 2410.14055           Acc: 57.9%, F1: 66.7%
+  ✓ 2411.00161           Acc: 94.7%, F1: 92.3%
+  ✓ 2502.02013           Acc: 63.2%, F1: 69.6%
+  ✓ 2411.12537           Acc: 90.0%, F1: 92.3%
+  ✓ 2507.09128           Acc: 75.0%, F1: 78.3%
+  ✓ 2502.05164           Acc: 90.0%, F1: 90.9%
+  ✓ 2506.08362           Acc: 75.0%, F1: 82.8%
+  ✓ 2503.03025           Acc: 80.0%, F1: 84.6%
+
+======================================================================
