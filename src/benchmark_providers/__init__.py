@@ -11,9 +11,10 @@ Model string format:
 """
 
 from typing import Optional
-from .base import BaseLLMProvider
+from .base_provider import BaseLLMProvider
 from .openai_provider import OpenAIProvider
 from .openrouter_provider import OpenRouterProvider
+from .prover_provider import ProverProvider
 
 
 def get_provider(
@@ -72,6 +73,12 @@ def get_provider(
             max_retries=max_retries,
             retry_delay=retry_delay,
             **kwargs
+        )
+    elif provider_name == "lean":
+        return ProverProvider(
+            model="",
+            max_retries=max_retries,
+            retry_delay=retry_delay
         )
     else:
         raise ValueError(

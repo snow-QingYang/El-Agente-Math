@@ -10,7 +10,7 @@ from typing import Optional
 from openai import OpenAI, APIError, RateLimitError, APIConnectionError
 from dotenv import load_dotenv
 
-from .base import BaseLLMProvider
+from .base_provider import BaseLLMProvider
 
 
 class OpenAIProvider(BaseLLMProvider):

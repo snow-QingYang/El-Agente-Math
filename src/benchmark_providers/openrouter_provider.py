@@ -12,7 +12,7 @@ import requests
 from typing import Optional
 from dotenv import load_dotenv
 
-from .base import BaseLLMProvider
+from .base_provider import BaseLLMProvider
 
 
 class OpenRouterProvider(BaseLLMProvider):

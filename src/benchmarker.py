@@ -149,12 +149,7 @@ def run_benchmark(
 
             # Check formula for errors
             start_time = time.time()
-            result = _check_formula_for_error(
-                formula,
-                context_before,
-                context_after,
-                provider
-            )
+            result = provider.detect_error(formula, context_before, context_after)
             response_time = time.time() - start_time
 
             return {
@@ -331,28 +326,6 @@ def run_benchmark(
     print(f"✓ Summary saved: {summary_path.relative_to(paper_dir)}")
     print(f"\n{'='*70}\n")
     return detection_path, benchmark_report_path
-
-
-def _check_formula_for_error(
-    formula: str,
-    context_before: str,
-    context_after: str,
-    provider
-) -> Dict[str, Any]:
-    """
-    Use LLM to check if a formula contains mathematical errors.
-
-    Args:
-        formula: The LaTeX formula to check
-        context_before: Text before the formula
-        context_after: Text after the formula
-        provider: LLM provider instance (from benchmark_providers)
-
-    Returns:
-        Dictionary with has_error, error_type, error_description
-    """
-    # Use the provider's detect_error method
-    return provider.detect_error(formula, context_before, context_after)
 
 
 def _calculate_parse_statistics(detections: List[Dict[str, Any]]) -> Dict[str, Any]:
