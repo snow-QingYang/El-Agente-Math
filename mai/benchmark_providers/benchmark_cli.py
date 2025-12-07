@@ -12,8 +12,8 @@ import json
 # Add parent directory to path to import from src
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
-from src.benchmark_providers.benchmark_runner import run_benchmark, run_batch_benchmark
-from src.benchmark_providers.prover_benchmark import ProverBenchmark, FormulaInput, load_formulas_from_json
+from mai.benchmark_providers.benchmark_runner import run_benchmark, run_batch_benchmark
+from mai.benchmark_providers.prover_benchmark import ProverBenchmark, FormulaInput, load_formulas_from_json
 
 app = typer.Typer(
     name="math-benchmark",

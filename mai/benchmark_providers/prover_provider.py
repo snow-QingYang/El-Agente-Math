@@ -7,7 +7,7 @@ from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openrouter import OpenRouterProvider
 from dotenv import load_dotenv
 
-from src.benchmark_providers import BaseLLMProvider
+from mai.benchmark_providers import BaseLLMProvider
 
 tool_prompt = """
 You have access to a Lean4 REPL tool. To use it, your response should be in the form:

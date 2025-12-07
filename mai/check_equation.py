@@ -5,7 +5,7 @@ import json
 from dataclasses import dataclass
 from typing import List, Optional, Dict, Literal
 from openai import OpenAI
-from src.formula_extractor import MathFormula
+from mai.formula_extractor import MathFormula
 
 
 @dataclass
