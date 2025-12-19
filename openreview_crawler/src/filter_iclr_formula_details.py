@@ -30,7 +30,12 @@ def filter_data(data: Dict[str, Any]) -> Dict[str, Any]:
         for iss in issues:
             for err in iss.get("formula_errors", []):
                 if err:
-                    flat_errors.append(err)
+                    flat_errors.append(
+                        {
+                            "review_id": iss.get("review_id"),
+                            **err,
+                        }
+                    )
         if not flat_errors:
             continue
         paper_copy = dict(paper)

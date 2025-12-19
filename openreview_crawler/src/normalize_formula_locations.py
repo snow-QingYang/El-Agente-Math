@@ -93,6 +93,7 @@ def normalize_file(data: Dict[str, Any]) -> Dict[str, Any]:
                     "formula_location": nums,
                     "category": err.get("category", ""),
                     "evidence": err.get("evidence", "")[:300],
+                    "review_id": err.get("review_id"),
                 }
             )
         if not normalized_errors:
