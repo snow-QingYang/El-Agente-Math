@@ -52,14 +52,44 @@ class ChatGPT5NanoFormulaFilter:
             print(f"[DEBUG] {msg}")
 
     @staticmethod
-    def _build_prompt(review_content: Dict[str, Any]) -> str:
-        summary = review_content.get("summary", "N/A")
-        claims = review_content.get("claims_and_evidence", "N/A")
-        theoretical = review_content.get("theoretical_claims", "N/A")
-        weaknesses = review_content.get("other_strengths_and_weaknesses", "N/A")
-        questions = review_content.get("questions_for_authors", "N/A")
-        comments = review_content.get("other_comments_or_suggestions", "N/A")
-        comment_text = review_content.get("comment", comments)
+    def _get_first(review_content: Dict[str, Any], keys: List[str], default: str = "N/A") -> str:
+        for k in keys:
+            if k in review_content and review_content[k]:
+                val = review_content[k]
+                if isinstance(val, dict):
+                    val = val.get("value", "")
+                return str(val)
+        return default
+
+    @classmethod
+    def _build_prompt(cls, review_content: Dict[str, Any]) -> str:
+        # Broader key coverage to handle ICLR-style fields.
+        summary = cls._get_first(review_content, ["summary"], "N/A")
+        claims = cls._get_first(
+            review_content,
+            ["claims_and_evidence", "strengths", "strength", "main_review", "details"],
+            "N/A",
+        )
+        theoretical = cls._get_first(
+            review_content,
+            ["theoretical_claims", "soundness", "correctness"],
+            "N/A",
+        )
+        weaknesses = cls._get_first(
+            review_content,
+            ["other_strengths_and_weaknesses", "weaknesses", "limitations"],
+            "N/A",
+        )
+        questions = cls._get_first(
+            review_content,
+            ["questions_for_authors", "questions"],
+            "N/A",
+        )
+        comments = cls._get_first(
+            review_content,
+            ["other_comments_or_suggestions", "comment", "additional_feedback"],
+            "N/A",
+        )
 
         return f"""You are a review-analysis assistant. Decide whether the review explicitly points out issues with formulas/equations/mathematical expressions (e.g., incorrect formulas, wrong derivations, unclear definitions, symbol misuse, proof errors, formatting issues, mismatch between formula and text).
 
@@ -69,7 +99,7 @@ Review content:
 [Theoretical claims] {theoretical}
 [Strengths/weaknesses] {weaknesses}
 [Questions for authors] {questions}
-[Other comments] {comment_text}
+[Other comments] {comments}
 
 Return JSON in English only:
 {{
@@ -314,9 +344,10 @@ Return JSON only:
 
 
 def main() -> None:
-    input_file = Path("output/ICLR_cc_2024_Conference_rejected.json")
-    output_file = Path("output/formula_issues_ICLR2024.json")
+    input_file = Path("openreview_crawler/output/ICLR_cc_2024_Conference_rejected.json")
+    output_file = Path("openreview_crawler/output/formula_issues_ICLR2024.json")
     concurrency = int(os.getenv("OPENAI_CONCURRENCY", "20"))
+    limit = int(os.getenv("OPENAI_LIMIT", "100"))  # default: analyze first 100 for quicker runs
 
     print("=" * 60)
     print("Formula-Issue Review Filter (ChatGPT 5 Nano)")
@@ -324,13 +355,15 @@ def main() -> None:
     print(f"Input file: {input_file}")
     print(f"Output file: {output_file}")
     print(f"Model: {os.getenv('OPENAI_MODEL', 'chatgpt-5-nano')}")
-    print(f"Concurrency: {concurrency}\n")
+    print(f"Concurrency: {concurrency}")
+    print(f"Limit: {limit if limit else 'None'}\n")
 
     analyzer = ChatGPT5NanoFormulaFilter()
     results = analyzer.run(
         input_file=input_file,
         output_file=output_file,
         concurrency=concurrency,
+        limit=limit,
     )
 
     print("\nDone")
