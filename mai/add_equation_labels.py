@@ -5,7 +5,7 @@ def add_equation_labels(tex_string):
     """
     Add labels to equations in a LaTeX string.
 
-    This function automatically adds \label{eq1}, \label{eq2}, etc. to equations
+    This function automatically adds % (eq. 1), % (eq. 2), etc. to equations
     that don't already have labels. It handles various equation environments including:
     - equation
     - align, align*
@@ -49,18 +49,18 @@ def add_equation_labels(tex_string):
 
                     for line in lines:
                         # Check if this line already has a label
-                        if r'\label{' not in line and line.strip() and not r'\nonumber' in line:
+                        if '% (eq.' not in line and line.strip() and not r'\nonumber' in line:
                             # Add label before the line break
-                            line = line.rstrip() + f' \\label{{eq{label_counter}}}'
+                            line = line.rstrip() + f' % (eq. {label_counter})'
                             label_counter += 1
                         new_lines.append(line)
 
                     content = r'\\'.join(new_lines)
                 else:
                     # For single equation environments
-                    if r'\label{' not in content:
+                    if '% (eq.' not in content:
                         # Add label at the end of the equation content
-                        content = content.rstrip() + f' \\label{{eq{label_counter}}}'
+                        content = content.rstrip() + f' % (eq. {label_counter})'
                         label_counter += 1
 
                 return begin_tag + content + end_tag
@@ -84,7 +84,7 @@ def add_equation_labels_preserve_existing(tex_string):
         str: The LaTeX string with labels added to unlabeled equations
     """
     # First, find all existing label numbers
-    existing_labels = re.findall(r'\\label\{eq(\d+)\}', tex_string)
+    existing_labels = re.findall(r'% \(eq\. (\d+)\)', tex_string)
     if existing_labels:
         label_counter = max(int(num) for num in existing_labels) + 1
     else:
@@ -114,15 +114,15 @@ def add_equation_labels_preserve_existing(tex_string):
                     new_lines = []
 
                     for line in lines:
-                        if r'\label{' not in line and line.strip() and not r'\nonumber' in line:
-                            line = line.rstrip() + f' \\label{{eq{label_counter}}}'
+                        if '% (eq.' not in line and line.strip() and not r'\nonumber' in line:
+                            line = line.rstrip() + f' % (eq.{label_counter})'
                             label_counter += 1
                         new_lines.append(line)
 
                     content = r'\\'.join(new_lines)
                 else:
-                    if r'\label{' not in content:
-                        content = content.rstrip() + f' \\label{{eq{label_counter}}}'
+                    if '% (eq.' not in content:
+                        content = content.rstrip() + f' % (eq.{label_counter})'
                         label_counter += 1
 
                 return begin_tag + content + end_tag
