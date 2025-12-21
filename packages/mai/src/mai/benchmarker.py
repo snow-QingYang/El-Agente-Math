@@ -66,13 +66,13 @@ def run_benchmark(
     print(f"  Loaded {len(formulas_to_check)} formulas from explained.json")
 
     # Load formulas JSON (with or without errors)
-    formulas_with_errors_path = paper_dir / f"{paper_id}_formulas_with_errors.json"
-    formulas_original_path = paper_dir / f"{paper_id}_formulas.json"
+    # formulas_with_errors_path = paper_dir / f"{paper_id}_formulas_with_errors.json"
+    formulas_original_path = paper_dir / f"{paper_id}_consolidated_formulas.json"
 
-    if formulas_with_errors_path.exists():
-        formulas_json_path = formulas_with_errors_path
-        print(f"  Using formulas_with_errors.json (error injection mode)")
-    elif formulas_original_path.exists():
+    # if formulas_with_errors_path.exists():
+    #     formulas_json_path = formulas_with_errors_path
+    #     print(f"  Using formulas_with_errors.json (error injection mode)")
+    if formulas_original_path.exists():
         formulas_json_path = formulas_original_path
         print(f"  Using formulas.json (no error injection)")
     else:
