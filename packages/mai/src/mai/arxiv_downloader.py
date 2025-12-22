@@ -245,7 +245,8 @@ def download_and_process_source(
     arxiv_id: str,
     version: int,
     output_dir: Path,
-    keep_raw: bool = True
+    keep_raw: bool = True,
+    reuse_existing: bool = True
 ) -> Dict[str, Optional[Path]]:
     """
     Download arXiv source and automatically post-process it.
@@ -261,6 +262,7 @@ def download_and_process_source(
         version: Version number to download (e.g., 1, 2, 3)
         output_dir: Directory to save downloaded and processed files
         keep_raw: If True, keeps the raw source archive (default: True)
+        reuse_existing: If True, reuse existing processed files when available (default: True)
 
     Returns:
         Dictionary with paths to generated files:
@@ -293,6 +295,11 @@ def download_and_process_source(
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    source_path = output_dir / f"{safe_id}_source.tar.gz"
+    extract_dir = output_dir / f"{safe_id}_extracted"
+    consolidated_path = output_dir / f"{safe_id}_consolidated.tex"
+    labeled_path = output_dir / f"{safe_id}_labeled.tex"
+
     results = {
         'source_archive': None,
         'consolidated_tex': None,
@@ -300,16 +307,30 @@ def download_and_process_source(
         'extraction_dir': None
     }
 
+    if reuse_existing and labeled_path.exists() and consolidated_path.exists() and extract_dir.exists():
+        print(f"\n{'='*80}")
+        print(f"Reusing existing processed files for: {version_id}")
+        print(f"{'='*80}\n")
+        results['consolidated_tex'] = consolidated_path
+        results['labeled_tex'] = labeled_path
+        results['extraction_dir'] = extract_dir
+        if keep_raw and source_path.exists():
+            results['source_archive'] = source_path
+        return results
+
     print(f"\n{'='*80}")
     print(f"Processing arXiv paper: {version_id}")
     print(f"{'='*80}\n")
 
     # Step 1: Download source archive
     print(f"Step 1/4: Downloading source archive...")
-    source_path = download_source_by_version(arxiv_id, version, output_dir)
-    if not source_path:
-        print("  Failed to download source")
-        return results
+    if reuse_existing and source_path.exists():
+        print(f"  Using existing source archive: {source_path}")
+    else:
+        source_path = download_source_by_version(arxiv_id, version, output_dir)
+        if not source_path:
+            print("  Failed to download source")
+            return results
 
     if keep_raw:
         results['source_archive'] = source_path
@@ -317,8 +338,10 @@ def download_and_process_source(
     # Step 2: Extract archive
     print(f"\nStep 2/4: Extracting source files...")
     try:
-        extract_dir = output_dir / f"{safe_id}_extracted"
-        extract_dir = extract_tex_source(source_path, extract_dir)
+        if reuse_existing and extract_dir.exists() and any(extract_dir.rglob("*.tex")):
+            print(f"  Using existing extraction: {extract_dir}")
+        else:
+            extract_dir = extract_tex_source(source_path, extract_dir)
         results['extraction_dir'] = extract_dir
         print(f"  Extracted to: {extract_dir}")
     except Exception as e:
@@ -328,8 +351,10 @@ def download_and_process_source(
     # Step 3: Consolidate LaTeX project
     print(f"\nStep 3/4: Consolidating LaTeX project...")
     try:
-        consolidated_path = output_dir / f"{safe_id}_consolidated.tex"
-        consolidated_path = consolidate_tex_project(extract_dir, consolidated_path)
+        if reuse_existing and consolidated_path.exists():
+            print(f"  Using existing consolidated file: {consolidated_path}")
+        else:
+            consolidated_path = consolidate_tex_project(extract_dir, consolidated_path)
         results['consolidated_tex'] = consolidated_path
     except Exception as e:
         print(f"  Error consolidating LaTeX: {e}")
@@ -340,15 +365,17 @@ def download_and_process_source(
     # Step 4: Add equation labels
     print(f"\nStep 4/4: Adding equation labels...")
     try:
-        # Read consolidated file
-        consolidated_content = consolidated_path.read_text(encoding='utf-8')
+        if reuse_existing and labeled_path.exists():
+            print(f"  Using existing labeled file: {labeled_path}")
+        else:
+            # Read consolidated file
+            consolidated_content = consolidated_path.read_text(encoding='utf-8')
 
-        # Add labels
-        labeled_content = add_equation_labels_preserve_existing(consolidated_content)
+            # Add labels
+            labeled_content = add_equation_labels_preserve_existing(consolidated_content)
 
-        # Write labeled version
-        labeled_path = output_dir / f"{safe_id}_labeled.tex"
-        labeled_path.write_text(labeled_content, encoding='utf-8')
+            # Write labeled version
+            labeled_path.write_text(labeled_content, encoding='utf-8')
         results['labeled_tex'] = labeled_path
 
         print(f"  Labels added successfully")

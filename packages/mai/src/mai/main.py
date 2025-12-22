@@ -1,3 +1,4 @@
+import asyncio
 import typer
 from pathlib import Path
 from typing import Optional, List
@@ -311,6 +312,80 @@ def process(
     # Exit with error code if any papers failed
     if results["failed"]:
         raise typer.Exit(1)
+
+
+@app.command()
+def openreview_verify(
+    input_file: Path = typer.Argument(
+        ...,
+        help="Path to xxx_detailed_normalized.json from openreview-crawler"
+    ),
+    cutoff_date: str = typer.Option(
+        "2026-01-01",
+        "--cutoff-date",
+        help="Latest arXiv submission date to consider (YYYY-MM-DD or ISO format)"
+    ),
+    output_dir: Path = typer.Option(
+        Path("./output/openreview_verification"),
+        "--output", "-o",
+        help="Directory to store cache and results"
+    ),
+    results_file: Optional[Path] = typer.Option(
+        None,
+        "--results", "-r",
+        help="Path to write verification results JSON (default: <output>/result.json)"
+    ),
+    limit_papers: Optional[int] = typer.Option(
+        None,
+        "--limit-papers",
+        help="Only check the first N papers"
+    ),
+    model: str = typer.Option(
+        "openai:gpt-5-mini",
+        "--model", "-m",
+        help="Model to use for equation verification"
+    ),
+    max_iterations: int = typer.Option(
+        10,
+        "--max-iterations",
+        help="Maximum iterations for the agentic reader"
+    ),
+):
+    """Verify equations referenced in OpenReview normalized data."""
+    from .pipeline import verify_openreview_issues
+    from dotenv import load_dotenv, find_dotenv
+
+    load_dotenv(find_dotenv(usecwd=True))
+    output_dir.mkdir(parents=True, exist_ok=True)
+    results_file = results_file or (output_dir / "result.json")
+    processed_dir = output_dir / "cache"
+
+    typer.echo(f"Loading OpenReview issues from: {input_file}")
+    typer.echo(f"Cutoff date: {cutoff_date}")
+    typer.echo(f"Output directory: {output_dir}")
+    typer.echo(f"Cache directory: {processed_dir}")
+    typer.echo(f"Results: {results_file}")
+    if limit_papers:
+        typer.echo(f"Limit papers: {limit_papers}")
+
+    try:
+        asyncio.run(
+            verify_openreview_issues(
+                normalized_path=input_file,
+                output_path=results_file,
+                cutoff_date=cutoff_date,
+                output_dir=processed_dir,
+                model=model,
+                max_iterations=max_iterations,
+                limit_papers=limit_papers,
+            )
+        )
+    except Exception as e:
+        typer.echo(f"\n✗ OpenReview verification failed: {e}", err=True)
+        raise typer.Exit(1)
+
+    typer.echo(f"\n✓ OpenReview verification complete!")
+    typer.echo(f"  Results: {results_file}")
 
 
 @app.command()
