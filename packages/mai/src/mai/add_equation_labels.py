@@ -1,6 +1,46 @@
 import re
 
 
+def remove_comments(tex_string):
+    """
+    Remove all LaTeX comments from a string.
+
+    This removes lines that start with % (after optional whitespace) and
+    inline comments (% to end of line), but preserves escaped percent signs (\%).
+
+    Args:
+        tex_string (str): The input LaTeX string
+
+    Returns:
+        str: The LaTeX string with all comments removed
+    """
+    lines = tex_string.split('\n')
+    result_lines = []
+
+    for line in lines:
+        # Remove inline comments, but preserve \%
+        # We need to handle escaped percent signs carefully
+        cleaned_line = ''
+        i = 0
+        while i < len(line):
+            if i > 0 and line[i] == '%' and line[i-1] == '\\':
+                # This is an escaped percent sign, keep it
+                cleaned_line += line[i]
+                i += 1
+            elif line[i] == '%' and (i == 0 or line[i-1] != '\\'):
+                # This is a comment, skip the rest of the line
+                break
+            else:
+                cleaned_line += line[i]
+                i += 1
+
+        # Only keep non-empty lines or lines that aren't just whitespace
+        if cleaned_line.strip():
+            result_lines.append(cleaned_line.rstrip())
+
+    return '\n'.join(result_lines)
+
+
 def add_equation_labels(tex_string):
     """
     Add labels to equations in a LaTeX string.
@@ -18,6 +58,9 @@ def add_equation_labels(tex_string):
     Returns:
         str: The LaTeX string with labels added to equations
     """
+    # Remove all comments first
+    tex_string = remove_comments(tex_string)
+
     label_counter = 1
     result = tex_string
 
@@ -50,8 +93,8 @@ def add_equation_labels(tex_string):
                     for line in lines:
                         # Check if this line already has a label
                         if '% (eq.' not in line and line.strip() and not r'\nonumber' in line:
-                            # Add label before the line break
-                            line = line.rstrip() + f' % (eq. {label_counter})'
+                            # Add label before the line break with newline
+                            line = line.rstrip() + f' % (eq. {label_counter})\n'
                             label_counter += 1
                         new_lines.append(line)
 
@@ -59,8 +102,8 @@ def add_equation_labels(tex_string):
                 else:
                     # For single equation environments
                     if '% (eq.' not in content:
-                        # Add label at the end of the equation content
-                        content = content.rstrip() + f' % (eq. {label_counter})'
+                        # Add label at the end of the equation content with newline
+                        content = content.rstrip() + f' % (eq. {label_counter})\n'
                         label_counter += 1
 
                 return begin_tag + content + end_tag
@@ -83,6 +126,9 @@ def add_equation_labels_preserve_existing(tex_string):
     Returns:
         str: The LaTeX string with labels added to unlabeled equations
     """
+    # Remove all comments first
+    tex_string = remove_comments(tex_string)
+
     # First, find all existing label numbers
     existing_labels = re.findall(r'% \(eq\. (\d+)\)', tex_string)
     if existing_labels:
@@ -115,14 +161,14 @@ def add_equation_labels_preserve_existing(tex_string):
 
                     for line in lines:
                         if '% (eq.' not in line and line.strip() and not r'\nonumber' in line:
-                            line = line.rstrip() + f' % (eq.{label_counter})'
+                            line = line.rstrip() + f' % (eq.{label_counter})\n'
                             label_counter += 1
                         new_lines.append(line)
 
                     content = r'\\'.join(new_lines)
                 else:
                     if '% (eq.' not in content:
-                        content = content.rstrip() + f' % (eq.{label_counter})'
+                        content = content.rstrip() + f' % (eq.{label_counter})\n'
                         label_counter += 1
 
                 return begin_tag + content + end_tag

@@ -7,7 +7,8 @@ Steps:
  3) GPT refine issues -> formula_issues_detailed_full.json
  4) Filter/flatten -> formula_issues_detailed_filtered.json
  5) Normalize equation numbers -> formula_issues_detailed_normalized.json
- 6) Build review lookup -> review_lookup.json
+ 6) Filter by category -> formula_issues_detailed_normalized_filtered.json
+ 7) Build review lookup -> review_lookup.json
 """
 
 from __future__ import annotations
@@ -25,6 +26,7 @@ from .analyze_iclr_formula_details import FormulaDetailsAnalyzer
 from .filter_iclr_formula_details import filter_data
 from .normalize_formula_locations import normalize_file
 from .build_review_lookup import norm_val, extract_numeric
+from .filter_by_category import filter_by_categories
 
 
 @dataclass
@@ -79,6 +81,7 @@ def detect_pipeline_progress(output_dir: Path) -> tuple[int, dict[str, Path]]:
         "detailed": output_dir / "formula_issues_detailed_full.json",
         "filtered": output_dir / "formula_issues_detailed_filtered.json",
         "normalized": output_dir / "formula_issues_detailed_normalized.json",
+        "category_filtered": output_dir / "formula_issues_detailed_normalized_filtered.json",
         "lookup": output_dir / "review_lookup.json",
     }
 
@@ -92,7 +95,8 @@ def detect_pipeline_progress(output_dir: Path) -> tuple[int, dict[str, Path]]:
         ("detailed", 2, "formula_issues_detailed_full.json"),
         ("filtered", 3, "formula_issues_detailed_filtered.json"),
         ("normalized", 4, "formula_issues_detailed_normalized.json"),
-        ("lookup", 5, "review_lookup.json"),
+        ("category_filtered", 5, "formula_issues_detailed_normalized_filtered.json"),
+        ("lookup", 6, "review_lookup.json"),
     ]
 
     for key, step_num, filename in steps:
@@ -147,12 +151,13 @@ def handle_existing_directory(output_dir: Path) -> tuple[bool, int]:
         2: "Step 2: Analyze (detailed analysis available)",
         3: "Step 3: Filter (filtered data available)",
         4: "Step 4: Normalize (normalized data available)",
-        5: "Step 5: Review Lookup (complete pipeline)",
+        5: "Step 5: Filter by Category (category-filtered data available)",
+        6: "Step 6: Review Lookup (complete pipeline)",
     }
 
     print(f"\nPipeline progress: {step_names.get(last_step, 'Unknown')}")
 
-    if last_step == 5:
+    if last_step == 6:
         print(f"\n💡 All pipeline steps appear to be completed!")
         print(f"   You can use the existing files or start fresh.")
     elif last_step >= 0:
@@ -178,8 +183,8 @@ def handle_existing_directory(output_dir: Path) -> tuple[bool, int]:
     elif choice == "2":
         # Resume from detected step
         resume_step = last_step + 1
-        if resume_step > 5:
-            resume_step = 5  # Already at end
+        if resume_step > 6:
+            resume_step = 6  # Already at end
         print(f"✓ Will resume from Step {resume_step}")
         return False, resume_step
     else:
@@ -393,8 +398,58 @@ def step_normalize(cfg: PipelineConfig, filtered_path: Path) -> Path:
     return out_path
 
 
+def step_filter_category(cfg: PipelineConfig, normalized_path: Path) -> Path:
+    """Step 5: Filter by category (keep only specific issue types)"""
+    if ask_skip_step("Filter by Category",
+                     "Keep only 'Typo / Symbol misuse' and 'Mathematically wrong' issues"):
+        # User wants to skip - ask for existing file
+        default_path = str(cfg.output_dir / "formula_issues_detailed_normalized_filtered.json")
+        file_path = ask_input("Path to existing category-filtered file", default_path)
+        category_filtered_path = Path(file_path)
+        if not category_filtered_path.exists():
+            print(f"❌ Error: File {category_filtered_path} does not exist!")
+            raise FileNotFoundError(f"File {category_filtered_path} not found")
+        print(f"✓ Using existing file: {category_filtered_path}")
+        return category_filtered_path
+
+    # Ask user for categories to keep
+    print("\nCategory filtering configuration:")
+    print("Default categories: 'Typo / Symbol misuse', 'Mathematically wrong'")
+    use_default = ask_yes_no("Use default categories?", default=True)
+
+    if use_default:
+        allowed_categories = {"Typo / Symbol misuse", "Mathematically wrong"}
+    else:
+        print("\nEnter categories to keep (one per line, empty line to finish):")
+        allowed_categories = set()
+        while True:
+            cat = input("Category: ").strip()
+            if not cat:
+                break
+            allowed_categories.add(cat)
+
+    out_path = cfg.output_dir / "formula_issues_detailed_normalized_filtered.json"
+    if out_path.exists():
+        if not ask_yes_no(f"File {out_path.name} exists. Overwrite?", default=False):
+            print(f"✓ Using existing file: {out_path}")
+            return out_path
+
+    print(f"\n🔄 Filtering by categories: {allowed_categories}")
+    data = json.load(normalized_path.open())
+    filtered = filter_by_categories(data, allowed_categories)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    json.dump(filtered, out_path.open("w"), indent=2, ensure_ascii=False)
+
+    print(f"✓ Filtered to {filtered['metadata']['total_papers_analyzed']} papers "
+          f"with {filtered['metadata']['total_issues']} issues")
+    print(f"  Removed {filtered['metadata']['papers_removed_by_filter']} papers")
+    print(f"  Removed {filtered['metadata']['issues_removed_by_filter']} issues")
+    print(f"  Saved to: {out_path}")
+    return out_path
+
+
 def step_lookup(cfg: PipelineConfig, input_path: Path, normalized_path: Path = None) -> Path:
-    """Step 5: Build review lookup table"""
+    """Step 6: Build review lookup table"""
     if ask_skip_step("Build Review Lookup",
                      "Extract review information and create lookup table"):
         # User wants to skip - ask for existing file
@@ -498,6 +553,7 @@ def run_pipeline(cfg: PipelineConfig) -> None:
         detailed_path = existing.get("detailed", cfg.output_dir / "formula_issues_detailed_full.json")
         filtered_path = existing.get("filtered", cfg.output_dir / "formula_issues_detailed_filtered.json")
         normalized_path = existing.get("normalized", cfg.output_dir / "formula_issues_detailed_normalized.json")
+        category_filtered_path = existing.get("category_filtered", cfg.output_dir / "formula_issues_detailed_normalized_filtered.json")
         lookup_path = existing.get("lookup", cfg.output_dir / "review_lookup.json")
 
         # Execute only the remaining steps
@@ -512,7 +568,9 @@ def run_pipeline(cfg: PipelineConfig) -> None:
         if resume_from_step <= 4:
             normalized_path = step_normalize(cfg, filtered_path)
         if resume_from_step <= 5:
-            lookup_path = step_lookup(cfg, input_path, normalized_path)
+            category_filtered_path = step_filter_category(cfg, normalized_path)
+        if resume_from_step <= 6:
+            lookup_path = step_lookup(cfg, input_path, category_filtered_path)
 
     else:
         # Fresh start - run all steps
@@ -533,19 +591,23 @@ def run_pipeline(cfg: PipelineConfig) -> None:
         # Step 4: Normalize equation numbers
         normalized_path = step_normalize(cfg, filtered_path)
 
-        # Step 5: Build review lookup (with filtering based on normalized data)
-        lookup_path = step_lookup(cfg, input_path, normalized_path)
+        # Step 5: Filter by category
+        category_filtered_path = step_filter_category(cfg, normalized_path)
+
+        # Step 6: Build review lookup (with filtering based on category-filtered data)
+        lookup_path = step_lookup(cfg, input_path, category_filtered_path)
 
     # Summary
     print("\n" + "="*60)
     print("✅ Pipeline completed successfully!")
     print("="*60)
     print(f"\nGenerated files:")
-    print(f"  📄 Input data:     {input_path}")
-    print(f"  📄 Simple issues:  {simple_path}")
-    print(f"  📄 Detailed:       {detailed_path}")
-    print(f"  📄 Filtered:       {filtered_path}")
-    print(f"  📄 Normalized:     {normalized_path}")
-    print(f"  📄 Review lookup:  {lookup_path}")
+    print(f"  📄 Input data:         {input_path}")
+    print(f"  📄 Simple issues:      {simple_path}")
+    print(f"  📄 Detailed:           {detailed_path}")
+    print(f"  📄 Filtered:           {filtered_path}")
+    print(f"  📄 Normalized:         {normalized_path}")
+    print(f"  📄 Category filtered:  {category_filtered_path}")
+    print(f"  📄 Review lookup:      {lookup_path}")
     print()
 
