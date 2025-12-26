@@ -300,7 +300,7 @@ def _select_version_before(
 
 
 def _build_arxiv_pdf_url(arxiv_id: str, version: int) -> str:
-    base_id = re.sub(r'v\\d+$', '', arxiv_id)
+    base_id = re.sub(r'v\d+$', '', arxiv_id)
     abs_url = f"http://arxiv.org/abs/{base_id}v{version}"
     return abs_url.replace("/abs/", "/pdf/")
 

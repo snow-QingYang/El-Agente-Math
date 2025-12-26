@@ -18,7 +18,7 @@
       "paper_title": "Visual Chain of Thought: Bridging Logical Gaps with Multimodal Infillings",
       "paper_pdf_link": "https://openreview.net/pdf?id=01Yi8rzoNs",
       "arxiv_id": "2305.02317v3",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.02317v3v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.02317v1",
       "version_date": "2023-05-03T17:58:29+00:00",
       "issues": [
         {
@@ -36,7 +36,7 @@
       "paper_title": "Unlocking the Potential of Federated Learning for Deeper Models",
       "paper_pdf_link": "https://openreview.net/pdf?id=0rXGGYNVAw",
       "arxiv_id": "2306.02701v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.02701v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.02701v1",
       "version_date": "2023-06-05T08:45:44+00:00",
       "issues": [
         {
@@ -54,7 +54,7 @@
       "paper_title": "High Dimensional Causal Inference with Variational Backdoor Adjustment",
       "paper_pdf_link": "https://openreview.net/pdf?id=2CFagKoXXx",
       "arxiv_id": "2310.06100v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.06100v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.06100v1",
       "version_date": "2023-10-09T19:21:41+00:00",
       "issues": [
         {
@@ -72,7 +72,7 @@
       "paper_title": "Towards Certified Probabilistic Robustness with High Accuracy",
       "paper_pdf_link": "https://openreview.net/pdf?id=4fH5ELoWFu",
       "arxiv_id": "2309.00879v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.00879v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.00879v1",
       "version_date": "2023-09-02T09:39:47+00:00",
       "issues": [
         {
@@ -90,7 +90,7 @@
       "paper_title": "Iteratively Refined Behavior Regularization for Offline Reinforcement Learning",
       "paper_pdf_link": "https://openreview.net/pdf?id=50vyPuz0iv",
       "arxiv_id": "2306.05726v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.05726v2v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.05726v2",
       "version_date": "2023-10-17T16:25:25+00:00",
       "issues": [
         {
@@ -108,7 +108,7 @@
       "paper_title": "Conditional Generative Modeling for High-dimensional Marked Temporal Point Processes",
       "paper_pdf_link": "https://openreview.net/pdf?id=6EQbYM0CIX",
       "arxiv_id": "2305.12569v4",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.12569v4v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.12569v2",
       "version_date": "2023-10-04T03:05:29+00:00",
       "issues": [
         {
@@ -126,7 +126,7 @@
       "paper_title": "Energy-Guided Continuous Entropic Barycenter Estimation for General Costs",
       "paper_pdf_link": "https://openreview.net/pdf?id=6GySuKTJcd",
       "arxiv_id": "2310.01105v4",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.01105v4v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.01105v1",
       "version_date": "2023-10-02T11:24:36+00:00",
       "issues": [
         {
@@ -152,7 +152,7 @@
       "paper_title": "TpopT: Efficient Trainable Template Optimization on Low-Dimensional Manifolds",
       "paper_pdf_link": "https://openreview.net/pdf?id=6YZmkpivVH",
       "arxiv_id": "2310.10039v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.10039v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.10039v1",
       "version_date": "2023-10-16T03:51:13+00:00",
       "issues": [
         {
@@ -170,7 +170,7 @@
       "paper_title": "Based on What We Can Control Artificial Neural Networks",
       "paper_pdf_link": "https://openreview.net/pdf?id=7duh4Ml5rc",
       "arxiv_id": "2310.05692v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.05692v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.05692v1",
       "version_date": "2023-10-09T13:09:38+00:00",
       "issues": [
         {
@@ -188,7 +188,7 @@
       "paper_title": "PriViT: Vision Transformers for Fast Private Inference",
       "paper_pdf_link": "https://openreview.net/pdf?id=8w6FzR68DS",
       "arxiv_id": "2310.04604v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.04604v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.04604v1",
       "version_date": "2023-10-06T21:45:05+00:00",
       "issues": [
         {
@@ -214,7 +214,7 @@
       "paper_title": "Global Convergence Rate of Deep Equilibrium Models with General Activations",
       "paper_pdf_link": "https://openreview.net/pdf?id=A2KKgcYYDB",
       "arxiv_id": "2302.05797v4",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2302.05797v4v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2302.05797v2",
       "version_date": "2023-09-23T13:25:15+00:00",
       "issues": [
         {
@@ -232,7 +232,7 @@
       "paper_title": "Curve Your Attention: Mixed-Curvature Transformers for Graph Representation Learning",
       "paper_pdf_link": "https://openreview.net/pdf?id=AN5uo4ByWH",
       "arxiv_id": "2309.04082v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.04082v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.04082v1",
       "version_date": "2023-09-08T02:44:37+00:00",
       "issues": [
         {
@@ -250,7 +250,7 @@
       "paper_title": "Applying language models to algebraic topology: generating simplicial cycles using multi-labeling in Wu's formula",
       "paper_pdf_link": "https://openreview.net/pdf?id=AfiM6F2YPY",
       "arxiv_id": "2306.16951v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.16951v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.16951v1",
       "version_date": "2023-06-01T12:23:14+00:00",
       "issues": [
         {
@@ -268,7 +268,7 @@
       "paper_title": "HyperSINDy: Deep Generative Modeling of Nonlinear Stochastic Governing Equations",
       "paper_pdf_link": "https://openreview.net/pdf?id=B4XM9nQ8Ns",
       "arxiv_id": "2310.04832v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.04832v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.04832v1",
       "version_date": "2023-10-07T14:41:59+00:00",
       "issues": [
         {
@@ -302,7 +302,7 @@
       "paper_title": "OS-net: Orbitally Stable Neural Networks",
       "paper_pdf_link": "https://openreview.net/pdf?id=BRO4PfCiwb",
       "arxiv_id": "2309.14822v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.14822v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.14822v1",
       "version_date": "2023-09-26T10:40:04+00:00",
       "issues": [
         {
@@ -336,7 +336,7 @@
       "paper_title": "Sequential Data Generation with Groupwise Diffusion Process",
       "paper_pdf_link": "https://openreview.net/pdf?id=BdWLzmPKst",
       "arxiv_id": "2310.01400v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.01400v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.01400v1",
       "version_date": "2023-10-02T17:58:47+00:00",
       "issues": [
         {
@@ -354,7 +354,7 @@
       "paper_title": "Understanding Contrastive Learning Through the Lens of Margins",
       "paper_pdf_link": "https://openreview.net/pdf?id=Bvrc6kobWd",
       "arxiv_id": "2306.11526v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.11526v2v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.11526v2",
       "version_date": "2023-10-10T14:37:45+00:00",
       "issues": [
         {
@@ -372,7 +372,7 @@
       "paper_title": "Wigner kernels: body-ordered equivariant machine learning without a basis",
       "paper_pdf_link": "https://openreview.net/pdf?id=ByOPJantEd",
       "arxiv_id": "2303.04124v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2303.04124v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2303.04124v1",
       "version_date": "2023-03-07T18:34:55+00:00",
       "issues": [
         {
@@ -390,7 +390,7 @@
       "paper_title": "Vec-Tok Speech: Speech Vectorization and Tokenization for Neural Speech Generation",
       "paper_pdf_link": "https://openreview.net/pdf?id=C53xlgEqVh",
       "arxiv_id": "2310.07246v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.07246v2v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.07246v2",
       "version_date": "2023-10-12T05:49:52+00:00",
       "issues": [
         {
@@ -408,7 +408,7 @@
       "paper_title": "Robustness to Multi-Modal Environment Uncertainty in MARL using Curriculum Learning",
       "paper_pdf_link": "https://openreview.net/pdf?id=D78HxVUg1Q",
       "arxiv_id": "2310.08746v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.08746v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.08746v1",
       "version_date": "2023-10-12T22:19:36+00:00",
       "issues": [
         {
@@ -426,7 +426,7 @@
       "paper_title": "Jensen-Shannon Divergence Based Novel Loss Functions for Bayesian Neural Networks",
       "paper_pdf_link": "https://openreview.net/pdf?id=EHKS0oXuku",
       "arxiv_id": "2209.11366v4",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2209.11366v4v3",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2209.11366v3",
       "version_date": "2023-02-08T20:33:49+00:00",
       "issues": [
         {
@@ -444,7 +444,7 @@
       "paper_title": "Deep Stochastic Mechanics",
       "paper_pdf_link": "https://openreview.net/pdf?id=F5ERvanO6m",
       "arxiv_id": "2305.19685v5",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.19685v5v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.19685v2",
       "version_date": "2023-10-04T15:23:47+00:00",
       "issues": [
         {
@@ -462,7 +462,7 @@
       "paper_title": "Episodic Memory Theory for the Mechanistic Interpretation of Recurrent Neural Networks",
       "paper_pdf_link": "https://openreview.net/pdf?id=HEcbGXzIHK",
       "arxiv_id": "2310.02430v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.02430v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.02430v1",
       "version_date": "2023-10-03T20:52:37+00:00",
       "issues": [
         {
@@ -488,7 +488,7 @@
       "paper_title": "PACIA: Parameter-Efficient Adapter for Few-Shot Molecular Property Prediction",
       "paper_pdf_link": "https://openreview.net/pdf?id=HrTGl8AhnS",
       "arxiv_id": "2310.00614v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.00614v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.00614v1",
       "version_date": "2023-10-01T08:28:04+00:00",
       "issues": [
         {
@@ -514,7 +514,7 @@
       "paper_title": "Wasserstein Distortion: Unifying fidelity and realism",
       "paper_pdf_link": "https://openreview.net/pdf?id=ICDJDL5lmQ",
       "arxiv_id": "2310.03629v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.03629v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.03629v1",
       "version_date": "2023-10-05T16:03:25+00:00",
       "issues": [
         {
@@ -532,7 +532,7 @@
       "paper_title": "Optimize Weight Rounding via Signed Gradient Descent for the Quantization of LLMs",
       "paper_pdf_link": "https://openreview.net/pdf?id=JXm3QYlNPn",
       "arxiv_id": "2309.05516v5",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.05516v5v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.05516v2",
       "version_date": "2023-09-28T09:05:57+00:00",
       "issues": [
         {
@@ -550,7 +550,7 @@
       "paper_title": "Deep Backtracking Counterfactuals for Causally Compliant Explanations",
       "paper_pdf_link": "https://openreview.net/pdf?id=JshLcbPI9J",
       "arxiv_id": "2310.07665v4",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.07665v4v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.07665v1",
       "version_date": "2023-10-11T17:11:10+00:00",
       "issues": [
         {
@@ -568,7 +568,7 @@
       "paper_title": "Assessing Robustness via Score-based Adversarial Image Generation",
       "paper_pdf_link": "https://openreview.net/pdf?id=K4fd38VWHt",
       "arxiv_id": "2310.04285v3",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.04285v3v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.04285v1",
       "version_date": "2023-10-06T14:37:22+00:00",
       "issues": [
         {
@@ -586,7 +586,7 @@
       "paper_title": "Federated Optimization Algorithms with Random Reshuffling and Gradient Compression",
       "paper_pdf_link": "https://openreview.net/pdf?id=Kq5avXrkpY",
       "arxiv_id": "2206.07021v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2206.07021v2v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2206.07021v2",
       "version_date": "2022-11-03T09:39:22+00:00",
       "issues": [
         {
@@ -604,7 +604,7 @@
       "paper_title": "Dissecting Causal Biases",
       "paper_pdf_link": "https://openreview.net/pdf?id=MFwQVbkTQ2",
       "arxiv_id": "2310.13364v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.13364v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.13364v1",
       "version_date": "2023-10-20T09:12:10+00:00",
       "issues": [
         {
@@ -622,7 +622,7 @@
       "paper_title": "Understanding Pathologies of Deep Heteroskedastic Regression",
       "paper_pdf_link": "https://openreview.net/pdf?id=Mdk7YP52V3",
       "arxiv_id": "2306.16717v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.16717v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.16717v1",
       "version_date": "2023-06-29T06:31:27+00:00",
       "issues": [
         {
@@ -640,7 +640,7 @@
       "paper_title": "Optimization Dynamics of Equivariant and Augmented Neural Networks",
       "paper_pdf_link": "https://openreview.net/pdf?id=O4s319PTpY",
       "arxiv_id": "2303.13458v5",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2303.13458v5v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2303.13458v2",
       "version_date": "2023-09-21T18:18:44+00:00",
       "issues": [
         {
@@ -658,7 +658,7 @@
       "paper_title": "Frustratingly Easy Model Generalization by Dummy Risk Minimization",
       "paper_pdf_link": "https://openreview.net/pdf?id=O7VnoefsB7",
       "arxiv_id": "2308.02287v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2308.02287v2v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2308.02287v2",
       "version_date": "2023-10-07T05:53:30+00:00",
       "issues": [
         {
@@ -692,7 +692,7 @@
       "paper_title": "Semi-supervised batch learning from logged data",
       "paper_pdf_link": "https://openreview.net/pdf?id=OWpp0TjdTt",
       "arxiv_id": "2209.07148v3",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2209.07148v3v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2209.07148v2",
       "version_date": "2022-09-28T09:46:14+00:00",
       "issues": [
         {
@@ -710,7 +710,7 @@
       "paper_title": "PEAR: Primitive enabled Adaptive Relabeling for boosting Hierarchical Reinforcement Learning",
       "paper_pdf_link": "https://openreview.net/pdf?id=OZ3syNYe7D",
       "arxiv_id": "2306.06394v6",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.06394v6v3",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.06394v3",
       "version_date": "2023-09-23T13:09:00+00:00",
       "issues": [
         {
@@ -728,7 +728,7 @@
       "paper_title": "MoMo: Momentum Models for Adaptive Learning Rates",
       "paper_pdf_link": "https://openreview.net/pdf?id=PUaSVhBzem",
       "arxiv_id": "2305.07583v3",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.07583v3v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.07583v2",
       "version_date": "2023-10-09T21:55:28+00:00",
       "issues": [
         {
@@ -746,7 +746,7 @@
       "paper_title": "PREDICTING ACCURATE LAGRANGIAN MULTIPLIERS FOR MIXED INTEGER LINEAR PROGRAMS",
       "paper_pdf_link": "https://openreview.net/pdf?id=PtB6l1vNtk",
       "arxiv_id": "2310.14659v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.14659v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.14659v1",
       "version_date": "2023-10-23T07:53:47+00:00",
       "issues": [
         {
@@ -772,7 +772,7 @@
       "paper_title": "Deep Reinforcement Learning for Efficient and Fair Allocation of Health Care Resources",
       "paper_pdf_link": "https://openreview.net/pdf?id=QeemQCJAdQ",
       "arxiv_id": "2309.08560v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.08560v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.08560v1",
       "version_date": "2023-09-15T17:28:06+00:00",
       "issues": [
         {
@@ -798,7 +798,7 @@
       "paper_title": "Best Possible Q-Learning",
       "paper_pdf_link": "https://openreview.net/pdf?id=RNgZTA4CTP",
       "arxiv_id": "2302.01188v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2302.01188v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2302.01188v1",
       "version_date": "2023-02-02T16:14:19+00:00",
       "issues": [
         {
@@ -816,7 +816,7 @@
       "paper_title": "Continuous Indeterminate Probability Neural Network",
       "paper_pdf_link": "https://openreview.net/pdf?id=Rt6btdXS2b",
       "arxiv_id": "2303.12964v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2303.12964v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2303.12964v1",
       "version_date": "2023-03-23T00:11:17+00:00",
       "issues": [
         {
@@ -842,7 +842,7 @@
       "paper_title": "Test like you Train in Implicit Deep Learning",
       "paper_pdf_link": "https://openreview.net/pdf?id=RzV7QRowUl",
       "arxiv_id": "2305.15042v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.15042v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.15042v1",
       "version_date": "2023-05-24T11:30:33+00:00",
       "issues": [
         {
@@ -860,7 +860,7 @@
       "paper_title": "PatchMixer: A Patch-Mixing Architecture for Long-Term Time Series Forecasting",
       "paper_pdf_link": "https://openreview.net/pdf?id=Te5v4EcFGL",
       "arxiv_id": "2310.00655v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.00655v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.00655v1",
       "version_date": "2023-10-01T12:47:59+00:00",
       "issues": [
         {
@@ -878,7 +878,7 @@
       "paper_title": "Reinforcement Learning with Human Feedback: Learning Dynamic Choices via Pessimism",
       "paper_pdf_link": "https://openreview.net/pdf?id=TrwocPauNQ",
       "arxiv_id": "2305.18438v3",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.18438v3v3",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.18438v3",
       "version_date": "2023-07-03T13:08:46+00:00",
       "issues": [
         {
@@ -896,7 +896,7 @@
       "paper_title": "EVEREST: Efficient Masked Video Autoencoder by Removing Redundant Spatiotemporal Tokens",
       "paper_pdf_link": "https://openreview.net/pdf?id=UM6QLuOVNi",
       "arxiv_id": "2211.10636v6",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2211.10636v6v3",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2211.10636v3",
       "version_date": "2023-06-19T00:42:26+00:00",
       "issues": [
         {
@@ -914,7 +914,7 @@
       "paper_title": "Retentive Network: A Successor to Transformer for Large Language Models",
       "paper_pdf_link": "https://openreview.net/pdf?id=UU9Icwbhin",
       "arxiv_id": "2307.08621v4",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2307.08621v4v4",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2307.08621v4",
       "version_date": "2023-08-09T08:53:08+00:00",
       "issues": [
         {
@@ -932,7 +932,7 @@
       "paper_title": "Towards guarantees for parameter isolation in continual learning",
       "paper_pdf_link": "https://openreview.net/pdf?id=V7QAX3zRh0",
       "arxiv_id": "2310.01165v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.01165v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.01165v1",
       "version_date": "2023-10-02T12:50:15+00:00",
       "issues": [
         {
@@ -950,7 +950,7 @@
       "paper_title": "Stochastic Gradient Langevin Dynamics Based on Quantization with Increasing Resolution",
       "paper_pdf_link": "https://openreview.net/pdf?id=VJLD9MquPH",
       "arxiv_id": "2305.18864v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.18864v2v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.18864v2",
       "version_date": "2023-10-04T07:50:15+00:00",
       "issues": [
         {
@@ -1000,7 +1000,7 @@
       "paper_title": "Learning A Disentangling Representation For PU Learning",
       "paper_pdf_link": "https://openreview.net/pdf?id=VwyTrglgmW",
       "arxiv_id": "2310.03833v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.03833v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.03833v1",
       "version_date": "2023-10-05T18:33:32+00:00",
       "issues": [
         {
@@ -1018,7 +1018,7 @@
       "paper_title": "Constrained Bayesian Optimization with Adaptive Active Learning of Unknown Constraints",
       "paper_pdf_link": "https://openreview.net/pdf?id=WKALcMvCdm",
       "arxiv_id": "2310.08751v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.08751v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.08751v1",
       "version_date": "2023-10-12T22:32:00+00:00",
       "issues": [
         {
@@ -1036,7 +1036,7 @@
       "paper_title": "Fair Off-Policy Learning from Observational Data",
       "paper_pdf_link": "https://openreview.net/pdf?id=WX9cd9iII4",
       "arxiv_id": "2303.08516v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2303.08516v2v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2303.08516v2",
       "version_date": "2023-10-09T12:46:17+00:00",
       "issues": [
         {
@@ -1062,7 +1062,7 @@
       "paper_title": "Counterfactual Image Generation for adversarially robust and interpretable Classifiers",
       "paper_pdf_link": "https://openreview.net/pdf?id=WYsLU5TEEo",
       "arxiv_id": "2310.00761v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.00761v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.00761v1",
       "version_date": "2023-10-01T18:50:29+00:00",
       "issues": [
         {
@@ -1080,7 +1080,7 @@
       "paper_title": "Observation-Guided Diffusion Probabilistic Models",
       "paper_pdf_link": "https://openreview.net/pdf?id=Wg3kLZ6pII",
       "arxiv_id": "2310.04041v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.04041v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.04041v1",
       "version_date": "2023-10-06T06:29:06+00:00",
       "issues": [
         {
@@ -1098,7 +1098,7 @@
       "paper_title": "The Representation Jensen-Shannon Divergence",
       "paper_pdf_link": "https://openreview.net/pdf?id=WnqD3EiylC",
       "arxiv_id": "2305.16446v4",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.16446v4v3",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.16446v3",
       "version_date": "2023-10-02T20:48:05+00:00",
       "issues": [
         {
@@ -1124,7 +1124,7 @@
       "paper_title": "CoSDA: Continual Source-Free Domain Adaptation",
       "paper_pdf_link": "https://openreview.net/pdf?id=Wure6HljpJ",
       "arxiv_id": "2304.06627v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2304.06627v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2304.06627v1",
       "version_date": "2023-04-13T15:53:23+00:00",
       "issues": [
         {
@@ -1142,7 +1142,7 @@
       "paper_title": "DPFormer: Learning Differentially Private Transformer on Long-Tailed Data",
       "paper_pdf_link": "https://openreview.net/pdf?id=WvVyG8qBCt",
       "arxiv_id": "2305.17633v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.17633v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.17633v1",
       "version_date": "2023-05-28T05:00:07+00:00",
       "issues": [
         {
@@ -1160,7 +1160,7 @@
       "paper_title": "Accelerated Neural Network Training with Rooted Logistic Objectives",
       "paper_pdf_link": "https://openreview.net/pdf?id=XheqLWvswO",
       "arxiv_id": "2310.03890v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.03890v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.03890v1",
       "version_date": "2023-10-05T20:49:48+00:00",
       "issues": [
         {
@@ -1194,7 +1194,7 @@
       "paper_title": "Boosting Discriminative Visual Representation Learning with Scenario-Agnostic Mixup",
       "paper_pdf_link": "https://openreview.net/pdf?id=Z4jsnFJMDd",
       "arxiv_id": "2111.15454v3",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2111.15454v3v3",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2111.15454v3",
       "version_date": "2023-05-23T17:51:28+00:00",
       "issues": [
         {
@@ -1212,7 +1212,7 @@
       "paper_title": "On the Implicit Bias of Adam",
       "paper_pdf_link": "https://openreview.net/pdf?id=ZA9XUTseA9",
       "arxiv_id": "2309.00079v4",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.00079v4v3",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.00079v3",
       "version_date": "2023-10-05T04:57:56+00:00",
       "issues": [
         {
@@ -1230,7 +1230,7 @@
       "paper_title": "READ: Recurrent Adaptation of Large Transformers",
       "paper_pdf_link": "https://openreview.net/pdf?id=bC50ZOyPQm",
       "arxiv_id": "2305.15348v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.15348v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.15348v1",
       "version_date": "2023-05-24T16:59:41+00:00",
       "issues": [
         {
@@ -1248,7 +1248,7 @@
       "paper_title": "ComSD: Balancing Behavioral Quality and Diversity in Unsupervised Skill Discovery",
       "paper_pdf_link": "https://openreview.net/pdf?id=bvw9H80jyW",
       "arxiv_id": "2309.17203v3",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.17203v3v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.17203v1",
       "version_date": "2023-09-29T12:53:41+00:00",
       "issues": [
         {
@@ -1266,7 +1266,7 @@
       "paper_title": "Memorization Through the Lens of Curvature of Loss Function Around Samples",
       "paper_pdf_link": "https://openreview.net/pdf?id=cMQeDPwSrB",
       "arxiv_id": "2307.05831v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2307.05831v2v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2307.05831v2",
       "version_date": "2023-10-02T03:50:18+00:00",
       "issues": [
         {
@@ -1284,7 +1284,7 @@
       "paper_title": "Prompt-tuning Latent Diffusion Models for Inverse Problems",
       "paper_pdf_link": "https://openreview.net/pdf?id=ckzglrAMsh",
       "arxiv_id": "2310.01110v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.01110v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.01110v1",
       "version_date": "2023-10-02T11:31:48+00:00",
       "issues": [
         {
@@ -1302,7 +1302,7 @@
       "paper_title": "Can pre-trained models assist in dataset distillation?",
       "paper_pdf_link": "https://openreview.net/pdf?id=d1MbVCsPuj",
       "arxiv_id": "2310.03295v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.03295v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.03295v1",
       "version_date": "2023-10-05T03:51:21+00:00",
       "issues": [
         {
@@ -1320,7 +1320,7 @@
       "paper_title": "Discouraging Posterior Collapse in Hierarchical Variational Autoencoders Using Context",
       "paper_pdf_link": "https://openreview.net/pdf?id=e0FExRqr5Q",
       "arxiv_id": "2302.09976v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2302.09976v2v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2302.09976v2",
       "version_date": "2023-09-28T12:32:22+00:00",
       "issues": [
         {
@@ -1346,7 +1346,7 @@
       "paper_title": "Black-box Targeted Adversarial Attack on Segment Anything (SAM)",
       "paper_pdf_link": "https://openreview.net/pdf?id=efxXzrbgrX",
       "arxiv_id": "2310.10010v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.10010v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.10010v1",
       "version_date": "2023-10-16T02:09:03+00:00",
       "issues": [
         {
@@ -1364,7 +1364,7 @@
       "paper_title": "Robust Core-periphery Constrained Transformer for Domain Adaptation",
       "paper_pdf_link": "https://openreview.net/pdf?id=eqEqvbKbq0",
       "arxiv_id": "2308.13515v5",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2308.13515v5v3",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2308.13515v3",
       "version_date": "2023-09-17T05:31:02+00:00",
       "issues": [
         {
@@ -1390,7 +1390,7 @@
       "paper_title": "Convexifying Transformers: Improving optimization and understanding of transformer networks",
       "paper_pdf_link": "https://openreview.net/pdf?id=fw1oizreEF",
       "arxiv_id": "2211.11052v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2211.11052v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2211.11052v1",
       "version_date": "2022-11-20T18:17:47+00:00",
       "issues": [
         {
@@ -1408,7 +1408,7 @@
       "paper_title": "A Computational Framework for Solving Wasserstein Lagrangian Flows",
       "paper_pdf_link": "https://openreview.net/pdf?id=gFBTNDNDUG",
       "arxiv_id": "2310.10649v3",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.10649v3v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.10649v2",
       "version_date": "2023-10-17T17:55:33+00:00",
       "issues": [
         {
@@ -1434,7 +1434,7 @@
       "paper_title": "Tweedie Moment Projected Diffusions for Inverse Problems",
       "paper_pdf_link": "https://openreview.net/pdf?id=hDzjO41IOO",
       "arxiv_id": "2310.06721v3",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.06721v3v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.06721v1",
       "version_date": "2023-10-10T15:48:55+00:00",
       "issues": [
         {
@@ -1452,7 +1452,7 @@
       "paper_title": "Computing high-dimensional optimal transport by flow neural networks",
       "paper_pdf_link": "https://openreview.net/pdf?id=i7P2mK3x3o",
       "arxiv_id": "2305.11857v5",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.11857v5v3",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2305.11857v3",
       "version_date": "2023-10-04T14:56:11+00:00",
       "issues": [
         {
@@ -1470,7 +1470,7 @@
       "paper_title": "Mildly Constrained Evaluation Policy for Offline Reinforcement Learning",
       "paper_pdf_link": "https://openreview.net/pdf?id=iMRhuFS0Uz",
       "arxiv_id": "2306.03680v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.03680v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.03680v1",
       "version_date": "2023-06-06T13:43:09+00:00",
       "issues": [
         {
@@ -1488,7 +1488,7 @@
       "paper_title": "G4SATBench: Benchmarking and Advancing SAT Solving with Graph Neural Networks",
       "paper_pdf_link": "https://openreview.net/pdf?id=iUD9FklwQf",
       "arxiv_id": "2309.16941v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.16941v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.16941v1",
       "version_date": "2023-09-29T02:50:57+00:00",
       "issues": [
         {
@@ -1506,7 +1506,7 @@
       "paper_title": "Choosing Public Datasets for Private Machine Learning via Gradient Subspace Distance",
       "paper_pdf_link": "https://openreview.net/pdf?id=ihr4X2qK62",
       "arxiv_id": "2303.01256v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2303.01256v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2303.01256v1",
       "version_date": "2023-03-02T13:36:28+00:00",
       "issues": [
         {
@@ -1524,7 +1524,7 @@
       "paper_title": "Towards Generalizable Multi-Camera 3D Object Detection via Perspective Debiasing",
       "paper_pdf_link": "https://openreview.net/pdf?id=kqHxpHKMSz",
       "arxiv_id": "2310.11346v3",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.11346v3v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.11346v1",
       "version_date": "2023-10-17T15:31:28+00:00",
       "issues": [
         {
@@ -1542,7 +1542,7 @@
       "paper_title": "Compresso: Structured Pruning with Collaborative Prompting Learns Compact Large Language Models",
       "paper_pdf_link": "https://openreview.net/pdf?id=ktiikNTgK5",
       "arxiv_id": "2310.05015v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.05015v2v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.05015v2",
       "version_date": "2023-10-11T01:46:35+00:00",
       "issues": [
         {
@@ -1560,7 +1560,7 @@
       "paper_title": "ResiDual: Transformer with Dual Residual Connections",
       "paper_pdf_link": "https://openreview.net/pdf?id=mOTiVzTgF2",
       "arxiv_id": "2304.14802v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2304.14802v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2304.14802v1",
       "version_date": "2023-04-28T12:19:47+00:00",
       "issues": [
         {
@@ -1578,7 +1578,7 @@
       "paper_title": "Revisiting Class-Incremental Learning with Pre-Trained Models: Generalizability and Adaptivity are All You Need",
       "paper_pdf_link": "https://openreview.net/pdf?id=mrRbIcyouU",
       "arxiv_id": "2303.07338v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2303.07338v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2303.07338v1",
       "version_date": "2023-03-13T17:59:02+00:00",
       "issues": [
         {
@@ -1596,7 +1596,7 @@
       "paper_title": "Using Forwards-Backwards Models to Approximate MDP Homomorphisms",
       "paper_pdf_link": "https://openreview.net/pdf?id=mxCX2bSV0Z",
       "arxiv_id": "2209.06356v3",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2209.06356v3v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2209.06356v2",
       "version_date": "2023-07-03T20:09:05+00:00",
       "issues": [
         {
@@ -1614,7 +1614,7 @@
       "paper_title": "Embed-Search-Align: DNA Sequence Alignment using Transformer models",
       "paper_pdf_link": "https://openreview.net/pdf?id=oNlPtI7QfQ",
       "arxiv_id": "2309.11087v6",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.11087v6v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.11087v1",
       "version_date": "2023-09-20T06:30:39+00:00",
       "issues": [
         {
@@ -1632,7 +1632,7 @@
       "paper_title": "Generating Transferable and Stealthy Adversarial Patch via Attention-guided Adversarial Inpainting",
       "paper_pdf_link": "https://openreview.net/pdf?id=p3x4fNKSNd",
       "arxiv_id": "2308.05320v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2308.05320v2v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2308.05320v2",
       "version_date": "2023-10-01T09:14:51+00:00",
       "issues": [
         {
@@ -1658,7 +1658,7 @@
       "paper_title": "AdaLomo: Low-memory Optimization with Adaptive Learning Rate",
       "paper_pdf_link": "https://openreview.net/pdf?id=p4B7rl1UFA",
       "arxiv_id": "2310.10195v3",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.10195v3v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.10195v2",
       "version_date": "2023-10-22T13:37:33+00:00",
       "issues": [
         {
@@ -1676,7 +1676,7 @@
       "paper_title": "A Causal Ordering Prior for Unsupervised Representation Learning",
       "paper_pdf_link": "https://openreview.net/pdf?id=p5oXp5Kvq5",
       "arxiv_id": "2307.05704v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2307.05704v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2307.05704v1",
       "version_date": "2023-07-11T18:12:05+00:00",
       "issues": [
         {
@@ -1694,7 +1694,7 @@
       "paper_title": "Spectral-Bias and Kernel-Task Alignment in Physically Informed Neural Networks",
       "paper_pdf_link": "https://openreview.net/pdf?id=pv2U1BeC5Z",
       "arxiv_id": "2307.06362v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2307.06362v2v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2307.06362v2",
       "version_date": "2023-10-05T18:00:03+00:00",
       "issues": [
         {
@@ -1712,7 +1712,7 @@
       "paper_title": "Understanding MLP-Mixer as a wide and sparse MLP",
       "paper_pdf_link": "https://openreview.net/pdf?id=r8h2uUX22d",
       "arxiv_id": "2306.01470v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.01470v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.01470v1",
       "version_date": "2023-06-02T11:51:24+00:00",
       "issues": [
         {
@@ -1730,7 +1730,7 @@
       "paper_title": "The Phase Transition Phenomenon of Shuffled Regression",
       "paper_pdf_link": "https://openreview.net/pdf?id=sIcPMMhl9W",
       "arxiv_id": "2310.20438v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.20438v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.20438v1",
       "version_date": "2023-10-31T13:21:14+00:00",
       "issues": [
         {
@@ -1748,7 +1748,7 @@
       "paper_title": "LL-VQ-VAE: Learnable Lattice Vector-Quantization For Efficient Representations",
       "paper_pdf_link": "https://openreview.net/pdf?id=sfTsvy05MX",
       "arxiv_id": "2310.09382v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.09382v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.09382v1",
       "version_date": "2023-10-13T20:03:18+00:00",
       "issues": [
         {
@@ -1766,7 +1766,7 @@
       "paper_title": "DisCo: Disentangled Control for Realistic Human Dance Generation",
       "paper_pdf_link": "https://openreview.net/pdf?id=sk7RRHFk7M",
       "arxiv_id": "2307.00040v3",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2307.00040v3v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2307.00040v2",
       "version_date": "2023-10-11T10:11:36+00:00",
       "issues": [
         {
@@ -1784,7 +1784,7 @@
       "paper_title": "Unifying over-smoothing and over-squashing in graph neural networks: A physics informed approach and beyond",
       "paper_pdf_link": "https://openreview.net/pdf?id=swPf2hwKl8",
       "arxiv_id": "2309.02769v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.02769v2v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.02769v2",
       "version_date": "2023-09-13T00:17:19+00:00",
       "issues": [
         {
@@ -1802,7 +1802,7 @@
       "paper_title": "ReLU to the Rescue: Improve Your On-Policy Actor-Critic with Positive Advantages",
       "paper_pdf_link": "https://openreview.net/pdf?id=thFwKIRqmG",
       "arxiv_id": "2306.01460v4",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.01460v4v2",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2306.01460v2",
       "version_date": "2023-06-12T18:49:29+00:00",
       "issues": [
         {
@@ -1820,7 +1820,7 @@
       "paper_title": "PINF: Continuous Normalizing Flows for Physics-Constrained Deep Learning",
       "paper_pdf_link": "https://openreview.net/pdf?id=uWHPW0sXFK",
       "arxiv_id": "2309.15139v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.15139v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.15139v1",
       "version_date": "2023-09-26T15:38:57+00:00",
       "issues": [
         {
@@ -1838,7 +1838,7 @@
       "paper_title": "Speed Limits for Deep Learning",
       "paper_pdf_link": "https://openreview.net/pdf?id=wKB3XcQHcX",
       "arxiv_id": "2307.14653v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2307.14653v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2307.14653v1",
       "version_date": "2023-07-27T06:59:46+00:00",
       "issues": [
         {
@@ -1872,7 +1872,7 @@
       "paper_title": "LayoutDETR: Detection Transformer Is a Good Multimodal Layout Designer",
       "paper_pdf_link": "https://openreview.net/pdf?id=wgmOXVTGdb",
       "arxiv_id": "2212.09877v4",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2212.09877v4v3",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2212.09877v3",
       "version_date": "2023-03-24T08:56:44+00:00",
       "issues": [
         {
@@ -1890,7 +1890,7 @@
       "paper_title": "Towards Faithful Neural Network Intrinsic Interpretation with Shapley Additive Self-Attribution",
       "paper_pdf_link": "https://openreview.net/pdf?id=yR5QbFv4Xb",
       "arxiv_id": "2309.15559v1",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.15559v1v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2309.15559v1",
       "version_date": "2023-09-27T10:31:48+00:00",
       "issues": [
         {
@@ -1924,7 +1924,7 @@
       "paper_title": "AttributionLab: Faithfulness of Feature Attribution Under Controllable Environments",
       "paper_pdf_link": "https://openreview.net/pdf?id=zhINOCrrqI",
       "arxiv_id": "2310.06514v2",
-      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.06514v2v1",
+      "arxiv_pdf_url": "http://arxiv.org/pdf/2310.06514v1",
       "version_date": "2023-10-10T10:55:49+00:00",
       "issues": [
         {
