@@ -22,9 +22,10 @@ def print_banner():
 def get_common_venues():
     """返回常见会议列表"""
     return [
-        ("ICML.cc/2025/Conference", "ICML 2025 (国际机器学习大会) - 有公开拒稿数据 ⭐"),
-        ("ICLR.cc/2024/Conference", "ICLR 2024 (国际学习表征会议)"),
-        ("ICLR.cc/2023/Conference", "ICLR 2023"),
+        ("ICLR.cc/2025/Conference", "ICLR 2025 (国际学习表征会议) - 有拒稿数据 ⭐"),
+        ("ICLR.cc/2024/Conference", "ICLR 2024 (国际学习表征会议) - 有拒稿数据 ⭐"),
+        ("ICLR.cc/2022/Conference", "ICLR 2022 (国际学习表征会议) - 有拒稿数据 ⭐"),
+        ("ICML.cc/2025/Conference", "ICML 2025 (国际机器学习大会)"),
         ("NeurIPS.cc/2023/Conference", "NeurIPS 2023 (神经信息处理系统)"),
         ("ICML.cc/2023/Conference", "ICML 2023"),
         ("custom", "输入自定义会议 ID"),
@@ -40,11 +41,11 @@ def select_venue():
     for i, (venue_id, name) in enumerate(venues, 1):
         print(f"  {i}. {name}")
 
-    print("\n提示: ICML 2025 有公开的拒稿数据，推荐用于测试")
+    print("\n提示: ICLR 2025/2024/2022 有公开的拒稿数据，推荐用于测试")
 
     while True:
         try:
-            choice = input("\n请输入选项 (1-6) [默认: 1]: ").strip()
+            choice = input(f"\n请输入选项 (1-{len(venues)}) [默认: 1]: ").strip()
 
             if not choice:
                 choice = "1"

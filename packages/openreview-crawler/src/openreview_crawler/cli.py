@@ -13,6 +13,7 @@ if _DOTENV:
     load_dotenv(_DOTENV)
 
 from .pipeline import PipelineConfig, run_pipeline, ask_input
+from .venue_config import normalize_venue_id, get_venue_config
 
 
 def main() -> None:
@@ -56,9 +57,30 @@ def main() -> None:
     # Conference identifier
     if args.conference:
         conference = args.conference
-        print(f"Conference: {conference}")
+        print(f"Conference (input): {conference}")
     else:
-        conference = ask_input("Conference identifier (e.g., iclr2024)", "iclr2024")
+        print("\nEnter conference identifier. Examples:")
+        print("  - Short names: iclr2024, iclr2025, iclr2022, icml2025")
+        print("  - Full IDs: ICLR.cc/2024/Conference")
+        conference = ask_input("Conference identifier", "iclr2024")
+
+    # Normalize venue ID (handles short names like 'iclr2024')
+    venue_id = normalize_venue_id(conference)
+
+    # Show what it was normalized to and any venue info
+    if venue_id != conference:
+        print(f"  → Normalized to: {venue_id}")
+
+    # Try to get venue config info
+    venue_config = get_venue_config(venue_id)
+    if venue_config:
+        print(f"  ✓ Found configuration: {venue_config.name}")
+        if venue_config.has_reject_tab:
+            print(f"    Reject tab: {venue_config.reject_tab_name}")
+        if venue_config.notes:
+            print(f"    Note: {venue_config.notes}")
+    else:
+        print(f"  ℹ No built-in configuration found (will use venue ID as-is)")
 
     # Output directory
     if args.output_dir:
