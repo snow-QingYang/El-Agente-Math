@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Dict, Any, Optional, List
 import re
 
+import typer
 from mai.arxiv_downloader import download_and_process_source
 from mai.arxiv_searcher import get_paper_metainfo
 from mai.agent.agentic_reader import agentic_reader, AgenticReaderOptions
@@ -296,6 +297,146 @@ def _select_version_before(
         return None
 
     return max(candidates, key=lambda item: (item[0], item[1]))[2]
+
+
+def _build_arxiv_pdf_url(arxiv_id: str, version: int) -> str:
+    base_id = re.sub(r'v\\d+$', '', arxiv_id)
+    abs_url = f"http://arxiv.org/abs/{base_id}v{version}"
+    return abs_url.replace("/abs/", "/pdf/")
+
+
+def check_openreview_arxiv_matches(
+    normalized_path: Path,
+    output_path: Path,
+    cutoff_date: str = "2026-01-01",
+    limit_papers: Optional[int] = None,
+) -> Dict[str, Any]:
+    """
+    Filter OpenReview normalized issues to papers that have a matching arXiv entry
+    and a version on or before the cutoff date.
+
+    Args:
+        normalized_path: Path to xxx_detailed_normalized.json from openreview-crawler
+        output_path: Path to write filtered results JSON
+        cutoff_date: Latest submission date allowed (default: 2026-01-01)
+        limit_papers: Only check the first N papers (default: all)
+    """
+    load_dotenv(find_dotenv(usecwd=True))
+    data = json.loads(normalized_path.read_text(encoding="utf-8"))
+    all_papers = data.get("papers", [])
+    papers = all_papers
+    if limit_papers is not None and limit_papers > 0:
+        papers = all_papers[:limit_papers]
+    cutoff_dt = _parse_cutoff_datetime(cutoff_date)
+
+    results: Dict[str, Any] = {
+        "metadata": {
+            "input_path": str(normalized_path),
+            "output_path": str(output_path),
+            "cutoff_date": cutoff_date,
+            "processed_at": datetime.now(timezone.utc).isoformat(),
+            "limit_papers": limit_papers,
+        },
+        "papers": []
+    }
+
+    total_issues = 0
+    filtered_issues = 0
+    skipped_papers = 0
+    allowed_categories = {"Typo / Symbol misuse", "Mathematically wrong"}
+
+    for index, paper in enumerate(papers, start=1):
+        paper_title = (paper.get("paper_title") or "").strip()
+        raw_issues = paper.get("issues", [])
+        total_issues += len(raw_issues)
+        issues = [issue for issue in raw_issues if issue.get("category") in allowed_categories]
+
+        if not paper_title:
+            print(f"Skipping paper with missing title (paper_id={paper.get('paper_id')}) {index}")
+            skipped_papers += 1
+            continue
+
+        metainfo = get_paper_metainfo(paper_title)
+        if not metainfo:
+            print(f"Skipping '{paper_title}': no exact arXiv match {index}")
+            skipped_papers += 1
+            continue
+
+        versions = metainfo.get("versions") or []
+        if not versions and metainfo.get("first_version_date"):
+            versions = [{
+                "version": 1,
+                "date": metainfo["first_version_date"],
+                "arxiv_id": f"{metainfo['arxiv_id']}v1",
+            }]
+
+        selected = _select_version_before(versions, cutoff_dt)
+        if not selected:
+            print(f"Skipping '{paper_title}': no version before {cutoff_date} {index}")
+            skipped_papers += 1
+            continue
+
+        issues_out: List[Dict[str, Any]] = []
+        for issue in issues:
+            locations = issue.get("formula_location")
+            if isinstance(locations, list):
+                eq_number = locations[0] if locations else None
+            else:
+                eq_number = locations
+
+            try:
+                eq_number_int = int(eq_number) if eq_number is not None else None
+            except (TypeError, ValueError):
+                eq_number_int = None
+
+            review_id = issue.get("review_id")
+            paper_id = paper.get("paper_id")
+            review_url = (
+                f"https://openreview.net/forum?id={paper_id}&noteId={review_id}"
+                if paper_id and review_id
+                else None
+            )
+
+            issue_out = {
+                "formula_location": eq_number_int,
+                "category": issue.get("category"),
+                "confidence": issue.get("confidence"),
+                "evidence": issue.get("evidence"),
+                "review_id": review_id,
+                "review_url": review_url,
+            }
+            issues_out.append(issue_out)
+
+        if not issues_out:
+            print(f"Skipping '{paper_title}': no issues after filtering {index}")
+            skipped_papers += 1
+            continue
+
+        paper_out: Dict[str, Any] = {
+            "paper_id": paper.get("paper_id"),
+            "paper_title": paper_title,
+            "paper_pdf_link": paper.get("paper_pdf_link"),
+            "arxiv_id": metainfo["arxiv_id"],
+            "arxiv_pdf_url": _build_arxiv_pdf_url(metainfo["arxiv_id"], selected["version"]),
+            "version_date": _normalize_datetime(selected["date"]).isoformat(),
+            "issues": issues_out,
+        }
+
+        typer.secho(f"Accepting '{paper_title}' {index}", fg=typer.colors.GREEN)
+        results["papers"].append(paper_out)
+        filtered_issues += len(issues_out)
+
+    results["papers"].sort(key=lambda item: item.get("paper_id") or "")
+    results["metadata"]["total_papers"] = len(all_papers)
+    results["metadata"]["processed_papers"] = len(papers)
+    results["metadata"]["total_issues"] = total_issues
+    results["metadata"]["filtered_issues"] = filtered_issues
+    results["metadata"]["matched_papers"] = len(results["papers"])
+    results["metadata"]["skipped_papers"] = skipped_papers
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
+    return results
 
 
 async def verify_equation_in_paper(

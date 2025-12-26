@@ -389,6 +389,63 @@ def openreview_verify(
 
 
 @app.command()
+def openreview_checkarxiv(
+    input_file: Path = typer.Argument(
+        ...,
+        help="Path to xxx_detailed_normalized.json from openreview-crawler"
+    ),
+    cutoff_date: str = typer.Option(
+        "2026-01-01",
+        "--cutoff-date",
+        help="Latest arXiv submission date to consider (YYYY-MM-DD or ISO format)"
+    ),
+    output_dir: Path = typer.Option(
+        Path("./output/openreview_checkarxiv"),
+        "--output", "-o",
+        help="Directory to store results"
+    ),
+    results_file: Optional[Path] = typer.Option(
+        None,
+        "--results", "-r",
+        help="Path to write results JSON (default: <output>/result.json)"
+    ),
+    limit_papers: Optional[int] = typer.Option(
+        None,
+        "--limit-papers",
+        help="Only check the first N papers"
+    ),
+):
+    """Filter OpenReview issues to papers with matching arXiv entries."""
+    from .pipeline import check_openreview_arxiv_matches
+    from dotenv import load_dotenv, find_dotenv
+
+    load_dotenv(find_dotenv(usecwd=True))
+    output_dir.mkdir(parents=True, exist_ok=True)
+    results_file = results_file or (output_dir / "result.json")
+
+    typer.echo(f"Loading OpenReview issues from: {input_file}")
+    typer.echo(f"Cutoff date: {cutoff_date}")
+    typer.echo(f"Output directory: {output_dir}")
+    typer.echo(f"Results: {results_file}")
+    if limit_papers:
+        typer.echo(f"Limit papers: {limit_papers}")
+
+    try:
+        check_openreview_arxiv_matches(
+            normalized_path=input_file,
+            output_path=results_file,
+            cutoff_date=cutoff_date,
+            limit_papers=limit_papers,
+        )
+    except Exception as e:
+        typer.echo(f"\n✗ OpenReview arXiv check failed: {e}", err=True)
+        raise typer.Exit(1)
+
+    typer.echo(f"\n✓ OpenReview arXiv check complete!")
+    typer.echo(f"  Results: {results_file}")
+
+
+@app.command()
 def benchmark(
     paper_dir: Optional[Path] = typer.Argument(
         None,
