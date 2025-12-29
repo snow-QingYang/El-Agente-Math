@@ -7,12 +7,45 @@ Allows keep/remove decisions and comments for each paper
 import streamlit as st
 import json
 import os
+import sys
 from datetime import datetime
 
 
 # Configuration
-INPUT_FILE = "packages/openreview-crawler/output/neurips2025/result.json"
-OUTPUT_FILE = "packages/openreview-crawler/output/neurips2025/paper_reviews.json"
+DEFAULT_CONFERENCE = "neurips2025"
+BASE_OUTPUT_DIR = os.path.join("packages", "openreview-crawler", "output")
+
+
+def _get_conference_from_args() -> str | None:
+    if "--conference" in sys.argv:
+        idx = sys.argv.index("--conference")
+        if idx + 1 < len(sys.argv):
+            return sys.argv[idx + 1]
+    return None
+
+
+def _prompt_conference() -> str:
+    prompt = f"Conference (default {DEFAULT_CONFERENCE}): "
+    try:
+        value = input(prompt).strip()
+    except EOFError:
+        value = ""
+    return value or DEFAULT_CONFERENCE
+
+
+def resolve_paths() -> tuple[str, str, str]:
+    conference = os.getenv("OPENREVIEW_CONFERENCE")
+    if not conference:
+        conference = _get_conference_from_args() or _prompt_conference()
+        os.environ["OPENREVIEW_CONFERENCE"] = conference
+
+    base_dir = os.path.join(BASE_OUTPUT_DIR, conference)
+    input_file = os.path.join(base_dir, "result.json")
+    output_file = os.path.join(base_dir, "paper_reviews.json")
+    return conference, input_file, output_file
+
+
+CONFERENCE, INPUT_FILE, OUTPUT_FILE = resolve_paths()
 
 
 def load_data():
@@ -63,6 +96,7 @@ def main():
 
     st.title("📄 Paper Review Interface")
     st.markdown("Review papers and decide: **Keep** or **Remove**")
+    st.caption(f"Conference: {CONFERENCE}")
 
     # Load data
     if 'data' not in st.session_state:
@@ -91,6 +125,7 @@ def main():
 
     # Display metadata
     st.sidebar.header("Dataset Information")
+    st.sidebar.markdown(f"**Conference:** {CONFERENCE}")
     if metadata:
         st.sidebar.markdown(f"**Total Papers:** {metadata.get('total_papers', 'N/A')}")
         st.sidebar.markdown(f"**Processed Papers:** {metadata.get('processed_papers', 'N/A')}")

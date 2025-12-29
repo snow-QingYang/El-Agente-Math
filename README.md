@@ -5,9 +5,20 @@ A CLI tool that downloads arXiv papers, extracts mathematical formulas, and gene
 ## Quick start for paper review
 ```bash
 uv sync
-uv run streamlit run paper_review_interface.py
+uv run streamlit run paper_review_interface.py #after launch, back to cli to enter which nips conference you are currently working with (e.g. neurips2025, neurips2024, etc.)
 ```
-After you finish your part of work, push the ```packages/openreview-crawler/output/neurips2025/paper_reviews.json```
+After you finish your part of work, push the ```packages/openreview-crawler/output/neurips{year}/paper_reviews.json```
+
+```bash
+uv run openreview_crawler  
+uv run openreview_crawler filter_reviews packages/openreview-crawler/output/neurips2025
+uv run python packages/openreview-crawler/examples/debug_nips_detect.py   
+uv run python packages/openreview-crawler/examples/filter_nips_formula_errors.py 
+uv run python packages/openreview-crawler/examples/convert_nips_formula_issues_to_result.py \
+    --input packages/openreview-crawler/output/neurips2025/formula_issues_nips_typo_math.json
+uv run streamlit run paper_review_interface.py
+
+```
 
 ## Installation
 

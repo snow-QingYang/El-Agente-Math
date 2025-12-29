@@ -252,19 +252,23 @@ class FormulaIssueDetectorICML:
    - "page 5" → `PAGE (5)`
    - "on page 12" → `PAGE (12)`
 
-6. **Page with Line**: `PAGE (X), LINE (Y)`
+6. **Line**: `LINE (X)`
+   - "line 402" → `LINE (402)`
+   - "below line 15" → `LINE (15)`
+
+7. **Page with Line**: `PAGE (X), LINE (Y)`
    - "page 5, line 10" → `PAGE (5), LINE (10)`
    - "line 15 on page 3" → `PAGE (3), LINE (15)`
 
-7. **Section**: `SECTION (X)`
+8. **Section**: `SECTION (X)`
    - "Section 4" → `SECTION (4)`
    - "Sec. 3.2" → `SECTION (3.2)`
 
-8. **Algorithm**: `ALGORITHM (X)`
+9. **Algorithm**: `ALGORITHM (X)`
    - "Algorithm 1" → `ALGORITHM (1)`
    - "Alg. 2" → `ALGORITHM (2)`
 
-9. **Appendix**: `APPENDIX (X)`
+10. **Appendix**: `APPENDIX (X)`
    - "Appendix A" → `APPENDIX (A)`
    - "Appendix B.2" → `APPENDIX (B.2)`
 
@@ -345,7 +349,11 @@ Example 7 - Lemma needs proof:
 Review: "The authors should provide a proof for Lemma 3."
 Output: {{"has_formula_issue": true, "formula_errors": [{{"evidence": "The authors should provide a proof for Lemma 3", "formula_location": "LEMMA (3)", "category": "Missing justification/proof", "confidence": "Confident"}}]}}
 
-Example 8 - Page reference only:
+Example 8 - Line reference only:
+Review: "Typo below line 402 where it says x=y."
+Output: {{"has_formula_issue": true, "formula_errors": [{{"evidence": "Typo below line 402 where it says x=y", "formula_location": "LINE (402)", "category": "Typo / Symbol misuse", "confidence": "Confident"}}]}}
+
+Example 9 - Page reference only:
 Review: "The math on page 7 contains errors."
 Output: {{"has_formula_issue": true, "formula_errors": [{{"evidence": "The math on page 7 contains errors", "formula_location": "PAGE (7)", "category": "Mathematically wrong", "confidence": "Confident"}}]}}
 """
@@ -355,7 +363,7 @@ Output: {{"has_formula_issue": true, "formula_errors": [{{"evidence": "The math 
         if not api_key:
             raise ValueError("Missing OPENAI_API_KEY")
         self.client = OpenAI(api_key=api_key)
-        self.model = os.getenv("OPENAI_MODEL", model)
+        self.model = model#os.getenv("OPENAI_MODEL", model)
         self.debug_mode = debug_mode
 
     @staticmethod
@@ -539,15 +547,26 @@ class FormulaIssueDetectorNIPS(FormulaIssueDetectorICML):
         strengths = (
             _extract("strengths_and_weaknesses")
             or _extract("strengths_and_weeknesses")
+            or _extract("strengths")
+            or "N/A"
+        )
+        weaknesses = (
+            _extract("weaknesses")
             or "N/A"
         )
         questions = _extract("questions") or "N/A"
 
+        limitations = _extract("limitations") or "N/A"
+
         review_text = "\n\n".join(
             [
-                f"summary: {summary}",
-                f"strengths_and_weaknesses: {strengths}",
-                f"questions: {questions}",
+                f"summary: {summary}\n",
+                f"strengths_and_weaknesses: "
+                f"{"strengths:" + strengths}\n"
+                f"{weaknesses if weaknesses != 'N/A' else ''}\n",
+                f"questions: {questions}\n"
+                f"{("limitations: " + limitations) if limitations != 'N/A' else ''}",
+
             ]
         )
         return self.PROMPT_TEMPLATE.format(review_text=review_text)

@@ -83,39 +83,39 @@ def main() -> None:
         concurrency=50,
     )
 
-    print("\n" + "=" * 60)
-    print("RESULTS")
-    print("=" * 60)
-    print(f"Analyzed {result['metadata']['total_reviews_analyzed']} reviews")
-    print(f"Found {result['metadata']['papers_with_formula_issues']} papers with formula issues")
-    print(f"Total formula errors: {result['metadata'].get('total_formula_errors', 0)}")
-    print(f"Model used: {result['metadata']['model_used']}")
-
-    if result["issues"]:
-        print(f"\nDetailed issues found:")
-        for i, issue in enumerate(result["issues"], 1):
-            print(f"\n{i}. Paper: {issue['paper_title'][:60]}...")
-            print(f"   Number of review issues: {len(issue['issues'])}")
-            for j, review_issue in enumerate(issue["issues"], 1):
-                print(f"\n   Review {j} (ID: {review_issue['review_id']}):")
-                formula_errors = review_issue.get("formula_errors", [])
-                print(f"     Total formula errors: {len(formula_errors)}")
-
-                for k, error in enumerate(formula_errors, 1):
-                    print(f"\n     Error {k}:")
-                    print(f"       Location: {error.get('formula_location', 'N/A')}")
-                    print(f"       Category: {error.get('category', 'N/A')}")
-                    print(f"       Confidence: {error.get('confidence', 'N/A')}")
-                    print(f"       Evidence: {error.get('evidence', 'N/A')[:100]}...")
-
-    print(f"\n✓ Full results saved to: {output_file}")
-    print(f"\nTo run on all reviews without debug mode:")
-    print(
-        "  detector = FormulaIssueDetectorNIPS(model='gpt-5-nano', debug_mode=False)"
-    )
-    print(
-        "  detector.run(input_file=filtered_file, output_file=output_file, limit=None, concurrency=10)"
-    )
+    # print("\n" + "=" * 60)
+    # print("RESULTS")
+    # print("=" * 60)
+    # print(f"Analyzed {result['metadata']['total_reviews_analyzed']} reviews")
+    # print(f"Found {result['metadata']['papers_with_formula_issues']} papers with formula issues")
+    # print(f"Total formula errors: {result['metadata'].get('total_formula_errors', 0)}")
+    # print(f"Model used: {result['metadata']['model_used']}")
+    #
+    # if result["issues"]:
+    #     print(f"\nDetailed issues found:")
+    #     for i, issue in enumerate(result["issues"], 1):
+    #         print(f"\n{i}. Paper: {issue['paper_title'][:60]}...")
+    #         print(f"   Number of review issues: {len(issue['issues'])}")
+    #         for j, review_issue in enumerate(issue["issues"], 1):
+    #             print(f"\n   Review {j} (ID: {review_issue['review_id']}):")
+    #             formula_errors = review_issue.get("formula_errors", [])
+    #             print(f"     Total formula errors: {len(formula_errors)}")
+    #
+    #             for k, error in enumerate(formula_errors, 1):
+    #                 print(f"\n     Error {k}:")
+    #                 print(f"       Location: {error.get('formula_location', 'N/A')}")
+    #                 print(f"       Category: {error.get('category', 'N/A')}")
+    #                 print(f"       Confidence: {error.get('confidence', 'N/A')}")
+    #                 print(f"       Evidence: {error.get('evidence', 'N/A')[:100]}...")
+    #
+    # print(f"\n✓ Full results saved to: {output_file}")
+    # print(f"\nTo run on all reviews without debug mode:")
+    # print(
+    #     "  detector = FormulaIssueDetectorNIPS(model='gpt-5-nano', debug_mode=False)"
+    # )
+    # print(
+    #     "  detector.run(input_file=filtered_file, output_file=output_file, limit=None, concurrency=10)"
+    # )
 
 
 if __name__ == "__main__":
