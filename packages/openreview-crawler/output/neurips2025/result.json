@@ -1,0 +1,1162 @@
+{
+  "metadata": {
+    "input_path": "packages/openreview-crawler/output/neurips2025/formula_issues_nips_typo_math.json",
+    "output_path": "packages/openreview-crawler/output/neurips2025/result.json",
+    "processed_at": "2025-12-29T01:00:16.370483",
+    "limit_papers": null,
+    "total_papers": 57,
+    "processed_papers": 57,
+    "total_issues": 92,
+    "filtered_issues": 92,
+    "matched_papers": 57,
+    "skipped_papers": 0,
+    "source_metadata": {
+      "total_reviews_analyzed": 1028,
+      "papers_with_formula_issues": 57,
+      "total_formula_errors": 92,
+      "model_used": "gpt-5-nano",
+      "total_reviews_with_formula_errors": 69,
+      "filtered_by_category_substrings": [
+        "Typo",
+        "Math"
+      ]
+    }
+  },
+  "papers": [
+    {
+      "paper_id": "zcVKvXtrkJ",
+      "paper_title": "Understanding Task Vectors in In-Context Learning: Emergence, Functionality, and Limitations",
+      "paper_pdf_link": "https://openreview.net/pdf?id=zcVKvXtrkJ",
+      "issues": [
+        {
+          "formula_location": "EQ (402)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "Typo: In the equation below line 402, I believe $\\tilde{R}_i$ should be $R_i$",
+          "review_id": "NYabOv9XzE",
+          "review_url": "https://openreview.net/forum?id=zcVKvXtrkJ&noteId=NYabOv9XzE"
+        }
+      ]
+    },
+    {
+      "paper_id": "zmlhP8myaT",
+      "paper_title": "Stepwise Feature Learning in Self-Supervised Learning",
+      "paper_pdf_link": "https://openreview.net/pdf?id=zmlhP8myaT",
+      "issues": [
+        {
+          "formula_location": "APPENDIX (B.2)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "In the derivation in Appendix B.2, is there a missing $f$ in the denominator (after integrating $cos(2fx)$)? I don't think it changes the conclusion, but curious if it's a typo or something that I missed.",
+          "review_id": "MF0LRFBDI6",
+          "review_url": "https://openreview.net/forum?id=zmlhP8myaT&noteId=MF0LRFBDI6"
+        }
+      ]
+    },
+    {
+      "paper_id": "xFDKphWWnD",
+      "paper_title": "Recurrent Action Transformer with Memory",
+      "paper_pdf_link": "https://openreview.net/pdf?id=xFDKphWWnD",
+      "issues": [
+        {
+          "formula_location": "EQ (2)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "the right-hand side of Eq. (2) would then be invalid.",
+          "review_id": "LkklyjDynY",
+          "review_url": "https://openreview.net/forum?id=xFDKphWWnD&noteId=LkklyjDynY"
+        }
+      ]
+    },
+    {
+      "paper_id": "tNvvSzS829",
+      "paper_title": "Dominated Actions in Imperfect-Information Games",
+      "paper_pdf_link": "https://openreview.net/pdf?id=tNvvSzS829",
+      "issues": [
+        {
+          "formula_location": "EQ (8)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "Equation (8): missing period at the end of equation",
+          "review_id": "jPuDYJ8lBK",
+          "review_url": "https://openreview.net/forum?id=tNvvSzS829&noteId=jPuDYJ8lBK"
+        }
+      ]
+    },
+    {
+      "paper_id": "wh3p37VYm2",
+      "paper_title": "Mechanistic Insights into Grokking from the Embedding Layer",
+      "paper_pdf_link": "https://openreview.net/pdf?id=wh3p37VYm2",
+      "issues": [
+        {
+          "formula_location": "EQ (5)",
+          "category": "Mathematically wrong",
+          "confidence": "Confident",
+          "evidence": "The analysis in (5) and (6) assumes that the loss is $\\beta$-smooth, but you specifically call out just below (1) that you are studying the model only with ReLU activations, which are _not_ $\\beta$-smooth.",
+          "review_id": "ycc0KHEMBO",
+          "review_url": "https://openreview.net/forum?id=wh3p37VYm2&noteId=ycc0KHEMBO"
+        },
+        {
+          "formula_location": "EQ (6)",
+          "category": "Mathematically wrong",
+          "confidence": "Confident",
+          "evidence": "The analysis in (5) and (6) assumes that the loss is $\\beta$-smooth, but you specifically call out just below (1) that you are studying the model only with ReLU activations, which are _not_ $\\beta$-smooth.",
+          "review_id": "ycc0KHEMBO",
+          "review_url": "https://openreview.net/forum?id=wh3p37VYm2&noteId=ycc0KHEMBO"
+        }
+      ]
+    },
+    {
+      "paper_id": "o03aOm4Vci",
+      "paper_title": "On Flow-based Generative Models for Probabilistic Forecasting",
+      "paper_pdf_link": "https://openreview.net/pdf?id=o03aOm4Vci",
+      "issues": [
+        {
+          "formula_location": "EQ (2)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Confident",
+          "evidence": "Equation 2: There should be no $x_0$ in $s_t$",
+          "review_id": "Y8Y8roDlx9",
+          "review_url": "https://openreview.net/forum?id=o03aOm4Vci&noteId=Y8Y8roDlx9"
+        }
+      ]
+    },
+    {
+      "paper_id": "oINSSze5gI",
+      "paper_title": "Towards Robust Heterogeneous Graph Explanations under Structural Perturbations",
+      "paper_pdf_link": "https://openreview.net/pdf?id=oINSSze5gI",
+      "issues": [
+        {
+          "formula_location": "EQ (8)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "For instance, in Equation (8), the term $q_{\u00005\text{psi}}(\\mathcal{G} \\mid \\tilde{\\mathcal{G}})$ may be a typographical error and should likely be $q_{\\psi}(Z \\mid \\tilde{\\mathcal{G}})$.",
+          "review_id": "y8wivprBrj",
+          "review_url": "https://openreview.net/forum?id=oINSSze5gI&noteId=y8wivprBrj"
+        },
+        {
+          "formula_location": "EQ (38)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "the fourth line of Equation (38) in the Appendix, the expression $q_{\\psi}(Z \\mid \\mathcal{G})$ might be intended as $q_{\\psi}(Z \\mid \\tilde{\\mathcal{G}})$, to maintain consistency with the KL divergence in the fifth line.",
+          "review_id": "y8wivprBrj",
+          "review_url": "https://openreview.net/forum?id=oINSSze5gI&noteId=y8wivprBrj"
+        },
+        {
+          "formula_location": "EQ (3)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "It appears that the probabilities in Equation (3) can be greater than 1 (e, assume a star graph, where the average degree is close to 1 but the center has a large degree, so that $d_i/\\overline{d}\\gg 1$).",
+          "review_id": "rvGA2g1ORy",
+          "review_url": "https://openreview.net/forum?id=oINSSze5gI&noteId=rvGA2g1ORy"
+        },
+        {
+          "formula_location": "THEOREM (3.2)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "The statement \"this factor is significantly greater than 1.\" in Theorem 3.2 is inaccurate. The quantity is greater than 1 but it can be arbitrarily close to 1.",
+          "review_id": "rvGA2g1ORy",
+          "review_url": "https://openreview.net/forum?id=oINSSze5gI&noteId=rvGA2g1ORy"
+        }
+      ]
+    },
+    {
+      "paper_id": "k5ekIwvmYA",
+      "paper_title": "Multi-Actor Multi-Critic Deep Deterministic Reinforcement Learning with a Novel Q-Ensemble Method",
+      "paper_pdf_link": "https://openreview.net/pdf?id=k5ekIwvmYA",
+      "issues": [
+        {
+          "formula_location": "EQ (2)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "In Eq. (2) and Eq. (7), shouldn't the sign in front of γ be negative?",
+          "review_id": "GTm7qPRusj",
+          "review_url": "https://openreview.net/forum?id=k5ekIwvmYA&noteId=GTm7qPRusj"
+        },
+        {
+          "formula_location": "EQ (7)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "In Eq. (2) and Eq. (7), shouldn't the sign in front of γ be negative?",
+          "review_id": "GTm7qPRusj",
+          "review_url": "https://openreview.net/forum?id=k5ekIwvmYA&noteId=GTm7qPRusj"
+        }
+      ]
+    },
+    {
+      "paper_id": "hEA2n6OUUK",
+      "paper_title": "Outlier-Robust Phase Retrieval in Nearly-Linear Time",
+      "paper_pdf_link": "https://openreview.net/pdf?id=hEA2n6OUUK",
+      "issues": [
+        {
+          "formula_location": "LEMMA (2.3)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "It is evident that the statement of Lemma 2.3 does not hold with high probability when ε is very small, for example, when ε = 0.",
+          "review_id": "VxVX3QyoV6",
+          "review_url": "https://openreview.net/forum?id=hEA2n6OUUK&noteId=VxVX3QyoV6"
+        },
+        {
+          "formula_location": "LEMMA (5.2)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "Similar issues arise elsewhere - for example, in Lemma 5.2, where the choice of m must depend on ε0 for the Lemma statement to hold.",
+          "review_id": "VxVX3QyoV6",
+          "review_url": "https://openreview.net/forum?id=hEA2n6OUUK&noteId=VxVX3QyoV6"
+        },
+        {
+          "formula_location": "LEMMA (3)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "In the proof of Lemma 3.1, on line 254 of the formula, the subtraction of two O(δ) terms results in 0, which is incorrect",
+          "review_id": "6cnagoS05r",
+          "review_url": "https://openreview.net/forum?id=hEA2n6OUUK&noteId=6cnagoS05r"
+        }
+      ]
+    },
+    {
+      "paper_id": "hdwccZL6L3",
+      "paper_title": "SENSE: $\\underline{\\text{SEN}}$sing Similarity $\\underline{\\text{SE}}$eing Structure",
+      "paper_pdf_link": "https://openreview.net/pdf?id=hdwccZL6L3",
+      "issues": [
+        {
+          "formula_location": "EQ (2)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "In eq(2), $b$ seems to be a typo.",
+          "review_id": "tJPYhIihsA",
+          "review_url": "https://openreview.net/forum?id=hdwccZL6L3&noteId=tJPYhIihsA"
+        },
+        {
+          "formula_location": "EQ (5)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "In eq(5), it should be $\\hat{D}=\\mathcal{D}(\\hat{X})$, where $\\hat{X}=\\arg\\min...$.",
+          "review_id": "tJPYhIihsA",
+          "review_url": "https://openreview.net/forum?id=hdwccZL6L3&noteId=tJPYhIihsA"
+        }
+      ]
+    },
+    {
+      "paper_id": "eg4AmZVVPO",
+      "paper_title": "Single-Step Consistent Diffusion Samplers",
+      "paper_pdf_link": "https://openreview.net/pdf?id=eg4AmZVVPO",
+      "issues": [
+        {
+          "formula_location": "EQ (7)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "Eq 7, should be a minus sign in between functions?",
+          "review_id": "IycZhUKmmZ",
+          "review_url": "https://openreview.net/forum?id=eg4AmZVVPO&noteId=IycZhUKmmZ"
+        }
+      ]
+    },
+    {
+      "paper_id": "gb4tyRuzzh",
+      "paper_title": "Feature Hedging: Correlated Features Break Narrow Sparse Autoencoders",
+      "paper_pdf_link": "https://openreview.net/pdf?id=gb4tyRuzzh",
+      "issues": [
+        {
+          "formula_location": "EQ (7)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "I think there is a small typo in Eq.7 (see minor comments)",
+          "review_id": "cQlfQzsKHb",
+          "review_url": "https://openreview.net/forum?id=gb4tyRuzzh&noteId=cQlfQzsKHb"
+        }
+      ]
+    },
+    {
+      "paper_id": "mZuFaBAVs6",
+      "paper_title": "MVG-CRPS: A Robust Loss Function for Multivariate Probabilistic Forecasting",
+      "paper_pdf_link": "https://openreview.net/pdf?id=mZuFaBAVs6",
+      "issues": [
+        {
+          "formula_location": "EQ (11)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "Eq. 11: consider using $\\approx$?",
+          "review_id": "Kuci8J7zRl",
+          "review_url": "https://openreview.net/forum?id=mZuFaBAVs6&noteId=Kuci8J7zRl"
+        },
+        {
+          "formula_location": "EQ (11)",
+          "category": "Mathematically wrong",
+          "confidence": "Confident",
+          "evidence": "Eq 11: that is not an equality: the right-hand side is the sample-based approximation of the energy score",
+          "review_id": "reMK6ffUgJ",
+          "review_url": "https://openreview.net/forum?id=mZuFaBAVs6&noteId=reMK6ffUgJ"
+        }
+      ]
+    },
+    {
+      "paper_id": "nFmq9z7Mdq",
+      "paper_title": "Reliable Image Quality Evaluation and Mitigating Quality Bias in Generative Models",
+      "paper_pdf_link": "https://openreview.net/pdf?id=nFmq9z7Mdq",
+      "issues": [
+        {
+          "formula_location": "EQ (1)",
+          "category": "Mathematically wrong",
+          "confidence": "Confident",
+          "evidence": "What are the failure cases for Equation 1? When image quality is degraded, it penalizes the numerator even if the image addresses the bias, leading to a lower score.",
+          "review_id": "hQFa3qMwQI",
+          "review_url": "https://openreview.net/forum?id=nFmq9z7Mdq&noteId=hQFa3qMwQI"
+        }
+      ]
+    },
+    {
+      "paper_id": "knKAKV7URX",
+      "paper_title": "CAST: Time-Varying Treatment Effects with Application to Chemotherapy and Radiotherapy on Head and Neck Squamous Cell Carcinoma",
+      "paper_pdf_link": "https://openreview.net/pdf?id=knKAKV7URX",
+      "issues": [
+        {
+          "formula_location": "ALGORITHM (1)",
+          "category": "Mathematically wrong",
+          "confidence": "Confident",
+          "evidence": "In the current parametric set-up, if beta_2 = 0, then half-life cannot be estimated (the “degenerate case” in algorithm 1).",
+          "review_id": "F7HXjAOyNf",
+          "review_url": "https://openreview.net/forum?id=knKAKV7URX&noteId=F7HXjAOyNf"
+        }
+      ]
+    },
+    {
+      "paper_id": "ZFPimg1RTe",
+      "paper_title": "DiffSDA: A Framework for Unsupervised Diffusion Sequential Disentanglement Across Modalities",
+      "paper_pdf_link": "https://openreview.net/pdf?id=ZFPimg1RTe",
+      "issues": [
+        {
+          "formula_location": "EQ (2)",
+          "category": "Mathematically wrong",
+          "confidence": "Suggestion",
+          "evidence": "Equation (2) of the posterior seems to imply some independence of the static and dynamic components",
+          "review_id": "QuXbJ8kd65",
+          "review_url": "https://openreview.net/forum?id=ZFPimg1RTe&noteId=QuXbJ8kd65"
+        }
+      ]
+    },
+    {
+      "paper_id": "csjryswwao",
+      "paper_title": "SyntheOcc: Synthesize Occupancy-Controlled Street View Images through 3D Semantic MPIs",
+      "paper_pdf_link": "https://openreview.net/pdf?id=csjryswwao",
+      "issues": [
+        {
+          "formula_location": "EQ (1-2)",
+          "category": "Mathematically wrong",
+          "confidence": "Confident",
+          "evidence": "I don't think the claim of 3D MPIs is a lossless representation of 3D scenes is correct. For one, as described in Eq. 1-2 in Section 3.2, for entities outside [d_min, d_max] by definition cannot be captured by such MPIs, leading to information loss.",
+          "review_id": "rNLYr4BtUc",
+          "review_url": "https://openreview.net/forum?id=csjryswwao&noteId=rNLYr4BtUc"
+        }
+      ]
+    },
+    {
+      "paper_id": "dCWSVAbWXM",
+      "paper_title": "Fence off Anomaly Interference: Cross-Domain Distillation for Fully Unsupervised Anomaly Detection",
+      "paper_pdf_link": "https://openreview.net/pdf?id=dCWSVAbWXM",
+      "issues": [
+        {
+          "formula_location": "EQ (2)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "cosine is not a distance. As can be seen in eq(2) it is not minimized but maximized.",
+          "review_id": "gE21jQbdpa",
+          "review_url": "https://openreview.net/forum?id=dCWSVAbWXM&noteId=gE21jQbdpa"
+        }
+      ]
+    },
+    {
+      "paper_id": "pRysdfwXiA",
+      "paper_title": "Learning General Causal Structures with Hidden Dynamic Process for Climate Analysis",
+      "paper_pdf_link": "https://openreview.net/pdf?id=pRysdfwXiA",
+      "issues": [
+        {
+          "formula_location": "EQ (1)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "For “s_{t,i} = g_{si}(z_t, \\epsilon_{x_{t,i}})$” in Eq. 1, authors mentioned “noise conditioned on $z_t$”; however, it should not be considered “noise,” since it depends on $z_t$.",
+          "review_id": "tMjZdCAKwL",
+          "review_url": "https://openreview.net/forum?id=pRysdfwXiA&noteId=tMjZdCAKwL"
+        },
+        {
+          "formula_location": "EQ (A19)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "As depicted in Eq. (A19), the equation is missing (I know it is in the separate appendix, but its omission disrupts the flow).",
+          "review_id": "tMjZdCAKwL",
+          "review_url": "https://openreview.net/forum?id=pRysdfwXiA&noteId=tMjZdCAKwL"
+        }
+      ]
+    },
+    {
+      "paper_id": "XWbIHOW6u1",
+      "paper_title": "Multi-Marginal Schrödinger Bridge Matching",
+      "paper_pdf_link": "https://openreview.net/pdf?id=XWbIHOW6u1",
+      "issues": [
+        {
+          "formula_location": "EQ (20a)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "Equation 20a (between lines 231 and 232) may be mislabeled. Is there an equation 20b?",
+          "review_id": "vv9pbjUKHt",
+          "review_url": "https://openreview.net/forum?id=XWbIHOW6u1&noteId=vv9pbjUKHt"
+        },
+        {
+          "formula_location": "EQ (14)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "Equations (14) and (17): Is there a typo in the definitions of β_T and γ_T? I would expect β and γ to belong to 𝒯, but the current definitions don't.",
+          "review_id": "F3uPxZW6B5",
+          "review_url": "https://openreview.net/forum?id=XWbIHOW6u1&noteId=F3uPxZW6B5"
+        },
+        {
+          "formula_location": "EQ (17)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "Equations (14) and (17): Is there a typo in the definitions of β_T and γ_T? I would expect β and γ to belong to 𝒯, but the current definitions don't.",
+          "review_id": "F3uPxZW6B5",
+          "review_url": "https://openreview.net/forum?id=XWbIHOW6u1&noteId=F3uPxZW6B5"
+        }
+      ]
+    },
+    {
+      "paper_id": "dEJ3ztpdbc",
+      "paper_title": "Forget Vectors at Play: Universal Input Perturbations Driving Machine Unlearning in Image Classification",
+      "paper_pdf_link": "https://openreview.net/pdf?id=dEJ3ztpdbc",
+      "issues": [
+        {
+          "formula_location": "PAGE (195)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very confident",
+          "evidence": "Typo in Line 195: should be \"tend to\" instead of \"tent to\"",
+          "review_id": "SbDTDizpXx",
+          "review_url": "https://openreview.net/forum?id=dEJ3ztpdbc&noteId=SbDTDizpXx"
+        },
+        {
+          "formula_location": "PAGE (316)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very confident",
+          "evidence": "Typo in Line 316: did you mean \"random data forgetting\" instead of \"data-wise forgetting\"? The following sentences all seem to refer to that setting as the former.",
+          "review_id": "SbDTDizpXx",
+          "review_url": "https://openreview.net/forum?id=dEJ3ztpdbc&noteId=SbDTDizpXx"
+        }
+      ]
+    },
+    {
+      "paper_id": "Y58JfHeQhH",
+      "paper_title": "Preference Banzhaf: A Game-Theoretic Index with Feature-wise Probabilities",
+      "paper_pdf_link": "https://openreview.net/pdf?id=Y58JfHeQhH",
+      "issues": [
+        {
+          "formula_location": "EQ (4)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "typing up the paranthesis of Equation 4 (preferably not squared ones but bigger normal parentheses)",
+          "review_id": "M45zn9RHHB",
+          "review_url": "https://openreview.net/forum?id=Y58JfHeQhH&noteId=M45zn9RHHB"
+        }
+      ]
+    },
+    {
+      "paper_id": "bFlE9AyEJY",
+      "paper_title": "From Attention to Atoms: Spectral Dictionary Learning for Fast, Interpretable Language Models}",
+      "paper_pdf_link": "https://openreview.net/pdf?id=bFlE9AyEJY",
+      "issues": [
+        {
+          "formula_location": "EQ (165)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Confident",
+          "evidence": "165 N=B×L?",
+          "review_id": "OIhdexnSRp",
+          "review_url": "https://openreview.net/forum?id=bFlE9AyEJY&noteId=OIhdexnSRp"
+        }
+      ]
+    },
+    {
+      "paper_id": "SP1zrF3Znk",
+      "paper_title": "Towards Safe and Generalizable Treatment Strategies in Healthcare via RL and PAC-Bayesian Computations",
+      "paper_pdf_link": "https://openreview.net/pdf?id=SP1zrF3Znk",
+      "issues": [
+        {
+          "formula_location": "EQ (6)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "questions: 1. Does there exist typos in Eq.(6)?",
+          "review_id": "UHUBuQWD2i",
+          "review_url": "https://openreview.net/forum?id=SP1zrF3Znk&noteId=UHUBuQWD2i"
+        },
+        {
+          "formula_location": "EQ (3)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "equation (3), $n$ should be $m$;",
+          "review_id": "tILQs6AdQs",
+          "review_url": "https://openreview.net/forum?id=SP1zrF3Znk&noteId=tILQs6AdQs"
+        },
+        {
+          "formula_location": "EQ (5)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "equation (5), $=$ in the definition;",
+          "review_id": "tILQs6AdQs",
+          "review_url": "https://openreview.net/forum?id=SP1zrF3Znk&noteId=tILQs6AdQs"
+        },
+        {
+          "formula_location": "EQ (6)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "equation (6), I guess the event in the indicator should be ≠",
+          "review_id": "tILQs6AdQs",
+          "review_url": "https://openreview.net/forum?id=SP1zrF3Znk&noteId=tILQs6AdQs"
+        }
+      ]
+    },
+    {
+      "paper_id": "SjAHFGoUb6",
+      "paper_title": "Concepts' Information Bottleneck Models",
+      "paper_pdf_link": "https://openreview.net/pdf?id=SjAHFGoUb6",
+      "issues": [
+        {
+          "formula_location": "EQ (3)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "- Eq 3: missing $E_{p(c)}$ for the third term",
+          "review_id": "bRusNcKumG",
+          "review_url": "https://openreview.net/forum?id=SjAHFGoUb6&noteId=bRusNcKumG"
+        }
+      ]
+    },
+    {
+      "paper_id": "VafdgT65jB",
+      "paper_title": "Amortized Inference of Causal Models via Conditional Fixed-Point Iterations",
+      "paper_pdf_link": "https://openreview.net/pdf?id=VafdgT65jB",
+      "issues": [
+        {
+          "formula_location": "PAGE (1), LINE (13)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "Page 1, line 13: \"also outperforms them in scare data regimes\" → should be \"scarce data regimes\"",
+          "review_id": "YdjmR7nXRJ",
+          "review_url": "https://openreview.net/forum?id=VafdgT65jB&noteId=YdjmR7nXRJ"
+        },
+        {
+          "formula_location": "PAGE (7), LINE (260)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "Page 7, line 260: \"Better Generalization in Scare Data Regimes\" → should be \"Scarce Data Regimes\"",
+          "review_id": "YdjmR7nXRJ",
+          "review_url": "https://openreview.net/forum?id=VafdgT65jB&noteId=YdjmR7nXRJ"
+        },
+        {
+          "formula_location": "PAGE (9), LINE (312)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "Page 9, line 312: \"Cond-FiP not only generalizes to unseens in-distribution instances\" → should be \"unseen in-distribution instances\"",
+          "review_id": "YdjmR7nXRJ",
+          "review_url": "https://openreview.net/forum?id=VafdgT65jB&noteId=YdjmR7nXRJ"
+        }
+      ]
+    },
+    {
+      "paper_id": "V8ImbOfpdh",
+      "paper_title": "DSH-Bench: A Difficulty- and Scenario-Aware Benchmark with Hierarchical Subject Taxonomy for Subject-Driven Text-to-Image Generation",
+      "paper_pdf_link": "https://openreview.net/pdf?id=V8ImbOfpdh",
+      "issues": [
+        {
+          "formula_location": "PAGE (6)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very confident",
+          "evidence": "The paper contains many typos, e.g., “Meidum” in Figure 6(a) should be corrected to “Medium”.",
+          "review_id": "C3l2s9RCF6",
+          "review_url": "https://openreview.net/forum?id=V8ImbOfpdh&noteId=C3l2s9RCF6"
+        }
+      ]
+    },
+    {
+      "paper_id": "WXAjAelIpJ",
+      "paper_title": "Axiomatic Characterization of the Hamming and Jaccard Distances",
+      "paper_pdf_link": "https://openreview.net/pdf?id=WXAjAelIpJ",
+      "issues": [
+        {
+          "formula_location": "PAGE (863), LINE (863)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "The inequality should be $J(x, z) \\leq$, not $J(x, z) \\leftarrow$.",
+          "review_id": "M7cGh9dod4",
+          "review_url": "https://openreview.net/forum?id=WXAjAelIpJ&noteId=M7cGh9dod4"
+        }
+      ]
+    },
+    {
+      "paper_id": "MZg06yaIW9",
+      "paper_title": "Streaming Sequence-to-Sequence Learning with Delayed Streams Modeling",
+      "paper_pdf_link": "https://openreview.net/pdf?id=MZg06yaIW9",
+      "issues": [
+        {
+          "formula_location": "EQ (6)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Confident",
+          "evidence": "In Equation (6), the second equation should use $\\tilde{Y}_t$ instead of $\\tilde{Y}_1$.",
+          "review_id": "nv4iKFpGyj",
+          "review_url": "https://openreview.net/forum?id=MZg06yaIW9&noteId=nv4iKFpGyj"
+        }
+      ]
+    },
+    {
+      "paper_id": "OtOcVbOT7r",
+      "paper_title": "Differentially Private Clipped-SGD: High-Probability Convergence with Arbitrary Clipping Level",
+      "paper_pdf_link": "https://openreview.net/pdf?id=OtOcVbOT7r",
+      "issues": [
+        {
+          "formula_location": "EQ (18)",
+          "category": "Mathematically wrong",
+          "confidence": "Suggestion",
+          "evidence": "The term (18) in the maximum seems to diverge w.r.t K, so I cannot see how you could obtain the rates presented in Table 1.",
+          "review_id": "92A6K7vXzz",
+          "review_url": "https://openreview.net/forum?id=OtOcVbOT7r&noteId=92A6K7vXzz"
+        }
+      ]
+    },
+    {
+      "paper_id": "TtYJeYAhC4",
+      "paper_title": "Generalized Kernelized Bandits: Self-Normalized Bernstein-Like Dimension-Free Inequality and Regret Bounds",
+      "paper_pdf_link": "https://openreview.net/pdf?id=TtYJeYAhC4",
+      "issues": [
+        {
+          "formula_location": "EQ (196)",
+          "category": "Mathematically wrong",
+          "confidence": "Confident",
+          "evidence": "the term $\\lambda^{-1}$ on the right-hand side of equation (196) does not really align with $(\\det(\\lambda I))^{-1}$ if the dimension is not one.",
+          "review_id": "AdDbfxZilQ",
+          "review_url": "https://openreview.net/forum?id=TtYJeYAhC4&noteId=AdDbfxZilQ"
+        }
+      ]
+    },
+    {
+      "paper_id": "KkOMqJQiWU",
+      "paper_title": "Meta-learning local learning rules for structured credit assignment with sparse feedback",
+      "paper_pdf_link": "https://openreview.net/pdf?id=KkOMqJQiWU",
+      "issues": [
+        {
+          "formula_location": "EQ (8)",
+          "category": "Mathematically wrong",
+          "confidence": "Suggestion",
+          "evidence": "Eq. 8 is wrong. The weight updates depend linearly on the eligibility trace, as in Eq. 5, but the weights themselves should be an exponential filtration of e_{ij} (R - \\bar{R}).",
+          "review_id": "lP901EbtRX",
+          "review_url": "https://openreview.net/forum?id=KkOMqJQiWU&noteId=lP901EbtRX"
+        },
+        {
+          "formula_location": "EQ (19)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "Equation (19) has a square and  is different from Eq. (9).",
+          "review_id": "uZY3bV92Yr",
+          "review_url": "https://openreview.net/forum?id=KkOMqJQiWU&noteId=uZY3bV92Yr"
+        },
+        {
+          "formula_location": "EQ (9)",
+          "category": "Mathematically wrong",
+          "confidence": "Suggestion",
+          "evidence": "Probably Eq. (9) has a mistake, because Figure 1 in Supplementary and Eq. (24) give a different equation.",
+          "review_id": "uZY3bV92Yr",
+          "review_url": "https://openreview.net/forum?id=KkOMqJQiWU&noteId=uZY3bV92Yr"
+        }
+      ]
+    },
+    {
+      "paper_id": "InyYuWLWHD",
+      "paper_title": "LayerGuard: Poisoning-Resilient Federated Learning via Layer-Wise Similarity Analysis",
+      "paper_pdf_link": "https://openreview.net/pdf?id=InyYuWLWHD",
+      "issues": [
+        {
+          "formula_location": "PAGE (4)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "on page 4, \"i, j ∈ 1, . . . , N\" is missing parentheses and should be corrected to \"i, j ∈ {1, . . . , N}\"",
+          "review_id": "5CUZztaBzD",
+          "review_url": "https://openreview.net/forum?id=InyYuWLWHD&noteId=5CUZztaBzD"
+        }
+      ]
+    },
+    {
+      "paper_id": "eR8raBLZW7",
+      "paper_title": "BriLLM: Brain-inspired Large Language Model",
+      "paper_pdf_link": "https://openreview.net/pdf?id=eR8raBLZW7",
+      "issues": [
+        {
+          "formula_location": "EQ (2)",
+          "category": "Mathematically wrong",
+          "confidence": "Confident",
+          "evidence": "Eq 2 / eq 3: I don't understand this. The softmax is over the $1:{L}-1$? So the $\\mathcal{W}$ shape is $[L-1]$? But then in eq 3, you multiply this with $e_k$, which is of shape $[d_{node}]$? This does not make sense.",
+          "review_id": "ktGKeNXWc6",
+          "review_url": "https://openreview.net/forum?id=eR8raBLZW7&noteId=ktGKeNXWc6"
+        },
+        {
+          "formula_location": "SECTION (4)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very confident",
+          "evidence": "4000 ∗ 4000 ∗ (32 ∗ 32 + 32), don't use '*' for multiplication, use `\\cdot` ($\\cdot$).",
+          "review_id": "ktGKeNXWc6",
+          "review_url": "https://openreview.net/forum?id=eR8raBLZW7&noteId=ktGKeNXWc6"
+        }
+      ]
+    },
+    {
+      "paper_id": "QJtanJS4T9",
+      "paper_title": "Irreducible Loss Floors in Gradient Descent Convergence and Energy Footprint",
+      "paper_pdf_link": "https://openreview.net/pdf?id=QJtanJS4T9",
+      "issues": [
+        {
+          "formula_location": "EQ (29)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "Equation (29) does not describe adaptive optimizers, as the parameter update is in general not a linear function of the gradient.",
+          "review_id": "PQZkEm3ONi",
+          "review_url": "https://openreview.net/forum?id=QJtanJS4T9&noteId=PQZkEm3ONi"
+        },
+        {
+          "formula_location": "SECTION (8)",
+          "category": "Mathematically wrong",
+          "confidence": "Suggestion",
+          "evidence": "The extension to adaptive optimizers in Section 8 seems to be wrong, as it assumes that the parameter update is a linear function of the gradient.",
+          "review_id": "PQZkEm3ONi",
+          "review_url": "https://openreview.net/forum?id=QJtanJS4T9&noteId=PQZkEm3ONi"
+        }
+      ]
+    },
+    {
+      "paper_id": "QCB4wfDqQ9",
+      "paper_title": "Efficient Sampling for Doubly Stochastic Variational Inference in Deep Gaussian Processes Regression",
+      "paper_pdf_link": "https://openreview.net/pdf?id=QCB4wfDqQ9",
+      "issues": [
+        {
+          "formula_location": "SECTION (3)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "\"First, even when the distributional form is clear, sampling incurs a time cost of O(N³).\"",
+          "review_id": "FAkcG5Agm1",
+          "review_url": "https://openreview.net/forum?id=QCB4wfDqQ9&noteId=FAkcG5Agm1"
+        }
+      ]
+    },
+    {
+      "paper_id": "FSowNqrLpp",
+      "paper_title": "Weak-to-strong Generalization via Formative Learning from Student Demonstrations & Teacher Evaluation",
+      "paper_pdf_link": "https://openreview.net/pdf?id=FSowNqrLpp",
+      "issues": [
+        {
+          "formula_location": "THEOREM (4.1)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very serious",
+          "evidence": "Proposition 4.1: W2s ⇒ W2S",
+          "review_id": "5qg2bVD9xM",
+          "review_url": "https://openreview.net/forum?id=FSowNqrLpp&noteId=5qg2bVD9xM"
+        }
+      ]
+    },
+    {
+      "paper_id": "M2JU5WQ1Gw",
+      "paper_title": "Uncovering Critical Sets of Deep Neural Networks via Sample-Independent Critical Lifting",
+      "paper_pdf_link": "https://openreview.net/pdf?id=M2JU5WQ1Gw",
+      "issues": [
+        {
+          "formula_location": "EQ (325)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "line 325: 1 \\leq i < j \\leq n (should be n instead of m)",
+          "review_id": "olmYUSEbXp",
+          "review_url": "https://openreview.net/forum?id=M2JU5WQ1Gw&noteId=olmYUSEbXp"
+        },
+        {
+          "formula_location": "EQ (330)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "line 330: non-zero (instead of non=zero)",
+          "review_id": "olmYUSEbXp",
+          "review_url": "https://openreview.net/forum?id=M2JU5WQ1Gw&noteId=olmYUSEbXp"
+        }
+      ]
+    },
+    {
+      "paper_id": "OCxhcqUtDf",
+      "paper_title": "HOTA: Hamiltonian framework for Optimal Transport Advection",
+      "paper_pdf_link": "https://openreview.net/pdf?id=OCxhcqUtDf",
+      "issues": [
+        {
+          "formula_location": "EQ (6)",
+          "category": "Mathematically wrong",
+          "confidence": "Not sure",
+          "evidence": "Eq 6 $\\inf$ over $x_t$ appears to be incorrect",
+          "review_id": "SxVFkTZUoF",
+          "review_url": "https://openreview.net/forum?id=OCxhcqUtDf&noteId=SxVFkTZUoF"
+        },
+        {
+          "formula_location": "EQ (6)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "In equation (6), therer are 2 parameters call $t$.",
+          "review_id": "4KcCsfdYft",
+          "review_url": "https://openreview.net/forum?id=OCxhcqUtDf&noteId=4KcCsfdYft"
+        }
+      ]
+    },
+    {
+      "paper_id": "Gsj3oN2Ipy",
+      "paper_title": "Echoes of the Visual Past: Test-Time Prompt Tuning with Multi-Scale Visual Memory",
+      "paper_pdf_link": "https://openreview.net/pdf?id=Gsj3oN2Ipy",
+      "issues": [
+        {
+          "formula_location": "EQ (8)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "In Eq.8, p(y|v,p_{ada}) represents the probability of belonging to y, which should be a value rather than a distribution.",
+          "review_id": "KyA4X5jnmE",
+          "review_url": "https://openreview.net/forum?id=Gsj3oN2Ipy&noteId=KyA4X5jnmE"
+        }
+      ]
+    },
+    {
+      "paper_id": "DP7kUjUltX",
+      "paper_title": "On the Complexity of Verifying Quantized GNNs with Readout",
+      "paper_pdf_link": "https://openreview.net/pdf?id=DP7kUjUltX",
+      "issues": [
+        {
+          "formula_location": "PAGE (2)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "- The authors in the second page refer to trRELU, I suppose this is a typo and they meant ReLU (?)",
+          "review_id": "XEIGbrknTl",
+          "review_url": "https://openreview.net/forum?id=DP7kUjUltX&noteId=XEIGbrknTl"
+        },
+        {
+          "formula_location": "EQ (140)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Confident",
+          "evidence": "3agg(x1) should be replaced by 3agg(x2)? (line 140)",
+          "review_id": "E5oeYP6KDd",
+          "review_url": "https://openreview.net/forum?id=DP7kUjUltX&noteId=E5oeYP6KDd"
+        },
+        {
+          "formula_location": "EQ (97)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Confident",
+          "evidence": "Should this be K^3m->K^m (as opposed to n?) (line 97)",
+          "review_id": "E5oeYP6KDd",
+          "review_url": "https://openreview.net/forum?id=DP7kUjUltX&noteId=E5oeYP6KDd"
+        }
+      ]
+    },
+    {
+      "paper_id": "9tYH4TrV1b",
+      "paper_title": "Enhancing Zeroth-Order Fine-Tuning for LLMs via Gradient-Guided Subspace Selection",
+      "paper_pdf_link": "https://openreview.net/pdf?id=9tYH4TrV1b",
+      "issues": [
+        {
+          "formula_location": "THEOREM (1)",
+          "category": "Mathematically wrong",
+          "confidence": "Suggestion",
+          "evidence": "Theorem 1 seems to be incorrect as it violates the lower bound of SGD sample complexity for non-convex smooth objective.",
+          "review_id": "zWhM9oa2Nz",
+          "review_url": "https://openreview.net/forum?id=9tYH4TrV1b&noteId=zWhM9oa2Nz"
+        }
+      ]
+    },
+    {
+      "paper_id": "AlcMfjenRb",
+      "paper_title": "Gradient-Free Approaches is a Key to an Efficient Interaction with Markovian Stochasticity",
+      "paper_pdf_link": "https://openreview.net/pdf?id=AlcMfjenRb",
+      "issues": [
+        {
+          "formula_location": "EQ (8)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "On line 204: $E$ -> $\\mathbb{E}$, and I think there is a factor $e$ missing in the two other members of the equation.",
+          "review_id": "BtRJc7GeaW",
+          "review_url": "https://openreview.net/forum?id=AlcMfjenRb&noteId=BtRJc7GeaW"
+        }
+      ]
+    },
+    {
+      "paper_id": "CO57FDVLhA",
+      "paper_title": "Quantization vs Pruning: Insights from the Strong Lottery Ticket Hypothesis",
+      "paper_pdf_link": "https://openreview.net/pdf?id=CO57FDVLhA",
+      "issues": [
+        {
+          "formula_location": "PAGE (1), LINE (137)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "line 137 RNNP -> RNPP",
+          "review_id": "9dB9o3nXvI",
+          "review_url": "https://openreview.net/forum?id=CO57FDVLhA&noteId=9dB9o3nXvI"
+        },
+        {
+          "formula_location": "PAGE (1), LINE (237)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "line 237 touble -> double",
+          "review_id": "9dB9o3nXvI",
+          "review_url": "https://openreview.net/forum?id=CO57FDVLhA&noteId=9dB9o3nXvI"
+        },
+        {
+          "formula_location": "PAGE (1), LINE (250)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "line 250 atleast -> at least",
+          "review_id": "9dB9o3nXvI",
+          "review_url": "https://openreview.net/forum?id=CO57FDVLhA&noteId=9dB9o3nXvI"
+        }
+      ]
+    },
+    {
+      "paper_id": "A2DJCgmWI5",
+      "paper_title": "Rethinking Diffusion Model in High Dimension",
+      "paper_pdf_link": "https://openreview.net/pdf?id=A2DJCgmWI5",
+      "issues": [
+        {
+          "formula_location": "EQ (13)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "Eq. (13) raises some concerns: 2) $c_0$ in $p(x_t|x_0) \\sim N(x_t; c_0 x_0, c_1^2)$ can be extremely close to 0. This leads to the mean μ becoming unbounded",
+          "review_id": "KWOo98Mb4G",
+          "review_url": "https://openreview.net/forum?id=A2DJCgmWI5&noteId=KWOo98Mb4G"
+        }
+      ]
+    },
+    {
+      "paper_id": "EqlmpJYapx",
+      "paper_title": "PipelineRL: Faster On-policy Reinforcement Learning for Long Sequence Generation",
+      "paper_pdf_link": "https://openreview.net/pdf?id=EqlmpJYapx",
+      "issues": [
+        {
+          "formula_location": "EQ (5)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "Equation 5 seems to be missing summation notation.",
+          "review_id": "t7kvPurg60",
+          "review_url": "https://openreview.net/forum?id=EqlmpJYapx&noteId=t7kvPurg60"
+        }
+      ]
+    },
+    {
+      "paper_id": "Bitk7yCRXB",
+      "paper_title": "Non-vacuous Bounds for the test error of Deep Learning without any change to the trained models",
+      "paper_pdf_link": "https://openreview.net/pdf?id=Bitk7yCRXB",
+      "issues": [
+        {
+          "formula_location": "EQ (4)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "bound (4) exceeds 100% in roughly one third of the cases reported in Table 3",
+          "review_id": "xfa60pWNf7",
+          "review_url": "https://openreview.net/forum?id=Bitk7yCRXB&noteId=xfa60pWNf7"
+        },
+        {
+          "formula_location": "EQ (4)",
+          "category": "Mathematically wrong",
+          "confidence": "Suggestion",
+          "evidence": "the bound (4) in Theorem 3.2 is looser than the one (3) in Theorem 3.1, which is weird to use loose bounds to compare different models",
+          "review_id": "0r3kP6BF74",
+          "review_url": "https://openreview.net/forum?id=Bitk7yCRXB&noteId=0r3kP6BF74"
+        }
+      ]
+    },
+    {
+      "paper_id": "8WP2NgiRUV",
+      "paper_title": "Higher-Order Causal Structure Learning with Additive Models",
+      "paper_pdf_link": "https://openreview.net/pdf?id=8WP2NgiRUV",
+      "issues": [
+        {
+          "formula_location": "EQ (4)",
+          "category": "Mathematically wrong",
+          "confidence": "Very confident",
+          "evidence": "Eq. (4) is not clear. If \\xi_S(x_s) is the log probability of p(x_s), then (4) is not correct.",
+          "review_id": "mAXxg9GtAm",
+          "review_url": "https://openreview.net/forum?id=8WP2NgiRUV&noteId=mAXxg9GtAm"
+        },
+        {
+          "formula_location": "EQ (8)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "Eq. (8): should $Pa$ be $HypPa$?",
+          "review_id": "4m8MlOYbMP",
+          "review_url": "https://openreview.net/forum?id=8WP2NgiRUV&noteId=4m8MlOYbMP"
+        },
+        {
+          "formula_location": "EQ (6)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "Eq. 6: \\mathrm{Pa}",
+          "review_id": "0aHtSpdOWj",
+          "review_url": "https://openreview.net/forum?id=8WP2NgiRUV&noteId=0aHtSpdOWj"
+        }
+      ]
+    },
+    {
+      "paper_id": "8QJjRy8Jwl",
+      "paper_title": "Beyond Self‑Attention: A Subquadratic Fourier‑Wavelet Transformer with Multi‑Modal Fusion",
+      "paper_pdf_link": "https://openreview.net/pdf?id=8QJjRy8Jwl",
+      "issues": [
+        {
+          "formula_location": "PAGE (1), LINE (1)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "There are quite a few typos in the paper; \"spectral techniques to replaces the attention mechanism\" should be \"spectral techniques to replace the attention mechanism\"",
+          "review_id": "lu2ymEZVGF",
+          "review_url": "https://openreview.net/forum?id=8QJjRy8Jwl&noteId=lu2ymEZVGF"
+        }
+      ]
+    },
+    {
+      "paper_id": "8EWo0gX5TW",
+      "paper_title": "Neural SDEs as a Unified Approach to Continuous-Domain Sequence Modeling",
+      "paper_pdf_link": "https://openreview.net/pdf?id=8EWo0gX5TW",
+      "issues": [
+        {
+          "formula_location": "EQ (13)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "Equation (13), which expresses the optimal diffusion as the squared residual of the drift term. However, this equation is fundamentally flawed: the right-hand side involves a random variable (Δx).",
+          "review_id": "Ebqa6oV6bX",
+          "review_url": "https://openreview.net/forum?id=8EWo0gX5TW&noteId=Ebqa6oV6bX"
+        }
+      ]
+    },
+    {
+      "paper_id": "2rgYVFiWPL",
+      "paper_title": "Sample complexity of Schrödinger potential estimation",
+      "paper_pdf_link": "https://openreview.net/pdf?id=2rgYVFiWPL",
+      "issues": [
+        {
+          "formula_location": "EQ (278)",
+          "category": "Mathematically wrong",
+          "confidence": "Confident",
+          "evidence": "the main estimate (lines 277–279) suffers from the curse of dimensionality ($\\approx \\mathcal{O}(d^2)$), making the problem difficult to scale to higher-dimensional settings.",
+          "review_id": "dgkyS0MiPt",
+          "review_url": "https://openreview.net/forum?id=2rgYVFiWPL&noteId=dgkyS0MiPt"
+        }
+      ]
+    },
+    {
+      "paper_id": "38Q0er5mtg",
+      "paper_title": "Equivariant Flow Matching for Point Cloud Assembly",
+      "paper_pdf_link": "https://openreview.net/pdf?id=38Q0er5mtg",
+      "issues": [
+        {
+          "formula_location": "EQ (5)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "Also I think the bottom-right corner of se3 matrix in Eq 5 should be 1.",
+          "review_id": "YK7c74dQK0",
+          "review_url": "https://openreview.net/forum?id=38Q0er5mtg&noteId=YK7c74dQK0"
+        }
+      ]
+    },
+    {
+      "paper_id": "0F924d12FX",
+      "paper_title": "Triple-BERT: Do We Really Need MARL for Order Dispatch on Ride-Sharing Platforms?",
+      "paper_pdf_link": "https://openreview.net/pdf?id=0F924d12FX",
+      "issues": [
+        {
+          "formula_location": "EQ (5-6)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "Typos: Eq. 5-6: Incorrect bracket sizing.",
+          "review_id": "vaYFzYa2U6",
+          "review_url": "https://openreview.net/forum?id=0F924d12FX&noteId=vaYFzYa2U6"
+        }
+      ]
+    },
+    {
+      "paper_id": "4kT9Jn7LSB",
+      "paper_title": "Curse of Slicing: Why Sliced Mutual Information is a Deceptive Measure of Statistical Dependence",
+      "paper_pdf_link": "https://openreview.net/pdf?id=4kT9Jn7LSB",
+      "issues": [
+        {
+          "formula_location": "LEMMA (A.3)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Very certain",
+          "evidence": "typo in \"Proof of Lemma A.3\". Should be A.4",
+          "review_id": "eAoj1CIom9",
+          "review_url": "https://openreview.net/forum?id=4kT9Jn7LSB&noteId=eAoj1CIom9"
+        }
+      ]
+    },
+    {
+      "paper_id": "23UbkRKsZa",
+      "paper_title": "Causal Path Tracing in Transformers",
+      "paper_pdf_link": "https://openreview.net/pdf?id=23UbkRKsZa",
+      "issues": [
+        {
+          "formula_location": "DEF (5)",
+          "category": "Mathematically wrong",
+          "confidence": "Confident",
+          "evidence": "describe why the intervention strategies described in the paragraph starting on line 119 violate the conditions in Def. 5, rather than just stating that they do.",
+          "review_id": "J1BNvO86vG",
+          "review_url": "https://openreview.net/forum?id=23UbkRKsZa&noteId=J1BNvO86vG"
+        }
+      ]
+    },
+    {
+      "paper_id": "6JlzhISecd",
+      "paper_title": "A Stochastic Approximation Approach for Efficient Decentralized Optimization on Random Networks",
+      "paper_pdf_link": "https://openreview.net/pdf?id=6JlzhISecd",
+      "issues": [
+        {
+          "formula_location": "EQ (46)",
+          "category": "Mathematically wrong",
+          "confidence": "Very certain",
+          "evidence": "Infeasible parameter conditions: Step-size constraints (Eq. 46) become unsolvable when $\\sigma_A>1$ (common in sparse networks).",
+          "review_id": "dVxzzNp9u1",
+          "review_url": "https://openreview.net/forum?id=6JlzhISecd&noteId=dVxzzNp9u1"
+        },
+        {
+          "formula_location": "EQ (6)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "In (6), (8b), I believe there is a sign issue and the variables $\\mathbf{x} _j$ and $\\mathbf{x} _i$ should be permutated.",
+          "review_id": "s8XUfslvwE",
+          "review_url": "https://openreview.net/forum?id=6JlzhISecd&noteId=s8XUfslvwE"
+        },
+        {
+          "formula_location": "EQ (8b)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "In (6), (8b), I believe there is a sign issue and the variables $\\mathbf{x} _j$ and $\\mathbf{x} _i$ should be permutated.",
+          "review_id": "s8XUfslvwE",
+          "review_url": "https://openreview.net/forum?id=6JlzhISecd&noteId=s8XUfslvwE"
+        },
+        {
+          "formula_location": "EQ (10c)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "In (10c) and (10d), I think three $\\pm$ signs should be $\\mp$ here too.",
+          "review_id": "s8XUfslvwE",
+          "review_url": "https://openreview.net/forum?id=6JlzhISecd&noteId=s8XUfslvwE"
+        },
+        {
+          "formula_location": "EQ (10d)",
+          "category": "Typo / Symbol misuse",
+          "confidence": "Suggestion",
+          "evidence": "In (10c) and (10d), I think three $\\pm$ signs should be $\\mp$ here too.",
+          "review_id": "s8XUfslvwE",
+          "review_url": "https://openreview.net/forum?id=6JlzhISecd&noteId=s8XUfslvwE"
+        }
+      ]
+    },
+    {
+      "paper_id": "0iJskiCgKp",
+      "paper_title": "On Fitting Flow Models with Large Sinkhorn Couplings",
+      "paper_pdf_link": "https://openreview.net/pdf?id=0iJskiCgKp",
+      "issues": [
+        {
+          "formula_location": "EQ (1)",
+          "category": "Mathematically wrong",
+          "confidence": "Very confident",
+          "evidence": "as ε → 0, the solution P^ε converges to the optimal transport matrix solving (1)",
+          "review_id": "nhlGZeuWO2",
+          "review_url": "https://openreview.net/forum?id=0iJskiCgKp&noteId=nhlGZeuWO2"
+        }
+      ]
+    }
+  ]
+}
