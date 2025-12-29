@@ -251,7 +251,7 @@ def main():
             value=str(existing_correct_formula_location) if existing_correct_formula_location else "",
             key=f"formula_loc_{paper_id}",
             label_visibility="collapsed",
-            placeholder="e.g., EQ (6), PAGE (5), SECTION (3.2)"
+            placeholder="e.g., LINE (402), EQ (6), PAGE (5), SECTION (3.2)"
         )
 
     # Action buttons
