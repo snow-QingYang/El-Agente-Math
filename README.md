@@ -2,6 +2,13 @@
 
 A CLI tool that downloads arXiv papers, extracts mathematical formulas, and generates AI-powered explanations.
 
+## Quick start for paper review
+```bash
+uv sync
+uv run streamlit run paper_review_interface.py
+```
+After you finish your part of work, push the ```packages/openreview-crawler/output/neurips2025/paper_reviews.json```
+
 ## Installation
 
 ### 1. Install uv (Python package manager)
