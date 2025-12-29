@@ -3,3 +3,11 @@ members = [
     "packages/mai",
     "packages/openreview-crawler",
 ]
+[project]
+name = "el-agente-math"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "pdfplumber>=0.11.8",
+    "streamlit>=1.52.2",
+]

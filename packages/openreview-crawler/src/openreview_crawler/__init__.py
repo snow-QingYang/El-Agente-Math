@@ -6,7 +6,11 @@ __version__ = "0.1.0"
 try:
     from .crawler import OpenReviewCrawler, Submission, Review
     from .pipeline import PipelineConfig, run_pipeline
-    from .analyze_formula_issues_gpt import FormulaIssueDetector
+    from .analyze_formula_issues_gpt import (
+        FormulaIssueDetector,
+        FormulaIssueDetectorICML,
+        FormulaIssueDetectorNIPS,
+    )
     from .analyze_iclr_formula_details import FormulaDetailsAnalyzer
 
     __all__ = [
@@ -16,6 +20,8 @@ try:
         "PipelineConfig",
         "run_pipeline",
         "FormulaIssueDetector",
+        "FormulaIssueDetectorICML",
+        "FormulaIssueDetectorNIPS",
         "FormulaDetailsAnalyzer",
     ]
 except Exception:  # pragma: no cover

@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
 """
 Streamlit interface for reviewing papers from result.json
-Allows accept/reject decisions and comments for each paper
+Allows keep/remove decisions and comments for each paper
 """
 
 import streamlit as st
 import json
 import os
-from pathlib import Path
 from datetime import datetime
 
 
 # Configuration
-INPUT_FILE = "output/iclr2024_check/result.json"
-OUTPUT_FILE = "output/iclr2024_check/paper_reviews.json"
+INPUT_FILE = "packages/openreview-crawler/output/neurips2025/result.json"
+OUTPUT_FILE = "packages/openreview-crawler/output/neurips2025/paper_reviews.json"
 
 
 def load_data():
@@ -39,29 +38,21 @@ def save_reviews(reviews):
         json.dump(reviews, f, indent=2, ensure_ascii=False)
 
 
-def normalize_arxiv_url(url):
-    """Convert arxiv URL to abs format"""
-    if not url or not url.strip():
-        return ''
-
-    url = url.strip()
-    # Replace /pdf/ with /abs/
-    if '/pdf/' in url:
-        url = url.replace('/pdf/', '/abs/')
-
-    return url
-
-
-def save_review(paper_id, decision, comment, correct_arxiv_url=''):
+def save_review(paper_id, keep, comment, correct_formula_location=None):
     """Save a single paper review"""
     reviews = load_reviews()
 
-    reviews[paper_id] = {
-        'decision': decision,
-        'comment': comment,
-        'correct_arxiv_url': normalize_arxiv_url(correct_arxiv_url),
-        'reviewed_at': datetime.now().isoformat()
+    review_data = {
+        'keep': bool(keep),
+        'comment': comment if comment else None,
+        'reviewed_at': datetime.now().isoformat(),
     }
+
+    # Only include correct_formula_location if it's provided (not None or empty)
+    if correct_formula_location is not None and correct_formula_location != '':
+        review_data['correct_formula_location'] = correct_formula_location
+
+    reviews[paper_id] = review_data
 
     save_reviews(reviews)
     return reviews
@@ -71,7 +62,7 @@ def main():
     st.set_page_config(page_title="Paper Review Interface", layout="wide")
 
     st.title("📄 Paper Review Interface")
-    st.markdown("Review papers and decide: **Accept** or **Reject**")
+    st.markdown("Review papers and decide: **Keep** or **Remove**")
 
     # Load data
     if 'data' not in st.session_state:
@@ -87,8 +78,16 @@ def main():
     # Progress information
     total_papers = len(papers)
     reviewed_count = len(reviews)
-    accept_count = sum(1 for r in reviews.values() if r['decision'] == 'accept')
-    reject_count = sum(1 for r in reviews.values() if r['decision'] == 'reject')
+    keep_count = sum(
+        1
+        for r in reviews.values()
+        if r.get('keep') is True or r.get('decision') == 'accept'
+    )
+    remove_count = sum(
+        1
+        for r in reviews.values()
+        if r.get('keep') is False or r.get('decision') == 'reject'
+    )
 
     # Display metadata
     st.sidebar.header("Dataset Information")
@@ -106,8 +105,8 @@ def main():
     col1, col2, col3, col4 = st.sidebar.columns(4)
     col1.metric("Total", total_papers)
     col2.metric("Reviewed", reviewed_count)
-    col3.metric("✓ Accept", accept_count)
-    col4.metric("✗ Reject", reject_count)
+    col3.metric("✓ Keep", keep_count)
+    col4.metric("✗ Remove", remove_count)
 
     progress = reviewed_count / total_papers if total_papers > 0 else 0
     st.sidebar.progress(progress)
@@ -121,7 +120,7 @@ def main():
     # Filter options
     filter_option = st.sidebar.radio(
         "Show:",
-        ["All Papers", "Unreviewed Only", "Reviewed Only", "Accepted Only", "Rejected Only"]
+        ["All Papers", "Unreviewed Only", "Reviewed Only", "Kept Only", "Removed Only"]
     )
 
     # Filter papers based on selection
@@ -129,10 +128,18 @@ def main():
         filtered_papers = [p for p in papers if p['paper_id'] not in reviews]
     elif filter_option == "Reviewed Only":
         filtered_papers = [p for p in papers if p['paper_id'] in reviews]
-    elif filter_option == "Accepted Only":
-        filtered_papers = [p for p in papers if p['paper_id'] in reviews and reviews[p['paper_id']]['decision'] == 'accept']
-    elif filter_option == "Rejected Only":
-        filtered_papers = [p for p in papers if p['paper_id'] in reviews and reviews[p['paper_id']]['decision'] == 'reject']
+    elif filter_option == "Kept Only":
+        filtered_papers = [
+            p for p in papers
+            if p['paper_id'] in reviews
+            and (reviews[p['paper_id']].get('keep') is True or reviews[p['paper_id']].get('decision') == 'accept')
+        ]
+    elif filter_option == "Removed Only":
+        filtered_papers = [
+            p for p in papers
+            if p['paper_id'] in reviews
+            and (reviews[p['paper_id']].get('keep') is False or reviews[p['paper_id']].get('decision') == 'reject')
+        ]
     else:
         filtered_papers = papers
 
@@ -165,27 +172,19 @@ def main():
         st.subheader(paper['paper_title'])
         st.markdown(f"**Paper ID:** `{paper_id}`")
 
-        col_arxiv, col_openreview = st.columns(2)
-        with col_arxiv:
-            if paper.get('arxiv_id'):
-                # Convert PDF URL to abstract URL for display
-                arxiv_url = paper.get('arxiv_pdf_url', '#')
-                arxiv_abs_url = arxiv_url.replace('/pdf/', '/abs/') if '/pdf/' in arxiv_url else arxiv_url
-                st.markdown(f"📄 [ArXiv: {paper['arxiv_id']}]({arxiv_abs_url})")
-        with col_openreview:
-            st.markdown(f"📄 [OpenReview PDF]({paper['paper_pdf_link']})")
-
-        if paper.get('version_date'):
-            st.markdown(f"**Version Date:** {paper['version_date']}")
+        st.markdown(f"📄 [OpenReview PDF]({paper['paper_pdf_link']})")
 
     with col2:
         # Show current review status
         if paper_id in reviews:
             review = reviews[paper_id]
-            if review['decision'] == 'accept':
-                st.success("✅ ACCEPTED")
+            keep_status = review.get('keep')
+            if keep_status is None:
+                keep_status = review.get('decision') == 'accept'
+            if keep_status:
+                st.success("✅ KEEP")
             else:
-                st.error("❌ REJECTED")
+                st.error("❌ REMOVE")
             st.markdown(f"*Reviewed: {review['reviewed_at'][:10]}*")
         else:
             st.warning("⏳ NOT REVIEWED")
@@ -217,9 +216,11 @@ def main():
 
     # Get existing review if available
     existing_review = reviews.get(paper_id, {})
-    existing_decision = existing_review.get('decision', 'accept')
-    existing_comment = existing_review.get('comment', '')
-    existing_correct_arxiv_url = existing_review.get('correct_arxiv_url', '')
+    existing_keep = existing_review.get('keep')
+    if existing_keep is None:
+        existing_keep = existing_review.get('decision', 'accept') == 'accept'
+    existing_comment = existing_review.get('comment') or ''
+    existing_correct_formula_location = existing_review.get('correct_formula_location', None)
 
     col1, col2 = st.columns([2, 3])
 
@@ -227,8 +228,8 @@ def main():
         st.markdown("**Decision:**")
         decision = st.radio(
             "Choose your decision:",
-            ["accept", "reject"],
-            index=0 if existing_decision == 'accept' else 1,
+            ["Keep", "Remove"],
+            index=0 if existing_keep else 1,
             key=f"decision_{paper_id}",
             label_visibility="collapsed"
         )
@@ -244,13 +245,13 @@ def main():
             placeholder="Enter your comments about this paper..."
         )
 
-        st.markdown("**Correct ArXiv URL (optional):**")
-        correct_arxiv_url = st.text_input(
-            "Enter correct ArXiv URL:",
-            value=existing_correct_arxiv_url,
-            key=f"arxiv_url_{paper_id}",
+        st.markdown("**Correct Location (optional):**")
+        correct_formula_location = st.text_input(
+            "Enter correct location:",
+            value=str(existing_correct_formula_location) if existing_correct_formula_location else "",
+            key=f"formula_loc_{paper_id}",
             label_visibility="collapsed",
-            placeholder="http://arxiv.org/pdf/2305.02317v1 or http://arxiv.org/abs/2305.02317v1"
+            placeholder="e.g., EQ (6), PAGE (5), SECTION (3.2)"
         )
 
     # Action buttons
@@ -258,7 +259,12 @@ def main():
 
     with col1:
         if st.button("💾 Save Review", type="primary", use_container_width=True):
-            st.session_state.reviews = save_review(paper_id, decision, comment, correct_arxiv_url)
+            # Convert 0 to None (means not provided)
+            keep_flag = decision == "Keep"
+            formula_loc_to_save = correct_formula_location if correct_formula_location else None
+            st.session_state.reviews = save_review(
+                paper_id, keep_flag, comment, formula_loc_to_save
+            )
             st.success(f"✅ Review saved! Decision: **{decision.upper()}**")
             st.rerun()
 
@@ -308,7 +314,7 @@ def main():
 
     for pid, review in recent_reviews:
         paper_title = next((p['paper_title'] for p in papers if p['paper_id'] == pid), pid)
-        decision_icon = "✅" if review['decision'] == 'accept' else "❌"
+        decision_icon = "✅" if (review.get('keep') is True or review.get('decision') == 'accept') else "❌"
         st.sidebar.markdown(f"{decision_icon} {paper_title[:50]}...")
 
 

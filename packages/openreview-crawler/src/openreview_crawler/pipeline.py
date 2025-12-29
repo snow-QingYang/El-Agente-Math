@@ -20,6 +20,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
+from datetime import datetime
 
 from .analyze_formula_issues_gpt import FormulaIssueDetector
 from .analyze_iclr_formula_details import FormulaDetailsAnalyzer
@@ -27,6 +28,7 @@ from .filter_iclr_formula_details import filter_data
 from .normalize_formula_locations import normalize_file
 from .build_review_lookup import norm_val, extract_numeric
 from .filter_by_category import filter_by_categories
+from .crawler import OpenReviewCrawler
 
 
 @dataclass
@@ -239,20 +241,247 @@ def step_crawl(cfg: PipelineConfig) -> Path:
     print("\nCrawling configuration:")
     venue_id = ask_input("Venue ID (e.g., ICLR.cc/2024/Conference)",
                         "ICLR.cc/2024/Conference")
-    invitation = ask_input("Invitation (e.g., Submission)", "Submission")
 
-    # TODO: Implement actual crawling logic here
-    # For now, just return a placeholder
+    # Ask whether to crawl rejected only or all submissions
+    crawl_rejected_only = ask_yes_no("Crawl only REJECTED papers? (recommended)", default=True)
+
+    if not crawl_rejected_only:
+        invitation = ask_input("Invitation (e.g., Submission)", "Submission")
+    else:
+        invitation = None  # Will use rejected-specific API
+
+    # Ask for limit (useful for testing)
+    limit_str = ask_input("Limit submissions (0=all, or number for testing)", "0")
+    limit = int(limit_str) if limit_str.isdigit() else 0
+
+    # Implement actual crawling logic
     out_path = cfg.output_dir / "openreview_raw.json"
-    print(f"⚠️  Crawling not yet implemented. Please provide an existing file.")
-    print(f"   Expected output path: {out_path}")
 
-    # Ask for existing file as fallback
-    file_path = ask_input("Path to existing OpenReview JSON file", str(out_path))
-    input_path = Path(file_path)
-    if not input_path.exists():
-        raise FileNotFoundError(f"File {input_path} not found")
-    return input_path
+    if out_path.exists():
+        if not ask_yes_no(f"File {out_path.name} exists. Overwrite?", default=False):
+            print(f"✓ Using existing file: {out_path}")
+            return out_path
+
+    print(f"\n🔄 Starting crawl from OpenReview...")
+    print(f"   Venue: {venue_id}")
+    if crawl_rejected_only:
+        print(f"   Mode: REJECTED papers only")
+    else:
+        print(f"   Invitation: {invitation}")
+    if limit > 0:
+        print(f"   Limit: {limit} submissions (testing mode)")
+
+    try:
+        # Initialize crawler
+        crawler = OpenReviewCrawler()
+
+        # Get submissions based on mode
+        if crawl_rejected_only:
+            print(f"\n📡 Fetching ALL submissions from OpenReview API (with reviews)...")
+            print(f"   (Will filter for rejected papers after fetching)")
+            try:
+                # Fetch ALL submissions with their reviews in one API call
+                # This is much more efficient than fetching reviews one by one
+                submissions_notes = crawler.client.get_all_notes(
+                    invitation=f"{venue_id}/-/Submission",
+                    details='replies'
+                )
+                print(f"✓ Fetched {len(submissions_notes)} total submissions")
+
+                # Now filter to only keep rejected papers (not desk-rejected or withdrawn)
+                print(f"\n🔍 Filtering for rejected papers only...")
+                rejected_venueid = f"{venue_id}/Rejected_Submission"
+                original_count = len(submissions_notes)
+
+                submissions_notes = [
+                    note for note in submissions_notes
+                    if note.content.get('venueid', {}).get('value', '') == rejected_venueid
+                    or note.content.get('venueid', '') == rejected_venueid
+                ]
+
+                print(f"✓ Found {len(submissions_notes)} rejected papers (filtered out {original_count - len(submissions_notes)} non-rejected)")
+
+            except Exception as api_error:
+                print(f"\n❌ API Error: {api_error}")
+                print(f"\n🔍 Debugging info:")
+                print(f"   - Check if venue ID is correct: {venue_id}")
+                print(f"   - Some venues may not have public rejected papers")
+                print(f"   - Try visiting: https://openreview.net/group?id={venue_id}#tab-reject")
+                raise
+        else:
+            print(f"\n📡 Fetching ALL submissions from OpenReview API...")
+            print(f"   Full invitation: {venue_id}/-/{invitation}")
+            try:
+                submissions_notes = crawler.client.get_all_notes(
+                    invitation=f"{venue_id}/-/{invitation}",
+                    details='replies'
+                )
+            except Exception as api_error:
+                print(f"\n❌ API Error: {api_error}")
+                print(f"\n🔍 Debugging info:")
+                print(f"   - Check if venue ID is correct: {venue_id}")
+                print(f"   - Check if invitation name is correct: {invitation}")
+                print(f"   - Try visiting: https://openreview.net/group?id={venue_id}")
+                raise
+
+        if not submissions_notes:
+            mode_str = "rejected" if crawl_rejected_only else "all"
+            print(f"\n⚠️  No {mode_str} submissions found")
+            print(f"   This could mean:")
+            print(f"   - The venue ID is incorrect")
+            if crawl_rejected_only:
+                print(f"   - This conference doesn't have public rejected papers")
+                print(f"   - The reject tab may have a different name (check venue_config.py)")
+            else:
+                print(f"   - The invitation is incorrect")
+                print(f"   - Submissions are not publicly accessible")
+
+            # Ask if user wants to provide existing file instead
+            if ask_yes_no("Would you like to provide an existing file instead?", default=True):
+                file_path = ask_input("Path to existing OpenReview JSON file", str(out_path))
+                input_path = Path(file_path)
+                if input_path.exists():
+                    return input_path
+            raise ValueError("No submissions found")
+
+        total_found = len(submissions_notes)
+        print(f"✓ Found {total_found} submissions")
+
+        # Apply limit if specified
+        if limit > 0 and limit < total_found:
+            submissions_notes = submissions_notes[:limit]
+            print(f"  → Limited to first {limit} submissions for testing")
+
+        # Convert to the expected format
+        print(f"\n📝 Processing {len(submissions_notes)} submissions and their reviews...")
+        submissions_data = []
+        processed = 0
+        skipped_no_reviews = 0
+        errors = 0
+
+        for idx, note in enumerate(submissions_notes, 1):
+            try:
+                # Get reviews for this submission from details (already fetched)
+                reviews = []
+
+                # Reviews are in details.replies for all modes now
+                if hasattr(note, 'details') and note.details and 'replies' in note.details:
+                    for reply in note.details['replies']:
+                        # Filter for official reviews
+                        if any('Review' in inv for inv in reply.get('invitations', [])):
+                            reviews.append({
+                                'id': reply.get('id', ''),
+                                'forum': reply.get('forum', ''),
+                                'replyto': reply.get('replyto', ''),
+                                'invitation': reply.get('invitations', [''])[0],
+                                'content': reply.get('content', {}),
+                                'signatures': reply.get('signatures', []),
+                                'created': reply.get('cdate', 0),
+                                'modified': reply.get('mdate', 0),
+                            })
+
+                # Add submission with its reviews
+                submission = {
+                    'id': note.id,
+                    'number': getattr(note, 'number', 0),
+                    'forum': note.forum,
+                    'invitation': note.invitations[0] if note.invitations else '',
+                    'content': note.content if hasattr(note, 'content') else {},
+                    'authors': note.content.get('authors', {}).get('value', []) if isinstance(note.content.get('authors'), dict) else note.content.get('authors', []),
+                    'status': note.content.get('venueid', {}).get('value', 'unknown') if isinstance(note.content.get('venueid'), dict) else note.content.get('venueid', 'unknown'),
+                    'reviews': reviews,
+                    'created': getattr(note, 'cdate', 0),
+                    'modified': getattr(note, 'mdate', 0),
+                }
+
+                # For rejected-only mode, only keep papers with reviews
+                if crawl_rejected_only and len(reviews) == 0:
+                    skipped_no_reviews += 1
+                    continue  # Skip papers with no reviews
+
+                submissions_data.append(submission)
+                processed += 1
+
+                # Show progress every 100 submissions or every 10 in test mode
+                progress_interval = 10 if limit > 0 and limit <= 50 else 100
+                if processed % progress_interval == 0:
+                    print(f"  Progress: {processed}/{len(submissions_notes)} submissions processed...")
+
+            except Exception as e:
+                errors += 1
+                print(f"  ⚠️ Error processing submission {idx} (ID: {getattr(note, 'id', 'unknown')}): {e}")
+                if errors > 10:
+                    print(f"  ❌ Too many errors ({errors}), stopping processing")
+                    break
+
+        print(f"✓ Processed {processed} submissions ({errors} errors)")
+        if crawl_rejected_only and skipped_no_reviews > 0:
+            print(f"  → Skipped {skipped_no_reviews} papers with no reviews")
+
+        # Save to JSON in the expected format
+        output_data = {
+            'metadata': {
+                'venue_id': venue_id,
+                'rejected_only': crawl_rejected_only,
+                'invitation': invitation if not crawl_rejected_only else None,
+                'total_submissions': len(submissions_data),
+                'total_reviews': sum(len(s['reviews']) for s in submissions_data),
+                'crawled_at': datetime.now().isoformat(),
+                'limit_applied': limit if limit > 0 else None,
+                'errors_encountered': errors,
+                'skipped_no_reviews': skipped_no_reviews if crawl_rejected_only else 0
+            },
+            'submissions': submissions_data
+        }
+
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(out_path, 'w', encoding='utf-8') as f:
+            json.dump(output_data, f, indent=2, ensure_ascii=False)
+
+        print(f"\n✓ Crawl complete!")
+        print(f"  Submissions: {len(submissions_data)}")
+        print(f"  Reviews: {sum(len(s['reviews']) for s in submissions_data)}")
+        print(f"  Saved to: {out_path}")
+        print(f"  File size: {out_path.stat().st_size / (1024*1024):.1f} MB")
+
+        # Show sample of first submission
+        if submissions_data:
+            print(f"\n📋 Sample (first submission):")
+            first = submissions_data[0]
+            title = first['content'].get('title', {})
+            if isinstance(title, dict):
+                title = title.get('value', 'N/A')
+            print(f"  Title: {title[:80]}...")
+            print(f"  ID: {first['id']}")
+            print(f"  Status: {first['status']}")
+            print(f"  Reviews: {len(first['reviews'])}")
+
+        return out_path
+
+    except Exception as e:
+        print(f"\n❌ Error during crawl: {e}")
+        import traceback
+        print(f"\n📍 Full error trace:")
+        traceback.print_exc()
+
+        print(f"\n💡 You can:")
+        print(f"  1. Check the venue ID is correct")
+        if crawl_rejected_only:
+            print(f"  2. Check if this conference has public rejected papers")
+            print(f"     Visit: https://openreview.net/group?id={venue_id}#tab-reject")
+        else:
+            print(f"  2. Check if the invitation name is correct")
+        print(f"  3. Try with a limit (e.g., 10) to test the format first")
+        print(f"  4. Provide an existing OpenReview data file")
+
+        # Ask for existing file as fallback
+        if ask_yes_no("Would you like to provide an existing file?", default=True):
+            file_path = ask_input("Path to existing OpenReview JSON file", str(out_path))
+            input_path = Path(file_path)
+            if input_path.exists():
+                return input_path
+
+        raise
 
 
 def step_detect(cfg: PipelineConfig, input_path: Path) -> Path:

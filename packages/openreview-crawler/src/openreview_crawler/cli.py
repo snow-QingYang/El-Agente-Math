@@ -18,6 +18,13 @@ from .venue_config import normalize_venue_id, get_venue_config
 
 def main() -> None:
     """Main entry point for the OpenReview crawler"""
+    if len(sys.argv) > 1 and sys.argv[1] == "filter_reviews":
+        from .filter_reviews import main as filter_reviews_main
+
+        sys.argv = [sys.argv[0], *sys.argv[2:]]
+        filter_reviews_main()
+        return
+
     parser = argparse.ArgumentParser(
         description="OpenReview formula-issue pipeline - Interactive mode"
     )
@@ -116,4 +123,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

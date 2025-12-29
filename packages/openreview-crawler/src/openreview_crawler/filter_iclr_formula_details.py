@@ -20,8 +20,8 @@ from typing import Any, Dict, List
 
 def filter_data(data: Dict[str, Any]) -> Dict[str, Any]:
     papers = data.get("papers", [])
-    # sort by paper_index
-    papers = sorted(papers, key=lambda p: p.get("paper_index", 0))
+    # Sort by paper_id alphabetically
+    papers = sorted(papers, key=lambda p: p.get("paper_id", ""))
 
     filtered_papers: List[Dict[str, Any]] = []
     for paper in papers:
@@ -39,6 +39,8 @@ def filter_data(data: Dict[str, Any]) -> Dict[str, Any]:
         if not flat_errors:
             continue
         paper_copy = dict(paper)
+        # Remove paper_index field if it exists
+        paper_copy.pop("paper_index", None)
         paper_copy["issues"] = flat_errors
         filtered_papers.append(paper_copy)
 
