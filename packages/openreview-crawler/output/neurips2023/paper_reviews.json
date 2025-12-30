@@ -1,0 +1,114 @@
+{
+  "yloVae273c_0": {
+    "keep": true,
+    "comment": "inline typo",
+    "reviewed_at": "2025-12-29T14:40:06.663304",
+    "correct_formula_location": "LINE (328)"
+  },
+  "yloVae273c_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2025-12-29T14:43:22.466692",
+    "correct_formula_location": "LINE (141)"
+  },
+  "yloVae273c_2": {
+    "keep": true,
+    "comment": "Finally, in line 154 of our work, by \"tighter bound\", we actually refer to a tighter dependence on the coverage ratio.\nFor example, in the tabular setting with $\\$ \\backslash$ Phi $\\$$ being the identity matrix, the term\n\n$$\n\\mu_1^{\\mathcal{B}}(x, a)^2\n$$\n\nacquires a factor of\n\n$$\n\\frac{1}{\\mu_{\\mathcal{B}}(x, a)}\n$$\n\nin the summation, which can be large.\nThanks for noticing this; we will make our statement clearer in the final draft.",
+    "reviewed_at": "2025-12-29T14:48:21.680657",
+    "correct_formula_location": "LINE (154)"
+  },
+  "yloVae273c_3": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2025-12-29T14:48:43.415865",
+    "correct_formula_location": "THEOREM (3.2)"
+  },
+  "yloVae273c_4": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2025-12-29T14:51:21.911762",
+    "correct_formula_location": "LINE (82)"
+  },
+  "yloVae273c_5": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2025-12-29T14:51:20.785017",
+    "correct_formula_location": "LINE (87)"
+  },
+  "yloVae273c_6": {
+    "keep": true,
+    "comment": "6. Yes, that is a typo, thank you for finding it! It is $C_{\\phi, 1 / 2}$ that is equal to the chi-square divergence, as you can check using the definition you provided.",
+    "reviewed_at": "2025-12-29T14:59:39.919772",
+    "correct_formula_location": "LINE (315)"
+  },
+  "z9NLqoFvZ0_0": {
+    "keep": false,
+    "comment": "can not find equation 20",
+    "reviewed_at": "2025-12-29T15:05:46.867219"
+  },
+  "xdtBFMAPD2_0": {
+    "keep": false,
+    "comment": "Not relate to math",
+    "reviewed_at": "2025-12-29T15:06:14.104568"
+  },
+  "wS3PPBUDX8_0": {
+    "keep": true,
+    "comment": "The term $-E_\\theta$ in line 70 should be correctly noted as $E_\\theta$.",
+    "reviewed_at": "2025-12-29T15:08:56.167255",
+    "correct_formula_location": "LINE (70)"
+  },
+  "zJMutieTgh_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2025-12-29T15:14:03.130280",
+    "correct_formula_location": "EQ (2)"
+  },
+  "vcNjibzV3P_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2025-12-29T15:16:04.704748",
+    "correct_formula_location": "LINE (235)"
+  },
+  "vfDPA1Ft0c_0": {
+    "keep": false,
+    "comment": " ",
+    "reviewed_at": "2025-12-29T15:17:34.883431",
+    "correct_formula_location": "EQ (10)"
+  },
+  "vfDPA1Ft0c_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2025-12-29T15:21:01.541258",
+    "correct_formula_location": "THEOREM (6.1)"
+  },
+  "x1FgW3vSM6_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2025-12-29T15:24:27.913688",
+    "correct_formula_location": "LINE (116)"
+  },
+  "wjqT8OBm0y_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2025-12-29T15:26:08.678939",
+    "correct_formula_location": "EQ (3)"
+  },
+  "uz7JaQgAJb_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2025-12-29T15:28:10.419013",
+    "correct_formula_location": "APPENDIX (A.1)"
+  },
+  "uz7JaQgAJb_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2025-12-29T15:30:03.669202",
+    "correct_formula_location": "LINE (130)"
+  },
+  "uz7JaQgAJb_2": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2025-12-29T15:31:29.626325",
+    "correct_formula_location": "LINE (180)"
+  }
+}
