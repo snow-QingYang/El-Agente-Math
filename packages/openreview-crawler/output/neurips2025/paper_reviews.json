@@ -1,0 +1,26 @@
+{
+  "zmlhP8myaT_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2025-12-31T18:28:01.284305",
+    "correct_formula_location": "APPENDIX (B.2)"
+  },
+  "zmlhP8myaT_1": {
+    "keep": false,
+    "comment": "Not  a mathematical problem",
+    "reviewed_at": "2025-12-31T18:41:16.834019",
+    "correct_formula_location": "SECTION (4)"
+  },
+  "zcVKvXtrkJ_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2025-12-31T18:55:26.234580",
+    "correct_formula_location": "LINE (402)"
+  },
+  "zcVKvXtrkJ_1": {
+    "keep": true,
+    "comment": "it is not very clear",
+    "reviewed_at": "2025-12-31T19:21:14.155316",
+    "correct_formula_location": "THEOREM (1)"
+  }
+}
