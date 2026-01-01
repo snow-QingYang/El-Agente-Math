@@ -58,5 +58,101 @@
     "comment": null,
     "reviewed_at": "2026-01-01T04:52:46.475937",
     "correct_formula_location": "EQ (unknown)"
+  },
+  "u2c6YVg5rQ_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T05:32:32.370355",
+    "correct_formula_location": "DEF (3)"
+  },
+  "tJk7czcEIK_0": {
+    "keep": false,
+    "comment": "not in math equation",
+    "reviewed_at": "2026-01-01T05:25:14.713923",
+    "correct_formula_location": "EQ (5)"
+  },
+  "vhnDpzcaO2_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T05:21:52.219262",
+    "correct_formula_location": "DEF (5)"
+  },
+  "uXEv9pSM0U_0": {
+    "keep": false,
+    "comment": "reviewer's mistake ",
+    "reviewed_at": "2026-01-01T05:29:59.517131",
+    "correct_formula_location": "EQ (7)"
+  },
+  "uXEv9pSM0U_1": {
+    "keep": false,
+    "comment": "same as before ",
+    "reviewed_at": "2026-01-01T05:30:57.744699",
+    "correct_formula_location": "EQ (2)"
+  },
+  "u2c6YVg5rQ_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T05:32:53.960254",
+    "correct_formula_location": "DEF (3)"
+  },
+  "u2c6YVg5rQ_2": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T05:39:00.507978",
+    "correct_formula_location": "THEOREM (1)"
+  },
+  "u2c6YVg5rQ_3": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T05:40:01.279015",
+    "correct_formula_location": "LINE (596)"
+  },
+  "u2c6YVg5rQ_4": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T05:40:43.301474",
+    "correct_formula_location": "LINE (631)"
+  },
+  "u2c6YVg5rQ_5": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T05:46:00.318601",
+    "correct_formula_location": "DEF (7)"
+  },
+  "u2c6YVg5rQ_6": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T05:46:18.525299",
+    "correct_formula_location": "LINE (514)"
+  },
+  "u2c6YVg5rQ_7": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T05:46:33.261110",
+    "correct_formula_location": "LINE (536)"
+  },
+  "u2c6YVg5rQ_8": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T05:46:49.020479",
+    "correct_formula_location": "EQ (6)"
+  },
+  "u2c6YVg5rQ_9": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T05:48:09.914375",
+    "correct_formula_location": "LINE (631)"
+  },
+  "u2c6YVg5rQ_10": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T05:48:25.523471",
+    "correct_formula_location": "LINE (633)"
+  },
+  "u2c6YVg5rQ_11": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T05:48:28.452187",
+    "correct_formula_location": "LINE (450)"
   }
 }
