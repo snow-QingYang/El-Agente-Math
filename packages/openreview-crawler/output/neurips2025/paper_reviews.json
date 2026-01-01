@@ -22,5 +22,41 @@
     "comment": "it is not very clear",
     "reviewed_at": "2025-12-31T19:21:14.155316",
     "correct_formula_location": "THEOREM (1)"
+  },
+  "xFDKphWWnD_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2025-12-31T19:31:33.417368",
+    "correct_formula_location": "EQ (2)"
+  },
+  "wh3p37VYm2_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T04:39:57.041383",
+    "correct_formula_location": "EQ (5)"
+  },
+  "wh3p37VYm2_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T04:40:18.884122",
+    "correct_formula_location": "EQ (6)"
+  },
+  "vWaMUMrBpF_0": {
+    "keep": false,
+    "comment": "reviewer's misunderstanding ",
+    "reviewed_at": "2026-01-01T04:44:48.544942",
+    "correct_formula_location": "LINE (135)"
+  },
+  "vWaMUMrBpF_2": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T04:52:49.418486",
+    "correct_formula_location": "LINE (248)"
+  },
+  "vWaMUMrBpF_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-01T04:52:46.475937",
+    "correct_formula_location": "EQ (unknown)"
   }
 }
