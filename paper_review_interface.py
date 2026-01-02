@@ -107,6 +107,61 @@ def save_review(paper_id, issue_idx, keep, comment, correct_formula_location=Non
     return reviews
 
 
+def inject_keyboard_shortcuts(prev_label: str, next_label: str) -> None:
+    shortcut_html = f"""
+    <script>
+    (function() {{
+      const parentWindow = window.parent;
+      if (!parentWindow) {{
+        return;
+      }}
+      const parentDoc = parentWindow.document;
+
+      function isEditable(el) {{
+        if (!el) return false;
+        const tag = (el.tagName || '').toLowerCase();
+        return tag === 'input' || tag === 'textarea' || tag === 'select' || el.isContentEditable;
+      }}
+
+      function findButtonByLabel(label) {{
+        const buttons = Array.from(parentDoc.querySelectorAll('button'));
+        return buttons.find((btn) => (btn.innerText || '').trim() === label);
+      }}
+
+      function clickButton(label) {{
+        const btn = findButtonByLabel(label);
+        if (btn && !btn.disabled) {{
+          btn.click();
+        }}
+      }}
+
+      if (parentWindow.__paperReviewKeyHandler) {{
+        parentDoc.removeEventListener('keydown', parentWindow.__paperReviewKeyHandler, true);
+      }}
+
+      const handler = (event) => {{
+        if (event.repeat) return;
+        if (!event.ctrlKey || !event.shiftKey || event.altKey || event.metaKey) return;
+        if (isEditable(parentDoc.activeElement)) return;
+
+        if (event.key === 'ArrowRight') {{
+          event.preventDefault();
+          clickButton({next_label!r});
+        }} else if (event.key === 'ArrowLeft') {{
+          event.preventDefault();
+          clickButton({prev_label!r});
+        }}
+      }};
+
+      parentWindow.__paperReviewKeyHandler = handler;
+      parentDoc.addEventListener('keydown', handler, true);
+    }})();
+    </script>
+    """
+
+    st.components.v1.html(shortcut_html, height=0)
+
+
 def main():
     st.set_page_config(page_title="Paper Review Interface", layout="wide")
 
@@ -382,14 +437,22 @@ def main():
     col1, col2, col3 = st.columns([1, 2, 1])
 
     with col1:
-        if st.button("⬅️ Previous", disabled=(paper_idx == 0), use_container_width=True):
+        if st.button("⬅️ Previous", disabled=(paper_idx == 0), use_container_width=True, key="nav_prev"):
             st.session_state.current_paper_idx = paper_idx - 1
             st.rerun()
 
     with col3:
-        if st.button("Next ➡️", disabled=(paper_idx == len(filtered_papers) - 1), use_container_width=True):
+        if st.button(
+            "Next ➡️",
+            disabled=(paper_idx == len(filtered_papers) - 1),
+            use_container_width=True,
+            key="nav_next",
+        ):
             st.session_state.current_paper_idx = paper_idx + 1
             st.rerun()
+
+    st.caption("Shortcut: Ctrl+Shift+←/→ to move between papers.")
+    inject_keyboard_shortcuts("⬅️ Previous", "Next ➡️")
 
     # Export options
     st.sidebar.divider()
