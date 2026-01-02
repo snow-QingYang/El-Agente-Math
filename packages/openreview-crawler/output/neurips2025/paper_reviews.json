@@ -352,5 +352,251 @@
     "comment": null,
     "reviewed_at": "2026-01-01T22:01:32.192549",
     "correct_formula_location": "SECTION (Figure 1(a))"
+  },
+  "np5NmBQL4F_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:31:33.043611",
+    "correct_formula_location": "DEF (3)"
+  },
+  "np5NmBQL4F_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:36:00.383490",
+    "correct_formula_location": "EQ (8)"
+  },
+  "kXdW2KySK5_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:38:01.423545",
+    "correct_formula_location": "LINE (224)"
+  },
+  "kXdW2KySK5_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:38:10.041361",
+    "correct_formula_location": "SECTION (unspecified)"
+  },
+  "k5ekIwvmYA_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:41:33.054166",
+    "correct_formula_location": "LINE (139-140)"
+  },
+  "k5ekIwvmYA_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:41:29.781921",
+    "correct_formula_location": "LINE (163-164)"
+  },
+  "knKAKV7URX_0": {
+    "keep": false,
+    "comment": "not math equation",
+    "reviewed_at": "2026-01-02T15:43:22.818702",
+    "correct_formula_location": "ALGORITHM (1)"
+  },
+  "knKAKV7URX_1": {
+    "keep": false,
+    "comment": "not math equation",
+    "reviewed_at": "2026-01-02T15:43:31.835748",
+    "correct_formula_location": "ALGORITHM (2)"
+  },
+  "hdwccZL6L3_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:44:15.307521",
+    "correct_formula_location": "LINE (94-95)"
+  },
+  "hdwccZL6L3_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:45:34.601368",
+    "correct_formula_location": "LINE (125-126)"
+  },
+  "hncKzAnyKQ_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:48:25.318129",
+    "correct_formula_location": "LINE (55)"
+  },
+  "hncKzAnyKQ_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:50:13.153527",
+    "correct_formula_location": "LINE (793)"
+  },
+  "gX9jCe0jI5_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:50:28.103703",
+    "correct_formula_location": "EQ (6)"
+  },
+  "fwJ1rRHT91_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:50:53.154244",
+    "correct_formula_location": "LINE (197-198)"
+  },
+  "dg1npGNK0d_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:51:00.283173",
+    "correct_formula_location": "LINE (199)"
+  },
+  "dCWSVAbWXM_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T15:55:56.088758",
+    "correct_formula_location": "LINE (121)"
+  },
+  "gb4tyRuzzh_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T16:02:44.007188",
+    "correct_formula_location": "EQ (7)"
+  },
+  "gb4tyRuzzh_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T16:02:42.903332",
+    "correct_formula_location": "EQ (5)"
+  },
+  "gb4tyRuzzh_2": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T16:02:46.496545",
+    "correct_formula_location": "LINE (68)"
+  },
+  "eg4AmZVVPO_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T16:04:28.901380",
+    "correct_formula_location": "LINE (107-108)"
+  },
+  "eg4AmZVVPO_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T16:05:42.138009",
+    "correct_formula_location": "LINE (128-129)"
+  },
+  "kOmJnJpfRW_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T16:51:58.068170",
+    "correct_formula_location": "LINE (72)"
+  },
+  "kOmJnJpfRW_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T16:52:19.004496",
+    "correct_formula_location": "LINE (107)"
+  },
+  "c7qZNpguY0_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T16:53:33.680907",
+    "correct_formula_location": "LINE (328)"
+  },
+  "c7qZNpguY0_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T16:58:28.933618",
+    "correct_formula_location": "LINE (274)"
+  },
+  "c7qZNpguY0_2": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T17:05:27.525068",
+    "correct_formula_location": "SECTION (2)"
+  },
+  "csjryswwao_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T17:10:05.009873",
+    "correct_formula_location": "EQ (1-2)"
+  },
+  "ccuvCkEhMJ_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T17:10:58.717373",
+    "correct_formula_location": "LINE (249)"
+  },
+  "ccuvCkEhMJ_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T17:12:14.424615",
+    "correct_formula_location": "SECTION (3)"
+  },
+  "hEA2n6OUUK_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T17:26:58.484825",
+    "correct_formula_location": "LINE (195-199)"
+  },
+  "hEA2n6OUUK_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T17:28:21.111903",
+    "correct_formula_location": "LEMMA (2.3)"
+  },
+  "hEA2n6OUUK_2": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T17:30:41.999905",
+    "correct_formula_location": "LEMMA (5.2)"
+  },
+  "hEA2n6OUUK_3": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T17:33:18.137937",
+    "correct_formula_location": "LINE  (254)"
+  },
+  "hEA2n6OUUK_4": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T17:33:21.599155",
+    "correct_formula_location": "LINE (254)"
+  },
+  "ZFPimg1RTe_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T18:32:20.899547",
+    "correct_formula_location": "EQ (1)"
+  },
+  "ZFPimg1RTe_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T18:34:40.460300",
+    "correct_formula_location": "EQ (1)"
+  },
+  "pRysdfwXiA_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T18:35:28.997196",
+    "correct_formula_location": "LINE (139)"
+  },
+  "eR8raBLZW7_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T18:35:54.545652",
+    "correct_formula_location": "EQ (2)"
+  },
+  "eR8raBLZW7_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T18:35:56.852886",
+    "correct_formula_location": "EQ (3)"
+  },
+  "XResNG9opT_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-02T18:36:09.040485",
+    "correct_formula_location": "SECTION (3)"
+  },
+  "W8TB5rmbk1_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-02T18:36:37.939660",
+    "correct_formula_location": "LINE (263)"
   }
 }
