@@ -598,5 +598,191 @@
     "comment": null,
     "reviewed_at": "2026-01-02T18:36:37.939660",
     "correct_formula_location": "LINE (263)"
+  },
+  "WXAjAelIpJ_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:25:59.620470",
+    "correct_formula_location": "LINE (64)"
+  },
+  "WXAjAelIpJ_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:28:28.036371",
+    "correct_formula_location": "LINE (238)"
+  },
+  "WXAjAelIpJ_2": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:28:32.515646",
+    "correct_formula_location": "LINE (227)"
+  },
+  "WXAjAelIpJ_3": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:29:59.959829",
+    "correct_formula_location": "LINE (863)"
+  },
+  "ac0TVbBLBh_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:31:46.139997",
+    "correct_formula_location": "EQ (7)"
+  },
+  "ac0TVbBLBh_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:32:02.624489",
+    "correct_formula_location": "EQ (8)"
+  },
+  "Y58JfHeQhH_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:32:39.158912",
+    "correct_formula_location": "EQ (4)"
+  },
+  "VafdgT65jB_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:33:19.700344",
+    "correct_formula_location": "PAGE (1), LINE (13)"
+  },
+  "VafdgT65jB_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:33:25.886375",
+    "correct_formula_location": "PAGE (7), LINE (260)"
+  },
+  "VafdgT65jB_2": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:33:32.537229",
+    "correct_formula_location": "PAGE (9), LINE (312)"
+  },
+  "YqzAsStE6n_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:40:11.259376",
+    "correct_formula_location": "LINE (106)"
+  },
+  "YqzAsStE6n_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:40:16.380777",
+    "correct_formula_location": "LINE (134)"
+  },
+  "YqzAsStE6n_2": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:40:31.645426",
+    "correct_formula_location": "LINE (134)"
+  },
+  "YtsX7irxbq_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:41:19.323569",
+    "correct_formula_location": "LINE (290)"
+  },
+  "bFlE9AyEJY_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:41:45.935072",
+    "correct_formula_location": "EQ (z)"
+  },
+  "bFlE9AyEJY_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:42:06.410899",
+    "correct_formula_location": "LINE (274)"
+  },
+  "VkXyaqhD0P_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:49:27.423320",
+    "correct_formula_location": "LINE (21)"
+  },
+  "XWbIHOW6u1_0": {
+    "keep": true,
+    "comment": "Equations (14) and (17): Thank you for catching the typo; the correct definition is\n\\[\n\\gamma_T(t) = \\max_{u}\\,[u < t \\mid u \\in T],\n\\]\nnot\n\\[\n\\gamma_T(t) = \\max_{u}\\,[u < t \\mid t \\in T].\n\\]",
+    "reviewed_at": "2026-01-04T01:56:19.649247",
+    "correct_formula_location": "LINE (174-187)"
+  },
+  "XWbIHOW6u1_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:56:21.609746",
+    "correct_formula_location": "EQ (17)"
+  },
+  "XWbIHOW6u1_2": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:56:23.083391",
+    "correct_formula_location": "EQ (20a)"
+  },
+  "XWbIHOW6u1_3": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:56:24.096088",
+    "correct_formula_location": "LINE (231)"
+  },
+  "XWbIHOW6u1_4": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T01:56:26.397428",
+    "correct_formula_location": "LINE (232)"
+  },
+  "TtYJeYAhC4_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T02:04:21.729515",
+    "correct_formula_location": "EQ (196)"
+  },
+  "SP1zrF3Znk_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T02:10:01.593203",
+    "correct_formula_location": "EQ (6)"
+  },
+  "SP1zrF3Znk_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-04T02:11:03.733771",
+    "correct_formula_location": "LINE (166-167)"
+  },
+  "SP1zrF3Znk_2": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-04T02:12:09.144740",
+    "correct_formula_location": "LINE (192-193)"
+  },
+  "SP1zrF3Znk_3": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-04T02:12:50.370292",
+    "correct_formula_location": "LINE (204-205)"
+  },
+  "SP1zrF3Znk_4": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-04T02:12:53.142943",
+    "correct_formula_location": "LINE (278)"
+  },
+  "SjAHFGoUb6_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T02:15:30.041441",
+    "correct_formula_location": "LINE (125)"
+  },
+  "SjAHFGoUb6_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-04T02:25:29.473933",
+    "correct_formula_location": "EQ (1)"
+  },
+  "SjAHFGoUb6_2": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-04T02:32:24.988591",
+    "correct_formula_location": "LINE (155-156)"
   }
 }
