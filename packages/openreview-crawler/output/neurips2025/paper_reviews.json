@@ -784,5 +784,299 @@
     "comment": null,
     "reviewed_at": "2026-01-04T02:32:24.988591",
     "correct_formula_location": "LINE (155-156)"
+  },
+  "Qo5N2wXrY7_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-05T13:27:45.325891",
+    "correct_formula_location": "LINE (211-213)"
+  },
+  "MZg06yaIW9_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-05T16:59:30.432455",
+    "correct_formula_location": "LINE (117-119)"
+  },
+  "MZg06yaIW9_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T16:59:53.478293",
+    "correct_formula_location": "APPENDIX (Table 5)"
+  },
+  "QJtanJS4T9_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T17:25:46.835974",
+    "correct_formula_location": "EQ (29)"
+  },
+  "M2JU5WQ1Gw_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-05T17:28:17.925866",
+    "correct_formula_location": "LINE (325)"
+  },
+  "M2JU5WQ1Gw_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T17:28:23.233867",
+    "correct_formula_location": "LINE (330)"
+  },
+  "M2JU5WQ1Gw_2": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T17:30:04.817513",
+    "correct_formula_location": "LINE (145)"
+  },
+  "M2JU5WQ1Gw_3": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T17:30:39.048168",
+    "correct_formula_location": "SECTION (4.5)"
+  },
+  "OCxhcqUtDf_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T17:46:27.019197",
+    "correct_formula_location": "EQ (6)"
+  },
+  "OCxhcqUtDf_2": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T17:46:19.956138",
+    "correct_formula_location": "EQ (11)"
+  },
+  "OCxhcqUtDf_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-05T17:46:23.675981",
+    "correct_formula_location": "LINE (117-118)"
+  },
+  "QCB4wfDqQ9_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T18:14:53.850351",
+    "correct_formula_location": "SECTION (3), LINE (169-170)"
+  },
+  "QCB4wfDqQ9_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T18:15:03.989952",
+    "correct_formula_location": "LINE (202)"
+  },
+  "KkOMqJQiWU_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T18:18:44.779381",
+    "correct_formula_location": "EQ (8)"
+  },
+  "KkOMqJQiWU_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T18:24:15.647579",
+    "correct_formula_location": "EQ (24)"
+  },
+  "KkOMqJQiWU_2": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T18:25:22.700123",
+    "correct_formula_location": "EQ (7)"
+  },
+  "KkOMqJQiWU_3": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T18:25:26.155172",
+    "correct_formula_location": "EQ (8)"
+  },
+  "KkOMqJQiWU_4": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T18:25:31.208200",
+    "correct_formula_location": "EQ (9)"
+  },
+  "KkOMqJQiWU_5": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-05T18:25:37.010165",
+    "correct_formula_location": "EQ (9)"
+  },
+  "K9uAbJ0DtX_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T15:11:55.978218",
+    "correct_formula_location": "EQ (16)"
+  },
+  "IyMoawG676_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T15:13:47.039896",
+    "correct_formula_location": "SECTION (Fig. 3)"
+  },
+  "K61Y6cTMRl_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T15:15:22.309548",
+    "correct_formula_location": "LINE (801)"
+  },
+  "MYfyMjaoQh_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-06T15:28:27.563241",
+    "correct_formula_location": "LINE (168)"
+  },
+  "HgfMIHcNao_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T15:29:31.374942",
+    "correct_formula_location": "PAGE (183), LINE (184)"
+  },
+  "HgfMIHcNao_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T15:29:35.212501",
+    "correct_formula_location": "PAGE (187), LINE (189)"
+  },
+  "InyYuWLWHD_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-06T15:30:09.816464",
+    "correct_formula_location": "LINE (145)"
+  },
+  "GgD01U3Y0H_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T15:43:54.837610",
+    "correct_formula_location": "EQ (1)"
+  },
+  "GgD01U3Y0H_1": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-06T15:51:51.308829",
+    "correct_formula_location": "LINE (194)"
+  },
+  "MeOTBs8BQV_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T15:55:33.942566",
+    "correct_formula_location": "THEOREM (1)"
+  },
+  "Gsj3oN2Ipy_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-06T15:57:56.863614",
+    "correct_formula_location": "LINE (174-175)"
+  },
+  "OtOcVbOT7r_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:02:52.581449",
+    "correct_formula_location": "LINE (226-244)"
+  },
+  "OtOcVbOT7r_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:09:21.799714",
+    "correct_formula_location": "EQ (18)"
+  },
+  "OtOcVbOT7r_2": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:09:48.360009",
+    "correct_formula_location": "LINE (262)"
+  },
+  "Fndac67aQH_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:35:22.617208",
+    "correct_formula_location": "LINE (95)"
+  },
+  "FSowNqrLpp_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:36:09.036024",
+    "correct_formula_location": "THEOREM (4.1)"
+  },
+  "F20AfNqMq9_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:51:15.967223",
+    "correct_formula_location": "EQ (4a)"
+  },
+  "F20AfNqMq9_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:51:18.959288",
+    "correct_formula_location": "EQ (4a)"
+  },
+  "F20AfNqMq9_2": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:51:20.273917",
+    "correct_formula_location": "LINE (125)"
+  },
+  "F20AfNqMq9_3": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:51:23.040903",
+    "correct_formula_location": "LINE (129)"
+  },
+  "F20AfNqMq9_4": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:51:24.809788",
+    "correct_formula_location": "LINE (131)"
+  },
+  "IQ3382JnQl_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:52:18.328662",
+    "correct_formula_location": "APPENDIX (D)"
+  },
+  "IQ3382JnQl_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:52:22.698330",
+    "correct_formula_location": "LINE (172)"
+  },
+  "AxaWle44P5_0": {
+    "keep": true,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:53:37.870046",
+    "correct_formula_location": "LINE (288)"
+  },
+  "CO57FDVLhA_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:54:16.232347",
+    "correct_formula_location": "LINE (137)"
+  },
+  "CO57FDVLhA_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:54:17.518989",
+    "correct_formula_location": "LINE (237)"
+  },
+  "CO57FDVLhA_2": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T16:54:19.019855",
+    "correct_formula_location": "LINE (250)"
+  },
+  "Bitk7yCRXB_0": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T17:04:20.080359",
+    "correct_formula_location": "THEOREM (3.1)"
+  },
+  "Bitk7yCRXB_1": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T17:04:27.089013",
+    "correct_formula_location": "EQ (4)"
+  },
+  "Bitk7yCRXB_2": {
+    "keep": false,
+    "comment": null,
+    "reviewed_at": "2026-01-06T17:04:30.063035",
+    "correct_formula_location": "EQ (3)"
   }
 }
