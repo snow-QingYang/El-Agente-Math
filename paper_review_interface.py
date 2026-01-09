@@ -186,6 +186,7 @@ def main():
     reviewed_count = 0
     keep_count = 0
     remove_count = 0
+    kept_paper_count = 0
 
     for paper in papers:
         for issue_idx, _issue in enumerate(paper.get('issues', [])):
@@ -200,6 +201,20 @@ def main():
                 keep_count += 1
             else:
                 remove_count += 1
+        has_review = False
+        any_keep = False
+        for issue_idx in range(len(paper.get('issues', []))):
+            existing = get_issue_review(reviews, paper['paper_id'], issue_idx, allow_fallback=False)
+            if existing is None:
+                continue
+            has_review = True
+            keep_value = existing.get('keep')
+            if keep_value is None:
+                keep_value = existing.get('decision') == 'accept'
+            if keep_value:
+                any_keep = True
+        if has_review and any_keep:
+            kept_paper_count += 1
 
     # Display metadata
     st.sidebar.header("Dataset Information")
@@ -220,6 +235,7 @@ def main():
     col2.metric("Reviewed Issues", reviewed_count)
     col3.metric("✓ Keep", keep_count)
     col4.metric("✗ Remove", remove_count)
+    st.sidebar.metric("Kept Papers", kept_paper_count)
 
     progress = reviewed_count / total_issues if total_issues > 0 else 0
     st.sidebar.progress(progress)
@@ -275,18 +291,17 @@ def main():
     elif filter_option == "Removed Only":
         filtered_papers = []
         for p in papers:
-            removed = False
+            remove_flags = []
             for idx in range(len(p.get('issues', []))):
                 existing = get_issue_review(reviews, p['paper_id'], idx, allow_fallback=False)
                 if existing is None:
-                    continue
+                    remove_flags = []
+                    break
                 keep_value = existing.get('keep')
                 if keep_value is None:
                     keep_value = existing.get('decision') == 'accept'
-                if not keep_value:
-                    removed = True
-                    break
-            if removed:
+                remove_flags.append(not bool(keep_value))
+            if remove_flags and all(remove_flags):
                 filtered_papers.append(p)
     else:
         filtered_papers = papers
