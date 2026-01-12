@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768191711887",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:21:51.897211Z",
+    "started_at": 1768191711.8976023,
+    "completed_at": 1768191829.3618758,
+    "error_message": null,
+    "file_info": {
+      "filename": "o03aOm4Vci.pdf",
+      "size": 625618,
+      "md5": "3952c753ae514a835ef9a96c2dbed5e6"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 114.9055027961731,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/3952c753ae514a835ef9a96c2dbed5e6/results.zip"
+  }
+}

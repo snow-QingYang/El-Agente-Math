@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768193553628",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:52:33.640490Z",
+    "started_at": 1768193553.6408544,
+    "completed_at": 1768193643.3927157,
+    "error_message": null,
+    "file_info": {
+      "filename": "Qo5N2wXrY7.pdf",
+      "size": 1795600,
+      "md5": "0996131db281b826a4b89e920a1eccb3"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 87.97152733802795,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/0996131db281b826a4b89e920a1eccb3/results.zip"
+  }
+}

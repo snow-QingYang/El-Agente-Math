@@ -1,0 +1,2837 @@
+[
+    {
+        "type": "text",
+        "text": "HOTA: Hamiltonian framework for Optimal Transport Advection ",
+        "text_level": 1,
+        "bbox": [
+            227,
+            122,
+            769,
+            172
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Anonymous Author(s)   \nAffiliation   \nAddress   \nemail ",
+        "bbox": [
+            423,
+            226,
+            580,
+            281
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Abstract ",
+        "text_level": 1,
+        "bbox": [
+            462,
+            318,
+            535,
+            334
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Optimal transport (OT) has become a natural framework for guiding the probability flows. Yet, the majority of recent generative models assume trivial geometry (e.g., Euclidean) and rely on strong density-estimation assumptions, yielding trajectories that do not respect the true principles of optimality in the underlying manifold. We present Hamiltonian Optimal Transport Advection (HOTA), a Hamilton–Jacobi–Bellman based method that tackles the dual dynamical OT problem explicitly through Kantorovich potentials, enabling efficient and scalable trajectory optimization. Our approach effectively evades the need for explicit density modeling, performing even when the cost functionals are non-smooth. Empirically, HOTA outperforms all baselines in standard benchmarks, as well as in custom datasets with non-differentiable costs, both in terms of feasibility and optimality. ",
+        "bbox": [
+            148,
+            348,
+            767,
+            501
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "12 1 Introduction ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            518,
+            312,
+            536
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "13 Static (Monge-Kantorovich) optimal transport was originally considered as the main framework for   \n14 comparing and finding a cost-minimizing coupling between distributions [Villani et al., 2008], while   \n15 optimality was mainly measured through the boundary marginals. Development of efficient and   \n16 scalable OT solvers [Cuturi, 2013, Peyré et al., 2019] popularized OT across different areas, such as   \n17 generative modeling [Makkuva et al., 2020, Korotin et al., 2022, Buzun et al., 2024], computational   \n18 biology [Bunne et al., 2022], graphics [Bonneel and Digne, 2023], high-energy physics [Nathan   \n19 T. Suri, 2024], and reinforcement learning [Klink et al., 2022, Asadulaev et al., 2024, Bobrin et al.,   \n20 2024, Rupf et al., 2025]. However, one crucial limitation of static formulation is its inability to   \n21 produce non-straight paths, which completely ignores the underlying geometry of the manifold of the   \n22 data. In classical OT, the underlying geometric structure is solely determined by the choice of cost   \n23 function (e.g., , Euclidean distance), inherently limiting the capacity for fine-grained control over the   \n24 trajectories. We refer to [Montesuma et al., 2024, Pereira and Amini, 2025] for recent overview of   \n25 practical applications of OT and to Villani et al. [2008], Santambrogio [2015], Peyré et al. [2019] for   \n26 a formal treatment.   \n27 On the other hand, the dynamical optimal transport paradigm, developed by Benamou and Brenier   \n28 [2000], recasts static OT as a continuous-time variational problem on the space of probability paths,   \n29 effectively incorporating time variable and enabling more nuanced control over optimal trajectories   \n30 (e.g., , through velocity, acceleration, length, or energy over the paths). Importantly, such formulation   \n31 enables one to directly operate on manifolds of non-trivial geometry, whenever the underlying space   \n32 contains curvature, obstacles, or is defined through potentials. This formulation is closely connected   \n33 to stochastic optimal control (SOC), where trajectories are stochastic yet must still maintain optimality,   \n34 a problem class known as the generalized Schrödinger bridge (GSB) Liu et al. [2024], Bartosh et al.   \n35 [2024],.   \n36 A common strategy for GSB involves solving the dual formulation via Hamilton-Jacobi-Bellman   \n37 (HJB) equations, which provide a flexible and a theoretically grounded framework for deriving   \n38 optimal trajectories (Liu et al. [2022], Neklyudov et al. [2024]). These methods parameterize the ",
+        "bbox": [
+            147,
+            544,
+            826,
+            736
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            150,
+            742,
+            826,
+            867
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            873,
+            825,
+            916
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Submitted to 39th Conference on Neural Information Processing Systems (NeurIPS 2025). Do not distribute. ",
+        "bbox": [
+            165,
+            922,
+            815,
+            936
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "1 2 3 4 5 6 7 8 9 10 11 ",
+        "bbox": [
+            148,
+            348,
+            163,
+            502
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "39 cost through a Lagrangian, enforcing optimality via the preservation of kinetic energy or using other   \n40 path-based penalties. While HJB-based approaches yield theoretically sound solutions, they suffer   \n41 from critical drawbacks: (1) unstable optimization dynamics, leading to high-variance gradients   \n42 and poor sample efficiency in high dimensions, and (2) the absence of a strict terminal distribution   \n43 matching criterion, resulting in inexact couplings. Additionally, they typically require differentiable   \n44 Lagrangians, restricting applicability to smooth costs only.   \n45 In the current work, we study the Generalized Schrodinger Bridge problem between two mea  \n46 sures, where the underlying geometry is defined through potentials. We propose a new HJB-based   \n47 framework that explicitly solves GSB task, resolves the learning stability problems of the previous   \n48 approaches, and has theoretical guarantees. We conduct extensive empirical evaluations on existing   \n49 low-dimensional physically-inspired benchmarks, as well as in the high-dimensional generative   \n50 setting. In short, our contributions are as follows: ",
+        "bbox": [
+            145,
+            92,
+            825,
+            175
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            181,
+            825,
+            263
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "• Hamiltonian dual reformulation of dynamical OT that binds Kantorovich potentials with an HJB value function, yielding a density-free objective and providing the performance gain compared to existing works;   \nProposed approach is robust to complex geometries and works even with non-smooth cost functions as the proposed objective explicitly incorporates the potential term;   \n• HOTA attains state-of-the-art empirical results in a diverse set of tasks, demonstrating both better feasibility (exact marginal matching) and optimality (cost along trajectories) compared to current dynamic OT solvers. ",
+        "bbox": [
+            217,
+            273,
+            825,
+            393
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "59 2 Related work ",
+        "text_level": 1,
+        "bbox": [
+            150,
+            405,
+            316,
+            421
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "Diffusion Models and Matching Algorithms. Diffusion models have emerged as powerful tools for generative modeling by prescribing the time evolution of marginal distributions. Matching algorithms, such as Action Matching (Neklyudov et al. [2024]) and Flow Matching (Lipman et al. [2023]), learn stochastic differential equations (SDEs) that align with prescribed probability paths [Blessing et al., 2025]. These methods typically assume explicit or implicit intermediate densities of the flow, whereas our approach (HOTA) optimizes a complete stochastic path from source to target distributions. ",
+        "bbox": [
+            171,
+            429,
+            825,
+            513
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "66 Generalized Schrödinger Bridge. The GSB problem extends SB by introducing state costs that   \n67 penalize or reward specific trajectories (Chen et al., 2015). Prior methods for solving GSB, such as   \n68 DeepGSB (Liu et al. [2022]), often relax feasibility constraints or rely on Sinkhorn-based approxima  \n69 tions, which can lead to instability or suboptimal solutions.   \n70 A recent approach GSBM [Liu et al., 2024] follows an alternating optimization scheme: in the first   \n71 stage, it learns the drift field $v _ { t }$ while keeping the marginal distributions $\\rho _ { t } ( x _ { t } )$ fixed, using a Flow   \n72 Matching-style objective. In the second stage, it updates the marginals conditioned on the boundary  \n73 coupled distribution $\\rho _ { t } ( x _ { t } \\mid x _ { 0 } , x _ { 1 } )$ , which is defined via the previously learned drift. While GSBM   \n74 demonstrates strong empirical performance, it imposes two critical limitations: 1) it requires the state   \n75 cost function $U ( x _ { t } )$ to be differentiable everywhere, and 2) it assumes that the conditional marginals   \n76 $\\rho ( x _ { t } \\mid x _ { 0 } , x _ { 1 } )$ are Gaussian. The first constraint restricts the method’s applicability to domains with   \n77 smooth geometries, sometimes mitigated via interpolation [Kapusniak et al., 2024], while the second   \n78 can lead to suboptimal solutions, unless $U _ { t }$ function is not quadratic.   \n79 Stochastic Optimal Control. The connection between GSB and stochastic optimal control (SOC) has   \n80 been explored in prior works (Theodorou et al. [2010]; Levine [2018]). SOC formulations often relax   \n81 hard distributional constraints into soft terminal costs, which can introduce bias or require adversarial   \n82 training (Liu et al. [2022]). Recently introduced Adjoint Matching approach [Domingo-Enrich et al.,   \n83 2024a] and Stochastic Optimal Control matching (SOCM) [Domingo-Enrich et al., 2024b] address   \n84 several existing limitations, but still produce highly unstable variance estimations. Our method   \n85 provides a natural way to preserve the feasibility via Kantorovich potential sum. ",
+        "bbox": [
+            147,
+            518,
+            825,
+            574
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            580,
+            825,
+            705
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            148,
+            712,
+            825,
+            809
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "3 Preliminaries ",
+        "text_level": 1,
+        "bbox": [
+            161,
+            820,
+            318,
+            837
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "87 Consider stochastic process with controlled drift and diffusion: ",
+        "bbox": [
+            148,
+            843,
+            588,
+            858
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/38cf1f6e9a353bf0d5959d63b329c9cd36074ac95afbfcf05be4fdc740e02a71.jpg",
+        "text": "$$\n\\mathrm { d } x _ { t } = v ( t , x _ { t } ) \\mathrm { d } t + \\sigma ( t , x _ { t } ) \\mathrm { d } W _ { t }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            388,
+            862,
+            609,
+            878
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "where 88 $v : [ 0 , 1 ] \\times \\mathbb { R } ^ { d }  \\mathbb { R } ^ { d }$ is the drift (control), $\\sigma : [ 0 , 1 ] \\times \\mathbb { R } ^ { d }  \\mathbb { R }$ is the diffusion coefficient, $W _ { t }$ 89 is $d$ -dimensional Brownian motion. We solve the OT minimization task with marginal distributions $( \\alpha$ , ",
+        "bbox": [
+            145,
+            882,
+            831,
+            911
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "discarded",
+        "text": "2 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "90 $\\beta$ ) and dynamic cost functions $c ( x , \\mu )$ and stochastic transport mapping $\\mu : \\mathbb { R } ^ { d }  \\mathcal { P } ( \\mathbb { R } ^ { d } )$ presented   \n91 in paper Korotin et al. [2022] ",
+        "bbox": [
+            145,
+            90,
+            825,
+            121
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/bf87cb5731b707925dc856c971eccc97b9c03b336376a09921b9a6977a16c758.jpg",
+        "text": "$$\nc ( x , \\mu ) = \\operatorname* { i n f } _ { v ( t , x ) : x _ { 0 } = x , x _ { 1 } \\sim \\mu } \\int _ { 0 } ^ { 1 } \\mathbb { E } \\mathcal { L } ( t , x _ { t } , v _ { t } ) d t , \\quad \\mathcal { L } ( t , x _ { t } , v _ { t } ) = \\frac { \\| v _ { t } \\| ^ { 2 } } { 2 } + U ( x _ { t } ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            233,
+            126,
+            764,
+            161
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "92 This problem is also known as generalized Schrödinger bridge (GSB). It is an extension of the classical   \n93 Schrödinger Bridge (SB) problem, which is a distribution-matching task seeking a diffusion model   \n94 that transports an initial distribution $\\alpha$ to a target distribution $\\beta$ . While the standard SB minimizes the   \n95 kinetic energy ( $L ^ { 2 }$ cost in OT), the GSB introduces additional flexibility by incorporating a state cost   \n96 $U ( x _ { t } )$ , allowing for more general optimality conditions beyond just kinetic energy minimization. The   \n97 standard SB’s reliance on kinetic energy (Euclidean cost) may not be ideal for all applications (e.g.,   \n98 image spaces, where distance may not be meaningful). Many scientific domains (population modeling,   \n99 robotics, molecular dynamics) require richer optimality conditions, which GSB accommodates via   \n100 $U ( x _ { t } )$ . The potential term usually characterizes the geometry of the space. But in addition, we can   \n101 also include some physical properties of the flow, e.g., entropic penalty or “mean-field” interaction   \n102 [Liu et al., 2022]. Thus, the optimal trajectories are curved to avoid regions with high values of   \n103 $U ( x _ { t } )$ .   \n104 Neural networks can effectively solve high-dimensional Optimal Transport (OT) problems by learning   \n105 the Kantorovich potentials, which maximizes the dual objective (Korotin et al. [2022], Buzun et al.   \n106 [2024]). It is shown in Villani et al. [2008] (Theorem 5.10) that OT task is equivalent to the   \n107 maximization of the Kantorovich potentials sum: ",
+        "bbox": [
+            143,
+            166,
+            826,
+            334
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            339,
+            826,
+            395
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/963b0f38502e29cc5c7e19377f5ef07ad8e1d242fe7ef567a2b645723b3bca7a.jpg",
+        "text": "$$\n\\operatorname* { s u p } _ { g \\in L _ { 1 } ( \\beta ) } \\Big [ \\mathbb { E } _ { \\alpha } \\big [ g ^ { c } ( x ) \\big ] + \\mathbb { E } _ { \\beta } [ g ( y ) ] \\Big ] ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            388,
+            401,
+            606,
+            434
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "where 108 $g ^ { c }$ denotes $c$ -conjugate transform of the potential $g$ ",
+        "bbox": [
+            140,
+            440,
+            555,
+            455
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e768e7136bbfb91353f13ac4433a00df569a55cc9d32e53b9710f29264e11268.jpg",
+        "text": "$$\ng ^ { c } ( x ) = \\operatorname* { i n f } _ { \\mu ( x ) : \\mathbb { R } ^ { d } \\to \\mathcal { P } ( \\mathbb { R } ^ { d } ) } \\mathbb { E } _ { y \\sim \\mu ( x ) } \\Big [ c ( x , \\mu ) - g ( y ) \\Big ] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            333,
+            462,
+            665,
+            492
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "109 Here $\\mu ( x )$ is the stochastic transport mapping, and in our notation it is the final distribution of   \n110 the stochastic process $x _ { 1 }$ under condition that $x _ { 0 } = x$ . The marginality requirement of the final   \n111 distribution of $x _ { 1 }$ (which must correspond to $\\beta$ ) is ensured by the potential difference $\\mathbb { E } _ { \\beta } { \\boldsymbol { g } } ( { \\boldsymbol { y } } )$ and   \n112 $\\mathbb { E } _ { \\alpha } \\mathbb { E } _ { y \\sim \\mu ( x ) } g ( y )$ , which tends to infinity otherwise.   \n113 But unlike classical OT, we need to minimize the cost throughout the trajectory $x _ { t }$ , $t \\in [ 0 , 1 ]$ with the   \n114 following objective ",
+        "bbox": [
+            140,
+            498,
+            825,
+            556
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            138,
+            561,
+            825,
+            592
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/8d21afe06d072b394d1d358678bd4769f2b576d85e97bd0ee65e5c133506af81.jpg",
+        "text": "$$\ng ^ { c } ( x ) = \\operatorname* { i n f } _ { v ( x , t ) } \\mathbb { E } \\left[ \\int _ { 0 } ^ { 1 } \\left( \\frac { \\| v ( t , x _ { t } ) \\| ^ { 2 } } { 2 } + U ( x _ { t } ) \\right) \\mathrm { d } t - g ( x _ { 1 } ) \\bigg | x _ { 0 } = x \\right] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            267,
+            597,
+            730,
+            633
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "115 In the last expression, we have united infimums by $\\mu ( x )$ and control $v ( t , x )$ and as a sequence have   \n116 removed the right side condition $x _ { 1 } \\sim \\mu ( x )$ . Based on dynamic programming approach, define the   \n117 value function. For any $0 \\leq t \\leq 1$ , the value function satisfies: ",
+        "bbox": [
+            140,
+            638,
+            825,
+            683
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/8233af6d3d313b46fa0017bd65f48ca19ad57813ba70c881fe13bf94c1a219bd.jpg",
+        "text": "$$\ns ( t , x ) = \\operatorname* { i n f } _ { x _ { t } } \\mathbb { E } \\left[ \\int _ { t } ^ { 1 } \\left( \\frac { \\| v ( t , x _ { t } ) \\| ^ { 2 } } { 2 } + U ( x _ { t } ) \\right) \\mathrm { d } t - g ( x _ { 1 } ) \\bigg | x _ { t } = x \\right] ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            272,
+            688,
+            723,
+            724
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "118 such that our objective equals $s ( 0 , x )$ and the boundary condition at time point $t = 1$ is ",
+        "bbox": [
+            137,
+            729,
+            743,
+            746
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/43aabde3b74c658198857480305558b2f8c7a0cf35bda4053da94f6960bfd4a4.jpg",
+        "text": "$$\n\\forall x \\in \\mathbb { R } ^ { d } : s ( 1 , x ) = - g ( x ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            403,
+            751,
+            593,
+            771
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "119 Function $s ( t , x )$ solves the Hamilton-Jacobi-Bellman (HJB) differential equation and it in turn allows us to find the conjugate potential 120 $g ^ { c }$ (4). ",
+        "bbox": [
+            140,
+            776,
+            826,
+            806
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/569bab8ee0649acc573a0b341f949559d239ec367bef4b213cdeebc0b1e1bae1.jpg",
+        "text": "$$\n- \\partial _ { t } s ( t , x ) = \\operatorname* { i n f } _ { v } \\{ v ^ { T } \\nabla _ { x } s ( t , x ) + \\mathcal { L } ( t , x , v ) \\} + \\frac { \\sigma ^ { 2 } } { 2 } \\mathrm { t r } \\{ \\nabla ^ { 2 } s ( t , x ) \\} .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            279,
+            810,
+            715,
+            843
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "121 Representation of the Lagrange function as a sum of kinetic and potential energy allows us to find   \n122 the minimum in velocity $( v )$ in explicit form, such that $v _ { t } = - \\nabla _ { x } s ( t , x _ { t } )$ . Together with potential   \n123 optimization (3), we obtain the final GSB objective in dual Kantorovich form. We provide a detailed   \n124 proof in Section 6.   \n125 Theorem 1 (Dual GSB problem). Given distributions $\\alpha , \\beta \\in \\mathcal { P } ( \\mathbb { R } ^ { d } )$ and stochastic dynamics (1)   \n126 with cost functional (2), the dynamic optimal transport problem admits the following formulation: ",
+        "bbox": [
+            142,
+            854,
+            825,
+            911
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "3 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            138,
+            90,
+            825,
+            119
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/8990096954ef3f4bdb7eaa5a2f3e67c27f904a79af6d19873925b3de6eddf469.jpg",
+        "text": "$$\n\\operatorname* { m a x } _ { s ( 1 , \\cdot ) \\in L _ { 1 } ( \\beta ) } \\left\\{ \\mathbb { E } _ { \\alpha } s ( 1 , x _ { 1 } ) - \\mathbb { E } _ { \\beta } s ( 1 , y ) \\right\\}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            370,
+            125,
+            627,
+            150
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where 127 $s ( t , x ) \\in C ^ { 1 , 2 } ( [ 0 , 1 ] \\times  { \\mathbb { R } } ^ { d } )$ and satisfies HJB PDE $\\forall t \\in [ 0 , 1 ]$ and $\\forall x \\in \\mathbb { R } ^ { d }$ ",
+        "bbox": [
+            140,
+            154,
+            710,
+            171
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ad7ea7f5d242d1ec8370ffaf627da0a165410aa0512b84f166987df7d8e969fc.jpg",
+        "text": "$$\n- \\partial _ { t } s ( t , x ) = - \\frac { 1 } { 2 } \\| \\nabla _ { x } s ( t , x ) \\| ^ { 2 } + U ( x ) + \\frac { \\sigma ^ { 2 } } { 2 } t r \\{ \\nabla ^ { 2 } s ( t , x ) \\} .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            297,
+            175,
+            699,
+            207
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "128 The first expression in Theorem 1 plays the role of a discriminator and guarantees matching the   \n129 target distribution $\\beta$ , and the second one is responsible for the optimality of trajectories. For the   \n130 HJB equation to have a unique solution (in the viscosity sense), we require coercivity (Theorem 4.1   \n131 [Fleeting and Soner, 2006]) of the Hamiltonian for some constants $C _ { 1 } > 0$ and $C _ { 2 } \\geq 0$ ",
+        "bbox": [
+            140,
+            217,
+            825,
+            273
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/f32ca717246ea3a7ce9bb2a16cd012faa9f0b0d37184b58e40904041eecfb3a0.jpg",
+        "text": "$$\n\\begin{array} { l } { \\displaystyle H ( x , \\nabla s , \\nabla ^ { 2 } s ) = \\frac { 1 } { 2 } \\| \\nabla _ { x } s \\| ^ { 2 } - U ( x ) - \\frac { \\sigma ^ { 2 } } { 2 } \\mathrm { t r } \\{ \\nabla ^ { 2 } s \\} } \\\\ { \\displaystyle \\qquad \\geq C _ { 1 } ( \\| \\nabla s \\| ) - C _ { 2 } ( 1 + \\| x \\| + \\| \\nabla ^ { 2 } s \\| ) } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            315,
+            277,
+            681,
+            330
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "132 The term $\\| \\nabla _ { x } s \\| ^ { 2 }$ dominates for large values, so in case $U ( x )$ is bounded and $\\sigma > 0$ the solution   \n133 is unique. By means of the optimized function $s ( t , x )$ we can generate the OT trajectories using   \n134 Euler-Maruyama algorithm: ",
+        "bbox": [
+            142,
+            333,
+            825,
+            376
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d2fb04b2a91a89017a76f41fbaeb3a26ecd3855eb13170b41e2e5d43260e1fb6.jpg",
+        "text": "$$\nx _ { t + \\Delta t } = - \\nabla _ { x } s ( t , x _ { t } ) \\Delta t + \\sigma \\Delta W , \\quad x _ { 0 } \\sim \\alpha .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            346,
+            381,
+            651,
+            398
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Unlike most other methods, here we do not need to model the intermediate density of the $x _ { t }$ $( t \\in ( 0 , 1 ) )$ distribution, which greatly simplifies the learning process, but we need to store the generation history in a replay buffer for more stable HJB optimization in high-dimensional spaces. ",
+        "bbox": [
+            161,
+            402,
+            825,
+            445
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "4 Method ",
+        "text_level": 1,
+        "bbox": [
+            161,
+            455,
+            269,
+            472
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "139 To find a stable and balanced solution $s ( t , x )$ for the given dynamic OT problem (1), we can follow a   \n140 composite approach that combines optimal control (via HJB PDE constraints) and RL techniques   \n141 (policy-based trajectory optimization). We approximate the value function using a parametric model   \n142 $s _ { \\theta } ( t , x )$ . We have to maximize the potential matching functional (8) subject to the constraint that   \n143 $s _ { \\theta } ( t , x )$ satisfies the HJB PDE. For that divide the time interval $[ 0 , 1 ]$ into $T$ time steps and simulate   \n144 $n$ trajectorie $\\{ t _ { 0 } ^ { k } , x _ { 0 } ^ { k } , \\ldots , t _ { T } ^ { k } , x _ { T } ^ { k } \\} _ { k = 1 } ^ { n }$ using initial $\\alpha$ distribution and Euler-Maruyama method (12).   \n145 Sample also $n$ points $y _ { k }$ from the target distribution $\\beta$ ",
+        "bbox": [
+            140,
+            479,
+            826,
+            579
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/fb06e33d8ed87003f4e5af9f4af686b6bb27208282db4315efeac70461ef85fa.jpg",
+        "text": "$$\nL _ { \\mathrm { p o t } } \\left( s _ { \\theta } \\right) = \\frac { 1 } { n } \\sum _ { k = 1 } ^ { n } { s _ { \\theta } ( 1 , x _ { T } ^ { k } ) } - \\frac { 1 } { n } \\sum _ { k = 1 } ^ { n } { s _ { \\theta } ( 1 , y ^ { k } ) } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            341,
+            583,
+            656,
+            625
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "146 The HJB PDE must hold for all $t \\in [ 0 , 1 ]$ and $x \\in \\mathbb { R } ^ { d }$ , but in practice, for more effective training, the   \n147 training data should be sampled in the region of the flow (trajectories) concentration (according to   \n148 Liu et al. [2022]). We enforce this by linear interpolation between datasets from $\\alpha$ and $\\beta$ as a rough   \n149 estimation of the flow region and subsequently use the replay buffer $\\boldsymbol { B }$ to collect points from the   \n150 previously obtained trajectories. Using data samples $\\{ t ^ { k } , \\boldsymbol { x ^ { \\dot { k } } } \\} _ { k = 1 } ^ { \\bar { n } }$ from $\\boldsymbol { B }$ or the linear interpolation   \n151 we compute HJB residual loss as ",
+        "bbox": [
+            142,
+            628,
+            825,
+            714
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/6a05de6b8d9749c52609eeef04bc8ff3c6bee4c0dd8adc32bd558b141ddea371.jpg",
+        "text": "$$\n\\begin{array} { r l r } & { } & { L _ { \\mathrm { h i b } } ( \\boldsymbol { s } _ { \\theta } , \\boldsymbol { \\overline { { s } } } ) = \\displaystyle \\frac { 1 } { n } \\sum _ { k = 1 } ^ { n } \\left( \\frac { \\partial s _ { \\theta } ^ { k } } { \\partial t } - \\frac { 1 } { 2 } \\| \\nabla _ { x } \\boldsymbol { \\overline { { s } } } ^ { k } \\| ^ { 2 } + U ( \\boldsymbol { x } ^ { k } ) + \\frac { \\sigma ^ { 2 } } { 2 } \\mathrm { t r } \\{ \\nabla ^ { 2 } \\boldsymbol { \\overline { { s } } } ^ { k } \\} + \\lambda _ { a } \\| a ^ { k } \\| \\right) ^ { 2 } } \\\\ & { } & { \\displaystyle + \\frac { 1 } { n } \\sum _ { k = 1 } ^ { n } \\left( \\frac { \\partial \\boldsymbol { \\overline { { s } } } ^ { k } } { \\partial t } - \\frac { 1 } { 2 } \\| \\nabla _ { x } s _ { \\theta } ^ { k } \\| ^ { 2 } + U ( \\boldsymbol { x } ^ { k } ) + \\frac { \\sigma ^ { 2 } } { 2 } \\mathrm { t r } \\{ \\nabla ^ { 2 } s _ { \\theta } ^ { k } \\} + \\lambda _ { a } \\| a ^ { k } \\| \\right) ^ { 2 } , } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            232,
+            718,
+            764,
+            804
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where 152 $s _ { \\theta } ^ { k } = s _ { \\theta } ( t ^ { k } , x ^ { k } )$ , $\\overline { { s } } ^ { k } = \\overline { { s } } ( t ^ { k } , x ^ { k } )$ denotes the target model with EMA parameters, $a ^ { k }$ is angular 153 acceleration defined as ",
+        "bbox": [
+            142,
+            808,
+            828,
+            837
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a0473e8dc8c977ba09fe47302aabfdbfbaccb1c6f02fa2b1d4c1a90aa1fe0d46.jpg",
+        "text": "$$\na ^ { k } = \\frac { d } { d t } \\frac { \\nabla s _ { \\theta } ( t ^ { k } , x ^ { k } ) } { \\| \\nabla s _ { \\theta } ( t ^ { k } , x ^ { k } ) \\| } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            416,
+            833,
+            581,
+            868
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "154 The angular acceleration with coefficient $\\lambda _ { a }$ forces the straightening of the trajectories (optionally).   \n155 We divide the model into $s _ { \\theta }$ and $\\overline { { s } }$ as it usually done in RL methods to make the optimization problem   \n156 more similar to regression.   \n157 In the result, our model is trained on two criteria ( $\\scriptstyle L _ { \\mathrm { p o t } }$ and $L _ { \\mathrm { h j b . } }$ ) simultaneously and to balance both   \n158 impacts we scale the gradients of the hjb-loss and sum it with the pot-loss: ",
+        "bbox": [
+            140,
+            869,
+            825,
+            911
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "4 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            90,
+            825,
+            119
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2d95f195b177b0958eaa5fad73afa204eb563cb2ff0a1699ff228b9296cb0f26.jpg",
+        "text": "$$\n\\nabla _ { \\boldsymbol { \\theta } } L _ { \\mathrm { p o t } } ( s _ { \\boldsymbol { \\theta } } ) + \\lambda _ { \\mathrm { h j b } } \\mathrm { E M A } \\left( \\frac { \\| \\nabla _ { \\boldsymbol { \\theta } } L _ { \\mathrm { p o t } } ( s _ { \\boldsymbol { \\theta } } ) \\| } { \\| \\nabla _ { \\boldsymbol { \\theta } } L _ { \\mathrm { h j b } } ( s _ { \\boldsymbol { \\theta } } , \\overline { { s } } ) \\| } \\right) \\nabla _ { \\boldsymbol { \\theta } } L _ { \\mathrm { h j b } } ( s _ { \\boldsymbol { \\theta } } , \\overline { { s } } ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            302,
+            126,
+            696,
+            161
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "159 The complete method is implemented as shown in Algorithm 1. It effectively combines the theo  \n160 retical guarantees of optimal transport with the flexibility of neural network approximations, while   \n161 maintaining numerical stability through careful gradient management. The adaptive balancing of the   \n162 potential matching and HJB residual losses ensures stable convergence to a solution that satisfies both   \n163 the optimality conditions and the boundary constraints. ",
+        "bbox": [
+            142,
+            167,
+            825,
+            237
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Algorithm 1 HOTA: Hamiltonian framework for Optimal Transport Advection ",
+        "text_level": 1,
+        "bbox": [
+            174,
+            252,
+            692,
+            268
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "1: Input: value model $s _ { \\theta }$ , model optimizer s_opt, distributions $\\alpha$ and $\\beta$ , potential function $U ( x )$ ,   \ndiffusion coefficient $\\sigma$ .   \n2: Hyperparameters: train steps $N$ , iterpolation sample steps $N _ { 0 }$ , temporal discretization $T$ , batch   \nsize $n$ , hjb-loss weight $\\lambda _ { \\mathrm { h j b } }$ , acceleration coefficient $\\lambda _ { a }$ , learning rate lr, gradients scale EMA   \ncoefficient $\\tau$ .   \n3: Initialize target model $\\overline { { s } }$ ; replay buffer $B \\gets \\emptyset$ ; gradients scale $\\alpha \\gets 1 . 0$   \n4: for iteration $i = 1$ to $N$ do   \n5: Sample train data $\\{ x _ { 0 } ^ { k } \\} _ { k = 1 } ^ { n } \\sim \\alpha$ ; $\\{ y ^ { k } \\} _ { k = 1 } ^ { n } \\sim \\beta$   \n6: if $i < N _ { 0 }$ then   \n7: Sample times k}nk=1 ∼ U (0, 1)   \n8: For $1 \\leq k \\leq n$ set $x ^ { k } = x _ { 0 } ^ { k } \\cdot \\left( 1 - t ^ { k } \\right) + y ^ { k } \\cdot t ^ { k }$   \n9: else   \n10: Sample $\\{ t ^ { k } , x ^ { k } \\} _ { k = 1 } ^ { n } \\sim B$   \n11: 12: end ifGenerate $n$ trajectories $\\{ t _ { 0 } ^ { k } , x _ { 0 } ^ { k } , \\ldots , t _ { T } ^ { k } , x _ { T } ^ { k } \\} _ { k = 1 } ^ { n }$ using current policy $\\boldsymbol { v } _ { t } = - \\nabla s ( t , \\boldsymbol { x } )$   \n13: Add the 1-st trajectory $\\{ t _ { 0 } ^ { 0 } , x _ { 0 } ^ { 0 } , \\ldots , t _ { T } ^ { 0 } , x _ { T } ^ { 0 } \\}$ to $\\boldsymbol { B }$   \n14: Compute gradients:   \n15: $g _ { \\mathrm { h j b } } \\doteq \\nabla _ { \\theta } \\breve { L } _ { \\mathrm { h j b } } \\bigl ( s _ { \\theta } , \\overline { { s } } , \\{ t ^ { k } , x ^ { k } \\} _ { k = 1 } ^ { n } \\bigr )$   \n16: $g _ { \\mathrm { p o t } } = \\nabla _ { \\boldsymbol { \\theta } } L _ { \\mathrm { p o t } } ( s _ { \\boldsymbol { \\theta } } , \\{ x _ { T } ^ { k } \\} _ { k = 1 } ^ { n } , \\{ y ^ { k } \\} _ { k = 1 } ^ { n } )$   \n17: Update Parameters:   \n18: Compute norms $G _ { \\mathrm { h j b } } = \\| g _ { \\mathrm { h j b } } \\| _ { 2 }$ and $G _ { \\mathrm { p o t } } = \\| g _ { \\mathrm { p o t } } \\| _ { 2 }$   \n19: EMA update of gradients scale $\\alpha = \\tau \\dot { G } _ { \\mathrm { p o t } } / G _ { \\mathrm { h j b } } + ( 1 - \\tau ) \\alpha$   \n20: Sum the gradients $g = g _ { \\mathrm { p o t } } + \\lambda _ { \\mathrm { h j b } } \\alpha g _ { \\mathrm { h j b } }$   \n21: Update model parameters $\\theta$ with $\\operatorname { s } \\_ { \\mathrm { o p t } ( g ) }$   \n22: EMA update of target model $\\overline { { s } }$   \n23: end for ",
+        "bbox": [
+            176,
+            273,
+            825,
+            638
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "164 5 Experiments ",
+        "text_level": 1,
+        "bbox": [
+            143,
+            660,
+            312,
+            678
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "In this section, we evaluate our method on a series of distribution matching tasks with non-trivial geometries. In Section 5.2, we compare HOTA with state-of-the-art baselines, demonstrating its superior performance on both standard benchmarks including datasets with almost non-differentiable potentials. In Section 5.3, we demonstrate the scalability of our approach by showcasing its effectiveness in high-dimensional settings. Finally, in Section 5.4, we ablate key components of our method. ",
+        "bbox": [
+            169,
+            684,
+            825,
+            767
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "5.1 Experimental Setup ",
+        "text_level": 1,
+        "bbox": [
+            173,
+            777,
+            351,
+            792
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "172 Evaluation We assess performance using two metrics: feasibility and optimality. Feasibility reflects   \n173 how well the method matches the target distribution, evaluated via Wasserstein distance with squared   \n174 Euclidean cost $( W _ { 2 } ( T _ { \\# } \\alpha , \\beta ) )$ , where the transport mapping $T$ uses optimized value function $s _ { \\theta }$ and   \n175 samples $x _ { 1 }$ by procedure (12). Optimality measures the quality of the resulting mapping, estimated   \n176 through the integral trajectory cost: $\\begin{array} { r } { \\int _ { 0 } ^ { 1 } \\left[ \\dot { \\mathbb { E } } _ { \\rho _ { t } } \\frac { \\| v _ { t } ( x _ { t } ) \\| ^ { 2 } } { 2 } + \\dot { U } ( x _ { t } ) \\right] d t } \\end{array}$ , where $x _ { t }$ follows (1).   \n177 Network In all our experiments, we employ a simple MLP augmented with Fourier feature encoding   \n178 of the time component. For general time embeddings of the form $\\operatorname { e m b } ( t ) = \\sin ( f \\cdot t + \\varphi )$ , the time   \n179 derivative is given by $\\partial _ { t } \\mathbf { e m b } ( t ) = \\boldsymbol { f } \\cdot \\cos ( \\boldsymbol { f } \\cdot \\boldsymbol { t } + \\varphi )$ . As the frequency $f$ increases, the magnitude   \n180 of this derivative also grows, potentially leading to numerical instability—especially when the time   \n181 derivative of the network is explicitly involved in the objective. This issue has been previously   \n182 discussed in Lu and Song [2024]. To address this, we restrict the frequency range to [1, 20] and   \n183 normalize the resulting Fourier features by dividing by the corresponding frequencies. ",
+        "bbox": [
+            140,
+            797,
+            825,
+            878
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            143,
+            883,
+            828,
+            912
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "5 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            92,
+            825,
+            161
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Baselines We use source code from GSBM repository for running it in our experiments on BabyMaze, Slit and Box datasets. Other results were taken from the original papers Liu et al. [2024], Pooladian et al. [2024] where dataset were previously introduced. ",
+        "bbox": [
+            165,
+            166,
+            825,
+            209
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "7 All experiments are conducted on a GeForce RTX 3090 GPU and take less than ten minutes for   \n8 training. Additional experimental details are provided in Appendix A. ",
+        "bbox": [
+            156,
+            215,
+            825,
+            244
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "189 5.2 Comparative Evaluation on Two-Dimensional Data ",
+        "text_level": 1,
+        "bbox": [
+            142,
+            253,
+            568,
+            268
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "image",
+        "img_path": "images/26b4fc0f60627f0763caaf2df29a47e4b1e8925e98319d01e8e38ac40bc9f1f2.jpg",
+        "image_caption": [
+            "Figure 1: Evaluation of HOTA method on smooth (top) and non-smooth datasets (bottom): Stunnel, Vneck, GMM, BabyMaze, Slit, Box. Blue regions indicate high values of potential $U ( x )$ . Distributions $\\alpha$ (red), $\\beta$ (black) and the mapped $T _ { \\# } \\alpha$ (green). "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            209,
+            291,
+            779,
+            574
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "190 In this section, we compare our method to previous state-of-the-art approaches on the standard bench  \n191 marks including datasets that feature almost non-differentiable potential functions. Visualizations   \n192 of the datasets are provided in Figure 1. The first three datasets—Stunnel, Vneck, and GMM—are   \n193 adopted from Liu et al. [2024]. These benchmarks incorporate state cost functions $U ( x _ { t } )$ that en  \n194 courage the optimal solution to respect complex geometric constraints. Each dataset is designed to   \n195 highlight specific capabilities of the evaluated algorithms. Stunnel assesses whether a method can   \n196 capture drift fields that undergo rapid and localized changes. Vneck evaluates the ability to model   \n197 drift that compresses and expands the support of marginal distributions. GMM tests whether the   \n198 method can disambiguate closely situated points and assign them to distinct trajectories. The re  \n199 maining datasets—BabyMaze, Slit, and Box (Pooladian et al. [2024])—are constructed using similar   \n200 underlying principles but pose additional difficulties due to the presence of almost non-differentiable   \n201 state cost functions. A summary of the quantitative results across all datasets is provided in Table 1.   \n202 Our method, HOTA, consistently outperforms existing approaches in terms of both feasibility and   \n203 optimality. In particular, HOTA achieves a substantial performance gain on the GMM dataset, which   \n204 may refer to its superior capability in trajectory separation for closely situated points. ",
+        "bbox": [
+            140,
+            645,
+            825,
+            852
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "5.3 Scalability to High-Dimensional Spaces ",
+        "text_level": 1,
+        "bbox": [
+            173,
+            862,
+            485,
+            877
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "206 In this section, we test the scalability of our method, demonstrating its stable performance in higher  \n207 dimensional settings. For this purpose, we use Sphere datasets parameterized by data dimensionality   \n208 $N$ . Specifically, we define an $N$ -dimensional unit sphere as a potential barrier inducing corresponding   \n209 state cost function $U ( x _ { t } )$ . The source and target distributions are samples from a standard distribution   \n10 located at the poles, projected onto the unit sphere. The three-dimensional case is visualized in   \n11 Figure 2a. The performance of our method across varying data dimensions is shown in Figure 2b   \n12 (right). Notably, HOTA demonstrates robust and stable performance as the dimensionality $N$   \n213 increases. ",
+        "bbox": [
+            148,
+            883,
+            825,
+            911
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "discarded",
+        "text": "6 ",
+        "bbox": [
+            493,
+            936,
+            504,
+            946
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "table",
+        "img_path": "images/bd13c5b4c5908d7f5a290d0dc397341a9d07c0cdb153e603e62ad03ef142a129.jpg",
+        "table_caption": [
+            "Table 1: Quantitative comparison between recent state-of-the-art methods and our approach, HOTA. Performance is evaluated using two criteria: Feasibility (how well the target distribution is covered) and Optimality (efficiency of the learned mapping). Our method consistently outperforms existing approaches, with significantly better results in certain tasks, such as GMM. N/A cells indicate that original authors of particular method did not include results for those tasks. The mean and the standard deviations of our method are computed across 5 different seeds. Best values are highlighted by bold font (lower is better). Gray values correspond to the method’s divergence. "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td rowspan=\"2\"></td><td colspan=\"3\">Feasibility W2(T#(α), β)</td><td colspan=\"3\">Optimality (integral cost)</td></tr><tr><td>Stunnel</td><td>Vneck</td><td>GMM</td><td>Stunnel</td><td>Vneck</td><td>GMM</td></tr><tr><td>NLSB</td><td>30.54</td><td>0.02</td><td>67.76</td><td>207.06</td><td>147.85</td><td>4202.71</td></tr><tr><td>GSBM</td><td>0.03</td><td>0.01</td><td>4.13</td><td>460.88</td><td>155.53</td><td>229.12</td></tr><tr><td>HOTA</td><td>0.006±0.003</td><td>0.002±0.001</td><td>0.19±0.05</td><td>320.90±12.5</td><td>115.09±8.9</td><td>80.44±2.6</td></tr><tr><td></td><td>BabyMaze</td><td>Slit</td><td>Box</td><td>BabyMaze</td><td>Slit</td><td>Box</td></tr><tr><td>NLSB</td><td>&gt;1</td><td>0.013</td><td>0.024</td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>NLOT</td><td>&gt;1</td><td>0.013</td><td>0.016</td><td>N/A</td><td>N/A</td><td>N/A</td></tr><tr><td>GSBM</td><td>0.01</td><td>0.01</td><td>0.02</td><td>6.5</td><td>4.9</td><td>3.8</td></tr><tr><td>HOTA</td><td>0.004±0.003</td><td>0.0004±0.0001</td><td>0.002±0.001</td><td>4.87±0.14</td><td>3.06±0.09</td><td>2.84±0.11</td></tr></table>",
+        "bbox": [
+            192,
+            195,
+            800,
+            367
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "image",
+        "img_path": "images/ba2c7d27462d0852f299f8563b69c40ae657363707f07c19ad7cb73db6d3c83c.jpg",
+        "image_caption": [
+            "Figure 2: (a) Visualization of Sphere dataset for $N = 3$ . (b) Feasibility and Optimality trends with respect to $3 D$ unit sphere smoothness (left) and unit sphere dimensionality (right). Our method maintains robust performance across both non-differentiable potentials and high-dimensional settings. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            184,
+            388,
+            816,
+            547
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            148,
+            618,
+            823,
+            702
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "5.4 Ablation study ",
+        "text_level": 1,
+        "bbox": [
+            166,
+            718,
+            315,
+            732
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Table 2 presents comparison of the full HOTA model against variants without the replay buffer $\\boldsymbol { B }$ that stores simulation history or the adaptive gradient balancing by means of $\\alpha$ (17), evaluating as previously feasibility and optimality metrics across Stunnel, Vneck, and GMM datasets. The full HOTA achieves strong metric scores, while removing the buffer severely degrades feasibility in Vneck and GMM and increases costs in Stunnel. Disabling gradient balancing harms feasibility in Stunnel and GMM. The results highlight the buffer’s critical role in maintaining feasibility and the nuanced trade-offs between gradient balancing and transport efficiency across different scenarios. ",
+        "bbox": [
+            161,
+            738,
+            823,
+            835
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "22 Additionally we have evaluated the influence of acceleration term $\\lambda _ { a } \\| a \\|$ used in loss $L _ { \\mathrm { h j b } }$ depending   \n23 on $\\lambda _ { a }$ (Figure 3). It performs the function of straightening trajectories by penalizing the change   \n4 in angular velocity. It follows from the results that increasing $\\lambda _ { a }$ improves the optimality of the   \n25 transportation trajectories while introducing a small bias in the matching of the target distribution   \n26 $\\beta$ , which is reflected in the feasibility metric. In the GMM task, due to the specificity of the dataset ",
+        "bbox": [
+            155,
+            842,
+            823,
+            911
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "7 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "227 and the divergence of trajectories in different directions, a small penalization of acceleration also improves feasibility. ",
+        "bbox": [
+            138,
+            90,
+            825,
+            119
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "table",
+        "img_path": "images/e53ec233e6bae035d02f37082f4feded1402784fa8807a10d56a0b97415e1dd1.jpg",
+        "table_caption": [
+            "Table 2: Comparison of HOTA method against variants without the replay buffer $\\boldsymbol { B }$ and the adaptive gradient balancing. Best values are highlighted by bold font (lower is better). Gray values correspond to the method’s divergence. "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td rowspan=\"2\"></td><td colspan=\"3\">Feasibility W2(T#(α), β)</td><td colspan=\"3\"> Optimality (integral cost)</td></tr><tr><td>Stunnel</td><td>Vneck</td><td>GMM</td><td>Stunnel</td><td>Vneck</td><td>GMM</td></tr><tr><td>HOTA</td><td>0.006</td><td>0.002</td><td>0.19</td><td>320.90</td><td>115.09</td><td>80.44</td></tr><tr><td>HOTA w/o buffer</td><td>0.076</td><td>16.47</td><td>1.248</td><td>706.89</td><td>82.49</td><td>121.6</td></tr><tr><td>HOTA w/o grad. balancing</td><td>3.60</td><td>0.026</td><td>2.64</td><td>325.22</td><td>109.25</td><td>72.77</td></tr></table>",
+        "bbox": [
+            202,
+            183,
+            789,
+            273
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "image",
+        "img_path": "images/e2156aa2e6aee37b62b3235622bdefc5fee7f5c50924a14376a45b3ac94d2975.jpg",
+        "image_caption": [
+            "Figure 3: Impact of acceleration coefficient $\\lambda _ { a }$ . Left: Stunnel, right: GMM datasets. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            272,
+            296,
+            727,
+            457
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "229 6 Proof of Theorem 1 (Dual Formulation of GSB) ",
+        "text_level": 1,
+        "bbox": [
+            147,
+            500,
+            602,
+            517
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "230 We prove in the first step the equivalence between the GSB (stochastic control formulation) and its   \n231 dual formulation using Kantorovich-style duality. Remind that we consider the stochastic process   \n232 $x _ { t }$ (1) with conditions $x _ { 0 } \\sim \\alpha$ , $x _ { 1 } \\sim \\beta$ , control function $v ( t , x _ { t } )$ , and Brownian motion $\\sigma ( t , x _ { t } ) d W _ { t }$ .   \n233 The primary problem of GSB optimization is: ",
+        "bbox": [
+            140,
+            523,
+            826,
+            580
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/471f58bc71e865b669d912be8ee0c4663112cc0381f1123cf49777e088f5b9c9.jpg",
+        "text": "$$\n\\operatorname* { i n f } _ { v ( x , t ) } \\mathbb { E } \\left[ \\int _ { 0 } ^ { 1 } \\mathcal { L } ( t , x _ { t } , v _ { t } ) d t \\right] \\quad \\mathrm { s . t . } \\quad x _ { 0 } \\sim \\alpha , x _ { 1 } \\sim \\beta ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            323,
+            583,
+            673,
+            621
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "where in the particular case 234 $\\mathcal { L } ( t , x , v ) = v ^ { 2 } / 2 + U ( x )$ . Since the stochastic process $x _ { t }$ starts from 235 $x _ { 0 } \\sim \\alpha$ the primal problem is equivalent to: ",
+        "bbox": [
+            137,
+            623,
+            828,
+            654
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/56013366b3cd0b2299181ce01de6b8dbe8d4b44b9f7998836580fecc791fd28f.jpg",
+        "text": "$$\n\\operatorname* { i n f } _ { v ( t , x ) } \\left( \\mathbb { E } \\left[ \\int _ { 0 } ^ { 1 } \\mathcal { L } ( t , x _ { t } , v _ { t } ) d t \\right] + \\operatorname* { s u p } _ { g \\in L _ { 1 } ( \\beta ) } \\left( - \\mathbb { E } [ g ( x _ { 1 } ) ] + \\mathbb { E } _ { \\beta } [ g ( y ) ] \\right) \\right) ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            272,
+            656,
+            722,
+            698
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "236 where the supremum over $g$ enforces the constraint $x _ { 1 } \\sim \\beta$ (via Lagrange duality). Rewrite the   \n237 Lagrangian problem as ",
+        "bbox": [
+            140,
+            700,
+            823,
+            729
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/30276a0e18f4104eb54f285f917e10cfc6f9431eaefc72d9ab0423e5a4ea6850.jpg",
+        "text": "$$\n\\operatorname* { i n f } _ { v ( t , x ) } \\operatorname* { s u p } _ { g \\in L _ { 1 } ( \\beta ) } \\left( \\mathbb { E } \\left[ \\int _ { 0 } ^ { 1 } \\mathcal { L } ( t , x _ { t } , v _ { t } ) d t - g ( x _ { 1 } ) \\right] + \\mathbb { E } _ { \\beta } [ g ( y ) ] \\right) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            297,
+            732,
+            700,
+            770
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "238 Assuming strong duality holds under mild regularity conditions (e.g., $\\mathcal { L }$ convex in $v , \\alpha , \\beta$ absolutely   \n239 continuous), we swap inf and sup: ",
+        "bbox": [
+            138,
+            773,
+            826,
+            803
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d920bd06c19e22001f7af5720d7902e14ac8ecbfd6ec71c0a97a5e7015d3c28f.jpg",
+        "text": "$$\n\\operatorname* { s u p } _ { g \\in L _ { 1 } ( \\beta ) } \\left( \\operatorname* { i n f } _ { v ( t , x ) } \\mathbb { E } \\left[ \\int _ { 0 } ^ { 1 } \\mathcal { L } ( t , x _ { t } , v _ { t } ) d t - g ( x _ { 1 } ) \\right] + \\mathbb { E } _ { \\beta } [ g ( y ) ] \\right) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            297,
+            805,
+            700,
+            843
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "240 Note that since the optimal $v ^ { * } ( t , x )$ is Markovian (depends only on current time $t$ and state $x$ ) and   \n241 does not depend on the initial distribution $\\alpha$ it holds that ",
+        "bbox": [
+            137,
+            848,
+            830,
+            877
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/df96f658605463613b9dcefff5d2d07b31521ab5be3a4a32d2f6ba3d20157995.jpg",
+        "text": "$$\n\\mathbb { E } \\left[ \\int _ { 0 } ^ { 1 } \\mathcal { L } ( t , x _ { t } , v _ { t } ^ { * } ) d t - g ( x _ { 1 } ) \\right] = \\mathbb { E } _ { x \\sim \\alpha } \\mathbb { E } \\left[ \\int _ { 0 } ^ { 1 } \\mathcal { L } ( t , x _ { t } , v _ { t } ^ { * } ) d t - g ( x _ { 1 } ) \\bigg | x _ { 0 } = x \\right] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            230,
+            880,
+            766,
+            916
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "8 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "228 ",
+        "bbox": [
+            140,
+            279,
+            161,
+            289
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "242 Buy the definition of $c$ -conjugate transform (5): ",
+        "bbox": [
+            145,
+            90,
+            483,
+            106
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/991e22a15361bd9f84a32bfb6bd494ac3e194236c6cf61c79249820ac2caa4b6.jpg",
+        "text": "$$\n\\mathbb { E } _ { x \\sim \\alpha } \\mathbb { E } \\left[ \\int _ { 0 } ^ { 1 } \\mathcal { L } ( t , x _ { t } , v _ { t } ^ { * } ) d t - g ( x _ { 1 } ) \\Big | x _ { 0 } = x \\right] = \\mathbb { E } _ { x \\sim \\alpha } g ^ { c } ( x ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            295,
+            109,
+            700,
+            147
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Thus, the dual problem becomes: 243 $\\begin{array} { r } { \\operatorname* { s u p } _ { g \\in L _ { 1 } ( \\beta ) } \\left( \\mathbb { E } _ { \\alpha } [ g ^ { c } ( x ) ] + \\mathbb { E } _ { \\beta } [ g ( y ) ] \\right) . } \\end{array}$ In the second step find the 244 optimal control solution $v ^ { * } ( t , x )$ by means of dynamic programming principle. Define the value 245 function $s ( t , x )$ that for any $0 \\leq t \\leq \\tau \\leq 1$ satisfies: ",
+        "bbox": [
+            140,
+            148,
+            823,
+            195
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/3e7f01e12169328068260f5737a582c877dbe4b6505ce49395121efaa52f5e1d.jpg",
+        "text": "$$\ns ( t , x ) = \\operatorname* { i n f } _ { v ( t , x ) } \\mathbb { E } \\left[ \\int _ { t } ^ { \\tau } \\mathcal { L } ( z , x _ { z } , v _ { z } ) d z + s ( \\tau , x _ { \\tau } ) \\bigg | x _ { t } = x \\right] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            302,
+            199,
+            696,
+            234
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "246 Applying Ito’s formula to $s ( \\tau , x _ { \\tau } )$ we obtain that ",
+        "bbox": [
+            142,
+            238,
+            496,
+            253
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2d58227d38919a32f4fbf229dfac6e7222c242fe81533a22fb46a4b34e2aaad8.jpg",
+        "text": "$$\n\\begin{array} { l } { \\displaystyle \\mathrm { d } s ( \\tau , x _ { \\tau } ) = \\partial _ { \\tau } s \\mathrm { d } \\tau + \\nabla s \\cdot \\mathrm { d } x _ { \\tau } + \\frac { 1 } { 2 } \\mathrm { t r } ( \\sigma ^ { 2 } \\nabla ^ { 2 } s ) \\mathrm { d } \\tau } \\\\ { \\displaystyle = \\left( \\partial _ { \\tau } s + \\nabla s ^ { T } v _ { \\tau } + \\frac { 1 } { 2 } \\mathrm { t r } ( \\sigma ^ { 2 } \\nabla ^ { 2 } s ) \\right) \\mathrm { d } \\tau + \\nabla s ^ { T } \\sigma \\mathrm { d } W _ { s } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            284,
+            256,
+            710,
+            324
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "247 Consider the evolution of the value between times $t$ and $\\tau$ : ",
+        "bbox": [
+            142,
+            325,
+            558,
+            340
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1c7aab481fb27494568e43a92c48ce9a29a3789d8120787eb69b3ddfc05ad58d.jpg",
+        "text": "$$\ns ( \\tau , x _ { \\tau } ) - s ( t , x _ { t } ) = \\int _ { t } ^ { \\tau } \\left( \\partial _ { z } s + \\nabla s \\cdot v _ { z } + \\frac { 1 } { 2 } \\mathrm { t r } ( \\sigma ^ { 2 } \\nabla ^ { 2 } s ) \\right) \\mathrm { d } z + \\int _ { t } ^ { \\tau } \\nabla s ^ { T } \\sigma \\mathrm { d } W .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            235,
+            340,
+            764,
+            376
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Basing on the martingale property of Ito integrals248 $\\begin{array} { r } { ( \\mathbb { E } [ \\int \\nabla s \\cdot \\sigma \\mathrm { d } W | x _ { t } = x ] = 0 , } \\end{array}$ ) it holds that ",
+        "bbox": [
+            140,
+            381,
+            781,
+            397
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/8581f428ddc58cfb5199b47cd2e7e53db19a2cbe88721d990e85118dbc60a0be.jpg",
+        "text": "$$\n\\mathbb { E } [ s ( \\tau , x _ { \\tau } ) | x _ { t } = x ] = s ( t , x ) + \\mathbb { E } \\left[ \\int _ { t } ^ { \\tau } \\left( \\partial _ { z } s + \\nabla s \\cdot v _ { z } + \\frac { 1 } { 2 } \\mathrm { t r } ( \\sigma ^ { 2 } \\nabla ^ { 2 } s ) \\right) \\mathrm { d } z \\right] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            240,
+            401,
+            754,
+            435
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "249 Substitute back into dynamic programming and plug the last expression into the equation (24): ",
+        "bbox": [
+            142,
+            439,
+            790,
+            454
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a9033017d3461080386c73a5078061977fb6b01ec032e09cc26f3080fa9b55f7.jpg",
+        "text": "$$\ns ( t , x ) = \\operatorname* { i n f } _ { v ( t , x ) } \\mathbb { E } \\left[ \\int _ { t } ^ { \\tau } \\mathcal { L } ( z , x _ { z } , v _ { z } ) \\mathrm { d } z + s ( t , x ) + \\int _ { t } ^ { \\tau } \\left( \\partial _ { z } s + \\nabla s ^ { T } v _ { \\tau } + \\frac { 1 } { 2 } \\mathbf { t r } ( \\sigma ^ { 2 } \\nabla ^ { 2 } s ) \\right) \\mathrm { d } z \\right] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            191,
+            457,
+            805,
+            492
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "250 Cancel $s ( t , x )$ from both sides and divide by $( \\tau - t )$ : ",
+        "bbox": [
+            140,
+            502,
+            522,
+            518
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4b6c6b503620d17fdbf3053f65bbc3cb0eb792411432e1134f1e66293db1942b.jpg",
+        "text": "$$\n0 = \\operatorname* { i n f } _ { v ( s , t ) } \\frac { 1 } { \\tau - t } \\mathbb { E } \\left[ \\int _ { t } ^ { \\tau } \\left( \\mathcal { L } ( z , x _ { z } , v _ { z } ) + \\partial _ { z } s + \\nabla s ^ { T } v _ { z } + \\frac { 1 } { 2 } \\mathrm { t r } ( \\sigma ^ { 2 } \\nabla ^ { 2 } s ) \\right) \\mathrm { d } z \\right] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            245,
+            522,
+            753,
+            558
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "251 Take limit $\\tau \\downarrow t$ to derive the HJB equation for a general Lagrangian $\\mathcal { L }$ ",
+        "bbox": [
+            143,
+            560,
+            637,
+            575
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/233b397474d834340235bffaf698f7b37e85a2ba280388e5af5fecd3c1089c04.jpg",
+        "text": "$$\n0 = \\operatorname* { i n f } _ { v } \\left\\{ { \\mathcal { L } } ( t , x , v ) + \\partial _ { t } s + \\nabla s ^ { T } v + { \\frac { 1 } { 2 } } \\mathrm { t r } ( \\sigma ^ { 2 } \\nabla ^ { 2 } s ) \\right\\} .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            321,
+            579,
+            674,
+            614
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Identify optimal control for the particular $\\mathcal { L } ( t , x , v ) = v ^ { 2 } / 2 + U ( x )$ . The infimum is attained when $\\boldsymbol { v } ^ { * } = - \\boldsymbol { \\nabla } s$ , yielding the final result of Theorem 1. ",
+        "bbox": [
+            163,
+            618,
+            823,
+            647
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "7 Limitations and Future Work ",
+        "text_level": 1,
+        "bbox": [
+            169,
+            657,
+            452,
+            675
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "While HOTA exhibits strong and robust performance, we observed sensitivity to certain network design choices—particularly the Fourier feature encoding of time, a commonly used technique in models that estimate ODE drifts. Additionally, because the value function in our framework must simultaneously support optimal control estimation and serve as a Kantorovich potential, it requires a network architecture capable of aggregating rich temporal and spatial information. The use of a simple MLP, while effective, may not be optimal from an optimization standpoint. Incorporating architectures with stronger inductive biases could further enhance performance. These considerations lie beyond the scope of this work, but we believe they offer promising directions for future research. ",
+        "bbox": [
+            173,
+            681,
+            825,
+            794
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "8 Conclusion ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            804,
+            299,
+            820
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "In this work, we introduced HOTA, a new OT method based on the Hamilton–Jacobi–Bellman (HJB) framework for solving the Generalized Schrödinger Bridge problem. We demonstrated that HOTA consistently outperforms recent state-of-the-art methods on standard benchmarks and scales effectively to high-dimensional settings. Remarkably, it works for non-smooth potentials and with non-differentiable cost functions, yielding robust performance gain in terms of strictly defined concepts of feasibility and optimality. ",
+        "bbox": [
+            173,
+            827,
+            823,
+            911
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "discarded",
+        "text": "9 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "270 References   \n271 Arip Asadulaev, Rostislav Korst, Aleksandr Korotin, Vage Egiazarian, Andrey Filchenkov, and Evgeny Burnaev.   \n272 Rethinking optimal transport in offline reinforcement learning. Advances in Neural Information Processing   \n273 Systems, 37:123592–123607, 2024.   \n274 Grigory Bartosh, Dmitry P Vetrov, and Christian Andersson Naesseth. Neural flow diffusion models: Learnable   \n275 forward process for improved diffusion modelling. Advances in Neural Information Processing Systems, 37:   \n276 73952–73985, 2024.   \n277 Jean-David Benamou and Yann Brenier. A computational fluid mechanics solution to the monge-kantorovich   \n278 mass transfer problem. Numerische Mathematik, 84(3):375–393, 2000.   \n279 Denis Blessing, Julius Berner, Lorenz Richter, and Gerhard Neumann. Underdamped diffusion bridges with   \n280 applications to sampling. In The Thirteenth International Conference on Learning Representations, 2025.   \n281 URL https://openreview.net/forum?id=Q1QTxFm0Is.   \n282 Maksim Bobrin, Nazar Buzun, Dmitrii Krylov, and Dmitry V Dylov. Align your intents: Offline imitation   \n283 learning via optimal transport. arXiv preprint arXiv:2402.13037, 2024.   \n284 Nicolas Bonneel and Julie Digne. A survey of optimal transport for computer graphics and computer vision.   \n285 Computer Graphics Forum, 42(2):439–460, 2023. doi: https://doi.org/10.1111/cgf.14778. URL https:   \n286 //onlinelibrary.wiley.com/doi/abs/10.1111/cgf.14778.   \n287 Charlotte Bunne, Laetitia Papaxanthos, Andreas Krause, and Marco Cuturi. Proximal optimal transport   \n288 modeling of population dynamics. In Gustau Camps-Valls, Francisco J. R. Ruiz, and Isabel Valera, editors,   \n289 Proceedings of The 25th International Conference on Artificial Intelligence and Statistics, volume 151 of   \n290 Proceedings of Machine Learning Research, pages 6511–6528. PMLR, 28–30 Mar 2022. URL https:   \n291 //proceedings.mlr.press/v151/bunne22a.html.   \n292 Nazar Buzun, Maksim Bobrin, and Dmitry V Dylov. Expectile regularization for fast and accurate training of   \n293 neural optimal transport. Advances in Neural Information Processing Systems, 37:119811–119837, 2024.   \n294 Marco Cuturi. Sinkhorn distances: Lightspeed computation of optimal transport. Advances in neural information   \n295 processing systems, 26, 2013.   \n296 Carles Domingo-Enrich, Michal Drozdzal, Brian Karrer, and Ricky TQ Chen. Adjoint matching: Fine-tuning flow   \n297 and diffusion generative models with memoryless stochastic optimal control. arXiv preprint arXiv:2409.08861,   \n298 2024a.   \n299 Carles Domingo-Enrich, Jiequn Han, Brandon Amos, Joan Bruna, and Ricky T. Q. Chen. Stochastic optimal   \n300 control matching. In The Thirty-eighth Annual Conference on Neural Information Processing Systems, 2024b.   \n301 URL https://openreview.net/forum?id=wfU2CdgmWt.   \n302 Wendell H. Fleeting and H. Mete Soner. Controlled markov processes and viscosity solutions (2nd ed.). Springer,   \n303 2006.   \n304 Kacper Kapusniak, Peter Potaptchik, Teodora Reu, Leo Zhang, Alexander Tong, Michael Bronstein, Joey Bose,   \n305 and Francesco Di Giovanni. Metric flow matching for smooth interpolations on the data manifold. Advances   \n306 in Neural Information Processing Systems, 37:135011–135042, 2024.   \n307 Pascal Klink, Haoyi Yang, Carlo D’Eramo, Jan Peters, and Joni Pajarinen. Curriculum reinforcement learning   \n308 via constrained optimal transport. In Kamalika Chaudhuri, Stefanie Jegelka, Le Song, Csaba Szepesvari,   \n309 Gang Niu, and Sivan Sabato, editors, Proceedings of the 39th International Conference on Machine Learning,   \n310 volume 162 of Proceedings of Machine Learning Research, pages 11341–11358. PMLR, 17–23 Jul 2022.   \n311 URL https://proceedings.mlr.press/v162/klink22a.html.   \n312 Alexander Korotin, Daniil Selikhanovych, and Evgeny Burnaev. Neural optimal transport. arXiv preprint   \n313 arXiv:2201.12220, 2022.   \n314 Sergey Levine. Reinforcement learning and control as probabilistic inference: Tutorial and review. CoRR,   \n315 abs/1805.00909, 2018.   \n316 Yaron Lipman, Ricky T. Q. Chen, Heli Ben-Hamu, Maximilian Nickel, and Matthew Le. Flow matching for   \n317 generative modeling. In The Eleventh International Conference on Learning Representations, 2023.   \n318 Guan-Horng Liu, Tianrong Chen, Oswin So, and Evangelos A Theodorou. Deep generalized schrödinger bridge.   \n319 In Advances in Neural Information Processing Systems, 2022.   \n320 Guan-Horng Liu, Yaron Lipman, Maximilian Nickel, Brian Karrer, Evangelos Theodorou, and Ricky T. Q.   \n321 Chen. Generalized schrödinger bridge matching. In The Twelfth International Conference on Learning   \n322 Representations, 2024.   \n323 Cheng Lu and Yang Song. Simplifying, stabilizing and scaling continuous-time consistency models. 2024.   \n324 Ashok Makkuva, Amirhossein Taghvaei, Sewoong Oh, and Jason Lee. Optimal transport mapping via input   \n325 convex neural networks. In International Conference on Machine Learning, pages 6672–6681. PMLR, 2020.   \n326 Eduardo Fernandes Montesuma, Fred Maurice Ngole Mboula, and Antoine Souloumiac. Recent advances in   \n327 optimal transport for machine learning. IEEE Transactions on Pattern Analysis and Machine Intelligence,   \n328 2024.   \n329 Benjamin Nachman Nathan T. Suri, Vinicius Mikuni. Wotan: Weakly-supervised optimal transport attention  \n330 based noise mitigation. NeurIPS 2024, 2024.   \n331 Kirill Neklyudov, Rob Brekelmans, Alexander Tong, Lazar Atanackovic, Qiang Liu, and Alireza Makhzani. A   \n332 computational framework for solving Wasserstein lagrangian flows. In Ruslan Salakhutdinov, Zico Kolter,   \n333 Katherine Heller, Adrian Weller, Nuria Oliver, Jonathan Scarlett, and Felix Berkenkamp, editors, Proceedings   \n334 of the 41st International Conference on Machine Learning, volume 235 of Proceedings of Machine Learning   \n335 Research, pages 37461–37485. PMLR, 21–27 Jul 2024.   \n336 Luiz Manella Pereira and M Hadi Amini. A survey on optimal transport for machine learning: Theory and   \n337 applications. IEEE Access, 2025.   \n338 Gabriel Peyré, Marco Cuturi, et al. Computational optimal transport: With applications to data science.   \n339 Foundations and Trends® in Machine Learning, 11(5-6):355–607, 2019.   \n340 Aram-Alexandre Pooladian, Carles Domingo-Enrich, Ricky T. Q. Chen, and Brandon Amos. Neural optimal   \n341 transport with lagrangian costs. In The 40th Conference on Uncertainty in Artificial Intelligence, 2024.   \n342 Thomas Rupf, Marco Bagatella, Nico Gürtler, Jonas Frey, and Georg Martius. Zero-shot offline imitation   \n343 learning via optimal transport, 2025. URL https://openreview.net/forum?id=vDecbmWf6w.   \n344 Filippo Santambrogio. Optimal transport for applied mathematicians, volume 87. Springer, 2015.   \n345 Evangelos Theodorou, Jonas Buchli, and Stefan Schaal. Learning policy improvements with path integrals. In   \n346 Yee Whye Teh and Mike Titterington, editors, Proceedings of the Thirteenth International Conference on   \n347 Artificial Intelligence and Statistics, volume 9 of Proceedings of Machine Learning Research, pages 828–835,   \n348 Chia Laguna Resort, Sardinia, Italy, 13–15 May 2010. PMLR.   \n349 Cédric Villani et al. Optimal transport: old and new, volume 338. Springer, 2008. ",
+        "bbox": [
+            140,
+            83,
+            830,
+            912
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "10 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            137,
+            90,
+            834,
+            406
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            506,
+            946
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "A Additional Experimental Details ",
+        "text_level": 1,
+        "bbox": [
+            160,
+            89,
+            480,
+            107
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "Hyperparameters Table 3 summarizes the hyperparameters used for each dataset presented in the paper. Note that the Sphere datasets, which are parameterized by data dimensionality, share all hyperparameters except for the potential weight, which may take value 10 for the low dimensions are 30 for high ones. ",
+        "bbox": [
+            161,
+            113,
+            825,
+            169
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "table",
+        "img_path": "images/3a1c6db7c1413d0d9cbbd9236af7da2377281e1af776a3eb4ceb6942e0c08e2b.jpg",
+        "table_caption": [
+            "Table 3: Hyperparameters used for each dataset presented in the paper. "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Hyperparameter</td><td>Stunnel Vneck</td><td>GMM</td><td>BabyMaze</td><td>Slit</td><td>Box</td><td>Sphere</td></tr><tr><td>MLP hidden layers Fourier frequencies</td><td colspan=\"6\">[512, 512,512,1]</td></tr><tr><td>optimizer</td><td colspan=\"6\">{1,...,20} Adam with cosine annealing (α = le-2)</td></tr><tr><td>initial learning rate</td><td colspan=\"6\">5×10-4</td></tr><tr><td>Adam [β1,β2]</td><td colspan=\"6\">[0.9,0.99]</td></tr><tr><td># training iterations</td><td colspan=\"6\">70000</td></tr><tr><td>batch size</td><td colspan=\"6\"></td></tr><tr><td>EMA decay, T</td><td colspan=\"6\">1024</td></tr><tr><td></td><td colspan=\"6\">0.9</td></tr><tr><td># control steps</td><td colspan=\"6\">30</td></tr><tr><td>diffusion coef., o</td><td>0.2</td><td>0.1</td><td>0.03</td><td>0.05</td><td>0.03</td><td>0.01</td></tr><tr><td>control weight, 入a</td><td>2.0</td><td>0.7</td><td>0.5</td><td>2.0</td><td>0.3</td><td>0.4</td></tr><tr><td>acc. weight, 入a</td><td>0.0001 0.001</td><td>0.2</td><td>0.05</td><td>0.001</td><td>0.01</td><td>0</td></tr><tr><td>potential weight</td><td>25</td><td>1000 25</td><td>10</td><td>30</td><td>700</td><td>{10,30}</td></tr></table>",
+        "bbox": [
+            183,
+            207,
+            808,
+            415
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "354 ",
+        "bbox": [
+            142,
+            422,
+            160,
+            431
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "12 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "355 NeurIPS Paper Checklist ",
+        "text_level": 1,
+        "bbox": [
+            151,
+            89,
+            387,
+            107
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "1. Claims ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            113,
+            284,
+            127
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: Do the main claims made in the abstract and introduction accurately reflect the paper’s contributions and scope? ",
+        "bbox": [
+            228,
+            132,
+            821,
+            160
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer:[Yes] ",
+        "bbox": [
+            233,
+            165,
+            323,
+            179
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: We provide theoretical derivation of the dual SGB problem. We made a thorough experiments on established benchmarks and compare proposed method with the other GSB solvers. In all extensive tests, HOTA outperforms the competition both in terms of feasibility and optimality. ",
+        "bbox": [
+            233,
+            183,
+            825,
+            238
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            242,
+            308,
+            256
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the abstract and introduction do not include the claims made in the paper.   \n• The abstract and/or introduction should clearly state the claims made, including the contributions made in the paper and important assumptions and limitations. A No or NA answer to this question will not be perceived well by the reviewers.   \n• The claims made should match theoretical and experimental results, and reflect how much the results can be expected to generalize to other settings.   \n• It is fine to include aspirational goals as motivation as long as it is clear that these goals are not attained by the paper. ",
+        "bbox": [
+            251,
+            261,
+            825,
+            392
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "2. Limitations ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            396,
+            316,
+            410
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss the limitations of the work performed by the authors? ",
+        "bbox": [
+            232,
+            414,
+            805,
+            428
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            433,
+            330,
+            446
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: We provided discussions on limitations in Section 6 of main paper. ",
+        "bbox": [
+            233,
+            450,
+            758,
+            465
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            469,
+            308,
+            483
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper.   \n• The authors are encouraged to create a separate \"Limitations\" section in their paper.   \n• The paper should point out any strong assumptions and how robust the results are to violations of these assumptions (e.g., independence assumptions, noiseless settings, model well-specification, asymptotic approximations only holding locally). The authors should reflect on how these assumptions might be violated in practice and what the implications would be.   \n• The authors should reflect on the scope of the claims made, e.g., if the approach was only tested on a few datasets or with a few runs. In general, empirical results often depend on implicit assumptions, which should be articulated.   \nThe authors should reflect on the factors that influence the performance of the approach. For example, a facial recognition algorithm may perform poorly when image resolution is low or images are taken in low lighting. Or a speech-to-text system might not be used reliably to provide closed captions for online lectures because it fails to handle technical jargon.   \n• The authors should discuss the computational efficiency of the proposed algorithms and how they scale with dataset size.   \n• If applicable, the authors should discuss possible limitations of their approach to address problems of privacy and fairness.   \n• While the authors might fear that complete honesty about limitations might be used by reviewers as grounds for rejection, a worse outcome might be that reviewers discover limitations that aren’t acknowledged in the paper. The authors should use their best judgment and recognize that individual actions in favor of transparency play an important role in developing norms that preserve the integrity of the community. Reviewers will be specifically instructed to not penalize honesty concerning limitations. ",
+        "bbox": [
+            250,
+            488,
+            825,
+            861
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "3. Theory assumptions and proofs ",
+        "text_level": 1,
+        "bbox": [
+            215,
+            864,
+            454,
+            878
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof? ",
+        "bbox": [
+            230,
+            883,
+            823,
+            911
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "13 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "356 357 358 359 360 361 362 363 364 365 366 367 368 369 370 371 372 373 374 375 376 377 378 379 380 381 382 383 384 385 386 387 388 389 390 391 392 393 394 395 396 397 398 399 400 401 402 403 404 405 406 407 ",
+        "bbox": [
+            137,
+            102,
+            166,
+            916
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            92,
+            330,
+            106
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: We provided a theoretical proof of dual GSB task formulation. ",
+        "bbox": [
+            233,
+            109,
+            730,
+            125
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            128,
+            308,
+            142
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include theoretical results.   \n• All the theorems, formulas, and proofs in the paper should be numbered and crossreferenced.   \n• All assumptions should be clearly stated or referenced in the statement of any theorems.   \n• The proofs can either appear in the main paper or the supplemental material, but if they appear in the supplemental material, the authors are encouraged to provide a short proof sketch to provide intuition. Inversely, any informal proof provided in the core of the paper should be complemented by formal proofs provided in appendix or supplemental material.   \n• Theorems and Lemmas that the proof relies upon should be properly referenced. ",
+        "bbox": [
+            250,
+            147,
+            826,
+            297
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "4. Experimental result reproducibility ",
+        "text_level": 1,
+        "bbox": [
+            215,
+            301,
+            480,
+            315
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)? ",
+        "bbox": [
+            232,
+            320,
+            825,
+            362
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            367,
+            328,
+            381
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: Along with detailed hyperparameter specifications in the Appendix, we included easy to follow Jupyter notebook which can be found in supplementary materials, enabling the others to fully reproduce the results in the paper. ",
+        "bbox": [
+            233,
+            386,
+            825,
+            426
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            431,
+            308,
+            444
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• If the paper includes experiments, a No answer to this question will not be perceived well by the reviewers: Making the paper reproducible is important, regardless of whether the code and data are provided or not.   \n• If the contribution is a dataset and/or model, the authors should describe the steps taken to make their results reproducible or verifiable. Depending on the contribution, reproducibility can be accomplished in various ways. For example, if the contribution is a novel architecture, describing the architecture fully might suffice, or if the contribution is a specific model and empirical evaluation, it may be necessary to either make it possible for others to replicate the model with the same dataset, or provide access to the model. In general. releasing code and data is often one good way to accomplish this, but reproducibility can also be provided via detailed instructions for how to replicate the results, access to a hosted model (e.g., in the case of a large language model), releasing of a model checkpoint, or other means that are appropriate to the research performed. While NeurIPS does not require releasing code, the conference does require all submissions to provide some reasonable avenue for reproducibility, which may depend on the nature of the contribution. For example (a) If the contribution is primarily a new algorithm, the paper should make it clear how to reproduce that algorithm. (b) If the contribution is primarily a new model architecture, the paper should describe the architecture clearly and fully. (c) If the contribution is a new model (e.g., a large language model), then there should either be a way to access this model for reproducing the results or a way to reproduce the model (e.g., with an open-source dataset or instructions for how to construct the dataset). (d) We recognize that reproducibility may be tricky in some cases, in which case authors are welcome to describe the particular way they provide for reproducibility. In the case of closed-source models, it may be that access to the model is limited in some way (e.g., to registered users), but it should be possible for other researchers to have some path to reproducing or verifying the results. ",
+        "bbox": [
+            250,
+            450,
+            825,
+            892
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "5. Open access to data and code ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            897,
+            437,
+            911
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "14 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "408 409 410 411 412 413 414 415 416 417 418 419 420 421 422 423 424 425 426 427 428 429 430 431 432 433 434 435 436 437 438 439 440 441 442 443 444 445 446 447 448 449 450 451 452 453 454 455 456 457 458 459 460 461 ",
+        "bbox": [
+            137,
+            94,
+            166,
+            917
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material? ",
+        "bbox": [
+            233,
+            92,
+            825,
+            132
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            138,
+            330,
+            152
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: We provided a fully reproducible code, written in JAX framework. Moreover, we provided step-by-step jupyter notebook, showcasing the performance of the proposed algorithm in all discussed tasks. ",
+        "bbox": [
+            233,
+            157,
+            825,
+            199
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            205,
+            308,
+            218
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that paper does not include experiments requiring code.   \n• Please see the NeurIPS code and data submission guidelines (https://nips.cc/ public/guides/CodeSubmissionPolicy) for more details.   \n• While we encourage the release of code and data, we understand that this might not be possible, so “No” is an acceptable answer. Papers cannot be rejected simply for not including code, unless this is central to the contribution (e.g., for a new open-source benchmark).   \n• The instructions should contain the exact command and environment needed to run to reproduce the results. See the NeurIPS code and data submission guidelines (https: //nips.cc/public/guides/CodeSubmissionPolicy) for more details.   \n• The authors should provide instructions on data access and preparation, including how to access the raw data, preprocessed data, intermediate data, and generated data, etc.   \n• The authors should provide scripts to reproduce all experimental results for the new proposed method and baselines. If only a subset of experiments are reproducible, they should state which ones are omitted from the script and why.   \n• At submission time, to preserve anonymity, the authors should release anonymized versions (if applicable).   \n• Providing as much information as possible in supplemental material (appended to the paper) is recommended, but including URLs to data and code is permitted. ",
+        "bbox": [
+            250,
+            224,
+            826,
+            506
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "6. Experimental setting/details ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            511,
+            429,
+            525
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results? ",
+        "bbox": [
+            233,
+            530,
+            825,
+            570
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            577,
+            330,
+            590
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: We provided detailed hyperparameters specifications in the Appendix for each of the tested benchmarks. ",
+        "bbox": [
+            232,
+            595,
+            823,
+            625
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            630,
+            308,
+            643
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments. • The experimental setting should be presented in the core of the paper to a level of detail that is necessary to appreciate the results and make sense of them. • The full details can be provided either with the code, in appendix, or as supplemental material. ",
+        "bbox": [
+            251,
+            648,
+            825,
+            723
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "7. Experiment statistical significance ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            729,
+            472,
+            743
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments? ",
+        "bbox": [
+            232,
+            748,
+            823,
+            776
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            781,
+            328,
+            795
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: All reported results are statistically significant. We include evaluation error (StDev) for each model and each dataset in the study across different runs and seeds. ",
+        "bbox": [
+            233,
+            801,
+            823,
+            829
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            833,
+            308,
+            847
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments. • The authors should answer \"Yes\" if the results are accompanied by error bars, confidence intervals, or statistical significance tests, at least for the experiments that support the main claims of the paper. ",
+        "bbox": [
+            251,
+            853,
+            825,
+            911
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "15 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "463 464 465 466 467 468 469 470 471 472 473 474 475 476 477 478 479 480 481 482 483 484 485 486 487 488 489 490 491 492 493 494 495 496 497 498 499 500 501 502 503 504 505 506 507 508 509 510 511 512 ",
+        "bbox": [
+            138,
+            108,
+            166,
+            926
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The factors of variability that the error bars are capturing should be clearly stated (for example, train/test split, initialization, random drawing of some parameter, or overall run with given experimental conditions).   \n• The method for calculating the error bars should be explained (closed form formula, call to a library function, bootstrap, etc.)   \n• The assumptions made should be given (e.g., Normally distributed errors).   \n• It should be clear whether the error bar is the standard deviation or the standard error of the mean.   \n• It is OK to report 1-sigma error bars, but one should state it. The authors should preferably report a 2-sigma error bar than state that they have a $96 \\%$ CI, if the hypothesis of Normality of errors is not verified.   \n• For asymmetric distributions, the authors should be careful not to show in tables or figures symmetric error bars that would yield results that are out of range (e.g. negative error rates).   \n• If error bars are reported in tables or plots, The authors should explain in the text how they were calculated and reference the corresponding figures or tables in the text. ",
+        "bbox": [
+            251,
+            90,
+            825,
+            327
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "8. Experiments compute resources ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            332,
+            457,
+            345
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments? ",
+        "bbox": [
+            232,
+            351,
+            825,
+            392
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            397,
+            330,
+            411
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: We include the exact computer configuration in Appendix and mention GPU model in the main text. ",
+        "bbox": [
+            232,
+            416,
+            823,
+            444
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            448,
+            308,
+            462
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The paper should indicate the type of compute workers CPU or GPU, internal cluster, or cloud provider, including relevant memory and storage.   \n• The paper should provide the amount of compute required for each of the individual experimental runs as well as estimate the total compute.   \n• The paper should disclose whether the full research project required more compute than the experiments reported in the paper (e.g., preliminary or failed experiments that didn’t make it into the paper). ",
+        "bbox": [
+            251,
+            467,
+            825,
+            585
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "9. Code of ethics ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            589,
+            333,
+            603
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines? ",
+        "bbox": [
+            232,
+            608,
+            823,
+            637
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            641,
+            330,
+            655
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: We read it and adhered to the ethical guidelines. ",
+        "bbox": [
+            232,
+            660,
+            635,
+            674
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            679,
+            308,
+            691
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the authors have not reviewed the NeurIPS Code of Ethics.   \n• If the authors answer No, they should explain the special circumstances that require a deviation from the Code of Ethics.   \n• The authors should make sure to preserve anonymity (e.g., if there is a special consideration due to laws or regulations in their jurisdiction). ",
+        "bbox": [
+            251,
+            696,
+            825,
+            771
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "10. Broader impacts ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            776,
+            351,
+            790
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed? ",
+        "bbox": [
+            233,
+            795,
+            823,
+            823
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [No] ",
+        "bbox": [
+            233,
+            827,
+            325,
+            840
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: Our paper does not address the societal impact as we operate with common datasets and benchmarks for testing GSB solvers. ",
+        "bbox": [
+            232,
+            845,
+            823,
+            873
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            878,
+            308,
+            892
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that there is no societal impact of the work performed. ",
+        "bbox": [
+            250,
+            897,
+            772,
+            911
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "513 514 515 516 517 518 519 520 521 522 523 524 525 526 527 528 529 530 531 532 533 534 535 536 537 538 539 540 541 542 543 544 545 546 547 548 549 550 551 552 553 554 555 556 557 558 559 560 561 562 563 ",
+        "bbox": [
+            138,
+            98,
+            168,
+            924
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• If the authors answer NA or No, they should explain why their work has no societal impact or why the paper does not address societal impact.   \n• Examples of negative societal impacts include potential malicious or unintended uses (e.g., disinformation, generating fake profiles, surveillance), fairness considerations (e.g., deployment of technologies that could make decisions that unfairly impact specific groups), privacy considerations, and security considerations.   \n• The conference expects that many papers will be foundational research and not tied to particular applications, let alone deployments. However, if there is a direct path to any negative applications, the authors should point it out. For example, it is legitimate to point out that an improvement in the quality of generative models could be used to generate deepfakes for disinformation. On the other hand, it is not needed to point out that a generic algorithm for optimizing neural networks could enable people to train models that generate Deepfakes faster.   \nThe authors should consider possible harms that could arise when the technology is being used as intended and functioning correctly, harms that could arise when the technology is being used as intended but gives incorrect results, and harms following from (intentional or unintentional) misuse of the technology.   \nIf there are negative societal impacts, the authors could also discuss possible mitigation strategies (e.g., gated release of models, providing defenses in addition to attacks, mechanisms for monitoring misuse, mechanisms to monitor how a system learns from feedback over time, improving the efficiency and accessibility of ML). ",
+        "bbox": [
+            250,
+            90,
+            825,
+            392
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "11. Safeguards ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            396,
+            313,
+            410
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pretrained language models, image generators, or scraped datasets)? ",
+        "bbox": [
+            235,
+            415,
+            823,
+            457
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            462,
+            328,
+            476
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Justification: Not applicable to this work. ",
+        "bbox": [
+            235,
+            479,
+            503,
+            494
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            500,
+            308,
+            512
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper poses no such risks.   \n• Released models that have a high risk for misuse or dual-use should be released with necessary safeguards to allow for controlled use of the model, for example by requiring that users adhere to usage guidelines or restrictions to access the model or implementing safety filters.   \n• Datasets that have been scraped from the Internet could pose safety risks. The authors should describe how they avoided releasing unsafe images.   \n• We recognize that providing effective safeguards is challenging, and many papers do not require this, but we encourage authors to take this into account and make a best faith effort. ",
+        "bbox": [
+            250,
+            517,
+            825,
+            662
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "12. Licenses for existing assets ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            669,
+            419,
+            683
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected? ",
+        "bbox": [
+            232,
+            688,
+            825,
+            729
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            734,
+            330,
+            748
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Justification: We properly refer to the original papers and use the open source codes from official repositories, providing the URLs to them. ",
+        "bbox": [
+            233,
+            752,
+            823,
+            781
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            785,
+            308,
+            799
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not use existing assets.   \n• The authors should cite the original paper that produced the code package or dataset.   \n• The authors should state which version of the asset is used and, if possible, include a URL.   \n• The name of the license (e.g., CC-BY 4.0) should be included for each asset.   \n• For scraped data from a particular source (e.g., website), the copyright and terms of service of that source should be provided.   \n• If assets are released, the license, copyright information, and terms of use in the package should be provided. For popular datasets, paperswithcode.com/datasets has curated licenses for some datasets. Their licensing guide can help determine the license of a dataset.   \n• For existing datasets that are re-packaged, both the original license and the license of the derived asset (if it has changed) should be provided.   \n• If this information is not available online, the authors are encouraged to reach out to the asset’s creators. ",
+        "bbox": [
+            251,
+            804,
+            825,
+            912
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "17 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "565 566 567 568 569 570 571 572 573 574 575 576 577 578 579 580 581 582 583 584 585 586 587 588 589 590 591 592 593 594 595 596 597 598 599 600 601 602 603 604 605 606 607 608 609 610 611 612 613 614 615 616 ",
+        "bbox": [
+            137,
+            111,
+            168,
+            933
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            251,
+            92,
+            825,
+            208
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "13. New assets ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            214,
+            310,
+            228
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets? ",
+        "bbox": [
+            232,
+            234,
+            823,
+            261
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            267,
+            330,
+            281
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: We include all of the details corresponding to train procedures, datasets used, and citations. Moreover, we provide a readme file for the repository details. The released code is legally approved for the publication; no special documentation is needed. ",
+        "bbox": [
+            233,
+            287,
+            825,
+            329
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            334,
+            308,
+            348
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not release new assets.   \n• Researchers should communicate the details of the dataset/code/model as part of their submissions via structured templates. This includes details about training, license, limitations, etc.   \n• The paper should discuss whether and how consent was obtained from people whose asset is used.   \n• At submission time, remember to anonymize your assets (if applicable). You can either create an anonymized URL or include an anonymized zip file. ",
+        "bbox": [
+            251,
+            354,
+            825,
+            474
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "14. Crowdsourcing and research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            207,
+            479,
+            584,
+            494
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? ",
+        "bbox": [
+            233,
+            501,
+            825,
+            541
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            547,
+            328,
+            561
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: No crowdsourcing was used in this study. ",
+        "bbox": [
+            233,
+            566,
+            589,
+            582
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            587,
+            308,
+            601
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   \n• Including this information in the supplemental material is fine, but if the main contribution of the paper involves human subjects, then as much detail as possible should be included in the main paper.   \n• According to the NeurIPS Code of Ethics, workers involved in data collection, curation, or other labor should be paid at least the minimum wage in the country of the data collector. ",
+        "bbox": [
+            246,
+            607,
+            825,
+            723
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "15. Institutional review board (IRB) approvals or equivalent for research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            728,
+            821,
+            757
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained? ",
+        "bbox": [
+            232,
+            762,
+            825,
+            818
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            824,
+            328,
+            838
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: No human studies/IRB was needed for this study. ",
+        "bbox": [
+            232,
+            843,
+            643,
+            858
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            863,
+            310,
+            877
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects. ",
+        "bbox": [
+            250,
+            883,
+            823,
+            911
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "617 618 619 620 621 622 623 624 625 626 627 628 629 630 631 632 633 634 635 636 637 638 639 640 641 642 643 644 645 646 647 648 649 650 651 652 653 654 655 656 657 658 659 660 661 662 663 664 665 666 ",
+        "bbox": [
+            137,
+            94,
+            166,
+            935
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• Depending on the country in which research is conducted, IRB approval (or equivalent) may be required for any human subjects research. If you obtained IRB approval, you should clearly state this in the paper.   \n• We recognize that the procedures for this may vary significantly between institutions and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the guidelines for their institution.   \n• For initial submissions, do not include any information that would break anonymity (if applicable), such as the institution conducting the review. ",
+        "bbox": [
+            251,
+            92,
+            825,
+            207
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "16. Declaration of LLM usage ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            212,
+            419,
+            226
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe the usage of LLMs if it is an important, original, or non-standard component of the core methods in this research? Note that if the LLM is used only for writing, editing, or formatting purposes and does not impact the core methodology, scientific rigorousness, or originality of the research, declaration is not required. ",
+        "bbox": [
+            232,
+            231,
+            825,
+            286
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            291,
+            328,
+            305
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Justification: This research does not involve LLMs. ",
+        "bbox": [
+            232,
+            309,
+            570,
+            323
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            329,
+            308,
+            342
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the core method development in this research does not involve LLMs as any important, original, or non-standard components. • Please refer to our LLM policy (https://neurips.cc/Conferences/2025/LLM) for what should or should not be described. ",
+        "bbox": [
+            250,
+            347,
+            825,
+            405
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "discarded",
+        "text": "19 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 18
+    }
+]

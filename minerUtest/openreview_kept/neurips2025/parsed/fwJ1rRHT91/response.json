@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768192381043",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:33:01.051905Z",
+    "started_at": 1768192381.0522175,
+    "completed_at": 1768192454.5311034,
+    "error_message": null,
+    "file_info": {
+      "filename": "fwJ1rRHT91.pdf",
+      "size": 448429,
+      "md5": "85005be8d5aec937c2151df6c466c846"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 72.59024667739868,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/85005be8d5aec937c2151df6c466c846/results.zip"
+  }
+}

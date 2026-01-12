@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768192123370",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:28:43.379905Z",
+    "started_at": 1768192123.380313,
+    "completed_at": 1768192204.006919,
+    "error_message": null,
+    "file_info": {
+      "filename": "kXdW2KySK5.pdf",
+      "size": 337226,
+      "md5": "b307a5d0539fecf5e1ef3c8f41fcf3e2"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 76.9479751586914,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/b307a5d0539fecf5e1ef3c8f41fcf3e2/results.zip"
+  }
+}

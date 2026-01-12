@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768192601455",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:36:41.469112Z",
+    "started_at": 1768192601.4694834,
+    "completed_at": 1768192666.288261,
+    "error_message": null,
+    "file_info": {
+      "filename": "kOmJnJpfRW.pdf",
+      "size": 990080,
+      "md5": "58f93f32ddd29e1d3545c1c4c77d8d0d"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 63.745567321777344,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/58f93f32ddd29e1d3545c1c4c77d8d0d/results.zip"
+  }
+}

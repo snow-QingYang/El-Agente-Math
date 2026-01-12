@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768192845405",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:40:45.413631Z",
+    "started_at": 1768192845.4139733,
+    "completed_at": 1768192959.989223,
+    "error_message": null,
+    "file_info": {
+      "filename": "hEA2n6OUUK.pdf",
+      "size": 468821,
+      "md5": "1950eef122b70a86027ecd8bf08f3d46"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 113.34189581871033,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/1950eef122b70a86027ecd8bf08f3d46/results.zip"
+  }
+}

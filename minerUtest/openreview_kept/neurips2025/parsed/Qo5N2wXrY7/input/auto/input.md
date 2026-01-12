@@ -1,0 +1,1308 @@
+# A Brain Graph Foundation Model: Pre-Training and Prompt-Tuning for Any Atlas and Disorder
+
+Anonymous Author(s)   
+Affiliation   
+Address   
+email
+
+# Abstract
+
+As large language models (LLMs) continue to revolutionize AI research, there   
+is a growing interest in building large-scale brain foundation models to advance   
+neuroscience. While most existing brain foundation models are pre-trained on   
+time-series signals or region-of-interest (ROI) features, we propose a novel graph  
+based pre-training paradigm for constructing a brain graph foundation model. In   
+this paper, we introduce the Brain Graph Foundation Model, termed BrainGFM,   
+a unified framework that leverages graph contrastive learning and graph masked   
+autoencoders for large-scale fMRI-based pre-training. BrainGFM is pre-trained   
+on a diverse mixture of brain atlases with varying parcellations, significantly ex  
+panding the pre-training corpus and enhancing the model’s ability to generalize   
+across heterogeneous fMRI-derived brain representations. To support efficient   
+and versatile downstream transfer, we integrate both graph prompts and language   
+prompts into the model design, enabling BrainGFM to flexibly adapt to a wide   
+range of atlases, neurological and psychiatric disorders, and task settings. Further  
+more, we employ meta-learning to optimize the graph prompts, facilitating strong   
+generalization to previously unseen disorders under both few-shot and zero-shot   
+learning conditions via language-guided prompting. BrainGFM is pre-trained on 27   
+neuroimaging datasets spanning 25 common neurological and psychiatric disorders,   
+encompassing 2 types of brain atlases (functional and anatomical) across 8 widely  
+used parcellations, and covering over 25,000 subjects, 60,000 fMRI scans, and a   
+total of 400,000 graph samples aggregated across all atlases and parcellations.
+
+# 22 1 Introduction
+
+With the rise of large language models (LLMs) Achiam et al. [2023], large-scale pre-trained founda  
+tion models (FMs) have been proposed across various domains, including computer vision Touvron   
+et al. [2023], natural language processing Achiam et al. [2023], and data mining Xia et al. [2024].   
+Recently, the field of neuroscience has also begun to witness the emergence of brain foundation   
+models. As a widely used data modality in neuroscience, functional magnetic resonance imaging   
+(fMRI) Markiewicz et al. [2021], Bycroft et al. [2018] plays a crucial role in understanding brain   
+function and dysfunction. Developing a fMRI-based brain foundation model is of great importance for   
+advancing neuroscience and its translational research. Due to the high complexity and cost of fMRI   
+data acquisition Van Essen et al. [2012], Cui et al. [2022], coupled with strong heterogeneity and   
+substantial inter-subject variability, most existing traditional deep learning-based fMRI models Wei   
+et al. [2025], Kan et al. [2022], Jiao et al. [2025] are trained on relatively small datasets. Consequently,   
+these models are typically tailored to specific tasks, disorders, or cohorts, resulting in limited general  
+izability, poor flexibility, and weak transferability to unseen tasks, datasets or disorder conditions.   
+Furthermore, training on small-scale datasets often leads to under-fitting, ultimately compromising   
+model performance and reliability. These issues have become common limitations of traditional deep   
+learning models for fMRI. However, they can be effectively addressed by building fMRI brain FMs.   
+Since FMs are typically pre-trained on large-scale datasets with rich diversity Touvron et al. [2023],   
+Xia et al. [2024], spanning various data types and knowledge representations within the neuroscience   
+domain, the resulting models exhibit strong generalization and broad applicability. As a result, fMRI   
+FMs can be more readily adapted to a wide range of downstream data, tasks and neurological and   
+psychiatric disorders.   
+Previous fMRI FMs have uniformly adopted Transformer-based architectures and were exclusively   
+pre-trained on either time-series data or ROI-level features, resulting in two main categories: time  
+series-based Caro et al. [2023], Thomas et al. [2022] and ROI-based Yang et al. [2024], Hu et al.   
+[2024], Dong et al. [2024] fMRI brain FMs. However, building brain FMs faces several critical   
+challenges that many previous approaches have either overlooked or failed to effectively address.   
+(1). Data Availability & Heterogeneity. fMRI data are difficult and costly to collect and pre  
+process Poldrack and Gorgolewski [2017], yet pre-training FMs typically requires large-scale datasets.   
+Existing fMRI datasets are not only limited in quantity but also exhibit substantial heterogeneity across   
+sources. Effectively leveraging and integrating these heterogeneous datasets is thus a fundamental   
+challenge. Many existing brain FMs have constructed relatively large-scale fMRI pre-training datasets,   
+but these are typically based on a single brain parcellation or atlas Thomas et al. [2022]. This overlooks   
+the fact that integrating multiple parcellation templates can not only expand the scale of available fMRI   
+data but also provide diverse and even complementary features across different brain parcellations   
+Hermosillo et al. [2024]. (2). Pre-Training Computational Cost. The computational cost of   
+pre-training brain FMs typically depends on the form of the fMRI data and the chosen pre-training   
+strategy. Time-series-based brain FMs are pre-trained directly on raw fMRI time series, resulting   
+in high computational demands with masked modeling pre-training paradigm. While ROI-based   
+brain FMs are more efficient, they often neglect inter-regional connectivity, leading to suboptimal   
+performance on various downstream tasks. Striking a balance between computational efficiency   
+and modeling effectiveness remains a pressing issue. (3). Adaptability and Generalization for   
+Few/Zero-Shot Transfer. Pre-trained brain FMs needs to be fine-tuned to various downstream tasks,   
+datasets, atlases and disorders. However, full-parameter fine-tuning is often inefficient, requires   
+large amounts of labeled data, and typically previous brain FMs Caro et al. [2023], Yang et al.   
+[2024] support only one disorder or atlas during the downstream inference. In addition, in many   
+real-world scenarios, downstream tasks may involve new atlases, datasets and disorders unseen during   
+pre-training, with very limited (few-shot) or even no labeled data available (zero-shot). Adapting FMs   
+to such few-shot or zero-shot settings poses a significant yet highly valuable challenge. Most existing   
+brain FMs Caro et al. [2023], Thomas et al. [2022], Dong et al. [2024] have not considered few-shot   
+or zero-shot scenarios, which limits their generalizability and flexibility. These three challenges   
+correspond to four essential aspects of pre-training brain FMs: data collection, model pre-training &   
+fine-tuning, and downstream task adaptation.   
+Contributions. To address the key challenges outlined above and overcome the limitations of prior   
+work, we propose the Brain Graph Foundation Model, named BrainGFM, specifically designed for   
+heterogeneous fMRI data, with a particular focus on graph-based modeling. We propose correspond  
+ing solutions within our model to enhance BrainGFM, enabling it to become a more powerful brain   
+FM compared to previous approaches. (1). To enable effective pre-training of brain FMs, we construct   
+a large-scale fMRI dataset comprising 27 widely used fMRI datasets. This collection includes over   
+,000 subjects, 60,000 fMRI scans, and 25 common neurological and psychiatric disorders. Unlike   
+previous brain foundation models, each fMRI sample in our dataset is processed using 2 different   
+brain functional and anatomical atlases, including 8 parcellations with various resolutions and par  
+titions, significantly increasing the scale and diversity of the data. This also allows the pre-trained   
+model to capture complementary feature representations across multiple parcellations. (2). Prior   
+brain FMs have predominantly relied on fMRI time series or ROI-level features for both pre-training   
+and fine-tuning. In this work, we creatively introduce a graph-based backbone for building brain   
+graph FMs. This approach offers the advantage of maintaining computational efficiency comparable   
+to ROI-based FMs, while achieving performance on par with time-series-based FMs. (3). To enhance   
+the generalizability and adaptability of the model, we discard conventional fine-tuning and introduce   
+a graph prompt-tuning. Under the multi-task and multi-dataset training paradigm of meta-learning,   
+this approach improves the model’s ability to perform few-shot adaptation across diverse tasks and   
+datasets. In addition, we incorporate language prompt tokens, including atlas/parcellation tokens and   
+task/disorder tokens, to guide the pre-trained BrainGFM in adapting to entirely unseen downstream   
+datasets, atlases, tasks, and disorders in zero-shot settings.
+
+# 96 2 Related Works
+
+# 97 2.1 Pre-Training Approaches for Brain Foundation Models Using fMRI
+
+The emergence of large-scale foundation models, such as LLMs Achiam et al. [2023], has demonstrated strong potential across various domains. In neuroscience, recent efforts have introduced brain FMs (e.g., using fMRI), which can be broadly classified into time-series-based Dong et al. [2024], Caro et al. [2023], Thomas et al. [2022] and ROI-based models Yang et al. [2024], Hu et al. [2024], both primarily relying on generative pre-training using masked modeling. In contrast to these approaches, our work introduces the first graph-based fMRI foundation model, which leverages the brain’s topological structure through graph representations. We incorporate both graph generative pre-training Hou et al. [2022] and graph contrastive pre-training Qiu et al. [2020], Wei et al. [2024], unifying two major paradigms in graph representation learning.
+
+# 2.2 Graph Pre-Training and Prompt Learning
+
+Pre-training is a fundamental step in the development of foundation models, with most approaches   
+categorized into contrastive-based and generative-based paradigms. While graph model pre-training   
+differs from that in vision and language domains, it generally follows these two strategies. To facilitate   
+zero-shot generalization, language prompts Achiam et al. [2023] have been widely used in NLP and   
+vision, providing semantic guidance that enables pre-trained models to adapt to unseen tasks without   
+parameter updates. In contrast, graph prompts have been proposed to address few-shot adaptation in   
+graph neural networks. Inspired by prefix-tuning Li and Liang [2021], graph prompts Sun et al. [2023]   
+introduce a small set of task-specific parameters that can be optimized efficiently while keeping   
+the backbone frozen. This approach improves sample efficiency and reduces computational cost in   
+117 adapting to new graph-based tasks with limited data.
+
+# 118 2.3 Meta-Learning
+
+19 Meta-learning Finn et al. [2017], Hospedales et al. [2021], also known as “learn to learn” aims to train   
+models that can quickly adapt to new tasks using only a small number of labeled examples. It typically   
+involves learning a good initialization or adaptation strategy by optimizing over a distribution of   
+related tasks. Meta-learning has been widely adopted in few-shot learning scenarios and has shown   
+strong potential for improving generalization across tasks and domains Sun et al. [2023]. In our   
+study, meta-learning is employed to train the graph prompt under the few-shot setting, enabling the   
+unification and generalization across diverse brain atlases and neurological disorders.
+
+# 126 3 Methodology
+
+As illustrated in Figure 1, we propose BrainGFM, a graph-based paradigm that distinguishes itself from previous time series-based and ROI-based brain FMs. Our framework consists of four main stages: large-scale fMRI graph data collection and pre-processing, graph pre-training for building our brain graph foundation model, multi-task meta-learning optimization for few-shot learning, and graph/language prompt-tuning for zero-shot adaption.
+
+# 3.1 Construction of Large-Scale fMRI Pre-Training Dataset
+
+Motivation. Brain parcellations with different resolutions and partitions offer complementary representations of brain structure and function, and different disorders may be best characterized under different parcellations.
+
+As shown in Figure 1(a), we curated a large-scale fMRI dataset by aggregating 27 widely used fMRI   
+datasets from different sites and institutions, covering 25 common neurological and psychiatric disor  
+ders. Unlike existing brain FMs, our dataset incorporates fMRI data processed using 8 parcellations,   
+including Schaefer100/Schaefer200/Schaefer300 Schaefer et al. [2018], AAL116/AAL3v1 Tzourio  
+Mazoyer et al. [2002], SHEN268 Shen et al. [2013], Power264 Power et al. [2011], and Gordon333   
+Gordon et al. [2016]. For each subject, we extracted raw fMRI time series using these brain atlases   
+and constructed fMRI brain graphs by computing and binarizing the Pearson correlation between   
+time series among brain ROIs. Integrating multiple atlases allows us to expand the dataset to eight   
+times the size of using a single parcellation, enabling more diverse representations and facilitating   
+the learning of atlas-invariant brain patterns. The inclusion of multiple atlases not only increases the   
+diversity and volume of the training data but also enables the model to learn parcellation-specific   
+features, significantly enhancing the generalization and robustness of the pre-trained BrainGFM.   
+Note that detailed information regarding the benchmark settings, including task types, dataset splits,   
+neurological disorder categories, and atlas/parcellation choices, can be found in Appendix N and P.
+
+![](images/258133cc12b9206c8ef24fa7f84324b33b94ae221d57533d64430c6b54df432b.jpg)  
+Figure 1: The pipeline of our proposed BrainGFM. (a) A large-scale brain fMRI graph dataset is constructed for pre-training. (b) BrainGFM is pre-trained using graph contrastive and masked autoencoder strategies, with atlas/parcellation tokens [A/P] to encode atlas-specific information. (c) Instead of full fine-tuning, we introduce graph prompts and use meta-learning to optimize them for few-shot adaptation, keeping the graph FM backbone frozen. (d) Finally, we freeze both the model and graph prompts, and use language prompts to enable zero-shot transfer to unseen tasks. Note that "Schf." means Schaefer atlas.
+
+# 3.2 Graph Pre-Training for Building BrainGFM
+
+Motivation. The graph foundation model approaches the effectiveness of time-series-based foundation 2 models, while matching the efficiency of ROI-based foundation models.
+
+We adopt a Graph Transformer Yun et al. [2019] as the backbone of our BrainGFM. As illustrated   
+in Figure 1(b), we first transform the input fMRI brain graphs and project them to obtain brain   
+graph embeddings, where each token corresponds to a brain ROI. We apply Positional Encoding   
+Tokens, denoted as [PE], to each brain ROI, enabling the model to perceive and learn the topological   
+and spatial characteristics of each ROI. Unlike conventional positional encodings used in standard   
+Transformer models Vaswani et al. [2017], graph-based positional encodings are inherently different,   
+as they require encoding the relative positions between nodes in the graph structure. Compared to   
+the commonly used Laplacian positional encoding Dwivedi et al. [2023] and node degree positional   
+encoding You et al. [2019] in graph-based models, we adopt a more efficient alternative Random   
+Walk Structural Encoding (RWSE) Dwivedi et al. [2021] as our positional encoding strategy. More   
+details about PEs can be found in Appendix F. Furthermore, inspired by language models in NLP,   
+we insert Atlas/Parcellation Tokens, denoted as [A/P], to the brain graph embeddings during   
+pre-training, enabling the model to better distinguish and learn from different atlases and parcellations.   
+Note that the construction of [A/P] tokens is described in detail in Section 3.4. Incorporating this   
+token enables the model to capture parcellation-specific patterns, which is crucial as prior studies   
+Hermosillo et al. [2024], Liu et al. [2023], Wu et al. [2025] show that different brain disorders   
+are better represented by specific parcellations. For instance, MDD benefits from Schaefer200 or   
+Power264 and ASD is better captured by Shen268 or Schaefer200. Embedding such parcellation  
+aware information helps improve model generalization across disorders and atlas configurations.   
+We follow the graph pre-training paradigm to pre-train our BrainGFM. To fully leverage the potential   
+of graph pre-training, we adopt two widely used pretext tasks in graph domain: graph contrastive   
+learning (GCL) You et al. [2020] pre-training and graph masked autoencoders (GMAE) Hou et al.   
+[2022] pre-training. For GCL pre-training, we apply graph augmentation to the fMRI brain graphs   
+by randomly dropping nodes and edges to generate positive and negative pairs of queries and keys.   
+The contrastive loss is then computed by contrasting the positive and negative graph pairs. For   
+GMAE pre-training, we randomly mask nodes and edges in the input brain graphs to obtain masked   
+brain graphs. These graphs are then passed through a graph autoencoder with an encoder-decoder   
+architecture to reconstruct the masked nodes and edges, optimized using a mean squared error (MSE)   
+loss. Note that both GCL and GMAE pre-training share the same encoder, which serves as the core   
+of our BrainGFM, which enables the encoder of BrainGFM to benefit from both contrastive and   
+generative paradigms, resulting in a more robust and well-pre-trained backbone. More details about   
+these two graph pre-training methods can be found in Appendix J and K.
+
+# 3.3 Few-Shot Graph Prompt-Tuning via Meta Learning Optimization
+
+Motivation. The graph prompt, optimized via multi-task meta-learning, enables the fully frozen graph foundation model to be effectively adapted to new, unseen tasks under few-shot settings.
+
+As illustrated in Figure 1(c), after completing the pre-training stage, we need to fine-tune the pretrained FM to various downstream tasks, including different atlases and disorders. However, for fMRI data, traditional full-parameter fine-tuning faces two major limitations. (1). The collection of fMRI data for neurological and psychiatric disorders is often time-consuming and labor-intensive, and for some rare diseases, only a very limited number of samples are available. When performing full-parameter fine-tuning on a large-scale foundation model with limited data, the optimization of model parameters becomes insufficient, leading to significant performance degradation. (2). Fullparameter fine-tuning requires substantial training time and computational resources, making it less practical in resource-constrained environments. Therefore, we introduce graph prompts Sun et al. [2023] to prompt-tune to our BrainGFM to different diseases and atlases. Following prior work on graph prompt learning, we design brain graph prompts specifically for brain graphs, with a structure consistent with the input brain graphs. Each node in the graph prompt is a learnable parameter, and the collection of all nodes forms a learnable vector set. For the edges, we initialize a fully learnable edge matrix, where each entry is also trainable. This design allows the graph prompt to flexibly adapt the FM to various downstream tasks without modifying the backbone parameters.
+
+To optimize the parameters of our brain graph prompts, we introduce meta-learning to train the   
+graph prompts. Specifically, we construct a multi-task dataset in which each task corresponds to   
+a different brain disorder and atlas pair. By adopting this meta-learning paradigm, the optimized   
+graph prompts can be flexibly transferred to unseen diseases and atlases, enabling effective adaptation   
+using only a small number of samples from the few-shot downstream tasks. During the meta-learning   
+optimization process, all parameters of the pre-trained model are kept frozen, and only the graph   
+prompt parameters, which are relatively lightweight, are updated. This design enables fast tuning   
+and adaptation. Moreover, the few-shot sample setting is particularly well-suited for optimizing the   
+small number of graph prompt parameters; in contrast, using limited samples to fine-tune a large   
+pre-trained foundation model with numerous parameters would lead to insufficient training and severe   
+underfitting. The task/disorder-specific features related to each disorder, atlas, or parcellation are   
+thus captured and stored entirely within the well-trained brain graph prompts. As a result, with the   
+help of the learned task-specific graph prompts, the frozen BrainGFM remains consistently ready to   
+be efficiently and rapidly adapted via prompt-tuning to unseen tasks, datasets, disorders and atlases,   
+even when only a few samples (few-shot settings) are available. More details about the meta-learning   
+datasets split and training procedure can be found in the Appendix I 8.
+
+# 3.4 Zero-Shot Graph/Language Prompt-Tuning
+
+Motivation. The language prompt guides the frozen pre-trained graph foundation model and metalearned graph prompt to achieve effective zero-shot transfer across diverse disorders and atlases.
+
+Building on the few-shot capability, we further introduce language prompts to enable more generalized zero-shot learning by jointly guiding both the graph prompt and the pre-trained foundation model. In zero-shot scenarios, the parameters of the graph prompt are also frozen, meaning the model cannot rely on prompt adaptation through learning. Instead, the language prompt provides semantic guidance, allowing the model to generalize and adapt to unseen downstream data, tasks, and disorder
+
+types without any gradient-based updates. As shown in Figure 1(d), in order to enable the model to   
+recognize and distinguish between different tasks and disorders in zero-shot settings, we introduce   
+Task/Disorder Tokens, denoted as [T/D], during the downstream fine-tuning stage, following a similar   
+design with Atlas/Parcellation Tokens [A/P]. To construct the [T/D] tokens, we first generate a   
+textual description for each disorder, including its full name, abbreviation, and a concise clinical   
+summary. For example, for Major Depressive Disorder, the corresponding text description is:   
+"Major Depressive Disorder (MDD) is a common mental illness characterized by persistent and   
+profound low mood, loss of interest, and cognitive impairment, significantly affecting daily life and   
+social functioning." Otte et al. [2016] We then encode these textual descriptions using a BERT model   
+Devlin et al. [2019] pre-trained on large-scale medical corpora, such as BioClinicalBERT Huang   
+et al. [2019], Alsentzer et al. [2019], to obtain semantic-rich text embeddings. These embeddings are   
+subsequently projected and embedded as [T/D] tokens, which are incorporated into the model during   
+downstream adaptation. Similarly, the construction of [A/P] tokens is also based on language text.   
+For each atlas and parcellation, we provide a textual description of its name, such as “Schaefer $1 0 0 ^ { \circ }$ ,   
+“Schaefe $\cdot 2 0 0 ^ { \circ }$ , or “AAL116”. These text descriptions are then encoded using the BioClinicalBERT   
+pre-trained model to extract language embeddings, which are subsequently transformed into [A/P]   
+tokens. As shown in Figure 1(d), the [T/D] and [A/P] tokens are ultimately concatenated with the ROI   
+tokens from the graph embeddings as language prompt tokens. This combined input is then fed into   
+the foundation model to guide feature extraction specific to the given dataset, task, and disorder. By   
+introducing disorder-specific semantic priors through the [T/D] and [A/P] tokens, the model is better   
+equipped to capture characteristics from different tasks, disorders, atlas and parcellations, thereby   
+improving its downstream adaption ability in zero-shot settings without any training.
+
+# 4 Experiments
+
+# 4.1 Comparison with Other Methods
+
+Datasets. To demonstrate the superiority of our BrainGFM, we conducted comparative experiments. Specifically, 10 common types of neurological and psychiatric disorders were selected from a total of 25 disorders, spanning 6 datasets among the 27 datasets we collected. More details about benchmarks and datasets can be found in Appendix N. Baselines. We compare our method against a series of baseline models. Based on the data representation type, these baselines are categorized into three groups: time-series-based methods, ROI-based methods, and graph-based methods. Based on the training paradigm, they are divided into two groups: non-pre-trained FMs and pre-trained FMs. All pre-trained models are retrained on our collected pre-training dataset to ensure a fair comparison. More details about baselines can be found in Appendix M. Metrics. We evaluate all methods using four metrics: AUC, accuracy (ACC), sensitivity (SEN), and specificity (SPE). More detailed information on disorders, datasets, and benchmarks can be found in the supplementary material. As shown in Table 1, our method outperforms all previous approaches and achieves stateof-the-art performance. The pre-trained FMs significantly outperforms models without pre-training. Our method, built upon a graph transformer backbone, substantially surpasses ROI-based brain FMs (BrainMass and BrainNPT), and also outperforms time-series brain FMs (BrainLM).
+
+# 4.2 Ablation Study for Full/Few/Zero-Shot on Graph/Language Prompt and Meta Learning
+
+Figure 2 illustrates the classification accuracy under four different data regimes, Full-Shot $( 1 0 0 \% )$ , Few-Shot $( 1 0 \% )$ , Few-Shot $( 1 \% )$ , and Zero-Shot $( 0 \% )$ , across three representative downstream datasets: ABIDE II, ADHD 200, and ADNI 2. We observe a consistent performance degradation across all methods as the available training data decreases, with the largest performance gap occurring under the most data-scarce setting (Zero-Shot). Vanilla Models, which lack any form of pre-training, perform the worst across all settings, highlighting their limited generalization ability. Introducing the FM (BrainGFM) without graph prompts leads to notable performance improvements, confirming the effectiveness of graph-based pre-training. The inclusion of graph prompts $\mathrm { F M } + \mathrm { G } .$ -Prompt) further enhances accuracy, particularly in Few-Shot and Zero-Shot regimes, indicating their role in injecting structural prior knowledge. When combined with meta-learning $\mathrm { ( F M + G \mathrm { - } P r o m p t + M e t a }$ L.), the model demonstrates increased adaptability and robustness under limited supervision. Finally, incorporating language prompts (FM + G-Prompt $^ +$ Meta L. $^ +$ Lan. Prompt) consistently achieves the best performance across all datasets and data regimes, underscoring the benefit of semantic guidance
+
+Table 1: Comparison among different methods on 10 brain disorders on Schaefer100 atlas. Pink indicates the best performance.   
+
+<table><tr><td rowspan="2">Method</td><td rowspan="2">| Pre-Trained|</td><td colspan="4">ADHD200 (ADHD)</td><td colspan="4">ABIDE II(ASD)</td><td colspan="4">ADNI2 (AD)</td><td colspan="4">HBN (MDD)</td><td colspan="4">HBN (ANX)</td></tr><tr><td></td><td></td><td></td><td>IAUCACC SEN SPE AUC ACC SEN SPE AUC ACC SEN SPE AUC ACC SEN SPE</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>AUCACC SEN SPE</td><td></td></tr><tr><td>Vanilla GCN</td><td></td><td>61.6</td><td>63.7</td><td>59.0</td><td>63.3</td><td>63.6</td><td></td><td>63.3</td><td></td><td></td><td>64.3</td><td>72.2</td><td></td><td>70.2</td><td>71.8</td><td></td><td>68.9 71.7</td><td>75.6</td><td>78.2</td><td>79.6 72.4</td><td></td></tr><tr><td>BrainGNN</td><td></td><td>60.5</td><td>63.3</td><td>63.1</td><td>57.3</td><td></td><td>65.6 62.7</td><td>60.7</td><td></td><td>68.4 69.1</td><td>70.2 70.666.973.4</td><td></td><td></td><td>68.8</td><td></td><td></td><td></td><td></td><td>77.2</td><td></td><td>72.7 80.5</td></tr><tr><td>Vanilla TF</td><td></td><td>62.4</td><td>64.6</td><td>60.8</td><td>62.1</td><td>61.2</td><td>65.2</td><td>57.3</td><td>65.2</td><td></td><td>74.4</td><td>68.674.2</td><td></td><td>74.1</td><td>73.0 76.6</td><td>71.3</td><td>71.4 65.7 78.7</td><td>76.3 77.8</td><td>80.9</td><td></td><td>81.673.9</td></tr><tr><td>Graph TF</td><td></td><td>64.6</td><td>65.3</td><td>62.1</td><td></td><td>65.3</td><td></td><td>64.2</td><td>61.9</td><td>71.7</td><td></td><td></td><td></td><td></td><td></td><td></td><td>80.2</td><td></td><td></td><td></td><td>77.983.5</td></tr><tr><td></td><td></td><td>63.3</td><td></td><td></td><td>66.3</td><td>65.2</td><td>67.1</td><td>67.7</td><td>63.6</td><td>73.3</td><td>76.6</td><td>70.4</td><td>75.9</td><td>76.4</td><td>77.8</td><td>73.1</td><td></td><td>80.5</td><td>81.8</td><td></td><td></td></tr><tr><td>BrainNetTF</td><td></td><td>62.3</td><td>64.6</td><td>65.2</td><td>61.1</td><td>66.5</td><td>66.6</td><td>66.9</td><td>65.7</td><td>74.3</td><td>76.4</td><td>77.2</td><td>70.7</td><td>75.7</td><td>74.9</td><td>72.6</td><td>78.5</td><td>78.4</td><td>81.1</td><td></td><td>75.580.9</td></tr><tr><td>BrainNPT</td><td></td><td>66.3</td><td>66.5</td><td>61.6</td><td>59.2</td><td>65.5</td><td>67.3</td><td>65.8</td><td>71.6</td><td>70.6</td><td>75.7</td><td>65.2</td><td>75.3</td><td>72.8</td><td>74.1</td><td>68.5</td><td>76.7</td><td>75.6</td><td>77.2</td><td>79.1</td><td>71.4</td></tr><tr><td>BrainLM BrainMass</td><td>GR</td><td>65.5</td><td>68.6 66.1</td><td>62.7 63.6</td><td>70.4 69.9</td><td>68.5</td><td>70.2</td><td>65.6 71.1</td><td></td><td>76.7</td><td>81.5</td><td>72.4 71.5</td><td>80.5 80.1</td><td>75.1</td><td>81.9</td><td>81.9 82.2</td><td>69.4 74.4</td><td>82.3</td><td>83.6</td><td></td><td>77.687.2</td></tr><tr><td>BrainGFM(Ours)|</td><td>√</td><td></td><td></td><td></td><td></td><td>67.3</td><td>68.5</td><td>69.3</td><td>64.8</td><td>76.6</td><td>79.3</td><td>76.2</td><td></td><td>75.7</td><td>78.5</td><td></td><td></td><td>79.8</td><td>82.7</td><td>79.0</td><td>80.6 82.6</td></tr><tr><td rowspan="2"></td><td rowspan="2">| Pre-Trained|</td><td colspan="4"></td><td colspan="4">70.672.2 67.3 73.4 71.2 73.5 70.4</td><td colspan="4">69.880.3 85.1</td><td colspan="4">84.4 83.6 85.5 85.8</td><td colspan="4">77.9 85.2 86.3 87.7</td></tr><tr><td colspan="4">HBN (OCD) IAUCACC SEN SPE AUC ACC SEN SPE AUC ACC SEN SPE AUC ACC SEN SPE</td><td colspan="4">HBN (PTSD)</td><td colspan="4">SubMex_CUD (CUD)</td><td colspan="4">UCLA_CNP (SCHZ)</td><td colspan="4">UCLA_CNP (BP)</td></tr><tr><td>Method</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>AUCACC SEN SPE</td></tr><tr><td>Vanilla GCN</td><td></td><td>69.7 76.9</td><td></td><td>61.3</td><td>76.6</td><td></td><td></td><td>71.8</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>BrainGNN</td><td></td><td>70.1</td><td>74.6</td><td>76.7</td><td>66.4</td><td>77.5 75.2</td><td>78.7</td><td>82.1 69.3 81.9</td><td></td><td>63.8 62.5</td><td>66.2 64.8</td><td>55.6 72.5 67.1</td><td></td><td>77.2 78.1</td><td>79.5 77.5</td><td>72.3</td><td>81.8 83.7 72.6</td><td>64.3 63.8</td><td>69.6 67.3</td><td>70.1</td><td>58.2 58.569.2</td></tr><tr><td>Vanilla TF</td><td></td><td>72.5</td><td>78.8</td><td>64.5</td><td>78.2</td><td>78.2</td><td>78.0 80.1</td><td>71.7 85.9</td><td></td><td>65.6</td><td>66.7</td><td>57.5 60.4 71.1</td><td></td><td>76.8</td><td>80.2</td><td>71.9</td><td>80.4</td><td>65.1</td><td>70.6</td><td>69.4</td><td>61.7</td></tr><tr><td>Graph TF</td><td></td><td>73.6</td><td>81.5</td><td>66.7</td><td>77.5</td><td>77.1</td><td>81.6</td><td>74.3 80.2</td><td></td><td>67.5</td><td>69.8</td><td>59.4</td><td>75.7</td><td>78.9</td><td>80.8</td><td>75.1</td><td>81.6</td><td>67.4</td><td>70.2</td><td></td><td>70.564.3</td></tr><tr><td>BrainNetTF</td><td></td><td>74.7</td><td>80.4</td><td>79.2</td><td>69.1</td><td>79.4</td><td>81.9</td><td>74.6</td><td>84.6</td><td>66.8</td><td>67.5</td><td>61.7</td><td>71.4</td><td>75.1</td><td>77.3</td><td>73.5</td><td>77.9</td><td>68.5</td><td>71.6</td><td></td><td>73.4 64.8</td></tr><tr><td>BrainNPT</td><td></td><td>71.2</td><td>75.3</td><td>63.6</td><td>78.4</td><td>76.4</td><td>80.6</td><td>70.3</td><td>82.5</td><td>63.7</td><td>64.2</td><td>57.5</td><td>69.3</td><td>75.0</td><td>76.5</td><td>68.7</td><td>81.9</td><td>65.5</td><td>68.7</td><td>74.7</td><td>60.270.1 66.3</td></tr><tr><td>BrainLM BrainMass</td><td>DR</td><td>78.2 76.881.2</td><td>83.3</td><td>72.6 80.6 72.578.1</td><td>84.5</td><td>80.2</td><td>84.8</td><td>81.5 73.6 73.2 82.4 67.5</td></table>
+
+in enabling zero-shot generalization. These results collectively validate the synergistic contribution   
+of these techniques in building a flexible and generalizable brain FMs.
+
+![](images/aa909a5afb16746209112f856ce49c64de53b853652ba638b3caa5a2694c70a3.jpg)  
+Figure 2: Performance comparison across different settings (Full-Shot, Few-Shot, Zero-Shot) on three datasets: ABIDE II, ADHD 200, and ADNI 2. The results demonstrate the progressive performance gains achieved by incorporating graph prompts (G-Prompt), meta-learning (Meta L.), and language prompts (Lan. Prompt) into the FM (BrainGFM), especially in few-shot and zero-shot settings.
+
+# 282 4.3 Experiments on Different Atlases and Parcellations with Different ROI Resolutions
+
+To systematically assess the effectiveness of different pre-trained models across a variety of brain   
+atlases and parcellations, we conducted comprehensive ablation studies. Specifically, we fine-tuned   
+four models on fMRI datasets spanning 2 representative atlases and 8 parcellation schemes. The   
+four models include: a vanilla graph transformer trained from scratch; BrainGFM (Functional), pre  
+trained on the functional Schaefer100 atlas; BrainGFM (Anatomical), pre-trained on the anatomical   
+AAL116 atlas; and BrainGFM (Mixed), pre-trained on a combination of Schaefer100 and AAL116   
+data. The atlases used in our experiments comprise both functional (Schaefer, SHEN, Power, and   
+Gordon) and anatomical (AAL) types. Among these, the Schaefer atlas provides three resolutions   
+(100, 200, and 300 parcels), and the AAL atlas includes both AAL116 and AAL3v1 parcellations.   
+As illustrated in Figure 3(a), BrainGFM (Functional) outperforms BrainGFM (Anatomical) when   
+evaluated on functional atlases, while the reverse is true for anatomical atlases. In all cases, both types   
+of pre-trained BrainGFM models significantly outperform the vanilla graph transformer trained from   
+scratch, highlighting the benefits of graph pre-training. Notably, although atlas-specific pre-training   
+offers substantial improvements, the BrainGFM (Mixed) model, pre-trained jointly on both functional   
+and anatomical data, achieves the best performance across all downstream atlases. We hypothesize   
+that this superior generalization stems from the complementary nature of anatomical structures and   
+functional connectivity patterns, which jointly enable the model to capture a richer and more diverse   
+set of neurobiological representations.   
+Overall, as summarized in Figure 3(b), the relative performance of the four models follows two   
+consistent patterns depending on the type of downstream atlas. For functional atlases, BrainGFM   
+(Mixed) performs best, followed by BrainGFM (Functional), BrainGFM (Anatomical), and finally   
+the vanilla model. In contrast, when evaluated on anatomical atlases, the best performance is again   
+achieved by BrainGFM (Mixed), followed by BrainGFM (Anatomical), BrainGFM (Functional),   
+and lastly the vanilla model. These findings underscore the value of incorporating both anatomical   
+and functional information during pre-training to enhance the generalizability of brain graph models   
+across diverse parcellation schemes.
+
+![](images/1d191644c386293b2f42bc88c425ef02832bf1297f8e59859c0743ac2aa270aa.jpg)  
+Figure 3: The performance of models pre-trained on different atlases varies across downstream atlases. The experiments are conducted on ABIDE II dataset for ASD classification.
+
+# 309 4.4 Comparison Among Time-Series, ROI and Graph-Based Foundation Models
+
+We compare four types of brain FMs: time-series-based FM (e.g., BrainLM), ROI-based FM (e.g.,   
+BrainMass), vanilla graph-based FM, and our proposed graph-based model, BrainGFM. The compar  
+ison spans five key dimensions: model performance, pre-training and fine-tuning efficiency, memory   
+usage, and model complexity.
+
+In terms of performance, BrainLM achieves the best results on AUC and ACC due to its direct modeling of raw fMRI time series, effectively capturing both temporal and spatial patterns. BrainMass, which relies on static ROI features without modeling inter-regional interactions, performs the worst. The vanilla graph-based model shows intermediate performance by explicitly modeling ROI connectivity. BrainGFM, which incorporates fMRI-specific enhancements such as graph prompts and structural encodings, significantly outperforms the vanilla graph model and matches or exceeds the performance of timeseries-based models. For computational efficiency, ROI-based models are the fastest in both pre-training and fine-tuning, given their compact input and lack of spatiotemporal modeling. Timeseries models are the slowest due to the cost of processing long, high-dimensional sequences. Graph-based models, including
+
+![](images/909da7db51f78da32134c3eed448a02751f77254136672d021aec3e5640be5e0.jpg)  
+Figure 4: Comparison of performance and efficiency across different brain FMs.
+
+BrainGFM, lie in between. Notably, BrainGFM achieves fast fine-tuning via prompt tuning while maintaining pre-training efficiency similar to the vanilla graph FM, surpassing even ROI-based models in fine-tuning speed. Regarding resource consumption, time-series models are the most memory- and compute-intensive. ROI-based models are the most lightweight. Graph-based models, while slightly more demanding than ROI-based ones due to edge computations, remain significantly more efficient than time-series models. Overall, this evaluation highlights the trade-offs between different brain modeling paradigms and how input representations, time series, ROI features, or graphs, affect both the effectiveness and efficiency of large-scale brain FMs.
+
+# 4.5 Ablation Study on Pre-Training with Different Atlases and Parcellations
+
+To investigate and demonstrate the impact of different atlases and parcellations on the performance of the pre-trained model, we conducted ablation experiments using pre-training datasets constructed from various types of atlases and parcellations. Specifically, we categorized the pre-training datasets into five representative groups: (1) a dataset based on a single func
+
+tional atlas and a single parcellation (Schaefer100), (2) a dataset based on a single anatomi  
+cal atlas and a single parcellation (AAL116), (3) a mixed dataset combining both functional   
+and anatomical atlases (Schaefer $1 0 0 \ +$ AAL116), (4) a dataset based on a single atlas but   
+incorporating multiple resolutions of parcellations (Schaefer $1 0 0 { + } 2 0 0 { + } 3 0 0 $ ), and (5) a fully   
+mixed dataset comprising various atlases and parcellations (All 5 Atlases with 8 Parcellations).   
+As shown in Table 2, pre-training on datasets with a   
+single-resolution parcellation reveals that functional at  
+lases, such as Schaefer, outperform anatomical atlases,   
+such as AAL116. This highlights that functional-based   
+atlases are more effective in capturing disease-specific   
+features in the diagnosis of neurological and psychiatric   
+disorders. Additionally, pre-training on datasets mix  
+ing different parcellation resolutions within a single atlas   
+(e.g., Schaefer $1 0 0 { + } 2 0 0 { + } 3 0 0 $ ) achieves comparable per  
+formance to pre-training on datasets combining multiple atlases with one parcellation each (e.g.,   
+Schaefer $1 0 0 + \mathrm { A A L 1 } 1 6$ ). Finally, pre-training on datasets that incorporate multiple atlases and   
+parcellations achieves substantially better performance than all previous settings. This improvement   
+can be attributed to the model’s ability to comprehensively learn features captured by different atlases,   
+thereby acquiring knowledge from diverse medical and biological perspectives. In addition, the model   
+benefits from learning across parcellations with varying resolutions, which enables it to capture the   
+brain’s feature distributions at both global and local scales.
+
+Table 2: Effect of different atlases on pre-training (ABIDE II, ASD).   
+
+<table><tr><td>Corpus</td><td>Atlas</td><td>Parcel.</td><td>FT Acc.</td></tr><tr><td>w/o Pre-train Schaefer100 AAL116</td><td>Func. = Anat.</td><td>Single Single</td><td>65.2/67.1 67.5/70.2</td></tr><tr><td>Sch(100+200+300)</td><td>Func.</td><td>Mixed</td><td>66.6/69.2 68.5/71.3</td></tr><tr><td>Sch100+AAL116 All Atlases</td><td>Mixed Mixed</td><td>Single Mixed</td><td>68.8 /71.6 70.5/73.3</td></tr></table>
+
+# 4.6 Ablation Study on Different Foundation Model Pre-Training Methods
+
+As shown in Figure 5, we compare the effectiveness of different graph pre-training strategies, including graph contrastive learning (GCL), graph-masked autoencoders (GMAE) and their sequential combination. The results demonstrate that GCL slightly outperforms GMAE, and that combining GCL and GMAE yields further performance gains compared to using either method alone.
+
+Graph contrastive learning (GCL) pre-training primarily focuses on capturing global representations of brain graphs by encouraging the model to aggregate holistic graph-level features and distinguish between different graph attributes and categories. In comparison, graph masked autoencoders (GMAE) pre-training emphasizes
+
+![](images/b08629e1552ff5f885b24959b5362bc4d3655addd38c6b8b037d1d42ba8747ca.jpg)
+
+![](images/6797a3a175c809a8f1056b75a2814017f6d27659845ae3ae55ee22d864e9accd.jpg)  
+Figure 5: Performance of different graph pre-training methods.
+
+the learning of local representations, where the model reconstructs masked brain ROIs based on   
+information from their local neighborhoods, thereby promoting specialization in ROI-level feature   
+extraction. By sequentially combining GCL and GMAE during pre-training, BrainGFM is able to   
+simultaneously acquire both global and local discriminative capabilities. Notably, the integration   
+of global and local information has been widely recognized as critical for understanding brain or  
+ganization and pathology in neuroscience and neuroimaging studies. Consequently, our pre-trained   
+model benefits from this multi-scale representation learning, leading to enhanced transferability and   
+improved performance across various downstream tasks.
+
+# 386 5 Conclusion
+
+We propose BrainGFM, a graph-based brain foundation model pre-trained on heterogeneous fMRI brain graphs constructed from diverse atlases and parcellation schemes. To enhance its generalization and adaptability, we introduce a meta-learning framework to optimize graph prompts, enabling robust few-shot learning under limited data. In addition, we incorporate language prompt tokens to guide zero-shot generalization, allowing BrainGFM to transfer effectively across unseen datasets, tasks, atlases, and neurological disorders. Our large-scale, multi-atlas fMRI dataset provides a rich and diverse training corpus, and BrainGFM demonstrates superior performance in both effectiveness and efficiency compared to prior time-series-based and ROI-based foundation models.
+
+References   
+Josh Achiam, Steven Adler, Sandhini Agarwal, Lama Ahmad, Ilge Akkaya, Florencia Leoni Aleman,   
+Diogo Almeida, Janko Altenschmidt, Sam Altman, Shyamal Anadkat, et al. Gpt-4 technical report.   
+arXiv preprint arXiv:2303.08774, 2023.   
+Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier Martinet, Marie-Anne Lachaux, Timothée   
+Lacroix, Baptiste Rozière, Naman Goyal, Eric Hambro, Faisal Azhar, et al. Llama: Open and   
+efficient foundation language models. arXiv preprint arXiv:2302.13971, 2023.   
+Lianghao Xia, Ben Kao, and Chao Huang. Opengraph: Towards open graph foundation models.   
+arXiv preprint arXiv:2403.01121, 2024.   
+Christopher J Markiewicz, Krzysztof J Gorgolewski, Franklin Feingold, Ross Blair, Yaroslav O   
+Halchenko, Eric Miller, Nell Hardcastle, Joe Wexler, Oscar Esteban, Mathias Goncavles, et al. The   
+openneuro resource for sharing of neuroscience data. Elife, 10:e71774, 2021.   
+Clare Bycroft, Colin Freeman, Desislava Petkova, Gavin Band, Lloyd T Elliott, Kevin Sharp, Allan   
+Motyer, Damjan Vukcevic, Olivier Delaneau, Jared O’Connell, et al. The uk biobank resource   
+with deep phenotyping and genomic data. Nature, 562(7726):203–209, 2018.   
+David C Van Essen, Kamil Ugurbil, Edward Auerbach, Deanna Barch, Timothy EJ Behrens, Richard   
+Bucholz, Acer Chang, Liyong Chen, Maurizio Corbetta, Sandra W Curtiss, et al. The human   
+connectome project: a data acquisition perspective. Neuroimage, 62(4):2222–2231, 2012.   
+Hejie Cui, Wei Dai, Yanqiao Zhu, Xuan Kan, Antonio Aodong Chen Gu, Joshua Lukemire, Liang   
+Zhan, Lifang He, Ying Guo, and Carl Yang. Braingb: a benchmark for brain network analysis with   
+graph neural networks. IEEE transactions on medical imaging, 42(2):493–506, 2022.   
+Xinxu Wei, Kanhao Zhao, Yong Jiao, Nancy B Carlisle, Hua Xie, Gregory A Fonzo, and Yu Zhang.   
+Multi-modal cross-domain self-supervised pre-training for fmri and eeg fusion. Neural Networks,   
+:107066, 2025.   
+Xuan Kan, Wei Dai, Hejie Cui, Zilong Zhang, Ying Guo, and Carl Yang. Brain network transformer.   
+Advances in Neural Information Processing Systems, 35:25586–25599, 2022.   
+Yong Jiao, Kanhao Zhao, Xinxu Wei, Nancy B Carlisle, Corey J Keller, Desmond J Oathes, Gregory A   
+Fonzo, and Yu Zhang. Deep graph learning of multimodal brain networks defines treatment  
+predictive signatures in major depression. Molecular Psychiatry, pages 1–12, 2025.   
+Josue Ortega Caro, Antonio H de O Fonseca, Christopher Averill, Syed A Rizvi, Matteo Rosati,   
+James L Cross, Prateek Mittal, Emanuele Zappala, Daniel Levine, Rahul M Dhodapkar, et al.   
+Brainlm: A foundation model for brain activity recordings. bioRxiv, pages 2023–09, 2023.   
+Armin Thomas, Christopher Ré, and Russell Poldrack. Self-supervised learning of brain dynamics   
+from broad neuroimaging data. Advances in neural information processing systems, 35:21255–   
+21269, 2022.   
+Yanwu Yang, Chenfei Ye, Guinan Su, Ziyao Zhang, Zhikai Chang, Hairui Chen, Piu Chan, Yue   
+Yu, and Ting Ma. Brainmass: Advancing brain network analysis for diagnosis with large-scale   
+self-supervised learning. IEEE Transactions on Medical Imaging, 2024.   
+Jinlong Hu, Yangmin Huang, Nan Wang, and Shoubin Dong. Brainnpt: Pre-training transformer   
+networks for brain network classification. IEEE Transactions on Neural Systems and Rehabilitation   
+Engineering, 2024.   
+Zijian Dong, Ruilin Li, Yilei Wu, Thuan Tinh Nguyen, Joanna Chong, Fang Ji, Nathanael Tong,   
+Christopher Chen, and Juan Helen Zhou. Brain-jepa: Brain dynamics foundation model with   
+gradient positioning and spatiotemporal masking. Advances in Neural Information Processing   
+Systems, 37:86048–86073, 2024.   
+Russell A Poldrack and Krzysztof J Gorgolewski. Openfmri: Open sharing of task fmri data.   
+Neuroimage, 144:259–261, 2017.
+
+Robert JM Hermosillo, Lucille A Moore, Eric Feczko, Óscar Miranda-Domínguez, Adam Pines, Ally Dworetsky, Gregory Conan, Michael A Mooney, Anita Randolph, Alice Graham, et al. A precision functional atlas of personalized network topography and probabilities. Nature neuroscience, 27(5): 1000–1013, 2024.   
+Zhenyu Hou, Xiao Liu, Yukuo Cen, Yuxiao Dong, Hongxia Yang, Chunjie Wang, and Jie Tang. Graphmae: Self-supervised masked graph autoencoders. In Proceedings of the 28th ACM SIGKDD conference on knowledge discovery and data mining, pages 594–604, 2022.   
+Jiezhong Qiu, Qibin Chen, Yuxiao Dong, Jing Zhang, Hongxia Yang, Ming Ding, Kuansan Wang, and Jie Tang. Gcc: Graph contrastive coding for graph neural network pre-training. In Proceedings of the 26th ACM SIGKDD international conference on knowledge discovery & data mining, pages 1150–1160, 2020.   
+Xinxu Wei, Kanhao Zhao, Yong Jiao, Nancy B Carlisle, Hua Xie, and Yu Zhang. Pre-training graph contrastive masked autoencoders are strong distillers for eeg. arXiv preprint arXiv:2411.19230, 2024.   
+Xiang Lisa Li and Percy Liang. Prefix-tuning: Optimizing continuous prompts for generation. arXiv preprint arXiv:2101.00190, 2021.   
+Xiangguo Sun, Jiawen Zhang, Xixi Wu, Hong Cheng, Yun Xiong, and Jia Li. Graph prompt learning: A comprehensive survey and beyond. arXiv preprint arXiv:2311.16534, 2023.   
+Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In International conference on machine learning, pages 1126–1135. PMLR, 2017. Timothy Hospedales, Antreas Antoniou, Paul Micaelli, and Amos Storkey. Meta-learning in neural networks: A survey. IEEE transactions on pattern analysis and machine intelligence, 44(9): 5149–5169, 2021.   
+Alexander Schaefer, Ru Kong, Evan M Gordon, Timothy O Laumann, Xi-Nian Zuo, Avram J Holmes, Simon B Eickhoff, and BT Thomas Yeo. Local-global parcellation of the human cerebral cortex from intrinsic functional connectivity mri. Cerebral cortex, 28(9):3095–3114, 2018. Nathalie Tzourio-Mazoyer, Brigitte Landeau, Dimitri Papathanassiou, Fabrice Crivello, Octave Etard, Nicolas Delcroix, Bernard Mazoyer, and Marc Joliot. Automated anatomical labeling of activations in spm using a macroscopic anatomical parcellation of the mni mri single-subject brain. Neuroimage, 15(1):273–289, 2002.   
+Xilin Shen, Fuyuze Tokoglu, Xenios Papademetris, and R Todd Constable. Groupwise whole-brain parcellation from resting-state fmri data for network node identification. Neuroimage, 82:403–415, 2013. Jonathan D Power, Alexander L Cohen, Steven M Nelson, Gagan S Wig, Kelly Anne Barnes, Jessica A Church, Alecia C Vogel, Timothy O Laumann, Fran M Miezin, Bradley L Schlaggar, et al. Functional network organization of the human brain. Neuron, 72(4):665–678, 2011.   
+Evan M Gordon, Timothy O Laumann, Babatunde Adeyemo, Jeremy F Huckins, William M Kelley, and Steven E Petersen. Generation and evaluation of a cortical area parcellation from resting-state correlations. Cerebral cortex, 26(1):288–303, 2016. Seongjun Yun, Minbyul Jeong, Raehyun Kim, Jaewoo Kang, and Hyunwoo J Kim. Graph transformer networks. Advances in neural information processing systems, 32, 2019.   
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. Attention is all you need. Advances in neural information processing systems, 30, 2017.   
+Vijay Prakash Dwivedi, Chaitanya K Joshi, Anh Tuan Luu, Thomas Laurent, Yoshua Bengio, and Xavier Bresson. Benchmarking graph neural networks. Journal of Machine Learning Research, 24 (43):1–48, 2023.
+
+Jiaxuan You, Rex Ying, and Jure Leskovec. Position-aware graph neural networks. In International   
+conference on machine learning, pages 7134–7143. PMLR, 2019.   
+Vijay Prakash Dwivedi, Anh Tuan Luu, Thomas Laurent, Yoshua Bengio, and Xavier Bresson.   
+Graph neural networks with learnable structural and positional representations. arXiv preprint   
+arXiv:2110.07875, 2021.   
+Mianxin Liu, Han Zhang, Feng Shi, and Dinggang Shen. Hierarchical graph convolutional network   
+built by multiscale atlases for brain disorder diagnosis using functional connectivity. IEEE   
+Transactions on Neural Networks and Learning Systems, 2023.   
+Xiaoya Wu, Chuang Liang, Juan Bustillo, Peter Kochunov, Xuyun Wen, Jing Sui, Rongtao Jiang,   
+Xiao Yang, Zening Fu, Daoqiang Zhang, et al. The impact of atlas parcellation on functional   
+connectivity analysis across six psychiatric disorders. Human Brain Mapping, 46(5):e70206, 2025.   
+Yuning You, Tianlong Chen, Yongduo Sui, Ting Chen, Zhangyang Wang, and Yang Shen. Graph   
+contrastive learning with augmentations. Advances in neural information processing systems, 33:   
+5812–5823, 2020.   
+Christian Otte, Stefan M Gold, Brenda W Penninx, Carmine M Pariante, Amit Etkin, Maurizio Fava,   
+David C Mohr, and Alan F Schatzberg. Major depressive disorder. Nature reviews Disease primers,   
+2(1):1–20, 2016.   
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. Bert: Pre-training of deep   
+bidirectional transformers for language understanding. In Proceedings of the 2019 conference of   
+the North American chapter of the association for computational linguistics: human language   
+technologies, volume 1 (long and short papers), pages 4171–4186, 2019.   
+Kexin Huang, Jaan Altosaar, and Rajesh Ranganath. Clinicalbert: Modeling clinical notes and   
+predicting hospital readmission. arXiv preprint arXiv:1904.05342, 2019.   
+Emily Alsentzer, John R Murphy, Willie Boag, Wei-Hung Weng, Di Jin, Tristan Naumann,   
+and Matthew McDermott. Publicly available clinical bert embeddings. arXiv preprint   
+arXiv:1904.03323, 2019.   
+Mingchen Sun, Kaixiong Zhou, Xin He, Ying Wang, and Xin Wang. Gppt: Graph pre-training and   
+prompt tuning to generalize graph neural networks. In Proceedings of the 28th ACM SIGKDD   
+Conference on Knowledge Discovery and Data Mining, pages 1717–1727, 2022.   
+Ning Ding, Yujia Qin, Guang Yang, Fuchao Wei, Zonghan Yang, Yusheng Su, Shengding Hu, Yulin   
+Chen, Chi-Min Chan, Weize Chen, et al. Parameter-efficient fine-tuning of large-scale pre-trained   
+language models. Nature Machine Intelligence, 5(3):220–235, 2023.   
+Thomas N Kipf and Max Welling. Semi-supervised classification with graph convolutional networks.   
+arXiv preprint arXiv:1609.02907, 2016.   
+Xiaoxiao Li, Yuan Zhou, Nicha Dvornek, Muhan Zhang, Siyuan Gao, Juntang Zhuang, Dustin   
+Scheinost, Lawrence H Staib, Pamela Ventola, and James S Duncan. Braingnn: Interpretable brain   
+graph neural network for fmri analysis. Medical Image Analysis, 74:102233, 2021.   
+Betty Jo Casey, Tariq Cannonier, May I Conley, Alexandra O Cohen, Deanna M Barch, Mary M   
+Heitzeg, Mary E Soules, Theresa Teslovich, Danielle V Dellarco, Hugh Garavan, et al. The adoles  
+cent brain cognitive development (abcd) study: imaging acquisition across 21 sites. Developmental   
+cognitive neuroscience, 32:43–54, 2018.   
+ADHD-200 consortium. The adhd-200 consortium: a model to advance the translational potential of   
+neuroimaging in clinical neuroscience. Frontiers in systems neuroscience, 6:62, 2012.   
+Adriana Di Martino, Chao-Gan Yan, Qingyang Li, Erin Denio, Francisco X Castellanos, Kaat Alaerts,   
+Jeffrey S Anderson, Michal Assaf, Susan Y Bookheimer, Mirella Dapretto, et al. The autism   
+brain imaging data exchange: towards a large-scale evaluation of the intrinsic brain architecture in   
+autism. Molecular psychiatry, 19(6):659–667, 2014.   
+Clifford R Jack Jr, Matt A Bernstein, Nick C Fox, Paul Thompson, Gene Alexander, Danielle Harvey,   
+Bret Borowski, Paula J Britson, Jennifer L. Whitwell, Chadwick Ward, et al. The alzheimer’s   
+disease neuroimaging initiative (adni): Mri methods. Journal of Magnetic Resonance Imaging: An   
+Official Journal of the International Society for Magnetic Resonance in Medicine, 27(4):685–691,   
+.   
+Lukas Snoek, Maite M van der Miesen, Tinka Beemsterboer, Andries Van Der Leij, Annemarie   
+Eigenhuis, and H Steven Scholte. The amsterdam open mri collection, a set of multimodal mri   
+datasets for individual difference analyses. Scientific data, 8(1):85, 2021.   
+Samuel A McLean, Kerry Ressler, Karestan Chase Koenen, Thomas Neylan, Laura Germine, Tanja   
+Jovanovic, Gari D Clifford, Donglin Zeng, Xinming An, Sarah Linnstaedt, et al. The aurora study:   
+a longitudinal, multimodal library of brain biology and function after traumatic stress exposure.   
+Molecular psychiatry, 25(2):283–296, 2020.   
+Meredith A Shafto, Lorraine K Tyler, Marie Dixon, Jason R Taylor, James B Rowe, Rhodri Cu  
+sack, Andrew J Calder, William D Marslen-Wilson, John Duncan, Tim Dalgleish, et al. The   
+cambridge centre for ageing and neuroscience (cam-can) study protocol: a cross-sectional, lifespan,   
+multidisciplinary examination of healthy cognitive ageing. BMC neurology, 14:1–25, 2014.   
+Dylan M. Nielson, Neda Sadeghi, Lisa S. Gorham, Lillian Eisner, Jeremy Taigman, Katherine Haynes,   
+Karen Qi, Christopher C. Camp, Payton Fors, Diana Rodriguez, Jerry McGuire, Erin Garth, Chana   
+Engel, Mollie Davis, Kenneth Towbin, and Argyris Stringaris. "national institute of mental health   
+characterization and treatment of adolescent depression (nimh cat-d)", 2023.   
+Avram J Holmes, Marisa O Hollinshead, Timothy M O’keefe, Victor I Petrov, Gabriele R Fariello,   
+Lawrence L Wald, Bruce Fischl, Bruce R Rosen, Ross W Mair, Joshua L Roffman, et al. Brain   
+genomics superstruct project initial data release with structural, functional, and behavioral measures.   
+Scientific data, 2(1):1–16, 2015.   
+Susan Y Bookheimer, David H Salat, Melissa Terpstra, Beau M Ances, Deanna M Barch, Randy L   
+Buckner, Gregory C Burgess, Sandra W Curtiss, Mirella Diaz-Santos, Jennifer Stine Elam, et al.   
+The lifespan human connectome project in aging: an overview. Neuroimage, 185:335–348, 2019.   
+Madhukar H Trivedi, Patrick J McGrath, Maurizio Fava, Ramin V Parsey, Benji T Kurian, Mary L   
+Phillips, Maria A Oquendo, Gerard Bruder, Diego Pizzagalli, Marisa Toups, et al. Establishing   
+moderators and biosignatures of antidepressant response in clinical care (embarc): Rationale and   
+design. Journal of psychiatric research, 78:11–23, 2016.   
+Anahit Babayan, Miray Erbey, Deniz Kumral, Janis D Reinelt, Andrea MF Reiter, Josefin Röbbig,   
+H Lina Schaare, Marie Uhlig, Alfred Anwander, Pierre-Louis Bazin, et al. A mind-brain-body   
+dataset of mri, eeg, cognition, emotion, and peripheral physiology in young and old adults. Scientific   
+data, 6(1):1–21, 2019.   
+Alexander Dagley, Molly LaPoint, Willem Huijbers, Trey Hedden, Donald G McLaren, Jasmeer P   
+Chatwal, Kathryn V Papp, Rebecca E Amariglio, Deborah Blacker, Dorene M Rentz, et al. Harvard   
+aging brain study: dataset and accessibility. Neuroimage, 144:255–258, 2017.   
+Jennifer Tremblay-Mercier, Cécile Madjar, Samir Das, Alexa Pichet Binette, Stephanie OM Dyke,   
+Pierre Étienne, Marie-Elyse Lafaille-Magnan, Jordana Remz, Pierre Bellec, D Louis Collins, et al.   
+Open science datasets from prevent-ad, a longitudinal cohort of pre-symptomatic alzheimer’s   
+disease. NeuroImage: Clinical, 31:102733, 2021.   
+Ayumu Yamashita, Noriaki Yahata, Takashi Itahashi, Giuseppe Lisi, Takashi Yamada, Naho Ichikawa,   
+Masahiro Takamura, Yujiro Yoshihara, Akira Kunimatsu, Naohiro Okada, et al. Harmonization of   
+resting-state functional mri data across multiple imaging sites via the separation of site differences   
+into sampling bias and measurement bias. PLoS biology, 17(4):e3000042, 2019.   
+Clare Kelly, Xi-Nian Zuo, Kristin Gotimer, Christine L Cox, Lauren Lynch, Dylan Brock, Davide   
+Imperati, Hugh Garavan, John Rotrosen, F Xavier Castellanos, et al. Reduced interhemispheric   
+resting state functional connectivity in cocaine addiction. Biological psychiatry, 69(7):684–692,   
+2011.   
+Pamela J LaMontagne, Tammie LS Benzinger, John C Morris, Sarah Keefe, Russ Hornbeck, Chengjie   
+Xiong, Elizabeth Grant, Jason Hassenstab, Krista Moulder, Andrei G Vlassenko, et al. Oasis-3:   
+longitudinal neuroimaging, clinical, and cognitive dataset for normal aging and alzheimer disease.   
+medrxiv, pages 2019–12, 2019.   
+Lindsay M Alexander, Jasmine Escalera, Lei Ai, Charissa Andreotti, Karina Febre, Alexander   
+Mangone, Natan Vega-Potler, Nicolas Langer, Alexis Alexander, Meagan Kovacs, et al. An open   
+resource for transdiagnostic research in pediatric mental health and learning disorders. Scientific   
+data, 4(1):1–26, 2017.   
+Diego Angeles-Valdez, Jalil Rasgado-Toledo, Viviana Villicaña, Alan Davalos-Guzman, Cristina   
+Almanza, Alfonso Fajardo-Valdez, Ruth Alcala-Lozano, and Eduardo A Garza-Villarreal. The   
+mexican dataset of a repetitive transcranial magnetic stimulation clinical trial on cocaine use   
+disorder patients: Sudmex tms. Scientific Data, 11(1):408, 2024.   
+Michael W Weiner, Dallas P Veitch, Paul S Aisen, Laurel A Beckett, Nigel J Cairns, Robert C   
+Green, Danielle Harvey, Clifford R Jack, William Jagust, Enchi Liu, et al. The alzheimer’s disease   
+neuroimaging initiative: a review of papers published since its inception. Alzheimer’s & Dementia,   
+9(5):e111–e194, 2013.   
+Diego Angeles-Valdez, Jalil Rasgado-Toledo, Victor Issa-Garcia, Thania Balducci, Viviana Villicaña,   
+Alely Valencia, Jorge Julio Gonzalez-Olvera, Ernesto Reyes-Zamorano, and Eduardo A Garza  
+Villarreal. The mexican magnetic resonance imaging dataset of patients with cocaine use disorder:   
+Sudmex conn. Scientific data, 9(1):133, 2022.   
+Russell A Poldrack, Eliza Congdon, William Triplett, KJ Gorgolewski, KH Karlsgodt, JA Mumford,   
+FW Sabb, NB Freimer, ED London, TD Cannon, et al. A phenome-wide examination of neural   
+and cognitive function. Scientific data, 3(1):1–12, 2016.   
+Chao-Gan Yan, Xiao Chen, Le Li, Francisco Xavier Castellanos, Tong-Jian Bai, Qi-Jing Bo, Jun Cao,   
+Guan-Mao Chen, Ning-Xuan Chen, Wei Chen, et al. Reduced default mode network functional   
+connectivity in patients with recurrent major depressive disorder. Proceedings of the National   
+Academy of Sciences, 116(18):9078–9083, 2019.   
+Oscar Esteban, Christopher J Markiewicz, Ross W Blair, Craig A Moodie, A Ilkay Isik, Asier   
+Erramuzpe, James D Kent, Mathias Goncalves, Elizabeth DuPre, Madeleine Snyder, et al. fmriprep:   
+a robust preprocessing pipeline for functional mri. Nature methods, 16(1):111–116, 2019.   
+Brian B Avants, Charles L Epstein, Murray Grossman, and James C Gee. Symmetric diffeomorphic   
+image registration with cross-correlation: evaluating automated labeling of elderly and neurode  
+generative brain. Medical image analysis, 12(1):26–41, 2008.   
+Yongyue Zhang, J Michael Brady, and Stephen Smith. Hidden markov random field model for   
+segmentation of brain mr image. In Medical Imaging 2000: Image Processing, volume 3979,   
+pages 1126–1137. SPIE, 2000.   
+Douglas N Greve and Bruce Fischl. Accurate and robust brain image alignment using boundary-based   
+registration. Neuroimage, 48(1):63–72, 2009.   
+Raimon HR Pruim, Maarten Mennes, Daan van Rooij, Alberto Llera, Jan K Buitelaar, and Christian F   
+Beckmann. Ica-aroma: A robust ica-based strategy for removing motion artifacts from fmri data.   
+Neuroimage, 112:267–277, 2015.
+
+![](images/5ba52d92111e128f2e29dd7eee676611c23be04d2ca4bace9f3e7b2789b7ce73.jpg)  
+Figure 6: The simplified training pipeline of BrainGFM, covering (a) fMRI graph construction for pre-training, (b) BrainGFM pre-training, (c) meta-learning for few-shot scenarios, and (d) zero-shot adaptation via language prompts.
+
+![](images/9c32b9803ac9c8b064441d971ccfb403eb23a6b70d373648c91824422a33872a.jpg)  
+B Contributions of BrainGFM for Unifying Cohorts, Atlases, and Disorders   
+Figure 7: Our BrainGFM achieves unification in the fMRI domain across three key dimensions: (a) diverse brain datasets and cohorts, (b) multiple neurological and psychiatric disorders, and (c) various brain atlases and parcellations.
+
+# 629 C Comparison of Our Vanilla Graph FM and BrainGFM with Prior 630 Time-Series-based and ROI-based Brain FMs
+
+![](images/94a8d21b4c129e4ebf183df3b11f11cfb0518616c3d778998374afccf597a3e3.jpg)  
+Figure 8: We compare different brain foundation models in terms of performance, inference speed, and computational cost. The results show that Graph FM provides a trade-off between performance and efficiency compared to Time-Series FM, while our BrainGFM achieves the best overall performance across all aspects.
+
+As shown in Table 3, after completing model pre-training, we explored three downstream adaptation   
+strategies: full fine-tuning Sun et al. [2022], parameter-efficient fine-tuning (PEFT) Ding et al. [2023],   
+and graph prompt-tuning Sun et al. [2023]. Full fine-tuning updates all model parameters during   
+downstream training, offering strong performance but at a high computational cost. In contrast, PEFT   
+methods reduce training overhead by modifying only a small subset of parameters or introducing   
+lightweight modules. We specifically evaluate two popular PEFT variants: prefix-tuning and LoRA.   
+Note that the details of all tuning methods are summarized in Table 4.   
+Graph prompt-tuning further improves efficiency by freezing the entire pre-trained model and updating   
+only a small set of learnable prompt vectors injected into the input. This strategy allows the model to   
+adapt without altering its core parameters, making it highly suitable for resource-constrained settings.   
+In full-shot scenarios, fine-tuning delivers the best results, but PEFT methods achieve competitive   
+performance with significantly lower computational demands. Graph prompt-tuning, while slightly   
+less accurate, offers the best efficiency–adaptability trade-off by minimizing trainable parameters.   
+Given the structural nature of brain graphs, where node and edge features capture complex spatial   
+and relational dependencies, we examine two prompt insertion mechanisms: addition $( ^ { 6 6 } + 7 )$ and   
+multiplication $\binom { 6 6 } { 7 } \times 3$ . Results show that multiplicative insertion consistently outperforms the additive   
+version, likely because scaling features better preserves relational patterns. Moreover, to further   
+leverage topological information, we extend the prompt-tuning framework by incorporating edge   
+prompts in addition to node prompts. This design grants the model greater flexibility to adjust local   
+connectivity, leading to improved transfer performance across diverse downstream tasks.
+
+Table 3: Comparison of Different Tuning Methods on ABIDE II (ASD Classification).   
+
+<table><tr><td>Tuning Method</td><td>FT Flops</td><td>Full-Shot FT</td></tr><tr><td> w/o Pre-Training</td><td>Very High</td><td>65.2 / 67.1</td></tr><tr><td> Fine-Tuning</td><td>High</td><td>70.5 / 73.3</td></tr><tr><td>PEFT (Prefix)</td><td>Low</td><td>69.3 / 72.1</td></tr><tr><td>PEFT (LoRA)</td><td>Low</td><td>70.6 / 72.6</td></tr><tr><td>G Prompt-Tuning (+)</td><td>Very Low</td><td>67.4 / 68.7</td></tr><tr><td>G Prompt-Tuning (x)</td><td>Very Low</td><td>70.1 / 72.6</td></tr><tr><td>G Prompt-Tuning w/ Edge (x)</td><td>Very Low</td><td>71.2 / 73.5</td></tr></table>
+
+Table 4: Overview of Tuning Methods Evaluated. Fine-tuning updates all model weights; PEFT strategies reduce trainable parameters by introducing lightweight modules; graph prompt-tuning updates only learnable prompts while freezing the backbone.   
+
+<table><tr><td>Tuning Method</td><td>Trainable Parameters Backbone Frozen</td><td></td><td>Extra Module</td><td>Description</td></tr><tr><td>Full Fine-Tuning</td><td>All</td><td>No</td><td>No</td><td>Updates all weights during downstream training.</td></tr><tr><td>PEFT (Prefix-Tuning)</td><td>Small prefix vectors</td><td>Yes</td><td>Prefix vectors</td><td>Injects trainable tokens into the input sequence.</td></tr><tr><td>PEFT (LoRA)</td><td>Low-rank matrices</td><td>Yes</td><td>LoRA adapters</td><td>Adds trainable rank-decomposed projections to attention layers.</td></tr><tr><td>Graph Prompt-Tuning (+)</td><td>Small prompt vectors</td><td>Yes</td><td>Prompt tokens</td><td>Adds prompts to node features via element-wise addition.</td></tr><tr><td>Graph Prompt-Tuning (×)</td><td>Small prompt vectors</td><td>Yes</td><td>Prompt tokens</td><td>Injects prompts via feature-wise multiplication.</td></tr><tr><td>G Prompt-Tuning w/ Edge (x)Node + edge prompts</td><td></td><td>Yes</td><td>Node + edge prompts</td><td>Extends prompt injection to edge features for better adaptation.</td></tr></table>
+
+# 652 E Brain fMRI Graph Construction from fMRI Time Series
+
+To construct brain graphs from resting-state fMRI data, we follow a correlation-based approach that   
+captures functional interactions between brain regions. Specifically, for each subject, we extract the   
+regional mean time series $\{ \mathbf { t } _ { i } \in \mathbb { R } ^ { T } \} _ { i = 1 } ^ { N }$ from $N$ brain regions of interest (ROIs), where $T$ is the   
+number of time points. We then compute the Pearson correlation coefficient between every pair of   
+ROI time series:
+
+$$
+\mathbf { A } _ { i j } = \frac { \operatorname { C o v } ( \mathbf { t } _ { i } , \mathbf { t } _ { j } ) } { \sigma ( \mathbf { t } _ { i } ) \cdot \sigma ( \mathbf { t } _ { j } ) } \in [ - 1 , 1 ] ,
+$$
+
+where $\operatorname { C o v } ( \cdot , \cdot )$ denotes the covariance and $\sigma ( \cdot )$ the standard deviation. The resulting symmetric   
+matrix $\textbf { A } \doteq \overset { ' } { \mathbb { R } } ^ { N \times N }$ serves as the weighted adjacency matrix of the brain graph, representing   
+functional connectivity strengths.   
+To construct the node features, we reuse the correlation profile of each ROI as its functional embedding.   
+That is, for node $i$ , we define its feature vector as:
+
+$$
+\mathbf { x } _ { i } = \mathbf { A } _ { i , : } \in \mathbb { R } ^ { N } ,
+$$
+
+which encodes the functional relationships between ROI $i$ and all other ROIs. The resulting graph $\mathcal { G } = ( \gamma , \mathcal { E } , \mathbf { A } , \mathbf { X } )$ is fully connected and characterized by node features $\mathbf { X } = [ \mathbf { x } _ { 1 } ^ { \top } ; \ldots ; \mathbf { x } _ { N } ^ { \top } ] \in \mathbb { R } ^ { \mathbf { \breve { N } } \times \mathbf { \breve { N } } }$ , and edge weights given by A.
+
+# 666 F Comparison of Positional Encoding Methods
+
+We investigate three commonly used positional encoding (PE) strategies for graph neural networks:   
+Laplacian Positional Encoding $( L P E )$ , Node Degree Positional Encoding, and Random Walk Struc  
+tural Encoding (RWSE). Below, we define each method and evaluate their characteristics in the   
+context of fMRI-based brain graph modeling.
+
+(1) Laplacian Positional Encoding. LPE leverages the eigenstructure of the graph Laplacian to capture global graph geometry. The symmetric normalized Laplacian is defined as:
+
+$$
+\mathbf { L } = \mathbf { I } - \mathbf { D } ^ { - 1 / 2 } \mathbf { A } \mathbf { D } ^ { - 1 / 2 } ,
+$$
+
+where $\mathbf { A } \in \mathbb { R } ^ { N \times N }$ is the adjacency matrix, $\mathbf { D }$ is the degree matrix with $\begin{array} { r } { D _ { i i } = \sum _ { j } A _ { i j } } \end{array}$ , and $\mathbf { I }$ is the identity matrix. The PE is obtained by taking the first $k$ non-trivial eigenvectors of L:
+
+$$
+\mathbf { P E } _ { \mathrm { L P E } } = [ \mathbf { u } _ { 1 } , \mathbf { u } _ { 2 } , \ldots , \mathbf { u } _ { k } ] ,
+$$
+
+where each $\mathbf { u } _ { i } \in \mathbb { R } ^ { N }$ is the $i$ -th eigenvector.
+
+Analysis. LPE captures rich global topology, but computing eigenvectors is expensive and unstable for large or dynamic graphs. It also suffers from a lack of cross-graph consistency, which limits its effectiveness for pre-training and transfer tasks.
+
+(2) Node Degree Positional Encoding. This method encodes each node $v _ { i }$ with its degree:
+
+$$
+\mathbf { P E } _ { \mathrm { { D e g r e e } } } ( v _ { i } ) = \deg ( v _ { i } ) = \sum _ { j = 1 } ^ { N } A _ { i j } ,
+$$
+
+and optionally normalized:
+
+$$
+\mathbf { P E } _ { \mathrm { D e g r e e } } ( v _ { i } ) = \frac { \deg ( v _ { i } ) } { \operatorname* { m a x } _ { j } \deg ( v _ { j } ) } .
+$$
+
+Analysis. Degree encoding is fast and simple, requiring no matrix operations. However, it only   
+captures local connectivity and lacks the expressiveness needed for distinguishing complex structural   
+roles in brain graphs.
+
+(3) Random Walk Structural Encoding (RWSE). RWSE encodes multi-scale structural roles by computing the probability that a random walk returns to the same node at different steps. Define the one-step transition probability matrix:
+
+$$
+\mathbf { P } = \mathbf { D } ^ { - 1 } \mathbf { A } ,
+$$
+
+then the 687 $t$ -step return probability for node $v _ { i }$ is:
+
+$$
+\mathbf { P E } _ { \mathrm { R W S E } } ( v _ { i } ) = \left[ \left( \mathbf { P } ^ { 1 } \right) _ { i i } , \left( \mathbf { P } ^ { 2 } \right) _ { i i } , \ldots , \left( \mathbf { P } ^ { T } \right) _ { i i } \right] .
+$$
+
+Analysis. RWSE is computationally efficient, avoids spectral decomposition, and encodes multi-hop   
+recurrence statistics that are particularly well-suited for the hierarchical and modular structure of   
+brain graphs. Empirically, it provides the most favorable balance between accuracy and scalability.   
+As shown in Table 5, we evaluate different positional encoding strategies on the ABIDE II dataset for   
+ASD classification. The model without any positional encoding is the fastest but performs poorly.   
+Applying graph pre-training substantially improves performance across all variants, validating its   
+effectiveness. Laplacian PE yields competitive accuracy but suffers from high computational cost   
+due to eigen-decomposition. Node Degree Encoding is computationally efficient but underperforms   
+compared to RWSE. Notably, RWSE achieves the highest performance while maintaining fast   
+inference speed. These results indicate that RWSE offers the best trade-off between accuracy and   
+efficiency, making it the most effective and scalable positional encoding method for our BrainGFM   
+framework.
+
+Table 5: Comparison of Positional Encoding Strategies on ABIDE II (ASD Classification)   
+
+<table><tr><td>[PE] Type</td><td>Pre-Trained</td><td>Efficiency</td><td>Performance (ACC /AUC)</td></tr><tr><td> w/o [PE]</td><td>X</td><td>Very Fast</td><td>65.2 / 67.1</td></tr><tr><td> w/o [PE]</td><td></td><td> Very Fast</td><td>69.5 / 71.7</td></tr><tr><td>Laplacian [PE]</td><td>「</td><td> Slow</td><td>69.2 / 71.3</td></tr><tr><td>Node Degree [PE]</td><td>√</td><td>Fast</td><td>68.4 / 70.5</td></tr><tr><td>RWSE [PE]</td><td></td><td>Fast</td><td>66.1 / 68.0</td></tr><tr><td>RWSE [PE]</td><td>X</td><td>Fast</td><td>70.5 / 73.3</td></tr></table>
+
+# 700 G Unified Training on Brain Graphs with Varying Numbers of Nodes
+
+To handle brain graphs with varying numbers of nodes, we introduce a prompt-based unification   
+mechanism that aligns all graphs to a fixed size $N _ { \mathrm { m a x } }$ . Given a graph with $N _ { i }$ nodes $( N _ { i } \le N _ { \operatorname* { m a x } } )$ , its   
+node feature matrix ${ \bf X } _ { i } \in \mathbb { R } ^ { \dot { N } _ { i } \times F }$ is first augmented with random walk structural encoding (RWSE),   
+and then zero-padded to obtain $\mathrm { P a d } ( \mathbf { X } _ { i } ) \in \mathbb { \bar { R } } ^ { N _ { \operatorname* { m a x } } \times F }$ .
+
+To inject inductive biases, we employ a learnable node prompt matrix 705 $\mathbf { P } \in \mathbb { R } ^ { N _ { \operatorname* { m a x } } \times F }$ , and perform 706 element-wise fusion as:
+
+$$
+\begin{array} { r } { \tilde { \mathbf { X } } _ { i } = \mathbf { P a d } ( \mathbf { X } _ { i } ) \odot \mathbf { P } , } \end{array}
+$$
+
+where $\odot$ denotes the Hadamard product. To further guide the model, we prepend the task/disorder   
+token [T/D] $\mathbf { x } _ { \mathrm { T D } }$ and the atlas/parcellation token [A/P] $\mathbf { x } _ { \mathrm { A P } }$ , resulting in the full input matrix:
+
+$$
+\mathbf { Z } _ { i } = [ \mathbf { x } _ { \mathrm { T D } } ; \mathbf { x } _ { \mathrm { A P } } ; \tilde { \mathbf { X } } _ { i } ] \in \mathbb { R } ^ { ( N _ { \mathrm { m a x } } + 2 ) \times F } .
+$$
+
+Simultaneously, the original adjacency matrix 709 $\mathbf { A } _ { i } \in \mathbb { R } ^ { N _ { i } \times N _ { i } }$ is expanded to $\hat { \mathbf { A } } _ { i } \in \mathbb { R } ^ { ( N _ { \operatorname* { m a x } } + 2 ) \times ( N _ { \operatorname* { m a x } } + 2 ) }$ 710 by fully connecting the two prompt tokens to all other nodes:
+
+$$
+\hat { \mathbf { A } } _ { i } = \left[ \begin{array} { l l } { \mathbf { 1 } _ { 2 \times 2 } } & { \mathbf { 1 } _ { 2 \times N _ { \mathrm { m a x } } } } \\ { \mathbf { 1 } _ { N _ { \mathrm { m a x } } \times 2 } } & { \mathrm { P a d } ( \mathbf { A } _ { i } ) } \end{array} \right] .
+$$
+
+An attention mask 711 $\mathbf { M } _ { i } \in \{ 0 , 1 \} ^ { N _ { \operatorname* { m a x } } + 2 }$ is also constructed, where $\mathbf { M } _ { i } [ j ] = 1$ indicates that position 712 $j$ corresponds to a padded node. This mask is used to prevent the self-attention mechanism from 713 attending to invalid positions, ensuring consistency across variable-sized graphs.
+
+To apply the attention mask, we modify the raw attention score matrix computed by the self-attention   
+mechanism:
+
+$$
+\mathbf { S } _ { i } = \frac { \mathbf { Q } _ { i } \mathbf { K } _ { i } ^ { \top } } { \sqrt { d } } ,
+$$
+
+where 16 $\mathbf { Q } _ { i } = \mathbf { Z } _ { i } \mathbf { W } _ { Q }$ and $\mathbf { K } _ { i } = \mathbf { Z } _ { i } \mathbf { W } _ { K }$ are the query and key projections of the input matrix $\mathbf { Z } _ { i }$
+
+The attention mask $\mathbf { M } _ { i }$ is broadcast across the attention heads and used to mask out the scores   
+corresponding to padded nodes by replacing them with $- \infty$ :
+
+$$
+\begin{array} { r } { \tilde { \mathbf { S } } _ { i } [ j , k ] = \left\{ \begin{array} { l l } { \mathbf { S } _ { i } [ j , k ] , } & { \mathrm { i f } \ \mathbf { M } _ { i } [ k ] = 0 , } \\ { - \infty , } & { \mathrm { i f } \ \mathbf { M } _ { i } [ k ] = 1 . } \end{array} \right. } \end{array}
+$$
+
+This masked score matrix719 $\tilde { \bf S } _ { i }$ is then passed through the softmax function to obtain the final attention 720 weights:
+
+$$
+\operatorname { A t t e n t i o n } ( \mathbf { Q } _ { i } , \mathbf { K } _ { i } , \mathbf { V } _ { i } ) = \operatorname { S o f t m a x } ( \tilde { \mathbf { S } } _ { i } ) \cdot \mathbf { V } _ { i } ,
+$$
+
+where $\mathbf { V } _ { i } = \mathbf { Z } _ { i } \mathbf { W } _ { V }$ is the value projection. This ensures that attention is only distributed among valid (unpadded) nodes and the two prompt tokens, making the model robust to input graphs with varying node counts.
+
+# 724 H Graph Prompt Construction and Insertion.
+
+To unify diverse brain graphs with variable node counts and enable flexible adaptation, we construct a learnable graph prompt denoted as 726 $\mathbf { P } \in \mathbb { R } ^ { N _ { \operatorname* { m a x } } \times F }$ , where $N _ { \mathrm { m a x } }$ is the maximum number of nodes
+
+across all graphs and $d$ is the feature dimension after RWSE augmentation. The prompt serves as a   
+set of element-wise multiplicative masks for node-wise feature modulation.   
+Given a brain graph with input node features $\mathbf { X } \in \mathbb { R } ^ { N \times F }$ , where $F ^ { \prime } = F _ { \mathrm { r a w } } + F _ { \mathrm { r w s e } }$ . Then, the graph   
+prompt is applied via element-wise multiplication:
+
+$$
+\hat { \mathbf { X } } = \mathbf { X } \odot \mathbf { P }
+$$
+
+where 731 $\odot$ denotes Hadamard (element-wise) product. This modulated feature tensor $\hat { \mathbf X }$ is projected 732 into the model hidden space via a learnable projection layer:
+
+$$
+\mathbf { H } _ { 0 } = \mathrm { P r o j } ( \hat { \mathbf { X } } ) \in \mathbb { R } ^ { N _ { \mathrm { m a x } } \times F _ { \mathrm { m o d e l } } }
+$$
+
+# 733 I Meta-Learning for Unifying Diverse Atlases and Disorders
+
+To support cross-disorder and cross-atlas generalization, we design a meta-learning framework that   
+optimizes only the graph prompt module while keeping the entire pre-trained backbone $\mathcal { F } _ { \theta }$ frozen.   
+The goal is to learn a prompt initialization that can quickly adapt to any new brain graph classification   
+task defined by varying disease types and brain parcellations.   
+Each task $\mathcal { T } _ { i }$ corresponds to a unique combination of a brain disorder and an atlas (e.g., MDD $^ +$   
+Schaefer100, ADHD $^ +$ AAL116). Given a task $\mathcal { T } _ { i }$ , we split its data into a support set $\mathcal { D } _ { i } ^ { \mathrm { t r a i n } }$ and a   
+740 query set $\mathcal { D } _ { i } ^ { \mathrm { t e s t } }$ .   
+41 Inner Loop: Prompt Adaptation on Single Task. We perform task-specific adaptation using the   
+support set by updating only the prompt parameters $\mathcal { P } _ { \phi }$ , while keeping the encoder $\mathcal { F } _ { \theta }$ fixed:
+
+$$
+\phi _ { i } ^ { \prime } = \phi - \alpha \nabla _ { \phi } \mathcal { L } _ { \mathcal { T } _ { i } } ^ { \mathrm { t r a i n } } \left( \mathcal { F } _ { \theta } ( \mathcal { P } _ { \phi } , \mathcal { D } _ { i } ^ { \mathrm { t r a i n } } ) \right)
+$$
+
+This update reflects how the prompt adapts to a particular disorder-atlas context, without altering the   
+pre-trained backbone.   
+Outer Loop: Meta-Update Across Tasks. We update the prompt initialization $\mathcal { P } _ { \phi }$ by minimizing   
+the query set losses across a batch $B$ of tasks:
+
+$$
+\phi  \phi - \beta \sum _ { i = 1 } ^ { B } \nabla _ { \phi } \mathcal { L } _ { T _ { i } } ^ { \mathrm { t e s t } } ( \mathcal { F } _ { \theta } ( \mathcal { P } _ { \phi _ { i } ^ { \prime } } , \mathcal { D } _ { i } ^ { \mathrm { t e s t } } ) )
+$$
+
+This outer-loop update encourages the learned prompt to generalize across diverse tasks, each   
+characterized by a different disorder and parcellation, while the encoder remains frozen throughout.
+
+# Algorithm 1: Meta-Learning for Graph Prompt Tuning (Frozen Backbone)
+
+
+
+<table><tr><td>Input: Frozen backbone Fθ, task set {Ti}=1,learning rates α, β Output: Meta-learned graph prompt parameters Φ Initialize prompt parameters P ;</td></tr><tr><td>while not converged do</td></tr><tr><td>Sample abatch of tasks {1;</td></tr><tr><td>/* Each task Ti = (disorder，atlas)pair</td></tr><tr><td>/* Inner Loop: Adapt prompt on single task</td></tr><tr><td>for each task Ti do</td></tr><tr><td></td></tr><tr><td> Split into support Dtrain and query Dtest ;</td></tr><tr><td>Compute task-specific adapted prompt:</td></tr><tr><td>=-aVLrain（F(P,Drain））；</td></tr><tr><td>/* Note: Fθ is frozen，only Φ of P is updated</td></tr><tr><td>/* Outer Loop: Update shared prompt using query losses */ ←Φ-β∑VL（Fθ(P,Dtest)；</td></tr></table>
+
+# 750 J Details of Graph Masked Autoencoder (GMAE) and Graph Contrastive 751 Learning (GCL)
+
+We propose a unified pre-training framework that combines Graph Masked Autoencoder (GMAE)   
+and Graph Contrastive Learning (GCL) to learn robust and generalizable representations for brain   
+graphs. These two components complement each other: GMAE enables fine-grained feature-level   
+recovery through generative reconstruction, while GCL encourages invariance under perturbations by   
+contrasting different views of the same graph.
+
+# 757 J.1 Graph Masked Autoencoder (GMAE)
+
+Inspired by recent advances in masked autoencoding Hou et al. [2022], we apply random masking to   
+both nodes and edges of the input graph. Given a graph with $N$ nodes, adjacency matrix $\mathbf { A } \in \mathbb { R } ^ { N \times N }$ ,   
+and node features $\mathbf { \bar { X } } \in \mathbb { R } ^ { N \times \hat { F } }$ , we randomly sample a subset of nodes $\nu _ { M } \subset \nu$ to mask. For each   
+masked node $v _ { i } \in \mathcal { V } _ { M }$ , its input feature is replaced with a learnable mask token $\mathbf { x } _ { [ M ] } \in \mathbb { R } ^ { D }$ . The   
+masked node feature matrix $\tilde { \mathbf { X } }$ is defined as:
+
+$$
+\tilde { \mathbf { x } } _ { i } = \left\{ \begin{array} { l l } { \mathbf { x } _ { [ M ] } , } & { \mathrm { i f } \ v _ { i } \in \mathscr { V } _ { M } } \\ { \mathbf { x } _ { i } , } & { \mathrm { o t h e r w i s e } } \end{array} \right.
+$$
+
+To further increase the learning difficulty, we also apply structural masking by dropping edges in the   
+adjacency matrix. Specifically, each edge is dropped independently with probability $p$ , resulting in a   
+corrupted adjacency matrix:
+
+$$
+\tilde { \mathbf { A } } = \mathbf { A } \odot \mathbf { M } _ { e }
+$$
+
+where 766 $\mathbf { M } _ { e } \in \{ 0 , 1 \} ^ { N \times N }$ is a symmetric binary mask sampled from a Bernoulli distribution with 767 parameter $1 - p$ , and $\odot$ denotes element-wise multiplication.
+
+The GMAE encoder processes the corrupted graph $( \tilde { \mathbf { X } } , \tilde { \mathbf { A } } )$ and produces latent embeddings, which   
+are then passed to a lightweight decoder to reconstruct the original node features of the masked nodes.   
+The reconstruction objective is defined as:
+
+$$
+\mathcal { L } _ { \mathrm { r e c } } = \frac { 1 } { | \mathcal { V } _ { M } | } \sum _ { v _ { i } \in \mathcal { V } _ { M } } \| \hat { \mathbf { x } } _ { i } - \mathbf { x } _ { i } \| _ { 2 } ^ { 2 }
+$$
+
+where 771 $\hat { \mathbf { x } } _ { i }$ is the predicted feature from the decoder.
+
+# 772 J.2 Graph Contrastive Learning (GCL)
+
+In parallel with the generative pathway, we apply contrastive learning to enforce view-invariant   
+representations. Specifically, we generate two augmented views of the same input graph by applying   
+lightweight stochastic perturbations (i.e., random feature dropout and edge dropout). One view is   
+treated as the query, while the other serves as the key. Let $( \mathbf { X } ^ { ( q ) } , \mathbf { A } ^ { ( q ) } )$ and $( \mathbf { X } ^ { ( k ) } , \mathbf { A } ^ { ( k ) } )$ denote   
+the two views; these are passed through a shared encoder to obtain corresponding representations $z _ { q }$   
+and $z _ { k }$ . We adopt the NT-Xent contrastive loss Qiu et al. [2020] to maximize the similarity between   
+matching query-key pairs from the same graph while distinguishing them from others in the batch:
+
+$$
+\mathcal { L } _ { \mathrm { C L } } = - \frac { 1 } { B } \sum _ { b = 1 } ^ { B } \log \frac { \exp ( \sin ( z _ { q } ^ { ( b ) } , z _ { k } ^ { ( b ) } ) / \tau ) } { \sum _ { b ^ { \prime } = 1 } ^ { B } \mathcal { k } _ { [ b ^ { \prime } \neq b ] } \exp ( \sin ( z _ { q } ^ { ( b ) } , z _ { k } ^ { ( b ^ { \prime } ) } ) / \tau ) }
+$$
+
+where $\sin ( \cdot , \cdot )$ denotes cosine similarity, $\tau$ is a temperature hyperparameter, and $B$ is the batch   
+size. Here, $b$ and $b ^ { \prime }$ index different samples within the batch, where each sample corresponds to an   
+augmented graph.   
+By encouraging the embeddings of different augmented views of the same graph to be aligned, the   
+model learns representations that are invariant to small perturbations in node features and topology,   
+thereby improving generalization across downstream tasks.   
+Table 6 provides a comprehensive comparison between Graph Contrastive Learning (GCL) and   
+Graph Masked Autoencoder (GMAE) as two prominent pre-training paradigms for graph neural   
+networks. GCL emphasizes learning discriminative representations by contrasting positive and   
+negative graph pairs, making it particularly effective for classification and retrieval tasks. In contrast,   
+GMAE focuses on reconstructing masked parts of the graph, encouraging the model to capture fine  
+grained structural details and local contextual information. While GCL tends to produce compact and   
+abstract embeddings that distinguish samples globally, GMAE yields richer and more structure-aware   
+representations suitable for reconstruction and local reasoning. However, both approaches have   
+limitations: GCL’s effectiveness heavily depends on the design of graph augmentations, potentially   
+neglecting subtle local cues; GMAE, on the other hand, is sensitive to the masking ratio and may   
+underperform in tasks requiring global discrimination. These complementary characteristics suggest   
+that combining both strategies may lead to more robust and generalizable graph representations.
+
+Table 6: Comparison between Graph Contrastive Learning (GCL) and Graph Masked Autoencoder (GMAE) Pre-training.   
+
+<table><tr><td rowspan=1 colspan=3>|Graph Contrastive Learning (GCL)    |Graph Masked Autoencoder (GMAE)</td></tr><tr><td rowspan=1 colspan=1>Main Objective</td><td rowspan=1 colspan=2>Learn to pull together positive pairs and push|Learn to reconstruct masked node/edge fea-apart negative pairs,focusing on discrimina-tures,focusing on structure-aware and fine-tive representations.                       grained representations.</td></tr><tr><td rowspan=1 colspan=1>Feature Focus</td><td rowspan=1 colspan=2>Emphasizes global discriminative features |Emphasizes local structure awareness andthat distinguish between different samples.detailed pattern recovery.</td></tr><tr><td rowspan=1 colspan=1>Pre-training Strategy</td><td rowspan=1 colspan=1>Contrastive loss (e.g., InfoNCE) between|Masking parts of the graph and reconstruct-augmented graph views.</td><td rowspan=1 colspan=1>Contrastive loss (e.g., InfoNCE) between|Masking parts of the graph and reconstruct-ing them via a decoder.</td></tr><tr><td rowspan=1 colspan=1>Best for</td><td rowspan=1 colspan=1>Classification，retrieval， tasks requiringstrong discrimination.</td><td rowspan=1 colspan=1>|Reconstruction, generation,local reasoning,and also benefiting classification.</td></tr><tr><td rowspan=1 colspan=1>Learning Tendency</td><td rowspan=1 colspan=1>Learns compact，abstract representations |that excel at distinguishing samples.</td><td rowspan=1 colspan=1>|Learns rich,detailed representations thatcapture local and global graph structures.</td></tr><tr><td rowspan=1 colspan=1>Potential Drawbacks</td><td rowspan=1 colspan=1>|Sensitive to augmentation design; may over-llook fine-grained local details.</td><td rowspan=1 colspan=1>|Sensitive to masking ratio; may focus toomuch on local patterns without sufficientglobal discrimination.</td></tr></table>
+
+# 799 L Implement Details
+
+During pre-training, we set the batch size to 128 and used the Adam optimizer with a learning rate of 0.0001. The number of training epochs was set to 100. For downstream classification tasks, we set the batch size to 16 in the full-shot setting, and to 1 in both the few-shot and zero-shot settings. The Adam optimizer was also used for these tasks, with the same learning rate of 0.0002. In the meta-learning setup, we trained the model for 30 epochs. More settings about pre-training and graph transformer backbone and meta learning can be found in Table 7, 8, 10, 9.
+
+# 806 M Baselines
+
+The Table 11 provides a systematic comparison of various brain foundation models and baseline methods across multiple dimensions, including architectural type, data domain, pre-training strategy, and tuning method. These approaches can be broadly categorized into three groups: conventional models without pre-training (e.g., Vanilla GCN Kipf and Welling [2016], BrainGNN Li et al. [2021], Vanilla ROI-based Tansformer (TF) Yun et al. [2019]), ROI- or time-series-based pre-trained models (e.g., BrainNPT Hu et al. [2024], BrainMass Yang et al. [2024], BrainLM Caro et al. [2023]), and our proposed graph-based foundation model, BrainGFM.
+
+The conventional models do not leverage any pre-training and are limited to single parcellation and   
+single-disorder settings, resulting in restricted generalization capabilities. ROI-based models such as   
+BrainNPT and BrainMass employ generative pre-training on region-level features, enabling improved
+
+Table 7: Training and architectural hyperparameters used in the Graph Transformer Backbone.   
+
+<table><tr><td>Parameter</td><td></td><td>Value Description</td></tr><tr><td>batch_size</td><td>128</td><td>Number of samples per batch during training.</td></tr><tr><td>learning_rate</td><td>0.0001</td><td>Learning rate used by the optimizer.</td></tr><tr><td>GMAE_decoder_layers</td><td>4</td><td>Number of layers in the decoder of the Graph Masked Autoen- coder (GMAE).</td></tr><tr><td>ff_hidden_size</td><td>256</td><td>Hidden dimension of the feed-forward layer in the Transformer.</td></tr><tr><td>num_classes</td><td>2</td><td>Number of output classes (mainly used for downstream classifica- tion tasks).</td></tr><tr><td>num_self_att_layers</td><td>4</td><td>Number of Transformer self-attention layers used in the encoder.</td></tr><tr><td>dropout</td><td>0.3</td><td>Dropout rate used for regularization.</td></tr><tr><td>num_GNN_layers</td><td>4</td><td>Number of GNN layers stacked in the encoder.</td></tr><tr><td>nhead</td><td>8</td><td>Number of attention heads in each multi-head self-attention layer.</td></tr><tr><td>hidden_dim</td><td>128</td><td>Dimensionality of hidden representations in the encoder.</td></tr><tr><td>max_feature_dim</td><td>512</td><td>Maximum input node feature dimension after projection.</td></tr><tr><td>rwse_steps</td><td></td><td>Number of steps in random walk positional encoding.</td></tr></table>
+
+Table 8: Training hyperparameters used in the MAML-style Meta-Learning Framework.   
+
+<table><tr><td>Parameter</td><td>Value Description</td><td></td></tr><tr><td>meta_epochs</td><td>50</td><td>Number of meta-training epochs (outer loop iterations).</td></tr><tr><td>meta_batch_size</td><td>8</td><td>Number of tasks sampled per meta-update step.</td></tr><tr><td>inner_steps</td><td>1</td><td>Number of inner-loop gradient update steps on each task.</td></tr><tr><td>inner_lr</td><td>0.0002</td><td>Learning rate used in the inner loop (task-specific adaptation).</td></tr><tr><td>outer_lr</td><td>0.0001</td><td>Learning rate used in the outer loop (meta-model update).</td></tr><tr><td>k_folds</td><td>5</td><td>Number of folds used in task-specific K-Fold data spliting.</td></tr><tr><td>support_set_size</td><td>80%</td><td>Number of samples used for inner-loop training (support set), determined by fold split.</td></tr><tr><td>query_set_size</td><td>20%</td><td>Number of samples used for outer-loop meta-update (query set), determined by fold split.</td></tr><tr><td>task_sampling</td><td>Random</td><td>Strategy used to sample tasks from the training pool per meta- iteration.</td></tr></table>
+
+performance across a limited number of disorders. BrainLM further enhances temporal modeling 8 through time-series-based generative pre-training.
+
+In contrast, BrainGFM adopts both generative and contrastive graph-based pre-training strategies and supports multiple adaptation paradigms, including full fine-tuning and graph prompt-tuning. It is the only model capable of handling full-shot, few-shot, and zero-shot scenarios. Trained on multiple parcellations and evaluated across 25 disorders, BrainGFM demonstrates superior generalizability and adaptability. Overall, it stands out as the only comprehensive brain FMs that supports structural graph modeling, multi-task transfer, cross-parcellation generalization, and versatile tuning strategies.
+
+# 825 N Benchmarks, Datasets, Disorders and Downstream Tasks
+
+Table 12 provides a comprehensive summary of the datasets used in our framework, categorized into four functional groups: Pre-train, Internal Test, Semi-External Test, and External Test. This partitioning is designed to systematically evaluate the performance and generalization ability of our brain FMs across varying levels of domain similarity. The Pre-train group includes 19 datasets
+
+Table 9: Common support/query set splits used in MAML-style meta-learning.   
+
+<table><tr><td>Support:Query</td><td>Typical Use Case</td><td>Description</td></tr><tr><td>50% : 50%</td><td>Balanced Learning</td><td>Equal emphasis on adaptation and generalization. Often used when data size is sufficient.</td></tr><tr><td>66% : 34%</td><td>Stronger Adaptation</td><td>More data is allocated to support the inner loop updates.Suitable for tasks with high variability.</td></tr><tr><td>33% : 67%</td><td></td><td>Stronger Generalization Emphasis on generalization performance, especially useful when measuring transferability.</td></tr></table>
+
+Table 10: Settings and considerations for the number of inner loop steps in MAML-style metalearning.   
+
+<table><tr><td>Inner Steps</td><td>Typical Scenario</td><td>Description</td></tr><tr><td>1</td><td>Fast Adaptation</td><td>Common choice with low compute cost. Provides basic task adaptation and supports batched meta-updates.</td></tr><tr><td>3</td><td>Balanced Trade-off</td><td>Provides stronger task-specific learning while maintaining rea- sonable training cost. Often used in practice.</td></tr><tr><td>5</td><td>Enhanced Adaptability</td><td>Allows deeper inner adaptation. Useful for complex or highly diverse tasks,but increases overfitting risk.</td></tr><tr><td>&gt;5</td><td>Rarely Used</td><td>Risk of overfitting support set and high computational cost. Not commonly used unless thoroughly validated.</td></tr></table>
+
+comprising over 50,000 samples from both healthy individuals and patients diagnosed with a broad   
+spectrum of neurological and psychiatric disorders, such as Alzheimer’s disease (AD), mild cognitive   
+impairment (MCI), ADHD, ASD, major depressive disorder (MDD), post-traumatic stress disorder   
+(PTSD), and substance use disorder (CUD). These datasets provide rich and diverse training samples   
+for learning a robust and generalizable representation. The Internal Test group is constructed   
+from a subset of the pre-training datasets and is used to evaluate in-distribution performance, where   
+both the disorders and acquisition protocols are seen during pre-training. This setting assesses   
+how well the model fits to familiar domains. The Semi-External Test group includes datasets   
+involving diseases that overlap with the pre-training stage but originate from different sites, scanners,   
+or cohort distributions. This setting simulates moderate domain shifts and is used to measure the   
+model’s transferability to partially unseen distributions. Finally, the External Test group consists   
+of datasets that are entirely excluded from pre-training and validation stages, containing distinct   
+population sources and clinical conditions. This group serves as a stringent benchmark for zero-shot   
+generalization, testing the model’s ability to adapt to entirely new domains, disorders, and acquisition   
+protocols. Overall, this structured dataset split enables a rigorous and hierarchical evaluation of the   
+model’s robustness, transfer performance, and zero-shot generalization capabilities across a wide   
+range of real-world neuroimaging scenarios.   
+Table 13 and 14 summarizes the 25 brain disorder classification tasks selected from various public   
+neuroimaging datasets. These tasks span a remarkably broad range in terms of disease types, age   
+groups, and data sources, reflecting the diversity and complexity of real-world clinical scenarios. The   
+downstream evaluation covers a wide spectrum of brain conditions, including neurodevelopmental   
+disorders (e.g., ADHD, ASD, SLD), affective and emotional disorders (e.g., MDD, anxiety, bipolar   
+disorder), psychotic disorders (e.g., schizophrenia), neurodegenerative diseases (e.g., AD, MCI,   
+dementia), and substance use disorders (e.g., CUD). Subject age ranges from as young as 5 years   
+old (e.g., ABIDE II, HBN) to elderly adults nearing 90 years old (e.g., ADNI, OASIS3), capturing   
+the full human lifespan from brain development to cognitive decline. To ensure scientific rigor and   
+fairness, we carefully constructed sex-balanced subsets for all labeled downstream tasks, meaning   
+that each task includes approximately equal numbers of male and female samples. This prevents   
+potential sex biases from influencing model performance. For multi-diagnostic datasets like HBN,   
+we created multiple binary classification tasks (e.g., MDD vs. NC, ADHD vs. NC), each treated   
+independently within a unified evaluation framework. By incorporating such a comprehensive and   
+diverse benchmark, we are able to thoroughly assess the robustness, transferability, and clinical   
+relevance of our proposed BrainGFM.
+
+Table 11: Comparison of brain foundation models and baselines across different architectural types, domains, pre-training strategies, and tuning methods.   
+
+<table><tr><td>Model</td><td>Foundation Model Type Domain</td><td></td><td></td><td>Pre-Training Method</td><td>Tuning Method</td><td>Tuning Shot</td><td>Parcellation</td><td>Disorder</td></tr><tr><td>Vanilla GCN</td><td></td><td>Graph</td><td>Spatial</td><td></td><td></td><td></td><td>Single</td><td>Single</td></tr><tr><td>BrainGNN</td><td>X</td><td>Graph</td><td>Spatial</td><td></td><td></td><td></td><td>Single</td><td>Single</td></tr><tr><td>Vanilla TF</td><td>×</td><td>ROI</td><td>Spatial</td><td></td><td></td><td></td><td>Single</td><td>Single</td></tr><tr><td>Graph TF</td><td>×</td><td>Graph</td><td>Spatial</td><td></td><td></td><td></td><td>Single</td><td>Single</td></tr><tr><td>BrainNetTF</td><td>×</td><td>ROI</td><td>Spatial</td><td></td><td></td><td></td><td>Single</td><td>Single</td></tr><tr><td>BrainNPT</td><td></td><td>ROI</td><td>Spatial</td><td>ROI Generative</td><td>Fine-Tuning</td><td>Full/Few-shot</td><td>Single</td><td>Multiple (&lt; 5)</td></tr><tr><td>BrainMass</td><td>广</td><td>ROI</td><td>Spatial</td><td>ROI Generative</td><td>Fine-Tuning</td><td>Full/Few-shot</td><td>Single</td><td>Multiple (10)</td></tr><tr><td>BrainLM</td><td>√</td><td>Time Series Temporal?</td><td></td><td>Time Series Generative</td><td>Fine-Tuning</td><td>Full-shot</td><td>Single</td><td>Multiple (&lt; 5)</td></tr><tr><td>BrainGFM</td><td>√</td><td>Graph</td><td></td><td>SpatialGraph (Gener. +Contra.) Fine/Prompt-Tuning FullFew/Zero-shot</td><td></td><td></td><td>Multiple</td><td>Multiple (25)</td></tr></table>
+
+Table 12: Overview of Neuroimaging Datasets Used for Pre-Training and Evaluation. We group datasets by their function in our pipeline: pre-training, internal test, semi-external test, and external test. The table lists dataset names, number of unique subjects, total samples, and associated disorders.   
+
+<table><tr><td>Function</td><td>Datasets</td><td>Source</td><td>Subjects</td><td>Samples</td><td>Disease</td></tr><tr><td rowspan="18">Pre-train</td><td>ABCD ADHD 200</td><td>Casey et al. [2018] consortium [2012]</td><td>11,878 973</td><td>35,770 1382</td><td>Multiple ADHD</td></tr><tr><td>ABIDEI</td><td>Di Martino et al. [2014]</td><td>1,112</td><td>1,112</td><td>ASD</td></tr><tr><td>ADNI 3</td><td></td><td>1,071</td><td></td><td></td></tr><tr><td>AOMIC</td><td>Jack Jr et al. [2008]</td><td></td><td>1,410</td><td>AD, MCI</td></tr><tr><td>AURORA</td><td>Snoek et al. [2021]</td><td>210</td><td>210</td><td>Multiple</td></tr><tr><td>CAM_CAN</td><td>McLean et al. [2020]</td><td>284</td><td>284</td><td>PTSD</td></tr><tr><td>CATD</td><td>Shafto et al. [2014]</td><td>652</td><td>652</td><td>-</td></tr><tr><td>GSP</td><td>Nielson et al. [2023]</td><td>127</td><td>454</td><td>Multiple</td></tr><tr><td>HCP-Aging</td><td>Holmes et al. [2015]</td><td>1,569</td><td>2,706</td><td></td></tr><tr><td></td><td>Bookheimer et al. [2019]</td><td>724</td><td>724</td><td>、</td></tr><tr><td>EMBARC LEMON</td><td>Trivedi et al. [2016]</td><td>308</td><td>308</td><td>MDD</td></tr><tr><td>HABS</td><td>Babayan et al. [2019]</td><td>213</td><td>213</td><td>MDD</td></tr><tr><td>PREVEND_AD</td><td>Dagley et al. [2017]</td><td>284</td><td>1,371</td><td>1</td></tr><tr><td>SRPBS_Japan</td><td>Tremblay-Mercier et al. [2021]</td><td>343</td><td>2,427</td><td>AD</td></tr><tr><td>NYU_CUD</td><td>Yamashita et al. [2019]</td><td>1,410</td><td>1,410</td><td>ASD</td></tr><tr><td>OASIS3</td><td>Kelly et al. [2011]</td><td>29</td><td>56</td><td>CUD</td></tr><tr><td>HBN</td><td>LaMontagne et al. [2019]</td><td>1,172</td><td>4,090</td><td>Dementia</td></tr><tr><td rowspan="3">Internal Test</td><td></td><td>Alexander et al. [2017]</td><td>2,228</td><td>4,039</td><td>Multiple</td></tr><tr><td>SubMex_RTMS</td><td>Angeles-Valdez et al. [2024]</td><td>150</td><td>150</td><td>CUD</td></tr><tr><td>ADHD 200 HBN</td><td>consortium [2012]</td><td>973</td><td>1382</td><td>ADHD</td></tr><tr><td rowspan="3"></td><td>OASIS3</td><td>Alexander et al. [2017]</td><td>2.282</td><td>4,039</td><td>Multiple</td></tr><tr><td></td><td>LaMontagne et al. [2019]</td><td>1,172</td><td>4,090</td><td>Dementia</td></tr><tr><td>ABIDE II</td><td>Di Martino et al. [2014]</td><td>1,044</td><td>1,044</td><td>ASD</td></tr><tr><td rowspan="2">Semi-External Test</td><td>ADNI 2 SubMex_CUD</td><td>Weiner et al. [2013]</td><td>1,171</td><td>1,306</td><td>AD, MCI</td></tr><tr><td></td><td>Angeles-Valdez et al. [2022]</td><td>135</td><td>135</td><td>CUD</td></tr><tr><td rowspan="2">External Test</td><td>UCLA_CNP</td><td>Poldrack et al. [2016]</td><td>261</td><td>261</td><td>Multiple</td></tr><tr><td>REST-META-MDD</td><td>Yan et al. [2019]</td><td>2,379</td><td>2,379</td><td>MDD</td></tr></table>
+
+# 863 O Data Acquisition and Preprocessing
+
+For all cohorts, resting-state fMRI data were collected with varying protocols and scanner parameters specific to each study site. All available resting-state fMRI data were preprocessed using the well-established fMRIPrep pipelineEsteban et al. [2019]. The T1-weighted image was corrected for intensity non-uniformity and then stripped skull. Spatial normalization was done through nonlinear registration, with the T1w referenceAvants et al. [2008]. Using FSL, brain features such as cerebrospinal fluid, white matter, and grey matter were segmented from the reference, brain-extracted
+
+Table 13: Overview of 25 Brain Disorders Across Public Neuroimaging Datasets. We select balanced samples (e.g., HBN, ADNI) for downstream classification. Note that all downstream tasks have balanced numbers of male and female samples.   
+
+<table><tr><td>Dataset</td><td>Disease/Disorder/Disability</td><td>Downstream Task</td><td>Age</td><td>Sample Size</td></tr><tr><td>ADHD200</td><td>Att-ention-Deficit/Hyperactivity Disorder (ADHD)</td><td>ADHD vs. NC</td><td>8-26</td><td>402/580</td></tr><tr><td>ABIDE II</td><td>Autistic Spectrum Disorders (ASD)</td><td>ASD vs. NC</td><td>5-64</td><td>581/733</td></tr><tr><td rowspan="2">ADNI 2</td><td>Alzheimers Disease (AD)</td><td>AD vs. NC</td><td>55-89</td><td>91/100</td></tr><tr><td>Mild Cognitive Impairment (MCI)</td><td>MCI vs. NC</td><td>55-89</td><td>168/200</td></tr><tr><td>OASIS3</td><td>Dementia (DM)</td><td>DM vs. NC</td><td>45-88</td><td>290/300</td></tr><tr><td rowspan="20">HBN</td><td>Major Depression Disorder (MDD)</td><td>MDD vs. NC</td><td>6-20</td><td>261/310</td></tr><tr><td>Anxiety (ANX)</td><td>ANX vs. NC</td><td>6-20</td><td>224/250</td></tr><tr><td>Oppositional Defiant Disorder(ODD)</td><td>ODD vs. NC</td><td>6-20</td><td>519/319</td></tr><tr><td>Obsessive-Compulsive Disorder (OCD)</td><td>OCD vs. NC</td><td>6-20</td><td>130/150</td></tr><tr><td>Language Disorder (LD)</td><td>LD vs. NC</td><td>6-20</td><td>464/319</td></tr><tr><td>Specific Learning Disorder (SLD)</td><td>SLD vs. NC</td><td>6-20</td><td>335/319</td></tr><tr><td>Enuresis (ENU)</td><td>ENU vs.NC</td><td>6-20</td><td>279/319</td></tr><tr><td>Intellectual Disability (ID)</td><td>ID vs.NC</td><td>6-20</td><td>129/150</td></tr><tr><td>Post-Traumatic Stress Disorder (PTSD)</td><td>PTSD vs.NC</td><td>6-20</td><td>39/40</td></tr><tr><td>Encopresis (ECP)</td><td>ECP vs.NC</td><td>6-20</td><td>68/70</td></tr><tr><td>Dysthymia (PDD)</td><td>PDD vs. NC</td><td>6-20</td><td>85/90</td></tr><tr><td>Tourette Sydnrome (PS)</td><td>PS vs.NC</td><td>6-20</td><td>68/70</td></tr><tr><td>Adjustment Disorder (AJD)</td><td>AJD vs. NC</td><td>6-20</td><td>96/100</td></tr><tr><td>Provisional Tic Disorder (PTD)</td><td>PTD vs.NC</td><td>6-20</td><td>68/70</td></tr><tr><td>Motor Disorder (MD)</td><td>MD vs. NC</td><td>6-20</td><td>123/130</td></tr><tr><td>Speech Sound Disorder (SSD)</td><td>SSD vs. NC</td><td>6-20</td><td>98/100</td></tr><tr><td>Communication Disorder (CD)</td><td>CD vs. NC</td><td>6-20</td><td>43/45</td></tr><tr><td>SubMex_CUD Cocaine Use Disorder (CUD)</td><td>CUD vs.NC</td><td>18-45</td><td>72/63</td></tr><tr><td>Schizophrenia (SCHZ)</td><td>SCHZ vs. NC</td><td>21-50</td><td>50/55</td></tr><tr><td>UCLA_CNP REST-META-MDD Major Depression Disorder (MDD)</td><td>Bipolar Disorder (BP)</td><td>BP vs. NC</td><td>21-50</td><td>49/55</td></tr></table>
+
+T1 weighted imageZhang et al. [2000]. The fieldmap information was used to correct distortion in   
+low-frequency and high-frequency components of fieldmap. Then, a corrected echo-planar imaging   
+reference was obtained from a more accurate co-registration with the anatomical reference. The   
+blood-oxygenation-level-dependent (BOLD) reference was then transformed to the T1-weighted   
+image with a boundary-based registration method, configured with nine degrees of freedom to account   
+for distortion remaining in the BOLD referenceGreve and Fischl [2009]. Head-motion parameters   
+(rotation and translation parameters of volume-to-reference transform matrices) were estimated with   
+MCFLIRT (FSL). BOLD signals were slice-time corrected and resampled onto the participant’s   
+original space with head-motion correction, susceptibility distortion’s correction, and then resampled   
+into standard space, generating a preprocessed BOLD run in MNI152NLin2009cAsym space. Au  
+tomatic removal of motion artifacts using independent component analysis (ICA-AROMA)Pruim   
+et al. [2015] was performed on the preprocessed BOLD time-series on MNI space after removal of   
+non-steady-state volumes and spatial smoothing with an isotropic Gaussian kernel of $6 \mathrm { m m }$ FWHM   
+(full-width half-maximum).
+
+# 884 P Definition and Description of Used Atlases/Parcellations
+
+Table 15 provides a systematic comparison of eight widely used brain atlases and parcellations   
+adopted in our study, including the number of parcels, construction type (functional or anatomical),   
+year of release, and key design features. These atlases represent the most commonly applied frame  
+works in both functional and structural neuroimaging studies and are constructed based on diverse   
+methodological principles, making them suitable for different modeling objectives in neuroscience   
+research. Specifically, the Schaefer atlas series (Schaefer100/200/300) is derived from resting-state   
+fMRI data using gradient-weighted clustering to generate spatially contiguous functional parcels.   
+Each parcel is assigned to one of the Yeo 7 or 17 functional networks, preserving hierarchical orga  
+nization and functional homogeneity. This design makes Schaefer atlases particularly suitable for   
+functional connectivity analysis and graph neural network modeling. The availability of multiple   
+spatial resolutions enables systematic evaluation of model behavior under coarse- to fine-grained   
+parcellations. The Shen268 atlas, constructed via group-level independent component analysis (ICA),   
+offers spatially contiguous and inter-subject consistent functional parcels and has become a standard   
+in GNN-based fMRI research. In contrast, the Power264 atlas identifies spherical regions centered   
+on functional hubs without enforcing spatial continuity. Although less anatomically constrained,   
+it is widely used in network neuroscience, particularly for studying nodal centrality and modular   
+organization. The Gordon333 atlas integrates local gradient information and functional network   
+assignment to define high-resolution, functionally coherent brain regions, enabling precise modeling   
+of functional boundaries. In terms of anatomical atlases, the AAL116 atlas is one of the earliest struc  
+tural templates, based on anatomical landmarks and extensively used in both structural and functional   
+neuroimaging studies. It remains the default parcellation in tools such as SPM. The AAL3v1 atlas is   
+an updated version of AAL116, providing finer subdivisions of subcortical and cerebellar regions for   
+907 enhanced spatial coverage and granularity, supporting more detailed structural-functional integration.   
+08 By incorporating both functional and anatomical atlases, as well as a wide range of spatial granularities   
+(from 100 to 333 parcels), our study is designed to comprehensively evaluate the adaptability,   
+scalability, and generalization capacity of brain graph models across heterogeneous parcellation   
+strategies. This diverse atlas configuration facilitates pre-training under varied topological priors and   
+enables robust transfer to downstream tasks involving unseen atlases or disorders. Such design is   
+critical for building generalizable BrainGFMs capable of adapting to diverse neuroimaging datasets   
+and real-world clinical scenarios.
+
+Table 14: Disorders in Different Categories and Their Datasets.   
+
+<table><tr><td>Category</td><td>Disease/Disorder</td><td>Dataset(s)</td></tr><tr><td rowspan="6">Neurodevelopmental Disorders</td><td>Atention-Deficit/Hyperactivity Disorder (ADHD)</td><td>ADHD200</td></tr><tr><td>Autism Spectrum Disorder (ASD)</td><td>ABIDE II</td></tr><tr><td>Language Disorder (LD)</td><td>HBN</td></tr><tr><td>Specific Learning Disorder (SLD)</td><td>HBN</td></tr><tr><td>Intellectual Disability (ID)</td><td>HBN</td></tr><tr><td>Speech Sound Disorder (SSD)</td><td>HBN</td></tr><tr><td rowspan="3">Neurodegenerative Disorders</td><td>Communication Disorder (CD)</td><td>HBN</td></tr><tr><td>Alzheimer&#x27;s Disease (AD)</td><td>ADNI 2</td></tr><tr><td>Mild Cognitive Impairment (MCI)</td><td>ADNI 2</td></tr><tr><td rowspan="5">Mood and Anxiety Disorders</td><td>Dementia (DM) Major Depression Disorder (MDD)</td><td>OASIS3</td></tr><tr><td>Anxiety (ANX)</td><td>HBN,REST-META-MDD HBN</td></tr><tr><td>Post-Traumatic Stress Disorder (PTSD)</td><td></td></tr><tr><td>Adjustment Disorder (AJD)</td><td>HBN</td></tr><tr><td>Mild Depression Disorder (PDD)</td><td>HBN HBN</td></tr><tr><td rowspan="2">Obsessive-Compulsive and Impulse Control Disorders</td><td>Bipolar Disorder (BP)</td><td>UCLA_CNP</td></tr><tr><td>Obsessive-Compulsive Disorder(OCD)</td><td>HBN</td></tr><tr><td rowspan="3">Motor Disorders</td><td>Oppositional Defiant Disorder (ODD)</td><td>HBN</td></tr><tr><td>Intermittent Explosive Disorder (IED)</td><td>HBN</td></tr><tr><td>Tourette Syndrome (TS)</td><td>HBN</td></tr><tr><td rowspan="2"></td><td>Motor Disorder (MD)</td><td>HBN</td></tr><tr><td>Provisional Tic Disorder (PTD)</td><td>HBN</td></tr><tr><td>Substance Use Disorders</td><td>Cocaine Use Disorder (CUD)</td><td>SubMex_CUD</td></tr><tr><td>Psychotic Disorders</td><td>Schizophrenia (SCHZ)</td><td>UCLA_CNP</td></tr></table>
+
+Table 15: Comparison of Common Brain Atlases and Parcellations Used in Our Study.   
+
+<table><tr><td>Atlas/Parcellation Parcel Num</td><td></td><td>Type</td><td>Year Key Features</td><td></td></tr><tr><td>Schaefer100</td><td>100</td><td>Functional</td><td>2018</td><td>Based on resting-state fMRI; each parcel belongs to Yeo 7/17 networks; spatially contiguous; gradient-weighted clustering.</td></tr><tr><td>Schaefer200</td><td>200</td><td>Functional</td><td>2018</td><td>Higher resolution; suitable for fine-grained functional connectivity or graph modeling.</td></tr><tr><td>Schaefer300</td><td>300</td><td>Functional</td><td>2018</td><td>Even finer granularity; suitable for detailed graph analy- sis but may increase noise.</td></tr><tr><td>Shen268</td><td>268</td><td>Functional</td><td>2013</td><td>Group-wise ICA-based; spatially contiguous；widely used in functional connectomics and GNNs.</td></tr><tr><td>Power264</td><td>264</td><td>Functional</td><td>2011</td><td>Functional hubs as spheres； not spatially contiguous; commonly used in network neuroscience.</td></tr><tr><td>Gordon333</td><td>333</td><td>Functional</td><td>2016</td><td>Combines local gradient and network assignment; fine resolution.</td></tr><tr><td>AAL116</td><td>116</td><td>Anatomical 2002</td><td></td><td>Based on anatomical landmarks;widely used in struc- tural/functional neuroimaging; standard in SPM.</td></tr><tr><td>AAL3v1</td><td>170+</td><td>Anatomical 2020</td><td></td><td>Updated AAL; includes more detailed subcortical and cerebellar regions.</td></tr></table>
+
+# 15 Q Broader Impact
+
+Our proposed Brain Graph Foundation Model (BrainGFM) is designed to be a unified and versatile architecture for graph-based modeling of brain data. While our current experiments focus on restingstate functional MRI (rs-fMRI), the model is modality-agnostic and readily extensible to other neuroimaging modalities, including task-based fMRI (task-fMRI), electroencephalography (EEG), diffusion tensor imaging (DTI), and magnetoencephalography (MEG). These diverse modalities can be represented as brain graphs, constructed from temporal correlations, structural connectivity, or stimulus-evoked activity patterns, making BrainGFM a generalizable framework for multi-modal neuroscience applications.
+
+The ability to transfer knowledge across data types, brain atlases, and clinical conditions enables   
+BrainGFM to benefit a wide range of downstream tasks, including biomarker discovery, mental   
+disorder diagnosis, and brain-computer interface (BCI) development. Its strong pre-training on   
+927 large-scale brain graphs makes it particularly valuable for low-resource or small-sample settings.
+
+# 928 R Limitation and Future Works
+
+29 While our work successfully constructed a large-scale fMRI dataset for pre-training, certain limitations   
+30 remain. Due to the significant manual effort involved, we were unable to include all datasets from   
+1 the OpenNeuro platform Markiewicz et al. [2021], particularly the large number of task-based   
+(non-resting-state) fMRI datasets. In addition, because of financial constraints, we were not able to   
+incorporate fMRI data from the UK Biobank Bycroft et al. [2018], including both resting-state and   
+task-based scans, as access to this dataset requires paid licensing and ongoing maintenance costs.   
+In future work, our dataset can be further expanded by incorporating additional resources such as the   
+full OpenNeuro repository and the UK Biobank dataset. This would enable the construction of an   
+even larger pre-training corpus for BrainGFMs. Moreover, combining task-based and resting-state   
+fMRI data could lead to a more comprehensive representation of brain dynamics. We believe that   
+with the inclusion of more diverse datasets and task-based fMRI, the performance and generalization   
+ability of BrainGFM can be further enhanced.
+
+# 941 NeurIPS Paper Checklist
+
+# 1. Claims
+
+Question: Do the main claims made in the abstract and introduction accurately reflect the paper’s contributions and scope?
+
+Answer: [Yes]
+
+Justification: The abstract and introduction clearly state the main contributions, including graph-based pre-training, multi-atlas integration, meta-learned graph prompts for few-shot learning, and language-guided prompting for zero-shot generalization.
+
+Guidelines:
+
+• The answer NA means that the abstract and introduction do not include the claims made in the paper.   
+• The abstract and/or introduction should clearly state the claims made, including the contributions made in the paper and important assumptions and limitations. A No or NA answer to this question will not be perceived well by the reviewers.   
+• The claims made should match theoretical and experimental results, and reflect how much the results can be expected to generalize to other settings.   
+• It is fine to include aspirational goals as motivation as long as it is clear that these goals are not attained by the paper.
+
+# 2. Limitations
+
+Question: Does the paper discuss the limitations of the work performed by the authors?
+
+Answer: [Yes]
+
+Justification: The paper discusses the limitations in Appendix R.
+
+Guidelines:
+
+• The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper.   
+• The authors are encouraged to create a separate "Limitations" section in their paper.   
+• The paper should point out any strong assumptions and how robust the results are to violations of these assumptions (e.g., independence assumptions, noiseless settings, model well-specification, asymptotic approximations only holding locally). The authors should reflect on how these assumptions might be violated in practice and what the implications would be.   
+• The authors should reflect on the scope of the claims made, e.g., if the approach was only tested on a few datasets or with a few runs. In general, empirical results often depend on implicit assumptions, which should be articulated. The authors should reflect on the factors that influence the performance of the approach. For example, a facial recognition algorithm may perform poorly when image resolution is low or images are taken in low lighting. Or a speech-to-text system might not be used reliably to provide closed captions for online lectures because it fails to handle technical jargon.   
+• The authors should discuss the computational efficiency of the proposed algorithms and how they scale with dataset size.   
+• If applicable, the authors should discuss possible limitations of their approach to address problems of privacy and fairness.   
+• While the authors might fear that complete honesty about limitations might be used by reviewers as grounds for rejection, a worse outcome might be that reviewers discover limitations that aren’t acknowledged in the paper. The authors should use their best judgment and recognize that individual actions in favor of transparency play an important role in developing norms that preserve the integrity of the community. Reviewers will be specifically instructed to not penalize honesty concerning limitations.
+
+# 3. Theory assumptions and proofs
+
+Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof?
+
+Answer: [Yes]
+
+Justification: We provide the complete theoretical results and formulaic proofs in the Appendix E, F, H, I.
+
+Guidelines:
+
+• The answer NA means that the paper does not include theoretical results.   
+• All the theorems, formulas, and proofs in the paper should be numbered and crossreferenced.   
+• All assumptions should be clearly stated or referenced in the statement of any theorems.   
+• The proofs can either appear in the main paper or the supplemental material, but if they appear in the supplemental material, the authors are encouraged to provide a short proof sketch to provide intuition.   
+• Inversely, any informal proof provided in the core of the paper should be complemented by formal proofs provided in appendix or supplemental material.   
+• Theorems and Lemmas that the proof relies upon should be properly referenced.
+
+# 4. Experimental result reproducibility
+
+Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)?
+
+Answer: [Yes]
+
+Justification: We provide the implementation details and the concrete procedures of the experimental methods in the appendix.
+
+Guidelines:
+
+• The answer NA means that the paper does not include experiments.   
+• If the paper includes experiments, a No answer to this question will not be perceived well by the reviewers: Making the paper reproducible is important, regardless of whether the code and data are provided or not.   
+• If the contribution is a dataset and/or model, the authors should describe the steps taken to make their results reproducible or verifiable.   
+• Depending on the contribution, reproducibility can be accomplished in various ways. For example, if the contribution is a novel architecture, describing the architecture fully might suffice, or if the contribution is a specific model and empirical evaluation, it may be necessary to either make it possible for others to replicate the model with the same dataset, or provide access to the model. In general. releasing code and data is often one good way to accomplish this, but reproducibility can also be provided via detailed instructions for how to replicate the results, access to a hosted model (e.g., in the case of a large language model), releasing of a model checkpoint, or other means that are appropriate to the research performed.   
+• While NeurIPS does not require releasing code, the conference does require all submissions to provide some reasonable avenue for reproducibility, which may depend on the nature of the contribution. For example (a) If the contribution is primarily a new algorithm, the paper should make it clear how to reproduce that algorithm. (b) If the contribution is primarily a new model architecture, the paper should describe the architecture clearly and fully. (c) If the contribution is a new model (e.g., a large language model), then there should either be a way to access this model for reproducing the results or a way to reproduce the model (e.g., with an open-source dataset or instructions for how to construct the dataset). (d) We recognize that reproducibility may be tricky in some cases, in which case authors are welcome to describe the particular way they provide for reproducibility. In the case of closed-source models, it may be that access to the model is limited in some way (e.g., to registered users), but it should be possible for other researchers to have some path to reproducing or verifying the results.
+
+# 5. Open access to data and code
+
+Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material?
+
+Answer: [Yes]
+
+Justification: The paper uses 27 publicly available datasets and states that anonymized code and benchmark instructions will be released in the supplementary material.
+
+Guidelines:
+
+• The answer NA means that paper does not include experiments requiring code.   
+• Please see the NeurIPS code and data submission guidelines (https://nips.cc/ public/guides/CodeSubmissionPolicy) for more details.   
+• While we encourage the release of code and data, we understand that this might not be possible, so “No” is an acceptable answer. Papers cannot be rejected simply for not including code, unless this is central to the contribution (e.g., for a new open-source benchmark).   
+• The instructions should contain the exact command and environment needed to run to reproduce the results. See the NeurIPS code and data submission guidelines (https: //nips.cc/public/guides/CodeSubmissionPolicy) for more details.   
+• The authors should provide instructions on data access and preparation, including how to access the raw data, preprocessed data, intermediate data, and generated data, etc.   
+• The authors should provide scripts to reproduce all experimental results for the new proposed method and baselines. If only a subset of experiments are reproducible, they should state which ones are omitted from the script and why.   
+• At submission time, to preserve anonymity, the authors should release anonymized versions (if applicable).   
+• Providing as much information as possible in supplemental material (appended to the paper) is recommended, but including URLs to data and code is permitted.
+
+# 6. Experimental setting/details
+
+Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results?
+
+Answer: [Yes]
+
+Justification: Appendix sections cover training/test splits, optimizers, learning rates, prompt dimensions, backbone choices, and experimental protocols in detail, which can be founf in Appendix L 7.
+
+Guidelines:
+
+• The answer NA means that the paper does not include experiments. • The experimental setting should be presented in the core of the paper to a level of detail that is necessary to appreciate the results and make sense of them. • The full details can be provided either with the code, in appendix, or as supplemental material.
+
+# 7. Experiment statistical significance
+
+Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments?
+
+Answer: [Yes]
+
+Justification: The paper reports accuracy and AUC along with error bars in figures and tables, and describes how they were computed (e.g., over repeated runs).
+
+Guidelines:
+
+• The answer NA means that the paper does not include experiments. • The authors should answer "Yes" if the results are accompanied by error bars, confidence intervals, or statistical significance tests, at least for the experiments that support the main claims of the paper.
+
+• The factors of variability that the error bars are capturing should be clearly stated (for example, train/test split, initialization, random drawing of some parameter, or overall run with given experimental conditions).   
+• The method for calculating the error bars should be explained (closed form formula, call to a library function, bootstrap, etc.)   
+• The assumptions made should be given (e.g., Normally distributed errors).   
+• It should be clear whether the error bar is the standard deviation or the standard error of the mean.   
+• It is OK to report 1-sigma error bars, but one should state it. The authors should preferably report a 2-sigma error bar than state that they have a $96 \%$ CI, if the hypothesis of Normality of errors is not verified.   
+• For asymmetric distributions, the authors should be careful not to show in tables or figures symmetric error bars that would yield results that are out of range (e.g. negative error rates).   
+• If error bars are reported in tables or plots, The authors should explain in the text how they were calculated and reference the corresponding figures or tables in the text.
+
+# 8. Experiments compute resources
+
+Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments?
+
+Answer: [Yes]
+
+Justification: We provide the information in the Appendix.
+
+Guidelines:
+
+• The answer NA means that the paper does not include experiments.   
+• The paper should indicate the type of compute workers CPU or GPU, internal cluster, or cloud provider, including relevant memory and storage.   
+• The paper should provide the amount of compute required for each of the individual experimental runs as well as estimate the total compute.   
+• The paper should disclose whether the full research project required more compute than the experiments reported in the paper (e.g., preliminary or failed experiments that didn’t make it into the paper).
+
+# 9. Code of ethics
+
+Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines?
+
+Answer: [Yes]
+
+Justification: We follow the Code of Ethics.
+
+Guidelines:
+
+• The answer NA means that the authors have not reviewed the NeurIPS Code of Ethics.   
+• If the authors answer No, they should explain the special circumstances that require a deviation from the Code of Ethics.   
+• The authors should make sure to preserve anonymity (e.g., if there is a special consideration due to laws or regulations in their jurisdiction).
+
+# 10. Broader impacts
+
+Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed?
+
+Answer: [Yes]
+
+Justification: The conclusion section and Appendix Q discusses how the model can benefit neuroscience and clinical diagnostics.
+
+Guidelines:
+
+• The answer NA means that there is no societal impact of the work performed.
+
+• If the authors answer NA or No, they should explain why their work has no societal impact or why the paper does not address societal impact.   
+• Examples of negative societal impacts include potential malicious or unintended uses (e.g., disinformation, generating fake profiles, surveillance), fairness considerations (e.g., deployment of technologies that could make decisions that unfairly impact specific groups), privacy considerations, and security considerations.   
+• The conference expects that many papers will be foundational research and not tied to particular applications, let alone deployments. However, if there is a direct path to any negative applications, the authors should point it out. For example, it is legitimate to point out that an improvement in the quality of generative models could be used to generate deepfakes for disinformation. On the other hand, it is not needed to point out that a generic algorithm for optimizing neural networks could enable people to train models that generate Deepfakes faster.   
+• The authors should consider possible harms that could arise when the technology is being used as intended and functioning correctly, harms that could arise when the technology is being used as intended but gives incorrect results, and harms following from (intentional or unintentional) misuse of the technology.   
+If there are negative societal impacts, the authors could also discuss possible mitigation strategies (e.g., gated release of models, providing defenses in addition to attacks, mechanisms for monitoring misuse, mechanisms to monitor how a system learns from feedback over time, improving the efficiency and accessibility of ML).
+
+# 11. Safeguards
+
+Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pre-trained language models, image generators, or scraped datasets)?
+
+Answer: [NA]
+
+Justification: The paper does not introduce models or data with high risk of misuse. All resources are aimed at neuroscience research.
+
+Guidelines:
+
+• The answer NA means that the paper poses no such risks.   
+• Released models that have a high risk for misuse or dual-use should be released with necessary safeguards to allow for controlled use of the model, for example by requiring that users adhere to usage guidelines or restrictions to access the model or implementing safety filters.   
+• Datasets that have been scraped from the Internet could pose safety risks. The authors should describe how they avoided releasing unsafe images.   
+• We recognize that providing effective safeguards is challenging, and many papers do not require this, but we encourage authors to take this into account and make a best faith effort.
+
+# 12. Licenses for existing assets
+
+Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected?
+
+Answer: [Yes]
+
+Justification: All datasets used (e.g., ABIDE, ADNI, HBN) are cited and publicly available;   
+proper credit and citations are given in the references (e.g., OpenNeuro, fMRIPrep).
+
+Guidelines:
+
+• The answer NA means that the paper does not use existing assets.   
+• The authors should cite the original paper that produced the code package or dataset.   
+• The authors should state which version of the asset is used and, if possible, include a URL.   
+• The name of the license (e.g., CC-BY 4.0) should be included for each asset.   
+• For scraped data from a particular source (e.g., website), the copyright and terms of service of that source should be provided.   
+• If assets are released, the license, copyright information, and terms of use in the package should be provided. For popular datasets, paperswithcode.com/datasets has curated licenses for some datasets. Their licensing guide can help determine the license of a dataset.   
+• For existing datasets that are re-packaged, both the original license and the license of the derived asset (if it has changed) should be provided.   
+• If this information is not available online, the authors are encouraged to reach out to the asset’s creators.
+
+# 13. New assets
+
+Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets?
+
+Answer: [Yes]
+
+Justification: The paper constructs a new large-scale multi-atlas brain graph corpus. It is documented in Appendix N with clear dataset composition and construction steps.
+
+Guidelines:
+
+• The answer NA means that the paper does not release new assets.   
+• Researchers should communicate the details of the dataset/code/model as part of their submissions via structured templates. This includes details about training, license, limitations, etc.   
+• The paper should discuss whether and how consent was obtained from people whose asset is used.   
+• At submission time, remember to anonymize your assets (if applicable). You can either create an anonymized URL or include an anonymized zip file.
+
+# 14. Crowdsourcing and research with human subjects
+
+Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)?
+
+Answer: [NA]
+
+Justification: The paper does not involve crowdsourcing or direct human subject experimentation.
+
+Guidelines:
+
+• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   
+• Including this information in the supplemental material is fine, but if the main contribution of the paper involves human subjects, then as much detail as possible should be included in the main paper.   
+• According to the NeurIPS Code of Ethics, workers involved in data collection, curation, or other labor should be paid at least the minimum wage in the country of the data collector.
+
+# 15. Institutional review board (IRB) approvals or equivalent for research with human subjects
+
+Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained?
+
+Answer: [NA]
+
+Justification: All human neuroimaging data used are obtained from public and private datasets with pre-approved IRB statements and anonymization handled by the original data providers.
+
+Guidelines:
+
+• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   
+• Depending on the country in which research is conducted, IRB approval (or equivalent) may be required for any human subjects research. If you obtained IRB approval, you should clearly state this in the paper.   
+• We recognize that the procedures for this may vary significantly between institutions and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the guidelines for their institution.   
+• For initial submissions, do not include any information that would break anonymity (if applicable), such as the institution conducting the review.
+
+# 16. Declaration of LLM usage
+
+Question: Does the paper describe the usage of LLMs if it is an important, original, or non-standard component of the core methods in this research? Note that if the LLM is used only for writing, editing, or formatting purposes and does not impact the core methodology, scientific rigorousness, or originality of the research, declaration is not required.
+
+Answer: [Yes]
+
+Justification: We use a large language model (LLM) to polish our English writing and expressions and to help us understand certain concepts and formulas presented in the paper.
+
+Guidelines:
+
+• The answer NA means that the core method development in this research does not involve LLMs as any important, original, or non-standard components. • Please refer to our LLM policy (https://neurips.cc/Conferences/2025/LLM) for what should or should not be described.

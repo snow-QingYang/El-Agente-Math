@@ -1,0 +1,3086 @@
+[
+    {
+        "type": "text",
+        "text": "Linear Bandits with Non-i.i.d. Noise ",
+        "text_level": 1,
+        "bbox": [
+            277,
+            122,
+            720,
+            147
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Anonymous Author(s)   \nAffiliation   \nAddress   \nemail ",
+        "bbox": [
+            423,
+            196,
+            578,
+            252
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Abstract ",
+        "text_level": 1,
+        "bbox": [
+            462,
+            287,
+            535,
+            304
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "1 We study the linear stochastic bandit problem, relaxing the standard i.i.d. assump  \n2 tion on the observation noise. As an alternative to this restrictive assumption,   \n3 we allow the noise terms across rounds to be sub-Gaussian but interdependent,   \n4 with dependencies that decay over time. To address this setting, we develop new   \n5 confidence sequences using a recently introduced reduction scheme to sequential   \n6 probability assignment, and use these to derive a bandit algorithm based on the   \n7 principle of optimism in the face of uncertainty. We provide regret bounds for   \n8 the resulting algorithm, expressed in terms of the decay rate of the strength of   \n9 dependence between observations. Among other results, we show that our bounds   \n10 recover the standard rates up to a factor of the mixing time for geometrically mixing   \n11 observation noise. ",
+        "bbox": [
+            148,
+            319,
+            767,
+            472
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "12 1 Introduction ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            497,
+            312,
+            515
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "13 The linear bandit problem (Abe and Long, 1999; Auer, 2003) is an instance of a multi-armed bandit   \n14 framework, where the expected reward is linear in the feature vector representing the chosen arm.   \n15 More concretely, it is a sequential decision-making problem, where an agent each round picks an arm   \n16 $X _ { t }$ , and receives a reward $Y _ { t } = \\langle \\theta ^ { \\star } , X _ { t } \\rangle + \\varepsilon _ { t }$ , with $\\theta ^ { \\star }$ a fixed parameter unknown to the agent, and   \n17 $\\varepsilon _ { t }$ zero-mean random noise. This framework has gained significant attention in the literature as it   \n18 yields analytic tools that can be applied to several concrete applications, such as online advertising   \n19 (Abe et al., 2003), recommendation systems (Li et al., 2010; Korkut and Li, 2021), and dynamic   \n20 pricing (Cohen et al., 2020).   \n21 A popular strategy to tackle linear bandits leverages the principle of optimism in the face of uncertainty,   \n22 via upper confidence bound (UCB) algorithms. The idea of optimism can be traced back to Lai and   \n23 Robbins (1985), and its application to linear bandits was already advanced by Auer (2003). Since   \n24 then, this approach has been improved and analysed by several works (Abbasi-Yadkori et al., 2011;   \n25 Lattimore and Szepesvári, 2020; Flynn et al., 2023). This class of methods requires constructing an   \n26 adaptive sequence of confidence sets that, with high probability, contain the true parameter $\\theta ^ { \\star }$ . Each   \n27 round, the agent selects the arm maximising the expected reward under the most optimistic parameter   \n28 (in terms of reward) in the current confidence set. UCB-based algorithms have become popular as   \n29 they are often easy to implement and come with tight worst-case regret guarantees.   \n30 For a UCB algorithm to perform well, it is necessary that the confidence sets are tight, which can be   \n31 ensured by taking advantage of the structure of the problem. In this paper, our focus is on studying   \n32 various assumptions on the observation noise. A commonly studied situation is when $( \\varepsilon _ { t } ) _ { t \\geq 0 }$ consists   \n33 of a sequence of i.i.d. realisations of some bounded or sub-Gaussian random variable (see Lattimore   \n34 and Szepesvári, 2020, Chapter 20). Often, the standard analysis can be extended to the case in which   \n35 the realisation are not independent, but conditionally centred and sub-Gaussian (Abbasi-Yadkori   \n36 et al., 2011). Yet, in real-world settings, this assumption is often unrealistic, as one can expect the   \n37 presence of interdependencies among the noise at different rounds. For instance, in the context   \n38 of advertisement selection, the noise models the ensemble of external factors that influence the   \n39 user’s choice on whether to click or not an ad. The i.i.d. assumption implies that across different   \n40 rounds these external factors are completely independent. In practice, the user choice will be affected   \n41 by temporally correlated events, such as recent browsing history or exposure to similar content.   \n42 Therefore, a more realistic assumption is to allow the dependencies to decay with time, rather than   \n43 being completely absent. This way to model dependencies, often referred to as mixing, is common to   \n44 study concentration for sums of non-i.i.d. random variables, with applications to machine learning   \n45 (Bradley, 2005; Mohri and Rostamizadeh, 2008; Abélès et al., 2025).   \n46 In the present paper we relax the assumption that the noise is conditionally zero-mean in the bandit   \n47 problem, and we allow for the presence of dependencies. Concretely, we replacethe standard   \n48 conditionally sub-Gaussian setting with a more general formulation that accounts for conditional   \n49 dependence of the noise on the past, by introducing a natural notion of mixing sub-Gaussianity. Within   \n50 this context, we introduce a UCB algorithm for which we rigorously establish regret guarantees.   \n51 There are two key challenges for our approach: constructing a valid confidence sequence under   \n52 dependent noise, and deriving a regret upper bound for the UCB algorithm that we propose.   \n53 We derive the confidence sequence by adapting the online-to-confidence-sets technique to accommo  \n54 date temporal dependencies in the noise. This approach, originally introduced by Abbasi-Yadkori   \n55 et al. (2011) and recently extended and improved (Jun et al., 2017; Lee et al., 2024; Clerico et al.,   \n56 2025), involves constructing an abstract online learning game whose regret guarantees can be turned   \n57 into a confidence sequence. To deal with the dependencies in the noise, we modify the standard   \n58 online-to-confidence-sets framework by introducing delays in the feedback received within the ab  \n59 stract online game. This approach is inspired by the recent work of Abélès et al. (2025) on extending   \n60 online-to-PAC conversions to non-i.i.d. mixing data sets in the context of deriving generalisation   \n61 bounds for statistical learning. There, a delayed-feedback trick similar to ours is employed to derive   \n62 statistical guarantees (generalisation bounds) from an abstract online learning game.   \n63 For the regret analysis of the bandit algorithm, we also need to face some challenges due to the   \n64 correlated observation noise. We address these by introducing delays into the decision-making policy   \n65 as well. This makes our approach superficially similar to algorithms used in the rich literature on   \n66 bandits with delayed feedback (see, e.g., Vernade et al., 2020a; Howson et al., 2023). These works   \n67 consider delay as part of the problem statement and not part of the solution concept, and are thus   \n68 orthogonal to our work. In particular, a simple adaptation of results from this literature would not   \n69 suffice for dealing with dependent observations, which we tackle by developing new concentration   \n70 inequalities. Another line of work that is conceptually related to ours is that of non-stationary bandits   \n71 (Garivier and Moulines, 2008; Russac et al., 2019). In that setting, the parameter vector $\\theta _ { t } ^ { \\star }$ evolves in   \n72 time according to a nonstationary stochastic process, and the observation noise remains i.i.d., once   \n73 again making for a rather different problem with its own challenges. Namely, the main obstacle   \n74 to overcome is that comparing with the optimal sequence of actions becomes impossible unless   \n75 strong assumptions are made about the sequence of parameter vectors. A typical trick to deal with   \n76 these nonstationarities is to discard old observations (which may have been generated by a very   \n77 different reward function), and use only recent rewards for decision-making. This is the polar opposite   \n78 of our approach that is explicitly disallowed to use recent rewards, which clearly highlights how   \n79 different these problems are. That said, there exists an intersection between the worlds of delayed   \n80 and nontationary bandits (Vernade et al., 2020b), and thus we would not discard the possibility of   \n81 eventually building a bridge between bandits with nonstationary reward functions and bandits with   \n82 nonstationary observation noise. For simplicity, we focus on the second of these two components in   \n83 this paper.   \n84 Notation. Throughout the paper, we will often use the following notations. For $u$ and $v$ in $\\mathbb { R } ^ { p }$ , we   \n85 let $\\langle u , v \\rangle$ denote their dot product. $\\| u \\| _ { 2 } = \\sqrt { \\langle u , u \\rangle }$ is the Euclidean norm, while for a non-negative   \n86 definite $( p \\times p )$ -matrix $A$ , $\\| u \\| _ { A } = \\sqrt { \\langle u , A u \\rangle }$ is a semi-norm (a norm if the matrix is strictly positive   \n87 definite). For $r > 0$ , $\\boldsymbol { B } ( \\boldsymbol { r } )$ denotes the closed centred Euclidean ball in $\\mathbb { R } ^ { p }$ with radius $r$ . Given a   \n88 non-empty set $U \\subseteq \\mathbb { R } ^ { p }$ , we let $\\Delta _ { U }$ denote the space of (Borel) probability measures on $\\mathbb { R } ^ { p }$ whose   \n89 support in $U$ . Finally, $( u _ { t } ) _ { t \\geq t _ { 0 } }$ denotes a sequence indexed on the integers, with $t _ { 0 }$ its smallest index. ",
+        "bbox": [
+            147,
+            529,
+            825,
+            640
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            646,
+            825,
+            771
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            776,
+            825,
+            901
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "Submitted to 39th Conference on Neural Information Processing Systems (NeurIPS 2025). Do not distribute. ",
+        "bbox": [
+            169,
+            922,
+            815,
+            936
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            92,
+            825,
+            188
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            194,
+            825,
+            292
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            297,
+            825,
+            436
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            443,
+            825,
+            733
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            746,
+            825,
+            835
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "90 2 Preliminaries on linear bandits ",
+        "text_level": 1,
+        "bbox": [
+            155,
+            853,
+            465,
+            869
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "91 We consider a version of the classic problem of regret minimisation in stochastic linear bandits, where   \n92 an agent needs to make a sequence of decisions (or pick an arm) from a given contextual decision set   \n93 that may change over the sequence of rounds. We assume that the environment is oblivious to the   \n94 actions of the agent, in the sense that the decision sets are determined in advance, and do not depend   \n95 neither on the realisations of the noise nor on the agent’s arm-selection strategy.   \n96 Concretely, we define the problem as follows. Let $\\theta ^ { \\star } \\in \\mathbb { R } ^ { p }$ be a parameter vector that is unknown   \n97 to the learning agent. We assume as known an upper bound $B > 0$ on its euclidean norm (namely,   \n98 $\\theta ^ { \\star } \\in B ( B ) )$ . Fix a sequence of decision sets $( \\bar { \\mathcal X } _ { t } ) _ { t \\ge 1 }$ in $\\mathbb { R } ^ { p }$ . We assume that for all $t$ we have   \n99 $\\mathcal { X } _ { t } \\subseteq B ( 1 )$ . At each round $t$ , the agent is required to pick an arm $X _ { t } \\in \\mathcal { X } _ { t }$ , and receives the reward   \n100 $Y _ { t } = \\langle \\theta ^ { \\star } , X _ { t } \\rangle + \\varepsilon _ { t }$ . The sequence $( \\varepsilon _ { t } ) _ { t \\geq 1 }$ represents the random feedback noise. The noise across   \n101 different rounds is typically assumed to be conditionally centred and to have well behaved tails.   \n102 For instance, a common assumption is to ask that $\\mathbb { E } [ \\varepsilon _ { t } | \\mathcal { F } _ { t - 1 } ]$ is centred and sub-Gaussian, where   \n103 $\\mathcal { F } _ { t } = \\sigma ( \\varepsilon _ { 1 } , \\ldots , \\varepsilon _ { t } )$ is the $\\sigma$ -field generated by the noise.1 This is the assumption this work relaxes.   \n104 The agent aims to find a good strategy to pick arms $X _ { t }$ that lead to a high expected $T$ -round reward   \n105 $\\textstyle \\sum _ { t = 1 } ^ { T } \\langle X _ { t } , \\theta ^ { \\star } \\rangle$ . To compare their performance to that of an agent playing each round the best available   \n106 arm (in expectation), we define the regret after $T$ rounds as ",
+        "bbox": [
+            148,
+            882,
+            825,
+            911
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "discarded",
+        "text": "2 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            90,
+            826,
+            133
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            138,
+            825,
+            251
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            256,
+            825,
+            301
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4741810c78976359361cf2ff8a9b08eeaee488cf274fe90d0d2ba2f67977b02e.jpg",
+        "text": "$$\n\\mathrm { R e g } ( T ) = \\sum _ { t = 1 } ^ { t } \\operatorname* { s u p } _ { x \\in \\mathcal { X } _ { t } } \\left( \\langle x , \\theta ^ { \\star } \\rangle - \\langle X _ { t } , \\theta ^ { \\star } \\rangle \\right) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            357,
+            308,
+            638,
+            349
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "A common approach to tackle the linear bandit problem is to follow an upper confidence bound (UCB) strategy. This involves the following protocol. At each round $t$ , we first derive a confidence set $\\mathcal { C } _ { t - 1 }$ , based on the arm-reward pairs $( X _ { s } , Y _ { s } ) _ { s \\leq t - 1 }$ . This is a random set (as it depends on the past noise realisations), which must be constructed ensuring that $\\theta ^ { \\star } \\in \\mathcal { C } _ { t - 1 }$ with high probability. More precisely, the regret can be effectively controlled if one can ensure that $\\theta ^ { \\star }$ uniformly belongs to every set $( \\mathcal { C } _ { t } ) _ { t \\geq 1 } ^ { }$ , with high probability (a property often referred to as anytime validity). Then, for every available arm $x$ , we let ",
+        "bbox": [
+            173,
+            361,
+            826,
+            458
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2804a2b69ac760246d3508b336945a8d90978d4d865407b4c7af2221d56166dd.jpg",
+        "text": "$$\n\\operatorname { U C B } _ { \\mathcal { C } _ { t - 1 } } ( x ) = \\operatorname* { m a x } _ { \\theta \\in \\mathcal { C } _ { t - 1 } } \\left. x , \\theta \\right. .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            398,
+            457,
+            598,
+            482
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "By definition, this is a high-probability upper bound on 107 $\\langle x , \\theta ^ { \\star } \\rangle$ , which justifies the name “upper confidence bound”. The idea is then to optimistically pick as 108 $X _ { t } \\in \\mathcal { X } _ { t }$ the arm maximising $\\mathrm { U C B } _ { { c } _ { t - 1 } }$ . ",
+        "bbox": [
+            135,
+            486,
+            828,
+            515
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "A key technical challenge in designing a UCB algorithm is to construct the anytime valid confidence sequence $( \\mathcal { C } _ { t } ) _ { t \\geq 1 }$ . Typically, under sub-Gaussian assumptions on the noise, these sets take the form of an ellipsoid, centred on a (regularised) maximum likelihood estimator. Explicitly, we often have ",
+        "bbox": [
+            171,
+            520,
+            825,
+            563
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/179e338dc5e66c221cfcdaaa1d3671391ad929cd886c51193b32912413dfb731.jpg",
+        "text": "$$\n\\mathcal { C } _ { t } = \\left\\{ \\theta \\in \\Theta : \\| \\theta - \\widehat { \\theta } _ { t } \\| _ { V _ { t } } ^ { 2 } \\leq \\beta _ { t } ^ { 2 } \\right\\} ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            379,
+            569,
+            616,
+            590
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "109 where $\\widehat { \\theta } _ { t }$ is the least-squares estimator of $\\theta ^ { \\star }$ , $V _ { t }$ is the feature-covariance matrix and $\\beta _ { t }$ is a radius   \n110 carefully chosen so that the high-probability coverage requirement is satisfied. In this work, to   \n111 construct the confidence sets we will leverage an online-to-confidence-set-conversion approach, a   \n112 method that reduces the problem of proving statistical concentration bounds to proving existence of   \n113 well-performing algorithms for an associated game of sequential probability assignment. We refer to   \n114 Section 4 for more details on our technique to construct the confidence sequence. ",
+        "bbox": [
+            142,
+            598,
+            825,
+            684
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "115 3 Linear bandits with non-i.i.d. observation noise ",
+        "text_level": 1,
+        "bbox": [
+            143,
+            702,
+            599,
+            719
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "116 We study a variant of the standard linear stochastic bandit problem where the observation-noise   \n117 variables feature dependencies across different rounds. We focus on the case of weakly stationary   \n118 noise, meaning we assume all the $\\varepsilon _ { t }$ to have the same marginal distribution. However, the core   \n119 assumption we make is what we call mixing sub-Gaussianity. This provides a way to control how   \n120 dependencies decay as the time between two observations increases. It is defined in terms of a   \n121 sequence of mixing coefficients $\\phi _ { d }$ , which quantify this decay.   \n22 Assumption 1 (Mixing sub-Gaussianity). Fix $\\sigma > 0$ and let $\\phi = ( \\phi _ { d } ) _ { d \\ge 0 }$ be a non-negative and   \n23 non-increasing sequence. We say that the random sequence $( \\epsilon _ { t } ) _ { t \\geq 1 }$ is $( \\sigma , \\bar { \\phi } )$ -mixing sub-Gaussian $i f$ ",
+        "bbox": [
+            147,
+            732,
+            825,
+            818
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            151,
+            820,
+            826,
+            851
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "1We remark that, more generally, one can consider the case where the $X _ { t }$ as well are randomised, namely contain additional randomness that is not included in the noise. To take this into account, one can add this other source or randomness in the filtration. However, since in our case we will only consider a non-randomised bandit algorithm, we omit this to simplify our analysis. ",
+        "bbox": [
+            173,
+            859,
+            825,
+            911
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "3 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/6c871690730aabc42a21f9011b71e5b037cc7954f64c728e56dcd494afc0cb9f.jpg",
+        "text": "$$\n\\left| \\mathbb { E } \\left[ \\epsilon _ { t } \\left| \\mathcal { F } _ { t - d } \\right. \\right] \\right| \\leq \\phi _ { d }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            433,
+            109,
+            566,
+            130
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "125 and ",
+        "bbox": [
+            142,
+            133,
+            202,
+            147
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e0f727a16aa385838b6424a3ba136b6cb492be3c9c3a1a46c0349731d6b343f6.jpg",
+        "text": "$$\n\\mathbb { E } [ \\exp \\lambda ( \\epsilon _ { t } - \\mathbb { E } [ \\epsilon _ { t } | \\mathcal { F } _ { t - d } ] ) | \\mathcal { F } _ { t - d }  ] \\leq e ^ { \\frac { \\lambda ^ { 2 } \\sigma ^ { 2 } } { 2 } } , \\qquad \\forall \\lambda > 0 .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            302,
+            142,
+            694,
+            166
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "126 Clearly, the above assumption generalises the standard conditionally sub-Gaussian assumption (that   \n127 can be recovered by setting $\\phi _ { d } = 0$ for all $t$ ), sometimes considered in the bandit literature. Although   \n128 this might look like an unusual mixing assumption, it is very natural for our problem at hand, and   \n129 can be weaker than standard mixing hypotheses. For instance, if the noise sequence is $\\varphi$ -mixing   \n130 (see Bradley, 2005) and each $\\varepsilon _ { t }$ is centred and bounded in $[ - a , b ]$ , it is straightforward to check that   \n131 $| \\mathbb { E } [ \\varepsilon _ { t } | \\mathcal { F } _ { t - d } ] | \\leq ( a + b ) \\phi _ { d }$ , and so Assumption 1 is satisfied since the boundedness automatically   \n132 implies sub-Gaussianity. In the rest of the paper we assume $\\sigma = 1$ for simplicity.   \n133 Under Assumption 1, we can build the confidence sequence needed for our UCB algorithm. We state   \n134 this result below, but defer the explicit derivation to Section 4 (see Corollary 1 there). ",
+        "bbox": [
+            140,
+            174,
+            825,
+            272
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            277,
+            823,
+            306
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Proposition 1. For some given $\\phi$ , let the noise satisfy Assumption $^ { l }$ with $\\sigma = 1$ . Fi ${ \\mathfrak { r } } \\delta \\in ( 0 , 1 )$ $\\lambda > 0$ , and $d \\geq 1 ,$ . For $t \\geq 1$ let ",
+        "bbox": [
+            168,
+            309,
+            823,
+            338
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/dd39346df362d29be651c3004afcbc1e52955c1599e238a0d9fe1f7e5c14a1a4.jpg",
+        "text": "$$\n\\begin{array} { r } { \\ \\cdot _ { t } = \\left\\{ \\theta \\in \\mathcal { B } ( B ) : \\frac { 1 } { 2 } \\| \\theta - \\widehat { \\theta } _ { t } \\| _ { V _ { t } } ^ { 2 } \\leq \\frac { d p } { 2 } \\log \\frac { ( B + 1 ) ^ { 2 } e \\operatorname* { m a x } ( d p , t + d ) } { d p } + 2 \\lambda B ^ { 2 } + t \\phi _ { d } ( B + 1 ) + d \\log \\frac { d } { \\delta } \\right\\} , } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            181,
+            342,
+            823,
+            367
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where $\\begin{array} { r } { V _ { t } = \\sum _ { s = 1 } ^ { t } X _ { t } { X _ { t } ^ { \\top } } + \\lambda \\mathrm { I d } , } \\end{array}$ , and $\\begin{array} { r } { \\widehat { \\theta } _ { t } = a r g m i n _ { \\theta \\in \\mathcal { B } ( B ) } \\sum _ { s = 1 } ^ { n } ( \\langle \\theta , X _ { t } \\rangle - Y _ { t } ) ^ { 2 } } \\end{array}$ . Then, $( \\mathcal { C } _ { t } ) _ { t \\geq 1 }$ is an anytime valid confidence sequence, in the sense that ",
+        "bbox": [
+            173,
+            375,
+            826,
+            406
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ddfd34d8d71eb23de2d26ce7cf3ed010fc59446031410ec495ffde743d76dd9b.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathbb { P } \\big ( \\theta ^ { \\star } \\in \\mathcal { C } _ { t } , \\forall t \\ge 1 \\big ) \\ge 1 - \\delta . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            397,
+            411,
+            599,
+            430
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "135 Leveraging the confidence sequence above, we can define a UCB approach for our problem (Algo  \n136 rithm 1). At a high level, the algorithm operates by taking the confidence sets defined in Proposition   \n137 1, and selecting the arm optimistically, as in the standard UCB. A key point is that a delay $d$ is   \n138 introduced, which at round $t$ restricts the agent to use only the information available from the first   \n139 $t - d$ rounds. Although the actual technical reason behind this restriction will become fully clear only   \n140 with the analysis of the coming sections, one can intuitively think of it as a way to prevent overfitting   \n141 to recent noise, which might be highly correlated. If $d$ is sufficiently large, the noise observed in   \n142 each round $t$ will be sufficiently decorrelated from the previous observations, which allows accurate   \n143 estimation and uncertainty quantification of the true parameter $\\theta ^ { \\star }$ and the associated rewards. ",
+        "bbox": [
+            140,
+            440,
+            826,
+            566
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Algorithm 1 Mixing-LinUCB ",
+        "text_level": 1,
+        "bbox": [
+            174,
+            580,
+            372,
+            595
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "set $d > 0$   \nfor $i \\in \\{ 1 , 2 , \\ldots d \\}$ do play an arbitrary $X _ { i }$ and observe $Y _ { i }$   \nend for   \nfor $t \\in \\{ d + 1 , \\ldots \\}$ do $X _ { t } = \\arg \\operatorname* { m a x } _ { x \\in \\mathcal { X } _ { t } } \\mathrm { U C B } _ { \\mathcal { C } _ { t - d } } ( x )$ , where $\\mathcal { C } _ { t - d }$ is as in Proposition 1 play $X _ { t }$ and observe reward $Y _ { t }$   \nend for ",
+        "bbox": [
+            181,
+            598,
+            658,
+            709
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "144 In Section 5 we provide a detailed analysis of the regret of the algorithm that we proposed. For   \n145 instance, assuming that the mixing coefficients decay exponentially as $\\phi _ { d } = C e ^ { - d / \\tau }$ (geometric   \n146 mixing), we show that the regret can be upper bounded in high probability as ",
+        "bbox": [
+            142,
+            724,
+            821,
+            770
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/93cacde4fce0be1823956037a1b82dca6c07661d92ece3892ba109ea0ee9d568.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathrm { R e g } ( T ) \\leq \\mathcal { O } \\left( \\tau p \\sqrt { T } \\log ( T ) ^ { 2 } + \\tau \\log T \\sqrt { p T \\log T } \\right) . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            318,
+            773,
+            678,
+            801
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "147 We refer to Theorem 2 and Corollary 2 in Section 5 for more details. ",
+        "bbox": [
+            143,
+            804,
+            624,
+            820
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "148 4 Constructing the confidence sequence ",
+        "text_level": 1,
+        "bbox": [
+            145,
+            838,
+            519,
+            856
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "149 In this section we derive a confidence sequence for linear models with non-i.i.d. noise. First, we   \n150 briefly describe the online-to-confidence-set conversion scheme from Clerico et al. (2025), which   \n151 serves as our starting point. We then extend this technique to handle mixing noise.   \n153 Before proceeding for the analysis of mixing sub-Gaussian noise, which is the focus of this work,   \n154 we start by describing how to derive a confidence sequence when the noise is independent (or   \n155 conditionally) centred and sub-Gaussian across different rounds, as in Clerico et al. (2025). The   \n156 online-to-confidence sets framework that we consider instantiates an abstract game played between   \n157 an online learner and an environment. We define the squared loss $\\ell _ { s } ( \\theta ) = \\bar { \\Psi } ( \\langle \\theta , \\dot { X } _ { s } \\rangle ^ { - } Y _ { s } ) ^ { 2 }$ . For   \n158 each round $s = 1 , \\ldots , t$ , the following steps are repeated:   \n1. the environment reveals $X _ { s }$ to the learner;   \n2. the learner plays a distribution $Q _ { s } \\in \\Delta _ { \\mathbb { R } ^ { p } }$ ;   \n3. the environment reveals $Y _ { s }$ to the learner;   \n4. the learner suffers the log loss $\\begin{array} { r } { \\begin{array} { r } { \\mathcal { L } _ { s } ( Q _ { s } ) = - \\log \\int _ { \\mathbb { R } ^ { p } } \\exp ( - \\ell _ { s } ( \\theta ) ) \\mathrm { d } Q _ { s } ( \\theta ) . } \\end{array} } \\end{array}$   \n163 This game is a special case of a well-studied problem called sequential probability assignment   \n164 (Cesa-Bianchi and Lugosi, 2006). The learner can use any strategy to choose $Q _ { 1 } , \\ldots , Q _ { t }$ , as long as   \n165 each $Q _ { s }$ depends only on $X _ { 1 } , Y _ { 1 } , \\dots , X _ { s - 1 } , Y _ { s - 1 } , X _ { s }$ . We define the regret of the learner against a   \n166 (possibly data-dependent) comparator $\\bar { \\theta } \\in \\mathbb { R } ^ { p }$ as ",
+        "bbox": [
+            142,
+            868,
+            825,
+            912
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "4 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "124 $\\varepsilon _ { t }$ is centred and $\\sigma$ -sub-Gaussian for every $t$ , and, for all $d \\geq 0$ and all $t > d ,$ , we have ",
+        "bbox": [
+            140,
+            90,
+            741,
+            107
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            117,
+            828,
+            202
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            209,
+            212,
+            712,
+            290
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            297,
+            826,
+            356
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/450127f20f5c6d2a8346aa31fc4dad1a3c35f0668f41fa61cea4c22b55d81b63.jpg",
+        "text": "$$\n\\mathrm { R e g r e t } _ { t } ( \\bar { \\theta } ) = \\sum _ { s = 1 } ^ { t } \\mathcal { L } _ { s } ( Q _ { s } ) - \\sum _ { s = 1 } ^ { t } \\ell _ { s } ( \\bar { \\theta } ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            366,
+            362,
+            632,
+            406
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "167 Clerico et al. (2025) provide a regret bound upper bound (Proposition 3.1 there) for when the learner’s   \n168 strategy is from an exponential weighted average (EWA) forecaster with a centred Gaussian prior   \n169 $Q _ { 1 }$ . However, to account for the presence of dependencies in our analysis, we will need the prior’s   \n170 support to be bounded. We hence state here a regret bound (whose proof is deferred to Appendix   \n171 A.2) for the regret of an EWA forecaster with a uniform prior.   \n172 Proposition 2. Fix $B > 0$ and consider the EWA forecaster with as prior the uniform distribution on   \n173 $B ( \\bar { B } + 1 )$ . Then, for all ${ \\bar { \\theta } } \\in B ( B )$ and any $t \\geq 1$ , ",
+        "bbox": [
+            142,
+            419,
+            825,
+            489
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            494,
+            825,
+            523
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/c9556dd2655e1f04d21700d179b46d56d45925249c0c2f1dfc63c65409232dc8.jpg",
+        "text": "$$\n\\mathrm { R e g r e t } _ { t } ( \\bar { \\theta } ) \\leq \\frac { p } { 2 } \\log \\frac { ( B + 1 ) ^ { 2 } e \\operatorname * { m a x } ( p , t ) } { p } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            356,
+            531,
+            642,
+            566
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "174 ",
+        "bbox": [
+            142,
+            568,
+            161,
+            579
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "175 We remark that, by adding and subtracting the total log loss of the learner, the excess loss of $\\theta ^ { \\star }$ (relative to 176 $\\bar { \\theta }$ ) can be rewritten as ",
+        "bbox": [
+            140,
+            592,
+            823,
+            621
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/eef4378f75e616135a2b6767171f263afe8559a33859a0e28204ab554aae7772.jpg",
+        "text": "$$\n\\sum _ { s = 1 } ^ { t } \\ell _ { s } ( \\theta ^ { \\star } ) - \\sum _ { s = 1 } ^ { t } \\ell _ { s } ( \\bar { \\theta } ) = \\mathrm { R e g r e t } _ { t } ( \\bar { \\theta } ) + \\sum _ { s = 1 } ^ { t } \\ell _ { s } ( \\theta ^ { \\star } ) - \\sum _ { s = 1 } ^ { t } \\mathcal { L } _ { s } ( Q _ { s } ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            276,
+            627,
+            720,
+            671
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "177 This simple decomposition is the key idea in the online-to-confidence sets scheme. ",
+        "bbox": [
+            133,
+            678,
+            717,
+            693
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Since the noise is conditionally sub-Gaussian and the distributions played by the online learner are predictable (super-m $Q _ { s }$ cannot depend onngale (cf. the no-h $Y _ { s }$ ), er $\\begin{array} { r } { \\sum _ { s = 1 } ^ { t } \\ell _ { s } ( \\theta ^ { \\star } ) - \\sum _ { s = 1 } ^ { t } \\mathcal { L } _ { s } ( Q _ { s } ) } \\end{array}$ is the logarithm of a non-negativenwald, 2007 or Proposition 2.1 in Clerico et al., 2025) with respect to the noise filtration $( \\ddot { \\mathcal F _ { t } } ) _ { t \\geq 1 }$ .2 Henceforth, from Ville’s inequality (a classical anytime valid Markov-like inequality that holds for non-negative super-martingales) one can easily derive that $\\theta ^ { \\star } \\in { \\mathcal { C } } _ { t }$ (uniformly for all $t$ ) with probability at least $1 - \\delta$ , where ",
+        "bbox": [
+            173,
+            698,
+            826,
+            785
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/0725e6df4b36687d9bf55cfe957bef2b26c70f8f30f65d594c26603aaae0d801.jpg",
+        "text": "$$\n{ \\mathcal { C } } _ { t } = \\left\\{ \\theta \\in \\mathbb { R } ^ { p } : \\sum _ { s = 1 } ^ { t } \\ell _ { s } ( \\theta ) - \\sum _ { s = 1 } ^ { t } \\ell _ { s } ( { \\bar { \\theta } } ) \\leq \\mathrm { R e g r e t } _ { t } ( { \\bar { \\theta } } ) + \\log { \\frac { 1 } { \\delta } } \\right\\} .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            282,
+            791,
+            714,
+            835
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "178 This result can be relaxed by replacing $\\mathrm { R e g r e t } _ { t } ( \\bar { \\theta } )$ by any known regret upper bound for the online   \n179 algorithm used in the abstract game (e.g., the bound of Proposition 2 for the EWA forecaster).   \n181 The standard online-to-confidence sets scheme relies on the fact that $\\begin{array} { r } { \\sum _ { s = 1 } ^ { t } \\ell _ { s } ( \\theta ^ { \\star } ) - \\sum _ { s = 1 } ^ { t } \\mathcal { L } _ { s } ( Q _ { s } ) } \\end{array}$ is   \n182 the logarithm of a non-negative super-martingale, whose fluctuations can be controlled uniformly in   \n183 time thanks to Ville’s inequality. However, this property hinges on the fact that the noise is assumed   \n184 to be conditionally centred and sub-Gaussian, which now is not anymore the case. Yet, thanks to   \n185 our mixing assumption, if we restrict our focus on rounds that are sufficiently far apart, the mutual   \n186 dependencies get weaker, and the exponential of the sum behaves almost like a martingale. This   \n187 insight suggests to partition the rounds into blocks, whose elements are mutually far apart, then apply   \n188 concentration results to each block, and finally use a union bound to recover the desired confidence   \n189 sequence spanning all rounds. We remark that this is a classical approach to derive concentration   \n190 results for mixing processes, often referred to as the blocking technique (Yu, 1994).   \n191 In order for the online-to-confidence sets scheme to leverage the blocking strategy outlined above,   \n192 the abstract online game used for the analysis must be designed in a way that is compatible with   \n193 the block structure. To address this point, we adopt an approach inspired by Abélès et al. (2025),   \n194 who introduced delays in the feedbacks received by the online learner in order to address a similar   \n195 challenge. More precisely, we will now consider the following delayed-feedback version of the online   \n196 game. Fix a delay $d > 0$ . For each round $s = 1 , \\ldots , t$ , the following steps are repeated:   \n1. the environment reveals to the learner $X _ { s }$ , which is assumed to be $\\mathcal { F } _ { s - d }$ -measurable;   \n2. the learner plays a distribution $Q _ { s } \\in \\Delta _ { \\mathbb { R } ^ { p } }$ ;   \n3. if $s > d$ , the environment reveals $Y _ { s - d + 1 }$ to the learner;   \n4. the learner suffers the log loss $\\begin{array} { r } { \\begin{array} { r } { \\mathcal { L } _ { s } ( Q _ { s } ) = - \\log \\int _ { \\mathbb { R } ^ { p } } \\exp ( - \\ell _ { s } ( \\theta ) ) \\mathrm { d } Q _ { s } ( \\theta ) . } \\end{array} } \\end{array}$ ",
+        "bbox": [
+            138,
+            843,
+            825,
+            873
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "2For simplicity, since this will be the case for our bandit strategy, we assume throughout the paper that $X _ { t }$ is fully determined given the past noise (see footnote 1). ",
+        "bbox": [
+            171,
+            885,
+            825,
+            911
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "5 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "152 4.1 Online-to-confidence set conversion for i.i.d. data ",
+        "bbox": [
+            140,
+            90,
+            553,
+            106
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            117,
+            825,
+            257
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            262,
+            826,
+            347
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            210,
+            354,
+            789,
+            426
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Note that the delay $d$ only applies for the rewards, while $Q _ { s }$ can still depend on $X _ { s }$ . Indeed, the choice of $X _ { s }$ in our mixing UCB algorithm is already “delayed”, as it depends on $\\mathcal { C } _ { t - d }$ (see Algorithm 1). ",
+        "bbox": [
+            168,
+            433,
+            820,
+            463
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "03 Of course, in this setting the decomposition of (3) is still valid. We now want to deal with the 4 concentration of $\\begin{array} { r } { \\sum _ { s = 1 } ^ { t } \\bar { \\ell } _ { s } ( \\theta ^ { \\star } ) - \\sum _ { s = 1 } ^ { t ^ { \\star } } \\mathcal { L } _ { s } ( Q _ { s } ) } \\end{array}$ via the blocking technique. For convenience, let 05 $\\begin{array} { r } { S _ { k } ^ { ( i ) } = \\sum _ { j = 1 } ^ { k } D _ { i + ( j - 1 ) d } } \\end{array}$ $D _ { t } = { \\ell _ { t } ( \\theta ^ { \\star } ) } - \\mathcal { L } _ { t } ( Q _ { t } )$ . We denote as ey idea is now t $S ^ { ( i ) } = ( S _ { k } ^ { ( i ) } ) _ { k \\geq 1 }$ $S ^ { ( i ) }$ subsequence defined asbehaves as the log of a martingale, up to a cumulative remainder that accounts for the conditional mean shift in the mixing sub-Gaussianity assumption. In particular, Ville’s inequality and a union bound yield the following. ",
+        "bbox": [
+            155,
+            468,
+            826,
+            565
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Lemma 1. Fix a delay $d > 0$ and $\\delta \\in ( 0 , 1 )$ . We have that ",
+        "bbox": [
+            171,
+            565,
+            562,
+            582
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/cee541be189c0b64f15e7412d951d3411f4bf7f99a57c86c478da0d893f3a267.jpg",
+        "text": "$$\n\\mathbb { P } \\left( \\sum _ { s = 1 } ^ { t } \\big ( \\ell _ { s } ( \\theta ^ { \\star } ) - \\mathcal { L } _ { s } ( Q _ { s } ) \\big ) \\leq t \\phi _ { d } B + d \\log \\frac { d } { \\delta } , \\forall t \\geq 1 \\right) \\geq 1 - \\delta .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            276,
+            583,
+            722,
+            626
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "209 Now that we have a concentration result to control $S _ { t }$ , we only need to be able to upper bound the   \n210 regret of an algorithm for the “delayed” online game that we are considering. To this purpose, we   \n211 propose the following approach. We run $d$ independent EWA forecaster (with uniform prior), each   \n212 one only making prediction and receiving the feedback once every $d$ rounds. More explicitly, the first   \n213 forecaster acts at rounds 1, $d + 1$ , $2 d + 1 . . .$ , the second at round 2, $d + 2$ , $2 d + 2 . . .$ , and so on. As a   \n214 direct consequence of Proposition 2, by summing the individual regret upper bounds we get a regret   \n215 bound for the joint forecaster, which at each round returns the distribution predicted by the currently   \n216 active forecaster. This technique of partitioning rounds into blocks for the regret analysis of online   \n217 learning is common in the literature (e.g., see Weinberger and Ordentlich, 2002). ",
+        "bbox": [
+            138,
+            633,
+            825,
+            760
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Lemma 2. Fix $B > 0$ , $d > 0$ , and consider a strategy with $d$ independent EWA forecasters outlined above, all initialised with the uniform distribution on $B ( B + 1 )$ as prior. For all ${ \\bar { \\theta } } \\in B ( B )$ and $t \\geq 1$ ",
+        "bbox": [
+            161,
+            762,
+            823,
+            790
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ff0d23713d5a785c2e983bf22c41f3106b1dce1d2e66d106fbd28b5be60a1ad2.jpg",
+        "text": "$$\n\\mathrm { R e g r e t } _ { t } ( \\bar { \\theta } ) \\leq \\frac { d p } { 2 } \\log \\frac { ( B + 1 ) ^ { 2 } e \\operatorname * { m a x } ( d p , t + d ) } { d p } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            333,
+            792,
+            663,
+            827
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "220 Putting together what we have, we get a confidence sequence suitable for our mixing UCB algorithm. Theorem 1. Consider the setting introduced above. Fix $\\delta \\in ( 0 , 1 )$ and a delay $d > 0$ . Assume as known that $\\theta ^ { \\star } \\in B ( B )$ . Let $\\widehat { \\theta } _ { t } = a r g m i n _ { \\theta \\in { \\mathcal { B } } ( B ) } \\{ \\sum _ { s = 1 } ^ { t } \\ell _ { s } ( \\theta ) \\}$ and $\\begin{array} { r } { \\Lambda _ { t } = \\sum _ { s = 1 } ^ { t } X _ { s } X _ { s } ^ { \\top } } \\end{array}$ . Define ",
+        "bbox": [
+            140,
+            835,
+            826,
+            886
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/c78d06382feda3e51f406fc9d2e1c8149862cfe5c5f1d05a27cb29edd9850f5f.jpg",
+        "text": "$$\n\\begin{array} { r } { { \\mathcal C } _ { t } = \\left\\{ \\theta \\in { \\mathcal B } ( B ) : \\frac { 1 } { 2 } \\| \\theta - \\widehat \\theta _ { t } \\| _ { \\Lambda _ { t } } ^ { 2 } \\leq \\frac { d p } { 2 } \\log \\frac { ( B + 1 ) ^ { 2 } e \\operatorname* { m a x } ( d p , t + d ) } { d p } + t \\phi _ { d } ( B + 1 ) + d \\log \\frac { d } { \\delta } \\right\\} . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            199,
+            890,
+            794,
+            916
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "discarded",
+        "text": "180 4.2 Confidence sequence under mixing sub-Gaussian noise ",
+        "bbox": [
+            143,
+            90,
+            593,
+            106
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "discarded",
+        "text": "6 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Then, $( \\mathcal { C } _ { t } ) _ { t \\geq 1 }$ is an anytime valid confidence sequence for $\\theta ^ { \\star }$ , namely ",
+        "bbox": [
+            173,
+            90,
+            629,
+            107
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5400f0e54a0ddcdfc3bd6c4bb9ed1ca544194becdd015960f52d6172da1d32fc.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathbb { P } \\big ( \\theta ^ { \\star } \\in \\mathcal { C } _ { t } , \\forall t \\ge 1 \\big ) \\le 1 - \\delta . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            397,
+            114,
+            599,
+            135
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Proof. The optimality of $\\widehat { \\theta } _ { t }$ implies $\\begin{array} { r } { \\sum _ { s = 1 } ^ { t } \\langle \\theta - \\widehat \\theta _ { t } , \\nabla \\ell _ { s } ( \\widehat \\theta _ { t } ) \\rangle \\geq 0 } \\end{array}$ , for all $\\theta \\in B ( B )$ . As $\\textstyle \\sum _ { s = 1 } ^ { t } \\ell _ { s }$ is quadratic, it equals its second order Taylor expansion around $\\widehat { \\theta } _ { t }$ and its Hessian is everywhere $\\Lambda _ { t }$ . So, ",
+        "bbox": [
+            171,
+            155,
+            828,
+            190
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2a46e33a176db1cf2655fd9db672f876892b9b0e43bfdb7f65244523e29fff51.jpg",
+        "text": "$$\n\\frac { 1 } { 2 } \\| \\theta - \\widehat { \\theta } _ { t } \\| _ { \\Lambda _ { t } } ^ { 2 } \\leq \\frac { 1 } { 2 } \\| \\theta - \\widehat { \\theta } _ { t } \\| _ { \\Lambda _ { t } } ^ { 2 } + \\sum _ { s = 1 } ^ { t } \\left. \\theta - \\widehat { \\theta } _ { t } , \\nabla \\ell _ { s } ( \\widehat { \\theta } _ { t } ) \\right. = \\sum _ { s = 1 } ^ { t } \\left( \\ell _ { s } ( \\theta ) - \\ell _ { s } ( \\widehat { \\theta } _ { t } ) \\right) ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            236,
+            196,
+            759,
+            241
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "221 for any $\\theta \\in B ( B )$ . This, together with (3), Lemma 1, and Lemma 2, yields the conclusion. ",
+        "bbox": [
+            143,
+            248,
+            764,
+            265
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "222 We remark that the confidence sets of Theorem 1 take the form of the intersection between the ball   \n223 $B ( B )$ and the “ellipsoid” $\\{ \\theta : \\| \\theta - \\widehat { \\theta _ { t } } \\| _ { \\Lambda _ { t } } \\leq \\beta _ { t } \\}$ , for a suitable radius $\\beta _ { t }$ . In order to implement and   \n224 analyse the bandit algorithm, it will be more convenient to work with a relaxation of these sets, a   \n225 pure ellipsoid not intersected with $B ( B )$ . We make this explicit in the following corollary. ",
+        "bbox": [
+            140,
+            284,
+            825,
+            342
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Corollary 1. Fix $\\lambda > 0$ , $d > 0$ , and $\\delta \\in ( 0 , 1 )$ . For $t \\geq 1$ , let $V _ { t } = \\Lambda _ { t } + \\lambda \\mathrm { I d }$ . Assuming that $\\theta ^ { \\star } \\in B ( \\bar { B } )$ , the following compact ellipsoids define an anytime valid confidence sequence for $\\theta ^ { \\star }$ : ",
+        "bbox": [
+            171,
+            345,
+            825,
+            376
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1aa04c0271b30fe5c625e7ac2f34ccb66d0758b457d97d215ffe8a59097c692f.jpg",
+        "text": "$$\n\\begin{array} { r } { \\ \\stackrel { , } { \\prime } = \\left\\{ \\theta \\in \\mathcal { B } ( B ) : \\frac { 1 } { 2 } \\| \\theta - \\widehat { \\theta } _ { t } \\| _ { V _ { t } } ^ { 2 } \\leq \\frac { d p } { 2 } \\log \\frac { ( B + 1 ) ^ { 2 } e \\operatorname* { m a x } ( d p , t + d ) } { d p } + 2 \\lambda B ^ { 2 } + t \\phi _ { d } ( B + 1 ) + d \\log \\frac { d } { \\delta } \\right\\} . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            181,
+            383,
+            826,
+            410
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Proof. Let 226 $\\begin{array} { r } { \\beta _ { t } ^ { 2 } = d p \\log { \\frac { ( B + 1 ) ^ { 2 } e \\operatorname* { m a x } ( d p , t + d ) } { d p } } + 2 t \\phi _ { d } ( B + 1 ) + 2 d \\log { \\frac { d } { \\delta } } } \\end{array}$ . From Theorem 1, with probability at least 227 $1 - \\delta$ , uniformly for every $t$ , $\\| \\theta ^ { \\star } - \\widehat { \\theta } _ { t } \\| _ { \\Lambda _ { t } } ^ { 2 } \\leq \\beta _ { t } ^ { 2 }$ . Adding to both sides of this inequality 228 $\\frac { \\lambda } { 2 } \\| \\theta ^ { \\star } - \\widehat { \\theta } _ { t } \\| _ { 2 } ^ { 2 }$ , and relaxing the RHS using that $\\lVert \\theta ^ { \\star } - \\widehat { \\theta } _ { t } \\rVert _ { 2 } ^ { 2 } \\leq 4 B ^ { 2 }$ , we conclude. □ ",
+        "bbox": [
+            143,
+            431,
+            826,
+            489
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "5 Regret bounds for Mixing-LinUCB ",
+        "text_level": 1,
+        "bbox": [
+            169,
+            508,
+            498,
+            527
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "In this section, we establish worst-case and gap-dependent cumulative regret bounds for mixing UCB algorithm (Mixing Lin-UCB). However, to account for the fact that Mixing-LinUCB selects actions with delays, the standard elliptical potential arguments must be modified. Throughout this section, we let $\\tilde { R _ { t } } = \\langle \\theta ^ { \\star } , X _ { t } ^ { \\star } - X _ { t } \\rangle$ (where $X _ { t } ^ { \\star } = \\arg \\operatorname* { m a x } _ { x \\in \\mathcal { X } _ { t } } \\langle \\theta ^ { \\star } , x \\rangle )$ denote the regret in round $t$ , and (B+1)2e max(dp,t+d) + 4λB2 + 2tϕd(B + 1) + 2d log d denote the squared radius of the ellipsoid $\\mathcal { C } _ { t }$ in Corollary 1. ",
+        "bbox": [
+            171,
+            541,
+            826,
+            636
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "5.1 Worst-case regret bounds ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            652,
+            390,
+            667
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "237 First, following the regret analysis in Abbasi-Yadkori et al. (2011) (see also Section 19.3 in Lattimore   \n238 and Szepesvári, 2020), we upper bound the instantaneous regret. From our boundedness assumptions   \n239 $( \\theta ^ { \\star } \\in B ( B )$ and $\\mathcal { X } _ { t } \\subseteq B ( 1 ) ,$ ), we easily deduce that $R _ { t } \\leq 2 B$ . Under the event that our confidence   \n240 sequence contains $\\theta ^ { \\star }$ at every step $t$ , we have another bound on $R _ { t }$ . If we define $ { \\widetilde { \\theta } } _ { t - d } \\in  { \\mathcal { C } } _ { t - d }$ to be   \n241 the point at which $\\langle \\widetilde { \\theta } _ { t - d } , X _ { t } \\rangle = \\mathrm { U C B } _ { \\mathcal { C } _ { t - d } } ( X _ { t } )$ , then from the definition of $X _ { t }$ we have ",
+        "bbox": [
+            138,
+            678,
+            825,
+            756
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/19b81edec95c4447b49f40f5d9ec51f6d86321d50d1beb4587fe76429cb53ce8.jpg",
+        "text": "$$\n\\langle \\theta ^ { \\star } , X _ { t } ^ { \\star } \\rangle \\leq \\operatorname* { m a x } _ { x \\in \\mathcal { X } _ { t } } \\operatorname* { m a x } _ { \\theta \\in \\mathcal { C } _ { t - d } } \\langle \\theta , x \\rangle = \\operatorname* { m a x } _ { x \\in \\mathcal { X } _ { t } } \\mathrm { U C B } _ { \\mathcal { C } _ { t - d } } ( x ) = \\mathrm { U C B } _ { \\mathcal { C } _ { t - d } } ( X _ { t } ) = \\langle \\widetilde { \\theta } _ { t - d } , X _ { t } \\rangle .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            222,
+            763,
+            776,
+            791
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "242 Recall that, for all $s$ , $V _ { s } = \\Lambda _ { s } + \\lambda \\mathrm { I d }$ , which is invertible as $\\lambda > 0$ . Thus, by Cauchy-Schwarz, ",
+        "bbox": [
+            135,
+            806,
+            789,
+            824
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ad2a84a374dc9e889e8ca7113a96dc07fbec865678dc9523595d78a456b1c9ea.jpg",
+        "text": "$$\n\\begin{array} { r } { { \\cal R } _ { t } \\le \\langle \\widetilde \\theta _ { t - d } - \\theta ^ { \\star } , { \\cal X } _ { t } \\rangle \\le \\| \\widetilde \\theta _ { t - d } - \\theta ^ { \\star } \\| _ { { \\cal V } _ { t - d } } \\| { \\cal X } _ { t } \\| _ { { \\cal V } _ { t - d } ^ { - 1 } } \\le 2 \\beta _ { t - d } \\| { \\cal X } _ { t } \\| _ { { \\cal V } _ { t - d } ^ { - 1 } } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            259,
+            830,
+            738,
+            856
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "243 This means that the instantaneous regret satisfies the bound ",
+        "bbox": [
+            140,
+            869,
+            563,
+            886
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a6c7934ff6e4b8df334aaf90a36e10a5f66dc740f46e09b52b587d4ac1991f4a.jpg",
+        "text": "$$\nR _ { t } \\leq 2 \\operatorname* { m a x } ( B , \\beta _ { t - d } ) \\operatorname* { m i n } ( 1 , \\| X _ { t } \\| _ { V _ { t - d } ^ { - 1 } } ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            357,
+            893,
+            638,
+            915
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "□ ",
+        "bbox": [
+            807,
+            250,
+            825,
+            263
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "7 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "244 Next, we separate the regret suffered in the first $d$ rounds and the remaining $T - d$ rounds. We then   \n245 use Cauchy-Schwarz once more, and the fact that $\\beta _ { t }$ is increasing in $t$ , to obtain ",
+        "bbox": [
+            137,
+            90,
+            825,
+            121
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5eba9edb9859106a9670c58d36cb04e802d1456407ffaabbc801d5c1581713a7.jpg",
+        "text": "$$\n\\begin{array} { r l } & { \\mathrm { R e g } ( T ) \\leq 2 d B + \\sqrt { ( T - d ) \\sum _ { t = d + 1 } ^ { T } { R _ { t } ^ { 2 } } } } \\\\ & { \\qquad \\leq 2 d B + \\sqrt { 4 ( T - d ) \\operatorname* { m a x } ( B ^ { 2 } , \\beta _ { T - d } ^ { 2 } ) \\sum _ { t = d + 1 } ^ { T } \\operatorname* { m i n } ( 1 , \\| X _ { t } \\| _ { V _ { t - d } ^ { - 1 } } ^ { 2 } ) } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            246,
+            127,
+            750,
+            191
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "246 At this point, we must depart from the standard linear UCB analysis (Abbasi-Yadkori et al., 2011; Latti  \n247 more and Szepesvári, 2020). We bound the sum of the elliptical potentials $\\begin{array} { r } { \\sum _ { t = d + 1 } ^ { T } \\operatorname* { m i n } ( 1 , \\| X _ { t } \\| _ { V _ { t - d } ^ { - 1 } } ^ { 2 } ) } \\end{array}$   \n248 using the following variant of the well-known “elliptical potential lemma” (see Appendix), which   \n249 accounts for the fact that the feature covariance matrix $V _ { t - d }$ is updated with a delay of $d$ steps. ",
+        "bbox": [
+            140,
+            202,
+            826,
+            268
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "250 Lemma 3. For all $T \\geq 1$ , ",
+        "bbox": [
+            145,
+            272,
+            348,
+            286
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d12eaea13b900856f5aa4d72267e95d2e9a30b4434d75f18dd4ecdb799cd6844.jpg",
+        "text": "$$\n\\sum _ { \\ell = d + 1 } ^ { T } \\operatorname* { m i n } ( 1 , \\| X _ { t } \\| _ { V _ { t - d } ^ { - 1 } } ^ { 2 } ) \\leq 2 d p \\log ( 1 + \\frac { T } { \\lambda d p } ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            343,
+            292,
+            651,
+            337
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "251 ",
+        "bbox": [
+            140,
+            338,
+            160,
+            348
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "252 We can now state a worst-case regret upper bound for Mixing-LinUCB. ",
+        "bbox": [
+            147,
+            361,
+            642,
+            376
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Theorem 2. Fix 53 $\\lambda = 1 / B ^ { 2 }$ , $d > 0$ and $\\delta \\in ( 0 , 1 )$ . With probability at least $1 - \\delta$ , for all $T > d$ , the 54 regret of Mixing-LinUCB satisfies ",
+        "bbox": [
+            153,
+            378,
+            825,
+            409
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/649b11ead79fed09280908b86ca0322f5f04bc1e4d0137169a9977b8f80d6323.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathrm { R e g } ( T ) \\le 2 d B + \\sqrt { 8 d p T \\mathrm { m a x } ( B ^ { 2 } , \\beta _ { T } ^ { 2 } ) \\log ( 1 + \\frac { B ^ { 2 } T } { d p } ) } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            310,
+            415,
+            686,
+            443
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "255 ",
+        "bbox": [
+            140,
+            449,
+            161,
+            460
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "256 From the definition of $\\beta _ { T }$ , we see that this regret bound is of the order ",
+        "bbox": [
+            142,
+            472,
+            635,
+            487
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b12c40eb190c509dc9737ad1324200318e228aeb20ef6c216d9296b3d22477cd.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathrm { R e g } ( T ) = \\mathcal { O } \\left( d B + d p \\sqrt { T } \\log \\frac { T B } { d p } + T \\sqrt { B d p \\phi _ { d } \\log \\frac { T B } { d p } } + d \\sqrt { p T \\log \\frac { T B } { p \\delta } } \\right) . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            238,
+            493,
+            758,
+            522
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "257 For any fixed (i.e., not depending on $T$ ) delay $d$ , this regret bound is linear in $T$ . To obtain meaningful   \n258 regret bounds, it is therefore crucial to set $d$ as a function of $T$ and the rate at which the mixing   \n259 coefficients decay to zero3. Under the assumption that the noise variables are either geometrically or   \n260 algebraically mixing, we obtain the following worst-case regret bounds. ",
+        "bbox": [
+            140,
+            534,
+            825,
+            592
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "261 Corollary 2. Suppose that(geometric mixing), and set $\\begin{array} { r } { d = \\lceil \\tau \\log \\frac { B C T } { p } \\rceil } \\end{array}$ s Assumption. Then, the re $^ { l }$ with et of $\\phi _ { d } = C e ^ { - \\frac { d } { \\tau } }$ for some CB satisfie $C , \\tau > 0$ ",
+        "bbox": [
+            147,
+            597,
+            828,
+            628
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/16f76ca1818b2bf723aa28eb5e445bbd8e4a7b3953fa99a5255444578763ed2c.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathrm { \\lambda e g } ( T ) = \\mathcal { O } \\left( \\tau p \\sqrt { T } \\left( \\log \\frac { T B \\operatorname* { m a x } ( 1 , C ) } { p } \\right) ^ { 2 } + p \\sqrt { T \\tau } \\log \\frac { T B \\operatorname* { m a x } ( 1 , C ) } { p } + \\tau \\log \\frac { B C T } { p } \\sqrt { p T \\log \\frac { T B } { p \\delta } } \\right) . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            181,
+            636,
+            825,
+            671
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "263 Corollary 3. Suppose that the noise satisfies Assumption $^ { l }$ with $\\phi _ { d } = C d ^ { - r }$ for some $C > 0$ and   \n264 $r > 0$ (algebraic mixing), and set $d = \\lceil C \\dot { T } ^ { 1 / ( 1 + r ) } \\rceil$ . Then, the regret of Mixing-LinUCB satisfies ",
+        "bbox": [
+            138,
+            679,
+            825,
+            708
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b1edfd6b917815ca70b5e6993c41d534390debfbcb93b81f5751848c9859fa0a.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathrm { R e g } ( T ) \\leq \\mathcal { O } \\left( C B T ^ { 1 / ( 1 + r ) } + T ^ { \\frac { 3 + r } { 2 ( 1 + r ) } } \\left( C p \\log \\frac { T B } { d p } + C \\sqrt { B p \\log \\frac { T ^ { r / ( 1 + r ) } B } { C p } } + \\sqrt { p \\log \\frac { T B } { p \\delta } } \\right) \\right) . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            181,
+            714,
+            818,
+            750
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Up to a factor of $\\tau \\log T$ , the bound for geometrically mixing noise matches the regret bound for linear UCB with i.i.d. noise. This bound is trivial for $r \\leq 1$ , however for $r > 1$ we get sublinear regret, and in particular we recover standard rates up to logarithmic factors in the limit where $r  \\infty$ . ",
+        "bbox": [
+            171,
+            772,
+            825,
+            816
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "5.2 Gap-dependent regret bounds ",
+        "text_level": 1,
+        "bbox": [
+            173,
+            832,
+            423,
+            848
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Under the assumption that, each round, the gap between the expected reward of the optimal arm and the expected reward of any other arm is at least $\\Delta > 0$ , we get regret bounds with better dependence ",
+        "bbox": [
+            166,
+            858,
+            821,
+            887
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "8 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "3 If $T$ is unknown, one could probably use doubling tricks to set the value of $d$ , but we do not pursue this here. ",
+        "bbox": [
+            187,
+            897,
+            821,
+            911
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "265 ",
+        "bbox": [
+            142,
+            751,
+            161,
+            761
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "on 272 $T$ . More precisely, define the minimum gap $\\begin{array} { r } { \\Delta = \\operatorname* { m i n } _ { t \\in [ T ] } \\operatorname* { m i n } _ { x \\in \\mathcal { X } _ { t } : x \\neq X _ { t } ^ { \\star } } \\langle X _ { t } ^ { \\star } - x , \\theta ^ { \\star } \\rangle } \\end{array}$ , and 273 assume that $\\Delta > 0$ . Since we either have $R _ { t } = 0$ or $R _ { t } \\geq \\Delta > \\bar { 0 }$ , it follows that ",
+        "bbox": [
+            140,
+            90,
+            826,
+            121
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ceb80021b7ea37e0a2e7166ea8a12f92473bcbd73805221909136988b6409b90.jpg",
+        "text": "$$\nR _ { t } \\leq R _ { t } ^ { 2 } / \\Delta .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            452,
+            128,
+            545,
+            147
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "274 In our worst-case analysis, we showed that ",
+        "bbox": [
+            142,
+            162,
+            455,
+            178
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/163024f56a21e6d76dbd6ec721793acae7c75951a3ba9f2fc425b8bbed415cd7.jpg",
+        "text": "$$\n\\sum _ { t = d + 1 } ^ { T } R _ { t } ^ { 2 } \\le 8 d p \\operatorname* { m a x } ( B ^ { 2 } , \\beta _ { T } ^ { 2 } ) \\log ( 1 + { \\frac { T } { \\lambda d p } } ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            346,
+            186,
+            650,
+            232
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "275 Combined with the previous inequality, we obtain the following gap-dependent regret bound. ",
+        "bbox": [
+            142,
+            246,
+            782,
+            262
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "276 Theorem 3. Fix $\\lambda = 1 / B ^ { 2 }$ , $d > 0$ , and $\\delta \\in ( 0 , 1 )$ . With probability at least $1 - \\delta$ , for all $T > d$ , the   \n277 regret of Mixing-LinUCB satisfies ",
+        "bbox": [
+            147,
+            266,
+            825,
+            296
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/14987bfd28f76324995e4bbc593af3d8f114124cbf814255d2964c547b8af6f1.jpg",
+        "text": "$$\n\\mathrm { R e g } ( T ) \\leq 2 d B + \\frac { 8 d p } { \\Delta } \\operatorname* { m a x } ( B ^ { 2 } , \\beta _ { T } ^ { 2 } ) \\log \\left( 1 + \\frac { B ^ { 2 } T } { d p } \\right) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            312,
+            305,
+            686,
+            340
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "278 ",
+        "bbox": [
+            140,
+            343,
+            161,
+            354
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "279 Similarly to the worst-case bound in Theorem 2, for any fixed $d > 0$ , this regret bound is linear in $T$ .   \n280 By setting $d$ as a suitable function of $T$ , we obtain the following gap-dependent regret bounds under   \n281 geometrically or algebraically mixing noise.   \n282 Corollary 4. Suppose that the noise variables are geometrically mixing and set $\\begin{array} { r } { d = \\lceil \\tau \\log \\frac { B C T } { p } \\rceil } \\end{array}$   \n283 Then the regret of Mixing-LinUCB satisfies ",
+        "bbox": [
+            140,
+            367,
+            826,
+            410
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            414,
+            825,
+            446
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/3a588feb5f09e9dab55f3e61ea17fb017e08d5324d83e335b3fa2519a3f603fb.jpg",
+        "text": "$$\n\\mathrm { R e g } ( T ) = \\mathcal { O } \\left( \\frac { 8 \\tau p } { \\Delta } \\left( l o g \\frac { B C T } { p } \\right) ^ { 2 } \\log \\left( 1 + \\frac { B ^ { 2 } T } { p \\tau \\log \\frac { B C T } { p } } \\right) \\left( \\frac { p } { 2 } \\log \\frac { T } { p \\tau } + \\log \\frac { \\tau \\log \\frac { B C T } { p } } { \\delta } \\right) \\right) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            187,
+            455,
+            810,
+            498
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "284 ",
+        "bbox": [
+            140,
+            501,
+            161,
+            511
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "285 Corollary 5. Suppose that the noise variables are algebraically mixing and set $d = \\lceil C T ^ { 1 / ( 1 + r ) } \\rceil$ .   \n286 Then the regret of Mixing-LinUCB satisfies ",
+        "bbox": [
+            138,
+            517,
+            826,
+            547
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d439e05358db3c7d2c85ffcce737bc720a44c61b747788190252ed8febc8bdf0.jpg",
+        "text": "$$\n\\mathrm { R e g } ( T ) = \\mathcal { O } \\left( \\frac { 8 C p } { \\Delta } T ^ { \\frac { 2 } { 1 + r } } \\log \\left( 1 + \\frac { B ^ { 2 } T } { p C T ^ { 1 / ( 1 + r ) } } \\right) \\left( \\frac { p } { 2 } \\log \\frac { T } { p \\tau } + \\log \\frac { C T ^ { 1 / ( 1 + r ) } } { \\delta } \\right) \\right) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            215,
+            556,
+            781,
+            592
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "287 ",
+        "bbox": [
+            140,
+            595,
+            160,
+            606
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "6 Conclusion ",
+        "text_level": 1,
+        "bbox": [
+            166,
+            628,
+            299,
+            646
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "We leave several interesting questions open for future research. Some of these are listed below. ",
+        "bbox": [
+            160,
+            662,
+            794,
+            678
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "An important limitation of our algorithm is that it requires the knowledge of the mixing coefficients (or at least an upper-bound on them). It would be interesting to explore the possibility of relaxing this assumption and to design an algorithm which infers the mixing coefficients while minimizing the regret. We note that the problem of estimating mixing coefficients is already a hard problem on its own right, with tight sample-complexity results only available in special cases such as Markov chains (Hsu et al., 2019; Wolfer, 2020). We also note that in order to recover the standard rate for the regret bound, the delay $d$ introduced in our algorithm need to be chosen as a function of the horizon $T$ . We believe that this could be fixed at little conceptual expense by using time-varying delay in the analysis, but we did not attempt to work out the (potentially non-trivial) details here. ",
+        "bbox": [
+            169,
+            683,
+            825,
+            809
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "299 Another limitation is that our analysis assumed throughout that the adversary picking the decision sets   \n300 $\\mathcal { X } _ { t }$ is oblivious, which is typically not required in linear bandit problems. For us, this was necessary   \n301 to avoid potential statistical dependence between decision sets and the nonstationary observations.   \n302 We believe that this issue can be handled at least for some classes of adversaries. For instance, it   \n303 is easy to see that our analysis would carry through under the assumption that the decision sets be   \n304 selected based on delayed information only. We leave the investigation of this question under more   \n305 realistic assumptions open for future work. ",
+        "bbox": [
+            140,
+            814,
+            825,
+            911
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "discarded",
+        "text": "9 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "References   \n307 Naoki Abe and Philip M. Long. Associative reinforcement learning using linear probabilistic concepts. In Proceedings of the Sixteenth International Conference on Machine Learning, 1999.   \n309 Peter Auer. Using confidence bounds for exploitation-exploration trade-offs. J. Mach. Learn. Res., 3: 397–422, 2003.   \n311 Naoki Abe, Alan W. Biermann, and Philip M. Long. Reinforcement learning with immediate rewards and linear hypotheses. Algorithmica, 37(4):263–293, 2003.   \n313 Lihong Li, Wei Chu, John Langford, and Robert E Schapire. A contextual-bandit approach to personalized news article recommendation. In Proceedings of the 19th international conference on World wide web, pages 661–670, 2010.   \n316 Melda Korkut and Andrew Li. Disposable linear bandits for online recommendations. Proceedings of the AAAI Conference on Artificial Intelligence, 35(5), 2021.   \n318 Maxime C Cohen, Ilan Lobel, and Renato Paes Leme. Feature-based dynamic pricing. Management Science, 66(11):4921–4943, 2020.   \n320 T.L. Lai and Herbert Robbins. Asymptotically efficient adaptive allocation rules. Advances in Applied Mathematics, 6(1):4–22, 1985.   \n322 Yasin Abbasi-Yadkori, Dávid Pál, and Csaba Szepesvári. Improved algorithms for linear stochastic bandits. Advances in neural information processing systems, 24, 2011.   \n324 Tor Lattimore and Csaba Szepesvári. Bandit algorithms. Cambridge University Press, 2020.   \n325 Hamish Flynn, David Reeb, Melih Kandemir, and Jan R Peters. Improved algorithms for stochastic linear bandits using tail bounds for martingale mixtures. Advances in Neural Information Processing Systems, 36:45102–45136, 2023. Richard C. Bradley. Basic properties of strong mixing conditions: A survey and some open questions. Probability Surveys, 2:107–144, 2005.   \n330 M. Mohri and A. Rostamizadeh. Rademacher complexity bounds for non-i.i.d. processes. NeurIPS, 2008. Baptiste Abélès, Eugenio Clerico, and Gergely Neu. Generalization bounds for mixing processes via delayed online-to-PAC conversions. In Proceedings of The 36th International Conference on Algorithmic Learning Theory, 2025.   \n335 Kwang-Sung Jun, Aniruddha Bhargava, Robert Nowak, and Rebecca Willett. Scalable generalized linear bandits: Online computation and hashing. In Advances in Neural Information Processing Systems, volume 30, 2017.   \n338 Junghyun Lee, Se-Young Yun, and Kwang-Sung Jun. Improved regret bounds of (multinomial) logistic bandits via regret-to-confidence-set conversion. In Proceedings of the 27th International Conference on Artificial Intelligence and Statistics, pages 4474–4482, 2024. Eugenio Clerico, Hamish Flynn, Wojciech Kotłowski, and Gergely Neu. Confidence sequences for generalized linear models via regret analysis, 2025. URL https://arxiv.org/abs/2504. 16555. Claire Vernade, Alexandra Carpentier, Tor Lattimore, Giovanni Zappella, Beyza Ermis, and Michael Brueckner. Linear bandits with stochastic delayed feedback. In International Conference on Machine Learning, pages 9712–9721. PMLR, 2020a.   \n347 Benjamin Howson, Ciara Pike-Burke, and Sarah Filippi. Delayed feedback in generalised linear bandits revisited. In International Conference on Artificial Intelligence and Statistics, pages 6095–6119. PMLR, 2023.   \n350 Aurélien Garivier and Eric Moulines. On upper-confidence bound policies for non-stationary bandit problems. arXiv preprint arXiv:0805.3415, 2008.   \nYoan Russac, Claire Vernade, and Olivier Cappé. Weighted linear bandits for non-stationary environments. Advances in Neural Information Processing Systems, 32, 2019.   \nClaire Vernade, Andras Gyorgy, and Timothy Mann. Non-stationary delayed bandits with intermediate observations. In International Conference on Machine Learning, pages 9722–9732. PMLR, 2020b.   \nNicolò Cesa-Bianchi and Gabor Lugosi. Prediction, Learning, and Games. Cambridge University Press, USA, 2006.   \nPeter D. Grünwald. The Minimum Description Length Principle (Adaptive Computation and Machine Learning). The MIT Press, 2007.   \nBin Yu. Rates of convergence for empirical processes of stationary mixing sequences. The Annals of Probability, 22(1):94–116, 1994.   \nM.J. Weinberger and E. Ordentlich. On delayed prediction of individual sequences. IEEE Transactions on Information Theory, 48(7), 2002.   \nDaniel Hsu, Aryeh Kontorovich, David A Levin, Yuval Peres, Csaba Szepesvári, and Geoffrey Wolfer. Mixing time estimation in reversible markov chains from a single sample path. The Annals of Applied Probability, 29(4):2439–2480, 2019.   \nGeoffrey Wolfer. Mixing time estimation in ergodic markov chains from a single trajectory with contraction methods. In Algorithmic Learning Theory, pages 890–905, 2020. ",
+        "bbox": [
+            150,
+            79,
+            828,
+            916
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "10 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "306 308 310 312 313 314 315 317 319 321 323 326 327 328 329 331 332 333 334 336 337 339 340 341 342 343 344 345 346 348 349 351 ",
+        "bbox": [
+            137,
+            94,
+            166,
+            929
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            150,
+            90,
+            828,
+            398
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            506,
+            946
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "discarded",
+        "text": "352 353 354 355 356 357 358 359 360 361 362 363 364 365 366 367 368 ",
+        "bbox": [
+            138,
+            82,
+            163,
+            407
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "The checklist is designed to encourage best practices for responsible machine learning research, addressing issues of reproducibility, transparency, research ethics, and societal impact. Do not remove the checklist: The papers not including the checklist will be desk rejected. The checklist should follow the references and follow the (optional) supplemental material. The checklist does NOT count towards the page limit. ",
+        "bbox": [
+            140,
+            121,
+            825,
+            190
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "75 Please read the checklist guidelines carefully for information on how to answer these questions. For each question in the checklist: ",
+        "bbox": [
+            156,
+            195,
+            826,
+            224
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "• You should answer [Yes] , [No] , or [NA] .   \n• [NA] means either that the question is Not Applicable for that particular paper or the relevant information is Not Available.   \n• Please provide a short (1–2 sentence) justification right after your answer (even for NA). ",
+        "bbox": [
+            217,
+            236,
+            823,
+            303
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "The checklist answers are an integral part of your paper submission. They are visible to the reviewers, area chairs, senior area chairs, and ethics reviewers. You will be asked to also include it (after eventual revisions) with the final version of your paper, and its final version will be published with the paper. ",
+        "bbox": [
+            176,
+            313,
+            825,
+            368
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "The reviewers of your paper will be asked to use the checklist as one of the factors in their evaluation. While \"[Yes] \" is generally preferable to \"[No] \", it is perfectly acceptable to answer \"[No] \" provided a proper justification is given (e.g., \"error bars are not reported because it would be too computationally expensive\" or \"we were unable to find the license for the dataset we used\"). In general, answering \"[No] \" or \"[NA] \" is not grounds for rejection. While the questions are phrased in a binary way, we acknowledge that the true answer is often more nuanced, so please just use your best judgment and write a justification to elaborate. All supporting evidence can appear either in the main paper or the supplemental material, provided in appendix. If you answer [Yes] to a question, in the justification please point to the section(s) where related material for the question can be found. ",
+        "bbox": [
+            173,
+            375,
+            825,
+            500
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "394 IMPORTANT, please: ",
+        "bbox": [
+            143,
+            506,
+            320,
+            520
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "• Delete this instruction block, but keep the section heading “NeurIPS Paper Checklist\", • Keep the checklist subsection headings, questions/answers and guidelines below. • Do not modify the questions and only use the provided macros for your answers. ",
+        "bbox": [
+            217,
+            531,
+            825,
+            584
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "1. Claims ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            597,
+            284,
+            609
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "Question: Do the main claims made in the abstract and introduction accurately reflect the paper’s contributions and scope? ",
+        "bbox": [
+            228,
+            616,
+            823,
+            643
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            647,
+            330,
+            661
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "Justification: See sections 3, 4,5. ",
+        "bbox": [
+            232,
+            666,
+            447,
+            681
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            685,
+            308,
+            699
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the abstract and introduction do not include the claims made in the paper.   \n• The abstract and/or introduction should clearly state the claims made, including the contributions made in the paper and important assumptions and limitations. A No or NA answer to this question will not be perceived well by the reviewers.   \n• The claims made should match theoretical and experimental results, and reflect how much the results can be expected to generalize to other settings.   \n• It is fine to include aspirational goals as motivation as long as it is clear that these goals are not attained by the paper. ",
+        "bbox": [
+            251,
+            704,
+            825,
+            837
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "2. Limitations ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            840,
+            316,
+            854
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss the limitations of the work performed by the authors? ",
+        "bbox": [
+            227,
+            859,
+            805,
+            875
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            878,
+            330,
+            892
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "Justification: See Conclusion. ",
+        "bbox": [
+            232,
+            897,
+            428,
+            911
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "12 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "369 370 371 372 373 374 3 376 377 378 379 380 381 382 383 384 385 386 387 388 389 390 391 392 393 395 396 397 398 399 400 401 402 403 404 405 406 407 408 409 410 411 412 413 414 415 416 ",
+        "bbox": [
+            138,
+            88,
+            165,
+            936
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "NeurIPS Paper Checklist ",
+        "bbox": [
+            143,
+            89,
+            387,
+            107
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "text_level": 1,
+        "bbox": [
+            232,
+            92,
+            308,
+            106
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper.   \n• The authors are encouraged to create a separate \"Limitations\" section in their paper.   \n• The paper should point out any strong assumptions and how robust the results are to violations of these assumptions (e.g., independence assumptions, noiseless settings, model well-specification, asymptotic approximations only holding locally). The authors should reflect on how these assumptions might be violated in practice and what the implications would be.   \n• The authors should reflect on the scope of the claims made, e.g., if the approach was only tested on a few datasets or with a few runs. In general, empirical results often depend on implicit assumptions, which should be articulated.   \nThe authors should reflect on the factors that influence the performance of the approach. For example, a facial recognition algorithm may perform poorly when image resolution is low or images are taken in low lighting. Or a speech-to-text system might not be used reliably to provide closed captions for online lectures because it fails to handle technical jargon.   \n• The authors should discuss the computational efficiency of the proposed algorithms and how they scale with dataset size.   \n• If applicable, the authors should discuss possible limitations of their approach to address problems of privacy and fairness.   \nWhile the authors might fear that complete honesty about limitations might be used by reviewers as grounds for rejection, a worse outcome might be that reviewers discover limitations that aren’t acknowledged in the paper. The authors should use their best judgment and recognize that individual actions in favor of transparency play an important role in developing norms that preserve the integrity of the community. Reviewers will be specifically instructed to not penalize honesty concerning limitations. ",
+        "bbox": [
+            250,
+            111,
+            825,
+            484
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "3. Theory assumptions and proofs ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            489,
+            454,
+            503
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof? ",
+        "bbox": [
+            232,
+            507,
+            823,
+            535
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            540,
+            330,
+            554
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: Most of the common assumptions concerning linear bandits are presented in Section 2. The main novel assumption is introduced in section 3. All the proofs that are not addressed in the paper are gathered in the Appendix. ",
+        "bbox": [
+            233,
+            559,
+            825,
+            601
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            604,
+            310,
+            618
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include theoretical results.   \n• All the theorems, formulas, and proofs in the paper should be numbered and crossreferenced.   \n• All assumptions should be clearly stated or referenced in the statement of any theorems.   \n• The proofs can either appear in the main paper or the supplemental material, but if they appear in the supplemental material, the authors are encouraged to provide a short proof sketch to provide intuition.   \nInversely, any informal proof provided in the core of the paper should be complemented by formal proofs provided in appendix or supplemental material.   \n• Theorems and Lemmas that the proof relies upon should be properly referenced. ",
+        "bbox": [
+            251,
+            623,
+            825,
+            772
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "4. Experimental result reproducibility ",
+        "text_level": 1,
+        "bbox": [
+            215,
+            776,
+            480,
+            791
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)? ",
+        "bbox": [
+            232,
+            795,
+            825,
+            837
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            842,
+            328,
+            856
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: Not Applicable. ",
+        "bbox": [
+            232,
+            859,
+            426,
+            875
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            878,
+            308,
+            892
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments. ",
+        "bbox": [
+            250,
+            897,
+            705,
+            911
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "13 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "417 418 419 420 421 422 423 424 425 426 427 428 429 430 431 432 433 434 435 436 437 438 439 440 441 442 443 444 445 446 447 448 449 450 451 452 453 454 455 456 457 458 459 460 461 462 463 464 465 466 467 468 469 ",
+        "bbox": [
+            138,
+            97,
+            166,
+            930
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "• If the paper includes experiments, a No answer to this question will not be perceived well by the reviewers: Making the paper reproducible is important, regardless of whether the code and data are provided or not.   \n• If the contribution is a dataset and/or model, the authors should describe the steps taken to make their results reproducible or verifiable.   \nDepending on the contribution, reproducibility can be accomplished in various ways. For example, if the contribution is a novel architecture, describing the architecture fully might suffice, or if the contribution is a specific model and empirical evaluation, it may be necessary to either make it possible for others to replicate the model with the same dataset, or provide access to the model. In general. releasing code and data is often one good way to accomplish this, but reproducibility can also be provided via detailed instructions for how to replicate the results, access to a hosted model (e.g., in the case of a large language model), releasing of a model checkpoint, or other means that are appropriate to the research performed.   \nWhile NeurIPS does not require releasing code, the conference does require all submissions to provide some reasonable avenue for reproducibility, which may depend on the nature of the contribution. For example (a) If the contribution is primarily a new algorithm, the paper should make it clear how to reproduce that algorithm. (b) If the contribution is primarily a new model architecture, the paper should describe the architecture clearly and fully. (c) If the contribution is a new model (e.g., a large language model), then there should either be a way to access this model for reproducing the results or a way to reproduce the model (e.g., with an open-source dataset or instructions for how to construct the dataset). (d) We recognize that reproducibility may be tricky in some cases, in which case authors are welcome to describe the particular way they provide for reproducibility. In the case of closed-source models, it may be that access to the model is limited in some way (e.g., to registered users), but it should be possible for other researchers to have some path to reproducing or verifying the results. ",
+        "bbox": [
+            250,
+            92,
+            825,
+            522
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "5. Open access to data and code ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            529,
+            437,
+            542
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material? ",
+        "bbox": [
+            233,
+            549,
+            825,
+            590
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            233,
+            597,
+            328,
+            611
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: Not Applicable. ",
+        "bbox": [
+            232,
+            617,
+            426,
+            632
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            637,
+            308,
+            651
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that paper does not include experiments requiring code.   \n• Please see the NeurIPS code and data submission guidelines (https://nips.cc/ public/guides/CodeSubmissionPolicy) for more details.   \n• While we encourage the release of code and data, we understand that this might not be possible, so “No” is an acceptable answer. Papers cannot be rejected simply for not including code, unless this is central to the contribution (e.g., for a new open-source benchmark).   \n• The instructions should contain the exact command and environment needed to run to reproduce the results. See the NeurIPS code and data submission guidelines (https: //nips.cc/public/guides/CodeSubmissionPolicy) for more details.   \n• The authors should provide instructions on data access and preparation, including how to access the raw data, preprocessed data, intermediate data, and generated data, etc.   \n• The authors should provide scripts to reproduce all experimental results for the new proposed method and baselines. If only a subset of experiments are reproducible, they should state which ones are omitted from the script and why.   \n• At submission time, to preserve anonymity, the authors should release anonymized versions (if applicable). ",
+        "bbox": [
+            250,
+            656,
+            826,
+            911
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "14 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "470 471 472 473 474 475 476 477 478 479 480 481 482 483 484 485 486 487 488 489 490 491 492 493 494 495 496 497 498 499 500 501 502 503 504 505 506 507 508 509 510 511 512 513 514 515 516 517 518 519 520 521 522 523 ",
+        "bbox": [
+            137,
+            87,
+            168,
+            928
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "• Providing as much information as possible in supplemental material (appended to the paper) is recommended, but including URLs to data and code is permitted. ",
+        "bbox": [
+            250,
+            92,
+            823,
+            119
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "6. Experimental setting/details ",
+        "text_level": 1,
+        "bbox": [
+            212,
+            125,
+            429,
+            138
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results? ",
+        "bbox": [
+            233,
+            143,
+            825,
+            185
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            190,
+            328,
+            205
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: Not Applicable. ",
+        "bbox": [
+            232,
+            210,
+            426,
+            224
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            229,
+            310,
+            243
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments. • The experimental setting should be presented in the core of the paper to a level of detail that is necessary to appreciate the results and make sense of them. • The full details can be provided either with the code, in appendix, or as supplemental material. ",
+        "bbox": [
+            250,
+            248,
+            825,
+            323
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "7. Experiment statistical significance ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            329,
+            472,
+            343
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments? ",
+        "bbox": [
+            232,
+            348,
+            823,
+            376
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            381,
+            328,
+            395
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: Not Applicable. ",
+        "bbox": [
+            233,
+            400,
+            426,
+            415
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            420,
+            308,
+            434
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The authors should answer \"Yes\" if the results are accompanied by error bars, confidence intervals, or statistical significance tests, at least for the experiments that support the main claims of the paper. The factors of variability that the error bars are capturing should be clearly stated (for example, train/test split, initialization, random drawing of some parameter, or overall run with given experimental conditions).   \n• The method for calculating the error bars should be explained (closed form formula, call to a library function, bootstrap, etc.)   \n• The assumptions made should be given (e.g., Normally distributed errors).   \n• It should be clear whether the error bar is the standard deviation or the standard error of the mean.   \n• It is OK to report 1-sigma error bars, but one should state it. The authors should preferably report a 2-sigma error bar than state that they have a $96 \\%$ CI, if the hypothesis of Normality of errors is not verified.   \n• For asymmetric distributions, the authors should be careful not to show in tables or figures symmetric error bars that would yield results that are out of range (e.g. negative error rates).   \n• If error bars are reported in tables or plots, The authors should explain in the text how they were calculated and reference the corresponding figures or tables in the text. ",
+        "bbox": [
+            250,
+            438,
+            826,
+            737
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "8. Experiments compute resources ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            743,
+            457,
+            757
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments? ",
+        "bbox": [
+            232,
+            762,
+            825,
+            803
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            809,
+            328,
+            823
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: Not Applicable. ",
+        "bbox": [
+            232,
+            828,
+            426,
+            843
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            848,
+            308,
+            861
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments. • The paper should indicate the type of compute workers CPU or GPU, internal cluster, or cloud provider, including relevant memory and storage. ",
+        "bbox": [
+            250,
+            867,
+            826,
+            911
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "15 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "524 525 526 527 528 529 530 531 532 533 534 535 536 537 538 539 540 541 542 543 544 545 546 547 548 549 550 551 552 553 554 555 556 557 558 559 560 561 562 563 564 565 566 567 568 569 570 571 572 573 ",
+        "bbox": [
+            137,
+            92,
+            166,
+            933
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The paper should provide the amount of compute required for each of the individual experimental runs as well as estimate the total compute.   \n• The paper should disclose whether the full research project required more compute than the experiments reported in the paper (e.g., preliminary or failed experiments that didn’t make it into the paper). ",
+        "bbox": [
+            248,
+            92,
+            825,
+            164
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "9. Code of ethics ",
+        "text_level": 1,
+        "bbox": [
+            212,
+            167,
+            333,
+            181
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines? ",
+        "bbox": [
+            232,
+            186,
+            823,
+            215
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            219,
+            328,
+            233
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: ",
+        "bbox": [
+            232,
+            238,
+            316,
+            251
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            256,
+            310,
+            270
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the authors have not reviewed the NeurIPS Code of Ethics.   \n• If the authors answer No, they should explain the special circumstances that require a deviation from the Code of Ethics.   \n• The authors should make sure to preserve anonymity (e.g., if there is a special consideration due to laws or regulations in their jurisdiction). ",
+        "bbox": [
+            251,
+            275,
+            825,
+            349
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "10. Broader impacts ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            353,
+            351,
+            367
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed? ",
+        "bbox": [
+            233,
+            372,
+            823,
+            400
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            405,
+            328,
+            419
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: ",
+        "bbox": [
+            232,
+            424,
+            316,
+            438
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            443,
+            310,
+            455
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that there is no societal impact of the work performed.   \n• If the authors answer NA or No, they should explain why their work has no societal impact or why the paper does not address societal impact.   \n• Examples of negative societal impacts include potential malicious or unintended uses (e.g., disinformation, generating fake profiles, surveillance), fairness considerations (e.g., deployment of technologies that could make decisions that unfairly impact specific groups), privacy considerations, and security considerations.   \n• The conference expects that many papers will be foundational research and not tied to particular applications, let alone deployments. However, if there is a direct path to any negative applications, the authors should point it out. For example, it is legitimate to point out that an improvement in the quality of generative models could be used to generate deepfakes for disinformation. On the other hand, it is not needed to point out that a generic algorithm for optimizing neural networks could enable people to train models that generate Deepfakes faster.   \nThe authors should consider possible harms that could arise when the technology is being used as intended and functioning correctly, harms that could arise when the technology is being used as intended but gives incorrect results, and harms following from (intentional or unintentional) misuse of the technology. If there are negative societal impacts, the authors could also discuss possible mitigation strategies (e.g., gated release of models, providing defenses in addition to attacks, mechanisms for monitoring misuse, mechanisms to monitor how a system learns from feedback over time, improving the efficiency and accessibility of ML). ",
+        "bbox": [
+            250,
+            457,
+            825,
+            776
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "11. Safeguards ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            781,
+            313,
+            795
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pretrained language models, image generators, or scraped datasets)? ",
+        "bbox": [
+            232,
+            800,
+            825,
+            842
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            845,
+            328,
+            859
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: This article is purely theoretical and addresses a mathematical problem which it attempts to solve. ",
+        "bbox": [
+            228,
+            864,
+            823,
+            892
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            897,
+            310,
+            911
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "574 575 576 577 578 579 580 581 582 583 584 585 586 587 588 589 590 591 592 593 594 595 596 597 598 599 600 601 602 603 604 605 606 607 608 609 610 611 612 613 614 615 616 617 618 619 620 621 622 623 624 625 ",
+        "bbox": [
+            138,
+            93,
+            166,
+            930
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper poses no such risks.   \n• Released models that have a high risk for misuse or dual-use should be released with necessary safeguards to allow for controlled use of the model, for example by requiring that users adhere to usage guidelines or restrictions to access the model or implementing safety filters.   \n• Datasets that have been scraped from the Internet could pose safety risks. The authors should describe how they avoided releasing unsafe images.   \n• We recognize that providing effective safeguards is challenging, and many papers do not require this, but we encourage authors to take this into account and make a best faith effort. ",
+        "bbox": [
+            250,
+            92,
+            825,
+            237
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "12. Licenses for existing assets ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            243,
+            419,
+            257
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected? ",
+        "bbox": [
+            232,
+            262,
+            823,
+            304
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            309,
+            328,
+            323
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Justification: ",
+        "bbox": [
+            232,
+            328,
+            316,
+            342
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            347,
+            308,
+            361
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not use existing assets.   \n• The authors should cite the original paper that produced the code package or dataset.   \n• The authors should state which version of the asset is used and, if possible, include a URL.   \n• The name of the license (e.g., CC-BY 4.0) should be included for each asset.   \n• For scraped data from a particular source (e.g., website), the copyright and terms of service of that source should be provided.   \n• If assets are released, the license, copyright information, and terms of use in the package should be provided. For popular datasets, paperswithcode.com/datasets has curated licenses for some datasets. Their licensing guide can help determine the license of a dataset.   \n• For existing datasets that are re-packaged, both the original license and the license of the derived asset (if it has changed) should be provided.   \n• If this information is not available online, the authors are encouraged to reach out to the asset’s creators. ",
+        "bbox": [
+            246,
+            364,
+            826,
+            593
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "13. New assets ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            598,
+            310,
+            611
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets? ",
+        "bbox": [
+            232,
+            617,
+            823,
+            643
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            650,
+            328,
+            664
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Justification: ",
+        "bbox": [
+            232,
+            669,
+            318,
+            683
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            688,
+            310,
+            702
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not release new assets.   \n• Researchers should communicate the details of the dataset/code/model as part of their submissions via structured templates. This includes details about training, license, limitations, etc.   \n• The paper should discuss whether and how consent was obtained from people whose asset is used.   \n• At submission time, remember to anonymize your assets (if applicable). You can either create an anonymized URL or include an anonymized zip file. ",
+        "bbox": [
+            251,
+            708,
+            826,
+            825
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "14. Crowdsourcing and research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            832,
+            584,
+            845
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? ",
+        "bbox": [
+            233,
+            851,
+            825,
+            892
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            897,
+            328,
+            911
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "17 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "626 627 628 629 630 631 632 633 634 635 636 637 638 639 640 641 642 643 644 645 646 647 648 649 650 651 652 653 654 655 656 657 658 659 660 661 662 663 664 665 666 667 668 669 670 671 672 673 674 675 676 ",
+        "bbox": [
+            137,
+            93,
+            166,
+            924
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Justification: ",
+        "bbox": [
+            232,
+            92,
+            316,
+            106
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            111,
+            308,
+            125
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   \n• Including this information in the supplemental material is fine, but if the main contribution of the paper involves human subjects, then as much detail as possible should be included in the main paper.   \n• According to the NeurIPS Code of Ethics, workers involved in data collection, curation, or other labor should be paid at least the minimum wage in the country of the data collector. ",
+        "bbox": [
+            248,
+            128,
+            825,
+            244
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "15. Institutional review board (IRB) approvals or equivalent for research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            210,
+            250,
+            821,
+            277
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained? ",
+        "bbox": [
+            232,
+            282,
+            825,
+            337
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            342,
+            328,
+            356
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: ",
+        "bbox": [
+            232,
+            361,
+            316,
+            375
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            380,
+            310,
+            393
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   \n• Depending on the country in which research is conducted, IRB approval (or equivalent) may be required for any human subjects research. If you obtained IRB approval, you should clearly state this in the paper.   \n• We recognize that the procedures for this may vary significantly between institutions and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the guidelines for their institution.   \n• For initial submissions, do not include any information that would break anonymity (if applicable), such as the institution conducting the review. ",
+        "bbox": [
+            248,
+            398,
+            825,
+            544
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "16. Declaration of LLM usage ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            549,
+            419,
+            563
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe the usage of LLMs if it is an important, original, or non-standard component of the core methods in this research? Note that if the LLM is used only for writing, editing, or formatting purposes and does not impact the core methodology, scientific rigorousness, or originality of the research, declaration is not required. ",
+        "bbox": [
+            232,
+            568,
+            825,
+            623
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            628,
+            328,
+            642
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: ",
+        "bbox": [
+            232,
+            647,
+            316,
+            660
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            666,
+            308,
+            679
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the core method development in this research does not involve LLMs as any important, original, or non-standard components. • Please refer to our LLM policy (https://neurips.cc/Conferences/2025/LLM) for what should or should not be described. ",
+        "bbox": [
+            248,
+            684,
+            825,
+            742
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "677 678 679 680 681 682 683 684 685 686 687 688 689 690 691 692 693 694 695 696 697 698 699 700 701 702 703 704 705 706 707 708 709 710 711 712 713 714 715 716 717 ",
+        "bbox": [
+            138,
+            74,
+            166,
+            755
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "18 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 17
+    }
+]

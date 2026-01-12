@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768193715824",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:55:15.835192Z",
+    "started_at": 1768193715.8355644,
+    "completed_at": 1768193833.8224409,
+    "error_message": null,
+    "file_info": {
+      "filename": "M2JU5WQ1Gw.pdf",
+      "size": 1322985,
+      "md5": "f3edc868dfb80d193658bbb535b14a80"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 116.62770104408264,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/f3edc868dfb80d193658bbb535b14a80/results.zip"
+  }
+}

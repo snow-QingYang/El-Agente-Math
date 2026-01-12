@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768191206069",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:13:26.082895Z",
+    "started_at": 1768191206.0832105,
+    "completed_at": 1768191259.754554,
+    "error_message": null,
+    "file_info": {
+      "filename": "wh3p37VYm2.pdf",
+      "size": 3052271,
+      "md5": "05dc10da8b658120b74c1339384ea0dd"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 52.7140154838562,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/05dc10da8b658120b74c1339384ea0dd/results.zip"
+  }
+}

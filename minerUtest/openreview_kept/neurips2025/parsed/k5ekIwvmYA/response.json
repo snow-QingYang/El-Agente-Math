@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768192207657",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:30:07.691420Z",
+    "started_at": 1768192207.6919618,
+    "completed_at": 1768192274.5565257,
+    "error_message": null,
+    "file_info": {
+      "filename": "k5ekIwvmYA.pdf",
+      "size": 5962338,
+      "md5": "4c629f04635862a1a1a3f3918c2ce55e"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 63.05538988113403,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/4c629f04635862a1a1a3f3918c2ce55e/results.zip"
+  }
+}

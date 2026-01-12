@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768194864130",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T05:14:24.138246Z",
+    "started_at": 1768194864.1386302,
+    "completed_at": 1768194940.6831715,
+    "error_message": null,
+    "file_info": {
+      "filename": "2rgYVFiWPL.pdf",
+      "size": 669389,
+      "md5": "1d6a5832140eb942ad8d0af9092a8996"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 67.62184047698975,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/1d6a5832140eb942ad8d0af9092a8996/results.zip"
+  }
+}

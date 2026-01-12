@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768192459609",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:34:19.622724Z",
+    "started_at": 1768192459.623074,
+    "completed_at": 1768192528.771749,
+    "error_message": null,
+    "file_info": {
+      "filename": "dCWSVAbWXM.pdf",
+      "size": 2386560,
+      "md5": "e252b432d297d267b97f39d674dc5573"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 67.77559971809387,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/e252b432d297d267b97f39d674dc5573/results.zip"
+  }
+}

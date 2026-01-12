@@ -1,0 +1,4245 @@
+[
+    {
+        "type": "text",
+        "text": "Stepwise Feature Learning in Self-Supervised Learning ",
+        "text_level": 1,
+        "bbox": [
+            223,
+            122,
+            774,
+            172
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Anonymous Author(s)   \nAffiliation   \nAddress   \nemail ",
+        "bbox": [
+            423,
+            226,
+            580,
+            281
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Abstract ",
+        "text_level": 1,
+        "bbox": [
+            462,
+            318,
+            535,
+            334
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "1 Recent advances in self-supervised learning (SSL) have shown remarkable progress   \n2 in representation learning. However, SSL models often exhibit shortcut learning   \n3 phenomenon, where they exploit dataset-specific biases rather than learning gen  \n4 eralizable features, sometimes leading to severe over-optimization on particular   \n5 datasets. We present a theoretical framework that analyzes this shortcut learning   \n6 phenomenon through the lens of extent bias and amplitude bias. By investigating   \n7 the relations among extent bias, amplitude bias, and learning priorities in SSL,   \n8 we demonstrate that learning dynamics is fundamentally governed by the dimen  \n9 sional properties and amplitude of features rather than their semantic importance.   \n10 Our analysis reveals how the eigenvalues of the feature cross-correlation matrix   \n11 influence which features are learned earlier, providing insights into why models   \n12 preferentially learn shortcut features over more generalizable features. ",
+        "bbox": [
+            148,
+            349,
+            766,
+            517
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "13 1 Introduction ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            545,
+            312,
+            563
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "14 While deep neural networks have shown remarkable success in various learning tasks, recent studies   \n15 have revealed a concerning trend: models often exploit unexpected learning behavior, particularly   \n16 shortcut learning, which tends to take easier but potentially less reliable paths to solve general tasks   \n17 [13]. For example, in image classification tasks, models tend to learn earlier larger background   \n18 features than smaller foreground objects [17], potentially leading them to classify cows based on   \n19 whether they appear on grass rather than learning actual cow features, or identify camels primarily by   \n20 detecting desert backgrounds [5]. This phenomenon is prevalent even in SSL [11, 22, 29, 10].   \n21 While previous research has shown that neural networks are vulnerable to spurious correlations in   \n22 data [1], several other contributing factors to shortcut learning have been identified. Hermann et al.   \n23 [17] find shortcuts emerging from color, size, and background. Rahaman et al. [25], Tancik et al.   \n24 [27] find spectral bias that low-frequency features are learned faster than high-frequency features.   \n25 While significant progress has been achieved, current theoretical frameworks provide insufficient   \n26 explanations for why models consistently induce shortcuts.   \n27 Recent studies have demonstrated that SSL models with small weight initialization exhibit stepwise   \n28 learning dynamics, where features are learned sequentially based on the corresponding eigenvalues   \n29 of the feature cross-correlation matrix [26]. Building on this insight, we analyze the eigenvalue   \n30 and eigenvector structure of the feature cross-correlation matrix. This approach provides a novel   \n31 theoretical framework for understanding why certain features, regardless of their semantic importance,   \n32 are consistently learned earlier in the training process. Our investigation focuses particularly on how   \n33 dimensional properties influence learning priority, potentially explaining some observed shortcut   \n34 learning phenomena beyond traditional spurious correlations. ",
+        "bbox": [
+            147,
+            577,
+            825,
+            674
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            681,
+            826,
+            763
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            770,
+            825,
+            882
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "35 The contributions of our work are as follows: ",
+        "bbox": [
+            148,
+            887,
+            470,
+            901
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "Submitted to 39th Conference on Neural Information Processing Systems (NeurIPS 2025). Do not distribute. ",
+        "bbox": [
+            169,
+            922,
+            813,
+            936
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "• We establish theoretical connections between shortcut learning phenomenon, stepwise learning, and eigenvalue-eigenvector of feature cross-correlation matrix on SSL.   \n• We extend theoretical research on shortcut learning from supervised learning to SSL.   \n• We characterize extent bias, a tendency to prioritize features based on their dimensional extent or spatial coverage rather than their semantic importance.   \n• We analyze how amplitude and frequency determine which features are learned earlier in SSL, and characterize amplitude bias, a tendency to prioritize features based on their amplitude rather than their semantic importance. ",
+        "bbox": [
+            158,
+            90,
+            826,
+            217
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "44 2 Related Works ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            234,
+            330,
+            252
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "45 Self-supervised learning SimCLR [7] established a foundational contrastive learning framework   \n46 but required large batch sizes to generate sufficient negative pairs for preventing representational   \n47 collapse. This limitation prompted research into non-contrastive approaches, leading to innovations   \n48 like SimSiam [8] and BYOL [14]. Further research introduced methods focusing on different training   \n49 objectives: VICReg [4] introduced variance-invariance-covariance regularization, while Barlow   \n50 Twins [31] employed cross-correlation matrix to prevent collapse. DINO [6] advanced the field by   \n51 introducing self-distillation with no labels. The success of DINO v2 [23] sparked interest in Joint   \n52 Embedding Predictive Architectures (JEPA) [2], with recent work by Littwin et al. [20] revealing   \n53 JEPA’s tendency to prioritize learning “related” features over “frequently” occurring ones.   \n54 Learning dynamics Following the introduction of Neural Tangent Kernel (NTK) [18], researchers   \n55 have discovered important connections between eigenvalue dynamics and learning behavior, including   \n56 spectral bias phenomena [27, 15]. This theoretical framework has enabled deeper analysis of loss   \n57 function trajectories and saddle point behaviors [19, 24]. Notably, Simon et al. [26] demonstrated   \n58 that these saddle-to-saddle dynamics appear not only in supervised learning but also extend to SSL   \n59 settings.   \n60 Shortcut learning Shortcut learning was first identified in Geirhos et al. [13], describing how   \n61 neural networks take easier but incorrect paths to solve tasks. This phenomenon appears in various   \n62 ways: Geirhos et al. [12], Baker et al. [3], Hermann and Lampinen [16] showed that CNNs rely   \n63 on object texture rather than object shape, Wu et al. [30] demonstrated that even a single pixel can   \n64 mislead model’s decisions, and Hermann et al. [17] revealed that CNNs preferentially learn salient   \n65 but potentially irrelevant features like scale and background elements. These shortcuts can arise   \n66 from dataset properties, particularly through spurious correlations [1] and implicit biases. Our work   \n67 specifically examines how dataset correlations contribute to shortcut learning. ",
+        "bbox": [
+            147,
+            266,
+            825,
+            392
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            405,
+            825,
+            489
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            502,
+            825,
+            614
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "68 3 Background (Stepwise Nature of SSL [26]) ",
+        "text_level": 1,
+        "bbox": [
+            147,
+            632,
+            562,
+            650
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "69 In this section, following Simon et al. [26], we analyze the stepwise learning dynamics of SSL systems   \n70 through the lens of toy Barlow Twins models [31]. We first introduce the loss function and gradient   \n71 flow dynamics, then derive the connection between cross-correlation matrix and feature learning.   \n72 Finally, we examine how the eigendecomposition of feature cross-correlation matrix connects to the   \n73 theoretical foundation for our analysis of extent bias, amplitude bias. ",
+        "bbox": [
+            147,
+            664,
+            825,
+            734
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "74 75 at, $\\{ x ^ { ( i ) } \\in \\mathbb { R } ^ { m } : i = 1 , 2 , \\cdot \\cdot \\cdot , n \\}$ Barlow, where is defined asis Frobenius $\\mathcal { L } = | | C - I _ { d } | | _ { F } ^ { 2 }$ $\\begin{array} { r } { C \\equiv \\frac { 1 } { 2 n } \\sum _ { i = 1 } ^ { n } ( W x ^ { ( i ) } ) ( W x ^ { \\prime ( i ) } ) ^ { \\top } + ( W x ^ { \\prime ( i ) } ) ( W x ^ { ( i ) } ) ^ { \\top } } \\end{array}$ $| | \\cdot | | _ { F }$ 76 norm, $W \\in \\mathbb { R } ^ { d \\times m }$ is learnable parameters, and $C \\in \\mathbb { R } ^ { d \\times d }$ is cross-correlation matrix of $W x$ and 77 $W x ^ { \\prime }$ for another view $x ^ { \\prime }$ from $x$ . Using the feature cross-correlation matrix ",
+        "bbox": [
+            147,
+            739,
+            825,
+            801
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/04466a5076ff08ae3bf0799015f24505c742cde333fb8fd17061c6d484b27f1a.jpg",
+        "text": "$$\n\\Gamma \\equiv \\frac { 1 } { 2 n } \\sum _ { i = 1 } ^ { n } ( x ^ { ( i ) } x ^ { \\prime ( i ) \\top } + x ^ { \\prime ( i ) } x ^ { ( i ) \\top } ) \\in \\mathbb { R } ^ { m \\times m } ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            341,
+            806,
+            655,
+            848
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "we have 78 $\\begin{array} { r } { \\mathcal { L } \\ = \\ | | W \\Gamma W ^ { \\top } \\ - \\ I _ { d } | | _ { F } ^ { 2 } } \\end{array}$ and $C = W \\Gamma W ^ { \\top }$ . The eigendecomposition of the feature 79 cross-correlation matrix is $\\Gamma = V _ { \\Gamma } \\Lambda _ { \\Gamma } V _ { \\Gamma } ^ { \\top }$ with $\\Lambda _ { \\Gamma } = \\operatorname { d i a g } ( \\gamma _ { 1 } , \\cdot \\cdot \\cdot , \\gamma _ { m } )$ and $V _ { \\Gamma } = [ v _ { 1 } \\cdot \\cdot \\cdot v _ { m } ] \\in$ 80 $\\mathbb { R } ^ { m \\times m }$ ,where $\\gamma _ { 1 } \\ge \\gamma _ { 2 } \\ge \\cdots \\ge \\gamma _ { m }$ are eigenvalues of $\\Gamma$ and $v _ { i }$ ’s are the corresponding eigenvectors 81 for $\\gamma _ { i }$ ’s. ",
+        "bbox": [
+            147,
+            852,
+            825,
+            912
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "discarded",
+        "text": "2 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "82 Using (3), we can express the gradient flow as follows: ",
+        "bbox": [
+            147,
+            90,
+            534,
+            107
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/6b38d6019f4fcecd3b319f6f06da38228519df5a020a1a82adc443799cb874f0.jpg",
+        "text": "$$\n\\frac { d W } { d t } = - \\nabla _ { W } \\mathcal { L } = - 4 ( W \\Gamma W ^ { \\top } - I _ { d } ) W \\Gamma .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            356,
+            111,
+            643,
+            141
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "83 To analyze eigenvector dynamics of weights, we assume weight initialization is aligned. ",
+        "bbox": [
+            150,
+            145,
+            748,
+            161
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "84 Assumption 3.1 (Aligned Initialization Simon et al. [26]). At the initialization, we assume that the   \n85 right-singular vectors of $W ( 0 )$ are aligned with the top $d$ eigenvectors of $\\Gamma$ , i.e., the singular value   \n86 decomposition is $W ( 0 ) = U S _ { 0 } V _ { \\Gamma } ^ { ( \\leq d ) \\top }$ for a orthogonal matrix $U \\in \\mathbb { R } ^ { d \\times d }$ , the top- $d$ eigenvector   \n87 matrix $V _ { \\Gamma } ^ { ( \\leq d ) } = \\left[ \\boldsymbol { v } _ { 1 } \\cdot \\cdot \\cdot \\boldsymbol { v } _ { d } \\right] \\in \\mathbb { R } ^ { \\bar { m } \\times d }$ , and a diagonal matrix $S _ { 0 } = \\mathrm { d i a g } ( s _ { 1 } ( 0 ) , \\cdot \\cdot \\cdot , s _ { d } ( 0 ) )$ with a   \n88 small initialization $s _ { j } ( 0 ) > 0$ .   \n89 Under Assumption 3.1, the solution $W ( t )$ for the gradient flow (2) can be expressed as follows   \n90 [26, Proposition 4.1]: $W ( t ) = U S ( t ) V _ { \\Gamma } ^ { ( \\leq d ) \\top }$ for $S ( t ) = \\mathrm { d i a g } ( s _ { 1 } ( t ) , \\cdot \\cdot \\cdot , s _ { d } ( t ) )$ , where the singular   \n91 values of $W ( t )$ evolve as ",
+        "bbox": [
+            145,
+            162,
+            825,
+            243
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            251,
+            826,
+            297
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/44cab95b28a0fabe018ff3e279cb0eb708c33e91d56855bd23729f7cb9b42273.jpg",
+        "text": "$$\ns _ { j } ( t ) = \\frac { e ^ { 4 \\gamma _ { j } t } } { \\sqrt { s _ { j } ^ { - 2 } ( 0 ) + ( e ^ { 8 \\gamma _ { j } t } - 1 ) \\gamma _ { j } } }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            382,
+            303,
+            616,
+            348
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "which has a limit of 92 $\\gamma _ { j } ^ { - 1 / 2 }$ as $t \\to \\infty$ and nearly sigmoidal ",
+        "bbox": [
+            145,
+            353,
+            560,
+            373
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4c0fa564701aadf9bf94d437dd16c4aeefbc91aa45aaa69a5ef01ed3f0a8cf37.jpg",
+        "text": "$$\ns _ { j } ^ { 2 } ( t ) \\approx \\frac { 1 } { \\gamma _ { j } + s _ { j } ^ { - 2 } ( 0 ) e ^ { - 8 \\gamma _ { j } t } } = : \\tilde { s } _ { j } ^ { 2 } ( t ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            372,
+            378,
+            625,
+            415
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Solving 93 $\\begin{array} { r } { \\tilde { s } _ { j } ^ { 2 } ( t ) = \\frac 1 2 s _ { j } ^ { 2 } ( \\infty ) } \\end{array}$ at its critical time $t = \\tau _ { j }$ , we have ",
+        "bbox": [
+            145,
+            420,
+            568,
+            438
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/51e8d4752350ea5b80186d84342091bd729faef3848c292888525ea214682fa7.jpg",
+        "text": "$$\n\\tau _ { j } = - \\frac { \\log \\left( s _ { j } ^ { 2 } ( 0 ) \\gamma _ { j } \\right) } { 8 \\gamma _ { j } }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            426,
+            443,
+            571,
+            479
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "around which 94 $s _ { j } ( t )$ (or $\\tilde { s } _ { j } ( t ) )$ ) passes $\\scriptstyle { \\frac { 1 } { 2 } } \\gamma _ { j } ^ { - 1 / 2 }$ and rapidly increases from near zero to near the 95 saturation γ−j $\\gamma _ { j } ^ { - 1 / 2 }$ ",
+        "bbox": [
+            147,
+            486,
+            825,
+            526
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "In this paper, we focus on the property that the eigenvector feature $v _ { j }$ corresponding to a larger $\\gamma _ { j }$ leads to an earlier critical point $\\tau _ { j }$ from (4). ",
+        "bbox": [
+            161,
+            529,
+            823,
+            559
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "98 4 Extent bias ",
+        "text_level": 1,
+        "bbox": [
+            150,
+            577,
+            299,
+            593
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "99 In computer vision tasks, backgrounds typically span larger regions while foreground objects occupy   \n100 more concentrated areas. Recent work by Hermann et al. [17] reveals that CNNs preferentially   \n101 learn these background features over object-specific details, creating a specific form of spurious   \n102 correlation between backgrounds and class labels. For example, cows are often classified based on   \n103 grass backgrounds rather than their distinctive features, and camels are identified through desert scenes   \n104 [5]. This phenomenon points to a underlying learning mechanism we term extent bias, a fundamental   \n105 tendency of neural networks to prioritize features based on their dimensional extent or spatial coverage   \n106 rather than their semantic importance. The connection between extent bias and learning dynamics   \n107 implies the need for understanding a more fundamental mechanism beyond traditional spurious   \n108 correlations. While spurious correlations emerge from dataset-specific relationships, the bias toward   \n109 learning background features is inherent in the learning dynamics of neural networks themselves.   \n110 Through our analysis of SSL systems, we demonstrate that this bias for background features emerges   \n111 naturally from how models learn earlier features with higher extent bias, independent of their semantic   \n112 relevance or predictive power.   \n113 In this section, we investigate how different feature properties influence learning priorities in SSL.   \n114 Through extent bias analysis, we demonstrate how features with larger dimensional coverage are   \n115 learned before those with smaller coverage, regardless of their semantic importance.   \n116 We construct a theoretical framework that identifies dimensional effects in feature learning. By   \n117 analyzing how SSL models process features of varying extent bias, we can directly observe how   \n118 extent bias influences learning priority and connects to the background-foreground learning dynamics   \n119 observed in practice. ",
+        "bbox": [
+            140,
+            607,
+            825,
+            801
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            806,
+            825,
+            849
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            854,
+            825,
+            911
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "3 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "image",
+        "img_path": "images/560e045326665e763d25326a4e90ae57e8a8c768546c93b6ede5d1e0440c31a1.jpg",
+        "image_caption": [
+            "Figure 1: Effects of extent bias on learning dynamics in SSL. (Left) Stepwise learning curves of Barlow Twins. There are two $\\left( d = 2 \\right.$ ) learning steps shown with two black dashed vertical lines (also shown in the other two panels) which indicate the time steps $t _ { 1 }$ and $t _ { 2 }$ with $\\begin{array} { r } { t _ { 1 } : t _ { 2 } \\approx \\frac { 1 } { \\gamma _ { l } } : \\frac { \\mathrm { i } } { \\gamma _ { s } } = } \\end{array}$ $\\begin{array} { r } { \\frac { 1 } { m _ { l } } : \\frac { 1 } { m _ { s } } } \\end{array}$ . The predicted loss (dashed green) of $\\begin{array} { r } { \\mathcal { L } = \\sum _ { j = 1 } ^ { d } ( \\tilde { \\lambda } _ { j } ( t ) - 1 ) ^ { 2 } = \\sum _ { j = 1 } ^ { d } ( \\tilde { s } _ { j } ^ { 2 } ( t ) \\gamma _ { j } - 1 ) ^ { 2 } } \\end{array}$ using (3) match the empirical result (solid green). (Center) Evolution of eigenvalues $\\lambda _ { j }$ ’s of $C$ during training. At the beginning, the first eigenvalue $\\lambda _ { 1 }$ (blue) increases to 1 and then later the second $\\lambda _ { 2 }$ (red) follows. We also compare them with the predicted evolution $\\tilde { \\lambda } _ { j } ( t )$ (dashed lines). (Right) Evolution of the feature alignment $| | W e | | _ { 2 }$ for $e = e _ { l }$ (blue) and $e = e _ { s }$ (red). It shows very similar behaviors with the eigenvalues $\\tilde { \\lambda } _ { j } ^ { 1 / 2 }$ (dashed lines). See Theorem 4.5. We use $m _ { l } = 9 , \\ m _ { s } = 1 .$ See Appendix A.1 for more detailed settings. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            174,
+            89,
+            823,
+            180
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "120 4.1 Settings ",
+        "text_level": 1,
+        "bbox": [
+            142,
+            367,
+            267,
+            383
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "121 We first consider the following base input $x _ { \\mathrm { b a s e } } = [ b _ { l } \\mathbf { 1 } _ { m _ { l } } ^ { \\top } , b _ { s } \\mathbf { 1 } _ { m _ { s } } ^ { \\top } ] ^ { \\top } \\in \\mathbb { R } ^ { m }$ , where $b _ { l } , b _ { s } \\stackrel { \\mathrm { i . i . d . } } { \\sim } B ( p =$   \n122 0.5) follow the Bernoulli distribution and take the value $\\pm 1$ with the equal probability, $m _ { l }$ and $m _ { s }$   \n123 indicate the size of larger part and smaller part, respectively, i.e., $m _ { l } > m _ { s }$ and $m _ { l } + m _ { s } = m$ , and   \n124 $\\mathbf { 1 } _ { k }$ is the $k$ -dimensional all-one vector. From now on, we will use the subscript $l$ and $s$ for the indices   \n125 with respect to the larger-part and smaller-part features, respectively. ",
+        "bbox": [
+            140,
+            396,
+            825,
+            469
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Then, to obtain the positive pair $( x , x ^ { \\prime } )$ , we introduce the following data augmentation $x = x _ { \\mathrm { b a s e } } +$ $\\varepsilon$ and $x ^ { \\prime } = x _ { \\mathrm { b a s e } } + \\varepsilon ^ { \\prime }$ , with the noise $\\varepsilon , \\varepsilon ^ { \\prime } \\stackrel { \\mathrm { i . i . d . } } { \\sim } \\mathcal { N } ( 0 _ { m } , a ^ { 2 } I _ { m } )$ for some $a > 0$ . ",
+        "bbox": [
+            165,
+            474,
+            826,
+            510
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "8 4.2 Learning Dynamics on extent bias ",
+        "text_level": 1,
+        "bbox": [
+            158,
+            523,
+            450,
+            539
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "129 In this subsection, we discuss the relationship between $\\gamma _ { j }$ and $\\mathcal { L }$ , focusing on which features are   \n130 learned earlier. From Section 4.1, we can simplify the feature cross-correlation matrix $\\Gamma$ by analyzing   \n131 the expected values of the augmented features. Based on the definition in (1), we have: ",
+        "bbox": [
+            140,
+            549,
+            826,
+            592
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5d409dfe0cdbb096fabd96224f6a3c94b21d8f4bad867b144244abc600b4c63c.jpg",
+        "text": "$$\n\\Gamma = \\frac { 1 } { 2 n } \\sum _ { i = 1 } ^ { n } ( x ^ { ( i ) } x ^ { \\prime ( i ) \\top } + x ^ { \\prime ( i ) } x ^ { ( i ) \\top } ) = \\mathbb { E } [ x _ { \\mathrm { b a s e } } x _ { \\mathrm { b a s e } } ^ { \\top } ] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            323,
+            594,
+            674,
+            636
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "132 To identify which features drive the loss as stepwise phenomena, we consider basis vectors that   \n133 disentangle individual features. Specifically, we define basis vectors $e _ { l }$ and $e _ { s }$ where each vector has   \n134 ones only in the dimensions corresponding to its respective feature: ",
+        "bbox": [
+            140,
+            646,
+            826,
+            688
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/936a3b753741c2a25dfaea6407219ea9aad87b11b845a8f2efef03a6c7158511.jpg",
+        "text": "$$\n\\begin{array} { r l } & { \\quad e _ { l } = [ \\mathbf { 1 } _ { m _ { l } } ^ { \\top } , \\mathbf { 0 } _ { m _ { s } } ^ { \\top } ] ^ { \\top } , e _ { s } = [ \\mathbf { 0 } _ { m _ { l } } ^ { \\top } , \\mathbf { 1 } _ { m _ { s } } ^ { \\top } ] ^ { \\top } \\in \\mathbb { R } ^ { m } . } \\\\ & { \\quad \\quad \\quad \\mathrm { F A } ( e ) = \\| W e \\| _ { 2 } \\mathrm { f o r } e = e _ { l } , e _ { s } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            338,
+            691,
+            658,
+            732
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "135 By measuring the feature alignment between these basis vectors and the weight matrix through   \n136 $\\mathsf { F } \\bar { \\mathbf { A } } ( e ) = \\| W \\boldsymbol { e } \\| _ { 2 }$ , we can identify which features are being learned at each stage of the training   \n137 process. ",
+        "bbox": [
+            140,
+            734,
+            825,
+            776
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "138 The eigendecomposition of $\\Gamma$ is given by the following proposition: ",
+        "bbox": [
+            148,
+            781,
+            619,
+            797
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "39 Theorem 4.1. For the correlation matrix in (5), we have the eigenvalue matrix $\\Lambda _ { \\Gamma }$ and eigenvector   \n40 matrix $V _ { \\Gamma }$ : ",
+        "bbox": [
+            151,
+            799,
+            825,
+            828
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e2f60d1c087e0c0c2f3b062d779748b8aa5bf930941e5901cf8720ee43080731.jpg",
+        "text": "$$\n\\Lambda _ { \\Gamma } = d i a g \\left( \\left[ m _ { l } , m _ { s } , { \\bf 0 } _ { m - 2 } \\right] \\right) , V _ { \\Gamma } ^ { ( \\le 2 ) } = \\left[ e _ { l } / \\sqrt { m _ { l } } e _ { s } / \\sqrt { m _ { s } } \\right] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            297,
+            830,
+            699,
+            852
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "141 We defer the proof to Appendix B.1. ",
+        "bbox": [
+            143,
+            862,
+            413,
+            877
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "142 We hypothesize that features with larger dimensions are learned faster, regardless of their predictive   \n143 power or potential to cause shortcuts. This is particularly relevant in vision tasks where such features   \n144 might correspond to larger pixel regions. We experiment using a simple toy model to validate our   \n145 theoretical analysis of dimensional influence on feature learning. In our experimental setup, we used   \n146 two distinct features with different dimensional coverage $\\ m _ { l } = 9$ and $m _ { s } = 1$ ), allowing us to   \n147 clearly observe the learning dynamics. ",
+        "bbox": [
+            138,
+            882,
+            825,
+            912
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "4 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            90,
+            825,
+            147
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "48 As shown in Figure 1, the results demonstrate three key phenomena: ",
+        "bbox": [
+            156,
+            152,
+            620,
+            167
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "149 Figure 1 (Left) shows loss trajectory (green line) exhibits two distinct stepwise phenomena, marked   \n150 by black vertical lines. These stepwise decreases precisely align with the abrupt increase in the   \n151 eigenvalue observed in Figure 1 (Center), confirming our theoretical prediction that eigenvalue   \n152 dynamics drives the learning process.   \n153 Figure 1 (Center) shows a clear stepwise pattern in which two distinct eigenvalues of $\\Gamma$ increase   \n154 sequentially. This sequential increase directly corresponds to the learning priority of feature, with the   \n155 higher-dimensional feature $\\mathrm { { \\Delta } m } _ { l } = 9 \\mathrm { { \\Delta } }$ ) being learned first.   \n156 Figure 1 (Right) shows that, feature alignment measurements $| | W e | | _ { 2 }$ from (6) provide direct evidence   \n157 of the learning order: the alignment with $e _ { 1 }$ (blue line, corresponding to the larger feature dimension)   \n158 increases during the first loss decrease, while $e _ { 2 }$ alignment (red line) follows during the second phase.   \n159 This learning pattern strongly supports our hypothesis that dimensional coverage determines how   \n160 early the features learned. ",
+        "bbox": [
+            140,
+            174,
+            825,
+            231
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            236,
+            825,
+            279
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            284,
+            825,
+            354
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "This result suggests that the spatial extent of features, rather than their semantic content, plays a crucial role in determining learning priority. ",
+        "bbox": [
+            163,
+            359,
+            825,
+            388
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "4.3 Cross-Correlation eigenvalue $\\lambda$ and Loss Relationship ",
+        "text_level": 1,
+        "bbox": [
+            173,
+            402,
+            588,
+            419
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "In this subsection, we analyze the relationship between the eigenvalues $\\lambda _ { j }$ of cross-correlation matrix $C$ . ",
+        "bbox": [
+            161,
+            428,
+            825,
+            458
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Theorem 4.2. Under Assumption 3.1, the eigenvalues $\\lambda _ { j }$ of feature cross-correlation matrix $C =$ $W \\Gamma W ^ { \\top }$ , using the approximation $s _ { j } \\approx \\tilde { s } _ { j }$ in (3), are approximated as $\\lambda _ { j } = s _ { j } ^ { 2 } \\gamma _ { j } \\approx \\tilde { s } _ { j } ^ { 2 } \\gamma _ { j } = : \\tilde { \\lambda } _ { j }$ which have ",
+        "bbox": [
+            173,
+            459,
+            825,
+            503
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/0c4cfb2eee1a2965391bb43ffbfd2add518b60c6291cfb85396eba4489581969.jpg",
+        "text": "$$\n\\tilde { \\lambda } _ { j } ( \\tau _ { j } ) = \\frac { 1 } { 2 } a n d \\tilde { \\lambda } _ { i } ^ { \\prime } ( \\tau _ { j } ) \\left\\{ \\begin{array} { l l } { = 2 \\gamma _ { j } } & { i f i = j , } \\\\ { \\approx 0 } & { i f i \\ne j } \\end{array} \\right.\n$$",
+        "text_format": "latex",
+        "bbox": [
+            357,
+            503,
+            638,
+            539
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "at 169 $\\tau _ { j } = - \\log ( s _ { j } ^ { 2 } ( 0 ) \\gamma _ { j } ) / 8 \\gamma _ { j }$ in (4). For the Barlow Twins loss $\\mathcal { L } = \\| C - I _ { d } \\| _ { F } ^ { 2 }$ , we have ${ \\mathcal { L } } =$ 170 $\\begin{array} { r } { \\sum _ { j = 1 } ^ { d } ( \\lambda _ { j } - 1 ) ^ { 2 } { a n d } - \\frac { d \\mathcal { L } } { d t } ( \\tau _ { j } ) \\approx \\tilde { \\lambda } _ { j } ^ { \\prime } ( \\tau _ { j } ) = 2 \\gamma _ { j } . } \\end{array}$ ",
+        "bbox": [
+            148,
+            541,
+            825,
+            579
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "171 We defer the proof to Appendix B.3. ",
+        "bbox": [
+            150,
+            585,
+            413,
+            601
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "172 Figure 6 in Appendix C shows the relationship between cross-correlation eigenvalue $\\lambda$ differentiated   \n173 with respect to $t$ and loss derivatives $\\textstyle { \\frac { d { \\mathcal { L } } } { d t } }$ . The close alignment between the loss derivative and $\\lambda$   \n174 derivative curves demonstrates that the decrease in loss is directly driven by $\\lambda$ , with larger $m _ { l }$ features   \n175 learned, and smaller $m _ { s }$ features learned later. The curves’ relative magnitudes show an approximate   \n176 $m _ { l } : m _ { s }$ ratio, which matches our theoretical predictions. ",
+        "bbox": [
+            142,
+            606,
+            825,
+            678
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "4.4 Weight Singular Value Evolution ",
+        "text_level": 1,
+        "bbox": [
+            161,
+            691,
+            442,
+            708
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "To verify the dynamics of weight singular values $s _ { j }$ , we propose the following theorem: Theorem 4.3. Using the approximation (3), the singular values of the weight matrix $W$ satis ",
+        "bbox": [
+            165,
+            717,
+            781,
+            750
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "at the critical point $t = \\tau _ { j }$ ",
+        "bbox": [
+            176,
+            770,
+            349,
+            786
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "We defer the proof to Appendix B.4. ",
+        "bbox": [
+            161,
+            792,
+            413,
+            809
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "182 Figure 7 in Appendix C shows two key aspects of singular value dynamics during training. First,√   \n183 the singular values $s _ { j }$ evolve to their theoretical limits $1 / \\sqrt { \\gamma _ { j } }$ and $1 / \\sqrt { \\gamma _ { s } }$ , as predicted by our   \n184 analysis. Second, the derivatives of these singular values exhibit peaks at their respective critical√ √   \n185 points, with magnitudes that follow the predicted $\\sqrt { 2 \\gamma _ { l } } : \\sqrt { 2 \\gamma _ { s } }$ ratio. These results provide strong   \n186 empirical validation of our theoretical framework, demonstrating that both the convergence values   \n187 and learning priority on different features are governed by their corresponding eigenvalues in the   \n188 feature cross-correlation matrix $\\Gamma$ . ",
+        "bbox": [
+            142,
+            814,
+            825,
+            911
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "5 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "189 4.5 Aligned Initialization and Subspace Alignment ",
+        "text_level": 1,
+        "bbox": [
+            147,
+            90,
+            539,
+            106
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "0 To justify our alignment initialization assumption in Assumption 3.1, we first define the following subspace alignment metric: ",
+        "bbox": [
+            156,
+            116,
+            825,
+            145
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "92 Definition 4.4 (Subspace Alignment). We define subspace alignment of two subspaces $\\operatorname { I m } ( A )$ and   \n93 $\\mathrm { I m } ( B )$ : ",
+        "bbox": [
+            155,
+            147,
+            826,
+            176
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e281f07f08426be33158e0a083648a7c7c579766d74478fd550151663e559f52.jpg",
+        "text": "$$\n\\mathrm { S A } ( A , B ) = | | A ^ { \\top } B | | _ { F } ^ { 2 } / d ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            408,
+            180,
+            588,
+            200
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "where 94 $\\operatorname { I m } ( A ) = \\{ A v \\in \\mathbb { R } ^ { m } : v \\in \\mathbb { R } ^ { d } \\}$ , $A = [ a _ { 1 } \\cdots a _ { d } ] , B = [ b _ { 1 } \\cdots b _ { d } ] \\in \\mathbb { R } ^ { m \\times d }$ and $a _ { i } , b _ { i } \\in \\mathbb { R } ^ { m }$ 95 are unit vectors. ",
+        "bbox": [
+            155,
+            204,
+            823,
+            234
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Note that $0 \\leq \\operatorname { S A } ( A , B ) \\leq 1$ and it attains $\\mathrm { S A } ( A , B ) = 0$ when $\\operatorname { I m } ( A ) \\perp \\operatorname { I m } ( B )$ , and $\\mathrm { S A } ( A , B ) = 1$ when $\\operatorname { I m } ( A ) = \\operatorname { I m } ( B )$ . Figure 10 (Top) in Appendix D empirically validates Assumption 3.1 using the subspace alignment metric. The model becomes aligned rapidly in the early stages of training, satisfying the assumption. ",
+        "bbox": [
+            163,
+            243,
+            825,
+            300
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "4.6 Orthogonal Feature Learning ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            315,
+            419,
+            330
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Our analysis shows that features are learned as orthogonal to each other, where each feature is acquired independently without interference from others. This orthogonal learning pattern is particularly evident in the evolution of the model’s weight matrix singular vectors. To formalize this observation, we analyze how the left singular vectors of the weight matrix align with the feature vectors during training. ",
+        "bbox": [
+            173,
+            340,
+            826,
+            411
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Theorem 4.5. Under Assumption 3.1, the left singular vectors u of $W ( t )$ learn features orthogonally: ",
+        "bbox": [
+            158,
+            412,
+            825,
+            429
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/908c10e5b1dd487992d51224f6b79285648a2173878828141c381876190cb0e7.jpg",
+        "text": "$$\n\\begin{array} { r } { { P r o j } _ { U ^ { ( \\leq 2 ) } } ( W e _ { l } ) : = ( u _ { l } ^ { \\top } W e _ { l } , u _ { s } ^ { \\top } W e _ { l } ) = ( \\sqrt { \\lambda _ { l } } , 0 ) , } \\\\ { { P r o j } _ { U ^ { ( \\leq 2 ) } } ( W e _ { s } ) : = ( u _ { l } ^ { \\top } W e _ { s } , u _ { s } ^ { \\top } W e _ { s } ) = ( 0 , \\sqrt { \\lambda _ { s } } ) , } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            323,
+            433,
+            673,
+            477
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "where 207 $u _ { l } , u _ { s }$ are the corresponding left singular vectors for the singular values $s _ { l } , s _ { s }$ ",
+        "bbox": [
+            148,
+            478,
+            730,
+            494
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Figure 11 shows orthogonal learning pattern that features are learned independently and sequentially, supporting our theoretical analysis of stepwise learning dynamics. ",
+        "bbox": [
+            166,
+            502,
+            823,
+            531
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "4.7 Non-linear multi layer network ",
+        "text_level": 1,
+        "bbox": [
+            163,
+            546,
+            431,
+            561
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Nonlinearity exhibits distinct learning dynamics compared to linearity. Therefore, we aim to investigate whether extent biass also exists in multilayer perceptrons (MLPs). We experiment with a 3-layer network, using leakyReLU as the activation function, for understanding non-linear feature learning dynamics. Our non-linear network experiments demonstrate that extent bias persists beyond linear models. As shown in Figure 14 in Appendix G, the non-linear network exhibits remarkably similar stepwise learning patterns to those observed in linear models Figure 1. Key similarities include: similar eigenvalue evolution patterns, consistent stepwise loss reduction phases. These results suggest that extent bias is a fundamental learning phenomenon that transcends network architecture complexity, rather than being merely an artifact of linear models. ",
+        "bbox": [
+            173,
+            571,
+            826,
+            698
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "4.8 Practical Study on Colored-MNIST Dataset ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            712,
+            516,
+            728
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "We conducted experiments using a Colored-MNIST dataset, where we adjusted the ratio of digits pixels relative to the total image pixels. We tested three different ratios: 0.05, 0.10, and 0.15. In this dataset, we set the correlation between background and label to $70 \\%$ for both training and test sets, making it difficult for a model that predicts solely based on background to achieve accuracy higher than $70 \\%$ . According to our hypothesis, since backgrounds have larger extent bias than objects, the test set accuracy would rapidly increase from an initial $10 \\%$ (random choosing) to $70 \\%$ (as the model learns background features), then plateau for a period, before slowly rising to $100 \\%$ (as it learns object features). We also hypothesized that this plateau period would decrease as the ratio of label pixels increases in the images, with shorter plateaus observed in the 0.15 ratio condition compared to 0.05. ",
+        "bbox": [
+            173,
+            737,
+            825,
+            876
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Figure 2 supports our hypothesis. Across all pixel ratio conditions (0.05, 0.10, 0.15), test accuracy exhibited a consistent pattern: a rapid increase from initial $10 \\%$ to $70 \\%$ , followed by a plateau period, ",
+        "bbox": [
+            160,
+            882,
+            823,
+            911
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "discarded",
+        "text": "6 ",
+        "bbox": [
+            493,
+            936,
+            504,
+            946
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "image",
+        "img_path": "images/159f1199497a91e3721802d7a404854b23655427df94f78b02a40de3a5432804.jpg",
+        "image_caption": [
+            "Figure 2: Extent bias effects on spurious datasets. ResNet18 on the Colored MNIST dataset. (Left) Loss decreases even though the error rate doesn’t decrease. (Right) The error rate has a plateau at $70 \\%$ , which corresponds to the correlation between background and object. The lengths of the plateaus become shorter as the object’s pixel ratio increases. See Appendix A.2 for more detailed settings. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            266,
+            98,
+            730,
+            199
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "233 and then a gradual ascent to $100 \\%$ . Notably, as the object pixel ratio increased, the duration of the   \n234 plateau phase decreased. The loss function continued to decrease even when accuracy remained   \n235 stagnant at $70 \\%$ . This suggests a extent bias where larger objects are prioritized during the learning   \n236 process. The pattern reflects how the model initially achieves $70 \\%$ accuracy by relying on background   \n237 features, which statistically occupy larger regions, before progressively learning object features.   \n238 Furthermore, this indicates that larger extents occupy greater eigenvalues, implying a reduction in the   \n239 critical point $\\tau _ { j }$ . ",
+        "bbox": [
+            140,
+            315,
+            826,
+            415
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "40 5 Amplitude Bias ",
+        "text_level": 1,
+        "bbox": [
+            155,
+            433,
+            334,
+            450
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "241 In regression tasks, the phenomenon of spectral bias has been observed, wherein low-frequency   \n242 components are learned more rapidly than high-frequency components during the training process.   \n243 Conversely, in classification tasks, a phenomenon known as frequency shortcut [28] has been observed,   \n244 wherein the model preferentially learns the distinctive Fourier components of the input during the   \n245 training process. While these studies have primarily focused on supervised learning, we extend this   \n246 investigation to the SSL, seeking to understand whether similar learning dynamics persist within SSL   \n247 frameworks. ",
+        "bbox": [
+            142,
+            464,
+            826,
+            563
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "5.1 Settings ",
+        "text_level": 1,
+        "bbox": [
+            173,
+            579,
+            267,
+            593
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "49 To analyze how frequency and amplitude bias affect learning dynamics, we consider input data   \n50 $x _ { \\mathrm { b a s e } } \\in \\mathbb { R } ^ { m }$ composed of two sinusoidal components with different frequencies: ",
+        "bbox": [
+            156,
+            604,
+            823,
+            632
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d56f874930249c1b3a483a1d413c47bf82d9c02b709eff009da738e00ae2ac00.jpg",
+        "text": "$$\nx _ { \\mathrm { b a s e } } [ t ] = c _ { h } b _ { h } \\sin ( f _ { h } t ) + c _ { l } b _ { l } \\sin ( f _ { l } t ) ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            367,
+            640,
+            629,
+            657
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "251 where $\\begin{array} { r } { f _ { h } = \\frac { 2 \\pi } { m } k } \\end{array}$ and $\\begin{array} { r } { f _ { l } = \\frac { 2 \\pi } { m } k ^ { \\prime } } \\end{array}$ represent different frequencies for some integers $k$ and $k ^ { \\prime } , b _ { h } , b _ { l } \\stackrel { \\mathrm { i . i . d . } } { \\sim }$   \n252 $B ( p = 0 . 5 )$ follow the Bernoulli distribution and take the value $\\pm 1$ . Suppose $f _ { h } < f _ { l }$ to examine   \n253 the learning dynamics between low and high frequency components. The coefficients $c _ { h }$ and $c _ { l }$   \n254 control the amplitude of each sinusoidal component, allowing us to investigate how magnitudes affect   \n255 learning earlier. The Bernoulli variables $b _ { h }$ and $b _ { l }$ introduce phase reversal in the signal. The time   \n256 vector $t$ spans the input dimension $m$ . We use the same augmentation with (4.1) to generate positive   \n257 pairs $( x , x ^ { \\prime } )$ by adding Gaussian noise. ",
+        "bbox": [
+            140,
+            669,
+            825,
+            768
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "5.2 Learning Dynamics on Amplitude Bias ",
+        "text_level": 1,
+        "bbox": [
+            174,
+            785,
+            483,
+            800
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Similar to Section 4.2, we consider basis vectors $e _ { h }$ and $e _ { l }$ that isolate individual features: $e _ { h } =$ $c _ { h } \\sin ( f _ { h } t )$ and $e _ { l } = c _ { l } \\sin ( f _ { l } t )$ , where $0 \\leq t \\leq m$ . Note that these two are orthogonal since $\\begin{array} { r } { f _ { h } = \\frac { 2 \\pi } { m } k } \\end{array}$ and ated $\\begin{array} { r } { f _ { l } = \\frac { 2 \\pi } { m } k ^ { \\prime } } \\end{array}$ with an be $k \\neq k ^ { \\prime }$ . Similar to Theorem 4.1, the cross-correlation matrix sed as follows: $\\Gamma$ for the ",
+        "bbox": [
+            173,
+            810,
+            825,
+            866
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "263 Theorem 5.1. Under (8), the correlation matrix $\\Gamma$ has ",
+        "bbox": [
+            142,
+            871,
+            534,
+            886
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/41ce1a775e41f3e52d42262150b069387b22e6ee5d20b2bae8b81e0888f4d7fa.jpg",
+        "text": "$$\n\\Lambda _ { \\Gamma } = d i a g \\left( \\left[ c _ { h } ^ { 2 } m / 2 , c _ { l } ^ { 2 } m / 2 , \\mathbf { 0 } _ { m - 2 } \\right] \\right) , V _ { \\Gamma } ^ { ( \\leq 2 ) } = \\left[ e _ { h } e _ { l } \\right] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            312,
+            892,
+            684,
+            914
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "7 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "image",
+        "img_path": "images/2f34db7339a9a527a571d036887a5caf0f877410348ce080c9adbf90749dec60.jpg",
+        "image_caption": [
+            "Figure 3: Amplitude bias effects on learning dynamics in SSL. See the caption of Figure 1. Note that the time steps $t _ { 1 }$ and $t _ { 2 }$ with $\\begin{array} { r } { t _ { 1 } : t _ { 2 } \\approx \\frac { 1 } { \\gamma _ { h } } : \\frac { 1 } { \\gamma _ { l } } = \\frac { 1 } { c _ { h } ^ { 2 } } : \\frac { 1 } { c _ { l } ^ { 2 } } } \\end{array}$ . We use $c _ { h } = 1 , \\ c _ { l } = 1 / 2$ . See Appendix A.3 for more detailed settings. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            176,
+            89,
+            821,
+            164
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "264 We defer the proof to Appendix B.2. ",
+        "bbox": [
+            148,
+            252,
+            411,
+            266
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "From (9), we observe that eigenvalues are proportional to the squares of the coefficients $c _ { h } ^ { 2 }$ and $c _ { l } ^ { 2 }$ . This implies that the learning dynamics are more strongly influenced by the amplitude rather than the underlying frequency. ",
+        "bbox": [
+            166,
+            272,
+            825,
+            314
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "68 To validate our theoretical analysis of amplitude bias effect on learning dynamics, we conduct   \n69 experiments using input data defined in (8). Especially, we set $c _ { h } > c _ { l }$ . This configuration shown in   \n70 Figure 4 in Appendix A, allows us to examine how high-amplitude $c _ { h } \\sin ( f _ { h } t )$ and low-amplitude   \n1 $c _ { l } \\sin ( f _ { l } t )$ affects feature amplitude bias. More details about the experiment are in Appendix A.3. ",
+        "bbox": [
+            155,
+            320,
+            825,
+            377
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Our analysis reveals two dominant eigenvalues. The large eigenvalue corresponds to the highamplitude feature, and small eigenvalue corresponds to the low-amplitude component. The eigenvectors of $\\Gamma$ are shown in Figure 5 , Appendix A. The first eigenvector, which corresponds to the largest eigenvalue, captures the dominant high-amplitude oscillation. The second eigenvector, which matches next-largest eigenvalue, captures the low-amplitude oscillation. Other eigenvectors are noise, corresponding to eigenvalues that are almost 0. ",
+        "bbox": [
+            171,
+            382,
+            825,
+            467
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "5.3 Cross-Correlation eigenvalue $\\lambda$ and Loss Relationship ",
+        "text_level": 1,
+        "bbox": [
+            173,
+            487,
+            586,
+            502
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "We analyze how the eigenvalues $\\lambda$ relate to the loss dynamics. The relationship follows similar patterns to those observed in Section 4.3, but with coefficients $c _ { h }$ and $c _ { l }$ rather than $m _ { l }$ and $m _ { s }$ . ",
+        "bbox": [
+            163,
+            513,
+            825,
+            542
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Figure 8 in Appendix C shows the close relationship between the derivatives of cross-correlation eigenvalues $\\frac { d \\bar { \\lambda } _ { h } ^ { - } } { d t }$ , $\\frac { d \\lambda _ { l } } { d t }$ and $\\textstyle { \\frac { d { \\mathcal { L } } } { d t } }$ . The peaks in these derivatives occur at the critical points with magnitudes proportional to the corresponding coefficients $\\gamma _ { h } : \\gamma _ { l } = c _ { h } ^ { 2 } : c _ { l } ^ { 2 }$ (see (9)). This shows our theoretical predictions Theorem 4.2 matches empirical result. ",
+        "bbox": [
+            174,
+            547,
+            825,
+            608
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "5.4 Weight Singular Value Evolution ",
+        "text_level": 1,
+        "bbox": [
+            168,
+            628,
+            441,
+            643
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "We now analyze how the singular values of the weight matrix evolve during training. Similarly to the extent bias case, we expect the singular values $s _ { j }$ to converge to theoretical limits determined by the feature coefficients. ",
+        "bbox": [
+            174,
+            656,
+            825,
+            698
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Figure 9 in Appendix C shows the evolution of singular values $s _ { h }$ and $s _ { l }$ of weight matrix $W$ (Left) and their derivatives (Right). The singular values converge to their theoretical limits $1 / \\sqrt { \\gamma _ { j } }$ predicted by Theorem 4.3, where $\\gamma _ { j } = c _ { j } ^ { 2 } \\frac { m } { 2 }$ . At the critical points $\\tau _ { j }$ , the derivatives achieve their maximum values of $\\sqrt { 2 \\gamma _ { j } }$ , showing that rates of feature learning are proportional to the coefficients. These results confirm that the feature coefficients, rather than their frequencies, govern both the convergence values and rates of feature learning. ",
+        "bbox": [
+            173,
+            704,
+            825,
+            794
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "5.5 Aligned Initialization and Subspace Alignment ",
+        "text_level": 1,
+        "bbox": [
+            168,
+            814,
+            537,
+            829
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "To validate Assumption 3.1 about alignment between the weight matrix singular vectors and eigenvectors of $\\Gamma$ , we measure the subspace alignment metric as defined in the extent case Definition 4.4. Figure 10 (Bottom) in Appendix D empirically validates our assumption through subspace alignment measurements. As discussed in Section 4.5, the model achieves alignment rapidly in the early stages of training, even with small random initializations. ",
+        "bbox": [
+            171,
+            842,
+            825,
+            911
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            493,
+            935,
+            503,
+            946
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Similar to the extent case, we investigate how the weight matrix learns different frequency components orthogonally as shown in Theorem 4.5. The orthogonal learning pattern reveals how frequency features are acquired independently despite their different spectral characteristics. ",
+        "bbox": [
+            173,
+            117,
+            823,
+            159
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Figure 12 in Appendix E shows the trajectories of weight matrix in terms of their alignments with frequency components $e _ { h }$ and $e _ { l }$ . The blue trajectory shows the first learning phase where $u _ { 1 }$ aligns with the high-amplitude feature $( c _ { h } \\sin ( f _ { h } t ) )$ , followed by the red trajectory showing $u _ { 2 }$ aligning with the low-amplitude feature $( c _ { l } \\sin ( f _ { l } t ) )$ . This sequential, orthogonal learning pattern demonstrates that feature learning is primarily determined by coefficient magnitudes rather than frequency characteristics, supporting our analysis in Theorem 4.5. ",
+        "bbox": [
+            173,
+            165,
+            825,
+            248
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "5.7 Non-linear multi layer network ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            267,
+            429,
+            281
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Same as Section 4.7 in Appendix G, we conduct experiments with a 3-layer network using leakyReLU activations to analyze how amplitude coefficients affect learning dynamics in non-linear settings. ",
+        "bbox": [
+            165,
+            292,
+            823,
+            321
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Figure 15 in Appendix G demonstrates amplitude bias effects in non-linear networks is similar to linear networks on Figure 3. These results confirm that amplitude bias persists in non-linear architectures, suggesting amplitude magnitude remains a primary determinant of feature learning priority regardless of network complexity. ",
+        "bbox": [
+            174,
+            327,
+            825,
+            382
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "5.8 Discussion ",
+        "text_level": 1,
+        "bbox": [
+            174,
+            401,
+            285,
+            415
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Figure 13 in Appendix F shows that a learning process is driven primarily by feature coefficient magnitude rather than frequency characteristics. The key observation is that the first learned features are those with large coefficients, independent of their spectral properties. This finding parallels frequency shortcut [28] in classification tasks, but reveals a different underlying mechanism. While frequency shortcut suggests models preferentially learn distinctive Fourier components, our results demonstrate that amplitude magnitude—not frequency characteristics—primarily determines feature learning priority. ",
+        "bbox": [
+            173,
+            426,
+            825,
+            525
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "6 Conclusion ",
+        "text_level": 1,
+        "bbox": [
+            163,
+            545,
+            299,
+            561
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "In this work, we establish a theoretical connection between eigendecomposition of the feature crosscorrelation matrix, shortcut learning, and stepwise learning behavior in SSL. We provide insights into how dimensional feature properties influence the learning process in SSL frameworks. This work not only explains observed shortcut learning phenomena but also offers a theoretical lens for understanding and potentially mitigating such learning biases. This theoretical framework lays the groundwork for developing more robust SSL algorithms. Future work should focus on leveraging these insights to design mechanisms that encourage learning of generalizable features despite their potentially lower extent bias or amplitude bias. ",
+        "bbox": [
+            173,
+            577,
+            825,
+            688
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "References ",
+        "text_level": 1,
+        "bbox": [
+            173,
+            709,
+            266,
+            726
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "[1] M. Arjovsky, L. Bottou, I. Gulrajani, and D. Lopez-Paz. Invariant risk minimization. arXiv preprint arXiv:1907.02893, 2019. ",
+        "bbox": [
+            178,
+            734,
+            823,
+            762
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "[2] M. Assran, Q. Duval, I. Misra, P. Bojanowski, P. Vincent, M. Rabbat, Y. LeCun, and N. Ballas. Self-supervised learning from images with a joint-embedding predictive architecture. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pages 15619–15629, 2023. ",
+        "bbox": [
+            176,
+            773,
+            823,
+            830
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "[3] N. Baker, H. Lu, G. Erlikhman, and P. J. Kellman. Deep convolutional networks do not classify based on global object shape. PLoS computational biology, 14(12):e1006613, 2018. ",
+        "bbox": [
+            176,
+            842,
+            823,
+            871
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "[4] A. Bardes, J. Ponce, and Y. LeCun. Vicreg: Variance-invariance-covariance regularization for self-supervised learning. arXiv preprint arXiv:2105.04906, 2021. ",
+        "bbox": [
+            173,
+            882,
+            823,
+            911
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "discarded",
+        "text": "9 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "discarded",
+        "text": "01 5.6 Orthogonal Feature Learning ",
+        "bbox": [
+            151,
+            92,
+            419,
+            106
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            142,
+            95,
+            158,
+            103
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "346 [5] S. Beery, G. Van Horn, and P. Perona. Recognition in terra incognita. In Proceedings of the   \n347 European Conference on Computer Vision (ECCV), September 2018.   \n348 [6] M. Caron, H. Touvron, I. Misra, H. Jégou, J. Mairal, P. Bojanowski, and A. Joulin. Emerging   \n349 properties in self-supervised vision transformers. In Proceedings of the IEEE/CVF international   \n350 conference on computer vision, pages 9650–9660, 2021.   \n351 [7] T. Chen, S. Kornblith, M. Norouzi, and G. Hinton. A simple framework for contrastive learning   \n352 of visual representations. In International conference on machine learning, pages 1597–1607.   \n353 PMLR, 2020.   \n354 [8] X. Chen and K. He. Exploring simple siamese representation learning. In Proceedings of the   \n355 IEEE/CVF conference on computer vision and pattern recognition, pages 15750–15758, 2021.   \n356 [9] L. Deng. The mnist database of handwritten digit images for machine learning research [best of   \n357 the web]. IEEE signal processing magazine, 29(6):141–142, 2012.   \n358 [10] C. Doersch, A. Gupta, and A. A. Efros. Unsupervised visual representation learning by context   \n359 prediction. In Proceedings of the IEEE International Conference on Computer Vision (ICCV),   \n360 December 2015.   \n361 [11] C. Doersch, A. Gupta, and A. A. Efros. Unsupervised visual representation learning by context   \n362 prediction. In Proceedings of the IEEE international conference on computer vision, pages   \n363 1422–1430, 2015.   \n364 [12] R. Geirhos, P. Rubisch, C. Michaelis, M. Bethge, F. A. Wichmann, and W. Brendel. Imagenet  \n365 trained cnns are biased towards texture; increasing shape bias improves accuracy and robustness.   \n366 arXiv preprint arXiv:1811.12231, 2018.   \n367 [13] R. Geirhos, J.-H. Jacobsen, C. Michaelis, R. Zemel, W. Brendel, M. Bethge, and F. A. Wichmann.   \n368 Shortcut learning in deep neural networks. Nature Machine Intelligence, 2(11):665–673, 2020.   \n369 [14] J.-B. Grill, F. Strub, F. Altché, C. Tallec, P. Richemond, E. Buchatskaya, C. Doersch,   \n370 B. Avila Pires, Z. Guo, M. Gheshlaghi Azar, et al. Bootstrap your own latent-a new ap  \n371 proach to self-supervised learning. Advances in neural information processing systems, 33:   \n372 21271–21284, 2020.   \n373 [15] M. S. Halvagal, A. Laborieux, and F. Zenke. Implicit variance regularization in non-contrastive   \n374 ssl. arXiv preprint arXiv:2212.04858, 2022.   \n375 [16] K. Hermann and A. Lampinen. What shapes feature representations? exploring datasets,   \n376 architectures, and training. Advances in Neural Information Processing Systems, 33:9995–   \n377 10006, 2020.   \n378 [17] K. L. Hermann, H. Mobahi, T. Fel, and M. C. Mozer. On the foundations of shortcut learning.   \n379 arXiv preprint arXiv:2310.16228, 2023.   \n380 [18] A. Jacot, F. Gabriel, and C. Hongler. Neural tangent kernel: Convergence and generalization in   \n381 neural networks. Advances in neural information processing systems, 31, 2018.   \n382 [19] A. Jacot, F. Ged, B. ¸Sim¸sek, C. Hongler, and F. Gabriel. Saddle-to-saddle dynamics in deep linear   \n383 networks: Small initialization training, symmetry, and sparsity. arXiv preprint arXiv:2106.15933,   \n384 2021.   \n385 [20] E. Littwin, O. Saremi, M. Advani, V. Thilak, P. Nakkiran, C. Huang, and J. Susskind. How jepa   \n386 avoids noisy features: The implicit bias of deep linear self distillation networks. arXiv preprint   \n387 arXiv:2407.03475, 2024.   \n388 [21] I. Loshchilov and F. Hutter. Decoupled weight decay regularization. arXiv preprint   \n389 arXiv:1711.05101, 2017.   \n390 [22] M. Noroozi, H. Pirsiavash, and P. Favaro. Representation learning by learning to count. In   \n391 Proceedings of the IEEE International Conference on Computer Vision (ICCV), Oct 2017.   \n392 [23] M. Oquab, T. Darcet, T. Moutakanni, H. Vo, M. Szafraniec, V. Khalidov, P. Fernandez, D. Haziza,   \n393 F. Massa, A. El-Nouby, et al. Dinov2: Learning robust visual features without supervision.   \n394 arXiv preprint arXiv:2304.07193, 2023.   \n395 [24] S. Pesme and N. Flammarion. Saddle-to-saddle dynamics in diagonal linear networks. Advances   \n396 in Neural Information Processing Systems, 36:7475–7505, 2023.   \n397 [25] N. Rahaman, A. Baratin, D. Arpit, F. Draxler, M. Lin, F. Hamprecht, Y. Bengio, and A. Courville.   \n398 On the spectral bias of neural networks. In International conference on machine learning, pages   \n399 5301–5310. PMLR, 2019.   \n400 [26] J. B. Simon, M. Knutins, L. Ziyin, D. Geisz, A. J. Fetterman, and J. Albrecht. On the stepwise   \n401 nature of self-supervised learning. In International Conference on Machine Learning, pages   \n402 31852–31876. PMLR, 2023.   \n403 [27] M. Tancik, P. Srinivasan, B. Mildenhall, S. Fridovich-Keil, N. Raghavan, U. Singhal, R. Ra  \n404 mamoorthi, J. Barron, and R. Ng. Fourier features let networks learn high frequency functions in   \n405 low dimensional domains. Advances in neural information processing systems, 33:7537–7547,   \n406 2020.   \n407 [28] S. Wang, R. Veldhuis, C. Brune, and N. Strisciuglio. What do neural networks learn in image   \n408 classification? a frequency shortcut perspective. In Proceedings of the IEEE/CVF International   \n409 Conference on Computer Vision, pages 1433–1442, 2023.   \n410 [29] D. Wei, J. J. Lim, A. Zisserman, and W. T. Freeman. Learning and using the arrow of time.   \n411 In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR),   \n412 June 2018.   \n413 [30] S. Wu, S. Chen, C. Xie, and X. Huang. One-pixel shortcut: on the learning preference of deep   \n414 neural networks. arXiv preprint arXiv:2205.12141, 2022.   \n415 [31] J. Zbontar, L. Jing, I. Misra, Y. LeCun, and S. Deny. Barlow twins: Self-supervised learning via   \n416 redundancy reduction. In International conference on machine learning, pages 12310–12320.   \n417 PMLR, 2021. ",
+        "bbox": [
+            137,
+            82,
+            830,
+            924
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "10 ",
+        "bbox": [
+            490,
+            935,
+            509,
+            948
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            137,
+            89,
+            828,
+            532
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            506,
+            946
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "18 A Experimental Details ",
+        "text_level": 1,
+        "bbox": [
+            155,
+            89,
+            385,
+            107
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "A.1 Extent bias Experiment ",
+        "text_level": 1,
+        "bbox": [
+            158,
+            121,
+            380,
+            136
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "420 For the extent bias experiment shown in Section 4.1, we train the model using 400 epochs. The   \n421 augmentation noise parameter $a$ was set to 0.01. We use a dataset size of $n = 1 0 0 0$ samples with   \n422 feature dimension $m = 1 0$ . We also use learning rate $\\eta = 6 \\cdot 1 0 ^ { - 4 }$ and scaling factor $5 \\cdot 1 \\bar { 0 } ^ { - 1 }$ . ",
+        "bbox": [
+            142,
+            147,
+            825,
+            189
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "A.2 Colored MNIST Experiment ",
+        "text_level": 1,
+        "bbox": [
+            166,
+            205,
+            416,
+            220
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "424 For the Colored MNIST shown in Section 4.8, we train the model using default augmentation   \n425 (RandomResizedCrop, RandomHorizontalFlip, RandomColorJitter, RandomGrayscale, Random  \n426 GaussianBlur, RandomSolarization) with augmentated image size $4 2 \\times 4 2$ . We use background colors   \n427 as [[255, 0, 0], [0, 255, 0], [0, 0, 255], [255, 255, 0], [255, 0, 255], [0, 255, 255], [0, 123, 123], [123,   \n428 0, 123], [123, 123, 0], [123, 0, 0]][digit]. We trained ResNet18 with 60 epochs, AdamW [21] with   \n429 learning rate $\\eta = 4 \\times 1 0 ^ { - 6 }$ . ",
+        "bbox": [
+            140,
+            232,
+            826,
+            316
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "A.3 Amplitude Experiment ",
+        "text_level": 1,
+        "bbox": [
+            158,
+            333,
+            377,
+            348
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "431 For the amplitude experiment shown in Section 5.1, we train the model using 500 epochs. The 432 augmentation noise parameter $a$ is set to 0.1. We use a dataset size of $n = 1 0 0 0$ samples with feature 433 frequency $f _ { h } = 2 \\frac { 2 \\pi } { 2 4 }$ , $f _ { l } = 3 2 \\frac { 2 \\pi } { 2 4 }$ . We also use learning rate $\\eta = 5 \\cdot 1 0 ^ { - 5 }$ , scaling factor $3 \\cdot 1 0 ^ { - 3 }$ and $m = 9 6$ . ",
+        "bbox": [
+            142,
+            359,
+            825,
+            415
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "image",
+        "img_path": "images/aa24d48a7964379c49454e95f2839c1663ccb39d0618d14e9ac9f85f42a0052a.jpg",
+        "image_caption": [
+            "0.5, Figure 4: Input data $\\begin{array} { r } { f _ { h } = \\frac { 2 \\pi } { m } { 3 2 } } \\end{array}$ , $\\begin{array} { r } { f _ { l } = \\frac { 2 \\pi } { m } 8 } \\end{array}$ $\\begin{array} { r } { x = x _ { b a s e } + \\epsilon . x _ { \\mathrm { b a s e } } [ t ] = b _ { h } c _ { h } \\sin ( f _ { h } t ) + b _ { l } c _ { l } \\sin ( f _ { l } t ) . } \\end{array}$ , $m = 9 6$ . , where $c _ { h } = 1 , c _ { l } =$ "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            258,
+            429,
+            740,
+            542
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "image",
+        "img_path": "images/416019d0a85df0ff288c64c4669e30ce18ecaf5821690b245775353bc724dbdd.jpg",
+        "image_caption": [
+            "Figure 5: The eigenvectors $v _ { i }$ ’s of $\\Gamma$ for $i = { 1 , 2 , 3 }$ (from Left to Right). (Left) The first eigenvector that correspondent to the largest eigenvalue indicates the (high frequency) feature with a high amplitude $\\bar { c } _ { h } \\sin \\left( f _ { h } t \\right)$ , (Center) the second the (low frequency) feature with a low amplitude feature $c _ { l } \\sin \\left( f _ { l } t \\right)$ , (Right) the third (and beyond) noise, where $c _ { l } < c _ { h }$ . "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            176,
+            617,
+            823,
+            688
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "B Proofs ",
+        "text_level": 1,
+        "bbox": [
+            173,
+            795,
+            263,
+            811
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "B.1 Proof of Theorem 4.1 ",
+        "text_level": 1,
+        "bbox": [
+            169,
+            827,
+            362,
+            842
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "437 Through matrix analysis, we can express: ",
+        "bbox": [
+            143,
+            853,
+            446,
+            867
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "equation",
+        "img_path": "images/7319fc5c1a24505988ab8d500521aa24ff9b990ca0d5b877f25bb49570e1ab27.jpg",
+        "text": "$$\n\\Gamma = \\mathbb { E } [ x _ { \\mathrm { b a s e } } x _ { \\mathrm { b a s e } } ^ { \\top } ] = \\left[ \\begin{array} { l l } { \\mathbf { 1 } _ { m _ { l } \\times m _ { l } } } & { \\mathbf { 0 } _ { m _ { s } \\times m _ { l } } } \\\\ { \\mathbf { 0 } _ { m _ { l } \\times m _ { s } } } & { \\mathbf { 1 } _ { m _ { s } \\times m _ { s } } } \\end{array} \\right] ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            354,
+            876,
+            642,
+            910
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "434 ",
+        "bbox": [
+            142,
+            763,
+            160,
+            773
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "12 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "438 which has two eigenvectors $e _ { l } / \\Vert e _ { l } \\Vert$ and $\\boldsymbol { e } _ { s } / \\Vert \\boldsymbol { e } _ { s } \\Vert$ correspond to nonzero eigenvalues. We get the   \n439 eigenvalues $m _ { l }$ and $m _ { s }$ from the following equation: ",
+        "bbox": [
+            142,
+            90,
+            826,
+            121
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a9d57a03678b85eab5ff7c063284b2ede09ad1d452279d46864908e97738aeaf.jpg",
+        "text": "$$\n\\begin{array} { r } { \\operatorname* { d e t } ( \\Gamma - \\lambda I ) = \\operatorname* { d e t } ( { \\bf 1 } _ { m _ { l } \\times m _ { l } } - \\lambda I _ { m _ { l } \\times m _ { l } } ) \\operatorname* { d e t } ( { \\bf 1 } _ { m _ { s } \\times m _ { s } } - \\lambda I _ { m _ { s } \\times m _ { s } } ) = 0 . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            253,
+            127,
+            743,
+            145
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "440 Finally, we can get the eigendecomposition $\\Gamma = V _ { \\Gamma } \\Lambda _ { \\Gamma } V _ { \\Gamma }$ where ",
+        "bbox": [
+            138,
+            151,
+            598,
+            167
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/31c4595ff2eafb5b4dfc660dd139acfe7011e4ad5513a86500f25de57d5259f5.jpg",
+        "text": "$$\n\\begin{array} { c } { { \\Lambda _ { \\Gamma } = \\mathrm { d i a g } \\left( \\left[ m _ { l } , m _ { s } , \\mathbf { 0 } _ { m - 2 } \\right] \\right) , } } \\\\ { { V _ { \\Gamma } ^ { \\left( \\leq d \\right) } = \\left[ \\displaystyle \\frac { 1 } { \\sqrt { m _ { l } } } e _ { l } \\displaystyle \\frac { 1 } { \\sqrt { m _ { s } } } e _ { s } \\right] . } } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            387,
+            172,
+            611,
+            231
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "441 B.2 Proof of Theorem 5.1 ",
+        "text_level": 1,
+        "bbox": [
+            140,
+            243,
+            362,
+            258
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "442 The cross-correlation matrix $\\Gamma$ for this input can be expressed using (5): ",
+        "bbox": [
+            142,
+            268,
+            645,
+            285
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/332e22676b991327a650753d2156f5e3bf8590b65839d1caeea10d6d3debd8be.jpg",
+        "text": "$$\n\\begin{array} { r l } & { \\mathrm { ~ \\gamma \\mathrm { ' } = \\mathbb { E } } [ x _ { \\mathrm { b a s t } } x _ { \\mathrm { b a s l } } ^ { \\top } ] } \\\\ & { \\mathrm { ~ \\ } = \\mathbb { E } [ c _ { h } ^ { 2 } b _ { h } ^ { 2 } \\sin ( f _ { h } t ) \\sin ( f _ { h } t ) ^ { \\top } + c _ { l } ^ { 2 } b _ { h } ^ { 2 } \\sin ( f _ { l } t ) \\sin ( f _ { l } t ) ^ { \\top } + c _ { h } c _ { l } b _ { h } b _ { l } \\sin ( f _ { h } t ) \\sin ( f _ { l } t ) ^ { \\top } + c _ { h } c _ { l } b _ { h } b _ { l } \\sin ( f _ { h } t ) ^ { \\top } ] } \\\\ & { \\mathrm { ~ \\ } = c _ { h } ^ { 2 } \\sin ( f _ { h } t ) \\sin ( f _ { h } t ) ^ { \\top } + c _ { l } ^ { 2 } \\sin ( f _ { l } t ) \\sin ( f _ { l } t ) ^ { \\top } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            181,
+            291,
+            839,
+            353
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "443 Using the orthogonality between $\\sin ( f _ { h } t )$ and $\\sin ( f _ { l } t ) ( f _ { h } \\neq f _ { l } )$ , where $t \\in \\mathbb N$ , ",
+        "bbox": [
+            138,
+            358,
+            692,
+            376
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/fe01ee92e803a50e5f06ca7550215ce16c5c83050faae2fdc13232d72ee76cfd.jpg",
+        "text": "$$\n\\begin{array} { c } { { \\Gamma = c _ { h } ^ { 2 } \\sin ( f _ { h } t ) \\sin ( f _ { h } t ) ^ { \\top } + c _ { l } ^ { 2 } \\sin ( f _ { l } t ) \\sin ( f _ { l } t ) ^ { \\top } , } } \\\\ { { \\Gamma \\sin ( f _ { h } t ) = c _ { h } ^ { 2 } | | \\sin ( f _ { h } t ) | | ^ { 2 } \\sin ( f _ { h } t ) , } } \\\\ { { \\Gamma \\sin ( f _ { l } t ) = c _ { l } ^ { 2 } | | \\sin ( f _ { l } t ) | | ^ { 2 } \\sin ( f _ { l } t ) . } } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            302,
+            381,
+            696,
+            444
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "444 We find eigenvector and eigenvalue as: ",
+        "bbox": [
+            142,
+            448,
+            429,
+            463
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/fdc35693c6be29658add13099ec28222527f34e308ce5417589257236690b4c6.jpg",
+        "text": "$$\n\\begin{array} { r } { \\Lambda _ { \\Gamma } = \\mathrm { d i a g } \\left( \\left[ c _ { h } ^ { 2 } | | \\sin ( f _ { h } t ) | | ^ { 2 } , c _ { l } ^ { 2 } | | \\sin ( f _ { l } t ) | | ^ { 2 } , \\mathbf { 0 } _ { m - 2 } \\right] \\right) , } \\\\ { V _ { \\Gamma } ^ { ( \\leq 2 ) } = \\left[ e _ { h } \\ e _ { l } \\right] ^ { \\top } . \\qquad } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            310,
+            468,
+            687,
+            512
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "$\\begin{array} { r } { f = \\frac { 2 \\pi } { m } k } \\end{array}$ for some integer $k$ ",
+        "bbox": [
+            140,
+            520,
+            457,
+            536
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4895637b038d70c7d55b00d8bf541b907c3e354393fab0e99923513d51440140.jpg",
+        "text": "$$\n\\begin{array} { l } { | | \\sin ( f x ) | | ^ { 2 } = \\displaystyle \\int _ { 0 } ^ { m } \\sin ^ { 2 } ( f x ) d x = \\displaystyle \\int _ { 0 } ^ { m } \\frac { 1 - \\cos ( 2 f x ) } { 2 } d x } \\\\ { = \\displaystyle \\frac { 1 } { 2 } \\left[ x - \\frac { \\sin ( 2 f x ) } { 2 } \\right] _ { 0 } ^ { m } = \\displaystyle \\frac { m } { 2 } - \\frac { \\sin ( 2 f m ) } { 4 } = \\displaystyle \\frac { m } { 2 } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            289,
+            544,
+            707,
+            616
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "446 Finally, we have ",
+        "bbox": [
+            142,
+            621,
+            284,
+            636
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/f8bbb43734083afb5ae114264f9dac837880152c8cab47cff2e4bd68e4ca1c41.jpg",
+        "text": "$$\n\\begin{array} { l } { { \\displaystyle \\Lambda _ { \\Gamma } = \\mathrm { d i a g } \\left( \\left[ c _ { h } ^ { 2 } \\frac { m } { 2 } , c _ { l } ^ { 2 } \\frac { m } { 2 } , { \\bf 0 } _ { m - 2 } \\right] \\right) , } } \\\\ { { \\displaystyle V _ { \\Gamma } ^ { ( \\leq 2 ) } = \\left[ e _ { h } e _ { l } \\right] . } } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            370,
+            643,
+            627,
+            695
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "447 B.3 Proof of Theorem 4.2 ",
+        "text_level": 1,
+        "bbox": [
+            142,
+            708,
+            364,
+            723
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "448 We have ",
+        "bbox": [
+            142,
+            734,
+            232,
+            748
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/38fd16f256e7ad89683b5b8b808c50ce45ec9deb7bb94d12d33f22e1a803c968.jpg",
+        "text": "$$\n\\tilde { \\lambda } _ { j } ( t ) = \\tilde { s } _ { j } ^ { 2 } ( t ) \\gamma _ { j } = ( 1 + \\lambda _ { j } ( 0 ) ^ { - 1 } e ^ { - 8 \\gamma _ { j } t } ) ^ { - 1 } ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            352,
+            753,
+            643,
+            775
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "and thus if we plug in 449 $\\tau _ { j } = - \\log ( \\lambda _ { j } ( 0 ) ) / 8 \\gamma _ { j }$ , i.e., $\\exp ( - 8 \\gamma _ { j } \\tau _ { j } ) = \\lambda _ { j } ( 0 )$ , then we have $\\tilde { \\lambda } _ { j } ( \\tau _ { j } ) =$ 450 $\\begin{array} { r } { ( 1 + 1 ) ^ { - 1 } = \\frac { 1 } { 2 } } \\end{array}$ . The derivative $\\tilde { \\lambda } _ { j } ^ { \\prime } ( t )$ at $t = \\tau _ { j }$ is given as follows: ",
+        "bbox": [
+            137,
+            785,
+            826,
+            818
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b04dddce83fcbeb8bf8340543b947bc26ee92bafaa0de372ddda269f7f73ba00.jpg",
+        "text": "$$\n\\begin{array} { r l } & { \\tilde { \\lambda } _ { j } ^ { \\prime } ( t ) = - ( 1 + \\lambda _ { j } ( 0 ) ^ { - 1 } e ^ { - 8 \\gamma _ { j } t } ) ^ { - 2 } ( - 8 \\gamma _ { j } \\lambda _ { j } ( 0 ) ^ { - 1 } e ^ { - 8 \\gamma _ { j } t } ) } \\\\ & { \\qquad = - \\tilde { \\lambda } _ { j } ^ { 2 } ( t ) ( - 8 \\gamma _ { j } \\lambda _ { j } ( 0 ) ^ { - 1 } e ^ { - 8 \\gamma _ { j } t } ) } \\\\ & { \\tilde { \\lambda } _ { j } ^ { \\prime } ( \\tau _ { j } ) = - \\tilde { \\lambda } _ { j } ^ { 2 } ( \\tau _ { j } ) ( - 8 \\gamma _ { j } \\lambda _ { j } ^ { - 1 } ( 0 ) \\lambda _ { j } ( 0 ) ) } \\\\ & { \\qquad = 2 \\gamma _ { j } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            307,
+            825,
+            691,
+            911
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "13 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            948
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/9480d1a356ce27802ce231a8beda924fb85203e34b079a706959e3ca06db05c7.jpg",
+        "text": "$$\nC = \\sum _ { j = 1 } ^ { d } \\lambda _ { j } u _ { j } u _ { j } ^ { \\top } \\mathrm { ~ a n d ~ } C ^ { 2 } = \\sum _ { j = 1 } ^ { d } \\lambda _ { j } ^ { 2 } u _ { j } u _ { j } ^ { \\top } ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            361,
+            112,
+            633,
+            157
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "452 we get the loss ",
+        "bbox": [
+            140,
+            164,
+            272,
+            178
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "equation",
+        "img_path": "images/554d71505fa699fc61f17776ca908b15e7a12e55a4c663a66e7ccefb52ce7fd7.jpg",
+        "text": "$$\n\\begin{array} { l } { { \\mathcal { L } = | | C - I | | _ { F } ^ { 2 } = \\mathrm { T r } ( ( C - I ) ( C - I ) ) = \\mathrm { T r } ( C ^ { 2 } ) - 2 \\mathrm { T r } ( C ) + d } } \\\\ { { \\displaystyle \\quad = \\sum _ { j = 1 } ^ { d } \\lambda _ { j } ^ { 2 } - 2 \\sum _ { j = 1 } ^ { d } \\lambda _ { j } + d = \\sum _ { j = 1 } ^ { d } ( \\lambda _ { j } - 1 ) ^ { 2 } . } } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            277,
+            183,
+            718,
+            250
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "453 Thus, we get the following equation: ",
+        "bbox": [
+            142,
+            253,
+            415,
+            270
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "equation",
+        "img_path": "images/013cd6b3d601dde089fc72f4b1218c374a6633c3a9ee9a6a7c3427bc09571b91.jpg",
+        "text": "$$\n\\begin{array} { l } { \\displaystyle \\frac { d \\mathcal { L } } { d t } ( \\tau _ { j } ) = \\sum _ { i = 1 } ^ { d } 2 ( \\lambda _ { i } ( \\tau _ { j } ) - 1 ) \\lambda _ { i } ^ { \\prime } ( \\tau _ { j } ) } \\\\ { \\displaystyle \\approx \\sum _ { i = 1 } ^ { d } 2 ( \\tilde { \\lambda } _ { i } ( \\tau _ { j } ) - 1 ) \\tilde { \\lambda } _ { i } ^ { \\prime } ( \\tau _ { j } ) } \\\\ { \\displaystyle \\approx 2 ( \\tilde { \\lambda } _ { j } ( \\tau _ { j } ) - 1 ) \\tilde { \\lambda } _ { j } ^ { \\prime } ( \\tau _ { j } ) } \\\\ { \\displaystyle = - \\tilde { \\lambda } _ { j } ^ { \\prime } ( \\tau _ { j } ) = - 2 \\gamma _ { j } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            382,
+            276,
+            617,
+            410
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "454 B.4 Proof of Theorem 4.3 ",
+        "text_level": 1,
+        "bbox": [
+            142,
+            419,
+            364,
+            434
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "455 First, we have ",
+        "bbox": [
+            142,
+            445,
+            267,
+            460
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "equation",
+        "img_path": "images/76d2fd577f400ae8f9198005ff62f748797473b8f4caa1876600d299fc4cdb02.jpg",
+        "text": "$$\n\\begin{array} { c } { { \\tilde { s } _ { j } ( t ) = ( \\gamma _ { j } + s _ { j } ^ { - 2 } ( 0 ) \\exp ( - 8 \\gamma _ { j } t ) ) ^ { - 1 / 2 } , } } \\\\ { { \\tilde { s } _ { j } ( \\tau _ { j } ) = ( \\gamma _ { j } + s _ { j } ^ { - 2 } ( 0 ) \\lambda _ { j } ( 0 ) ) ^ { - 1 / 2 } } } \\\\ { { = ( 2 \\gamma _ { j } ) ^ { - 1 / 2 } . } } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            359,
+            464,
+            635,
+            531
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "456 and its derivative is given as follows: ",
+        "bbox": [
+            142,
+            534,
+            416,
+            549
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "equation",
+        "img_path": "images/289262ee845a941d8bd6b13e094393f83c8380eaa83e0825a1ddbc64b61b9416.jpg",
+        "text": "$$\n\\begin{array} { l } { { \\displaystyle { \\tilde { s } _ { j } ^ { \\prime } } ( t ) = - \\frac { 1 } { 2 } ( \\gamma _ { j } + s _ { j } ^ { - 2 } ( 0 ) \\exp ( - 8 \\gamma _ { j } t ) ) ^ { - 3 / 2 } ( - 8 \\gamma _ { j } s _ { j } ^ { - 2 } ( 0 ) \\exp ( - 8 \\gamma _ { j } t ) ) , } } \\\\ { { \\displaystyle { \\tilde { s } _ { j } ^ { \\prime } } ( \\tau _ { j } ) = - \\frac { 1 } { 2 } ( \\gamma _ { j } + s _ { j } ^ { - 2 } ( 0 ) \\lambda _ { j } ( 0 ) ) ^ { - 3 / 2 } ( - 8 \\gamma _ { j } s _ { j } ^ { - 2 } ( 0 ) \\lambda _ { j } ( 0 ) ) } } \\\\ { { \\displaystyle ~ = - \\frac { 1 } { 2 } ( 2 \\gamma _ { j } ) ^ { - 3 / 2 } ( - 8 \\gamma _ { j } ^ { 2 } ) } } \\\\ { { \\displaystyle ~ = ( 2 \\gamma _ { j } ) ^ { 1 / 2 } . } } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            258,
+            556,
+            736,
+            670
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "14 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "451 Using the equations ",
+        "bbox": [
+            142,
+            92,
+            307,
+            106
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "image",
+        "img_path": "images/e31cb10382dff3b5f3211d5ae03e5a6f417ad5c0b5caea466ce3b7ac0f2fbd0a.jpg",
+        "image_caption": [
+            "Figureblue), vatives (solid dλl (blue),  are app $\\frac { d \\lambda _ { s } } { d t }$ (red), and mately equ $- { \\frac { d { \\mathcal { L } } } { d t } }$ shed). The deri(dashed blue), $\\begin{array} { r } { \\frac { d \\lambda _ { l } } { d t } ( \\tau _ { l } ) } \\end{array}$ (solidashed $\\begin{array} { r } { \\frac { d \\lambda _ { s } } { d t } ( \\tau _ { s } ) } \\end{array}$ $2 \\gamma _ { l } = 2 m _ { l }$ $2 \\gamma _ { s } = 2 m _ { s }$ "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            178,
+            128,
+            816,
+            281
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "image",
+        "img_path": "images/7f57c31be7508e6f3573dd2b736acec1b854ad01a1f00dbfca594558c9d7933b.jpg",
+        "image_caption": [
+            "Figure 7: Evolution of $s _ { j } ( t )$ and $s _ { j } ^ { \\prime } ( t )$ . (Left) Evolution of singular values $s _ { l }$ (solid blue) and $s _ { s }$ (solid red) of $W$ during training. They converge near to $1 / \\sqrt { \\gamma _ { l } } = 1 / 3$ (dashed horizontal blue) and $1 / \\sqrt { \\gamma _ { s } } = 1$ (dashed horizontal red), respectively. The predicted singular values (dashed blue, dashed red) match the empirired). The derivatives √ l, t) Evolution of the derivativeare approximately equal to $\\textstyle { \\frac { d s _ { l } } { d t } }$ (solid blue) and (dashed horizo $\\frac { d s _ { s } } { d t }$ (solid blue), $\\begin{array} { r } { \\frac { d s _ { l } } { d t } ( \\tau _ { l } ) } \\end{array}$ $\\begin{array} { r } { \\frac { d s _ { s } } { d t } ( \\tau _ { s } ) } \\end{array}$ $\\sqrt { 2 \\gamma _ { l } }$ $\\sqrt { 2 \\gamma _ { s } }$ (dashed horizontal red). The predicted derivatives of singular values (dashed blue, dashed red) also match the empirical result. We use $m _ { l } = 9$ and $m _ { s } = 1$ . "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            176,
+            361,
+            823,
+            453
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "457 C Derivatives ",
+        "bbox": [
+            142,
+            90,
+            303,
+            106
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "15 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "image",
+        "img_path": "images/33a6053c78ea411bc2a2ee4109a0201bba14401aec0b4b8c4cb037c4cfef698f.jpg",
+        "image_caption": [
+            "Figureblue), ivatives  (solid r $\\frac { d \\lambda _ { h } } { d t }$ (blue), re appr $\\frac { d \\lambda _ { l } } { d t }$ (red), andately equa $- { \\frac { d { \\mathcal { L } } } { d t } }$ ashed). The d(dashed blue), $\\textstyle { \\frac { d \\lambda _ { h } } { d t } } \\left( \\tau _ { h } \\right)$ (solidd red). $\\begin{array} { r } { \\frac { d \\lambda _ { l } } { d t } ( \\tau _ { l } ) } \\end{array}$ $2 \\gamma _ { h } = 2 c _ { h } ^ { 2 }$ $2 \\gamma _ { l } = 2 c _ { l } ^ { 2 }$ "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            178,
+            90,
+            818,
+            250
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "image",
+        "img_path": "images/7e3d0a72566a6537917905fc5f9e0211e80195b38bb9a720eb90d4be5bf5cb31.jpg",
+        "image_caption": [
+            "Figure 9: Evolution of $s _ { j } ( t )$ and $s _ { j } ^ { \\prime } ( t )$ . See the caption of Figure 7. (Left) They converge near to $1 / \\sqrt { \\gamma _ { h } } = 1 / \\sqrt { c _ { h } ^ { 2 } \\frac { m } { 2 } }$ and √ $1 / \\sqrt { \\gamma } \\stackrel { \\cdot } { = } 1 / \\sqrt { c _ { l } ^ { 2 } \\frac { m } { 2 } }$ . (Right) The derivatives $\\textstyle { \\frac { d s _ { h } } { d t } } \\left( \\tau _ { h } \\right)$ , $\\begin{array} { r } { \\frac { d s _ { l } } { d t } ( \\tau _ { l } ) } \\end{array}$ are approximately equal to $\\sqrt { 2 \\gamma _ { h } } , \\sqrt { 2 \\gamma _ { l } }$ . We use $c _ { h } = 1$ and $c _ { l } = 1 / 2$ . "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            176,
+            330,
+            823,
+            406
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "16 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "image",
+        "img_path": "images/d0911a6619bb3b1c6339218d69ed4778f3c89f3bae07b0fad85c82ea106026d1.jpg",
+        "image_caption": [
+            "Figure 10: Evolution of subspace alignment ${ \\mathrm { S A } } ( V ^ { ( \\leq d ) } , V _ { \\Gamma } ^ { ( \\leq d ) } )$ $( d = 2 )$ ) between the top- $d$ right singular vectors of $W$ and eigenvectors of $\\Gamma$ . We use the data (Top) from Section 4.1 and (Bottom) from Section 5.1. See Appendix A. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            176,
+            131,
+            821,
+            468
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "458 D Subspace Alignment ",
+        "bbox": [
+            142,
+            90,
+            382,
+            107
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "17 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "image",
+        "img_path": "images/7b623326b3f55e0c559a27be4796f2f65b053b8380b21dd7ce02bd401dfa6575.jpg",
+        "image_caption": [
+            "Figure 11: Visualization of the trajectory of $W e _ { l }$ and $W e _ { s }$ on the subspace spanned by $u _ { 1 } , u _ { 2 }$ during training. The high-dimensional feature $W e _ { h }$ (blue solid line) aligns with $u _ { 1 }$ and the lowdimensional feature $W e _ { l }$ (red solid line) aligns with $u _ { 2 }$ . Dashed lines are predicted trajectory (see Theorem 4.5). "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            356,
+            127,
+            661,
+            347
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "image",
+        "img_path": "images/e000edcd6485ad60c25a325b7bcdd9263a6a30d3c411aa693119d131642f7acb.jpg",
+        "image_caption": [
+            "Figure 12: Visualization of the trajectory of $W e _ { h }$ and $W e _ { l }$ on the subspace spanned by $u _ { 1 } , u _ { 2 }$ during training. See the caption of Figure 11. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            354,
+            435,
+            663,
+            655
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "459 E Orthogonal Feature Learning ",
+        "bbox": [
+            140,
+            89,
+            457,
+            107
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "18 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "image",
+        "img_path": "images/78355c9950b817468c9c122806049bb4932dc1131fe147f9cd4d6ef86b3c0edb.jpg",
+        "image_caption": [
+            "Figure 13: The first two right singular vectors (Top/Bottom) of $W$ during training (from Left to Right). (Left) At $t = 0$ , the two singular vectors are just noise. (Center) A little after $t = \\tau _ { 1 }$ , the first singular value reaches the plateau as shown in Figure 3 and only the (high frequency) feature with a high amplitude is learned. (Right) At the convergence, the model learns the two features. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            174,
+            127,
+            825,
+            276
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "discarded",
+        "text": "19 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "discarded",
+        "text": "460 F Right Singular Vectors of W ",
+        "bbox": [
+            142,
+            90,
+            442,
+            107
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "image",
+        "img_path": "images/c3bcfb06d027285a1ba4f113d773afe8240230264c530cd26cf3c27a4f9ce94b.jpg",
+        "image_caption": [
+            "Figure 14: Effects of extent bias on learning dynamics in non-linear network. (Left) Stepwise learning curves of Barlow Twins. There are two $\\left[ d = 2 \\right]$ ) learning steps shown with two black dashed vertical lines (also shown in the other two panels) on empirical result (solid green). (Right) Evolution of eigenvalues $\\lambda _ { j }$ ’s of $C$ during training. At the beginning, the first eigenvalue $\\lambda _ { 1 }$ (blue) increases to 1 and then later the second $\\lambda _ { 2 }$ (red) follows. We use same inputs in Figure 1. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            174,
+            128,
+            823,
+            226
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "image",
+        "img_path": "images/983893aa41afcbb4c42b3de929754f5e3558b4afeb6d8ea9e3d3ceb16528c347.jpg",
+        "image_caption": [
+            "Figure 15: Amplitude bias effects on learning dynamics in non-linear network. (Left) Stepwise learning curves of Barlow Twins showing two distinct learning phases with vertical dashed lines marking critical transition points during training. The green line shows empirical loss decreasing in two clear stages. (Right) Evolution of eigenvalues $\\lambda _ { j }$ of correlation matrix C during training. The eigenvalue $\\lambda _ { l }$ (blue) increases first, followed by the eigenvalue $\\lambda _ { s }$ (red), demonstrating amplitudebased learning prioritization. We use same inputs in Figure 3. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            176,
+            330,
+            823,
+            428
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "discarded",
+        "text": "461 G Non-linear Experiments ",
+        "bbox": [
+            142,
+            90,
+            413,
+            106
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "63 Our study has several limitations due to its simplified assumptions. While our theoretical analysis   \n4 provides valuable insights into the relationship between extent bias and shortcut learning, several   \n5 limitations should be acknowledged: ",
+        "bbox": [
+            153,
+            119,
+            825,
+            162
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "• Linear Network Assumption: We focus on one-layer linear networks, which may not capture the complexities of multi-layer non-linear neural networks.   \n• Feature Independence: Our assumption of independent features may not reflect the complex interdependencies in practical scenarios.   \n• Augmentation Limitations: Augmentation Limitations: Our basic augmentation approach may not fully represent the sophisticated strategies used in modern SSL methods. ",
+        "bbox": [
+            217,
+            172,
+            825,
+            266
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "472 Future work could address these limitations by extending the theoretical framework to non-linear   \n473 networks, incorporating feature interactions, and analyzing the impact of more complex augmentation   \n474 strategies. ",
+        "bbox": [
+            145,
+            275,
+            826,
+            318
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "475 I Supplementary Studies ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            337,
+            397,
+            354
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "476 I.1 Non-linear Feature Learned Measurement ",
+        "text_level": 1,
+        "bbox": [
+            147,
+            367,
+            506,
+            382
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Nonlinearity exhibits distinct learning dynamics compared to linearity. Therefore, we aim to investigate whether extent biases also exists in multilayer perceptrons (MLPs). We define a measurement of feature learning as: ",
+        "bbox": [
+            169,
+            392,
+            825,
+            435
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Definition I.1. (Feature Learning Distance). When a model $f ( \\cdot , \\theta )$ has sufficiently learned a specific latent feature vector $e _ { f }$ , $f ( X , \\theta )$ contains information about $e _ { f }$ for input $X = \\bar { p } ( e _ { f } ) \\in R ^ { m }$ where $p$ represents some non-linear transformation function. Consequently, if a simple linear probing function $g$ can extract $e _ { f }$ from $f ( X , \\theta )$ , we can define that the model $f$ has meaningfully learned $e _ { f }$ Furthermore, to quantify the degree of learning, assuming an optimally trained probe $g$ , we define a feature learning metric ",
+        "bbox": [
+            173,
+            438,
+            825,
+            522
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "equation",
+        "img_path": "images/cd47d96ff3dc39198e791efd1ff59f63f0e1c18a0e5051ee5c2c8acc57d61a34.jpg",
+        "text": "$$\n\\mathrm { F L D } ( k ) = \\operatorname* { m i n } _ { g } \\mathbb { E } _ { e _ { f } \\in \\mathcal { P } _ { k } } \\left[ \\frac { \\mathbf { M S E } ( g ( f ( X , \\theta ) ) , e _ { f } ) } { | | e _ { f } | | _ { 2 } ^ { 2 } } \\right] ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            331,
+            526,
+            663,
+            560
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "486 where $\\mathcal { P } _ { k }$ is distribution of feature $k$ . ",
+        "bbox": [
+            151,
+            565,
+            416,
+            579
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "I.2 Non-linear on extent bias ",
+        "text_level": 1,
+        "bbox": [
+            165,
+            595,
+            385,
+            609
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "488 We experiment on Section 4.7, for understanding non-linear feature learning dynamics. Figure 14   \n489 shows this results.   \n490 From Figure 16, we observe $\\mathrm { F L D } ( e _ { l } )$ drop earlier than $\\mathrm { F L D } ( e _ { s } )$ . Therefore, the phenomenon of $e _ { l }$   \n491 being learned before $e _ { s }$ is consistent with the linear case. ",
+        "bbox": [
+            148,
+            621,
+            828,
+            648
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "image",
+        "img_path": "images/1a273a63c3af5789e4df152a507af2f4e1381291961c6c9b24d6b99dc5842b42.jpg",
+        "image_caption": [
+            "Figure 16: Effects of extent bias on learning dynamics in non-linear network. (Left) Stepwise learning curves of Barlow Twins. There are two $\\left( d = 2 \\right.$ ) learning steps shown with two black dashed vertical lines (also shown in the other two panels) on empirical result (solid green). (Center) Evolution of eigenvalues $\\lambda _ { j }$ ’s of $C$ during training. At the beginning, the first eigenvalue $\\lambda _ { 1 }$ (blue) increases to 1 and then later the second $\\lambda _ { 2 }$ (red) follows. (Right) Evolution of the feature learning distance $\\mathrm { F L D } ( e )$ for $e _ { l }$ (blue) and $e _ { s }$ (red). See Definition I.1. We use $m _ { l } = 9 , m _ { s } = 1$ . See Appendix A.1 for more detailed settings. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            174,
+            660,
+            823,
+            757
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            137,
+            882,
+            825,
+            911
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "discarded",
+        "text": "462 H Limitations ",
+        "bbox": [
+            142,
+            89,
+            308,
+            106
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            506,
+            946
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "image",
+        "img_path": "images/75fa558006357063bedad98d7b790f4f28f667aaddf1b2a563543064db1cb553.jpg",
+        "image_caption": [
+            "Figure 17: Amplitude bias effects on learning dynamics in non-linear network. (Left) Stepwise learning curves of Barlow Twins showing two distinct learning phases with vertical dashed lines marking critical transition points during training. The green line shows empirical loss decreasing in two clear stages. (Center) Evolution of eigenvalues $\\lambda _ { j }$ of correlation matrix C during training. The eigenvalue $\\lambda _ { h }$ (blue) increases first, followed by the eigenvalue $\\lambda _ { l }$ (red), demonstrating amplitude-based learning prioritization. (Right) Evolution of feature learning distance $\\mathrm { F L D } ( e )$ for high-amplitude feature el (blue) and low-amplitude feature es (red), confirming that features with higher amplitude coefficients $\\left( c _ { h } \\right)$ are learned before those with lower amplitude $( c _ { l } )$ , even in non-linear architectures. Note that FLD decreases as the network learns to represent the corresponding feature. We use $c _ { h } = 1 , c _ { l } = 0 . 5$ and a 3-layer network with leakyReLU activations. See the caption of Figure 16. See Appendix A for additional experimental details. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            176,
+            90,
+            823,
+            186
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "492 I.3 Non-linear on amplitude bias ",
+        "text_level": 1,
+        "bbox": [
+            147,
+            376,
+            413,
+            391
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "Using Definition I.1, we experiment on Section 5.7. Figure 17 demonstrates amplitude bias effects in non-linear networks. The results show that features with higher amplitude $\\left( c _ { h } \\right)$ are learned before 5 those with lower amplitude $( c _ { l } )$ , consistent with our linear model findings. Specifically, $F L D ( e _ { h } )$ 6 decreases earlier than $F L D ( e _ { l } )$ , mirroring the eigenvalue increase patterns observed in the left and 7 center panels. These results confirm that amplitude bias persists in non-linear architectures, suggesting 98 that amplitude magnitude remains a primary determinant of feature learning priority regardless of 9 network complexity. This provides additional evidence that deep learning models respond more 00 sensitively to amplitude characteristics than frequency properties, even when non-linearities are 01 introduced. ",
+        "bbox": [
+            155,
+            401,
+            825,
+            526
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "502 I.4 Eigenvalues on Shift Augmentation ",
+        "text_level": 1,
+        "bbox": [
+            145,
+            542,
+            455,
+            558
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "equation",
+        "img_path": "images/31026b490d0c2e09f285623adbfb7f95abf970a4b34c9fe16611f325b7b7ac9f.jpg",
+        "text": "$$\n\\begin{array} { l } { { x _ { b a s e } = c _ { a } \\sin ( f _ { a } t + \\epsilon _ { a } ) + c _ { b } \\sin ( f _ { b } t + \\epsilon _ { b } ) } } \\\\ { { \\mathrm { } } } \\\\ { { \\epsilon _ { a } , \\epsilon _ { b } \\overset { \\mathrm { i . i . d . } } { \\sim } U ( - \\pi , \\pi ) } } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            352,
+            574,
+            643,
+            617
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "503 ",
+        "bbox": [
+            140,
+            614,
+            161,
+            626
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "equation",
+        "img_path": "images/374b3235c501614a9a73dcefb9ad7cea8f875d6e186969586fdf9ba35ea011d6.jpg",
+        "text": "$$\n\\begin{array} { l } { \\Gamma = \\mathbb { E } [ x _ { b a s e } x _ { b a s e } ^ { \\top } ] } \\\\ { \\Gamma _ { i j } = \\mathbb { E } [ c _ { a } ^ { 2 } \\sin ( f _ { a } i + \\epsilon _ { a } ) \\sin ( f _ { a } j + \\epsilon _ { a } ) + c _ { a } c _ { b } \\sin ( f _ { a } i + \\epsilon _ { a } ) \\sin ( f _ { b } j + \\epsilon _ { b } ) } \\\\ { + c _ { a } c _ { b } \\sin ( f _ { b } i + \\epsilon _ { b } ) \\sin ( f _ { a } j + \\epsilon _ { a } ) + c _ { b } ^ { 2 } \\sin ( f _ { b } i + \\epsilon _ { b } ) \\sin ( f _ { b } j + \\epsilon _ { b } ) ] } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            251,
+            627,
+            745,
+            691
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "504 ",
+        "bbox": [
+            140,
+            686,
+            161,
+            698
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "equation",
+        "img_path": "images/f3189af565ec0b2236789abb6f2c292e50040cbcfe851e64d5ee212a0db9750f.jpg",
+        "text": "$$\n\\begin{array} { r l } { \\mathbb { E } _ { \\epsilon _ { a } , \\epsilon _ { b } } [ \\sin ( \\theta _ { a } + \\epsilon _ { a } ) \\sin ( \\theta _ { b } + \\epsilon _ { b } ) ] = \\mathbb { E } _ { \\epsilon _ { a } , \\epsilon _ { b } } [ \\mathrm { I m } ( \\exp ( i ( \\theta _ { a } + \\epsilon _ { a } ) ) ) \\mathrm { I m } ( \\exp ( i ( \\theta _ { b } + \\epsilon _ { b } ) ) ) ] } & { } \\\\ & { = \\mathbb { E } _ { \\epsilon _ { a } } [ \\mathrm { I m } ( \\exp ( i ( \\theta _ { a } + \\epsilon _ { a } ) ) ) ] \\mathbb { E } _ { \\epsilon _ { b } } [ \\mathrm { I m } ( \\exp ( i ( \\theta _ { b } + \\epsilon _ { b } ) ) ) ] } \\\\ & { = \\mathrm { I m } ( \\mathbb { E } _ { \\epsilon _ { a } } [ \\exp ( i ( \\theta _ { a } + \\epsilon _ { a } ) ) ] ) \\mathrm { I m } ( \\mathbb { E } _ { \\epsilon _ { b } } [ \\exp ( i ( \\theta _ { b } + \\epsilon _ { b } ) ) ] ) } \\\\ & { = \\mathrm { I m } ( \\mathbb { E } _ { \\epsilon _ { a } } [ \\exp ( i \\epsilon _ { a } ) \\exp ( i \\theta _ { a } ) ] ) \\mathrm { I m } ( \\mathbb { E } _ { \\epsilon _ { b } } [ \\exp ( i \\epsilon _ { b } ) \\exp ( i \\theta _ { b } ) ] ) } \\\\ & { = \\mathrm { I m } ( \\varphi ( 1 ) \\exp ( i \\theta _ { a } ) ) \\mathrm { I m } ( \\varphi ( 1 ) \\exp ( i \\theta _ { b } ) ) } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            187,
+            699,
+            810,
+            791
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "505 We can define $u , d$ as $u = \\mu + \\alpha , d = \\mu - \\alpha , \\alpha = 2 \\pi$ . ",
+        "bbox": [
+            140,
+            794,
+            529,
+            809
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "equation",
+        "img_path": "images/9a40851c56bfd04d222bac4807f7b9e251f76eea1d90fa2d86d3d330999e6da0.jpg",
+        "text": "$$\n\\varphi ( 1 ) = { \\frac { \\exp ( i u ) - \\exp ( i d ) } { i ( u - d ) } } = { \\frac { \\exp ( i \\mu ) } { \\alpha i } } { \\frac { \\exp ( i \\alpha ) - \\exp ( - i \\alpha ) } { 2 i } } = { \\frac { \\exp ( i \\mu ) } { \\alpha i } } \\sin ( \\alpha ) = 0\n$$",
+        "text_format": "latex",
+        "bbox": [
+            217,
+            832,
+            779,
+            866
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "506 So, ",
+        "bbox": [
+            140,
+            872,
+            197,
+            886
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e06bcd9c24fa0d39b9bb0c8081b4e5577fa3a14b57e5792d3ca4726d3fa35587.jpg",
+        "text": "$$\n\\mathbb { E } _ { \\epsilon _ { a } , \\epsilon _ { b } } [ \\sin ( \\theta _ { a } + \\epsilon _ { a } ) \\sin ( \\theta _ { b } + \\epsilon _ { b } ) ] = 0\n$$",
+        "text_format": "latex",
+        "bbox": [
+            375,
+            895,
+            620,
+            909
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "equation",
+        "img_path": "images/456406322c5d5b974df9720671d340df67671a9c73b5f0651c26409722e1c71d.jpg",
+        "text": "$$\n\\begin{array} { l } { \\displaystyle \\varepsilon [ \\sin ( \\theta _ { a } + \\epsilon _ { a } ) \\sin ( \\theta _ { b } + \\epsilon _ { a } ) ] = - \\frac { 1 } { 2 } \\mathbb { E } [ \\cos ( \\theta _ { a } + \\theta _ { b } + 2 \\epsilon _ { a } ) - \\cos ( \\theta _ { a } - \\theta _ { b } ) ] } \\\\ { \\displaystyle \\qquad = - \\frac { 1 } { 2 } \\mathbb { E } [ \\cos ( \\theta _ { a } + \\theta _ { b } + 2 \\epsilon _ { a } ) ] + \\frac { 1 } { 2 } \\cos ( \\theta _ { a } - \\theta _ { b } ) } \\\\ { \\displaystyle \\qquad = - \\frac { 1 } { 2 } \\int _ { a } ^ { b } [ \\frac { 1 } { b - a } \\cos ( \\theta _ { a } + \\theta _ { b } + 2 x ) d x ] + \\frac { 1 } { 2 } \\cos ( \\theta _ { a } - \\theta _ { b } ) } \\\\ { \\displaystyle \\qquad = - \\frac { 1 } { 4 } \\frac { 1 } { b - a } [ \\sin ( \\theta _ { a } + \\theta _ { b } + 2 b ) - \\sin ( \\theta _ { a } + \\theta _ { b } + 2 a ) ] + \\frac { 1 } { 2 } \\cos ( \\theta _ { a } - \\theta _ { b } ) } \\\\ { \\displaystyle \\qquad = - \\frac { 1 } { 4 } \\frac { 1 } { b - a } [ 2 \\cos ( \\theta _ { a } + \\theta _ { b } + a + b ) \\sin ( b - a ) ] + \\frac { 1 } { 2 } \\cos ( \\theta _ { a } - \\theta _ { b } ) } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            181,
+            128,
+            833,
+            291
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "508 we assumed $b - a = 2 \\pi$ , ",
+        "bbox": [
+            140,
+            309,
+            339,
+            324
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "equation",
+        "img_path": "images/557ffbd023cf04b223080ffe121a9c06dbc6054d776c89285175d06ab53d29e9.jpg",
+        "text": "$$\n\\mathbb { E } [ \\sin ( \\theta _ { a } + \\epsilon _ { a } ) \\sin ( \\theta _ { b } + \\epsilon _ { a } ) ] = { \\frac { 1 } { 2 } } \\cos ( \\theta _ { a } - \\theta _ { b } )\n$$",
+        "text_format": "latex",
+        "bbox": [
+            343,
+            330,
+            653,
+            357
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "509 finally, we get ",
+        "bbox": [
+            140,
+            380,
+            269,
+            395
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "equation",
+        "img_path": "images/72a57b1f678e1d96cd8c39acdb8e8f055b742bfbd02fa542db945c981c94dec0.jpg",
+        "text": "$$\n\\Gamma _ { i j } = \\frac { c _ { a } ^ { 2 } } { 2 } \\cos ( f _ { a } ( i - j ) ) + \\frac { c _ { b } ^ { 2 } } { 2 } \\cos ( f _ { b } ( i - j ) )\n$$",
+        "text_format": "latex",
+        "bbox": [
+            348,
+            398,
+            648,
+            431
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "is symmetric circulant matrix when 510 $\\begin{array} { r } { f _ { a } = a \\frac { 2 \\pi } { N } , f _ { b } = b \\frac { 2 \\pi } { N } } \\end{array}$ ",
+        "bbox": [
+            140,
+            441,
+            550,
+            459
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "equation",
+        "img_path": "images/c4ef21767f9ccccff2bd55864058c1001ba97aa809e6ca5ba37658e250ac255e.jpg",
+        "text": "$$\n\\begin{array} { l } { { \\displaystyle c _ { j } = \\frac { c _ { a } ^ { 2 } } { 2 } \\cos ( f _ { a } j ) + \\frac { c _ { b } ^ { 2 } } { 2 } \\cos ( f _ { b } j ) } } \\\\ { { \\displaystyle \\Lambda _ { \\Gamma , k } = \\sum _ { j = 0 } ^ { N - 1 } c _ { j } \\omega ^ { - k j } } } \\\\ { { \\displaystyle V _ { \\Gamma , k } = \\frac { 1 } { \\sqrt { N } } \\left[ 1 , \\omega ^ { k } , \\omega ^ { 2 k } , \\ldots , \\omega ^ { ( N - 1 ) k } \\right] ^ { \\top } } } \\\\ { { \\displaystyle \\omega = \\exp ( \\frac { 2 \\pi i } { n } ) = \\cos ( \\frac { 2 \\pi } { n } ) + i \\sin ( \\frac { 2 \\pi } { n } ) } } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            356,
+            465,
+            640,
+            608
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "511 This is symmetric, so eigenvalues are real. The eigenvectors can be expressed either in complex form   \n512 or as pairs of real vectors. Using properties of Discrete Fourier Transform (DFT) matrix on $\\Lambda _ { \\Gamma , k }$ , ",
+        "bbox": [
+            137,
+            609,
+            826,
+            638
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5a9fdeeebb0d83b6a703ccf3e11a7b1f920c2f34e503741f81f095b8044a6eff.jpg",
+        "text": "$$\n\\Lambda _ { \\Gamma , k } = \\left\\{ \\begin{array} { l l } { 0 \\left( k \\neq l _ { a } , N - l _ { a } , l _ { b } , N - l _ { b } \\right) } \\\\ { \\frac { c _ { a } ^ { 2 } } { 2 } \\left( k = l _ { a } \\mathrm { o r } k = N - l _ { a } \\right) } \\\\ { \\frac { c _ { b } ^ { 2 } } { 2 } \\left( k = l _ { b } \\mathrm { o r } k = N - l _ { b } \\right) } \\end{array} \\right.\n$$",
+        "text_format": "latex",
+        "bbox": [
+            356,
+            643,
+            624,
+            703
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "513 Finally, we can derive as: ",
+        "bbox": [
+            142,
+            707,
+            343,
+            722
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4483b6f5a78bf1f3883aecc644458bd87437d7f02c10a4b29147183c17d54f1b.jpg",
+        "text": "$$\n\\begin{array} { l } { { \\displaystyle \\Lambda _ { \\Gamma } = \\mathrm { d i a g } \\left( \\left[ \\frac { c _ { a } ^ { 2 } } { 2 } , \\frac { c _ { a } ^ { 2 } } { 2 } , \\frac { c _ { b } ^ { 2 } } { 2 } , \\frac { c _ { b } ^ { 2 } } { 2 } , \\ : { \\bf 0 } _ { m - 2 } \\right] \\right) , } } \\\\ { { \\displaystyle V _ { \\Gamma } ^ { ( \\le 4 ) } = \\left[ \\frac { 1 } { \\sqrt { N } } e _ { h , \\cos } \\frac { 1 } { \\sqrt { N } } e _ { h , \\mathrm { s i n } } \\frac { 1 } { \\sqrt { N } } e _ { l , \\mathrm { c o s } } \\frac { 1 } { \\sqrt { N } } e _ { l , \\mathrm { s i n } } \\right] . } } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            312,
+            724,
+            686,
+            797
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "514 where ",
+        "bbox": [
+            140,
+            800,
+            217,
+            814
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "equation",
+        "img_path": "images/04864e18942a44f856657dafe76515d1cfd125584c7495b06964a69b12884d74.jpg",
+        "text": "$$\n\\begin{array} { r } { e _ { h , \\mathrm { c o s } } = c _ { a } \\cos ( f _ { a } t ) , } \\\\ { e _ { h , \\mathrm { s i n } } = c _ { a } \\sin ( f _ { a } t ) , } \\\\ { e _ { l , \\mathrm { c o s } } = c _ { b } \\cos ( f _ { b } t ) , } \\\\ { e _ { l , \\mathrm { s i n } } = c _ { b } \\sin ( f _ { b } t ) . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            431,
+            819,
+            568,
+            891
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "discarded",
+        "text": "507 Similar, ",
+        "bbox": [
+            140,
+            92,
+            228,
+            106
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "discarded",
+        "text": "23 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            948
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "515 NeurIPS Paper Checklist ",
+        "text_level": 1,
+        "bbox": [
+            143,
+            89,
+            387,
+            107
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "1. Claims ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            118,
+            284,
+            132
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Question: Do the main claims made in the abstract and introduction accurately reflect the paper’s contributions and scope? ",
+        "bbox": [
+            232,
+            138,
+            823,
+            166
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            172,
+            328,
+            188
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Justification: The abstract and introduction clearly state our main contributions: (1) establishing theoretical connections between shortcut learning, stepwise learning, and dataset’s cross correlation’s eigendecomposition in SSL, (2) extending theoretical research on shortcut learning to SSL, and (3) characterizing extent bias and amplitude bias in learning dynamics. These claims accurately reflect the scope of our work as demonstrated in Section 4, and Section 5 where we provide both theoretical foundations and empirical validation. ",
+        "bbox": [
+            232,
+            194,
+            825,
+            276
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            282,
+            308,
+            296
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the abstract and introduction do not include the claims made in the paper.   \n• The abstract and/or introduction should clearly state the claims made, including the contributions made in the paper and important assumptions and limitations. A No or NA answer to this question will not be perceived well by the reviewers.   \n• The claims made should match theoretical and experimental results, and reflect how much the results can be expected to generalize to other settings.   \n• It is fine to include aspirational goals as motivation as long as it is clear that these goals are not attained by the paper. ",
+        "bbox": [
+            251,
+            304,
+            825,
+            438
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "2. Limitations ",
+        "text_level": 1,
+        "bbox": [
+            212,
+            444,
+            315,
+            458
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss the limitations of the work performed by the authors? ",
+        "bbox": [
+            232,
+            464,
+            803,
+            478
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            484,
+            328,
+            500
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Justification: We acknowledge the limitations of our work in Appendix H. Our analysis primarily focuses on linear networks, which may not fully capture the complexities of deep non-linear architectures used in practice. We also assume feature independence which simplifies analysis but may not reflect real-world feature interdependencies. Additionally, our augmentation approach is more basic than sophisticated strategies used in modern SSL systems. We suggest future research directions to address these limitations. ",
+        "bbox": [
+            232,
+            506,
+            825,
+            588
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            594,
+            308,
+            608
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper.   \n• The authors are encouraged to create a separate \"Limitations\" section in their paper.   \n• The paper should point out any strong assumptions and how robust the results are to violations of these assumptions (e.g., independence assumptions, noiseless settings, model well-specification, asymptotic approximations only holding locally). The authors should reflect on how these assumptions might be violated in practice and what the implications would be.   \n• The authors should reflect on the scope of the claims made, e.g., if the approach was only tested on a few datasets or with a few runs. In general, empirical results often depend on implicit assumptions, which should be articulated.   \n• The authors should reflect on the factors that influence the performance of the approach. For example, a facial recognition algorithm may perform poorly when image resolution is low or images are taken in low lighting. Or a speech-to-text system might not be used reliably to provide closed captions for online lectures because it fails to handle technical jargon.   \n• The authors should discuss the computational efficiency of the proposed algorithms and how they scale with dataset size.   \n• If applicable, the authors should discuss possible limitations of their approach to address problems of privacy and fairness. ",
+        "bbox": [
+            251,
+            614,
+            825,
+            911
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "discarded",
+        "text": "516 517 518 519 520 521 522 523 524 525 526 527 528 529 530 531 532 533 534 535 536 537 538 539 540 541 542 543 544 545 546 547 548 549 550 551 552 553 554 555 556 557 558 559 560 561 562 563 564 565 ",
+        "bbox": [
+            137,
+            98,
+            166,
+            928
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "• While the authors might fear that complete honesty about limitations might be used by reviewers as grounds for rejection, a worse outcome might be that reviewers discover limitations that aren’t acknowledged in the paper. The authors should use their best judgment and recognize that individual actions in favor of transparency play an important role in developing norms that preserve the integrity of the community. Reviewers will be specifically instructed to not penalize honesty concerning limitations. ",
+        "bbox": [
+            251,
+            92,
+            825,
+            174
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "3. Theory assumptions and proofs ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            179,
+            454,
+            193
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof? ",
+        "bbox": [
+            232,
+            198,
+            825,
+            224
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            229,
+            328,
+            243
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Justification: All theoretical results in our paper are presented with complete assumptions and rigorous proofs. Each theorem explicitly states its assumptions and corresponding proofs are provided in Appendix B with detailed derivations. We use a consistent numbering system for cross-referencing and provide proof sketches in the main paper to build intuition before directing readers to the complete proofs. ",
+        "bbox": [
+            232,
+            247,
+            825,
+            316
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            321,
+            308,
+            335
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include theoretical results.   \n• All the theorems, formulas, and proofs in the paper should be numbered and crossreferenced.   \n• All assumptions should be clearly stated or referenced in the statement of any theorems.   \n• The proofs can either appear in the main paper or the supplemental material, but if they appear in the supplemental material, the authors are encouraged to provide a short proof sketch to provide intuition.   \n• Inversely, any informal proof provided in the core of the paper should be complemented by formal proofs provided in appendix or supplemental material.   \n• Theorems and Lemmas that the proof relies upon should be properly referenced. ",
+        "bbox": [
+            251,
+            339,
+            825,
+            488
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "4. Experimental result reproducibility ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            492,
+            482,
+            506
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)? ",
+        "bbox": [
+            232,
+            511,
+            825,
+            553
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            556,
+            328,
+            570
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Justification: We provide comprehensive details to reproduce our experimental results in Section 4 and Section 5, with additional specifics in Appendix A. ",
+        "bbox": [
+            235,
+            574,
+            823,
+            603
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            607,
+            308,
+            619
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• If the paper includes experiments, a No answer to this question will not be perceived well by the reviewers: Making the paper reproducible is important, regardless of whether the code and data are provided or not. If the contribution is a dataset and/or model, the authors should describe the steps taken to make their results reproducible or verifiable. Depending on the contribution, reproducibility can be accomplished in various ways. For example, if the contribution is a novel architecture, describing the architecture fully might suffice, or if the contribution is a specific model and empirical evaluation, it may be necessary to either make it possible for others to replicate the model with the same dataset, or provide access to the model. In general. releasing code and data is often one good way to accomplish this, but reproducibility can also be provided via detailed instructions for how to replicate the results, access to a hosted model (e.g., in the case of a large language model), releasing of a model checkpoint, or other means that are appropriate to the research performed.   \n• While NeurIPS does not require releasing code, the conference does require all submissions to provide some reasonable avenue for reproducibility, which may depend on the nature of the contribution. For example (a) If the contribution is primarily a new algorithm, the paper should make it clear how to reproduce that algorithm.   \n(b) If the contribution is primarily a new model architecture, the paper should describe the architecture clearly and fully.   \n(c) If the contribution is a new model (e.g., a large language model), then there should either be a way to access this model for reproducing the results or a way to reproduce the model (e.g., with an open-source dataset or instructions for how to construct the dataset).   \n(d) We recognize that reproducibility may be tricky in some cases, in which case authors are welcome to describe the particular way they provide for reproducibility. In the case of closed-source models, it may be that access to the model is limited in some way (e.g., to registered users), but it should be possible for other researchers to have some path to reproducing or verifying the results. ",
+        "bbox": [
+            250,
+            626,
+            825,
+            911
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "discarded",
+        "text": "566 567 568 569 570 571 572 573 574 575 576 577 578 579 580 581 582 583 584 585 586 587 588 589 590 591 592 593 594 595 596 597 598 599 600 601 602 603 604 605 606 607 608 609 610 611 612 613 614 615 616 617 618 619 ",
+        "bbox": [
+            137,
+            74,
+            168,
+            926
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            263,
+            92,
+            825,
+            246
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "5. Open access to data and code ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            251,
+            437,
+            265
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material? ",
+        "bbox": [
+            232,
+            270,
+            825,
+            311
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            316,
+            328,
+            330
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Justification: Yes ",
+        "bbox": [
+            232,
+            335,
+            346,
+            349
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            354,
+            310,
+            368
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that paper does not include experiments requiring code.   \n• Please see the NeurIPS code and data submission guidelines (https://nips.cc/ public/guides/CodeSubmissionPolicy) for more details.   \n• While we encourage the release of code and data, we understand that this might not be possible, so “No” is an acceptable answer. Papers cannot be rejected simply for not including code, unless this is central to the contribution (e.g., for a new open-source benchmark).   \n• The instructions should contain the exact command and environment needed to run to reproduce the results. See the NeurIPS code and data submission guidelines (https: //nips.cc/public/guides/CodeSubmissionPolicy) for more details.   \n• The authors should provide instructions on data access and preparation, including how to access the raw data, preprocessed data, intermediate data, and generated data, etc.   \n• The authors should provide scripts to reproduce all experimental results for the new proposed method and baselines. If only a subset of experiments are reproducible, they should state which ones are omitted from the script and why.   \n• At submission time, to preserve anonymity, the authors should release anonymized versions (if applicable).   \n• Providing as much information as possible in supplemental material (appended to the paper) is recommended, but including URLs to data and code is permitted. ",
+        "bbox": [
+            250,
+            372,
+            826,
+            654
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "6. Experimental setting/details ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            659,
+            429,
+            672
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results? ",
+        "bbox": [
+            232,
+            678,
+            825,
+            719
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            724,
+            328,
+            738
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Justification: Section 4.1 and Section 5.1 detail our experimental setup, while Appendix A provides comprehensive information about hyperparameters, training procedures, and implementation details. Extent bias experiments, we specify relevant parameters including dataset size, feature dimensions, learning rates. All essential information needed to understand and reproduce our results is included. ",
+        "bbox": [
+            233,
+            743,
+            825,
+            813
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            818,
+            308,
+            832
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments. • The experimental setting should be presented in the core of the paper to a level of detail that is necessary to appreciate the results and make sense of them. • The full details can be provided either with the code, in appendix, or as supplemental material. ",
+        "bbox": [
+            251,
+            837,
+            825,
+            911
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "discarded",
+        "text": "26 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "discarded",
+        "text": "620 621 622 623 624 625 626 627 628 629 630 631 632 633 634 635 636 637 638 639 640 641 642 643 644 645 646 647 648 649 650 651 652 653 654 655 656 657 658 659 660 661 662 663 664 665 666 667 668 669 670 671 672 ",
+        "bbox": [
+            137,
+            89,
+            166,
+            935
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "7. Experiment statistical significance ",
+        "text_level": 1,
+        "bbox": [
+            215,
+            92,
+            472,
+            106
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments? ",
+        "bbox": [
+            232,
+            111,
+            823,
+            138
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            143,
+            328,
+            157
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "Justification: Yes ",
+        "bbox": [
+            232,
+            161,
+            346,
+            175
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            181,
+            308,
+            194
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The authors should answer \"Yes\" if the results are accompanied by error bars, confidence intervals, or statistical significance tests, at least for the experiments that support the main claims of the paper. The factors of variability that the error bars are capturing should be clearly stated (for example, train/test split, initialization, random drawing of some parameter, or overall run with given experimental conditions).   \n• The method for calculating the error bars should be explained (closed form formula, call to a library function, bootstrap, etc.)   \n• The assumptions made should be given (e.g., Normally distributed errors).   \n• It should be clear whether the error bar is the standard deviation or the standard error of the mean.   \n• It is OK to report 1-sigma error bars, but one should state it. The authors should preferably report a 2-sigma error bar than state that they have a $96 \\%$ CI, if the hypothesis of Normality of errors is not verified. For asymmetric distributions, the authors should be careful not to show in tables or figures symmetric error bars that would yield results that are out of range (e.g. negative error rates).   \n• If error bars are reported in tables or plots, The authors should explain in the text how they were calculated and reference the corresponding figures or tables in the text. ",
+        "bbox": [
+            250,
+            196,
+            826,
+            496
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "8. Experiments compute resources ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            501,
+            457,
+            515
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments? ",
+        "bbox": [
+            233,
+            520,
+            823,
+            560
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "Answer: [No] ",
+        "bbox": [
+            232,
+            565,
+            323,
+            580
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "Justification: Our experiments do not require a lot of resources. We used a single L40s GPU for training Resnet18, and used L4 GPU for linear model. ",
+        "bbox": [
+            233,
+            584,
+            825,
+            613
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            617,
+            308,
+            631
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The paper should indicate the type of compute workers CPU or GPU, internal cluster, or cloud provider, including relevant memory and storage.   \n• The paper should provide the amount of compute required for each of the individual experimental runs as well as estimate the total compute.   \n• The paper should disclose whether the full research project required more compute than the experiments reported in the paper (e.g., preliminary or failed experiments that didn’t make it into the paper). ",
+        "bbox": [
+            251,
+            636,
+            825,
+            755
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "9. Code of ethics ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            758,
+            333,
+            772
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines? ",
+        "bbox": [
+            230,
+            779,
+            821,
+            806
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            810,
+            328,
+            824
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "Justification: Our research fully complies with the NeurIPS Code of Ethics. ",
+        "bbox": [
+            235,
+            829,
+            723,
+            844
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            848,
+            308,
+            862
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the authors have not reviewed the NeurIPS Code of Ethics. • If the authors answer No, they should explain the special circumstances that require a deviation from the Code of Ethics. ",
+        "bbox": [
+            251,
+            867,
+            825,
+            911
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "discarded",
+        "text": "673 674 675 676 677 678 679 680 681 682 683 684 685 686 687 688 689 690 691 692 693 694 695 696 697 698 699 700 701 702 703 704 705 706 707 708 709 710 711 712 713 714 715 716 717 718 719 720 721 722 723 ",
+        "bbox": [
+            138,
+            97,
+            166,
+            928
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "• The authors should make sure to preserve anonymity (e.g., if there is a special consideration due to laws or regulations in their jurisdiction). ",
+        "bbox": [
+            251,
+            92,
+            823,
+            119
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "text",
+        "text": "10. Broader impacts ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            125,
+            352,
+            138
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed? ",
+        "bbox": [
+            233,
+            142,
+            821,
+            170
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            175,
+            328,
+            189
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "text",
+        "text": "Justification: We discuss broader impacts in Section 6. Positively, our work could lead to more robust machine learning models that are less susceptible to shortcut learning, potentially improving fairness and reliability in real-world applications. Understanding extent bias may help address issues where models learn background correlations rather than meaningful object features. ",
+        "bbox": [
+            233,
+            194,
+            825,
+            262
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "text_level": 1,
+        "bbox": [
+            232,
+            267,
+            308,
+            280
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that there is no societal impact of the work performed.   \n• If the authors answer NA or No, they should explain why their work has no societal impact or why the paper does not address societal impact.   \n• Examples of negative societal impacts include potential malicious or unintended uses (e.g., disinformation, generating fake profiles, surveillance), fairness considerations (e.g., deployment of technologies that could make decisions that unfairly impact specific groups), privacy considerations, and security considerations.   \n• The conference expects that many papers will be foundational research and not tied to particular applications, let alone deployments. However, if there is a direct path to any negative applications, the authors should point it out. For example, it is legitimate to point out that an improvement in the quality of generative models could be used to generate deepfakes for disinformation. On the other hand, it is not needed to point out that a generic algorithm for optimizing neural networks could enable people to train models that generate Deepfakes faster.   \nThe authors should consider possible harms that could arise when the technology is being used as intended and functioning correctly, harms that could arise when the technology is being used as intended but gives incorrect results, and harms following from (intentional or unintentional) misuse of the technology.   \nIf there are negative societal impacts, the authors could also discuss possible mitigation strategies (e.g., gated release of models, providing defenses in addition to attacks, mechanisms for monitoring misuse, mechanisms to monitor how a system learns from feedback over time, improving the efficiency and accessibility of ML). ",
+        "bbox": [
+            251,
+            284,
+            825,
+            601
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "text",
+        "text": "11. Safeguards ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            604,
+            313,
+            619
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pretrained language models, image generators, or scraped datasets)? ",
+        "bbox": [
+            232,
+            623,
+            825,
+            665
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            670,
+            328,
+            683
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "text",
+        "text": "Justification: Our work is primarily theoretical with controlled toy experiments that do not produce models or datasets with potential for misuse. We do not release pre-trained models, generative systems, or scraped datasets that would require safeguards against harmful applications. ",
+        "bbox": [
+            233,
+            688,
+            825,
+            743
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            747,
+            308,
+            761
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper poses no such risks.   \n• Released models that have a high risk for misuse or dual-use should be released with necessary safeguards to allow for controlled use of the model, for example by requiring that users adhere to usage guidelines or restrictions to access the model or implementing safety filters.   \n• Datasets that have been scraped from the Internet could pose safety risks. The authors should describe how they avoided releasing unsafe images.   \n• We recognize that providing effective safeguards is challenging, and many papers do not require this, but we encourage authors to take this into account and make a best faith effort. ",
+        "bbox": [
+            251,
+            766,
+            825,
+            911
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "discarded",
+        "text": "724 725 726 727 728 729 730 731 732 733 734 735 736 737 738 739 740 741 742 743 744 745 746 747 748 749 750 751 752 753 754 755 756 757 758 759 760 761 762 763 764 765 766 767 768 769 770 771 772 773 774 775 776 777 ",
+        "bbox": [
+            138,
+            92,
+            166,
+            917
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 27
+    },
+    {
+        "type": "text",
+        "text": "12. Licenses for existing assets ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            92,
+            419,
+            106
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected? ",
+        "bbox": [
+            232,
+            111,
+            823,
+            151
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            157,
+            328,
+            171
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "Justification: We properly cite all relevant prior work including Simon et al. [26] and Zbontar et al. [31] whose theoretical frameworks we build upon. For the Colored-MNIST dataset adaptation in Section 4.8, we acknowledge the original MNIST dataset Deng [9] which is in the public domain. No proprietary or restrictively licensed code or data was used in our research. ",
+        "bbox": [
+            232,
+            176,
+            825,
+            244
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            251,
+            310,
+            263
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not use existing assets.   \n• The authors should cite the original paper that produced the code package or dataset.   \n• The authors should state which version of the asset is used and, if possible, include a URL.   \n• The name of the license (e.g., CC-BY 4.0) should be included for each asset.   \n• For scraped data from a particular source (e.g., website), the copyright and terms of service of that source should be provided.   \n• If assets are released, the license, copyright information, and terms of use in the package should be provided. For popular datasets, paperswithcode.com/datasets has curated licenses for some datasets. Their licensing guide can help determine the license of a dataset.   \n• For existing datasets that are re-packaged, both the original license and the license of the derived asset (if it has changed) should be provided.   \n• If this information is not available online, the authors are encouraged to reach out to the asset’s creators. ",
+        "bbox": [
+            251,
+            268,
+            825,
+            494
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "13. New assets ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            501,
+            310,
+            513
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets? ",
+        "bbox": [
+            232,
+            520,
+            823,
+            546
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            553,
+            326,
+            565
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "Justification: Our paper does not introduce new datasets or code libraries intended for community use beyond the experimental validation of our theoretical claims ",
+        "bbox": [
+            233,
+            571,
+            823,
+            599
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            604,
+            308,
+            617
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not release new assets.   \n• Researchers should communicate the details of the dataset/code/model as part of their submissions via structured templates. This includes details about training, license, limitations, etc.   \n• The paper should discuss whether and how consent was obtained from people whose asset is used.   \n• At submission time, remember to anonymize your assets (if applicable). You can either create an anonymized URL or include an anonymized zip file. ",
+        "bbox": [
+            251,
+            622,
+            825,
+            742
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "14. Crowdsourcing and research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            747,
+            584,
+            761
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? ",
+        "bbox": [
+            233,
+            766,
+            823,
+            808
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            813,
+            326,
+            827
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "Justification: Our research is purely theoretical and computational, involving no human subjects, crowdsourced data collection, or human evaluation. ",
+        "bbox": [
+            232,
+            832,
+            823,
+            859
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            864,
+            308,
+            878
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects. ",
+        "bbox": [
+            248,
+            883,
+            823,
+            911
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "discarded",
+        "text": "779 780 781 782 783 784 785 786 787 788 789 790 791 792 793 794 795 796 797 798 799 800 801 802 803 804 805 806 807 808 809 810 811 812 813 814 815 816 817 818 819 820 821 822 823 824 825 826 827 828 ",
+        "bbox": [
+            137,
+            107,
+            166,
+            929
+        ],
+        "page_idx": 28
+    },
+    {
+        "type": "text",
+        "text": "• Including this information in the supplemental material is fine, but if the main contribution of the paper involves human subjects, then as much detail as possible should be included in the main paper.   \n• According to the NeurIPS Code of Ethics, workers involved in data collection, curation, or other labor should be paid at least the minimum wage in the country of the data collector. ",
+        "bbox": [
+            251,
+            92,
+            825,
+            176
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "text",
+        "text": "15. Institutional review board (IRB) approvals or equivalent for research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            202,
+            181,
+            821,
+            209
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained? ",
+        "bbox": [
+            232,
+            214,
+            825,
+            270
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            275,
+            326,
+            289
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "text",
+        "text": "Justification: No human subjects were involved in our research, so IRB approval was not required or sought. ",
+        "bbox": [
+            232,
+            292,
+            823,
+            321
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            325,
+            310,
+            339
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   \n• Depending on the country in which research is conducted, IRB approval (or equivalent) may be required for any human subjects research. If you obtained IRB approval, you should clearly state this in the paper.   \n• We recognize that the procedures for this may vary significantly between institutions and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the guidelines for their institution.   \n• For initial submissions, do not include any information that would break anonymity (if applicable), such as the institution conducting the review. ",
+        "bbox": [
+            251,
+            344,
+            825,
+            491
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "text",
+        "text": "16. Declaration of LLM usage ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            494,
+            419,
+            508
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe the usage of LLMs if it is an important, original, or non-standard component of the core methods in this research? Note that if the LLM is used only for writing, editing, or formatting purposes and does not impact the core methodology, scientific rigorousness, or originality of the research, declaration is not required. ",
+        "bbox": [
+            232,
+            513,
+            825,
+            569
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            574,
+            326,
+            588
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "text",
+        "text": "Justification: No large language models were used in the development of our research methodology, theoretical analysis, or experimental design. ",
+        "bbox": [
+            230,
+            593,
+            823,
+            621
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            626,
+            308,
+            638
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the core method development in this research does not involve LLMs as any important, original, or non-standard components. • Please refer to our LLM policy (https://neurips.cc/Conferences/2025/LLM) for what should or should not be described. ",
+        "bbox": [
+            251,
+            643,
+            825,
+            703
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "discarded",
+        "text": "30 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 29
+    },
+    {
+        "type": "discarded",
+        "text": "829 830 831 832 833 834 835 836 837 838 839 840 841 842 843 844 845 846 847 848 849 850 851 852 853 854 855 856 857 858 859 860 861 862 863 864 865 866 867 ",
+        "bbox": [
+            138,
+            82,
+            166,
+            714
+        ],
+        "page_idx": 29
+    }
+]

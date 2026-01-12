@@ -1,0 +1,1925 @@
+[
+    {
+        "type": "text",
+        "text": "On Fitting Flow Models with Large Sinkhorn Couplings ",
+        "text_level": 1,
+        "bbox": [
+            173,
+            122,
+            821,
+            148
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Anonymous Author(s)   \nAffiliation   \nAddress   \nemail ",
+        "bbox": [
+            423,
+            200,
+            580,
+            256
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Abstract ",
+        "text_level": 1,
+        "bbox": [
+            462,
+            292,
+            535,
+            309
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Flow models transform data gradually from a modality (e.g. noise) onto another (e.g. images). Such models are parameterized by a time-dependent velocity field, trained to fit segments connecting pairs of source & target points. When a pairing between source and target points is known, the training boils down to a supervised regression problem. When no such pairing exists, as is the case when generating data from noise, training flows is much harder. A popular approach lies in picking in that case source and target points independently [Lipman et al., 2023]. This can, however, lead to velocity fields with high variance that are difficult to integrate. In theory, one would greatly benefit from training flow models by sampling pairs from an optimal transport (OT) measure coupling source and target, since this would lead to a highly efficient flow solving the Benamou and Brenier dynamical OT problem. Practically, recent works have proposed to sample mini-batches of $n$ source and $n$ target points and reorder them using an OT solver to form “better” pairs. These works have advocated using batches of size $n \\approx 2 5 6$ , and considered couplings that are both “hard” (permutations obtained with the Hungarian algorithm) or “soft” (computed with the Sinkhorn algorithm). We follow in the footsteps of these works by exploring the benefits of increasing this mini-batch size $n$ by several orders of magnitude, and look more carefully on the effect of the entropic regularization $\\varepsilon$ used in Sinkhorn. Our analysis and computations are facilitated by new scale invariant quantities to present results and sharded computations parallelized over multiple GPU nodes. We uncover various dimensional regimes where flow matching benefits from OT guiding, using proper scales for $n$ and suitable entropic regularization $\\varepsilon$ , to be set so that it approximates 0.2 in the novel renormalized entropy scale we propose. ",
+        "bbox": [
+            153,
+            320,
+            766,
+            651
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "25 1 Introduction ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            666,
+            312,
+            683
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "26 Finding a map that can transform a source into a target measure is a task at the core of generative   \n27 modeling and unpaired modality translation. Following the widespread popularity of GAN formula  \n28 tions [Goodfellow et al., 2014], the field has greatly benefited from a gradual, time-dependent parame  \n29 terization of these transformations as neural-ODEs [Chen et al., 2018] or normalizing flows [Rezende   \n30 and Mohamed, 2015]. Such flow models are now commonly estimated using flow matching [Lipman   \n31 et al., 2024]. While time parameterization substantially increases the expressivity of these models,   \n32 this comes typically with a higher cost at inference time due to the additional cost of running an   \n33 ODE solver with potentially dozens of steps. On the theoretical side, the golden standard for such   \n34 time parameterized transformation is given by the Benamou and Brenier dynamical optimal transport   \n35 (OT) solution, which would collapse in practice in a 1-step generation achieved by the Monge map   \n36 formulation [Santambrogio, 2015]. In practice, while the mathematics [Villani, 2003] of optimal   \n37 transport have contributed to the understanding of these methodsLiu et al., the jury seems to be still   \n38 out on ruling whether tools from the computational OT toolbox [Peyré and Cuturi, 2019], which is   \n39 typically used to compute large scale couplings from data [Klein et al., 2025], can decisively help   \n40 with the estimation of flows in high-dimensions.   \n41 Stochastic interpolants. The flow matching (FM) framework [Lipman et al., 2024], introduced   \n42 in concurrent seminal papers [Peluchetti, 2022, Lipman et al., 2023, Albergo and Vanden-Eijnden,   \n43 2023, Neklyudov et al., 2023] proposes to estimate a flow model by leveraging a time-dependent   \n44 interpolation $\\mu _ { t }$ between source $\\mu _ { 0 }$ and target $\\mu _ { 1 }$ —the stochastic interpolant following the terminol  \n45 ogy of Albergo and Vanden-Eijnden [2023]. That interpolation is the crucial ingredient used to fit a   \n46 parameterized velocity field, with a regression loss. In practice, such an interpolation can be formed   \n47 by sampling $X _ { 0 } \\sim \\mu _ { 0 }$ independently of $X _ { 1 } \\sim \\mu _ { 1 }$ , to define $\\mu _ { t }$ as the law of $\\bar { X _ { t } } : = ( 1 - t ) X _ { 0 } + t X _ { 1 }$ .   \n48 One can then fit a parameterized time-dependent velocity field $\\mathbf { v } _ { \\boldsymbol { \\theta } } ( t , \\mathbf { x } )$ that minimizes the expectation   \n49 of $\\| X _ { 1 } - X _ { 0 } - \\bar { \\mathbf { v } _ { \\theta } } ( X _ { T } , T ) \\| ^ { 2 }$ w.r.t. $X _ { 0 } , X _ { 1 }$ and $T$ a random time variable in [0, 1]. This procedure   \n50 (hereafter abbreviated as Independent-FM, IFM) has been immensely successful, but can suffer from   \n51 high variance, as highlighted by [Liu, 2022] (that loss can never be 0), and does not result in an   \n52 optimal transport: this can be measured by noticing a high curvature when integrating the ODE   \n53 needed to form an output from an input sample point $\\mathbf { x } _ { \\mathrm { 0 } }$ .   \n54 Blending FM and OT Solvers. To fit exactly the OT framework, it would be best to choose $\\mu _ { t }$   \n55 to be the McCann interpolation between $\\mu _ { 0 }$ and $\\mu _ { 1 }$ , which would be $\\mu _ { t } : = ( ( 1 - t ) \\mathrm { I d } + t T ^ { \\star } ) \\# \\dot { \\mu } _ { 0 }$ ,   \n56 where $T ^ { \\star }$ is the Monge map connecting $\\mu _ { 0 }$ and $\\mu _ { 1 }$ . Unfortunately, this insight is irrelevant, since   \n57 knowing $T ^ { \\star }$ would mean that no flow needs to be trained at all. Adopting a more practical perspective,   \n58 Pooladian et al. [2023] and Tong et al. [2023] have proposed in their seminal works to carefully select   \n59 pairs of observations using OT solvers. Concretely, they sample mini-batches $\\mathbf { x } _ { 0 } ^ { 1 } \\ldots , \\mathbf { x } _ { 0 } ^ { n }$ from $\\mu _ { 0 }$ and   \n60 $\\mathbf { \\bar { x } } _ { 1 } ^ { 1 } , \\ldots , \\mathbf { x } _ { 1 } ^ { n }$ from  matr $\\mu _ { 1 }$ ; compute a  and feed the $n \\times n$ OT coupling mmodel with pairs $\\mathbf { x } _ { i _ { \\ell } } ^ { 0 } , \\mathbf { x } _ { j _ { \\ell } } ^ { 1 }$ mple pairs of indices . This approach was $( i _ { \\ell } , j _ { \\ell } )$ from that used and   \n62 adapted in [Tian et al., 2024, Generale et al., 2024, Klein et al., 2023, Davtyan et al., 2025]. Despite   \n63 their appeal, these modifications have not yet been widely adopted. The consensus stated recently   \n64 by Lipman et al. [2024] seems to be still that \"the most popular class of affine probability paths is   \n65 instantiated by the independent coupling\".   \n66 Can mini-batch OT really help? We try to answer this question by noticing first that the evaluations   \n67 carried out in all of the references cited above use batch sizes of $2 ^ { 8 } = 2 5 6$ points, more rarely   \n68 $2 ^ { 1 0 } = 1 0 2 4$ . We believe that this might be the case because these works rely on the Hungarian   \n69 algorithm (complexity $O ( n ^ { 3 } ) )$ . We also notice that while these works also consider entropic OT   \n70 (EOT) [Cuturi, 2013], they choose a single $\\varepsilon$ value throughout their work. We go back to the drawing   \n71 board in this paper, and study whether batch-OT FM can work at all, and if so at which regimes of   \n72 mini-batch size $n$ , regularization $\\varepsilon$ , and for which data dimensions $d$ . Our contributions are:   \n73 • Rather than drawing a line between Batch-OT (in Hungarian or EOT form) and independent FM, we   \n74 leverage the fact that all of these approaches can be interpolated using EOT: Hungarian corresponds   \n75 to the case where $\\varepsilon \\to 0$ while IFM is recovered with $\\varepsilon  \\infty$ .   \n76 . We propose a modification of the Sinkhorn algorithm when used with for the squared-Euclidean   \n77 norm, by dropping norms and focusing on the dot-product between points. We propose the definition   \n78 of a renormalized entropy for couplings, to pin them efficiently on a scale of 0 (bijective assignment   \n79 induced by a permutation, e.g. that returned by a Hungarian algorithm) to 1 (independent coupling).   \n80 This quantity is useful because unlike transport cost or entropy regularization $\\varepsilon$ , it is bounded in   \n81 $[ 0 , 1 ]$ and is invariant to data dimension $d$ or number of points $n$ .   \n82 • We explore in our experiments substantially different regimes for $n$ and $\\varepsilon$ . We vary the mini-batch   \n83 size from $n = 2 ^ { 1 1 } = \\stackrel { \\cdot } { 2 } , 0 4 8$ to $n = 2 ^ { 2 1 } = \\dot { 2 } , 0 9 7 , 1 5 2$ and consider a more ample adaptive grid for   \n84 $\\varepsilon$ that captures the range $[ 0 , 1 ]$ range of our renormalized entropy. ",
+        "bbox": [
+            147,
+            693,
+            825,
+            898
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "Submitted to 39th Conference on Neural Information Processing Systems (NeurIPS 2025). Do not distribute. ",
+        "bbox": [
+            171,
+            922,
+            815,
+            936
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 ",
+        "bbox": [
+            143,
+            301,
+            163,
+            676
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            90,
+            826,
+            271
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            279,
+            826,
+            444
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            452,
+            825,
+            549
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            151,
+            554,
+            826,
+            732
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "2 Background Material on Optimal Transport and Flow Matching ",
+        "text_level": 1,
+        "bbox": [
+            163,
+            742,
+            743,
+            761
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "86 Let $\\mathcal { P } _ { 2 } ( \\mathbb { R } ^ { d } )$ denote the space of probability measures over $\\mathbb { R } ^ { d }$ with a finite second moment. Let   \n87 $\\mu , \\nu \\in \\mathcal { P } _ { 2 } ( \\mathbb { R } ^ { d } )$ , and let $\\Gamma ( \\mu , \\nu )$ be the set of joint probability measures in $\\mathcal { P } _ { 2 } ( \\mathbb { R } ^ { d } \\times \\mathbb { R } ^ { d } )$ with   \n88 left-marginal $\\mu$ and right-marginal $\\nu$ . The OT problem in its Kantorovich formulation is: ",
+        "bbox": [
+            147,
+            766,
+            825,
+            810
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/7a0b627af516f6d5ea78ea7a5995f7373e1fe6f1da586c2b82811ad9c8660a25.jpg",
+        "text": "$$\nW ( \\mu , \\nu ) : = \\operatorname* { i n f } _ { \\pi \\in \\Gamma ( \\mu , \\nu ) } \\int \\int \\frac { 1 } { 2 } \\| x - y \\| ^ { 2 } \\mathrm { d } \\pi ( x , y ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            344,
+            816,
+            653,
+            849
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "89 A minimizer of (1) is called an $O T$ coupling measure, denoted $\\pi ^ { \\star }$ . If $\\mu$ was a source (e.g. noise) and   \n90 $\\nu$ a target (e.g. images), $\\pi ^ { \\star }$ would be the perfect coupling to sample pairs of noise and image to learn   \n91 flow models: e.g. sample $\\mathbf { x } _ { 0 } , \\mathbf { x } _ { 1 } \\sim \\pi ^ { \\star }$ and ensure the flow models bring $\\mathbf { x } _ { \\mathrm { 0 } }$ to $\\mathbf { x } _ { 1 }$ along a straight   \n92 path. Such of these couplings $\\pi ^ { \\star }$ are in fact induced by pushforward maps, i.e. a point $\\mathbf { x } _ { \\mathrm { 0 } }$ can only ",
+        "bbox": [
+            147,
+            854,
+            825,
+            912
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "discarded",
+        "text": "2 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "be paired with a 93 $T ( \\mathbf { x } _ { \\mathrm { 0 } } )$ , where $T : \\mathbb { R } ^ { d }  \\mathbb { R } ^ { d }$ . We say that such $T$ pushes $\\mu$ forward to $\\nu$ , $T _ { \\# } \\mu = \\nu$ 94 when for $X \\sim \\mu$ one has $T ( X ) \\sim \\nu$ . The Monge formulation of OT is: ",
+        "bbox": [
+            150,
+            89,
+            825,
+            119
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/aca3b5e6e3746c3ec3363468f343f8dfe8333bfa203a74532b41b68de66d0398.jpg",
+        "text": "$$\nT ^ { \\star } ( \\mu , \\nu ) : = \\underset { T : T _ { \\# } \\mu = \\nu } { \\arg \\operatorname* { m i n } } \\int \\frac { 1 } { 2 } \\| \\mathbf { x } - T ( \\mathbf { x } ) \\| ^ { 2 } \\mathrm { d } \\mu ( \\mathbf { x } )\n$$",
+        "text_format": "latex",
+        "bbox": [
+            344,
+            122,
+            650,
+            157
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "95 where the minimizers are referred to as Monge or OT maps. Such maps can be characterized: ",
+        "bbox": [
+            151,
+            160,
+            782,
+            174
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "96 Theorem 1 ([Brenier, 1991]). If $\\mu \\in \\mathcal P _ { 2 } ( \\mathbb { R } ^ { d } )$ has an absolutely continuous density then (2) is solved   \n97 by a map $T ^ { \\star }$ of the form $T ^ { \\star } = \\nabla u$ , where $u : \\mathbb { R } ^ { d }  \\mathbb { R }$ is convex. Moreover if u is a convex potential   \n98 that is such that $\\nabla u _ { \\# } \\mu = \\nu$ then $\\nabla u$ solves (2).   \n99 As a result of this theorem, one can choose a convex potential $u$ , a starting measure $\\mu$ , and train flow   \n100 matching models between $\\mu$ and $\\nu : = \\nabla u _ { \\sharp } \\mu$ to define synthetic tasks for which the coupling $\\pi ^ { \\star }$ is   \n101 known, as proposed in [Korotin et al., 2021]. We consider this in Section 4.2 to benchmark batch-OT.   \n102 Entropic OT. Entropic regularization [Cuturi, 2013] has become the most popular approach   \n103 to estimate a finite sample analog of $\\pi ^ { \\star }$ using samples $\\left( \\mathbf { x } _ { 1 } , \\ldots , \\mathbf { x } _ { n } \\right)$ and $\\left( \\mathbf { y } _ { 1 } , \\ldots , \\mathbf { y } _ { n } \\right)$ . Using a   \n104 regularization strength $\\varepsilon > 0$ , a cost matrix $\\mathbf { \\bar { C } } : = \\mathbf { \\bar { \\Gamma } } [ \\frac { 1 } { 2 } \\| \\mathbf { x } _ { i } - \\mathbf { y } _ { j } \\| ^ { 2 } ] _ { i j }$ between these samples, the   \n105 entropic OT (EOT) problem can be presented in primal form (1) or in dual form: ",
+        "bbox": [
+            148,
+            175,
+            826,
+            218
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            143,
+            223,
+            826,
+            266
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            272,
+            825,
+            329
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e5b6bbf31cb56515960adb125e654bb40a5c882930141cb517446a2822c2a8aa.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { \\mathbf { P } \\in \\mathbb { R } _ { + } ^ { n \\times n } , \\mathbf { P } \\mathbf { 1 } _ { n } = \\mathbf { P } ^ { T } \\mathbf { 1 } _ { n } = \\mathbf { 1 } _ { n } / n } \\langle \\mathbf { P } , \\mathbf { C } \\rangle - \\varepsilon H ( \\mathbf { P } ) , \\quad \\operatorname* { m a x } _ { \\mathbf { f } \\in \\mathbb { R } ^ { n } , \\mathbf { g } \\in \\mathbb { R } ^ { n } } \\frac { 1 } { n } \\langle \\mathbf { f } + \\mathbf { g } , \\mathbf { 1 } _ { n } \\rangle - \\varepsilon \\langle \\exp \\left( \\frac { \\mathbf { C } - \\mathbf { f } \\oplus \\mathbf { g } } { \\varepsilon } \\right) , \\mathbf { 1 } _ { n \\times n } \\rangle .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            179,
+            330,
+            802,
+            362
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "106 The optimal solutions to (3) are usually found   \n107 with the Sinkhorn algorithm, as presented in Al  \n108 gorithm 1, where for a matrix $\\mathbf { \\bar { S } } = [ \\mathbf { S } _ { i , j } ]$ we   \n109 write $\\begin{array} { r } { \\operatorname* { m i n } _ { \\varepsilon } ( \\mathbf { S } ) : = [ - \\varepsilon \\log \\left( \\mathbf { 1 } ^ { \\top } e ^ { - \\mathbf { S } _ { i , \\cdot } / \\varepsilon } \\right) ] _ { i } } \\end{array}$ , and   \n110 $\\oplus$ is the tensor sum of two vectors, i.e. f $\\oplus$   \n111 $\\mathbf { g } : = [ \\mathbf { f } _ { i } + \\mathbf { g } _ { j } ] _ { i j }$ . The optimal dual variables (3)   \n112 $( \\mathbf { f } ^ { \\varepsilon } , \\mathbf { g } ^ { \\varepsilon } )$ can then be used to instantiate a valid   \n113 coupling matrix $\\mathbf { P } ^ { \\varepsilon } = \\exp \\left( ( \\mathbf { C } - \\mathbf { f } ^ { \\varepsilon } \\oplus \\mathbf { g } ^ { \\varepsilon } ) / \\varepsilon \\right)$ ,   \n114 which approximately solves the finite-sample   \n115 counterpart of (1). An important remark is   \n116 that as $\\varepsilon \\  \\ 0$ , the solution $\\mathbf { P } ^ { \\varepsilon }$ converges to   \n117 the optimal transport matrix solving 1, while ",
+        "bbox": [
+            140,
+            373,
+            485,
+            541
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/15f2ac07ab21e9533ac30e0d36cfb04d768dc1cde99eb24c8b2f95d02a635f45.jpg",
+        "text": "$$\n\\mathbf { A l g o r i t h m 1 S I N K } \\big ( \\mathbf { X } \\in \\mathbb { R } ^ { n \\times d } , \\mathbf { Y } \\in \\mathbb { R } ^ { m \\times d } , \\varepsilon , \\tau \\big )\n$$",
+        "text_format": "latex",
+        "bbox": [
+            496,
+            388,
+            825,
+            407
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "1: $\\mathbf { f } , \\mathbf { g } \\gets \\mathbf { 0 } _ { n } , \\mathbf { 0 } _ { m }$ .   \n2: $\\mathbf { C } \\gets [ \\frac { 1 } { 2 } \\| \\mathbf { x } _ { i } - \\mathbf { y } _ { j } \\| ^ { 2 } ] _ { i j } , i \\leq n , j \\leq m$   \n3: while $\\begin{array} { r } { \\| \\exp \\left( \\frac { \\mathbf { C } - \\mathbf { f } \\oplus \\mathbf { g } } { \\varepsilon } \\right) \\mathbf { 1 } _ { m } - \\frac { 1 } { n } \\mathbf { 1 } _ { n } \\| _ { 1 } < \\tau } \\end{array}$ do   \n4: $\\mathbf { f }  \\varepsilon \\log \\frac { 1 } { n } \\mathbf { 1 } _ { n } - \\operatorname* { m i n } _ { \\varepsilon } ( \\mathbf { C } - \\mathbf { f } \\oplus \\mathbf { g } ) + \\mathbf { f }$   \n5: $\\begin{array} { r } { \\mathbf { g }  \\varepsilon \\log \\frac { 1 } { n } \\mathbf { 1 } _ { n } - \\operatorname* { m i n } _ { \\varepsilon } ( \\mathbf { C } ^ { \\top } - \\mathbf { g } \\oplus \\mathbf { f } ) + \\mathbf { g } } \\end{array}$   \n6: end while   \n7: return $\\mathbf { f } , \\mathbf { g } , \\mathbf { P } = \\exp \\left( ( \\mathbf { C } - \\mathbf { f } \\oplus \\mathbf { g } ) / \\varepsilon \\right)$ ",
+        "bbox": [
+            503,
+            410,
+            823,
+            526
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "18 $\\mathbf { P } ^ { \\varepsilon } \\to \\mathbf { \\Pi } _ { . n ^ { 2 } } ^ { 1 } \\mathbf { 1 } _ { n \\times n }$ as $\\varepsilon  \\infty$ . These two limiting points coincide with the optimal assignment matrix 9 (or optimal permutation as returned e.g. by the Hungarian algorithm [Kuhn, 1955]), and the uniform independent coupling used implicitly in I-FM. ",
+        "bbox": [
+            158,
+            541,
+            826,
+            583
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "121 Independent and Batch-OT Flow Matching.   \n122 A stochastic interpolant $\\mu _ { t }$ with law $X _ { t } : = ( 1 -$   \n123 $t ) X _ { 0 } + t X _ { 1 }$ is used in flow matching to solve   \n124 a regression loss $\\begin{array} { r } { \\operatorname* { m i n } _ { \\theta } \\mathbb { E } _ { T , X _ { 0 } , X _ { 1 } } \\| X _ { 1 } ^ { \\cdot } - X _ { 0 } - \\| } \\end{array}$   \n125 $\\mathbf { v } _ { \\theta } ( X _ { T } , T ) \\lVert ^ { 2 }$ where the expectation is taken w.r.t.   \n126 $X _ { 0 } \\sim \\mu _ { 0 } , X _ { 1 } \\sim \\mu _ { 1 }$ and $T$ a random variable in   \n127 $[ 0 , 1 ]$ . In I-FM, this interpolant is implemented by   \n128 taking independent batches of samples $\\mathbf { x } _ { 0 } ^ { 1 } \\ldots , \\mathbf { x } _ { 0 } ^ { \\bar { n } }$   \n129 from $\\mu _ { 0 }$ , $\\mathbf { x } _ { 1 } ^ { 1 } , \\ldots , \\mathbf { x } _ { 1 } ^ { n }$ from $\\mu _ { 1 }$ , and $t _ { 1 } , \\ldots , t _ { n }$ time   \n130 values sampled in $[ 0 , 1 ]$ , to form the loss values   \n131 $\\| \\mathbf { x } _ { 1 } ^ { k } - \\mathbf { x } _ { 0 } ^ { k } - \\mathbf { v } _ { \\theta } \\big ( \\big ( 1 - t _ { k } \\big ) \\mathbf { x } _ { 0 } ^ { j } + t _ { k } \\mathbf { x } _ { 1 } ^ { k } , t _ { k } \\big ) \\| ^ { 2 }$ . In the ",
+        "bbox": [
+            140,
+            590,
+            498,
+            747
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "1: $\\mathbf { X } _ { 0 } = ( \\mathbf { x } _ { 0 } ^ { 1 } , \\ldots , \\mathbf { x } _ { 0 } ^ { n } ) \\sim \\mu _ { 0 }$   \n2: $\\mathbf { X } _ { 1 } = ( \\mathbf { x } _ { 1 } ^ { 1 } , \\ldots , \\mathbf { x } _ { 1 } ^ { n } ) \\sim \\mu _ { 1 }$   \n3: $\\mathbf { P } \\gets \\mathrm { O T } \\mathbf { - } \\mathrm { S O L V E } ( \\mathbf { X } _ { 0 } , \\mathbf { X } _ { 1 } )$ or ${ \\mathbf I } _ { n } / n$   \n4: $( i _ { 1 } , j _ { 1 } ) , \\dotsc , ( i _ { n } , j _ { n } ) \\sim \\mathbf { P }$   \n5: $t _ { 1 } , \\ldots , t _ { n } \\gets$ TIMESAMPLER   \n6: $\\tilde { \\mathbf { x } } ^ { k } \\gets ( 1 - t _ { k } ) \\mathbf { x } _ { 0 } ^ { i _ { k } } + t _ { k } \\mathbf { x } _ { 1 } ^ { j _ { k } }$ , for $k \\leq n$   \n7: $\\begin{array} { r } { \\mathcal { L } ( \\boldsymbol { \\theta } ) = \\sum _ { k } \\| \\mathbf { x } _ { 1 } ^ { j _ { k } } - \\mathbf { x } _ { 0 } ^ { i _ { k } } - \\mathbf { v } _ { \\boldsymbol { \\theta } } ( \\tilde { \\mathbf { x } } ^ { k } , t _ { k } ) \\| ^ { 2 } } \\end{array}$   \n8: $\\theta \\gets$ GRADIENT-UPDATE( $\\left( \\nabla { \\mathcal { L } } ( \\theta ) \\right)$   \n132 formalism of Pooladian et al. [2023] and Tong et al. [2023], the same samples $\\mathbf { x } _ { 0 } ^ { 1 } \\ldots , \\mathbf { x } _ { 0 } ^ { n }$ and   \n133 $\\mathbf { x } _ { 1 } ^ { 1 } , \\ldots , \\mathbf { x } _ { 1 } ^ { n }$ are first fed into a discrete optimal matching solver. This outputs a bistochastic coupling   \n134 matrix $\\mathbf { P } \\in \\mathbb { R } ^ { n \\times n }$ which is then used to $r e$ -shuffle the $n$ pairs originally provided to be better coupled,   \n135 and which should help the velocity field fit better trajectories, with less training steps. The procedure   \n136 is summarized in Algorithm 2 and adapted to our setup and notations. The choice ${ \\mathbf I } _ { n } / n$ corresponds   \n137 to IFM. More recently, [Davtyan et al., 2025] has proposed to keep a memory of that matching effort   \n138 across mini-batches, by updating a large (of the size of the entire dataset) assignment permutation   \n139 between noise and full-batch data that is locally refreshed with the output of the Hungarian method   \n140 run on a small batch. A crucial aspect of the batch-OT methodology is that this pairing is disconnected   \n141 from the training of $\\mathbf { v } _ { \\theta }$ itself. Indeed, as currently implemented, OT variants of FM can be interpreted   \n142 as meta-dataloaders that do a selective pairing of noise and data, without considering $\\theta$ at all. In that   \n143 sense, training and preparation of coupled noise/data pairs can be done independently. ",
+        "bbox": [
+            516,
+            612,
+            802,
+            731
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            138,
+            746,
+            826,
+            911
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "3 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "144 3 Prepping Sinkhorn for Large Batch-size and Dimension. ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            89,
+            674,
+            107
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "The Necessity of Large Batch Size. The motivation to use larger batch sizes for OT-FM lies in the fundamental bias introduced by using small batches in the context of the curse of dimensionality [Chewi et al., 2024, Fatras et al., 2019]. That bias cannot be traded off with more iterations on the flow matching loss. The necessity of varying $\\varepsilon$ accordingly is that this regularization is known to offset that bias to some extent, with more favorable sample complexity [Genevay et al., 2018, Mena and Niles-Weed, 2019, Rigollet and Stromme, 2025]. ",
+        "bbox": [
+            169,
+            113,
+            825,
+            196
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "151 Automatic Rescaling of $\\varepsilon$ . A practical problem arising when running the Sinkhorn algorithm lies   \n152 in choosing the $\\varepsilon$ parameter. As described earlier, while $\\mathbf { P } ^ { \\varepsilon }$ does follow a path from the optimal   \n153 permutation return by the Hungarian algorithm to the independent coupling as $\\varepsilon$ varies from $0 \\infty$   \n154 what matters is what actual values are chosen in between those two ends. To avoid using a fixed grid   \n155 that risks becoming irrelevant as we move $n$ and $d$ , we revisit the strategy used in [Cuturi, 2013]   \n156 to divide the cost matrix $\\mathbf { C }$ by its mean, median or maximal value, as implemented for instance   \n157 in [Flamary et al., 2021]. While needed to avoid underflow when instantiating a kernel matrix   \n158 ${ \\bf K } = e ^ { - { \\bf C } / \\bar { \\varepsilon } }$ , that strategy is not relevant when using the log-sum-exp operator in our implementation   \n159 (as advocated in [Peyré and Cuturi, 2019, Remark 4.23]), since the $\\operatorname* { m i n } _ { \\varepsilon }$ in our implementation is   \n160 invariant to a constant shift in $\\mathbf { C }$ , whereas mean, median and max statistics are not. We propose   \n161 instead to use the standard deviation (STD) of the cost matrix, which has this property: dispersion of   \n162 costs around its mean has more relevance than mean itself. The STD can be computed in $( \\bar { n } + m ) d ^ { 2 }$   \n163 time/ memory, without having to instantiate the cost matrix. When this memory cost increase from   \n164 $d$ to $d ^ { 2 }$ is too high, we subsample $n = 2 ^ { 1 4 } = 1 6 3 8 4$ points. In what follows, we always pass the $\\varepsilon$   \n165 value to the Sinkhorn algorithm 1 as $\\tilde { \\varepsilon } : = \\mathrm { s t d } ( \\mathbf { C } ) \\times \\varepsilon$ , where $\\varepsilon$ is now a scale-free quantity selected   \n166 in a grid [0.001, 1.0]. See appendix for plots that report instead $\\varepsilon$ . ",
+        "bbox": [
+            140,
+            204,
+            825,
+            426
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Scale-Free Renormalized Coupling Entropy. While useful to keep computations stable across runs, the rescaling of $\\varepsilon$ still does not provide a clear idea of whether a computed coupling $\\mathbf { P } ^ { \\varepsilon }$ between $n \\times n$ points is sharp or close to independent. While a distance to the independent coupling can be easily computed, that to the optimal Hungarian permutation cannot, of course, be derived. Instead, we resort to a fundamental information inequality used in [Cuturi, 2013]: if $\\mathbf { P }$ is a valid coupling between two marginal probability vectors a, b, then one has by $\\begin{array} { r } { \\frac { 1 } { 2 } ( H ( \\mathbf { a } ) + H ( \\mathbf { b } ) ) \\leq H ( \\mathbf { P } ) \\leq \\bar { H } ( \\mathbf { a } ) + H ( \\mathbf { b } ) } \\end{array}$ . As a result, for any $\\varepsilon$ , we can define a renormalized entropy $\\mathcal { E }$ for any coupling of $\\mathbf { a } , \\mathbf { b }$ : ",
+        "bbox": [
+            173,
+            431,
+            825,
+            530
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ed4bdb01fff0f71633b109f891049a4f10c487811a96d2f42e2915284e7ba735.jpg",
+        "text": "$$\n\\mathcal { E } ( \\mathbf { P } ) : = \\frac { 2 H ( \\mathbf { P } ) } { H ( \\mathbf { a } ) + H ( \\mathbf { b } ) } - 1 \\in ( 0 , 1 ] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            372,
+            536,
+            622,
+            570
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "167 When ${ \\bf a } = { \\bf b } = { \\bf 1 } _ { n } / n$ , as considered here, this simplifies to $\\mathcal { E } ( \\mathbf { P } ) : = H ( \\mathbf { P } ) / \\log n - 1$ . Independently   \n168 of the size $n$ and of the scale of $\\varepsilon$ , $\\mathcal { E } ( \\mathbf { P } ^ { \\varepsilon } )$ provides a simple measure of the proximity of $\\mathbf { P } ^ { \\varepsilon }$ to an   \n169 optimal assignment matrix (as $\\mathcal { E }$ gets closer to 0) or to the independent coupling matrix (as $\\mathcal { E }$ reaches   \n170 1). As a result we report $\\mathcal { E } ( \\mathbf { P } ^ { \\varepsilon } )$ rather than $\\varepsilon$ in our plots (or to be more accurate, the average of   \n171 $\\mathcal { E } ( \\mathbf { P } ^ { \\varepsilon } )$ computed over multiple mini-batches). ",
+        "bbox": [
+            140,
+            577,
+            825,
+            647
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "172 From Squared Euclidean Costs to Dot-products Using the notation $T ^ { \\star } ( \\mu , \\nu )$ introduced in (2), 173 we notice an equivariance property of Monge maps. For $\\mathbf { s } \\in \\mathbb { R } ^ { d }$ and $r \\in \\mathbb { R } _ { + }$ we write $L _ { r , \\mathbf { s } }$ for the 174 dilation and translation map $L _ { r , \\mathbf { s } } ( \\mathbf { x } ) = r \\mathbf { x } + \\mathbf { s }$ . Naturally, $L _ { r , \\mathbf { s } } ^ { - 1 } ( \\mathbf { x } ) = ( \\mathbf { x } - \\mathbf { s } ) / r = L _ { 1 / r , - \\mathbf { s } / r } ( \\mathbf { x } )$ , but also 175 $L _ { r , s } = \\nabla w _ { r , s }$ where $\\begin{array} { r } { w _ { r , \\underline { { s } } } ( \\mathbf { x } ) : = \\frac { r } { 2 } \\| \\mathbf { x } \\| ^ { 2 } - \\mathbf { s } ^ { T } \\mathbf { x } } \\end{array}$ is convex. ",
+        "bbox": [
+            142,
+            652,
+            825,
+            714
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Lemma 2. The Monge map $T ( \\mu , \\nu )$ is equivariant w.r.t to dilation and translation maps, as ",
+        "bbox": [
+            151,
+            714,
+            776,
+            728
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/dac87f8d120ae6d92b78ff872b2bde01ae397aacb25a288fbf687578d9bfbbdf.jpg",
+        "text": "$$\nT ^ { \\star } ( L _ { r , \\mathbf { s } } \\# \\mu , L _ { r ^ { \\prime } , \\mathbf { s } ^ { \\prime } } \\# \\nu ) = L _ { r ^ { \\prime } , \\mathbf { s } ^ { \\prime } } \\circ T ^ { \\star } ( \\mu , \\nu ) \\circ L _ { r , \\mathbf { s } } ^ { - 1 } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            331,
+            734,
+            665,
+            756
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "176 Proof. Following Brenier’s theorem, let $u$ be a convex potential from $\\mu$ to $\\nu$ such that $T ^ { \\star } ( \\mu , \\nu ) = \\nabla u$ .   \n177 Set $\\bar { F } : = L _ { r ^ { \\prime } , { \\bf s } ^ { \\prime } } \\bar { \\circ } \\nabla u \\circ L _ { r , { \\bf s } } ^ { - 1 }$ . $F$ is the composition of the gradients of three convex functions. Because   \n178 the Jacobians of $L _ { r , s }$ and $L _ { r , \\mathbf { s } } ^ { - 1 }$ are respectively $r \\mathbf { I } _ { d }$ and ${ \\mathbf { I } } _ { d } / r$ , they commute with the Hessian of $u$   \n179 Therefore the Jacobian of $F$ is symmetric positive definite, and $F$ is the gradient of a convex potential   \n180 that pushes $L _ { r , \\mathbf { s } } \\# \\mu$ to $L _ { r ^ { \\prime } , \\mathbf { s } ^ { \\prime } } \\# \\nu$ . It is therefore their Monge map by Brenier’s theorem. □   \n181 In practice, this equivariance means that when focusing on permutation matrices (which can be   \n182 seen as the discrete counterparts of these Monge maps), one is free to rescale and shift either point   \n183 cloud. This remark has a practical implication when running Sinkhorn as well. When using the   \n184 squared-Euclidean distance matrix, the cost matrix is a sum of a correlation term with two rank-1   \n185 norm terms, $\\mathbf { C } = - \\mathbf { X } \\mathbf { Y } ^ { T } \\frac { 1 } { 2 } ( \\xi \\mathbf { 1 } _ { m } ^ { T } + \\mathbf { 1 } _ { n } \\gamma ^ { T } )$ where $\\xi$ and $\\gamma$ are the vectors composed of the $n$ squared   \n186 norms of vectors in $\\mathbf { X }$ and $\\mathbf { Y }$ . Yet, due to the constraints $\\mathbf { P 1 } _ { m } = \\mathbf { a } , \\mathbf { P } ^ { T } \\mathbf { 1 } _ { n } = \\mathbf { b }$ , any modification   \n187 188 to the cost matrix of theobjective by a constant, $\\begin{array} { r } { \\langle { \\bf P } , \\tilde { \\bf C } \\rangle = \\langle { \\bf P } , { \\bf C } \\rangle - \\frac { 1 } { n } { \\bf 1 } _ { n } ^ { T } { \\bf c } - \\frac { 1 } { n } { \\bf 1 } _ { n } ^ { T } { \\bf d } . } \\end{array}$ $\\tilde { \\mathbf { C } } = \\mathbf { C } - \\mathbf { c } \\mathbf { 1 } _ { m } ^ { T } - \\mathbf { 1 } _ { n } \\mathbf { d } ^ { T }$ $\\mathbf { c } \\in \\mathbb { R } ^ { n }$ , $\\mathbf { d } \\in \\mathbb { R } ^ { m }$ only shifts the (3) means that norms   \n189 can only perturb Sinkhorn computations, and one should focus on the negative correlation matrix   \n190 $\\mathbf { C } : = - \\mathbf { \\dot { X } } ^ { T } \\mathbf { Y }$ , replacing Line 2 in Algorithm 1. We do observe significant stability gains of these   \n191 properly rescaled costs when comparing two point clouds (see Appendix A.1).   \n2 Scaling Up Sinkhorn to Millions of High-Dimensional Points. Our ambition, when guiding flow   \n3 matching with batch-OT as presented in Algorithm 2, is to vary $n$ and $\\varepsilon$ so that the coupling $\\mathbf { P } ^ { \\varepsilon }$ used   \n4 to sample indices can be both large $( n \\approx \\bar { 1 0 } ^ { 6 }$ ) and sharp if needed, i.e. with a $\\varepsilon$ that can be brought   \n95 to arbitrarily low levels so that $\\mathcal { E } ( \\mathbf { P } ^ { \\varepsilon } ) \\approx 0$ . To that end, we leverage the OTT-JAX implementation   \n96 of the Sinkhorn algorithm [Cuturi et al., 2022], which can be natively sharded across multi-GPUs,   \n97 or more generally multiple nodes of GPU machines equipped with efficient interconnect. In that   \n98 approach, inspited by the earlier mono-GPU implementation of [Feydy, 2020], all $n$ points from   \n99 source and target are sharded across GPUs and nodes (we have used either 1 or 2 nodes of 8 GPUs   \n0 each, either Nvidia H100 or A100). A crucial point in that implementation is that the cost matrix   \n$\\mathbf { C } = - \\mathbf { X } \\mathbf { Y } ^ { T }$ (following remark above) is never instantiated globally, and recomputed instead at each   \n2 $\\operatorname* { m i n } _ { \\varepsilon }$ operation in Lines 4 and 5 of Algorithm 1 locally, for these shards. All sharded results are   \n3 then gathered to recover f, g newly assigned after that iteration. When outputted, we use $\\mathbf { f } ^ { \\varepsilon }$ and $\\mathbf { g } ^ { \\varepsilon }$   \nand, analogously, never instantiate the full $\\mathbf { P } ^ { \\varepsilon }$ matrix (this would be impossible at sizes $n \\approx 1 0 ^ { 6 }$ we   \n5 consider) but instead, materialize it blocks of rows by blocks of rows to do index sampling. We use   \n06 the Gumbel-softmax trick to vectorize and speed up efficiently the $n$ categorical sampling of these   \npotentially very large unnormalized probability vectors. ",
+        "bbox": [
+            142,
+            768,
+            826,
+            842
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            854,
+            825,
+            911
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            493,
+            935,
+            503,
+            946
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            89,
+            825,
+            195
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            155,
+            202,
+            825,
+            422
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "4 Experiments ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            436,
+            313,
+            454
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "09 We revisit the application of Algorithm 2 using the modifications to the Sinkhorn algorithm outlined 0 in Section 3 to various I-FM benchmark tasks. We consider synthetic tasks in which the groundtruth Monge map is known, and benchmark unconditioned image generation using CIFAR-10 and ImageNet-32 generation, with a limited number of total integration steps. ",
+        "bbox": [
+            156,
+            462,
+            825,
+            517
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Sinkhorn Hyperparameters. To track precisely whether the Sinkhorn algorithm converges for low $\\varepsilon$ values, we set the maximal number of iterations to 50, 000. We use the momentum rule introduced in [Lehmann et al., 2022] beyond 2000 iterations to speed-up harder runs. Overall, all of the runs below converge, and therefore, even for low $\\varepsilon$ , we never experience convergence issues. The threshold $\\tau$ is set to 0.001 and we observe that it remains relevant for all dimensions, as we use the 1-norm to quantify convergence. Convergence statistics are reported in Appendix A.2. ",
+        "bbox": [
+            173,
+            523,
+            825,
+            608
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "4.1 Evaluation Metrics for $\\mathbf { v } _ { \\theta }$ ",
+        "text_level": 1,
+        "bbox": [
+            169,
+            618,
+            392,
+            632
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "20 All metrics used in our experiments can be interpreted as lower is better. Negative log-likelihood.   \n1 Given a trained flow model $\\mathbf { v } _ { \\boldsymbol { \\theta } } ( t , \\mathbf { x } )$ , the density $p _ { t } ( \\mathbf { x } )$ obtained by pushing forward $p _ { 0 } ( \\mathbf { x } )$ along the   \n22 flow map of $\\mathbf { v } _ { \\theta }$ can be computed by solving ",
+        "bbox": [
+            156,
+            637,
+            825,
+            679
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5f55cf479665a00470cabd466fb885a5257ee5a463ed4fe47de179dbdce0a90c.jpg",
+        "text": "$$\n\\log p _ { t } ( \\mathbf { x } _ { t } ) = \\log p _ { 0 } ( \\mathbf { x } _ { 0 } ) - \\int _ { 0 } ^ { 1 } ( \\nabla _ { x } \\cdot \\mathbf { v } _ { \\theta } ) ( t , \\mathbf { x } _ { t } ) \\mathrm { d } t , \\qquad \\dot { \\mathbf { x } } _ { t } = \\mathbf { v } _ { \\theta } ( t , \\mathbf { x } _ { t } ) ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            264,
+            686,
+            732,
+            723
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Similarly, given a pair $( t , \\mathbf { x } )$ , the density $p _ { t } ( \\mathbf { x } )$ can be evaluated by backward integration [Grathwohl et al., 2018, Section 2.2]. The divergence $( \\nabla _ { x } \\cdot \\mathbf { v } _ { \\theta } ) ( t , \\mathbf { x } _ { t } )$ requires computing the trace of the Jacobian of $\\mathbf { v } _ { \\theta } ( t , \\cdot )$ . As commonly done in the literature, we use the Hutchinson trace estimator with a varying number of samples to speed up that computation without materializing the entire Jacobian and use either an Euler solver with 50 steps for synthetic tasks or a Dopri5 adaptive solver for image generation tasks, both implemented in the Diffrax toolbox [Kidger, 2021]. Given $n$ points $\\mathbf { x } _ { 1 } ^ { 1 } , \\ldots , \\mathbf { \\bar { x } } _ { 1 } ^ { n } \\sim \\nu$ and integrated backwards, the negative log-likelihood (NLL) of that set is ",
+        "bbox": [
+            173,
+            729,
+            826,
+            828
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/f0dabc03ea8bd1fc60b8ce4cbc01cb6974f7be3b3475a1ba46320ee4af34dc42.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathcal { L } ( \\boldsymbol { \\theta } ) : = - \\frac { 1 } { n } \\displaystyle \\sum _ { i = 1 } ^ { n } \\log p _ { 1 } ( \\mathbf { x } _ { 1 } ^ { i } ) . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            403,
+            835,
+            593,
+            876
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "223 subject to (4) and $p _ { 0 }$ the law of $\\mu$ . We alternatively report the bits per dimension (BPD) statistic,   \n224 which is $\\mathcal { L }$ divided by $d \\log 2$ . ",
+        "bbox": [
+            137,
+            882,
+            825,
+            912
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "5 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Curvature. We use the curvature of the field $\\mathbf { v } _ { \\theta }$ as defined by [Lee et al., 2023]: for $n$ integrated trajectories $( \\mathbf { x } _ { t } ^ { 1 } , \\ldots , \\mathbf { x } _ { t } ^ { n } )$ starting from samples at $t = 0$ from $\\mu$ , the curvature is defined as ",
+        "bbox": [
+            171,
+            90,
+            825,
+            121
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1f03bb09797f723c43f924af3ec1597478f6dddabadc8247c325af80cc1bc605.jpg",
+        "text": "$$\n\\begin{array} { r } { \\kappa ( \\theta ) : = \\frac { 1 } { n } \\displaystyle \\sum _ { i = 1 } ^ { N } \\int _ { 0 } ^ { 1 } \\| \\mathbf { v } _ { \\theta } ( t , \\mathbf { x } _ { t } ^ { ( i ) } ) - ( \\mathbf { x } _ { 1 } ^ { ( i ) } - \\mathbf { x } _ { 0 } ^ { ( i ) } ) \\| _ { 2 } ^ { 2 } \\mathrm { d } t , } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            326,
+            127,
+            669,
+            171
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "225 where the integration is done with an Euler solver with 50 steps for synthetic tasks and the Dopri5   \n226 solver evaluated on a grid of 8 steps for image generation tasks. The smaller the curvature, the more   \n227 the ODE path looks like a straight line. ",
+        "bbox": [
+            142,
+            176,
+            826,
+            220
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Reconstruction loss. For synthetic tasks in Sections 4.2, we have access to the ground-truth transport map $T _ { 0 }$ that generated the target measure $\\nu$ . In both cases, that map is parameterized as the gradient of a convex Brenier potential, respectively a piecewise quadratic function and an input convex neural network, ICNN [Amos et al., 2017]. For a starting point $\\mathbf { x } _ { \\mathrm { 0 } }$ , we can therefore compute a reconstruction loss (a variant of the $\\mathcal { L } ^ { 2 }$ -UVP in Korotin et al. [2021]) as the squared norm of the difference between the true map $T ^ { \\star } ( \\mathbf { x } _ { 0 } )$ and the flow map $T _ { \\theta }$ obtained by integrating $\\mathbf { v } _ { \\theta } ( t , \\cdot )$ (using 50 steps with a Euler solver), defined using $n$ points sampled from $\\mu$ as ",
+        "bbox": [
+            173,
+            227,
+            825,
+            324
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ef0902a08784abef94058da637e8b0ac7f973d9f908e174199dc459297c8334d.jpg",
+        "text": "$$\n\\mathcal { R } ( \\theta ) : = \\textstyle \\frac { 1 } { n } \\sum _ { i = 1 } ^ { n } \\| T _ { \\theta } ( \\mathbf { x } _ { 0 } ^ { i } ) - T _ { 0 } ( \\mathbf { x } _ { 0 } ^ { i } ) \\| _ { 2 } ^ { 2 } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            370,
+            332,
+            625,
+            372
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "FID. We report the FID metric [Heusel et al., 2017] in image generation tasks. For CIFAR-10 we use the train dataset of 50k images, for ImageNet-32 we subset a random set of $5 0 \\mathrm { k }$ images from the train set. For generation we consider four integration solvers, Euler with 4, 8 and 16 steps and a Dopri5 solver from the Diffrax library [Kidger, 2021]. ",
+        "bbox": [
+            171,
+            387,
+            825,
+            444
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "4.2 Synthetic Benchmark Tasks, $d = 3 2 \\sim 2 5 6$ ",
+        "text_level": 1,
+        "bbox": [
+            174,
+            453,
+            508,
+            468
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "We consider in this section synthetic benchmarks of medium dimensionality $\\left( d = 6 4 \\sim 2 5 6 \\right)$ ). In this evaluation, we prioritize these tasks in controlled settings over other data sources at similar dimensions (e.g. PCA reduced single-cell data [Bunne et al., 2024]) because we want to compute a ground-truth reconstruction loss, and therefore elucidate the impact of OT batch size $n$ and $\\varepsilon$ on this important practical aspect in practical applications. ",
+        "bbox": [
+            173,
+            472,
+            825,
+            542
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Piecewise Affine Brenier Map. The source is a standard Gaussian and the target is obtained by mapping it through the gradient of a potential, itself a (convex) piecewise quadratic function obtained using the pointwise maximum of $k$ rank-deficient parabolas: ",
+        "bbox": [
+            158,
+            549,
+            825,
+            592
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/9ddaeeda26db9eadb0fa11aec8a3dfa24c51186df8404469bcfaa0781b091056.jpg",
+        "text": "$$\n\\begin{array} { r } { u ( \\mathbf { x } ) : = \\displaystyle \\operatorname* { m a x } _ { i \\leq k } u _ { i } ( \\mathbf { x } ) : = \\frac { 1 } { 2 } \\| \\mathbf { x } \\| ^ { 2 } + \\frac { 1 } { 2 } \\| \\mathbf { A } _ { i } ( \\mathbf { x } - \\mathbf { m } _ { i } ) \\| ^ { 2 } - \\| \\mathbf { A } _ { i } \\mathbf { m } _ { i } \\| ^ { 2 } , } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            281,
+            597,
+            714,
+            622
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "241 where $\\mathbf { A } _ { i } \\sim \\mathrm { { W i s h a r t } } ( \\frac { d } { 2 } , I _ { d } ) , \\mathbf { m } _ { i } \\sim \\mathcal { N } ( 0 , 3 I _ { d } ) , c _ { i } \\sim \\mathcal { N } ( 0 , 1 )$ and all means are centered around zero   \n242 after sampling. In practice, this yields a transport map of the form $\\nabla u ( { \\bf x } ) = { \\bf x } + A _ { i ^ { \\star } } \\big ( { \\bf x } - { \\bf m } _ { i ^ { \\star } } \\big )$ where   \n243 $i ^ { \\star }$ is the potential selected for that particular $\\mathbf { x }$ (i.e. the argmax in (5)). The correction $- \\| \\mathbf { A } _ { i } \\mathbf { \\dot { m } } _ { i } \\| ^ { 2 }$ is   \n244 designed to ensure that these potentials are sampled equally when moving away from 0. The number   \n245 of potentials $k$ is equal to $d / \\bar { 1 6 }$ . Examples of this map are shown in Appendix A.3. We consider this   \n246 setting in dimensions d = 32, 64, 128, 256. ",
+        "bbox": [
+            147,
+            631,
+            825,
+            717
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Korotin et al. Benchmark. We use the set of pre-trained ICNNs introduced in [Korotin et al., 2021] along with their predefined Gaussian mixtures as sources. We consider the benchmark in $d = 3 2$ , 64, 128, 256 using their checkpoints to generate the ground-truth maps. This problem setting is more challenging, however, since both the source and target distributions have multiple modes. ",
+        "bbox": [
+            173,
+            723,
+            825,
+            780
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Velocity Field Parameterization and Training. The velocity fields are parameterized as MLPs with 5 hidden layers, of sizes 512 for $d = 3 2$ , 64 and 1024 for $d = 1 2 8$ , 256. Time in $[ 0 , 1 ]$ is encoded using $d / 8$ Fourier encodings. All models are trained with unpaired batches: the sampling in Line 1 of Algorithm 2 is done as $\\mathbf { X } _ { 0 } \\sim \\mu$ while for Line 2, $\\mathbf { X } _ { 1 } : = T _ { 0 } ( \\mathbf { X } _ { 0 } ^ { \\prime } )$ where $\\mathbf { X } _ { 0 } ^ { \\prime }$ is a new sample from $\\mu$ . All models are trained for 8192 steps, with effective batch sizes of 2048 samples to average a gradient, a learning rate of $1 0 ^ { - 3 }$ (we tested with $1 0 ^ { - 2 }$ or $1 0 ^ { - 4 }$ , both were either unstable or less efficient on a subset of runs). The model marked as $\\blacktriangle$ in the plots is a flow model trained with perfect supervision, i.e. given ground-truth paired samples $\\mathbf { X } _ { 0 } \\sim \\mu$ and $\\mathbf { X } _ { 1 } : = T _ { 0 } ( \\mathbf { X } _ { 0 } )$ , provided in the correct order. I-FM is marked as $\\blacktriangledown$ . For all other runs, we vary $\\varepsilon$ (reporting renormalized entropy $\\mathcal { E }$ ) ",
+        "bbox": [
+            171,
+            786,
+            825,
+            912
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "discarded",
+        "text": "6 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "image",
+        "img_path": "images/6cdd2357f69240be03f6a65c4b066003444d6b7b8e390cbf01e48c8dd32575ef.jpg",
+        "image_caption": [
+            "Figure 1: Results on the piecewise affine OT Map benchmark. The three top rows present (in that order) curvature, reconstruction and BPD metrics. Below, we provide compute times associated with running the Sinkhorn algorithm as a per-example cost. This per-example cost is the total time needed to run Sinkhorn to get $n \\times n$ coupling divided by $n$ . That cost would be 0 when using I-FM. We observe across all dimensions improvements of all metrics. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            161,
+            101,
+            826,
+            647
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "260 and the batch size $n$ used to compute couplings, somewhere between 256 and 2, 097, 152. These runs   \n261 are carried out on a single node with 8 GPUs, and therefore the data is sharded in blocks of size $n / 8$ .   \n262 Results. The results displayed in Figures 1 and 2 paint a homogeneous picture: as can be expected,   \n263 increasing $n$ is generally impactful and beneficial for all metrics. The interest of decreasing $\\varepsilon$ , while   \n264 beneficial in smaller dimensions, can be less pronounced in higher dimensions. Indeed, we find that   \n265 renormalized entropies around $\\approx 0 . 2$ should be advocated, if one has in mind the computational   \n266 effort needed to get these samples. ",
+        "bbox": [
+            143,
+            777,
+            826,
+            806
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            842,
+            825,
+            911
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "7 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "image",
+        "img_path": "images/4f66d29eb702284e4280d2d903cd1c0f460f5b4890a7643c6a39d09724ad94ca.jpg",
+        "image_caption": [
+            "Figure 2: Results on the Korotin benchmark. As with Figure 1, we compute curvature and reconstruction metrics, and compute times below. Some of the runs for largest OT batch sizes $n$ are provided in the supplementary. These runs suggest that to train OT models in these dimensions increasing $n$ is overall beneficial across the board. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            171,
+            94,
+            828,
+            503
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "4.3 Unconditioned Image Generation, $d = 3 0 7 2$ ",
+        "text_level": 1,
+        "bbox": [
+            169,
+            594,
+            516,
+            609
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "CIFAR-10. As done originally in [Lipman et al., 2023], we consider unconditional generation of the CIFAR-10 dataset. Results are presented in Figure 3. Compared to results reported in [Tong et al., 2023] we observe slightly better FID scores (about 0.1) for both I-FM and OT-FM. ",
+        "bbox": [
+            166,
+            613,
+            823,
+            656
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "ImageNet-32. As also considered in [Lipman et al., 2023], we also evaluate the impact of BatchOT in unconditional generation of the ImageNet-32 dataset. We report results with under-trained models (120k steps vs. $4 3 8 \\mathrm { k }$ advocated in their paper) in Figure 4 and present later checkpoints in Appendix A.6. Compared to results reported in [Tong et al., 2023] we observe slightly better FID scores (about 0.1 when using the Dopri5 solver for instance) for both I-FM and OT-FM. ",
+        "bbox": [
+            173,
+            662,
+            825,
+            733
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Velocity Field Parameterization and Training. We use the network parameterization given in [Tong et al.] for CIFAR-10 and we replicate the network parameterization given in [Pooladian et al., 2023], including learning rate choices. We follow their recommendations on setting learning rates as well as total number of iterations. ",
+        "bbox": [
+            171,
+            741,
+            825,
+            797
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Limitations. Our results rely on training of neural networks. In the interest of comparison, we have used the same model across all changes advocated in the paper (on $n$ and $\\varepsilon$ ). However, and due to the scale of our experiments, we have not been able to ablate important parameters such as learning rates when varying $n$ and $\\varepsilon$ . ",
+        "bbox": [
+            173,
+            805,
+            825,
+            861
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Conclusion. Our experiments suggest that guiding flow models with large scale Sinkhorn couplings can prove beneficial for downstream performance. We have tested this hypothesis by computing and sampling from both crisp and blurry $n \\times n$ Sinkhorn coupling matrices for sizes $n$ in the millions of ",
+        "bbox": [
+            166,
+            869,
+            825,
+            911
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            493,
+            936,
+            503,
+            946
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "image",
+        "img_path": "images/d7e2e71e3f78721a1ac16a66c708595b7b46f7909b8cd36e0b0e337201fff03b.jpg",
+        "image_caption": [
+            "Figure 3: Experiment metrics for CIFAR-10 image generation. We evaluate the trained models using the Euler solver with three different number of steps, and with the Dopri5 solver and adaptive steps. The plots demonstrate the benefits of a larger OT batch size to achieve significantly smaller curvature, and moderately smaller FID at low number of integration steps. Our experiments also suggest that in this setting, lower renormalized entropy generally benefits the performance. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            194,
+            92,
+            813,
+            319
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "image",
+        "img_path": "images/aa3e580cf60e35f2cfe4c79dbeeb72356791414c065c5d31e8b14d5c753ee817.jpg",
+        "image_caption": [
+            "Figure 4: Early ImageNet-32 experiment metrics obtained at a checkpoint of $1 2 0 \\mathrm { k }$ iterations (150k for I-FM). We provide later checkpoint results and settings in Appendix A.6. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            194,
+            409,
+            813,
+            636
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "287 points, placing them on an intuitive scale from 0 (close to using an optimal permutation as returned   \n288 e.g. by the Hungarian algorithm) to 1 (equivalent to the independent sampling approach popularized   \n289 by Lipman et al. [2023]). This involved efficient multi-GPU parallelization, realizing scales which,   \n290 to our knowledge, were never achieved previously in the literature. Although the scale of these   \n291 computations may seem large, they are still relatively cheap compared to the price one has to pay   \n292 to optimize the FM loss, and, additionally, are completely independent from model training. As a   \n293 result, they should be carried out prior to any training. While we have not explored the possibility of   \n294 launching multiple jobs with them (to ablate, e.g., for other fundamental aspects of model training   \n295 such as learning rates), we leave a more careful tuning of these training runs for future work. We   \n296 claim that paying this relatively small price to log and sample paired indices obtained from large   \n297 scale couplings results for mid-sized problems in great returns in the form of faster training and faster   \n298 inference, thanks to the straightness of the flows learned with the batch-OT procedure. For larger   \n299 sized problems, the conclusion is not so clear, although we quickly observe benefits when using   \n300 middle values for $n$ (in the thousands) and renormalized entropies around 0.2 which forms, at the   \n301 time of writing, our main practical recommendation for end users. ",
+        "bbox": [
+            138,
+            704,
+            825,
+            911
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "discarded",
+        "text": "9 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "302 References   \n303 Michael S Albergo and Eric Vanden-Eijnden. Building normalizing flows with stochastic interpolants. In 11th International Conference on Learning Representations, ICLR 2023, 2023.   \n305 Brandon Amos, Lei Xu, and J Zico Kolter. Input Convex Neural Networks. volume 34, 2017.   \n306 Jean-David Benamou and Yann Brenier. A computational fluid mechanics solution to the mongekantorovich mass transfer problem. Numerische Mathematik, 84(3):375–393, 2000.   \n308 Yann Brenier. Polar factorization and monotone rearrangement of vector-valued functions. Communications on Pure and Applied Mathematics, 44(4), 1991. doi: 10.1002/cpa.3160440402. Charlotte Bunne, Geoffrey Schiebinger, Andreas Krause, Aviv Regev, and Marco Cuturi. Optimal transport for single-cell and spatial omics. Nature Reviews Methods Primers, 4(1):58, 2024.   \n12 Ricky TQ Chen, Yulia Rubanova, Jesse Bettencourt, and David K Duvenaud. Neural ordinary differential equations. Advances in neural information processing systems, 31, 2018.   \n314 Sinho Chewi, Jonathan Niles-Weed, and Philippe Rigollet. Statistical optimal transport. arXiv preprint arXiv:2407.18163, 2024.   \n316 Marco Cuturi. Sinkhorn distances: Lightspeed computation of optimal transport. In Advances in neural information processing systems, pages 2292–2300, 2013. Marco Cuturi, Laetitia Meng-Papaxanthos, Yingtao Tian, Charlotte Bunne, Geoff Davis, and Olivier Teboul. Optimal transport tools (ott): A jax toolbox for all things wasserstein. arXiv preprint arXiv:2201.12324, 2022. Aram Davtyan, Leello Tadesse Dadi, Volkan Cevher, and Paolo Favaro. Faster inference of flow-based generative models via improved data-noise coupling. In The Thirteenth International Conference on Learning Representations, 2025. Kilian Fatras, Younes Zine, Rémi Flamary, Rémi Gribonval, and Nicolas Courty. Learning with minibatch wasserstein: asymptotic and gradient properties. arXiv preprint arXiv:1910.04091, 2019. Jean Feydy. Analyse de données géométriques, au delà des convolutions. PhD thesis, Université Paris-Saclay, 2020. Rémi Flamary, Nicolas Courty, Alexandre Gramfort, Mokhtar Z. Alaya, Aurélie Boisbunon, Stanislas Chambon, Laetitia Chapel, Adrien Corenflos, Kilian Fatras, Nemo Fournier, Léo Gautheron, Nathalie T.H. Gayraud, Hicham Janati, Alain Rakotomamonjy, Ievgen Redko, Antoine Rolet, Antony Schutz, Vivien Seguy, Danica J. Sutherland, Romain Tavenard, Alexander Tong, and Titouan Vayer. Pot: Python optimal transport. Journal of Machine Learning Research, 22(78):1–8, 2021.   \n335 Adam P Generale, Andreas E Robertson, and Surya R Kalidindi. Conditional variable flow matching: Transforming conditional densities with amortized conditional optimal transport. arXiv preprint arXiv:2411.08314, 2024. Aude Genevay, Lénaic Chizat, Francis Bach, Marco Cuturi, and Gabriel Peyré. Sample complexity of sinkhorn divergences. arXiv preprint arXiv:1810.02733, 2018.   \n340 Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative adversarial nets. In Advances in neural information processing systems, pages 2672–2680, 2014. Will Grathwohl, Ricky TQ Chen, Jesse Bettencourt, Ilya Sutskever, and David Duvenaud. Ffjord: Free-form continuous dynamics for scalable reversible generative models. arXiv preprint arXiv:1810.01367, 2018. Jonathan Heek, Anselm Levskaya, Avital Oliver, Marvin Ritter, Bertrand Rondepierre, Andreas Steiner, and Marc van Zee. Flax: A neural network library and ecosystem for JAX, 2024. URL http://github.com/google/flax.   \n349 Martin Heusel, Hubert Ramsauer, Thomas Unterthiner, Bernhard Nessler, and Sepp Hochreiter. Gans trained by a two time-scale update rule converge to a local nash equilibrium. Advances in neural information processing systems, 30, 2017.   \n352 Leonid Kantorovich. On the transfer of masses (in russian). Doklady Akademii Nauk, 37(2), 1942.   \n353 Patrick Kidger. On Neural Differential Equations. PhD thesis, University of Oxford, 2021. Dominik Klein, Giovanni Palla, Marius Lange, Michal Klein, Zoe Piran, Manuel Gander, Laetitia Meng-Papaxanthos, Michael Sterr, Lama Saber, Changying Jing, et al. Mapping cells through time and space with moscot. Nature, pages 1–11, 2025.   \n357 Leon Klein, Andreas Krämer, and Frank Noé. Equivariant flow matching. Advances in Neural Information Processing Systems, 36:59886–59910, 2023.   \n359 Alexander Korotin, Lingxiao Li, Aude Genevay, Justin Solomon, Alexander Filippov, and Evgeny Burnaev. Do Neural Optimal Transport Solvers Work? A Continuous Wasserstein-2 Benchmark. 2021. Harold W Kuhn. The hungarian method for the assignment problem. Naval research logistics quarterly, 2(1-2):83–97, 1955.   \n364 Sangyun Lee, Beomsu Kim, and Jong Chul Ye. Minimizing trajectory curvature of ode-based generative models. In International Conference on Machine Learning, pages 18957–18973. PMLR, 2023. Tobias Lehmann, Max-K Von Renesse, Alexander Sambale, and André Uschmajew. A note on overrelaxation in the sinkhorn algorithm. Optimization Letters, pages 1–12, 2022. Yaron Lipman, Ricky T. Q. Chen, Heli Ben-Hamu, Maximilian Nickel, and Matthew Le. Flow matching for generative modeling. In The Eleventh International Conference on Learning Representations, 2023. URL https://openreview.net/forum?id=PqvMRDCJT9t.   \n372 Yaron Lipman, Marton Havasi, Peter Holderrieth, Neta Shaul, Matt Le, Brian Karrer, Ricky TQ Chen, David Lopez-Paz, Heli Ben-Hamu, and Itai Gat. Flow matching guide and code. arXiv preprint arXiv:2412.06264, 2024.   \n375 Qiang Liu. Rectified flow: A marginal preserving approach to optimal transport. arXiv preprint arXiv:2209.14577, 2022. Xingchao Liu, Chengyue Gong, et al. Flow straight and fast: Learning to generate and transfer data with rectified flow. In The Eleventh International Conference on Learning Representations.   \n379 Robert J McCann. A convexity principle for interacting gases. Advances in mathematics, 128(1): 153–179, 1997.   \n381 Gonzalo Mena and Jonathan Niles-Weed. Statistical bounds for entropic optimal transport: sample complexity and the central limit theorem. Advances in neural information processing systems, 32, 2019.   \n384 Gaspard Monge. Mémoire sur la théorie des déblais et des remblais. Histoire de l’Académie Royale des Sciences, 1781. Kirill Neklyudov, Rob Brekelmans, Daniel Severo, and Alireza Makhzani. Action matching: Learning stochastic dynamics from samples. In International conference on machine learning, pages 25858– 25889. PMLR, 2023.   \n389 Stefano Peluchetti. Non-denoising forward-time diffusions, 2022. URL https://openreview. net/forum?id=oVfIKuhqfC.   \n391 Gabriel Peyré and Marco Cuturi. Computational optimal transport. Foundations and Trends in Machine Learning, 11(5-6), 2019. ISSN 1935-8245. ",
+        "bbox": [
+            150,
+            41,
+            828,
+            917
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "10 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "304 305 307 309 310 311 313 315 317 318 319 320 321 322 323 324 325 326 327 328 329 330 331 332 333 334 336 337 338 339 341 342 343 344 345 346 347 348 ",
+        "bbox": [
+            138,
+            88,
+            165,
+            929
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            50,
+            828,
+            920
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "discarded",
+        "text": "11 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            948
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "discarded",
+        "text": "350 351 354 355 356 358 360 361 362 363 365 366 367 368 369 370 371 373 374 376 377 378 380 381 382 383 385 386 387 388 390 392 ",
+        "bbox": [
+            138,
+            92,
+            165,
+            924
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "393 Aram-Alexandre Pooladian, Heli Ben-Hamu, Carles Domingo-Enrich, Brandon Amos, Yaron Lipman,   \n394 and Ricky TQ Chen. Multisample flow matching: Straightening flows with minibatch couplings.   \n395 In International Conference on Machine Learning, pages 28100–28127. PMLR, 2023.   \n396 Danilo Jimenez Rezende and Shakir Mohamed. Variational inference with normalizing flows.   \n397 In Proceedings of the 32nd International Conference on International Conference on Machine   \n398 Learning-Volume 37, pages 1530–1538, 2015.   \n399 Philippe Rigollet and Austin J Stromme. On the sample complexity of entropic optimal transport.   \n400 The Annals of Statistics, 53(1):61–90, 2025.   \n401 Filippo Santambrogio. Optimal transport for applied mathematicians. Springer, 2015.   \n402 Richard Sinkhorn. A relationship between arbitrary positive matrices and doubly stochastic matrices.   \n403 Ann. Math. Statist., 35:876–879, 1964.   \n404 Qingwen Tian, Yuxin Xu, Yixuan Yang, Zhen Wang, Ziqi Liu, Pengju Yan, and Xiaolin Li. Equiflow:   \n405 Equivariant conditional flow matching with optimal transport for 3d molecular conformation   \n406 prediction. arXiv preprint arXiv:2412.11082, 2024.   \n407 Alexander Tong, Kilian FATRAS, Nikolay Malkin, Guillaume Huguet, Yanlei Zhang, Jarrid Rector  \n408 Brooks, Guy Wolf, and Yoshua Bengio. Improving and generalizing flow-based generative models   \n409 with minibatch optimal transport. Transactions on Machine Learning Research.   \n410 Alexander Tong, Nikolay Malkin, Kilian Fatras, Lazar Atanackovic, Yanlei Zhang, Guillaume Huguet,   \n411 Guy Wolf, and Yoshua Bengio. Simulation-free schr\\\" odinger bridges via score and flow matching.   \n412 arXiv preprint arXiv:2307.03672, 2023.   \n413 Cédric Villani. Topics in optimal transportation. Number 58. American Mathematical Soc., 2003. ",
+        "bbox": [
+            140,
+            88,
+            828,
+            467
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "12 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "NeurIPS Paper Checklist ",
+        "text_level": 1,
+        "bbox": [
+            161,
+            117,
+            387,
+            136
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "1. Claims ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            143,
+            284,
+            156
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: Do the main claims made in the abstract and introduction accurately reflect the paper’s contributions and scope? ",
+        "bbox": [
+            230,
+            164,
+            823,
+            191
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            198,
+            330,
+            213
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: The paper proposes to revisit an existing method by scaling up significantly its hyperparameters and study their interplay when measuring final performance. ",
+        "bbox": [
+            230,
+            219,
+            823,
+            247
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "2. Limitations ",
+        "text_level": 1,
+        "bbox": [
+            212,
+            253,
+            316,
+            267
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss the limitations of the work performed by the authors? ",
+        "bbox": [
+            232,
+            273,
+            803,
+            289
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            295,
+            330,
+            309
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: Yes, in the sense that the method works when scaling $n$ (minibatch size of OT) up to a point. ",
+        "bbox": [
+            230,
+            315,
+            823,
+            343
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "3. Theory assumptions and proofs ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            351,
+            455,
+            364
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof? ",
+        "bbox": [
+            232,
+            371,
+            825,
+            400
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            406,
+            328,
+            420
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: We do not include any proofs. ",
+        "bbox": [
+            233,
+            426,
+            517,
+            441
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "4. Experimental result reproducibility ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            446,
+            482,
+            462
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)? ",
+        "bbox": [
+            232,
+            468,
+            823,
+            510
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            517,
+            328,
+            531
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: All of our experiments rely on config files previously presented in the literature or on simple MLP architectures. ",
+        "bbox": [
+            232,
+            537,
+            823,
+            565
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "5. Open access to data and code ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            571,
+            439,
+            587
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material? ",
+        "bbox": [
+            232,
+            593,
+            825,
+            633
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            641,
+            330,
+            655
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: The data is either synthetically generated or widely available. Our code builds on OTT-JAX and will be released in coming months. ",
+        "bbox": [
+            232,
+            662,
+            823,
+            690
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "6. Experimental setting/details ",
+        "text_level": 1,
+        "bbox": [
+            212,
+            696,
+            429,
+            710
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results? ",
+        "bbox": [
+            232,
+            717,
+            825,
+            758
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            765,
+            330,
+            780
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: We provide details of each experiment in Section 4 and in the Appendices. ",
+        "bbox": [
+            230,
+            786,
+            805,
+            801
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "7. Experiment statistical significance ",
+        "text_level": 1,
+        "bbox": [
+            215,
+            806,
+            472,
+            821
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments? ",
+        "bbox": [
+            230,
+            828,
+            823,
+            856
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [No] ",
+        "bbox": [
+            232,
+            863,
+            325,
+            876
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: Due to the scale of our experiments (each points in our plots is a run takes a single node for a few hours to sometimes a full day) we are not able to report error bars. ",
+        "bbox": [
+            232,
+            883,
+            825,
+            911
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "13 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "415 416 417 418 419 420 421 422 423 424 425 426 427 428 429 430 431 432 433 434 435 436 437 438 439 440 441 442 443 444 445 446 447 448 449 450 451 452 453 454 455 456 457 ",
+        "bbox": [
+            138,
+            98,
+            168,
+            926
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "414 Please look at supplementary material zip file for appendix. ",
+        "bbox": [
+            140,
+            92,
+            563,
+            106
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "8. Experiments compute resources ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            92,
+            457,
+            106
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments? ",
+        "bbox": [
+            232,
+            113,
+            825,
+            155
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            162,
+            330,
+            178
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: We use standard GPU nodes (A100, H100). ",
+        "bbox": [
+            232,
+            184,
+            607,
+            199
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "9. Code of ethics ",
+        "text_level": 1,
+        "bbox": [
+            212,
+            207,
+            333,
+            220
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines? ",
+        "bbox": [
+            230,
+            228,
+            823,
+            256
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            263,
+            330,
+            279
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: We do. ",
+        "bbox": [
+            232,
+            286,
+            367,
+            300
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "10. Broader impacts ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            308,
+            351,
+            321
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed? ",
+        "bbox": [
+            228,
+            329,
+            823,
+            358
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            366,
+            330,
+            380
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: The only societal impact we envision is faster inference time of flow models. ",
+        "bbox": [
+            230,
+            387,
+            821,
+            401
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "11. Safeguards ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            409,
+            313,
+            424
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pretrained language models, image generators, or scraped datasets)? ",
+        "bbox": [
+            232,
+            431,
+            823,
+            472
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            481,
+            328,
+            494
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: We do not see such risks. ",
+        "bbox": [
+            233,
+            502,
+            486,
+            517
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "12. Licenses for existing assets ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            523,
+            419,
+            539
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected? ",
+        "bbox": [
+            232,
+            546,
+            823,
+            588
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            595,
+            328,
+            609
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: We exclusively build on top of OTT-JAX [Cuturi et al., 2022], Diffrax [Kidger, 2021] and Flax [Heek et al., 2024]. ",
+        "bbox": [
+            230,
+            617,
+            825,
+            645
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "13. New assets ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            654,
+            310,
+            666
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets? ",
+        "bbox": [
+            232,
+            675,
+            823,
+            703
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            710,
+            328,
+            724
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: We do not provide any new assets. ",
+        "bbox": [
+            233,
+            732,
+            547,
+            747
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "14. Crowdsourcing and research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            209,
+            753,
+            583,
+            768
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? ",
+        "bbox": [
+            232,
+            776,
+            823,
+            818
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            825,
+            328,
+            840
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: This paper does not involve any crowdsourcing nor research with human subjects. ",
+        "bbox": [
+            232,
+            847,
+            823,
+            876
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "15. Institutional review board (IRB) approvals or equivalent for research with human subjects ",
+        "bbox": [
+            207,
+            882,
+            821,
+            911
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "14 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "458 459 460 461 462 463 464 465 466 467 468 469 470 471 472 473 474 475 476 477 478 479 480 481 482 483 484 485 486 487 488 489 490 491 492 493 494 495 496 497 498 499 500 ",
+        "bbox": [
+            138,
+            94,
+            168,
+            926
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained? ",
+        "bbox": [
+            225,
+            92,
+            825,
+            146
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            154,
+            328,
+            167
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: This paper does not involve any crowdsourcing nor research with human subjects. ",
+        "bbox": [
+            233,
+            174,
+            823,
+            202
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "16. Declaration of LLM usage ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            208,
+            419,
+            223
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe the usage of LLMs if it is an important, original, or non-standard component of the core methods in this research? Note that if the LLM is used only for writing, editing, or formatting purposes and does not impact the core methodology, scientific rigorousness, or originality of the research, declaration is not required. ",
+        "bbox": [
+            232,
+            229,
+            825,
+            285
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            291,
+            328,
+            305
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: This paper does not involve LLMs as any as any important, original, or non-standard components. ",
+        "bbox": [
+            232,
+            313,
+            825,
+            340
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "501 502 503 504 505 506 507 508 509 510 511 512 513 514 515 ",
+        "bbox": [
+            137,
+            87,
+            165,
+            358
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "516 A Appendix / supplemental material ",
+        "text_level": 1,
+        "bbox": [
+            143,
+            89,
+            495,
+            107
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "517 A.1 Sinkhorn   \n518 Here put minimal evidence that dropping norm terms helps with convergence and considering smaller   \n519 ε   \n520 A.2 Sinkhorn Convergence   \n521 A.3 Gaussian Generation   \n522 A.4 Korotin et al. Benchmark Examples   \n523 A.5 Cifar 10 Detailed Results   \n524 A.6 ImageNet32 Detailed Results ",
+        "bbox": [
+            137,
+            113,
+            828,
+            258
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "16 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 15
+    }
+]

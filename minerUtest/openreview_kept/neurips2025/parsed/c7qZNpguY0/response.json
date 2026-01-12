@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768192669401",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:37:49.411839Z",
+    "started_at": 1768192669.4122243,
+    "completed_at": 1768192746.1054466,
+    "error_message": null,
+    "file_info": {
+      "filename": "c7qZNpguY0.pdf",
+      "size": 764651,
+      "md5": "c32e91a53caea538b9c05adba7eaeebb"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 63.82841348648071,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/c32e91a53caea538b9c05adba7eaeebb/results.zip"
+  }
+}

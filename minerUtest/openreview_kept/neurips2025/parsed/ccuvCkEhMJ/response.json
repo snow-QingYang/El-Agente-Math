@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768192750430",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:39:10.507502Z",
+    "started_at": 1768192750.5080159,
+    "completed_at": 1768192839.1256192,
+    "error_message": null,
+    "file_info": {
+      "filename": "ccuvCkEhMJ.pdf",
+      "size": 26645518,
+      "md5": "87a5402425ffbe438696444b0a42df6c"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 77.17712187767029,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/87a5402425ffbe438696444b0a42df6c/results.zip"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768193228375",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:47:08.381828Z",
+    "started_at": 1768193228.3823407,
+    "completed_at": 1768193291.0322301,
+    "error_message": null,
+    "file_info": {
+      "filename": "YqzAsStE6n.pdf",
+      "size": 340344,
+      "md5": "63320ddd961b1f05cd7251797f4c2932"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 61.56168723106384,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/63320ddd961b1f05cd7251797f4c2932/results.zip"
+  }
+}

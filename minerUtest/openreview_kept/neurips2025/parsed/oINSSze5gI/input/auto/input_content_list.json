@@ -1,0 +1,3974 @@
+[
+    {
+        "type": "text",
+        "text": "Towards Robust Heterogeneous Graph Explanations under Structural Perturbations ",
+        "text_level": 1,
+        "bbox": [
+            181,
+            122,
+            818,
+            172
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Anonymous Author(s)   \nAffiliation   \nAddress   \nemail ",
+        "bbox": [
+            423,
+            222,
+            578,
+            276
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Abstract ",
+        "text_level": 1,
+        "bbox": [
+            462,
+            313,
+            535,
+            329
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "1 Explaining the prediction process of Graph Neural Networks (GNNs) is critical for   \n2 enhancing model transparency and trustworthiness. However, real-world graphs are   \n3 predominantly heterogeneous and often suffer from structural noise, which severely   \n4 hampers the reliability of existing explanation methods. To address this challenge,   \n5 we propose RoHeX, a Robust Heterogeneous Graph Neural Network Explainer.   \n6 RoHeX begins with a theoretical analysis of how different heterogeneous GNN   \n7 architectures amplify noise through message passing. To mitigate this effect, we   \n8 introduce a denoising variational inference framework that operates on the graph   \n9 structure to extract robust latent representations. Furthermore, RoHeX incorporates   \n10 heterogeneous edge semantics into the subgraph generation process and formulates   \n11 explanation as an optimization problem under the graph information bottleneck   \n12 principle. This enables RoHeX to generate explanations that are both semantically   \n13 meaningful and structurally robust. Extensive experiments on multiple real-world   \n14 heterogeneous graph datasets demonstrate that RoHeX significantly outperforms   \n15 state-of-the-art baselines in terms of explanation quality and robustness to noise. ",
+        "bbox": [
+            148,
+            344,
+            766,
+            553
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "16 1 Introduction ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            579,
+            310,
+            595
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "17 Graph Neural Networks (GNNs) have emerged as powerful tools for learning from graph-structured   \n18 data, demonstrating strong performance across domains such as social networks [1], citation   \n19 graphs [2], and recommender systems [3]. Despite these successes, GNNs remain largely opaque:   \n20 their predictions are difficult to interpret, which limits their deployment in sensitive domains involving   \n21 fairness, privacy, and security [4, 5].   \n22 To address this, GNN explainers aim to reveal the decision rationale behind model predictions by   \n23 identifying critical substructures. Existing approaches fall into two categories: post-hoc methods [6,   \n24 7, 8], which explain a pretrained model without modifying it, and built-in methods [9, 10, 11], which   \n25 generate explanations during model training. Post-hoc methods are more flexible and generalizable,   \n26 while built-in methods often yield task-specific insights. However, both struggle under complex, noisy   \n27 conditions—especially in heterogeneous graphs, which are the norm in real-world settings [12, 13].   \n28 Heterogeneous graphs, composed of diverse node and edge types, introduce nontrivial challenges.   \n29 Their interwoven semantics and irregular structures complicate subgraph extraction. Moreover,   \n30 real-world graphs commonly exhibit noise such as irrelevant or missing edges, which exacerbate the   \n31 challenges in achieving robust model explainability [14, 15]. The diversity in distributions, attributes,   \n32 and application domains across heterogeneous graphs also limits the generalizability of existing   \n33 explainers. While post-hoc methods offer broader applicability, they remain vulnerable to structural   \n34 irregularities and noise, which can distort the model’s reasoning process. Moreover, noise amplifies   \n35 structural irregularities and shifts node importance, rendering conventional methods that rely on strict   \n36 constraints (e.g., subgraph size, connectivity, or budget) ineffective [16].   \n37 In this paper, we propose RoHeX, a Robust Heterogeneous Graph Neural Network Explainer. First, we   \n38 theoretically analyze how noise amplification occurs in heterogeneous GNNs. Second, we introduce   \n39 a denoising variational inference module that learns robust latent representations by filtering noise in   \n40 the input graph. Third, we design a heterogeneous explanation generator based on relation-aware   \n41 attention, which captures the rich semantics across node and edge types. Finally, by integrating the   \n42 Graph Information Bottleneck (GIB) principle, we reframe explanation as an information-theoretic   \n43 optimization problem to better handle irregular structures. We validate RoHeX’s performance through   \n44 extensive experiments on multiple real-world datasets, demonstrating its superior ability to handle   \n45 noise and generate high-quality explanations compared to state-of-the-art GNN explainers. ",
+        "bbox": [
+            147,
+            611,
+            825,
+            680
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            686,
+            825,
+            770
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            776,
+            825,
+            900
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "Submitted to 39th Conference on Neural Information Processing Systems (NeurIPS 2025). Do not distribute. ",
+        "bbox": [
+            169,
+            922,
+            815,
+            936
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            90,
+            825,
+            217
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "46 The contributions of this paper are as follows: ",
+        "bbox": [
+            153,
+            223,
+            473,
+            237
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "• We present the first systematic analysis of how noise interacts with heterogeneity in GNN explainers, theoretically proving that existing heterogeneous GNNs amplify structural noise and degrade explainability.   \n• We propose RoHeX, a robust heterogeneous GNN explainer that integrates denoising variational inference and a relation-aware explanation generator, effectively modeling heterogeneity while suppressing noise during explanation generation.   \n• Extensive experiments on multiple real-world heterogeneous graphs demonstrate that RoHeX consistently outperforms existing explainers in both explanation fidelity and robustness under noisy conditions. ",
+        "bbox": [
+            217,
+            247,
+            825,
+            385
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "2 Problem Definition ",
+        "text_level": 1,
+        "bbox": [
+            165,
+            404,
+            364,
+            420
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "2.1 Heterogeneous Graph ",
+        "text_level": 1,
+        "bbox": [
+            174,
+            435,
+            366,
+            450
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "A heterogeneous graph, denoted as $\\mathcal { G } = ( \\mathbf { A } , \\mathbf { X } , \\mathbf { \\mathcal { A } } , \\mathcal { R } , \\Phi )$ , encompasses multiple types of nodes $\\nu$ and edges $\\mathcal { E }$ , where $\\mathbf { A }$ is the corresponding adjacency matrix, $\\mathbf { X }$ represents node features, $\\mathcal { A }$ denotes the set of node types, $\\mathcal { R }$ signifies the set of edge types, and $\\Phi$ represents the set of meta-paths. A meta-path $\\phi \\in \\Phi$ is a path of edges connecting various types of nodes from node $v _ { 1 }$ to node $v _ { l + 1 }$ , such as $\\mathcal { A } _ { 1 } \\stackrel { \\mathcal { R } _ { 1 } } { \\longrightarrow } \\mathcal { A } _ { 2 } \\stackrel { \\mathcal { R } _ { 2 } } { \\longrightarrow } \\ldots \\stackrel { \\mathcal { R } _ { l } } { \\longrightarrow } \\mathcal { A } _ { l + 1 }$ , where $l$ denotes the length of the meta-path. The label set of $\\mathcal { G }$ is denoted as $\\mathbf { Y }$ , comprising $\\mathcal { C }$ categories. Meanwhile, a heterogeneous graph has two mapping functions $\\psi ( v ) : \\mathcal { V } \\to \\mathcal { A }$ and $\\varphi ( e ) : \\mathcal { E }  \\mathcal { R }$ that correspond to nodes and edges, respectively. ",
+        "bbox": [
+            171,
+            460,
+            825,
+            564
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "2.2 Heterogeneous Graph Neural Network Explainer ",
+        "text_level": 1,
+        "bbox": [
+            158,
+            579,
+            555,
+            595
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "66 Given a trained GNN model $f$ as the subject of explanation and a heterogeneous graph $\\mathcal { G }$ , the   \n67 objective of the GNN explainer is to identify the most influential subgraph $\\mathcal { G } _ { s } = ( \\mathbf { A } _ { s } , \\mathbf { X } , \\mathbf { \\mathcal { A } } _ { s } , \\mathbf { \\mathcal { R } } _ { s } )$ .   \n68 Here, ${ \\bf A } _ { s }$ represents the adjacency matrix formed by nodes $\\gamma _ { s }$ and $\\mathcal { E } _ { s }$ which significantly contribute   \n69 to prediction. For the original prediction of GNN model $f$ , it can be formalized as follows: ",
+        "bbox": [
+            147,
+            606,
+            826,
+            662
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b110b171729e824c4e37da51c7190dc453ff88ca7ab9b91c57b1a0255e035a7b.jpg",
+        "text": "$$\n\\hat { y } = \\underset { c \\in \\mathcal { C } } { \\operatorname { a r g m a x } } P _ { f } ( c | \\mathbf { A } , \\mathbf { X } , \\mathbf { \\mathcal { A } } , \\mathcal { R } ) ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            392,
+            681,
+            602,
+            708
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "70 where $P _ { f } ( \\cdot )$ represents the prediction function of the GNN model $f$ . Current research indicates   \n71 that graph structural information is crucial for classification tasks [16, 17]. Therefore, our RoHeX   \n72 focuses on exploring structural noise when generating explanations. The excellent explanation should   \n73 contain the most critical information to approximate the predicted labels and outcome changing when   \n74 predicting the remaining part of the original graph, which is as follows: ",
+        "bbox": [
+            147,
+            712,
+            825,
+            784
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2597f3fd30bf6873b047e42c8cfae402d7564c7a758ea45185f325b034d6be07.jpg",
+        "text": "$$\n\\operatorname { a r g m a x } _ { c \\in \\mathcal { C } } P _ { f } \\left( c | \\mathbf { A } _ { s } , \\mathbf { X } , \\mathcal { A } _ { s } , \\mathcal { R } _ { s } \\right) = \\hat { y } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            382,
+            801,
+            616,
+            829
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "75 3 Methodology ",
+        "text_level": 1,
+        "bbox": [
+            147,
+            852,
+            315,
+            869
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "76 Figure 1 illustrates the overall framework of RoHeX. We begin by applying a denoising variational   \n77 graph encoder to obtain a robust latent representation of the input graph $\\mathcal { G }$ . Node embeddings sampled   \n78 from the latent structural distribution are used to construct edge representations. These edge features   \n79 are then fed into a heterogeneous relation-aware attention module, which estimates the importance   \n80 of each edge by modeling the semantics of different edge types. Based on the learned importance   \n81 scores, RoHeX generates a compact and informative explanatory subgraph. Finally, the entire process   \n82 is optimized under the graph information bottleneck objective, which adaptively promotes structural   \n83 sparsity and robustness against irregularities. ",
+        "bbox": [
+            148,
+            882,
+            823,
+            912
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "discarded",
+        "text": "2 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "image",
+        "img_path": "images/fbd93ea4a32de6e28e3deee94d42e2789004f6e80732040d5bf2ea2a7d04555f.jpg",
+        "image_caption": [
+            "Figure 1: The architecture of our proposed RoHeX. First, the denoised node representations are obtained from the noisy graph via denoising variational inference. Then, the Explainer Network employs the heterogeneous relation-based importance computation method to obtain the weights for different edges. The top $k$ percent of edges are selected as important edges to generate the explanatory subgraph. Finally, the generated explanatory subgraph and the original graph are respectively input into heterogeneous GNN models to obtain predictions, which are used to compute the loss function. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            178,
+            90,
+            821,
+            324
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            448,
+            825,
+            534
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "84 3.1 Controllable Structural Perturbation for Heterogeneous Graphs ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            551,
+            658,
+            568
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "85 Real-world graph noise often arises from missing or spurious edges and is typically modeled via   \n86 random edge addition or deletion [18, 19, 20]. Building upon this idea, we introduce a controllable   \n87 and heterogeneous-aware structural perturbation strategy—a heuristic but flexible method designed to   \n88 simulate realistic noise, maintain comparability with prior work, and enable targeted evaluation under   \n89 adversarial or highly irregular settings. Notably, this method can be changed into a graph structure   \n90 attack method to achieve structural corruption. ",
+        "bbox": [
+            145,
+            578,
+            825,
+            662
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "For each edge type 91 $r \\in \\mathcal { R }$ , we define its deletion rate $\\eta _ { r } ^ { + }$ and false addition rate $\\eta _ { r } ^ { - }$ , which represent 92 the probabilities of deleting and adding edges of this type, respectively. The perturbed adjacency $\\tilde { \\mathbf { A } } _ { r }$ 93 for edge type $r$ is generated as: ",
+        "bbox": [
+            147,
+            667,
+            825,
+            713
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/3c1668ba0bb4e0b3585e19412a814204b4fd7b2d29f3d801fe967138366b98f2.jpg",
+        "text": "$$\n\\tilde { \\mathbf { A } } _ { i j } ^ { r } = \\left\\{ \\begin{array} { l l } { 0 } & { \\mathrm { w i t h ~ p r o b a b i l i t y ~ } \\eta _ { r } ^ { + } \\cdot \\frac { d _ { i } ^ { r } + d _ { j } ^ { r } } { 2 \\bar { d } ^ { r } } , } \\\\ { 1 } & { \\mathrm { w i t h ~ p r o b a b i l i t y ~ } \\eta _ { r } ^ { - } \\cdot \\frac { 1 } { d _ { i } ^ { r } + d _ { j } ^ { r } } , } \\\\ { \\mathbf { A } _ { i j } } & { \\mathrm { o t h e r w i s e } , } \\end{array} \\right.\n$$",
+        "text_format": "latex",
+        "bbox": [
+            351,
+            723,
+            643,
+            784
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "94 where $d _ { i } ^ { r }$ is the degree of node $v _ { i }$ under edge type $r$ , and $\\begin{array} { r } { \\bar { d } ^ { r } = \\frac { 1 } { | \\mathcal { V } _ { r } | } \\sum _ { i \\in \\mathcal { V } _ { r } } d _ { i } ^ { r } } \\end{array}$ denotes the average   \n95 degree for type $r$ . This degree-aware perturbation prevents the disproportionate removal of hub-node   \n96 edges and limits unrealistic edge additions, thus preserving key graph structure properties. To control   \n97 the overall noise intensity, we introduce a global noise budget $B$ , representing the total number of   \n98 edges to be perturbed. This budget is allocated across edge types according to their importance   \n99 scores: ",
+        "bbox": [
+            145,
+            792,
+            826,
+            880
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1589530cc33187d2a3db296b115042a2a06a058085bc05a930ff1df3bac0900c.jpg",
+        "text": "$$\nB _ { r } = B \\cdot \\frac { s _ { r } } { \\sum _ { r ^ { \\prime } \\in \\mathcal { R } } s _ { r ^ { \\prime } } } , \\quad \\mathrm { w h e r e ~ } s _ { r } = \\frac { | \\mathcal { E } _ { r } | } { | \\mathcal { E } | } \\cdot \\log | \\mathcal { E } _ { r } | ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            326,
+            880,
+            669,
+            915
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "3 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "100 with $s _ { r }$ capturing both the proportion and diversity of edge type $r$ . We then calibrate the edge   \n101 type-specific perturbation rates: ",
+        "bbox": [
+            147,
+            90,
+            825,
+            119
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/033004097c59347ed41865c732d25e8177226879975829430efc5ec84af562c6.jpg",
+        "text": "$$\n\\eta _ { r } ^ { + } = \\frac { B _ { r } ^ { + } } { | \\mathcal { E } _ { r } | } , \\quad \\eta _ { r } ^ { - } = \\frac { B _ { r } ^ { - } } { | \\mathcal { V } _ { r } | ^ { 2 } - | \\mathcal { E } _ { r } | } , \\quad \\mathrm { s . t . ~ } B _ { r } ^ { + } + B _ { r } ^ { - } = B _ { r } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            308,
+            122,
+            691,
+            157
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "102 Finally, we provide a theoretical analysis showing how degree-aware perturbation impacts node   \n103 connectivity:   \n104 Theorem 3.1 (Degree-Aware Perturbation). For node $v _ { i }$ , its expected perturbed degree $d _ { i } ^ { \\prime }$ under the   \n105 above strategy satisfies: ",
+        "bbox": [
+            150,
+            166,
+            823,
+            195
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            196,
+            826,
+            226
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/86cec5198b5e5d5eaa5c2fe6761003d51b40b21c2937dc6a665b1b96884c77f1.jpg",
+        "text": "$$\nE [ d _ { i } ^ { \\prime } ] = d _ { i } + \\sum _ { r \\in \\mathcal { R } } \\left( \\eta _ { r } ^ { - } \\cdot \\frac { ( | \\mathcal { V } _ { r } | - d _ { i } ^ { r } ) } { d _ { i } ^ { r } + \\bar { d } ^ { r } } - \\eta _ { r } ^ { + } \\cdot \\frac { d _ { i } ^ { r 2 } } { 2 \\bar { d } ^ { r } } \\right) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            326,
+            228,
+            671,
+            270
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "106 ",
+        "bbox": [
+            142,
+            266,
+            160,
+            276
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "By incorporating degree balance constraints and noise budget allocation, our method simulates real-world noise more realistically and preserves the structural properties of the original graph. ",
+        "bbox": [
+            163,
+            287,
+            823,
+            316
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "3.2 Noise Analysis and Denoising Variational Inference ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            330,
+            570,
+            347
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "We investigate the impact of noise on different approaches for Heterogeneous Graph Neural Network (HGNN). We categorize common HGNN into two classes: meta-path-based and neighborhood 12 aggregation-based methods. Meta-path-based methods typically require defining a meta-path $\\phi$ , and 13 then capturing information along different relations following the meta-path structure, aggregating 4 this information, such as Paths2Pair [21] and MAGNET [22]. Neighborhood aggregation-based methods simultaneously consider the neighbor node types and edge types and use specific aggregation 16 functions to combine information from different types. Common neighborhood aggregation methods include MHGCN [23] and Simple-HGN [24]. However, these two categories of methods differ in 8 their efficiency of noise propagation [20], and we find that meta-path-based message passing methods 9 amplify the impact of noise. ",
+        "bbox": [
+            155,
+            356,
+            825,
+            496
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Theorem 3.2 (Noise Amplification Effect in HG). In HG, compared to neighborhood aggregationbased methods, meta-path-based methods can significantly amplify the effect of noisy edges. Specifically, for a node $v _ { i }$ and a newly added noisy edge $e _ { i j }$ , the factor by which its influence changes is $\\frac { d { v _ { i } } + k } { d { v _ { i } } + 1 }$ , where $k$ is the degree of the new neighbor $v _ { j }$ under the noise and $d _ { v _ { i } }$ is the degree of $v _ { i }$ . When $k > d _ { v _ { i } }$ , this factor is significantly greater than 1. ",
+        "bbox": [
+            168,
+            497,
+            825,
+            577
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "125 The complete proof of Theorem 3.2 is provided in Appendix D. Based on Theorem 3.2, we employ a   \n126 neighborhood aggregation method to encode heterogeneous graph and mitigate noise. Given noisy   \n127 graph data $\\tilde { \\mathcal { G } }$ , our objective is to obtain a denoised version of the standard graph data $\\mathcal { G }$ . VGAE [25]   \n128 uses variational inference to derive statistical properties of the graph. The statistical data of latent   \n129 variables in VGAE can be efficiently inferred from the latent space rather than the observation space,   \n130 which provides robust graph information. For the standard graph $\\mathcal { G }$ , it initially generates latent   \n131 variables $\\mathbf { Z }$ from a prior distribution $p ( \\mathbf { Z } )$ , such as a Gaussian distribution $\\mathcal { N } ( \\mu , \\sigma ^ { 2 } )$ . Second, the   \n132 data $\\mathcal { G }$ is generated using a conditional distribution $p ( \\mathcal { G } | \\mathbf { Z } )$ . VGAE optimizes its parameters by   \n133 maximizing the likelihood of the observed data, which as follows: ",
+        "bbox": [
+            140,
+            585,
+            825,
+            712
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/46cc661962fb9711d8e11d1bd3b5ca9f086d16aaa59a6971ded11a0827b663bb.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathrm { K L } ( q _ { \\Psi } ( \\mathbf { Z } | \\mathcal { G } ) | | p _ { \\theta } ( \\mathbf { Z } | \\mathcal { G } ) ) + \\mathcal { L } ( \\Psi , \\theta ; \\mathcal { G } ) , } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            370,
+            715,
+            625,
+            733
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "134 where $\\Psi$ is the encoder and $\\theta$ represents the parameters to be optimized. Then, the evidence lower   \n135 bound $\\mathcal { L } ( \\Psi , \\theta ; \\mathcal { G } )$ can be expressed as follows: ",
+        "bbox": [
+            137,
+            736,
+            828,
+            763
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2f5087570289e4d2a13267b914f59c2d4dd8e82fa75c7b44cfc93511f0a3d898.jpg",
+        "text": "$$\n\\mathcal { L } ( \\Psi , \\theta ; \\mathcal { G } ) = \\mathbb { E } _ { q \\ast ( \\mathbf { Z } | \\mathcal { G } ) } \\left[ \\log \\frac { p _ { \\theta } ( \\mathbf { Z } , \\mathcal { G } ) } { q _ { \\Psi } ( \\mathbf { Z } | \\mathcal { G } ) } \\right] = \\mathbb { E } _ { q \\ast ( \\mathbf { Z } | \\mathcal { G } ) } \\left[ \\log p _ { \\theta } ( \\mathbf { Z } | \\mathcal { G } ) \\right] - \\mathrm { K L } \\left( q _ { \\Psi } ( \\mathbf { Z } | \\mathcal { G } ) \\| p ( \\mathbf { Z } ) \\right) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            192,
+            767,
+            787,
+            803
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "136 Variational inference enhances the model’s robustness and generalization capabilities [26, 27]. How  \n137 ever, due to the differing distributions between noisy heterogeneous graph data and standard graph   \n138 data, the obtained distribution tends to align with the noisy distribution, potentially misleading the   \n139 GNN explainer into generating incorrect explanatory subgraphs. Therefore, we introduce a denoising   \n140 module during the process of variational inference. The original encoder part is modified to: ",
+        "bbox": [
+            140,
+            810,
+            826,
+            881
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5183dfd4ced25a7eec7ccd852519b4dc59cb761cc4e11e0b011460186aced109.jpg",
+        "text": "$$\nq _ { \\Psi } ^ { \\prime } ( \\mathbf { Z } | \\mathcal { G } ) = \\int q _ { \\Psi } ( \\mathcal { G } | \\tilde { \\mathcal { G } } ) q ( \\tilde { \\mathcal { G } } | \\mathcal { G } ) \\mathrm { d } \\tilde { \\mathcal { G } } ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            383,
+            883,
+            612,
+            916
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "4 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where 141 $\\Psi$ is the encoder based on $\\tilde { \\mathcal { G } }$ , and $\\begin{array} { r } { q ( \\tilde { \\mathcal { G } } | \\mathcal { G } ) = \\prod _ { r \\in \\mathcal { R } } q ( \\tilde { \\mathbf { A } } _ { r } | \\mathbf { A } _ { r } ) } \\end{array}$ . During this process, the 142 evidence lower bound is expressed as: ",
+        "bbox": [
+            145,
+            88,
+            825,
+            119
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/29f37059aa15a93942bfd3ec84466f773c5d7a10b4ae1f4090ec42c148bd234a.jpg",
+        "text": "$$\n\\mathcal { L } _ { d } = \\mathbb { E } _ { q _ { \\Psi } ^ { \\prime } ( \\mathbf { Z } | \\mathcal { G } ) } [ \\log \\frac { p _ { \\theta } ( \\mathbf { Z } , \\mathcal { G } ) } { q _ { \\Psi } ^ { \\prime } ( \\mathbf { Z } | \\mathcal { G } ) } ] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            398,
+            126,
+            599,
+            160
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "As we need to derive the distribution of the noisy graph data 143 $\\tilde { \\mathcal { G } }$ , this lower bound can be further 144 refined as: ",
+        "bbox": [
+            142,
+            167,
+            826,
+            196
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2c088bee3fb33a2d54e0477250a77e9ecdbc09e5a5b6713acc8d0118bdb103d3.jpg",
+        "text": "$$\n\\begin{array} { r l r } & { } & { \\mathcal { L } _ { d } = \\mathbb { E } _ { q _ { \\Psi } ^ { \\prime } ( { \\bf Z } | \\mathcal { G } ) } [ \\log \\frac { p _ { \\theta } ( { \\bf Z } , \\mathcal { G } ) } { q _ { \\Psi } ^ { \\prime } ( { \\bf Z } | \\mathcal { G } ) } ] \\geq \\mathbb { E } _ { q _ { \\Psi } ^ { \\prime } ( { \\bf Z } | \\mathcal { G } ) } \\left[ \\log \\frac { p _ { \\theta } ( \\mathcal { G } , { \\bf Z } ) } { q _ { \\Psi } ( { \\bf Z } | \\tilde { \\mathcal { G } } ) } \\right] } \\\\ & { } & { = \\mathbb { E } _ { q _ { \\Psi } ^ { \\prime } ( { \\bf Z } | \\mathcal { G } ) } [ \\log p _ { \\theta } ( \\mathcal { G } | { \\bf Z } ) ] - \\mathbb { E } _ { q \\left( \\tilde { \\mathcal { G } } | \\mathcal { G } \\right) } [ \\mathrm { K L } ( q _ { \\Psi } ( { \\bf Z } | \\tilde { \\mathcal { G } } ) ) | | p ( { \\bf Z } ) ] . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            303,
+            199,
+            694,
+            262
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "145 The detailed derivation is in the Appendix E. Compared to VGAE, the denoising variational inference   \n146 models the posterior probability $p ( \\mathbf { Z } | \\mathcal { G } )$ using a Gaussian Mixture Model, whereas VGAE models   \n147 $p ( \\mathbf { Z } | \\mathcal { G } )$ using a Gaussian distribution. Additionally, during the optimization process, there is a   \n148 constraint that forces $q _ { \\Psi } ( \\mathbf { Z } | \\tilde { \\mathcal { G } } )$ to approximate the standard Gaussian distribution $p ( \\mathbf { Z } )$ . Consequently,   \n149 our method can significantly improve the model’s robustness and produce high-quality graph data.   \n150 We further employ the Monte Carlo sampling method to approximate the objective, which can be   \n151 effectively optimized using gradient descent as follows: ",
+        "bbox": [
+            140,
+            265,
+            826,
+            366
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4e51ce4140539c031fe971054642bac6f5a81ca63763f0a916780c4ead8e92b7.jpg",
+        "text": "$$\n\\mathcal { L } _ { d } \\approx \\frac { 1 } { K } \\sum _ { k = 1 } ^ { K } \\sum _ { r \\in \\mathcal { R } } \\log \\frac { p _ { \\theta } ( \\mathcal { G } _ { r } , \\mathbf { Z } ) } { q _ { \\Psi } ( \\mathbf { Z } | \\tilde { \\mathcal { A } } _ { r } ) } ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            388,
+            372,
+            607,
+            416
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "152 where $K$ is the number of samples sampled during the simulation. After denoising variational infer  \n153 ence, we input the sampled robust representations $\\mathbf { Z }$ into the Heterogeneous Explanation Generator,   \n154 where the complex semantics on the heterogeneous graph are learned. Before delving into that, we   \n155 introduce the Graph Information Bottleneck. ",
+        "bbox": [
+            142,
+            421,
+            825,
+            478
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "3.3 Graph Information Bottleneck ",
+        "text_level": 1,
+        "bbox": [
+            161,
+            493,
+            426,
+            508
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "157 As mentioned in the introduction, noise exacerbates the irregularity of graph structures and alters node   \n158 importance. Therefore, previous methods imposing structural regularity constraints on explanatory   \n159 subgraphs are infeasible under noise influence. We exploit the Graph Information Bottleneck (GIB)   \n160 to enable the explainer network to adaptively handle structural irregularities. The objective of GIB   \n161 is to obtain the optimal explanatory subgraph $\\mathcal { G } _ { s }$ . From an information-theoretic perspective, GIB   \n162 limits the amount of information carried by the explanatory subgraph $\\mathcal { G } _ { s }$ , rather than imposing   \n163 simple structural constraints. Simultaneously, nodes may require scattered edges across the graph to   \n164 jointly explain their predictive function, rather than constraining connectedness. Consequently, GIB   \n165 adaptively explores the entire graph without imposing any potentially biased restrictions. GIB can be   \n166 formulated as: ",
+        "bbox": [
+            140,
+            518,
+            825,
+            656
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/fd8040f45301506d4907129e9fad1f5d9966eeb8c626da9cf4daeb5786f4c3a4.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { \\mathcal { G } _ { s } \\subset G } - \\operatorname { I } ( \\hat { y } ; \\mathcal { G } _ { s } ) + \\beta \\operatorname { I } ( \\mathcal { G } ; \\mathcal { G } _ { s } ) ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            398,
+            655,
+            598,
+            679
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "167 where $\\operatorname { I } ( \\cdot ; \\cdot )$ denotes mutual information, and $\\beta$ controls the trade-off between the two terms. Since   \n168 the information in $\\mathcal { G } _ { s }$ can be continually optimized, the explain task can be characterized as an   \n169 optimization task guided by GIB.   \n170 The GIB principle aims to obtain the minimum sufficient information about the graph $\\mathcal { G }$ . The first   \n171 term maximizes the mutual information between the label and the explanatory subgraph, ensuring $\\mathcal { G } _ { s }$   \n172 contains as much information about the label as possible. The second term minimizes the mutual   \n173 information between the input graph and the explanatory subgraph, ensuring $\\mathcal { G } _ { s }$ contains the minimum   \n174 information about the input graph. Next, we introduce the Heterogeneous Explanation Generator,   \n175 describing how each term is optimized during training under the GIB principle. ",
+        "bbox": [
+            142,
+            681,
+            825,
+            724
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            729,
+            825,
+            815
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "176 3.4 Heterogeneous Explanation Generator ",
+        "text_level": 1,
+        "bbox": [
+            142,
+            830,
+            482,
+            845
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "177 We begin by modeling the explanatory subgraph as a Gilbert random graph [28], where edges are   \n178 conditionally independent. Following the literature [16], we define an adjacency matrix-like edge   \n179 matrix $E _ { s }$ , where each element $e _ { i j }$ is a binary variable indicating whether the edge is included in the   \n180 subgraph. When there is an edge $( i , j )$ from $v _ { i }$ to $v _ { j }$ , $e _ { i j } = 1$ , otherwise $e _ { i j } = 0$ .   \n181 To capture the rich semantics of heterogeneous graphs, pairwise node interactions alone are in  \n182 sufficient. Thus, we incorporate heterogeneous semantics learning into the explanatory subgraph   \n183 generation process. We incorporate heterogeneous edge type information into the attention compu  \n184 tation by extending the standard graph attention mechanism. Specifically, we assign an edge type   \n185 embedding $\\mathbf { r } _ { \\varphi ( e ) }$ for each edge type $\\varphi ( e )$ , and simultaneously utilize the edge type embeddings and   \n186 node embeddings to compute the attention coefficient $\\alpha _ { i j }$ : ",
+        "bbox": [
+            142,
+            854,
+            825,
+            912
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "5 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            90,
+            826,
+            175
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/020afcb978a20bd32ce8d3fa5d8e42a0325c3c4e2aad13c55d34cb19bd84e64f.jpg",
+        "text": "$$\n\\alpha _ { i j } = \\frac { \\exp { \\left( \\mathrm { R e L U } \\left( { \\pmb a } ^ { T } [ \\pmb { W } z _ { i } \\vert \\vert \\pmb { W } z _ { j } \\vert \\vert \\pmb { W } _ { r } \\pmb { r } _ { \\varphi ( e _ { i j } ) } ] \\right) \\right)}  } { \\sum _ { k \\in \\mathcal { N } _ { i } } \\exp { \\left( \\mathrm { R e L U } \\left( { \\pmb a } ^ { T } [ \\pmb { W } z _ { i } \\vert \\vert \\pmb { W } z _ { k } \\vert \\vert \\pmb { W } _ { r } \\pmb { r } _ { \\varphi ( e _ { i k } ) } ] \\right) \\right) } } ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            299,
+            179,
+            697,
+            219
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "187 where $W _ { r }$ is a learnable weight matrix for type embeddings. Edge type embedding is a one-hot   \n188 encoding derived from each edge type. This attention coefficient $\\alpha _ { i j }$ integrates both heterogeneous   \n189 node and edge type semantics, offering a more comprehensive representation.   \n190 Next, we define the heterogeneous random graph variable. The probability of the heterogeneous   \n191 explanatory subgraph can be factorized as: ",
+        "bbox": [
+            142,
+            222,
+            825,
+            263
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            270,
+            826,
+            297
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/283ce813387e90bd8a5ca5707483af8427e32bf2bbc86562eb174ea7d5cea760.jpg",
+        "text": "$$\np ( \\mathcal { G } ) = \\prod _ { ( i , j ) \\in E _ { s } } p ( e _ { i j } | \\varphi ( e _ { i j } ) ) ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            398,
+            301,
+            598,
+            339
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "192 where $e _ { i j } \\ \\sim \\ \\mathrm { B e r n } ( \\pi _ { i j } )$ and $\\pi _ { i j }$ is the edge existence probability inferred via $\\alpha _ { i j }$ . To enable   \n193 backpropagation through discrete edge selections, we adopt the reparameterization trick using a   \n194 hard-concrete relaxation: ",
+        "bbox": [
+            142,
+            342,
+            825,
+            385
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/6cf4909db1060c81b4c1e61f88ba8efa4b8a58210621058eeaff7e99e2cb9b1d.jpg",
+        "text": "$$\ne _ { i j } = \\mathrm { S i g m o i d } \\Big ( \\frac { \\log { \\epsilon } - \\log ( 1 - \\epsilon ) + \\alpha _ { i j } ( \\varphi ( e _ { i j } ) ) } { \\tau } \\Big ) ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            326,
+            386,
+            669,
+            436
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "195 where $\\tau$ is a temperature coefficient to smooth the optimization, and $\\alpha _ { i j }$ from Eq. 13 adds heteroge  \n196 neous information into the explanatory subgraph. When $\\begin{array} { r } { \\alpha _ { i j } = \\log \\frac { \\pi _ { i j } } { 1 - \\pi _ { i j } } } \\end{array}$ , we have $\\begin{array} { r } { \\operatorname* { l i m } _ { \\tau \\to 0 } p ( e _ { i j } = } \\end{array}$   \n197 $\\begin{array} { r } { 1 ) = \\frac { \\exp ( \\alpha _ { i j } ) } { 1 + \\exp ( \\alpha _ { i j } ) } } \\end{array}$ , so we can obtain the explanatory subgraph $\\mathcal { G } _ { s }$ since $p ( e _ { i j } = 1 ) = \\pi _ { i j }$ . ",
+        "bbox": [
+            142,
+            439,
+            826,
+            492
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "This results in a continuous probability matrix 198 $\\mathbf { M _ { p } } \\in \\mathbb { R } ^ { N \\times N }$ , where each entry $[ \\mathbf { M _ { p } } ] _ { i j } = \\pi _ { i j }$ 99 denotes the likelihood of including edge $( i , j )$ . We then construct the soft explanatory subgraph: ",
+        "bbox": [
+            153,
+            497,
+            826,
+            529
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1128664d32ea98cdefbe2410ec87cf83fecedc83f165244745b7d8912a75fe57.jpg",
+        "text": "$$\n\\mathcal { G } _ { s } = ( \\mathbf { A _ { s } } = \\mathbf { M _ { p } } \\odot \\mathbf { A } , \\mathbf { X } , \\mathbf { \\mathcal { A } } _ { s } , \\mathcal { R } _ { s } ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            379,
+            531,
+            617,
+            549
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "00 To optimize the explainer, we adopt the Graph Information Bottleneck (GIB) principle, balancing   \n01 predictive fidelity and information compression. The GIB objective 12 is upper-bounded as: ",
+        "bbox": [
+            148,
+            553,
+            825,
+            582
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ee2ab768fd5f82373702d1e3b407845bff4e81e317b84f371cff718511783c80.jpg",
+        "text": "$$\n\\begin{array} { r } { - \\operatorname { I } ( \\widehat { y } ; \\mathcal { G } _ { s } ) + \\beta \\operatorname { I } ( \\mathcal { G } ; \\mathcal { G } _ { s } ) \\leq - \\mathbb { E } _ { p ( \\mathcal { G } _ { s } , \\widehat { y } ) } \\big [ \\log p _ { f } ( \\widehat { y } | \\mathcal { G } _ { s } ) \\big ] + \\operatorname { H } ( \\widehat { y } ) + \\beta \\mathbb { E } _ { p ( \\mathcal { G } ) } \\big [ \\mathrm { K L } ( p _ { \\alpha } ( \\mathcal { G } _ { s } | \\mathcal { G } ) | | q ( \\mathcal { G } _ { s } ) ) \\big ] , } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            179,
+            584,
+            789,
+            604
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "02 where $f$ is the GNN model and $\\alpha$ is the explain model, see Appendix E for detailed derivation. Since $\\mathrm { H } ( \\hat { y } )$ is constant, the objective function can be expressed as follows: ",
+        "bbox": [
+            156,
+            606,
+            825,
+            635
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/021ab55b858a6d18246961791d3c67f7b22f31704edc384cc5caef2b71bd4625.jpg",
+        "text": "$$\n\\mathcal { L } _ { G I B } = - \\mathbb { E } _ { p ( \\mathcal { G } _ { s } , \\hat { y } ) } \\left[ \\log p _ { f } ( \\hat { y } | \\mathcal { G } _ { s } ) \\right] + \\beta \\mathbb { E } _ { p ( \\mathcal { G } ) } \\left[ \\mathrm { K L } ( p _ { \\alpha } ( \\mathcal { G } _ { s } | \\mathcal { G } ) | | q ( \\mathcal { G } _ { s } ) ) \\right] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            267,
+            638,
+            727,
+            659
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "204 The total loss combines the GIB objective with the denoising loss from the variational graph encoder: ",
+        "bbox": [
+            140,
+            660,
+            820,
+            676
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/04ce4cf40e7b345ffdf833cd59aacc96baceb11317851ae90b55936cc0a5a04f.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathcal { L } = \\mathcal { L } _ { d } + \\mathcal { L } _ { G I B } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            439,
+            680,
+            558,
+            696
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "205 3.5 Complexity Analysis. ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            710,
+            361,
+            726
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "206 The cost of each iteration comprises two parts: (1) the variational inference process and (2) the   \n207 heterogeneous explanation generation. The time complexity of the first step is $\\Dot { O } ( N ^ { 2 } + E )$ , and the   \n208 space complexity is $O ( N )$ , as this step requires storing the robust node representations. The time   \n209 complexity of the second step is $O ( E )$ , and the space complexity is $O ( E )$ . Therefore, the overall   \n210 time complexity of RoHeX is $O ( N ^ { 2 } + E )$ , and the space complexity is ${ \\dot { O } } ( N + E )$ . ",
+        "bbox": [
+            140,
+            736,
+            825,
+            806
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "211 4 Experiment ",
+        "text_level": 1,
+        "bbox": [
+            142,
+            824,
+            303,
+            842
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "212 In this section, we evaluate the performance of the proposed RoHeX and state-of-the-art baselines on   \n213 the node classification task. We then analyze the contributions of different components of RoHeX and   \n214 demonstrate why RoHeX is robust to noise and capable of generating explanations that incorporate   \n215 heterogeneous information. ",
+        "bbox": [
+            140,
+            854,
+            825,
+            911
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "discarded",
+        "text": "6 ",
+        "bbox": [
+            493,
+            936,
+            504,
+            946
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "table",
+        "img_path": "images/c311b4f299834337270c7866cb0eb6dca9d725793222ae15a898eee29ce2d80a.jpg",
+        "table_caption": [
+            "Table 1: The comparison of RoHeX and baselines under different ratios of random structural noise. We use bold font to mark the best score. The second best score is marked with underline. "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Dataset</td><td>Metric</td><td>Noise</td><td>PGExplainer</td><td>GNNExplainer</td><td>PGM-Explainer</td><td>V-InfoR</td><td>AMExplainer</td><td>Hete-PGE</td><td>xPath</td><td>RoHeX</td></tr><tr><td rowspan=\"8\"></td><td rowspan=\"4\">MAE</td><td>10%</td><td>1.2158±0.0062</td><td>0.8530±0.0009</td><td>1.0704±0.0007</td><td>1.1930±0.0030</td><td>1.4862±0.0026</td><td>0.8719±0.0008</td><td>0.8162±0.0032</td><td>0.8359±0.0029</td></tr><tr><td>20%</td><td>1.2179±0.0089</td><td>0.9080±0.0007</td><td>1.2046±0.0006</td><td>1.1960±0.0025</td><td>1.5697±0.0008</td><td>0.8896±0.0005</td><td>0.9651±0.0042</td><td>0.8743±0.0018</td></tr><tr><td>30%</td><td>1.2449±0.0059</td><td>1.2613±0.0011</td><td>1.3313±0.0002</td><td>1.2312±0.0026</td><td>1.7133±0.0006</td><td>1.1913±0.0006</td><td>1.1405±0.1032</td><td>0.8827±0.0034</td></tr><tr><td>40%</td><td>1.2451±0.0068</td><td>1.3389±0.0008</td><td>1.3401±0.0005</td><td>1.2530±0.0010</td><td>1.9345±0.0005</td><td>0.9268±0.0006</td><td>1.2852±0.0002</td><td>0.9014±0.0015</td></tr><tr><td></td><td>10%</td><td>1.6775±0.0054</td><td>1.2968±0.0006</td><td>1.3855±0.0005</td><td>1.6481±0.0027</td><td>1.9219±0.0048</td><td>1.2814±0.0004</td><td>1.3175±0.0020</td><td>1.2416±0.0017</td></tr><tr><td>DBLP RMSE</td><td>20%</td><td>1.6815±0.0666</td><td>1.3072±0.0004</td><td>1.5280±0.0003</td><td>1.6511±0.0020</td><td>2.0419±0.0006</td><td>1.2859±0.0002</td><td>1.4341±0.0025</td><td>1.2750±0.0013</td></tr><tr><td></td><td>30%</td><td>1.6999±0.0024</td><td>1.8470±0.0007</td><td>1.6497±0.0001</td><td>1.6781±0.0020</td><td>2.1842±0.0003</td><td>1.6532±0.0003</td><td>1.5752±0.1198</td><td>1.2792±0.0022</td></tr><tr><td rowspan=\"8\"></td><td>40%</td><td>1.7060±0.0042</td><td>1.9043±0.0004</td><td>1.6681±0.0001</td><td>1.6885±0.0008</td><td>2.3616±0.0002</td><td>1.3100±0.0004</td><td>1.6819±0.0001</td><td>1.2889±0.0008</td></tr><tr><td>10%</td><td>0.7624±0.0080</td><td>0.3449±0.0003</td><td>0.2155±0.0009</td><td>0.7639±0.0001</td><td>0.3895±0.0005</td><td>0.8091±0.0003</td><td>0.3900±0.0001</td><td>0.2129±0.0009</td></tr><tr><td>20%</td><td>0.7751±0.0162</td><td>0.3951±0.0001</td><td>0.3732±0.0003</td><td>0.7913±0.0004</td><td>0.6746±0.0224</td><td>0.8183±0.0005</td><td>0.3985±0.0003</td><td>0.2483±0.0010</td></tr><tr><td rowspan=\"5\">MAE ACM</td><td>30%</td><td>0.7867±0.0152</td><td>0.5087±0.0003</td><td>0.5932±0.0006</td><td>0.8064±0.0003</td><td>0.7077±0.0221</td><td>0.8220±0.0002</td><td>0.4164±0.0012</td><td>0.3140±0.0019</td></tr><tr><td>40%</td><td>0.7913±0.0181</td><td>0.6496±0.0002</td><td>0.7932±0.0007</td><td>0.8154±0.0005</td><td>0.7181±0.0164</td><td>0.8310±0.0001</td><td>0.4292±0.0006</td><td></td></tr><tr><td>10%</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>0.3163±0.0015</td></tr><tr><td>20%</td><td>1.0258±0.0037</td><td>0.6831±0.0005</td><td>0.5121±0.0004</td><td>1.0145±0.0002</td><td>0.6241±0.0003</td><td>1.0740±0.0001</td><td>0.7750±0.0002</td><td>0.5662±0.0012</td></tr><tr><td>30%</td><td>1.0307±0.0069</td><td>0.7791±0.0002</td><td>0.6893±0.0002</td><td>1.0366±0.0004</td><td>0.8213±0.0649</td><td>1.0778±0.0004</td><td>0.7458±0.0003</td><td>0.6177±0.0008</td></tr><tr><td rowspan=\"8\">Freebase</td><td>RMSE</td><td></td><td>1.0423±0.0127</td><td>0.9506±0.0001</td><td>0.8793±0.0004</td><td>1.0705±0.0007</td><td>0.8412±0.0698</td><td>1.0731±0.0001</td><td>0.7768±0.0009</td><td>0.6669±0.0013</td></tr><tr><td></td><td>40%</td><td>1.0431±0.0124</td><td>1.1306±0.0002</td><td>1.0766±0.0004</td><td>1.0786±0.0003</td><td>0.8474±0.0713</td><td>1.0856±0.0001</td><td>0.8396±0.0007</td><td>0.6909±0.0008</td></tr><tr><td></td><td>10%</td><td>0.7189±0.0096</td><td>0.9012±0.0002</td><td>0.9190±0.0003</td><td>0.5957±0.0322</td><td>0.9312±0.0004</td><td>0.7760±0.0007</td><td>0.9006±0.0127</td><td>0.3885±0.0010</td></tr><tr><td>MAE</td><td>20% 30%</td><td>0.7237±0.0078</td><td>0.9108±0.0003</td><td>0.9401±0.0001</td><td>0.6822±0.0527 0.7249±0.0329</td><td>0.9709±0.1209</td><td>0.7812±0.0005</td><td>0.9247±0.0092</td><td>0.4441±0.0012</td></tr><tr><td></td><td>40%</td><td>0.7285±0.0041</td><td>0.9126±0.0003 0.9378±0.0007</td><td>0.9530±0.0004</td><td>0.7894±0.0111</td><td>1.0089±0.1651 1.0531±0.0005</td><td>0.7908±0.0003 0.8030±0.0001</td><td>0.9263±0.0043 0.9301±0.0061</td><td>0.4694±0.0021</td></tr><tr><td></td><td>10%</td><td>0.7370±0.0019</td><td>1.2886±0.0001</td><td>0.9587±0.0009 1.2432±0.0001</td><td>1.0375±0.0233</td><td>1.2589±0.0004</td><td>1.1064±0.0003</td><td></td><td>0.4880±0.0014</td></tr><tr><td></td><td>20%</td><td>1.0616±0.0071 1.0635±0.0051</td><td>1.2983±0.0002</td><td>1.2549±0.0001</td><td>1.1172±0.0566</td><td>1.2987±0.1848</td><td>1.1117±0.0004</td><td>1.2466±0.0056 1.2435±0.0108</td><td>0.8251±0.0018</td></tr><tr><td>RMSE</td><td>30%</td><td>1.0689±0.0039</td><td>1.2995±0.0002</td><td>1.2747±0.0002</td><td>1.1487±0.0277</td><td>1.3391±0.2381</td><td>1.1200±0.0002</td><td></td><td>0.8854±0.0010</td></tr><tr><td></td><td></td><td>40%</td><td>1.0803±0.0018</td><td>1.3217±0.0005</td><td>1.2838±0.0004</td><td>1.1929±0.0054</td><td>1.3830±0.0004</td><td>1.1315±0.0001</td><td>1.2721±0.0034 1.2643±0.0072</td><td>0.9035±0.0012 0.9217±0.0007</td></tr></table>",
+        "bbox": [
+            174,
+            125,
+            826,
+            318
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "216 4.1 Experiment Settings ",
+        "text_level": 1,
+        "bbox": [
+            140,
+            343,
+            356,
+            358
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "217 Datasets and Baselines. We evaluate the effectiveness of our RoHeX on three real-world datasets,   \n218 including two academic citation datasets (DBLP and ACM) and a knowledge graph dataset (Freebase).   \n219 Since there are no existing robust heterogeneous explainer, we select three types of baselines: the   \n220 surrogate method PGM-Explainer, the perturbation-based methods GNNExplainer, PGExplainer and   \n221 AMExplainer, and the V-infor method studying robustness on homogeneous graphs. We used the   \n222 heterogeneous graph path explainer, xPath, and extended our Heterogeneous Explanation Generator   \n223 to PGExplainer, referred to as Hete-PGE, for comparison. ",
+        "bbox": [
+            142,
+            368,
+            826,
+            465
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Evaluation. The evaluation of explainer performance is based on the generated explanatory subgraphs, assessing their contribution to the original prediction. We adopt two metrics: fidelity and sparsity. Fidelity measures the decrease in prediction confidence after removing the explanation from the input graph, while sparsity measures the ratio of remaining edges in the explanatory subgraph $\\mathcal { G } _ { s }$ relative to the input graph. We use the Mean Absolute Error (MAE, $\\begin{array} { r } { \\frac { 1 } { N } \\sum _ { i = 1 } ^ { N } \\Big | \\mathbb { I } ( \\hat { y } _ { i } = y _ { i } ) - \\mathbb { I } ( \\hat { y } _ { i } ^ { \\mathcal { G } _ { s } } = y _ { i } ) \\Big | ) } \\end{array}$ , and Root Mean Squared Error (RMSE, $\\begin{array} { r } { \\sqrt { \\frac { 1 } { N } \\sum _ { i = 1 } ^ { N } \\Big ( \\mathbb { I } ( \\hat { y } _ { i } = y _ { i } ) - \\mathbb { I } ( \\hat { y } _ { i } ^ { \\mathcal { G } _ { s } } = y _ { i } ) \\Big ) ^ { 2 } } ; } \\end{array}$ ) as proxy measures for fidelity, and compare the performance of different baselines across varying sparsity levels, where $N$ is the number of nodes or graphs, $\\hat { y } _ { i }$ is the original prediction result, and $\\hat { y } _ { i } ^ { \\mathcal { G } _ { s } }$ is the prediction result obtained by the explanatory subgraph. ",
+        "bbox": [
+            158,
+            479,
+            826,
+            635
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Implementation Details. We conduct experiments under different proportions of random noise scenarios. Noise is added to both the training set and the test set to restore the real scene. To ensure randomness, the deletion rate and false addition rate are set to be equal. For the baselines, we select the best-performing parameters for heterogeneous datasets based on the original settings. We chose the most basic HGNN architecture, which only includes GCN [29] and relational learning modules, as the base model for fair comparison. For our RoHeX, we use Adam as the optimizer with a learning rate of 1e-4. We set the hidden dimension for variational inference to 64, the output dimension to 32, and the edge weight output dimension to 32. Each experiment is repeated 5 times, and we report the mean and variance as the results. Descriptions of the variance, datasets, baselines, base HGNN model architecture, and parameter settings are provided in the Appendix F. ",
+        "bbox": [
+            171,
+            647,
+            825,
+            786
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "4.2 Overall Performance under Structural Perturbations ",
+        "text_level": 1,
+        "bbox": [
+            166,
+            803,
+            581,
+            818
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Table 1 shows the experimental results on the heterogeneous graphs with different budgets of structural perturbations. We find that RoHeX outperforms other baselines in most experimental results, achieving the best performance on the DBLP and Freebase datasets. Taking $30 \\%$ noise ratio as an example, RoHeX shows $2 5 . 9 \\%$ lower MAE and $2 2 . 4 \\%$ lower RMSE than the second-best method on the DBLP dataset, $3 8 . 2 \\%$ lower MAE and $2 4 . 1 \\%$ lower RMSE on the ACM dataset, and $3 5 . 2 \\%$ lower MAE and $1 5 . 4 \\%$ lower RMSE on the Freebase dataset. xPath performs excellently in multiple ",
+        "bbox": [
+            173,
+            828,
+            823,
+            911
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "7 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "image",
+        "img_path": "images/8cc90b11d44a0301adb7c8bae9e889891a548d2932b8d526530cd401552ec91f.jpg",
+        "image_caption": [
+            "Figure 2: Fidelity-Sparsity Curve on the DBLP dataset. The first row is the result without noise, and the second row is the result with $20 \\%$ noise budget. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            173,
+            88,
+            485,
+            306
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "image",
+        "img_path": "images/df211aaefe6599a40b9b16cc4f4080abc2e7e7c21b46335116dc8902c5dfd7ee.jpg",
+        "image_caption": [
+            "Figure 3: Ablation study on three datasets and the influence of hyperparameters $\\tau$ and $\\beta$ on RoHeX. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            514,
+            103,
+            820,
+            304
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "250 scenarios, indicating that designing corresponding modules for heterogeneous graphs is essential. We   \n251 can observe that Hete-PGE achieves second best performance multiple times on the DBLP dataset   \n252 and outperforms many baselines on other datasets, demonstrating the effectiveness of our proposed   \n253 heterogeneous explanation generator in considering rich semantics on heterogeneous graphs. Due   \n254 to the similar edge type distribution in the DBLP dataset, the dataset exhibits higher heterogeneity,   \n255 which enhances the module’s ability to capture heterogeneous information. Simultaneously, as a   \n256 plug-and-play module, it can be conveniently extended to other parameterized explanation methods   \n257 for generating explanations on heterogeneous graphs. On the medium and small-scale datasets DBLP   \n258 and ACM, explanation methods based on raw features (e.g., GNNExplainer) are more susceptible   \n259 to noise, potentially because raw features are more easily affected in smaller graphs. Since RoHeX   \n260 generates robust graph representations, it can better mitigate the influence of noise, which is also why   \n261 the latent representation-based explainer V-InfoR performs well in multiple scenarios. Under the   \n262 guidance of GIB, our method can adaptively select important edges while excluding redundant and   \n263 noisy edges, thereby generating the best explanations for the prediction model. ",
+        "bbox": [
+            140,
+            398,
+            825,
+            594
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "4.3 Fidelity-Sparsity Analysis ",
+        "text_level": 1,
+        "bbox": [
+            169,
+            609,
+            392,
+            623
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Next, we further investigate RoHeX’s performance at different sparsity levels. We provide the Fidelity-Sparsity curve on the DBLP dataset as shown in Figure 2. RoHeX consistently outperforms other baselines across all sparsity levels, indicating that our method can generate the best explanations. As the sparsity increases from 0 to 1, the overall trend of all curves is downward, i.e., decreasing error. When the sparsity is extremely low, e.g., $10 \\%$ , our method significantly outperforms other baselines, suggesting that RoHeX can identify the truly critical subgraphs. We further find that although the overall performance improves as the sparsity level increases, there are still some cases where the performance drops with increasing sparsity, such as PGExplainer. We conjecture that this may be because in the subgraph generation process, when the sparsity increases to a point where all edges with high importance scores have been selected, forcing higher sparsity will begin to select unimportant edges, which can be viewed as noisy edges, leading to degraded performance. As the sparsity continues to increase, this adverse effect is offset. Since AMExplainer and xPath contain specific Sparsity settings to generate explanations, they were not included in the experiment. ",
+        "bbox": [
+            171,
+            633,
+            825,
+            814
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "78 4.4 Model Analysis ",
+        "text_level": 1,
+        "bbox": [
+            155,
+            830,
+            320,
+            844
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Perturbation Performance We analyze the perturbation performance of controllable structural perturbation for heterogeneous graphs under different noise scenarios, as shown in Table 2. Compared to the original results, our structural perturbation method significantly impacts the decision-making process of HGNN on the whole graph (Noisy), 1-hop subgraph (1-hop), and 2-hop subgraph (2-hop). ",
+        "bbox": [
+            173,
+            856,
+            825,
+            911
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            493,
+            936,
+            503,
+            946
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "table",
+        "img_path": "images/34b0eff21a6659846192944ad86a51b98620a9d846489be510d64ee75e56297b.jpg",
+        "table_caption": [
+            "Table 2: Prediction performance of HGNN in different noise scenarios. "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td rowspan=\"2\">Dataset</td><td rowspan=\"2\">Method</td><td colspan=\"2\">10%</td><td colspan=\"2\">20%</td><td colspan=\"2\">30%</td><td colspan=\"2\">40%</td></tr><tr><td>Micro-F1</td><td>Macro-F1</td><td>Micro-F1</td><td>Macro-F1</td><td>Micro-F1</td><td>Macro-F1</td><td>Micro-F1</td><td>Macro-F1</td></tr><tr><td rowspan=\"4\">DBLP</td><td>Original</td><td>92.64</td><td>92.16</td><td>92.64</td><td>92.16</td><td>92.64</td><td>92.16</td><td>92.64</td><td>92.16</td></tr><tr><td>Noisy</td><td>81.58</td><td>80.34</td><td>73.41</td><td>70.26</td><td>67.18</td><td>62.02</td><td>62.99</td><td>55.91</td></tr><tr><td>1-hop</td><td>57.28</td><td>55.92</td><td>54.22</td><td>52.40</td><td>52.18</td><td>49.98</td><td>50.56</td><td>48.40</td></tr><tr><td>2-hop</td><td>57.64</td><td>55.65</td><td>42.07</td><td>38.55</td><td>41.76</td><td>38.06</td><td>39.01</td><td>34.01</td></tr><tr><td rowspan=\"4\">ACM</td><td>Original</td><td>92.32</td><td>92.40</td><td>92.32</td><td>92.40</td><td>92.32</td><td>92.40</td><td>92.32</td><td>92.40</td></tr><tr><td>Noisy</td><td>33.52</td><td>19.28</td><td>33.28</td><td>18.82</td><td>31.96</td><td>16.14</td><td>31.96</td><td>16.14</td></tr><tr><td>1-hop</td><td>77.10</td><td>77.31</td><td>76.39</td><td>76.51</td><td>75.40</td><td>75.57</td><td>67.94</td><td>67.81</td></tr><tr><td>2-hop</td><td>52.19</td><td>51.73</td><td>49.12</td><td>50.65</td><td>42.38</td><td>36.42</td><td>38.73</td><td>30.07</td></tr><tr><td rowspan=\"4\">Freebase</td><td>Original</td><td>68.99</td><td>63.57</td><td>68.99</td><td>63.57</td><td>68.99</td><td>63.57</td><td>68.99</td><td>63.57</td></tr><tr><td>Noisy</td><td>67.89</td><td>61.90</td><td>66.05</td><td>59.29</td><td>62.94</td><td>53.74</td><td>57.50</td><td>46.02</td></tr><tr><td>1-hop</td><td>58.52</td><td>53.23</td><td>57.62</td><td>51.94</td><td>57.50</td><td>51.21</td><td>57.01</td><td>51.14</td></tr><tr><td>2-hop</td><td>44.66</td><td>31.12</td><td>42.90</td><td>27.24</td><td>41.10</td><td>24.15</td><td>39.46</td><td>21.62</td></tr></table>",
+        "bbox": [
+            207,
+            111,
+            790,
+            273
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "283 An interesting finding is that $30 \\%$ noise is enough to cause the performance of HGNN on the ACM   \n284 dataset to drop to its lowest.   \n285 Ablation Study We investigate the contributions of different components in RoHeX. Specifically,   \n286 we study (a) the effectiveness of the denoising variational inference module, and (b) the effectiveness   \n287 of the relation-based importance module. We use ’w/o VI’ to denote the model without the denoising   \n288 variational inference module, and ’w/o Re’ to denote the model without the relation-based importance   \n289 module. For the latter case, we replace it with the common concatenation operation, i.e., $\\alpha _ { i j } =$   \n290 $\\mathrm { M L P } [ ( \\mathbf { z } _ { i } , \\mathbf { z } _ { j } ] )$ . The experiments are conducted under $20 \\%$ noise budget, and the first row of Figure 3   \n291 shows the results after ablation. We find that without the denoising variational inference module,   \n292 the model relies on the original features and graph structure for prediction, failing to mitigate the   \n293 influence of noise, leading to performance degradation. When the model loses the ability to learn   \n294 heterogeneous relationships, the process of generating explanation subgraphs struggles to recognize   \n295 the complex semantics in heterogeneous graphs. All edges are treated as the same type, and the   \n296 model explains solely based on node interactions. This demonstrates the necessity of our proposed   \n297 relation importance module.   \n298 Hyperparameter Analysis We further analyze the impact of two parameters $\\tau$ and $\\beta$ on model   \n299 performance. $\\tau$ controls the approximation degree of $e _ { i j }$ distribution to the Bernoulli distribution,   \n300 ranging within [0.1, 0.5]. $\\beta$ balances the information recovery strength and information filtering   \n301 strength in the optimization objective, and we select values from $\\{ 0 . 3 , \\mathrm { { \\bar { 0 } } . 5 , 1 , 2 , 3 } \\}$ . The second row   \n302 of Figure 3 shows the effects of these hyperparameters on RoHeX across three datasets. We can   \n303 observe that the best results of $\\tau$ all appear around 0.3. That is, when $\\tau = 0 . 3$ , the continuity and   \n304 approximation degree in Eq. 15 reach the best trade-off. Secondly, RoHeX is not very sensitive to $\\beta$   \n305 that controls the constraint strength in Eq. 18, validating that our used GIB constraint can adapt to   \n306 different data scenarios and achieve superior performance. ",
+        "bbox": [
+            142,
+            310,
+            825,
+            339
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            138,
+            367,
+            825,
+            546
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            575,
+            825,
+            700
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "307 5 Conclusion ",
+        "text_level": 1,
+        "bbox": [
+            142,
+            733,
+            299,
+            751
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "308 In this work, we focus on the problem of explaining heterogeneous graph neural network under   \n309 noise. We are the first to study this problem, theoretically proving that heterogeneous graph neural   \n310 network have an amplifying effect on noise, and propose RoHeX to mitigate the influence of   \n311 noise and obtain explanatory subgraphs based on heterogeneous relations. Specifically, RoHeX   \n312 employs denoising variational inference to obtain robust graph representations and parameterizes the   \n313 explanatory subgraph generation process with heterogeneous semantics. It integrates type information   \n314 to capture the complexity of diverse node and edge types. Extensive experiments on real-world   \n315 datasets demonstrate RoHeX’s superiority over other state-of-the-art baselines. For future work, we   \n316 plan to further extend RoHeX to dynamic graphs by incorporating dynamic information into the   \n317 explanation generation process, further broadening RoHeX’s applicability. ",
+        "bbox": [
+            140,
+            772,
+            825,
+            911
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "discarded",
+        "text": "9 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "References   \n[1] Yuwei Cao, Hao Peng, Zhengtao Yu, and S Yu Philip. Hierarchical and incremental structural entropy minimization for unsupervised social event detection. In Proceedings of the AAAI Conference on Artificial Intelligence, volume 38, pages 8255–8264, 2024.   \n[2] Yifan Lu, Mengzhou Gao, Huan Liu, Zehao Liu, Wei Yu, Xiaoming Li, and Pengfei Jiao. Neighborhood overlap-aware heterogeneous hypergraph neural network for link prediction. Pattern Recognition, 144:109818, 2023.   \n[3] Yi Zhang, Yiwen Zhang, Yuchuan Zhao, Shuiguang Deng, and Yun Yang. Dual variational graph reconstruction learning for social recommendation. IEEE Transactions on Knowledge and Data Engineering, 2024.   \n[4] Peter Müller, Lukas Faber, Karolis Martinkus, and Roger Wattenhofer. Graphchef: Decision-tree recipes to explain graph neural networks. In The Twelfth International Conference on Learning Representations, 2024. [5] Senzhang Wang, Jun Yin, Chaozhuo Li, Xing Xie, and Jianxin Wang. V-infor: a robust graph neural networks explainer for structurally corrupted graphs. Advances in Neural Information Processing Systems, 36, 2024. [6] Minh N Vu and My T Thai. Limitations of perturbation-based explanation methods for temporal graph neural networks. In 2023 IEEE International Conference on Data Mining (ICDM), pages 618–627. IEEE, 2023.   \n[7] Tamara Pereira, Erik Nascimento, Lucas E Resck, Diego Mesquita, and Amauri Souza. Distill n’explain: explaining graph neural networks using simple surrogates. In International Conference on Artificial Intelligence and Statistics, pages 6199–6214. PMLR, 2023. [8] Qiang Huang, Makoto Yamada, Yuan Tian, Dinesh Singh, and Yi Chang. Graphlime: Local interpretable model explanations for graph neural networks. IEEE Transactions on Knowledge and Data Engineering, 35(7):6968–6972, 2022.   \n[9] Sangwoo Seo, Sungwon Kim, and Chanyoung Park. Interpretable prototype-based graph information bottleneck. Advances in Neural Information Processing Systems, 36, 2024.   \n[10] Zaixi Zhang, Qi Liu, Hao Wang, Chengqiang Lu, and Cheekong Lee. Protgnn: Towards self-explaining graph neural networks. In Proceedings of the AAAI Conference on Artificial Intelligence, volume 36, pages 9127–9135, 2022.   \n[11] Hao Yuan, Jiliang Tang, Xia Hu, and Shuiwang Ji. Xgnn: Towards model-level explanations of graph neural networks. In Proceedings of the 26th ACM SIGKDD international conference on knowledge discovery & data mining, pages 430–438, 2020.   \n[12] Xiao Wang, Deyu Bo, Chuan Shi, Shaohua Fan, Yanfang Ye, and S Yu Philip. A survey on heterogeneous graph embedding: methods, techniques, applications and sources. IEEE Transactions on Big Data, 9(2):415–436, 2022.   \n[13] Carl Yang, Yuxin Xiao, Yu Zhang, Yizhou Sun, and Jiawei Han. Heterogeneous network representation learning: A unified framework with survey and benchmark. IEEE Transactions on Knowledge and Data Engineering, 34(10):4854–4873, 2020.   \n[14] James Fox and Sivasankaran Rajamanickam. How robust are graph neural networks to structural noise? arXiv preprint arXiv:1912.10206, 2019.   \n[15] Enyan Dai, Wei Jin, Hui Liu, and Suhang Wang. Towards robust graph neural networks for noisy graphs with sparse labels. In Proceedings of the Fifteenth ACM International Conference on Web Search and Data Mining, pages 181–191, 2022.   \n[16] Dongsheng Luo, Wei Cheng, Dongkuan Xu, Wenchao Yu, Bo Zong, Haifeng Chen, and Xiang Zhang. Parameterized explainer for graph neural network. Advances in neural information processing systems, 33:19620–19631, 2020.   \n[17] Daniel Zügner, Amir Akbarnejad, and Stephan Günnemann. Adversarial attacks on neural networks for graph data. In Proceedings of the 24th ACM SIGKDD international conference on knowledge discovery & data mining, pages 2847–2856, 2018.   \n[18] Dingyuan Zhu, Ziwei Zhang, Peng Cui, and Wenwu Zhu. Robust graph convolutional networks against adversarial attacks. In Proceedings of the 25th ACM SIGKDD international conference on knowledge discovery & data mining, pages 1399–1407, 2019.   \n[19] Jiaqi Ma, Shuangrui Ding, and Qiaozhu Mei. Towards more practical adversarial attacks on graph neural networks. Advances in neural information processing systems, 33:4756–4766, 2020.   \n[20] Mengmei Zhang, Xiao Wang, Meiqi Zhu, Chuan Shi, Zhiqiang Zhang, and Jun Zhou. Robust heterogeneous graph neural networks against adversarial attacks. In Proceedings of the AAAI Conference on Artificial Intelligence, volume 36, pages 4363–4370, 2022.   \n[21] Jinquan Hang, Zhiqing Hong, Xinyue Feng, Guang Wang, Guang Yang, Feng Li, Xining Song, and Desheng Zhang. Paths2pair: Meta-path based link prediction in billion-scale commercial heterogeneous graphs. In Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining, pages 5082–5092, 2024.   \n[22] Xin-Cheng Wen, Cuiyun Gao, Jiaxin Ye, Yichen Li, Zhihong Tian, Yan Jia, and Xuan Wang. Meta-path based attentional graph learning model for vulnerability detection. IEEE Transactions on Software Engineering, 2023.   \n[23] Pengyang Yu, Chaofan Fu, Yanwei Yu, Chao Huang, Zhongying Zhao, and Junyu Dong. Multiplex heterogeneous graph convolutional network. In Proceedings of the 28th ACM SIGKDD Conference on Knowledge Discovery and Data Mining, pages 2377–2387, 2022.   \n[24] Qingsong Lv, Ming Ding, Qiang Liu, Yuxiang Chen, Wenzheng Feng, Siming He, Chang Zhou, Jianguo Jiang, Yuxiao Dong, and Jie Tang. Are we really making much progress? revisiting, benchmarking and refining heterogeneous graph neural networks. In Proceedings of the 27th ACM SIGKDD conference on knowledge discovery & data mining, pages 1150–1160, 2021.   \n[25] Thomas N Kipf and Max Welling. Variational graph auto-encoders. arXiv preprint arXiv:1611.07308, 2016.   \n[26] Haoyi Fan, Fengbin Zhang, Yuxuan Wei, Zuoyong Li, Changqing Zou, Yue Gao, and Qionghai Dai. Heterogeneous hypergraph variational autoencoder for link prediction. IEEE transactions on pattern analysis and machine intelligence, 44(8):4125–4138, 2021.   \n[27] Daniel Im Im, Sungjin Ahn, Roland Memisevic, and Yoshua Bengio. Denoising criterion for variational auto-encoding framework. In Proceedings of the AAAI conference on artificial intelligence, volume 31, 2017.   \n[28] Edgar N Gilbert. Random graphs. The Annals of Mathematical Statistics, 30(4):1141–1144, 1959.   \n[29] Thomas N Kipf and Max Welling. Semi-supervised classification with graph convolutional networks. arXiv preprint arXiv:1609.02907, 2016.   \n[30] Michael Sejr Schlichtkrull, Nicola De Cao, and Ivan Titov. Interpreting graph neural networks for nlp with differentiable edge masking. In International Conference on Learning Representations, 2020.   \n[31] Jiaxing Zhang, Dongsheng Luo, and Hua Wei. Mixupexplainer: Generalizing explanations for graph neural networks with data augmentation. In Proceedings of the 29th ACM SIGKDD Conference on Knowledge Discovery and Data Mining, pages 3286–3296, 2023.   \n[32] Zhitao Ying, Dylan Bourgeois, Jiaxuan You, Marinka Zitnik, and Jure Leskovec. Gnnexplainer: Generating explanations for graph neural networks. Advances in neural information processing systems, 32, 2019. ",
+        "bbox": [
+            155,
+            75,
+            828,
+            917
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "10 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "318 319 320 321 322 323 324 325 326 327 328 329 330 331 332 333 334 335 336 337 338 339 340 341 342 343 344 345 346 347 348 349 350 351 352 353 354 355 356 357 358 359 360 361 362 363 364 ",
+        "bbox": [
+            138,
+            98,
+            168,
+            926
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            158,
+            51,
+            828,
+            917
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "discarded",
+        "text": "11 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            948
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "discarded",
+        "text": "365 366 367 368 369 370 371 372 373 374 375 376 377 378 379 380 381 382 383 384 385 386 387 388 389 390 391 392 393 394 395 396 397 398 399 400 401 402 403 404 405 406 407 408 409 410 411 ",
+        "bbox": [
+            138,
+            90,
+            166,
+            929
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "2 [33] Minh Vu and My T Thai. Pgm-explainer: Probabilistic graphical model explanations for graph neural networks. Advances in neural information processing systems, 33:12225–12235, 2020. ",
+        "bbox": [
+            158,
+            90,
+            825,
+            121
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "[34] Shengyao Lu, Keith G Mills, Jiao He, Bang Liu, and Di Niu. Goat: Explaining graph neural networks via graph output attribution. In The Twelfth International Conference on Learning Representations, 2024. [35] Tong Li, Jiale Deng, Yanyan Shen, Luyu Qiu, Huang Yongxiang, and Caleb Chen Cao. Towards fine-grained explainability for heterogeneous graph neural network. In Proceedings of the AAAI Conference on Artificial Intelligence, volume 37, pages 8640–8647, 2023. [36] Wei Zhang, Xiaofan Li, and Wolfgang Nejdl. Adversarial mask explainer for graph neural networks. In Proceedings of the ACM on Web Conference 2024, pages 861–869, 2024. [37] Xiao Wang, Houye Ji, Chuan Shi, Bai Wang, Yanfang Ye, Peng Cui, and Philip S Yu. Heterogeneous graph attention network. In The world wide web conference, pages 2022–2032, 2019. [38] Xinyu Fu, Jiani Zhang, Ziqiao Meng, and Irwin King. Magnn: Metapath aggregated graph neural network for heterogeneous graph embedding. In Proceedings of the web conference 2020, pages 2331–2341, 2020. 8 [39] Xiaocheng Yang, Mingyu Yan, Shirui Pan, Xiaochun Ye, and Dongrui Fan. Simple and efficient heterogeneous graph neural network. In Proceedings of the AAAI conference on artificial intelligence, volume 37, pages 10816–10824, 2023. [40] Michael Schlichtkrull, Thomas N Kipf, Peter Bloem, Rianne Van Den Berg, Ivan Titov, and Max Welling. Modeling relational data with graph convolutional networks. In The semantic web: 15th international conference, ESWC 2018, Heraklion, Crete, Greece, June 3–7, 2018, proceedings 15, pages 593–607. Springer, 2018. [41] Lingfan Yu, Jiajun Shen, Jinyang Li, and Adam Lerer. Scalable graph neural networks for heterogeneous graphs. arXiv preprint arXiv:2011.09679, 2020. [42] Zeyu Sun, Wenjie Zhang, Lili Mou, Qihao Zhu, Yingfei Xiong, and Lu Zhang. Generalized equivariance and preferential labeling for gnn node classification. In Proceedings of the AAAI Conference on Artificial Intelligence, volume 36, pages 8395–8403, 2022. [43] Sucheta Dawn. Graph neural networks for homogeneous and heterogeneous graphs: Algorithms and applications. 2025. [44] Kurt Bollacker, Colin Evans, Praveen Paritosh, Tim Sturge, and Jamie Taylor. Freebase: a collaboratively created graph database for structuring human knowledge. In Proceedings of the 2008 ACM SIGMOD international conference on Management of data, pages 1247–1250, 2008. [45] Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980, 2014. ",
+        "bbox": [
+            155,
+            97,
+            828,
+            700
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "12 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "41 413 414 415 416 417 418 419 420 421 422 423 424 425 426 427 42 429 430 431 432 433 434 435 436 437 438 439 440 441 442 443 444 445 446 ",
+        "bbox": [
+            140,
+            80,
+            166,
+            710
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "447 A Related Work ",
+        "text_level": 1,
+        "bbox": [
+            143,
+            89,
+            326,
+            106
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "448 GNN Explainability. Recently, various approaches have been proposed to explain the predictions   \n449 of GNN, these approaches can be categorized into post-hoc and built-in method. Common post-hoc   \n450 methods include perturbation-based [6, 30] and surrogate model-based [7, 8] approaches. Mixu  \n451 pExplainer [31] extends the existing GIB framework by introducing label-independent subgraphs   \n452 during the sampling of explanation subgraphs, thereby obtaining explanations while mitigating the   \n453 distribution shift phenomenon. GNNExplainer [32] learns masks for features and edges by optimizing   \n454 the masks to obtain the optimal explanation. PGExplainer [16] employs a parametric neural network   \n455 approach to learn the importance of each edge and ultimately selects edges with high importance   \n456 scores to construct the explanatory subgraph. PGM-Explainer [33] adopts a Bayesian network formu  \n457 lation, naturally expressing the dependencies between nodes in the form of conditional probabilities.   \n458 Common built-in methods include prototype learning-based [9, 10] and graph generation-based [11]   \n459 approaches. PGIB [9] integrates prototypes into the Graph Information Bottleneck framework, allow  \n460 ing it to learn prototypes based on key subgraphs in the input graph, thereby providing a more accurate   \n461 explanation of the prediction process. GOAt [34] generates explanatory subgraphs by decomposing   \n462 the model’s output into a series of scalar products involving node and edge features, and calculating   \n463 the contribution of each feature to these scalar products, thereby highlighting the edges that are   \n464 important for the prediction outcome. xPath [35] provides fine-grained explanations by identifying   \n465 cause nodes and their influence paths through a novel graph rewiring algorithm, thereby offering   \n466 detailed insights into how specific nodes affect model predictions. AMExplainer [36] leverages ad  \n467 versarial networks to optimize for both sparsity and prediction accuracy in explanations, significantly   \n468 enhancing the clarity and efficiency of model interpretability.   \n469 Heterogeneous Graph Neural Networks Heterogeneous Graph Neural Networks can be catego  \n470 rized into meta-path-based methods and neighborhood aggregation-based methods. Meta-path-based   \n471 methods typically decompose heterogeneous graphs into multiple homogeneous subgraphs using   \n472 predefined meta-paths, thereby capturing specific types of heterogeneous semantics. Message passing   \n473 is then performed within each subgraph, and the messages are subsequently aggregated. Common   \n474 methods in this category include HAN [37], MAGNN [38], and SeHGNN [39]. On the other hand,   \n475 neighborhood aggregation-based methods usually aggregate information directly from neighbors and   \n476 apply specific aggregation strategies based on node types. Examples of methods in this category   \n477 include RGCN [40], NARS [41], and Simple-HGN [24]. ",
+        "bbox": [
+            138,
+            119,
+            826,
+            410
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            424,
+            826,
+            549
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "478 B Proof of Theorem 3.1 ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            566,
+            385,
+            584
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Let node 479 $v _ { i }$ ’s original degree under edge type $r$ be denoted as $d _ { i } ^ { r }$ . The deletion rate for edge type $r$ is 80 $\\eta _ { r } ^ { + }$ , and the false addition rate is $\\eta _ { r } ^ { - }$ . The average degree for edge type $r$ is defined as: ",
+        "bbox": [
+            151,
+            597,
+            826,
+            626
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/acce24c8f9b126b751fa092b556c396a5c05aa5dd732157bf20a083de52d1f3c.jpg",
+        "text": "$$\n\\bar { d } ^ { r } = \\frac { 1 } { | \\mathcal { V } _ { r } | } \\sum _ { i \\in \\mathcal { V } _ { r } } d _ { i } ^ { r }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            437,
+            628,
+            560,
+            667
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "where 481 $\\mathcal { V } _ { r }$ represents the set of nodes involved in edge type $r$ . For node $v _ { i }$ , the expected number of 482 edges deleted under edge type $r$ is: ",
+        "bbox": [
+            138,
+            670,
+            828,
+            699
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e5b3a0850520e587c47d6b39ecb83367829b31286c686f2eadea082880328042.jpg",
+        "text": "$$\n\\mathbb { E } [ \\Delta d _ { i , + } ^ { r } ] = \\sum _ { j \\in N _ { r } ( i ) } \\eta _ { r } ^ { + } \\cdot \\frac { d _ { i } ^ { r } + d _ { j } ^ { r } } { 2 \\bar { d } ^ { r } }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            387,
+            700,
+            611,
+            743
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "483 where $\\mathcal { N } _ { r } ( i )$ represents the set of neighbors of node $v _ { i }$ under edge type $r$ . Assuming the degree   \n484 distribution of neighbors is uniform, it can be approximated as: ",
+        "bbox": [
+            138,
+            747,
+            825,
+            775
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5e99ad6bde5cbc937f5e4997ab882e2b4f627424793932929e465da38f7db8e9.jpg",
+        "text": "$$\n\\mathbb { E } [ \\Delta d _ { i , + } ^ { r } ] \\approx d _ { i } ^ { r } \\cdot \\eta _ { r } ^ { + } \\cdot \\frac { d _ { i } ^ { r } + \\bar { d } ^ { r } } { 2 \\bar { d } ^ { r } }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            398,
+            777,
+            599,
+            810
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "485 Further simplification gives: ",
+        "bbox": [
+            142,
+            813,
+            361,
+            827
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5ae25b08c6a02d2251a6bb8afb3dff1c1ec56f3be426bf88dd0e2c7b68007c45.jpg",
+        "text": "$$\n\\mathbb { E } [ \\Delta d _ { i , + } ^ { r } ] \\approx \\eta _ { r } ^ { + } \\cdot \\frac { d _ { i } ^ { r ^ { 2 } } } { 2 \\bar { d } ^ { r } }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            426,
+            825,
+            573,
+            858
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "For node 486 $v _ { i }$ , the expected number of false added edges under edge type $r$ is: ",
+        "bbox": [
+            138,
+            858,
+            669,
+            873
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "equation",
+        "img_path": "images/c5b3fed5db4694ba6c44ade2580b804a32371a6053c2c0e7f5ff4246f69fe72a.jpg",
+        "text": "$$\n\\mathbb { E } [ \\Delta d _ { i , - } ^ { r } ] = \\sum _ { j \\notin { \\mathcal { N } _ { r } ( i ) } } \\eta _ { r } ^ { - } \\cdot \\frac { 1 } { d _ { i } ^ { r } + d _ { j } ^ { r } }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            387,
+            876,
+            611,
+            915
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "13 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "487 Assuming the degree distribution of non-neighbor nodes is uniform, it can be approximated as: ",
+        "bbox": [
+            140,
+            90,
+            794,
+            107
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "equation",
+        "img_path": "images/cbf304bd7dccccad1f6c1e8dbf8cc6e3e4727cc2b95e90a03ed93091e3d515f0.jpg",
+        "text": "$$\n\\mathbb { E } [ \\Delta d _ { i , - } ^ { r } ] \\approx ( | \\mathcal { V } _ { r } | - d _ { i } ^ { r } ) \\cdot \\eta _ { r } ^ { - } \\cdot \\frac { 1 } { d _ { i } ^ { r } + \\bar { d } ^ { r } }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            369,
+            111,
+            629,
+            145
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "For node 488 $v _ { i }$ , the total degree change across all edge types is: ",
+        "bbox": [
+            140,
+            148,
+            570,
+            165
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "equation",
+        "img_path": "images/25a1c566daee8c88cfe6b22eac2f9180ba308869bd1014ef6b99ac52ecff8a38.jpg",
+        "text": "$$\n\\mathbb { E } [ \\Delta d _ { i } ] = \\sum _ { r \\in R } ( \\mathbb { E } [ \\Delta d _ { i , - } ^ { r } ] - \\mathbb { E } [ \\Delta d _ { i , + } ^ { r } ] )\n$$",
+        "text_format": "latex",
+        "bbox": [
+            370,
+            170,
+            625,
+            204
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "489 Substituting the above results, we get: ",
+        "bbox": [
+            142,
+            209,
+            424,
+            224
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "equation",
+        "img_path": "images/10ba7fe6e73d6acec6cb81b902bf816905cff5261d84f96cc0e4fc7d8fadda92.jpg",
+        "text": "$$\n\\mathbb { E } [ \\Delta d _ { i } ] = \\sum _ { r \\in \\mathcal { R } } \\left( \\eta _ { r } ^ { - } \\cdot \\frac { \\left( | \\mathcal { V } _ { r } | - d _ { i } ^ { r } \\right) } { d _ { i } ^ { r } + \\bar { d } ^ { r } } - \\eta _ { r } ^ { + } \\cdot \\frac { d _ { i } ^ { r ^ { 2 } } } { 2 \\bar { d } ^ { r } } \\right)\n$$",
+        "text_format": "latex",
+        "bbox": [
+            341,
+            229,
+            655,
+            270
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "490 The expected degree of node $v _ { i }$ after perturbation is: ",
+        "bbox": [
+            140,
+            275,
+            519,
+            290
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5d37e60762b25ad0b518755e2051d34ec8839e64b98a34e74d26704b3c2adbe9.jpg",
+        "text": "$$\n\\mathbb { E } [ d _ { i } ^ { \\prime } ] = d _ { i } + \\mathbb { E } [ \\Delta d _ { i } ]\n$$",
+        "text_format": "latex",
+        "bbox": [
+            428,
+            295,
+            570,
+            313
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Substituting the expression for 491 $\\mathbb { E } [ \\Delta d _ { i } ]$ , we get: ",
+        "bbox": [
+            140,
+            318,
+            483,
+            333
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "equation",
+        "img_path": "images/6384ff1cb981e40d61b1aae6cd93bdcaf01d4da7a00f258616ec7f6476dfb512.jpg",
+        "text": "$$\n\\mathbb { E } [ d _ { i } ^ { \\prime } ] = d _ { i } + \\sum _ { r \\in { \\mathcal { R } } } \\left( \\eta _ { r } ^ { - } \\cdot \\frac { ( | \\mathcal { V } _ { r } | - d _ { i } ^ { r } ) } { d _ { i } ^ { r } + \\bar { d } ^ { r } } - \\eta _ { r } ^ { + } \\cdot \\frac { d _ { i } ^ { r ^ { 2 } } } { 2 \\bar { d } ^ { r } } \\right)\n$$",
+        "text_format": "latex",
+        "bbox": [
+            330,
+            338,
+            666,
+            380
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "492 To maintain the degree distribution characteristics of the graph, we introduce a degree-balancing   \n493 constraint, which states that the expected degree after perturbation should be as close as possible to   \n494 the original degree. Specifically, we require: ",
+        "bbox": [
+            140,
+            383,
+            825,
+            428
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "equation",
+        "img_path": "images/279eedd2269b23daa1df961ccdc2610ecedf4300f2458eef6d713b7932e202a5.jpg",
+        "text": "$$\n| \\mathbb { E } [ d _ { i } ^ { \\prime } ] - d _ { i } | \\le \\epsilon\n$$",
+        "text_format": "latex",
+        "bbox": [
+            444,
+            431,
+            553,
+            449
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "495 where $\\epsilon$ is a small constant representing the allowed degree deviation. By adjusting the deletion rate   \n496 $\\eta _ { r } ^ { + }$ and false addition rate $\\eta _ { r } ^ { - }$ , we can satisfy this constraint.   \n497 The above derivation shows that the degree-balancing constraint can effectively control the impact of   \n498 noise injection on the graph structure. For high-degree nodes, the deletion rate $\\eta _ { r } ^ { + }$ has a larger weight   \n499 $\\frac { d _ { i r } } { 2 d _ { r } }$ , thereby reducing the number of edges to be deleted. For low-degree nodes, the false addition   \n500 rate $\\eta _ { r } ^ { - }$ has a larger weigh t 1dir+d¯r , thereby increasing the number of edges to be added. This design   \n501 ensures that the perturbed graph structure maintains degree distribution characteristics similar to the   \n502 original graph, thereby improving the reasonableness of noise injection. ",
+        "bbox": [
+            143,
+            455,
+            826,
+            484
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            138,
+            489,
+            825,
+            583
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "table",
+        "img_path": "images/8128697f1c8d2d8a28a655c4f1226aa36998af85e0fd3fca698ed26447d3baa9.jpg",
+        "table_caption": [
+            "Table 3: Statistics of the graphs before and after perturbation. "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td rowspan=1 colspan=1>Dataset</td><td rowspan=1 colspan=1>Budget</td><td rowspan=1 colspan=1>△d     JS Divergence</td></tr><tr><td rowspan=1 colspan=1>DBLP</td><td rowspan=1 colspan=1>10%20%30%40%</td><td rowspan=1 colspan=1>0.0831       0.08750.8337       0.09051.7506       0.11142.6675       0.1407</td></tr><tr><td rowspan=2 colspan=1>ACM</td><td rowspan=2 colspan=1>10%20%30%40%</td><td rowspan=1 colspan=1>4.0125       0.2156</td></tr><tr><td rowspan=1 colspan=1>9.0189       0.212614.0254      0.213119.0318      0.2188</td></tr><tr><td rowspan=4 colspan=1>Freebase</td><td rowspan=4 colspan=1>10%20%30%40%</td><td rowspan=1 colspan=1>0.6556       0.2029</td></tr><tr><td rowspan=1 colspan=1>0.3112       0.1516</td></tr><tr><td rowspan=1 colspan=1>0.0332       0.1167</td></tr><tr><td rowspan=1 colspan=1>0.3776       0.0897</td></tr></table>",
+        "bbox": [
+            331,
+            616,
+            665,
+            824
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "503 C Effectiveness of Controllable Structural Perturbation and Theorem 3.1 ",
+        "text_level": 1,
+        "bbox": [
+            142,
+            851,
+            799,
+            869
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "504 We propose controllable structural perturbation on heterogeneous graphs to simulate real-world   \n505 noise. Our focus is on statistical perturbation effects rather than individual node changes. The   \n506 uniform assumption was introduced to simplify the derivation, a practice widely adopted in prior   \n507 works [42, 43]. Assuming uniform distribution effectively captures perturbation impacts. To further   \n508 validate this, we analyzed the degree distributions of the DBLP, ACM, and Freebase datasets before   \n509 and after perturbation, as shown in Table 3. The results indicate that our method achieves significant   \n510 noise effect while only slightly altering the degree distribution (with JS divergence $< 0 . 2 2 $ ), as   \n511 demonstrated in Table 2 of the main text.   \n512 Additionally, we conducted experiments comparing the performance of the explainer under the   \n513 uniform assumption and the actual degree distribution. The results, presented in Table 4, confirm   \n514 that the uniform assumption has minimal impact on model performance compared to using the real   \n515 distribution. ",
+        "bbox": [
+            142,
+            883,
+            823,
+            911
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "14 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "table",
+        "img_path": "images/bea4f3284bed880365a283fc4af36612520d91859154c412448cf84c09806c3d.jpg",
+        "table_caption": [
+            "Table 4: The performance of RoHeX under different distribution perturbations. "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td rowspan=\"2\">Dataset</td><td rowspan=\"2\">Budget</td><td colspan=\"2\">10%</td><td colspan=\"2\">20%</td><td colspan=\"2\">30%</td><td colspan=\"2\">40%</td></tr><tr><td>MAE</td><td>RMSE</td><td>MAE</td><td>RMSE</td><td>MAE</td><td>RMSE</td><td>MAE</td><td>RMSE</td></tr><tr><td rowspan=\"3\">DBLP</td><td>Uniform</td><td>0.7940</td><td>1.3462</td><td>0.8877</td><td>1.3708</td><td>0.9391</td><td>1.4185</td><td>0.9486</td><td>1.3891</td></tr><tr><td>Real</td><td>0.8359</td><td>1.2416</td><td>0.8743</td><td>1.2750</td><td>0.8827</td><td>1.2792</td><td>0.9014</td><td>1.2889</td></tr><tr><td>Difference</td><td>5.01%</td><td>-8.42%</td><td>-1.53%</td><td>-7.51%</td><td>-6.39%</td><td>-10.89%</td><td>-5.24%</td><td>-7.77%</td></tr><tr><td rowspan=\"3\">ACM</td><td>Uniform</td><td>0.2225</td><td>0.5648</td><td>0.2544</td><td>0.5986</td><td>0.3362</td><td>0.7516</td><td>0.3743</td><td>0.7333</td></tr><tr><td>Real</td><td>0.2129</td><td>0.5662</td><td>0.2483</td><td>0.6177</td><td>0.3140</td><td>0.6669</td><td>0.3163</td><td>0.6909</td></tr><tr><td>Difference</td><td>-4.51%</td><td>0.25%</td><td>-2.46%</td><td>3.09%</td><td>-7.07%</td><td>-12.70%</td><td>-18.34%</td><td>-6.14%</td></tr><tr><td rowspan=\"3\">Freebase</td><td>Uniform</td><td>0.4331</td><td>0.7906</td><td>0.4564</td><td>0.9125</td><td>0.5186</td><td>0.9758</td><td>0.5247</td><td>0.9818</td></tr><tr><td>Real</td><td>0.3885</td><td>0.8251</td><td>0.4441</td><td>0.8854</td><td>0.4694</td><td>0.9035</td><td>0.4880</td><td>0.9217</td></tr><tr><td>Difference</td><td>-11.47%</td><td>4.18%</td><td>-2.78%</td><td>-3.06%</td><td>-10.48%</td><td>-8.01%</td><td>-7.51%</td><td>-6.53%</td></tr></table>",
+        "bbox": [
+            176,
+            109,
+            825,
+            275
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            301,
+            825,
+            385
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            390,
+            825,
+            446
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "516 D Proof of Theorem 3.2 ",
+        "text_level": 1,
+        "bbox": [
+            147,
+            465,
+            387,
+            483
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "517 In Graph Neural Network, a node representation is typically updated by aggregating information   \n518 from its neighboring nodes. This process can be described as a message passing mechanism, where   \n519 each node receives messages from neighboring nodes and updates its representation based on these   \n520 messages. To avoid cases where the influence is overly amplified during the aggregation process, the   \n521 messages from neighboring nodes are typically normalized. A common normalization approach is   \n522 to multiply each neighbor message by the inverse of its degree. Assuming that each node influence   \n523 on neighbors is equal, a higher-degree node will distribute its influence evenly among all neighbors.   \n524 Therefore, the influence received by each neighbor should be proportional to the inverse of the node   \n525 degree. In contrast, in random walk models, the transition probability between nodes is inversely   \n526 proportional to the node degree. That is, the probability of a node reaching a particular neighbor is   \n527 the inverse of its degree. ",
+        "bbox": [
+            140,
+            496,
+            826,
+            650
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Given a heterogeneous graph $\\mathcal { G }$ , let $v _ { i }$ be a node with degree $d _ { v _ { i } }$ . A noisy edge $e _ { i j }$ is added to the graph, where $v _ { j }$ is a new neighbor with degree $d _ { v _ { j } }$ and $k$ specific-type neighbors that match a given meta-path $\\phi$ . ",
+        "bbox": [
+            171,
+            655,
+            825,
+            698
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "For meta-path-based methods: ",
+        "bbox": [
+            163,
+            704,
+            374,
+            718
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "(a) Before adding the noisy edge, the influence of $v _ { i }$ is assumed to be a combination of the influences from its $d _ { v _ { i } }$ existing neighbors $v _ { 1 } , v _ { 2 } , . . . , v _ { d _ { p _ { i } } }$ in $\\mathcal { G }$ . The influence of each neighbor $v _ { n }$ on $v _ { i }$ can be represented as: ",
+        "bbox": [
+            173,
+            723,
+            825,
+            766
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "equation",
+        "img_path": "images/36f22ce0ead5e86c3c8709f164bebefdf0e406aa5cb1cf55aee20df99b0147ba.jpg",
+        "text": "$$\nI _ { \\mathrm { o r i l } } = \\sum _ { n = 1 } ^ { d _ { v _ { i } } } \\frac { 1 } { d _ { v _ { i } } }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            446,
+            765,
+            552,
+            809
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "535 (b) After adding the noisy edge $( v _ { i } , v _ { j } )$ , $v _ { i }$ is directly connected to $v _ { j }$ , and the influence of $v _ { j }$ 536 will propagate to its $k$ neighbors. The influence on each neighbor of $v _ { j }$ changes in the following manner 537 $v _ { i }$ : ",
+        "bbox": [
+            142,
+            811,
+            825,
+            854
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "equation",
+        "img_path": "images/bcbbcf48cd7199d490375918d561896b1b483af02166963f43130d4157133a5e.jpg",
+        "text": "$$\nI _ { \\mathrm { n e w } 1 } = \\sum _ { i = 1 } ^ { d _ { v _ { i } } } \\frac { 1 } { d _ { v _ { i } } + 1 } + \\frac { k } { d _ { v _ { i } } + 1 } = \\frac { d _ { v _ { i } } } { d _ { v _ { i } } + 1 } + \\frac { k } { d _ { v _ { i } } + 1 } = \\frac { d _ { v _ { i } } + k } { d _ { v _ { i } } + 1 }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            281,
+            871,
+            715,
+            916
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "15 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "image",
+        "img_path": "images/586ab00555403045f8ff575a9b11dc3a77d493b656391b710d5eb65f511320eb.jpg",
+        "image_caption": [
+            "Figure 4: The illustrative example for noise against HGNNs on Movie-Director graph. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            297,
+            99,
+            709,
+            212
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "538 For neighborhood aggregation-based methods: ",
+        "bbox": [
+            142,
+            275,
+            480,
+            291
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "539 ",
+        "bbox": [
+            140,
+            299,
+            161,
+            310
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "(a) Before adding the noisy edge, the influence on the direct neighbors of $v _ { i }$ is given by: ",
+        "bbox": [
+            202,
+            296,
+            782,
+            313
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "equation",
+        "img_path": "images/be476574f79fa1bde734525c3c71ac1b834fd0452cd8c30b38722d6d99e36a3e.jpg",
+        "text": "$$\nI _ { \\mathrm { o r i 2 } } = \\sum _ { n = 1 } ^ { d _ { v _ { i } } } \\frac { 1 } { d _ { v _ { i } } }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            446,
+            320,
+            552,
+            367
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "540 (b) After adding the noisy edge $( v _ { i } , v _ { j } )$ , the neighbors of $v _ { i }$ increase to $d _ { v 1 } + 1$ , and the influence   \n541 on each of its neighbors changes to: ",
+        "bbox": [
+            140,
+            376,
+            826,
+            405
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "equation",
+        "img_path": "images/38c8d5fdec905afeef3ee752f01ddfba301a3da6a34aaae5428b70ee5286545d.jpg",
+        "text": "$$\nI _ { \\mathrm { n e w } 2 } = \\sum _ { n = 1 } ^ { d _ { v _ { i } } + 1 } \\frac { 1 } { d _ { v _ { i } } + 1 }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            423,
+            412,
+            575,
+            459
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "542 The multiplicative relationship $\\xi$ of the influence propagation between the meta-path-based method   \n543 and the neighborhood aggregation method is: ",
+        "bbox": [
+            137,
+            474,
+            828,
+            503
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a2526fc0323dd00bd90ae1efdfdbb88d3c733ca7a1116401805e33b3524022be.jpg",
+        "text": "$$\n\\xi = \\frac { \\frac { I _ { \\mathrm { n e w 1 } } } { I _ { \\mathrm { o r i l } } } } { \\frac { I _ { \\mathrm { n e w 2 } } } { I _ { \\mathrm { o r i 2 } } } } = \\frac { \\frac { d _ { v _ { i } } + k } { d _ { v _ { i } } + 1 } } { 1 } = \\frac { d _ { v _ { i } } + k } { d _ { v _ { i } } + 1 }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            395,
+            512,
+            602,
+            559
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "544 Consequently, when $k > d _ { v _ { i } }$ , the multiplicative factor $\\xi$ is significantly greater than 1. This indicates   \n545 that in general heterogeneous graphs, meta-path-based approaches are far more susceptible to the   \n546 influence of noisy edges compared to neighborhood aggregation-based approaches. This substantiates   \n547 that meta-path-based methods can significantly amplify the effect of noisy edges to a greater extent   \n548 than neighborhood aggregation methods.   \n549 We also provide the illustrative example for noise against HGNNs on Movie-Director graph in   \n550 Figure 4. The meta-path used is M-D-M. In neighborhood aggregation-based HGNNs, the noise  \n551 introduced nodes are not directly considered as 1-hop neighbors of $M _ { 1 }$ . Consequently, under the   \n552 influence of noise, the 2-hop neighbors $M _ { 3 } , M _ { 4 } , M _ { 5 }$ can only affect $M _ { 1 }$ through the 1-hop neighbor   \n553 $D _ { 3 }$ . However, in meta-path-based HGNNs, all neighbors under the M-D-M meta-path are aggregated   \n554 with equal weight $\\frac { 1 } { 5 }$ , thereby enlarging the effect of the noisy edge $\\langle M _ { 1 } , D _ { 3 } \\rangle$ to $\\frac { 3 } { 5 }$ (the total weight   \n555 of the noisy neighbors $M _ { 3 } , M _ { 4 } , M _ { 5 } )$ . ",
+        "bbox": [
+            140,
+            573,
+            825,
+            643
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            648,
+            825,
+            747
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "556 E Detailed Derivation ",
+        "text_level": 1,
+        "bbox": [
+            142,
+            768,
+            372,
+            786
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "557 First, we give the detailed derivation of Eq. 7. We introduce the Kullback-Leibler (KL) divergence.   \n558 The KL divergence is a measure used to quantify the difference between two probability distributions.   \n559 Let us consider two continuous random variables with probability distributions $P$ and $Q$ , and their   \n560 corresponding probability density functions denoted as $p ( x )$ and $q ( x )$ , respectively. If we aim to   \n561 approximate $p ( x )$ using $q ( x )$ , the KL divergence can be expressed as: ",
+        "bbox": [
+            140,
+            801,
+            826,
+            872
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "equation",
+        "img_path": "images/f7f9b383bcb3efb09c4688d68c4230988e9d84f290a103c9b53d532391cc1c79.jpg",
+        "text": "$$\n\\mathrm { K L } ( P | | Q ) = \\int p ( x ) \\log { \\frac { p ( x ) } { q ( x ) } } d x .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            383,
+            882,
+            612,
+            916
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "16 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "562 Because the logarithmic function is convex, the value of $\\mathrm { K L }$ divergence is nonnegative. Then, Eq. 7   \n563 can be written as: ",
+        "bbox": [
+            140,
+            90,
+            825,
+            121
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "equation",
+        "img_path": "images/8f62dfe7b77c782d9310cf842d7ebc072ea269c60468a361cd8d22ee798c8292.jpg",
+        "text": "$$\n\\begin{array} { r l } & { \\displaystyle \\mathcal { L } \\big ( \\Psi , \\theta ; \\mathcal { G } \\big ) = \\mathbb { E } _ { q _ { \\Psi } ( \\mathbf { Z } | \\mathcal { G } ) } \\big [ \\log \\frac { p _ { \\theta } ( \\mathbf { Z } , \\mathcal { G } ) } { q _ { \\Psi } ( \\mathbf { Z } | \\mathcal { G } ) } \\big ] } \\\\ & { \\quad \\quad \\quad \\quad = \\mathbb { E } _ { q _ { \\Psi } ( \\mathbf { Z } | \\mathcal { G } ) } \\big [ \\log p _ { \\theta } ( \\mathbf { Z } | \\mathcal { G } ) \\cdot \\frac { p ( \\mathbf { Z } ) } { q _ { \\Psi } ( \\mathbf { Z } | \\mathcal { G } ) } \\big ] } \\\\ & { \\quad \\quad \\quad = \\mathbb { E } _ { q _ { \\Psi } ( \\mathbf { Z } | \\mathcal { G } ) } \\big [ \\log p _ { \\theta } ( \\mathbf { Z } | \\mathcal { G } ) \\big ] - \\mathrm { K L } \\big ( q _ { \\Psi } ( \\mathbf { Z } | \\mathcal { G } ) | | p ( \\mathbf { Z } ) \\big ) . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            297,
+            121,
+            699,
+            212
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "564 Second, the lower bound of denoising variational inference in Eq. 10 can be derived as: ",
+        "bbox": [
+            135,
+            219,
+            743,
+            236
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e8a1bad2557e35f2a1ef0f601e7d7500147c61d215788a0494d7cb47535fe28f.jpg",
+        "text": "$$\n\\begin{array} { r l } & { \\mathcal { L } _ { d } = \\mathbb { E } _ { q _ { \\psi } ^ { \\prime } ( { \\mathbf Z } | \\mathcal { O } ) } [ \\log \\frac { p _ { \\theta } ( { \\mathbf Z } , { \\mathcal Z } ) } { q _ { \\psi } ^ { \\prime } ( { \\mathbf Z } | \\mathcal { Q } ) } ] \\geq \\mathbb { E } _ { q _ { \\psi } ^ { \\prime } ( { \\mathbf Z } | \\mathcal { O } ) } \\left[ \\log \\frac { p _ { \\theta } ( { \\mathcal { G } } , { \\mathbf Z } ) } { q _ { \\psi } ( { \\mathbf Z } | \\bar { \\mathcal { G } } ) } \\right] } \\\\ & { \\quad = \\mathbb { E } _ { q _ { \\psi } ^ { \\prime } ( { \\mathbf Z } | \\mathcal { O } ) } [ \\log p _ { \\theta } ( { \\mathcal { G } } | { \\mathbf Z } ) + \\log p ( { \\mathbf Z } ) - \\log q _ { \\psi } ( { \\mathbf Z } | \\bar { \\mathcal { G } } ) ] } \\\\ & { \\quad = \\mathbb { E } _ { q _ { \\psi } ^ { \\prime } ( { \\mathbf Z } | \\mathcal { O } ) } [ \\log p _ { \\theta } ( { \\mathcal { G } } | { \\mathbf Z } ) ] - \\mathbb { E } _ { q _ { \\psi } ^ { \\prime } ( { \\mathbf Z } | \\mathcal { O } ) } \\left[ \\log \\frac { q _ { \\psi } ( { \\mathbf Z } | \\bar { \\mathcal { G } } ) } { p } \\right] } \\\\ & { \\quad = \\mathbb { E } _ { q _ { \\psi } ^ { \\prime } ( { \\mathbf Z } | \\mathcal { O } ) } [ \\log p _ { \\theta } ( { \\mathcal { G } } | { \\mathbf Z } ) ] - \\mathbb { E } _ { q _ { \\psi } ^ { \\prime } ( { \\mathbf Z } ) } \\mathbb { E } _ { q _ { \\psi } ( { \\mathbf Z } | \\mathcal { O } ) } \\left[ \\log \\frac { q _ { \\psi } ( { \\mathbf Z } | \\bar { \\mathcal { G } } ) } { p ( { \\mathbf Z } ) } \\right] } \\\\ & { \\quad = \\mathbb { E } _ { q _ { \\psi } ^ { \\prime } ( { \\mathbf Z } | \\mathcal { O } ) } [ \\log p _ { \\theta } ( { \\mathcal { G } } | { \\mathbf Z } ) ] - \\mathbb { E } _ { q _ { \\psi } ( { \\mathbf Z } ) } \\mathbb { E } _ { q _ { \\psi } ( { \\mathbf Z } | \\mathcal { O } ) } \\left[ \\log \\frac { q _ { \\psi } ( { \\mathbf Z } | \\bar { \\mathcal { G } } ) } { p ( { \\mathbf Z } ) } \\right] } \\\\ &  \\quad = \\mathbb { E } _  q _ { \\psi } ^ { \\prime } ( { \\mathbf Z } | \\mathcal  \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            284,
+            239,
+            712,
+            409
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "565 Third, we derive an upper bound for GIB in Eq. 17. We decompose the mutual information: ",
+        "bbox": [
+            137,
+            416,
+            774,
+            433
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "equation",
+        "img_path": "images/6d73ec362ec4d09661de062909449426e966a233a8c953417dd3b6e912d244ec.jpg",
+        "text": "$$\n\\mathrm { I } ( \\hat { y } ; \\mathcal { G } _ { s } ) = \\mathbb { E } _ { p ( \\hat { y } , \\mathcal { G } _ { s } ) } \\left[ \\log \\frac { p ( \\hat { y } , \\mathcal { G } _ { s } ) } { p ( \\hat { y } ) p ( \\mathcal { G } _ { s } ) } \\right] , \\mathrm { I } ( \\mathcal { G } ; \\mathcal { G } _ { s } ) = \\mathbb { E } _ { p ( \\mathcal { G } , \\mathcal { G } _ { s } ) } \\left[ \\log \\frac { p ( \\mathcal { G } , \\mathcal { G } _ { s } ) } { p ( \\mathcal { G } ) p ( \\mathcal { G } _ { s } ) } \\right] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            243,
+            436,
+            753,
+            472
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "566 The GIB objective can be written as: ",
+        "bbox": [
+            140,
+            474,
+            415,
+            489
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "equation",
+        "img_path": "images/94157907fb2661748c4181b52f821753fc78c77603527dd15639a03f826179ca.jpg",
+        "text": "$$\n\\begin{array} { r l } & { - \\mathbb { I } ( \\hat { y } ; \\mathcal { G } _ { s } ) + \\beta \\mathbb { I } ( \\mathcal { G } ; \\mathcal { G } _ { s } ) } \\\\ & { = - \\mathbb { E } _ { p ( \\hat { y } , \\mathcal { G } _ { s } ) } \\left[ \\log \\frac { p ( \\hat { y } , \\mathcal { G } _ { s } ) } { p ( \\hat { y } ) p ( \\mathcal { G } _ { s } ) } \\right] + \\beta \\mathbb { E } _ { p ( \\mathcal { G } , \\mathcal { G } _ { s } ) } \\left[ \\log \\frac { p ( \\mathcal { G } , \\mathcal { G } _ { s } ) } { p ( \\mathcal { G } ) p ( \\mathcal { G } _ { s } ) } \\right] } \\\\ & { = - \\mathbb { E } _ { p ( \\hat { y } , \\mathcal { G } _ { s } ) } \\left[ \\log \\frac { p ( \\hat { y } | \\mathcal { G } _ { s } ) p ( \\mathcal { G } _ { s } ) } { p ( \\hat { y } ) p ( \\mathcal { G } _ { s } ) } \\right] + \\beta \\mathbb { E } _ { p ( \\mathcal { G } , \\mathcal { G } _ { s } ) } \\left[ \\log \\frac { p ( \\mathcal { G } _ { s } | \\mathcal { G } ) p ( \\mathcal { G } ) } { p ( \\mathcal { G } ) p ( \\mathcal { G } _ { s } ) } \\right] } \\\\ & { = - \\mathbb { E } _ { p ( \\hat { y } , \\mathcal { G } _ { s } ) } \\left[ \\log \\frac { p ( \\hat { y } | \\mathcal { G } _ { s } ) } { p ( \\hat { y } ) } \\right] + \\beta \\mathbb { E } _ { p ( \\mathcal { G } , \\mathcal { G } _ { s } ) } \\left[ \\log \\frac { p ( \\mathcal { G } _ { s } | \\mathcal { G } ) } { p ( \\mathcal { G } _ { s } ) } \\right] } \\\\ & { = - \\mathbb { E } _ { p ( \\mathcal { G } _ { s } ) } \\mathbb { E } _ { p ( \\hat { y } | \\mathcal { G } _ { s } ) } \\left[ \\log \\frac { p ( \\hat { y } | \\mathcal { G } _ { s } ) } { p ( \\hat { y } ) } \\right] + \\beta \\mathbb { E } _ { p ( \\mathcal { G } ) } \\mathbb { E } _ { p ( \\mathcal { G } _ { s } | \\mathcal { G } ) } \\left[ \\log \\frac { p ( \\mathcal { G } _ { s } | \\mathcal { G } ) } { p ( \\mathcal { G } _ { s } ) } \\right] } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            267,
+            493,
+            735,
+            655
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "567 Using Jensen’s inequality and assuming that $p _ { f } ( \\hat { y } | \\mathcal { G } _ { s } )$ is an approximation of $p ( \\hat { y } | \\mathcal { G } _ { s } )$ , we can get: ",
+        "bbox": [
+            140,
+            656,
+            813,
+            672
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4e3833429e077716016241fa6144adcaffc467194117ae5583a2cbc1e759bc10.jpg",
+        "text": "$$\n\\begin{array} { r l } & { - \\mathbb { E } _ { p ( \\mathcal { G } _ { s } ) } \\mathbb { E } _ { p ( \\hat { y } | \\mathcal { G } _ { s } ) } \\left[ \\log \\frac { p ( \\hat { y } | \\mathcal { G } _ { s } ) } { p ( \\hat { y } ) } \\right] \\leq - \\mathbb { E } _ { p ( \\mathcal { G } _ { s } ) } \\mathbb { E } _ { p ( \\hat { y } | \\mathcal { G } _ { s } ) } [ \\log p _ { f } ( \\hat { y } | \\mathcal { G } _ { s } ) ] - \\mathbb { E } _ { p ( \\hat { y } ) } [ \\log p ( \\hat { y } ) ] } \\\\ & { \\qquad = - \\mathbb { E } _ { p ( \\mathcal { G } _ { s } , \\hat { y } ) } \\left[ \\log p _ { f } ( \\hat { y } | \\mathcal { G } _ { s } ) \\right] + \\mathbb { H } ( \\hat { y } ) . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            209,
+            676,
+            761,
+            732
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "568 We introduce explain models: ",
+        "bbox": [
+            140,
+            734,
+            369,
+            750
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ee0eefba04720f02c85c84983d91451195829ee0a6edd69986d74316cc05c9e3.jpg",
+        "text": "$$\n\\begin{array} { r l } & { \\beta \\mathbb { E } _ { p ( \\mathcal { G } ) } \\mathbb { E } _ { p ( \\mathcal { G } _ { s } \\mid \\mathcal { G } ) } \\left[ \\log \\frac { p ( \\mathcal { G } _ { s } \\mid \\mathcal { G } ) } { p ( \\mathcal { G } _ { s } ) } \\right] } \\\\ & { = \\mathbb { E } _ { p ( \\mathcal { G } ) } \\mathbb { E } _ { p ( \\mathcal { G } _ { s } \\mid \\mathcal { G } ) } \\left[ \\log \\frac { p _ { \\alpha } ( \\mathcal { G } _ { s } \\mid \\mathcal { G } ) } { p ( \\mathcal { G } _ { s } ) } \\cdot \\frac { p ( \\mathcal { G } _ { s } \\mid \\mathcal { G } ) } { p _ { \\alpha } ( \\mathcal { G } _ { s } \\mid \\mathcal { G } ) } \\right] } \\\\ & { = \\mathbb { E } _ { p ( \\mathcal { G } ) } \\mathbb { E } _ { p ( \\mathcal { G } _ { s } \\mid \\mathcal { G } ) } \\left[ \\log \\frac { p _ { \\alpha } ( \\mathcal { G } _ { s } \\mid \\mathcal { G } ) } { p ( \\mathcal { G } _ { s } ) } \\right] + \\mathbb { E } _ { p ( \\mathcal { G } ) } \\mathbb { E } _ { p ( \\mathcal { G } _ { s } \\mid \\mathcal { G } ) } \\left[ \\log \\frac { p ( \\mathcal { G } _ { s } \\mid \\mathcal { G } ) } { p _ { \\alpha } ( \\mathcal { G } _ { s } \\mid \\mathcal { G } ) } \\right] . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            269,
+            753,
+            727,
+            861
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "569 The second term is the KL divergence: ",
+        "bbox": [
+            142,
+            862,
+            429,
+            877
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "equation",
+        "img_path": "images/005d8b355f20c6f27837f1d48bb1312c0983decd57467f03456c2e0d26f1f673.jpg",
+        "text": "$$\n\\mathbb { E } _ { p ( \\mathcal { G } ) } \\mathbb { E } _ { p ( \\mathcal { G } _ { s } | \\mathcal { G } ) } \\left[ \\log \\frac { p ( \\mathcal { G } _ { s } | \\mathcal { G } ) } { p _ { \\alpha } ( \\mathcal { G } _ { s } | \\mathcal { G } ) } \\right] = \\mathbb { E } _ { p ( \\mathcal { G } ) } \\left[ \\mathrm { K L } ( p ( \\mathcal { G } _ { s } | \\mathcal { G } ) | | p _ { \\alpha } ( \\mathcal { G } _ { s } | \\mathcal { G } ) ) \\right] \\geq 0 .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            264,
+            881,
+            733,
+            916
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "17 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "570 Therefore, ",
+        "bbox": [
+            140,
+            92,
+            245,
+            106
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "equation",
+        "img_path": "images/cf1263444948f0b76a5e8ff478e87141acaf7b4cc60171fe3b83f20b76ffc9cc.jpg",
+        "text": "$$\n\\mathrm { I } ( { \\mathcal { G } } ; { \\mathcal { G } } _ { s } ) \\leq \\mathbb { E } _ { p ( { \\mathcal { G } } ) } \\mathbb { E } _ { p _ { \\alpha } ( { \\mathcal { G } } _ { s } \\mid { \\mathcal { G } } ) } \\left[ \\log { \\frac { p _ { \\alpha } ( { \\mathcal { G } } _ { s } \\mid { \\mathcal { G } } ) } { q ( { \\mathcal { G } } _ { s } ) } } \\right] = \\mathbb { E } _ { p ( { \\mathcal { G } } ) } \\left[ \\mathrm { K L } ( p _ { \\alpha } ( { \\mathcal { G } } _ { s } \\mid { \\mathcal { G } } ) \\| q ( { \\mathcal { G } } _ { s } ) ) \\right] .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            243,
+            107,
+            753,
+            142
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "571 Combined with our previous derivation of the first term, we can get: ",
+        "bbox": [
+            135,
+            143,
+            629,
+            159
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "equation",
+        "img_path": "images/50962e212ef00e22af6921e9fd361f878cf1a0f405111b0af72562255c9b2f41.jpg",
+        "text": "$$\n\\begin{array} { r } { - \\operatorname { I } ( \\widehat { y } ; \\mathcal { G } _ { s } ) + \\beta \\operatorname { I } ( \\mathcal { G } ; \\mathcal { G } _ { s } ) \\leq - \\mathbb { E } _ { p ( \\mathcal { G } _ { s } , \\widehat { y } ) } \\left[ \\log p _ { f } ( \\widehat { y } | \\mathcal { G } _ { s } ) \\right] + \\operatorname { H } ( \\widehat { y } ) + \\beta \\mathbb { E } _ { p ( \\mathcal { G } ) } \\left[ \\mathrm { K L } ( p _ { \\alpha } ( \\mathcal { G } _ { s } | \\mathcal { G } ) | | q ( \\mathcal { G } _ { s } ) ) \\right] . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            179,
+            160,
+            789,
+            179
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "572 F Experiment Supplement ",
+        "text_level": 1,
+        "bbox": [
+            140,
+            194,
+            411,
+            213
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "table",
+        "img_path": "images/c5c1125f5d10a66f90dcbf84f3350e0a5b8178c77e8294e8116cae7aecd86edf.jpg",
+        "table_caption": [
+            "Table 5: Statistics of Datasets. "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Dataset</td><td>DBLP</td><td>ACM</td><td>Freebase</td></tr><tr><td>Nodes</td><td>26,128</td><td>10,942</td><td>43,854</td></tr><tr><td>Edges</td><td>239,566</td><td>547,872</td><td>151,034</td></tr><tr><td>Node Types</td><td>4</td><td>4</td><td>4</td></tr><tr><td>Edge Types</td><td>6</td><td>8</td><td>6</td></tr><tr><td>Classes</td><td>4</td><td>3</td><td>3</td></tr></table>",
+        "bbox": [
+            334,
+            250,
+            658,
+            349
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "573 F.1 Datasets ",
+        "text_level": 1,
+        "bbox": [
+            140,
+            371,
+            272,
+            386
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "574 We conduct experiments on three real-world datasets. According to the Heterogeneous Graph   \n575 Benchmark [24] settings, we randomly split the nodes with proportions of $24 \\%$ , $6 \\%$ , and $70 \\%$ for   \n576 training, validation, and testing, respectively. The statistics of the three datasets are shown in Table 5. ",
+        "bbox": [
+            145,
+            396,
+            826,
+            439
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• $\\mathbf { D B L P ^ { 1 } }$ is a computer science bibliography network that contains four types of nodes: Paper (P), Author (A), Term (T), and Venue (V). The authors in this network are from four research areas (Database, Data Mining, Artificial Intelligence, and Information Retrieval).   \n• $\\mathbf { A C M } ^ { 2 }$ is a citation network that contains four types of nodes: Paper (P), Author (A), Term (T), and Subject (S). The papers in this network are divided into three classes (Database, Wireless Communication, and Data Mining).   \n• Freebase [44] is a knowledge graph that contains four types of nodes: Movie (M), Actor (A), Director (D) and Writer (W). ",
+        "bbox": [
+            217,
+            446,
+            826,
+            568
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "F.2 Baselines ",
+        "text_level": 1,
+        "bbox": [
+            174,
+            582,
+            277,
+            597
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Next, we provide details on the baselines used in our experiments. ",
+        "bbox": [
+            158,
+            608,
+            604,
+            622
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• PGExpaliner [16] is a parameterized explainer that learns a mask for each edge to obtain edge importance scores.   \n• GNNExplainer [32] maximizes the mutual information between the model’s prediction on the original input and the masked input by masking features and edges.   \n• PGM-Explainer [33] employs a Bayesian network-based approach, treating vertices in the input graph as random variables to fit the GNN model’s predicted label.   \n• V-InfoR [5] utilizes a parametric method, learning edge masks on the latent representations to identify important edges.   \n• AMExplainer [36] optimizes GNN explanations by leveraging adversarial networks to achieve both sparsity and prediction accuracy, ensuring compact and faithful explanation sets.   \n• Hete-PGE is an extension of PGExplainer, where we replace the initial concatenation with a relation-based attention learning module to enable learning of heterogeneous semantics.   \n• xPath provides fine-grained explanations by identifying causal nodes and their influence paths through a novel graph rewiring algorithm, offering detailed insights into the model’s decision-making process. ",
+        "bbox": [
+            217,
+            632,
+            825,
+            878
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "1https://dblp.uni-trier.de 2http://dl.acm.org/ ",
+        "bbox": [
+            194,
+            883,
+            338,
+            911
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "18 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "table",
+        "img_path": "images/06534ae7992f12849853ac09482307e7225566eb4e4d05c910e632eda95edf42.jpg",
+        "table_caption": [
+            "Table 6: Node classification result using our heterogeneous Graph Neural Network. "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Dataset</td><td>DBLP</td><td>ACM</td><td>Freebase</td></tr><tr><td>Micro-F1</td><td>92.64±0.14</td><td>92.32±0.12</td><td>68.99±0.20</td></tr><tr><td>Macro-F1</td><td>92.16±0.19</td><td>92.40±0.11</td><td>63.57±0.36</td></tr></table>",
+        "bbox": [
+            307,
+            143,
+            691,
+            202
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "604 In the experiment, we use a basic heterogeneous Graph Neural Network, which encodes the input   \n605 graph through 2 layers of GCN, and then used a layer of attention learning module to learn different   \n606 heterogeneous relations. For a heterogeneous graph, the feature spaces of different types of nodes are   \n607 usually different. We use a mapping function to map the features of different types into a common   \n608 feature space, as shown below: ",
+        "bbox": [
+            140,
+            215,
+            825,
+            285
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d04b1eafa97bd17b1f62b087db8e0696a74e67db89c0e31fe7cfabd7657d4b4b.jpg",
+        "text": "$$\n\\mathbf { z } _ { v } = \\mathbf { W } _ { m } \\mathbf { x } _ { v } ^ { A } + \\mathbf { b } _ { m } ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            428,
+            282,
+            568,
+            301
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "609 where $A \\in { \\mathcal { A } }$ is the node type of node $v$ , $\\mathbf { W } _ { m }$ is a learnable weight, and $ { \\mathbf { b } } _ { m }$ is the bias. Then, in the   \n610 shared space, we use GCN to obtain the node embeddings: ",
+        "bbox": [
+            145,
+            304,
+            825,
+            332
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "equation",
+        "img_path": "images/3325bfc1dec97b40d31a62031bbea4f5b37bcbfefb3c8146f17f652e7ea67fb9.jpg",
+        "text": "$$\n\\mathbf { Z } ^ { ( l ) } = \\mathrm { G C N } ( \\mathbf { Z } ^ { ( l - 1 ) } , \\mathbf { A } ) , \\mathbf { Z } ^ { ( 0 ) } = \\mathbf { Z } _ { v } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            374,
+            337,
+            622,
+            356
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "611 To learn the heterogeneous semantics of the heterogeneous graph, we introduce a type vector $\\gamma _ { v }$ and   \n612 learn relation information through an attention module: ",
+        "bbox": [
+            137,
+            361,
+            828,
+            388
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "equation",
+        "img_path": "images/bd2d908b4c5de5897817b4856647162050328289cdad443a263f03d91c92f7f4.jpg",
+        "text": "$$\n\\begin{array} { r } { \\gamma _ { i } ^ { q } = \\mathbf { W } _ { r } ^ { q } \\gamma _ { i } , \\gamma _ { j } ^ { k } = \\mathbf { W } _ { r } ^ { k } \\gamma _ { j } , } \\\\ { s c o r e _ { i j } ^ { \\gamma } = \\gamma _ { i } ^ { q } \\gamma _ { j } ^ { k } , \\quad } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            406,
+            393,
+            589,
+            438
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "where 613 $\\mathbf { W } _ { r } ^ { q }$ and $\\mathbf { W } _ { r } ^ { k }$ are learnable weights. The attention of the nodes can be computed as follows: ",
+        "bbox": [
+            145,
+            441,
+            818,
+            458
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2f3f1ee37c58b41575c50b0b1871c150d53ad9d33b4896e8af1d559934299e1f.jpg",
+        "text": "$$\n\\begin{array} { r } { q _ { i } = \\mathbf { W } _ { q } ^ { z } \\mathbf { z } _ { i } , k _ { j } = \\mathbf { W } _ { k } ^ { z } \\mathbf { z } _ { j } , \\quad \\quad } \\\\ { \\widehat { \\alpha } _ { i j } = \\frac { \\exp \\left( \\mathrm { L e a k y R e L U } \\left( a ^ { T } [ q _ { i } \\parallel k _ { j } ] \\right) \\right) } { \\sum _ { j ^ { \\prime } \\in \\mathcal { N } _ { i } } \\exp \\left( \\mathrm { L e a k y R e L U } \\left( a ^ { T } [ q _ { i } \\parallel k _ { j ^ { \\prime } } ] \\right) \\right) } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            338,
+            462,
+            658,
+            520
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "where 614 $\\mathbf { W } _ { q } ^ { z }$ and $\\mathbf { W } _ { k } ^ { z }$ are learnable weights. The final prediction can be expressed as: ",
+        "bbox": [
+            137,
+            522,
+            723,
+            539
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "equation",
+        "img_path": "images/fe47015b50fff672cccb57f57ddddcf2b5e75f537edaff478e178c1b8eb37b25.jpg",
+        "text": "$$\n\\begin{array} { r } { s c o r e _ { i j } = \\widehat { \\alpha } _ { i j } + \\beta s c o r e _ { i j } ^ { \\gamma } , \\phantom { x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x } } \\\\ { \\mathbf { Z } _ { \\mathbf { H } } ^ { ( l ) } = \\mathrm { L a y e r N o r m } ( \\mathbf { Z } _ { \\mathbf { H } } ^ { ( l - 1 ) } + s c o r e _ { i j } \\cdot \\mathbf { Z } _ { \\mathbf { H } } ^ { ( l - 1 ) } ) , } \\\\ { \\hat { Y } = P _ { f } ( \\mathbf { Z } _ { \\mathbf { H } } ^ { ( l ) } ; \\boldsymbol { \\theta } _ { p } ) . \\phantom { x x x x x x x x x x x x x x x x } } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            341,
+            544,
+            655,
+            611
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "15 where $\\theta _ { p }$ is the parameter of the predictor. The basic prediction results are shown in Table 6. ",
+        "bbox": [
+            158,
+            613,
+            779,
+            628
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "16 The experiments are conducted on an L20 GPU with 48GB of memory. Our CPU is an Intel(R)   \n617 Xeon(R) Platinum 8457C. We utilized PyTorch version 1.13.1 and DGL version 1.1.1. ",
+        "bbox": [
+            150,
+            632,
+            828,
+            662
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "F.4 Impact of Noise ",
+        "text_level": 1,
+        "bbox": [
+            161,
+            678,
+            323,
+            693
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "19 We measure the impact of noise on the graph distribution through the variation of the KL divergence.   \n620 The result is in Table 7, and it can be observed that noise significantly disrupts the graph distribution. ",
+        "bbox": [
+            148,
+            703,
+            826,
+            733
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "table",
+        "img_path": "images/986ea3d39d3b09317f93bf50a0849fc24586cde22c9c639fd11eeb7571d55bfb.jpg",
+        "table_caption": [
+            "Table 7: The impact of noise with different budgets on graph distribution. "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Noise</td><td>10%</td><td>20%</td><td>30%</td><td>40%</td><td>50%</td><td>60%</td><td>70%</td><td>80%</td><td>90%</td></tr><tr><td>KL</td><td>0.11108</td><td>0.31823</td><td>0.54854</td><td>0.80690</td><td>1.09782</td><td>1.43823</td><td>2.01607</td><td>2.15205</td><td>2.40943</td></tr></table>",
+        "bbox": [
+            178,
+            766,
+            828,
+            805
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "621 F.5 Parameter Setting ",
+        "text_level": 1,
+        "bbox": [
+            142,
+            830,
+            341,
+            845
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "622 For the base heterogeneous Graph Neural Network, we use Adam [45] as the optimizer, LeakyReLU   \n623 with a negative slope $s = 0 . 2$ as the activation function, a learning rate of 1e-4, and a dropout rate of 0   \n624 for Freebase and 0.5 for other datasets. The hidden dimension is set to 256. Our training is performed   \n625 for 100 epochs. ",
+        "bbox": [
+            140,
+            854,
+            825,
+            911
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "discarded",
+        "text": "603 F.3 Base Heterogeneous Graph Neural Network ",
+        "bbox": [
+            140,
+            90,
+            519,
+            107
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "626 G Limitations ",
+        "text_level": 1,
+        "bbox": [
+            142,
+            89,
+            308,
+            106
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "627 Node Feature Noise. This paper focuses on structural noise. Both denoising variational inference   \n628 and heterogeneous explanation generator are proposed to mitigate the impact of structural noise.   \n629 Therefore, RoHeX cannot be directly used to explain heterogeneous graphs containing feature noise.   \n630 We will extend RoHeX to achieve robustness at the node feature level in future work.   \n631 Dynamic Graph. RoHeX can be used to explain different levels of tasks on heterogeneous graphs   \n632 and can also be applied to homogeneous graphs. Due to the lack of dynamic information extraction   \n633 module, RoHeX cannot be applied to dynamic graphs. ",
+        "bbox": [
+            140,
+            121,
+            826,
+            176
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            143,
+            190,
+            828,
+            233
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "1. Claims ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            116,
+            284,
+            130
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Question: Do the main claims made in the abstract and introduction accurately reflect the paper’s contributions and scope? ",
+        "bbox": [
+            232,
+            135,
+            823,
+            162
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            167,
+            330,
+            181
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Justification: The abstract and introduction accurately reflect the paper’s contributions and scope. ",
+        "bbox": [
+            233,
+            185,
+            823,
+            214
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            218,
+            310,
+            232
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the abstract and introduction do not include the claims made in the paper.   \n• The abstract and/or introduction should clearly state the claims made, including the contributions made in the paper and important assumptions and limitations. A No or NA answer to this question will not be perceived well by the reviewers.   \n• The claims made should match theoretical and experimental results, and reflect how much the results can be expected to generalize to other settings.   \n• It is fine to include aspirational goals as motivation as long as it is clear that these goals are not attained by the paper. ",
+        "bbox": [
+            251,
+            237,
+            825,
+            369
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "2. Limitations ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            373,
+            316,
+            387
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss the limitations of the work performed by the authors? ",
+        "bbox": [
+            232,
+            391,
+            805,
+            406
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            410,
+            330,
+            424
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Justification: See Appendix G. ",
+        "bbox": [
+            232,
+            429,
+            434,
+            444
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            448,
+            308,
+            460
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper.   \n• The authors are encouraged to create a separate \"Limitations\" section in their paper.   \n• The paper should point out any strong assumptions and how robust the results are to violations of these assumptions (e.g., independence assumptions, noiseless settings, model well-specification, asymptotic approximations only holding locally). The authors should reflect on how these assumptions might be violated in practice and what the implications would be.   \n• The authors should reflect on the scope of the claims made, e.g., if the approach was only tested on a few datasets or with a few runs. In general, empirical results often depend on implicit assumptions, which should be articulated.   \n• The authors should reflect on the factors that influence the performance of the approach. For example, a facial recognition algorithm may perform poorly when image resolution is low or images are taken in low lighting. Or a speech-to-text system might not be used reliably to provide closed captions for online lectures because it fails to handle technical jargon.   \n• The authors should discuss the computational efficiency of the proposed algorithms and how they scale with dataset size.   \n• If applicable, the authors should discuss possible limitations of their approach to address problems of privacy and fairness.   \n• While the authors might fear that complete honesty about limitations might be used by reviewers as grounds for rejection, a worse outcome might be that reviewers discover limitations that aren’t acknowledged in the paper. The authors should use their best judgment and recognize that individual actions in favor of transparency play an important role in developing norms that preserve the integrity of the community. Reviewers will be specifically instructed to not penalize honesty concerning limitations. ",
+        "bbox": [
+            250,
+            463,
+            825,
+            842
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "3. Theory assumptions and proofs ",
+        "text_level": 1,
+        "bbox": [
+            215,
+            847,
+            455,
+            861
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof? ",
+        "bbox": [
+            230,
+            864,
+            823,
+            892
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            897,
+            328,
+            911
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            506,
+            946
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "discarded",
+        "text": "635 636 637 638 639 640 641 642 643 644 645 646 647 648 649 650 651 652 653 654 655 656 657 658 659 660 661 662 663 664 665 666 667 668 669 670 671 672 673 674 675 676 677 678 679 680 681 682 683 684 685 ",
+        "bbox": [
+            137,
+            97,
+            166,
+            924
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "discarded",
+        "text": "634 NeurIPS Paper Checklist ",
+        "bbox": [
+            145,
+            89,
+            387,
+            107
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Justification: See Appendix B, D, and E. ",
+        "bbox": [
+            232,
+            92,
+            506,
+            106
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "text_level": 1,
+        "bbox": [
+            232,
+            111,
+            308,
+            123
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include theoretical results.   \n• All the theorems, formulas, and proofs in the paper should be numbered and crossreferenced.   \n• All assumptions should be clearly stated or referenced in the statement of any theorems.   \n• The proofs can either appear in the main paper or the supplemental material, but if they appear in the supplemental material, the authors are encouraged to provide a short proof sketch to provide intuition.   \n• Inversely, any informal proof provided in the core of the paper should be complemented by formal proofs provided in appendix or supplemental material.   \n• Theorems and Lemmas that the proof relies upon should be properly referenced. ",
+        "bbox": [
+            251,
+            128,
+            826,
+            279
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "4. Experimental result reproducibility ",
+        "text_level": 1,
+        "bbox": [
+            217,
+            284,
+            480,
+            297
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)? ",
+        "bbox": [
+            232,
+            301,
+            825,
+            343
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            348,
+            330,
+            362
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "Justification: See Section 4.1 and Appendix F.5. ",
+        "bbox": [
+            235,
+            366,
+            545,
+            381
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            386,
+            308,
+            398
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• If the paper includes experiments, a No answer to this question will not be perceived well by the reviewers: Making the paper reproducible is important, regardless of whether the code and data are provided or not.   \nIf the contribution is a dataset and/or model, the authors should describe the steps taken to make their results reproducible or verifiable.   \n• Depending on the contribution, reproducibility can be accomplished in various ways. For example, if the contribution is a novel architecture, describing the architecture fully might suffice, or if the contribution is a specific model and empirical evaluation, it may be necessary to either make it possible for others to replicate the model with the same dataset, or provide access to the model. In general. releasing code and data is often one good way to accomplish this, but reproducibility can also be provided via detailed instructions for how to replicate the results, access to a hosted model (e.g., in the case of a large language model), releasing of a model checkpoint, or other means that are appropriate to the research performed.   \n• While NeurIPS does not require releasing code, the conference does require all submissions to provide some reasonable avenue for reproducibility, which may depend on the nature of the contribution. For example (a) If the contribution is primarily a new algorithm, the paper should make it clear how to reproduce that algorithm. (b) If the contribution is primarily a new model architecture, the paper should describe the architecture clearly and fully. (c) If the contribution is a new model (e.g., a large language model), then there should either be a way to access this model for reproducing the results or a way to reproduce the model (e.g., with an open-source dataset or instructions for how to construct the dataset). (d) We recognize that reproducibility may be tricky in some cases, in which case authors are welcome to describe the particular way they provide for reproducibility. In the case of closed-source models, it may be that access to the model is limited in some way (e.g., to registered users), but it should be possible for other researchers to have some path to reproducing or verifying the results. ",
+        "bbox": [
+            250,
+            401,
+            828,
+            844
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "5. Open access to data and code ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            851,
+            437,
+            864
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material? ",
+        "bbox": [
+            233,
+            869,
+            823,
+            911
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "discarded",
+        "text": "22 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "discarded",
+        "text": "686 687 688 689 690 691 692 693 694 695 696 697 698 699 700 701 702 703 704 705 706 707 708 709 710 711 712 713 714 715 716 717 718 719 720 721 722 723 724 725 726 727 728 729 730 731 732 733 734 735 736 737 738 739 ",
+        "bbox": [
+            138,
+            74,
+            166,
+            921
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "Answer: [No] ",
+        "bbox": [
+            232,
+            92,
+            325,
+            106
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "Justification: The code will be open-sourced after the paper is accepted. ",
+        "bbox": [
+            232,
+            109,
+            700,
+            125
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            128,
+            308,
+            142
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that paper does not include experiments requiring code.   \n• Please see the NeurIPS code and data submission guidelines (https://nips.cc/ public/guides/CodeSubmissionPolicy) for more details.   \n• While we encourage the release of code and data, we understand that this might not be possible, so “No” is an acceptable answer. Papers cannot be rejected simply for not including code, unless this is central to the contribution (e.g., for a new open-source benchmark).   \n• The instructions should contain the exact command and environment needed to run to reproduce the results. See the NeurIPS code and data submission guidelines (https: //nips.cc/public/guides/CodeSubmissionPolicy) for more details.   \n• The authors should provide instructions on data access and preparation, including how to access the raw data, preprocessed data, intermediate data, and generated data, etc.   \n• The authors should provide scripts to reproduce all experimental results for the new proposed method and baselines. If only a subset of experiments are reproducible, they should state which ones are omitted from the script and why.   \n• At submission time, to preserve anonymity, the authors should release anonymized versions (if applicable).   \n• Providing as much information as possible in supplemental material (appended to the paper) is recommended, but including URLs to data and code is permitted. ",
+        "bbox": [
+            251,
+            146,
+            826,
+            425
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "6. Experimental setting/details ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            429,
+            429,
+            444
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results? ",
+        "bbox": [
+            232,
+            448,
+            825,
+            488
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            494,
+            330,
+            508
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "Justification: See Appendix F.1 and F.5. ",
+        "bbox": [
+            233,
+            512,
+            498,
+            527
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            531,
+            308,
+            545
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments. • The experimental setting should be presented in the core of the paper to a level of detail that is necessary to appreciate the results and make sense of them. • The full details can be provided either with the code, in appendix, or as supplemental material. ",
+        "bbox": [
+            251,
+            550,
+            825,
+            622
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "7. Experiment statistical significance ",
+        "text_level": 1,
+        "bbox": [
+            215,
+            628,
+            472,
+            642
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments? ",
+        "bbox": [
+            232,
+            646,
+            823,
+            674
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            679,
+            330,
+            693
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "Justification: See Section 4.2. ",
+        "bbox": [
+            232,
+            696,
+            428,
+            712
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            715,
+            308,
+            729
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The authors should answer \"Yes\" if the results are accompanied by error bars, confidence intervals, or statistical significance tests, at least for the experiments that support the main claims of the paper.   \nThe factors of variability that the error bars are capturing should be clearly stated (for example, train/test split, initialization, random drawing of some parameter, or overall run with given experimental conditions).   \n• The method for calculating the error bars should be explained (closed form formula, call to a library function, bootstrap, etc.)   \n• The assumptions made should be given (e.g., Normally distributed errors).   \n• It should be clear whether the error bar is the standard deviation or the standard error of the mean.   \n• It is OK to report 1-sigma error bars, but one should state it. The authors should preferably report a 2-sigma error bar than state that they have a $96 \\%$ CI, if the hypothesis of Normality of errors is not verified.   \n• For asymmetric distributions, the authors should be careful not to show in tables or figures symmetric error bars that would yield results that are out of range (e.g. negative error rates).   \n• If error bars are reported in tables or plots, The authors should explain in the text how they were calculated and reference the corresponding figures or tables in the text. ",
+        "bbox": [
+            251,
+            734,
+            826,
+            912
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "discarded",
+        "text": "740 741 742 743 744 745 746 747 748 749 750 751 752 753 754 755 756 757 758 759 760 761 762 763 764 765 766 767 768 769 770 771 772 773 774 775 776 777 778 779 780 781 782 783 784 785 786 787 788 789 790 791 ",
+        "bbox": [
+            138,
+            95,
+            166,
+            926
+        ],
+        "page_idx": 22
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            251,
+            92,
+            825,
+            208
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "8. Experiments compute resources ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            212,
+            455,
+            226
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments? ",
+        "bbox": [
+            232,
+            231,
+            825,
+            272
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            276,
+            330,
+            291
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Justification: See Appendix F.3. ",
+        "bbox": [
+            232,
+            296,
+            442,
+            310
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            315,
+            310,
+            329
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The paper should indicate the type of compute workers CPU or GPU, internal cluster, or cloud provider, including relevant memory and storage.   \n• The paper should provide the amount of compute required for each of the individual experimental runs as well as estimate the total compute.   \n• The paper should disclose whether the full research project required more compute than the experiments reported in the paper (e.g., preliminary or failed experiments that didn’t make it into the paper). ",
+        "bbox": [
+            251,
+            333,
+            826,
+            452
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "9. Code of ethics ",
+        "text_level": 1,
+        "bbox": [
+            212,
+            457,
+            333,
+            470
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines? ",
+        "bbox": [
+            233,
+            476,
+            821,
+            503
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            508,
+            330,
+            522
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Justification: We comply. ",
+        "bbox": [
+            232,
+            527,
+            400,
+            541
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            546,
+            308,
+            559
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the authors have not reviewed the NeurIPS Code of Ethics.   \n• If the authors answer No, they should explain the special circumstances that require a deviation from the Code of Ethics.   \n• The authors should make sure to preserve anonymity (e.g., if there is a special consideration due to laws or regulations in their jurisdiction). ",
+        "bbox": [
+            251,
+            565,
+            825,
+            640
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "10. Broader impacts ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            643,
+            351,
+            657
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed? ",
+        "bbox": [
+            232,
+            662,
+            823,
+            690
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            695,
+            330,
+            709
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Justification: See Section 1. ",
+        "bbox": [
+            233,
+            714,
+            413,
+            728
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            733,
+            308,
+            747
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that there is no societal impact of the work performed.   \n• If the authors answer NA or No, they should explain why their work has no societal impact or why the paper does not address societal impact.   \n• Examples of negative societal impacts include potential malicious or unintended uses (e.g., disinformation, generating fake profiles, surveillance), fairness considerations (e.g., deployment of technologies that could make decisions that unfairly impact specific groups), privacy considerations, and security considerations.   \n• The conference expects that many papers will be foundational research and not tied to particular applications, let alone deployments. However, if there is a direct path to any negative applications, the authors should point it out. For example, it is legitimate to point out that an improvement in the quality of generative models could be used to generate deepfakes for disinformation. On the other hand, it is not needed to point out that a generic algorithm for optimizing neural networks could enable people to train models that generate Deepfakes faster.   \nThe authors should consider possible harms that could arise when the technology is being used as intended and functioning correctly, harms that could arise when the technology is being used as intended but gives incorrect results, and harms following from (intentional or unintentional) misuse of the technology.   \n• If there are negative societal impacts, the authors could also discuss possible mitigation strategies (e.g., gated release of models, providing defenses in addition to attacks, mechanisms for monitoring misuse, mechanisms to monitor how a system learns from feedback over time, improving the efficiency and accessibility of ML). ",
+        "bbox": [
+            250,
+            750,
+            825,
+            911
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "discarded",
+        "text": "792 793 794 795 796 797 798 799 800 801 802 803 804 805 806 807 808 809 810 811 812 813 814 815 816 817 818 819 820 821 822 823 824 825 826 827 828 829 830 831 832 833 834 835 836 837 838 839 840 841 842 ",
+        "bbox": [
+            137,
+            92,
+            168,
+            926
+        ],
+        "page_idx": 23
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            251,
+            92,
+            825,
+            248
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "11. Safeguards ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            252,
+            313,
+            266
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pretrained language models, image generators, or scraped datasets)? ",
+        "bbox": [
+            232,
+            270,
+            825,
+            311
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            316,
+            328,
+            330
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Justification: This paper poses no such risks. ",
+        "bbox": [
+            235,
+            334,
+            524,
+            349
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            353,
+            308,
+            366
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper poses no such risks.   \n• Released models that have a high risk for misuse or dual-use should be released with necessary safeguards to allow for controlled use of the model, for example by requiring that users adhere to usage guidelines or restrictions to access the model or implementing safety filters.   \n• Datasets that have been scraped from the Internet could pose safety risks. The authors should describe how they avoided releasing unsafe images.   \n• We recognize that providing effective safeguards is challenging, and many papers do not require this, but we encourage authors to take this into account and make a best faith effort. ",
+        "bbox": [
+            251,
+            371,
+            825,
+            515
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "12. Licenses for existing assets ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            520,
+            419,
+            534
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected? ",
+        "bbox": [
+            233,
+            539,
+            823,
+            579
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            584,
+            330,
+            598
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Justification: See Appendix F.1 and F.2. ",
+        "bbox": [
+            233,
+            602,
+            498,
+            617
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            621,
+            308,
+            635
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not use existing assets.   \n• The authors should cite the original paper that produced the code package or dataset.   \n• The authors should state which version of the asset is used and, if possible, include a URL.   \n• The name of the license (e.g., CC-BY 4.0) should be included for each asset.   \n• For scraped data from a particular source (e.g., website), the copyright and terms of service of that source should be provided.   \n• If assets are released, the license, copyright information, and terms of use in the package should be provided. For popular datasets, paperswithcode.com/datasets has curated licenses for some datasets. Their licensing guide can help determine the license of a dataset.   \n• For existing datasets that are re-packaged, both the original license and the license of the derived asset (if it has changed) should be provided.   \n• If this information is not available online, the authors are encouraged to reach out to the asset’s creators. ",
+        "bbox": [
+            251,
+            638,
+            825,
+            859
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "13. New assets ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            864,
+            310,
+            878
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets? ",
+        "bbox": [
+            230,
+            883,
+            823,
+            911
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "discarded",
+        "text": "843 844 845 846 847 848 849 850 851 852 853 854 855 856 857 858 859 860 861 862 863 864 865 866 867 868 869 870 871 872 873 874 875 876 877 878 879 880 881 882 883 884 885 886 887 888 889 890 891 892 893 894 895 ",
+        "bbox": [
+            137,
+            98,
+            168,
+            924
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 24
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            92,
+            328,
+            106
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Justification: We does not release new assets. ",
+        "bbox": [
+            235,
+            111,
+            529,
+            125
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            130,
+            308,
+            143
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not release new assets.   \n• Researchers should communicate the details of the dataset/code/model as part of their submissions via structured templates. This includes details about training, license, limitations, etc.   \n• The paper should discuss whether and how consent was obtained from people whose asset is used.   \n• At submission time, remember to anonymize your assets (if applicable). You can either create an anonymized URL or include an anonymized zip file. ",
+        "bbox": [
+            251,
+            148,
+            825,
+            267
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "14. Crowdsourcing and research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            207,
+            272,
+            584,
+            286
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? ",
+        "bbox": [
+            233,
+            291,
+            823,
+            333
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            338,
+            328,
+            352
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Justification: This paper does not involve crowdsourcing nor research with human subjects. ",
+        "bbox": [
+            232,
+            358,
+            823,
+            371
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            376,
+            310,
+            390
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   \n• Including this information in the supplemental material is fine, but if the main contribution of the paper involves human subjects, then as much detail as possible should be included in the main paper.   \n• According to the NeurIPS Code of Ethics, workers involved in data collection, curation, or other labor should be paid at least the minimum wage in the country of the data collector. ",
+        "bbox": [
+            251,
+            395,
+            825,
+            511
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "15. Institutional review board (IRB) approvals or equivalent for research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            516,
+            821,
+            545
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained? ",
+        "bbox": [
+            232,
+            549,
+            825,
+            604
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            609,
+            328,
+            623
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Justification: This paper does not involve crowdsourcing nor research with human subjects. ",
+        "bbox": [
+            235,
+            628,
+            823,
+            643
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            647,
+            308,
+            661
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   \n• Depending on the country in which research is conducted, IRB approval (or equivalent) may be required for any human subjects research. If you obtained IRB approval, you should clearly state this in the paper.   \n• We recognize that the procedures for this may vary significantly between institutions and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the guidelines for their institution.   \n• For initial submissions, do not include any information that would break anonymity (if applicable), such as the institution conducting the review. ",
+        "bbox": [
+            251,
+            666,
+            825,
+            813
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "16. Declaration of LLM usage ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            818,
+            419,
+            832
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe the usage of LLMs if it is an important, original, or non-standard component of the core methods in this research? Note that if the LLM is used only for writing, editing, or formatting purposes and does not impact the core methodology, scientific rigorousness, or originality of the research, declaration is not required. ",
+        "bbox": [
+            232,
+            837,
+            825,
+            892
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            897,
+            328,
+            911
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "discarded",
+        "text": "26 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "discarded",
+        "text": "896 897 898 899 900 901 902 903 904 905 906 907 908 909 910 911 912 913 914 915 916 917 918 919 920 921 922 923 924 925 926 927 928 929 930 931 932 933 934 935 936 937 938 939 940 941 942 943 944 945 946 ",
+        "bbox": [
+            138,
+            92,
+            168,
+            921
+        ],
+        "page_idx": 25
+    },
+    {
+        "type": "text",
+        "text": "Justification: This paper does not involve LLMs as any important, original, or non-standard components. ",
+        "bbox": [
+            230,
+            90,
+            823,
+            119
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            125,
+            310,
+            137
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the core method development in this research does not involve LLMs as any important, original, or non-standard components. • Please refer to our LLM policy (https://neurips.cc/Conferences/2025/LLM) for what should or should not be described. ",
+        "bbox": [
+            253,
+            142,
+            825,
+            202
+        ],
+        "page_idx": 26
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 26
+    }
+]

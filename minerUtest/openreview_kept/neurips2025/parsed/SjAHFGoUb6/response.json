@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768193449235",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:50:49.248915Z",
+    "started_at": 1768193449.2492318,
+    "completed_at": 1768193551.8157983,
+    "error_message": null,
+    "file_info": {
+      "filename": "SjAHFGoUb6.pdf",
+      "size": 926902,
+      "md5": "b1f908e74aa3b4c2c011aabfc9f8c4fc"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 101.25486016273499,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/b1f908e74aa3b4c2c011aabfc9f8c4fc/results.zip"
+  }
+}

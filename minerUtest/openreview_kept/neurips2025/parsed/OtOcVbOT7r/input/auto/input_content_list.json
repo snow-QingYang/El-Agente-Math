@@ -1,0 +1,2613 @@
+[
+    {
+        "type": "text",
+        "text": "Differentially Private Clipped-SGD: High-Probability Convergence with Arbitrary Clipping Level ",
+        "text_level": 1,
+        "bbox": [
+            176,
+            122,
+            821,
+            172
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Anonymous Author(s)   \nAffiliation   \nAddress   \nemail ",
+        "bbox": [
+            423,
+            226,
+            580,
+            281
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Abstract ",
+        "text_level": 1,
+        "bbox": [
+            462,
+            318,
+            535,
+            334
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Gradient clipping is a fundamental tool in Deep Learning, improving the highprobability convergence of stochastic first-order methods like SGD, AdaGrad, and Adam under heavy-tailed noise, which is common in training large language models. It is also a crucial component of Differential Privacy (DP) mechanisms. However, existing high-probability convergence analyses typically require the clipping threshold to increase with the number of optimization steps, which is incompatible with standard DP mechanisms like the Gaussian mechanism. In this work, we close this gap by providing the first high-probability convergence analysis for DP-Clipped-SGD with a fixed clipping level, applicable to both convex and non-convex smooth optimization under heavy-tailed noise, characterized by a bounded central $\\alpha$ -th moment assumption, $\\alpha \\in ( 1 , 2 ]$ . Our results show that, with a fixed clipping level, the method converges to a neighborhood of the optimal solution with a faster rate than the existing ones. The neighborhood can be balanced against the noise introduced by DP, providing a refined trade-off between convergence speed and privacy guarantees. ",
+        "bbox": [
+            148,
+            352,
+            766,
+            560
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "16 1 Introduction ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            593,
+            312,
+            609
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "17 Stochastic first-order optimization methods, such as Stochastic Gradient Descent (SGD) (Robbins   \n18 and Monro, 1951), AdaGrad (Streeter and McMahan, 2010; Duchi et al., 2011), and Adam (Kingma   \n19 and Ba, 2014), are fundamental for training modern Machine Learning (ML) and Deep Learning   \n20 (DL) models. However, these methods are often enhanced with additional algorithmic techniques that   \n21 play a critical role in their convergence and practical performance. Among these, gradient clipping   \n22 (Pascanu et al., 2013) is one of the most widely used and well-studied approaches. In recent years,   \n23 substantial efforts have been made to theoretically understand the advantages of gradient clipping   \n24 and its impact on the convergence of stochastic optimization algorithms.   \n25 In particular, gradient clipping is a key component in managing heavy-tailed noise, which commonly   \n26 arises in the training of language models on textual data (Zhang et al., 2020), in the training of   \n27 GANs (Goodfellow et al., 2014; Gorbunov et al., 2022), and even in simpler tasks such as image   \n28 classification (S¸ ims¸ekli et al., 2019). This approach is primarily analyzed through the lens of high  \n29 probability convergence, as such guarantees provide a more accurate reflection of the actual behavior   \n30 of optimization methods compared to their more conventional in-expectation counterparts (Gorbunov   \n31 et al., 2020). Moreover, as demonstrated by Sadiev et al. (2023) for SGD and by Chezhegov et al.   \n32 (2024) for AdaGrad and Adam, methods without clipping may fail to exhibit high-probability   \n33 convergence with logarithmic dependence on the failure probability. In contrast, several recent works   \n34 (Gorbunov et al., 2020; Cutkosky and Mehta, 2021; Sadiev et al., 2023; Nguyen et al., 2023; Gorbunov   \n35 et al., 2024b; Chezhegov et al., 2024; Parletta et al., 2024) have established that various stochastic   \n36 first-order methods attain significantly better high-probability convergence under heavy-tailed noise   \n37 assumptions across different settings.   \n38 On the other hand, clipping is a cornerstone of Differentially Private (DP) machine learning. The   \n39 widely used Gaussian mechanism (Dwork et al., 2014) achieves privacy by adding Gaussian noise to   \n40 the gradients, thereby introducing uncertainty about their true values. However, the DP guarantees   \n41 provided by this mechanism rely on the assumption that the gradients have bounded norms, a   \n42 condition typically enforced through gradient clipping (Abadi et al., 2016).   \n43 It is therefore tempting to claim that gradient clipping can provably address two distinct challenges   \n44 simultaneously: mitigating heavy-tailed noise and ensuring differential privacy (DP). However, this   \n45 is not entirely accurate, as the clipping policies required for these two objectives differ substantially.   \n46 In the context of heavy-tailed noise, existing convergence guarantees are typically derived assuming   \n47 that the clipping level increases with the total number of training steps. In contrast, DP mechanisms   \n48 require a fixed and bounded clipping threshold to ensure robust privacy guarantees. This fundamental   \n49 mismatch raises a critical question: ",
+        "bbox": [
+            147,
+            627,
+            825,
+            738
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            744,
+            825,
+            897
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "Submitted to 39th Conference on Neural Information Processing Systems (NeurIPS 2025). Do not distribute. ",
+        "bbox": [
+            169,
+            922,
+            815,
+            936
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 ",
+        "bbox": [
+            148,
+            352,
+            163,
+            565
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            151,
+            90,
+            823,
+            119
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            126,
+            825,
+            195
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            200,
+            825,
+            299
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "How does differentially private version of Clipped-SGD converge with high probability under the heavy-tailed noise? ",
+        "bbox": [
+            209,
+            308,
+            787,
+            340
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "50 Our contribution. In this paper, we address the above question by providing the first high  \n51 probability convergence bounds for the differentially private version of Clipped-SGD (DP-Clipped  \n52 SGD) with an arbitrary fixed clipping level applied to convex smooth optimization problems under   \n53 heavy-tailed noise. Specifically, we assume that the stochastic gradient has a bounded central $\\alpha$ -th   \n54 moment for some $\\alpha \\in ( 1 , 2 ]$ and establish that DP-Clipped-SGD achieves a high-probability conver  \n55 gence rate of $\\widetilde { \\mathcal { O } } ( K ^ { - 1 / 2 } )$ to a certain neighborhood of the optimal solution. This rate is significantly   \n56 better than the previously known bound of $\\widetilde { \\mathcal { O } } ( K ^ { - ( \\alpha - 1 ) } / \\alpha )$ in this setting.   \n57 However, this improvement is achieved by relaxing the requirement for exact convergence and instead   \n58 demonstrating convergence to a neighborhood whose size depends non-trivially on the clipping level,   \n59 noise scale, and other problem-dependent parameters. Importantly, the size of this neighborhood,   \n60 introduced due to the inherent bias in clipped stochastic gradients, can be carefully balanced with   \n61 the neighborhood induced by the DP noise, allowing for more flexible control over the trade-off   \n62 between convergence accuracy and privacy. Additionally, we extend our results to the non-convex   \n63 case, illustrating the broader applicability of our analysis. ",
+        "bbox": [
+            145,
+            356,
+            826,
+            460
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            465,
+            825,
+            564
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "64 2 Technical Preliminaries ",
+        "text_level": 1,
+        "bbox": [
+            150,
+            583,
+            403,
+            601
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "65 The optimization problem considered in this work has the following form ",
+        "bbox": [
+            147,
+            616,
+            655,
+            631
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1319b1a8f591739ab40cce91144ccc9d6738ea4c66dcb00e8c33db0e4d77a8a1.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { x \\in \\mathbb { R } ^ { d } } \\left\\{ f ( x ) : = \\mathbb { E } _ { \\xi \\sim \\mathcal { D } } [ f _ { \\xi } ( x ) ] \\right\\} .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            395,
+            638,
+            601,
+            662
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "66 Here, $x$ denotes the model parameters, $f :  { \\mathbb { R } ^ { d } } \\to  { \\mathbb { R } }$ is the expected loss function, and $f _ { \\xi } : \\mathbb { R } ^ { d }  \\mathbb { R }$   \n67 represents the loss computed for a random sample $\\xi$ drawn from an (often unknown) distribution $\\mathcal { D }$ .   \n68 Such problems are fundamental in machine learning (Shalev-Shwartz and Ben-David, 2014).   \n69 We assume that at each iteration, we have access to an oracle that provides a stochastic gradi  \n70 ent $\\nabla f _ { \\xi } ( x )$ , as well as a $d$ -dimensional random vector $\\omega$ sampled from a Gaussian distribution   \n71 $\\mathcal { N } ( 0 , \\sigma _ { \\omega } ^ { 2 } \\mathbf { I } _ { d } )$ , where $\\mathbf { I } _ { d }$ is the $d \\times d$ identity matrix. More precisely, the random variables $\\xi$ and $\\omega$ are   \n72 defined on the probability space $\\left( \\Omega _ { d } \\times \\mathbb { R } ^ { d } , { \\mathcal { B } } ( \\Omega _ { d } ) \\otimes { \\mathcal { B } } ( \\mathbb { R } ^ { d } ) , { \\mathcal { F } } ^ { t } , \\mathbb { P } \\right)$ , where $\\Omega _ { d }$ represents the data   \n73 sample space, and $B ( \\mathcal { X } )$ denotes the Borel $\\sigma$ -algebra generated by the set $\\mathcal { X }$ . This probability space   \n74 is also equipped with the natural filtration $\\mathcal { F } ^ { t } = \\sigma \\left( \\left[ \\nabla f _ { \\xi ^ { 0 } } ( x ^ { 0 } ) , \\omega _ { 0 } \\right] ^ { T } , \\dots \\left[ \\nabla f _ { \\xi ^ { t } } ( x ^ { t } ) , \\omega _ { t } \\right] ^ { T } \\right)$ , which   \n75 captures the history of the stochastic process up to time $t$ . The probability measure $\\mathbb { P }$ is defined as the   \n76 product measure on this space, given by ",
+        "bbox": [
+            147,
+            671,
+            826,
+            715
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            720,
+            825,
+            847
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/0f0a3b9272acdc8b4920c51851500b70df569d9f61cfa01333d2e26ce7fbe638.jpg",
+        "text": "$$\n\\mathbb { P } \\{ B _ { d } \\times B _ { \\omega } \\} = ( \\mu \\times \\nu ) ( B _ { d } \\times B _ { \\omega } ) = \\mu ( B _ { d } ) \\nu ( B _ { \\omega } ) , \\quad \\forall B _ { d } \\in \\mathcal { B } ( \\Omega _ { d } ) , \\forall B _ { \\omega } \\in \\mathcal { B } ( \\mathbb { R } ^ { d } ) ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            212,
+            854,
+            784,
+            873
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "where 77 $\\mu$ is a probability measure on $\\Omega _ { d }$ , and $\\nu$ is the Gaussian measure on $\\mathbb { R } ^ { d }$ with mean zero and covariance matrix 78 $\\sigma _ { \\omega } ^ { 2 } \\bar { \\mathbf { I } _ { d } }$ . ",
+        "bbox": [
+            145,
+            882,
+            826,
+            912
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "discarded",
+        "text": "2 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "79 Types of convergence bounds. Several types of convergence bounds are commonly used to analyze   \n80 the behavior of stochastic optimization methods, ranging from in-expectation bounds to almost   \n81 sure convergence guarantees. High-probability convergence bounds provide guarantees of the form   \n82 $\\mathbb { P } \\{ \\mathcal { P } ( x ^ { K } ) \\} \\breve { \\leq } \\epsilon \\} \\bar { \\geq } 1 - \\beta$ , where ${ \\mathcal { P } } ( x )$ is a performance metric that measures the quality of the   \n83 solution1. Here, $\\mathbb { P } \\{ \\cdot \\}$ denotes the probability measure defined by the problem setup, $x ^ { K }$ is the   \n84 algorithm’s output after $K$ iterations, $\\beta$ is the confidence level (or failure probability), and $\\epsilon$ is the   \n85 optimization error.   \n86 This type of convergence is generally considered superior to in-expectation guarantees (e.g.,   \n87 $\\mathbb { E } [ \\mathcal { P } ( \\dot { x } ^ { \\hat { K } } ) ] \\leq \\epsilon )$ , as it captures not only the average behavior of the underlying random variables but   \n88 also their tail behavior, which is particularly important for distributions with heavy tails. However, it   \n89 is worth noting that the number of iterations $K$ required to achieve such high-probability guarantees   \n90 can depend inversely on the failure probability $\\beta$ , as seen in analyses for methods like SGD (Sadiev   \n91 et al., 2023), AdaGrad, and Adam (Chezhegov et al., 2024). Such inverse-power dependencies on $\\beta$   \n92 are generally undesirable, as $\\beta$ is typically chosen to be very small. Consequently, a major objective   \n93 in the high-probability convergence literature is to establish bounds with polylogarithmic dependence   \n94 on $^ 1 / \\beta$ , which are significantly tighter and more practical. ",
+        "bbox": [
+            145,
+            92,
+            825,
+            191
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            196,
+            826,
+            323
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Assumptions. In the following, we list the assumptions on the structure of the problem at hand.   \nThese assumptions are very mild and cover a wide range of problems. ",
+        "bbox": [
+            158,
+            335,
+            825,
+            363
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Assumption 2.1. We assume the function 97 $f$ is uniformly lower-bounded on some subset $Q \\subseteq \\mathbb { R } ^ { d }$ , 98 i.e., $f _ { * } : = \\operatorname* { i n f } _ { x \\in Q } f ( x ) > - \\infty$ . ",
+        "bbox": [
+            156,
+            364,
+            825,
+            395
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "99 The above assumption is necessary for problem (1) to be feasible. Next, we make a standard   \n0 assumption about the smoothness of the objective function. ",
+        "bbox": [
+            156,
+            401,
+            825,
+            431
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Assumption 2.2. We assume that there exists a constant 101 $L > 0$ such that for all $x , y \\in Q \\subseteq \\mathbb { R } ^ { d }$ the 102 function $f$ satisfies the following. ",
+        "bbox": [
+            145,
+            433,
+            826,
+            460
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/85b1294b843747255f386e18539d16bde8552532f3362f6c84a0c08374bc9f02.jpg",
+        "text": "$$\n\\left\\| \\nabla f ( x ) - \\nabla f ( y ) \\right\\| \\leq L \\left\\| x - y \\right\\| .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            383,
+            462,
+            612,
+            479
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "103 In this work, we consider both classes of convex and non-convex functions. The following assumption   \n104 holds only for convex functions. ",
+        "bbox": [
+            150,
+            486,
+            828,
+            513
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Assumption 2.3. We assume there exists a subset 05 $Q$ of $\\mathbb { R } ^ { d }$ such that for all $x , y \\in Q$ ",
+        "bbox": [
+            155,
+            516,
+            733,
+            531
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1d13670538f6717df081bca545fa47a116c03ad8827c4852144ac19dfcb0fdef.jpg",
+        "text": "$$\nf ( y ) \\geq f ( x ) + \\langle \\nabla f ( x ) , y - x \\rangle .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            390,
+            531,
+            604,
+            549
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "106 The following assumption is with respect to the stochastic oracle that our algorithm receives at   \n107 each iteration. We assume that the stochastic gradients have a bounded central $\\alpha$ moment for some   \n108 $\\alpha \\in ( 1 , 2 ]$ . This assumption is stated explicitly below. ",
+        "bbox": [
+            142,
+            556,
+            828,
+            598
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Assumption 2.4. We assume there exist some subset 109 $Q \\subseteq \\mathbb { R } ^ { d }$ , and some constants $\\sigma > 0$ , $\\alpha \\in ( 1 , 2 ]$ 110 such that for all $x \\in Q$ ",
+        "bbox": [
+            147,
+            601,
+            823,
+            630
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/baad85416ec1a6dbadd6bdef4bc30d3a5d1954e47606a8a8a5bc8347f3f8e298.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathbb { E } _ { \\xi \\sim D } \\left[ \\nabla f _ { \\xi } ( x ) \\mid x \\right] = \\nabla f ( x ) , } \\\\ { \\mathbb { E } _ { \\xi \\sim D } \\left[ \\left. \\nabla f _ { \\xi } ( x ) - \\nabla f ( x ) \\right. ^ { \\alpha } \\mid x \\right] \\le \\sigma ^ { \\alpha } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            364,
+            628,
+            632,
+            670
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "111 As it can be seen, in the case $\\alpha = 2$ , the aforementioned conditions recover the standard uniformly   \n112 bounded variance assumption widely used for obtaining convergence guarantees for optimization   \n113 algorithms in the literature. Since the $L ^ { p }$ norms of random variable are non-decreasing in $p$ , this   \n114 assumption allows the stochastic gradients to have infinite variance.   \n115 Next, we use the classical definition of $( \\varepsilon , \\delta )$ -differential privacy. Intuitively, it provides probabilistic   \n116 guarantees that an intruder cannot infer the existence of a particular data in the data set that the   \n117 algorithm used to train the model. ",
+        "bbox": [
+            140,
+            674,
+            825,
+            731
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            736,
+            825,
+            777
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "18 Definition 2.5. ( $( \\epsilon , \\delta )$ -Differential Privacy (Dwork et al., 2014)). A randomized method $\\mathcal { M } : \\mathcal { D }  \\mathcal { R }$ satisfies 19 $( \\varepsilon , \\delta )$ -Differential Privacy, if for any adjacent $D , D ^ { \\prime } \\in \\mathcal { D }$ and for any ${ \\mathcal { S } } \\subseteq { \\mathcal { R } }$ ",
+        "bbox": [
+            153,
+            780,
+            825,
+            809
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/6483fdd6801f560883597e007869309bc99a7a84033d052f710b5b9c345e6909.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathbb { P } \\left( \\mathcal { M } ( \\mathcal { D } ) \\in \\mathcal { S } \\right) \\le e ^ { \\varepsilon } \\mathbb { P } \\left( \\mathcal { M } ( \\mathcal { D ^ { \\prime } } ) \\in \\mathcal { S } \\right) + \\delta , } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            357,
+            809,
+            637,
+            827
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "120 Smaller $( \\varepsilon , \\delta )$ provides stronger privacy guarantee. This also can be viewed from the perspective of   \n121 Bayesian hypothesis testing where the null and alternative hypothesis are about the existence of an   \n122 individual’s data in the dataset (Su, 2024). ",
+        "bbox": [
+            142,
+            833,
+            825,
+            876
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "3 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "1Examples of such performance metric for problem (1): $\\mathcal { P } ( x ) = f ( x ) - f ( x ^ { * } ) , \\mathcal { P } ( x ) = \\| \\nabla f ( x ) \\| ^ { 2 }$ , $\\mathcal { P } ( x ) = \\| x - x ^ { * } \\| ^ { 2 }$ , where $x ^ { * } \\in \\arg \\operatorname* { m i n } _ { x \\in \\mathbb { R } ^ { d } } f ( x )$ . ",
+        "bbox": [
+            174,
+            882,
+            825,
+            912
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Clipping in Differential Private learning. There are several approaches to ensuring DP guarantees in SGD, but the most common method relies on a combination of gradient clipping and noise injection. In the finite-sum setting, Abadi et al. (2016) demonstrated that it is sufficient to add Gaussian noise (the Gaussian mechanism) with standard deviation $\\begin{array} { r } { \\sigma _ { \\omega } = \\Theta \\left( \\frac { q \\lambda } { \\varepsilon } \\sqrt { K \\ln \\frac { 1 } { \\delta } } \\right) } \\end{array}$ to the clipped gradients, where $q$ is the sampling probability for each individual summand. This approach reduces the variance√ of the required Gaussian noise by a factor of $\\sqrt { \\ln { K } }$ compared to the advanced composition theorem (Dwork et al., 2014), significantly improving the utility of DP training. ",
+        "bbox": [
+            166,
+            122,
+            825,
+            232
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "This combination of gradient clipping and the Gaussian mechanism has become a standard approach in many DP training algorithms. However, these methods often rely on restrictive assumptions, such as requiring the clipping level to always be larger than the norm of the transmitted vector (Zhang et al., 2022; Noble et al., 2022; Allouah et al., 2023, 2024; Li and Chi, $2 0 2 5 ) ^ { 2 }$ , assuming symmetry of the noise distribution (Liu et al., 2022), or requiring that the full gradients be computed (Wei et al., 2020). These conditions can be quite restrictive, particularly in practical large-scale settings. ",
+        "bbox": [
+            166,
+            237,
+            825,
+            320
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "137 To the best of our knowledge, the only work that avoids these assumptions is Islamov et al. (2025),   \n138 where the authors proposed a distributed optimization method based on clipping, error feedback   \n139 (Seide et al., 2014; Richtarik et al. ´ , 2021), and heavy-ball momentum (Polyak, 1964). However,   \n140 their high-probability convergence analysis critically relies on the assumption that the noise in the   \n141 stochastic gradients has sub-Gaussian tails. By contrast, under the more realistic Assumption 2.4 with   \n142 $\\alpha \\geq 2$ (which is still more restrictive than the heavy-tailed case with $\\alpha < 2$ ), Zhao et al. (2025) derive   \n143 in-expectation convergence bounds for a variant of projected SGD that uses DP mean estimation   \n144 with a sufficiently large number of samples. However, this approach can be prohibitively expensive   \n145 in practice, particularly in the training of large language models.   \n146 High-probability convergence bounds. If the noise in the stochastic gradient has light tails, then   \n147 classical stochastic first-order methods like SGD and its adaptive and momentum-based variants can   \n148 achieve desirable high-probability convergence rates, characterized by polylogarithmic dependence   \n149 on the failure probability $\\beta$ . For instance, under the sub-Gaussian noise assumption, such results   \n150 exist for SGD (Nemirovski et al., 2009; Harvey et al., 2019), its accelerated variants (Ghadimi   \n151 and Lan, 2012; Dvurechensky and Gasnikov, 2016), and its momentum and AdaGrad versions   \n152 (Li and Orabona, 2020; Liu et al., 2023). Additionally, Madden et al. (2024) demonstrate that   \n153 polylogarithmic high-probability bounds can also be achieved for SGD under the weaker sub-Weibull   \n154 noise assumption. However, as highlighted by Sadiev et al. (2023) and Chezhegov et al. (2024),   \n155 methods like SGD, AdaGrad, and Adam can fail to achieve these desired high-probability rates   \n156 under heavier-tailed noise distributions.   \n157 To address the limitations of high-probability convergence for stochastic methods under heavy-tailed   \n158 noise, several algorithmic modifications have been proposed and rigorously analyzed in recent years.   \n159 Nazin et al. (2019) introduced a variant of Stochastic Mirror Descent (Nemirovskij and Yudin, 1983)   \n160 with truncation of the stochastic gradient, establishing high-probability complexity bounds for convex   \n161 and strongly convex smooth optimization over compact sets under the bounded variance assumption   \n162 (Assumption 2.4 with $\\alpha = 2$ ). Interestingly, the truncation operator used in this work, while not   \n163 identical, is closely related to the standard gradient clipping technique that has since become the   \n164 foundation of many subsequent studies. ",
+        "bbox": [
+            140,
+            327,
+            825,
+            452
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            143,
+            469,
+            825,
+            621
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            627,
+            825,
+            738
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "In particular, Gorbunov et al. (2020) derived the first high-probability complexity bounds for ClippedSGD and also proposed an accelerated version based on the Stochastic Similar Triangles Method (SSTM) (Gasnikov and Nesterov, 2016). These results were later extended to non-smooth problems by Gorbunov et al. (2024a); Parletta et al. (2024), to unconstrained variational inequalities by Gorbunov et al. (2022), and to settings with noise having a bounded $\\alpha$ -th moment by Cutkosky and Mehta (2021) (with an additional bounded gradient assumption in the non-convex case). Building on these foundations, Sadiev et al. (2023) extended the results from Gorbunov et al. (2020) and Gorbunov et al. (2022) to the more challenging setting defined by Assumption 2.4 with $\\alpha < 2$ , removing the bounded gradient assumption for non-convex objectives. This work also introduced ",
+        "bbox": [
+            173,
+            744,
+            825,
+            869
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "2Li and Chi (2025) also provide an in-expectation convergence result without the bounded gradient assumption, but with a worse dependence on the variance bound of the stochastic gradients. ",
+        "bbox": [
+            173,
+            886,
+            825,
+            911
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            493,
+            935,
+            503,
+            946
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "123 3 Related Work ",
+        "bbox": [
+            142,
+            89,
+            321,
+            106
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "174 new high-probability bounds for Clipped-SGD in the non-convex regime. These non-convex results   \n175 were further refined by Nguyen et al. (2023), who also obtained tighter logarithmic factors in the   \n176 convergence rates for both convex and strongly convex settings.   \n177 In the context of distributed optimization, Gorbunov et al. (2024b) extended the results of Sadiev   \n178 et al. (2023) to distributed composite minimization and variational inequalities using the clipping   \n179 of gradient differences, thereby broadening the applicability to decentralized and federated learning   \n180 scenarios.   \n181 Adaptive methods have also been analyzed through the lens of high-probability convergence. Li and   \n182 Liu (2023) derived new high-probability bounds for Clipped-AdaGrad with scalar stepsizes, while   \n183 Chezhegov et al. (2024) obtained analogous bounds for various versions of Clipped-AdaGrad and   \n184 Clipped-Adam with both scalar and coordinate-wise stepsizes. Additionally, Kornilov et al. (2023)   \n185 proposed a zeroth-order variant of Clipped-SSTM and analyzed it under Assumption 2.4, extending   \n186 the clipping framework to derivative-free settings.   \n187 However, a critical limitation shared by all of these methods is that the clipping level $\\lambda$ is typically   \n188 chosen as an increasing function of the total number of steps $K ^ { 3 }$ . This choice, while theoretically   \n189 convenient, leads to prohibitively large DP noise variance when aiming to guarantee $( \\varepsilon , \\delta )$ -DP,   \n190 resulting in utility bounds that grow with $K$ and significantly degrade the practical effectiveness of   \n191 these methods in privacy-preserving applications.   \n192 There exist other alternatives to gradient clipping that also ensure high-probability convergence   \n193 with polylogarithmic dependency on the failure probability. They include robust distance estimation   \n194 coupled with inexact proximal point steps (Davis et al., 2021), gradient normalization (Cutkosky   \n195 and Mehta, 2021; Hubler et al. ¨ , 2024), and sign-based methods (Kornilov et al., 2025). Notably,   \n196 the approaches from Hubler et al. ¨ (2024); Kornilov et al. (2025) enjoy provable (yet sub-optimal)   \n197 high-probability convergence even when $\\alpha$ is unknown. In the special case of symmetric distributions,   \n198 Armacki et al. (2023, 2024) provide new high-probability convergence bounds for a large class   \n199 of SGD-type methods with non-linear transformations such as standard clipping, coordinate-wise   \n200 clipping, normalization, and sign-operator, and Puchkin et al. (2024) derive high-probability conver  \n201 gence of SGD with median-based clipping and also extend this result to problems with structured   \n202 non-symmetry for SGD with smoothed median of means coupled with gradient clipping. ",
+        "bbox": [
+            143,
+            90,
+            826,
+            133
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            138,
+            825,
+            194
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            202,
+            825,
+            285
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            291,
+            825,
+            361
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            367,
+            826,
+            518
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "03 4 Main Results ",
+        "text_level": 1,
+        "bbox": [
+            156,
+            540,
+            315,
+            558
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "The well-known Clipped-SGD algorithm with the Gaussian DP mechanism (DP-Clipped-SGD) is described in Algorithm 1. If differential privacy (DP) is not required, one can simply set $\\sigma _ { \\omega } ^ { 2 } = 0$ . As shown by Sadiev et al. (2023), achieving exact convergence to the optimal solution of problem (1) using Clipped-SGD requires the clipping level to be chosen as $\\lambda = \\mathcal { \\bar { O } } \\left( \\sigma \\left( K / ( \\ln \\frac { K } { \\beta } ) \\right) ^ { 1 / \\alpha } \\right)$ . However, this choice of clipping level, which scales with the total number of iterations $K$ , is problematic from a DP perspective. Specifically, larger clipping levels necessitate larger DP noise to maintain privacy, significantly increasing the variance in gradient estimates and leading to a larger convergence neighborhood. ",
+        "bbox": [
+            169,
+            573,
+            826,
+            693
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "To address this limitation, in this work, we focus on the more general case of arbitrary fixed clipping levels that do not scale with the total number of iterations. This approach is more compatible with practical DP requirements, where clipping levels are typically kept constant. However, our theoretical results can also accommodate clipping levels that scale with $K$ up to this order, as we discuss in detail in the appendix. This broader analysis introduces a few additional step-size conditions, which we also explore thoroughly in the supplementary material. ",
+        "bbox": [
+            173,
+            699,
+            825,
+            784
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "The following two theorems present our newly derived step-size bounds and the corresponding performance guarantees for both convex and non-convex settings. Following each theorem, we provide a table that further simplify the performance bounds under the assumption that the clipping level falls within specific intervals. In these tables, we assume that no DP noise is present, focusing purely on the impact of the clipping bias. The final corollary extend these results to the case where ",
+        "bbox": [
+            174,
+            789,
+            825,
+            858
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "3In some cases, such as the analysis of Clipped-SSTM (Gorbunov et al., 2020) or Clipped-SGD under strong convexity (Sadiev et al., 2023), the clipping level decreases as a function of the current iteration counter $k$ but still increases overall as a function of $K$ . ",
+        "bbox": [
+            174,
+            872,
+            825,
+            911
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "5 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Algorithm 1 DP-Clipped-SGD ",
+        "text_level": 1,
+        "bbox": [
+            173,
+            90,
+            388,
+            107
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Input: starting point $x ^ { 0 }$ , number of iterations $K$ , stepsize $\\gamma > 0$ , clipping level $\\lambda$ . ",
+        "bbox": [
+            173,
+            112,
+            714,
+            127
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "1: for $k = 0 , \\ldots , K$ do   \n2: Compute gˆk = clip $\\left( \\nabla f _ { \\xi ^ { k } } ( x ^ { k } ) , \\lambda \\right)$ using a fresh sample $\\xi ^ { k } \\sim \\mathcal { D }$   \n3: ωk ∼ N (0, σ2ωId)   \n4: gk = ˆgk + ωk   \n5: e  x k +1 = x k − γ gk   \n6: end for   \n23 DP noise is included in the convex case, while the result for DP case in the non-convex setup is   \n224 deffered to the supplementary materials due to space limitation. ",
+        "bbox": [
+            178,
+            127,
+            681,
+            212
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            151,
+            239,
+            823,
+            270
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "225 Convex problems. We start with the convex case. ",
+        "bbox": [
+            140,
+            282,
+            514,
+            297
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "6 Theorem 4.1 (Convergence of DP-Clipped-SGD for the convex objectives). Let the integer $K \\geq 0$ and $\\beta \\in ( 0 , 1 ]$ be given. Furthermore, let Assumptions 2.1, 2.2, 2.3, 2.4, hold for $Q = B _ { 2 R } ( x ^ { \\star } )$ , $R \\geq$ 8 $\\| x ^ { 0 } - x ^ { \\star } \\|$ . Set $\\zeta _ { \\lambda } : = \\operatorname* { m a x } \\left\\{ 0 , 2 L R - { \\textstyle { \\frac { \\lambda } { 2 } } } \\right\\}$ , and further assume that the step-size $\\gamma$ is selected to 9 satisfy ",
+        "bbox": [
+            158,
+            301,
+            826,
+            361
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/c6201b1eff8180298205bc070c4c68a5d602cbda01bdde8783b20db5244b158d.jpg",
+        "text": "$$\n\\begin{array} { r } { \\gamma \\leq \\mathcal { O } \\left( \\operatorname* { m i n } \\left\\{ \\frac { 1 } { L } , \\frac { R } { \\lambda ^ { 1 - \\alpha / 2 } \\sqrt { K \\ln \\left( \\frac { K } { \\beta } \\right) \\left( \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } \\right) } } , \\right. } \\\\ { \\left. \\frac { R \\lambda ^ { \\alpha - 1 } } { K ( \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } ) \\left( \\frac { L R } { \\lambda } + \\frac { \\lambda ^ { \\alpha - 1 } \\zeta _ { \\lambda } } { \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } } + \\left( \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } \\right) ^ { \\frac { - 1 } { \\alpha } } \\right) } , \\frac { R } { \\sigma _ { \\omega } \\sqrt { d K \\ln \\left( \\frac { K } { \\beta } \\right) } } \\right\\} \\right) . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            205,
+            364,
+            790,
+            501
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "230 Then, after $K$ iterations of DP-Clipped-SGD, the iterates with probability at least $1 - \\beta$ satisfy ",
+        "bbox": [
+            140,
+            506,
+            805,
+            522
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e703f933d8c03a32a1123df1f8d90aa5d8910d1202a7e8db5de1f699ba1999bf.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { t \\in [ 0 , K ] } f ( x ^ { t } ) - f ( x ^ { \\star } ) \\leq \\frac { 4 R ^ { 2 } } { \\gamma ( K + 1 ) } + \\frac { 6 4 L R ^ { 4 } } { \\lambda ^ { 2 } \\gamma ^ { 2 } ( K + 1 ) ^ { 2 } } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            300,
+            526,
+            665,
+            563
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "The convergence rate and the neighborhood to which the algorithm converges depend on the magnitude of $\\lambda$ in a non-trivial way. Table 1 summarizes these relationships for different values of $\\lambda$ in the absence of DP noise. In the special case where $\\lambda = \\mathcal { O } \\left( \\sigma \\left( K / \\ln \\frac { K } { \\beta } \\right) ^ { 1 / \\alpha } \\right)$ , our theorem provides a convergence rate of $\\mathcal { O } \\left( \\left( \\left( \\ln \\frac { K } { \\beta } \\right) / K \\right) ^ { ( \\alpha - 1 ) / \\alpha } + ( \\ln \\frac { K } { \\beta } ) \\big / K \\right)$ to the exact solution in the asymptotic regime. This matches the rate previously derived by Sadiev et al. (2023). ",
+        "bbox": [
+            138,
+            574,
+            826,
+            665
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "In contrast, if $\\lambda$ is chosen as a constant, independent of $K$ , the leading term in the convergence rate simplifies to $\\mathcal { O } ( \\sqrt { ( \\ln \\frac { K } { \\beta } ) / \\kappa } )$ , which is faster than the more conservative bound $\\mathcal { O } \\left( \\left( ( \\ln \\frac { K } { \\beta } ) \\ / \\middle / K \\right) ^ { ( \\alpha - 1 ) \\ / \\alpha } \\right)$ . However, this faster rate comes at the cost of only guaranteeing convergence to a neighborhood around the optimal solution, determined by the third term in the stepsize condition (8). ",
+        "bbox": [
+            150,
+            669,
+            826,
+            734
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "To ensure $( \\varepsilon , \\delta )$ -DP for DP-Clipped-SGD in our setting (i.e., expectation minimization), one can set the noise scale as $\\begin{array} { r } { \\sigma _ { \\omega } = \\Theta \\left( \\frac { \\lambda } { \\varepsilon } \\sqrt { K \\ln \\left( \\frac { K } { \\delta } \\right) \\ln \\left( \\frac { 1 } { \\delta } \\right) } \\right) } \\end{array}$ and apply the advanced composition theorem (Dwork et al., 2014, Theorem 3.22). Given the fourth term in (8), this choice implies that the stepsize decreases as $^ { 1 / K }$ , resulting in convergence to a certain neighborhood. This observation is formalized in the next corollary. ",
+        "bbox": [
+            140,
+            739,
+            826,
+            820
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Corollary 4.2 (Convergence of Clipped-SGD for the convex objective). Let the assumptions of Theorem 4.1 hold, $\\begin{array} { r } { \\sigma _ { \\omega } = \\Theta \\left( \\frac { \\lambda } { \\varepsilon } \\sqrt { K \\ln \\left( \\frac { K } { \\delta } \\right) \\ln \\left( \\frac { 1 } { \\delta } \\right) } \\right) } \\end{array}$ , and $\\gamma$ is chosen as the minimum of (8) then with probability at least $1 - \\beta$ the error converges to a neighborhood of the global optimum of size ",
+        "bbox": [
+            140,
+            824,
+            826,
+            878
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b00a60e969c0af7b306905c483cd9175c079dc9a3504d63175fb5ffc9b38c667.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { t \\in \\left[ 0 , K \\right] } f ( x ^ { t } ) - f ( x ^ { \\star } ) \\leq \\mathcal { O } \\left( \\operatorname* { m a x } \\left\\{ ( 1 1 ) , ( 1 2 ) , ( 1 3 ) , ( 1 4 ) \\right\\} \\right) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            305,
+            882,
+            691,
+            909
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "discarded",
+        "text": "6 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "discarded",
+        "text": "231 232 233 234 235 236 237 238 239 240 241 242 243 244 245 246 247 ",
+        "bbox": [
+            138,
+            554,
+            163,
+            888
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "248 where ",
+        "bbox": [
+            140,
+            92,
+            215,
+            106
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ec3e2102f38b1d0fb143bfe7c6e1466e84a82b4e1bf4fc5a6d2b9372ac8de0ee.jpg",
+        "text": "$$\n\\begin{array} { c } { \\frac { \\frac { L R ^ { 2 } } { K } + \\frac { L ^ { 3 } R ^ { 4 } } { \\lambda ^ { 2 } K ^ { 2 } } } { K } } \\\\ { \\frac { R \\lambda ^ { 1 - \\alpha / 2 } \\sigma ^ { \\alpha / 2 } \\sqrt { \\frac { \\ln { \\kappa / \\beta } } { K } } + \\frac { L R ^ { 2 } \\sigma ^ { \\alpha } \\ln { \\kappa / \\beta } } { K } } { \\frac { R \\left( \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } \\right) \\left( \\frac { L R } { \\lambda } + \\frac { \\lambda ^ { \\alpha - 1 } \\zeta _ { \\lambda } } { \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } } + \\left( \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } \\right) ^ { \\frac { - 1 } { \\alpha } } \\right) } { \\lambda ^ { \\alpha - 1 } } + \\frac { R ^ { 2 } L \\left( \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } \\right) ^ { 2 } \\left( \\frac { L R } { \\lambda } + \\frac { \\lambda ^ { \\alpha - 1 } \\zeta _ { \\lambda } } { \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } } + \\left( \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } \\right) ^ { \\frac { - 1 } { \\alpha } } \\right) ^ { 2 } } { \\lambda ^ { 2 \\alpha } } } } \\\\ { \\frac { R \\lambda } { \\varepsilon } \\sqrt { d \\ln { \\left( \\frac { K } { \\beta } \\right) } \\ln { \\left( \\frac { K } { \\delta } \\right) } \\ln { \\left( \\frac { 1 } { \\delta } \\right) } + \\frac { L R ^ { 2 } d \\ln { \\left( \\frac { K } { \\beta } \\right) } \\ln { \\left( \\frac { K } { \\delta } \\right) } } { \\varepsilon ^ { 2 } } } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            233,
+            108,
+            766,
+            232
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "249 One may notice that there is a non-trivial trade-off between the convergence rate, clipping level, and   \n250 the size of the neighborhood. Therefore, we consider two special cases and provide the result with   \n251 optimally selected $\\lambda$ in the following corollary.   \n252 Corollary 4.3 (Convergence of DP-Clipped-SGD for the convex objective). Let the assump  \n253 tions of Theorem 4.1 hold, $K$ is sufficiently large, $\\gamma$ is chosen as the minimum of (8), $\\sigma _ { \\omega } =$   \n254 $\\begin{array} { r } { \\Theta \\left( \\frac { \\lambda } { \\varepsilon } \\sqrt { K \\ln \\left( \\frac { K } { \\delta } \\right) \\ln \\left( \\frac { 1 } { \\delta } \\right) } \\right) } \\end{array}$ , and the $\\lambda > 4 L R$ . Then the optimal value for $\\lambda$ is ",
+        "bbox": [
+            140,
+            242,
+            830,
+            285
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            287,
+            826,
+            342
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5104e52eee7d4d3aae27f0e534fe0ed2ba8003839cca5bd12ef91ba46ed49b1b.jpg",
+        "text": "$$\n\\lambda = \\operatorname* { m a x } \\left\\{ 4 L R , \\left( { \\frac { \\varepsilon \\sigma ^ { \\alpha } } { d \\ln \\left( { \\frac { K } { \\delta } } \\right) \\ln \\left( { \\frac { 1 } { \\delta } } \\right) \\ln { \\frac { K } { \\beta } } } } \\right) ^ { \\frac { 1 } { \\alpha } } \\right\\} .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            336,
+            347,
+            660,
+            398
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "255 With this value, the iterates produced by the algorithm with probability of at least $1 - \\beta$ satisfy ",
+        "bbox": [
+            140,
+            404,
+            795,
+            420
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/00929668a1c0474d7cae7d8d09c5259fbaf17925abfeee94628630994b42a72b.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { k \\in \\left[ 0 , K \\right] } f ( x ^ { t } ) - f ( x ^ { \\star } ) = \\mathcal { O } \\left( \\operatorname* { m a x } \\left\\{ ( 1 5 ) , ( 1 6 ) , ( 1 7 ) , ( 1 8 ) \\right\\} \\right) ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            287,
+            424,
+            674,
+            450
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "256 where ",
+        "bbox": [
+            140,
+            457,
+            217,
+            472
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/d111e2b6cce390e9e86c6dbdac696458ce7899806f2b853af265718e8609f3fa.jpg",
+        "text": "$$\n\\begin{array} { r l } &  \\operatorname* { m a x } \\{ \\begin{array} { l l } { \\displaystyle \\mathbb { W } ^ { 1 - \\mu _ { \\widehat { x } } / \\lambda - \\alpha _ { g } \\mu _ { 0 } + \\frac { 1 } { \\lambda } } ( \\frac { \\widehat { \\mathcal { X } } } { \\lambda } ) _ { \\widehat { x } } \\mathbb { H } ( \\frac { \\omega ^ { \\star } } { \\lambda } ) _ { \\widehat { x } } \\mathbb { H } ( \\frac { \\omega ^ { \\star } } { \\lambda } ) _ { \\widehat { x } } ^ { \\star } \\Bigg | _ { \\lambda } ^ { \\lambda } \\Bigg | _ { \\lambda } ^ { \\lambda - \\frac { 2 } { \\lambda } } ( \\frac { \\widehat { \\mathcal { X } } } { \\lambda } ) \\Bigg | } \\\\ { \\displaystyle \\qquad \\mathbb { H } ( \\frac { \\widehat { \\mathcal { X } } ^ { 2 - \\mu _ { g } } } { \\lambda } , N ^ { \\lambda } , N ^ { \\lambda } ) _ { \\widehat { x } } ^ { \\lambda } \\Bigg | } \\\\ { \\displaystyle \\quad \\mathrm { m i n } \\Bigg \\{ \\frac { \\int _ { \\widehat { x } } \\widehat { \\mathcal { X } } ^ { 2 - \\mu _ { g } } } { \\lambda } \\mathbb { H } ( \\frac { \\mathcal { X } } { \\lambda } ) _ { \\widehat { x } } ( \\frac { \\mathcal { X } } { \\lambda } ) _ { \\widehat { x } } ( \\frac { \\omega } { \\lambda } ) _ { \\widehat { x } } \\Bigg \\} ^ { \\frac { 1 } { \\lambda } } \\Bigg \\} } \\\\ { \\displaystyle \\mathrm { m i n } \\Bigg \\{ \\frac { \\int _ { \\widehat { x } } \\widehat { \\mathcal { X } } ^ { 2 } } { \\lambda } \\frac { L ^ { 2 } N ^ { 2 } ( \\widehat { \\mathcal { X } } _ { \\widehat { x } } ^ { 2 } ) \\ln ( \\frac { \\widehat { \\mathcal { X } } } { \\lambda } ) _ { \\widehat { x } } ( \\frac { \\mathcal { X } } { \\lambda } ) _ { \\widehat { x } } ^ { \\lambda } } { ( \\lambda ) ^ { \\frac { 2 } { \\lambda } } \\lambda ^ { \\frac { 2 } { \\lambda } } ( \\frac { \\mathcal { X } } { \\lambda } ) _ { \\widehat { x } } ^ { \\lambda } } \\Bigg \\} + \\frac { L \\widehat { \\mathcal { X } } ^ { 2 } } { N } } \\\\  \\displaystyle \\mathrm { m a x } \\Bigg \\{ \\frac { \\int _ { \\widehat { x } } \\widehat { \\mathcal { X } } ^ { 2 } } { \\lambda } \\sqrt { \\mathrm { d } \\lambda } ( \\frac { \\widehat { \\mathcal { X } } } { \\lambda } \\end{array} \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            225,
+            474,
+            769,
+            770
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Also, for small 257 $\\lambda$ regime $\\begin{array} { r } { \\left( \\lambda \\leq \\frac { 4 } { 3 } L R \\right) } \\end{array}$ \u0001, the optimal value for $\\lambda$ is ",
+        "bbox": [
+            140,
+            772,
+            591,
+            791
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/1439d322f02f4cf602b70d056090ff165e7a45163885f45ceaf1d49991d71c32.jpg",
+        "text": "$$\n\\lambda = \\operatorname* { m i n } \\left\\{ \\frac { 4 } { 3 } L R , \\frac { 2 \\varepsilon L R } { \\left( d \\ln \\left( \\frac { K } { \\delta } \\right) \\ln \\left( \\frac { 1 } { \\delta } \\right) \\ln \\frac { K } { \\beta } \\right) ^ { \\frac { 1 } { 2 \\alpha + 2 } } + 1 } \\right\\} .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            315,
+            796,
+            681,
+            857
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "258 With this value, the iterates produced by the algorithm with probability of at least $1 - \\beta$ satisfy ",
+        "bbox": [
+            140,
+            861,
+            794,
+            877
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e35c9608f03ce0c05da9c35746029367211f93f47850e51907b7e9e0e040f81e.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { t \\in \\left[ 0 , K \\right] } f ( x ^ { t } ) - f ( x ^ { \\star } ) = \\mathcal { O } \\left( \\operatorname* { m a x } \\left\\{ ( 2 0 ) , ( 2 1 ) , ( 2 2 ) , ( 2 3 ) \\right\\} \\right) ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            305,
+            882,
+            687,
+            909
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "7 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "table",
+        "img_path": "images/0539bd0aac6627689e3ce7f4b14a1416df0ef067ae2c3a4beac183b73f56d837.jpg",
+        "table_caption": [
+            "Table 1: Rate, neighborhood and optimal $\\lambda$ in different regimes for the convex objective function. Here, $\\lambda$ denotes the clipping level, $L$ denotes the smoothness parameter, $R \\geq \\| x ^ { 0 } - x ^ { * } \\|$ represents the initial error, $\\alpha \\in ( 1 , 2 ]$ denotes the moment that is bounded and $\\sigma ^ { \\alpha }$ is that upper bound value. Furthermore, $\\beta$ is the confidence level, $\\zeta _ { \\lambda } : = \\operatorname* { m a x } \\{ 0 , 2 L R - \\textstyle { \\frac { \\lambda } { 2 } } \\}$ , and $\\eta$ is a small positive constant. "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Regime</td><td>Neighborhood</td><td>Optimal 入</td><td></td><td>Convergence rate</td><td></td></tr><tr><td>入&gt;4LR (s=0）</td><td>0 R +LR² g2a） 2</td><td>a 0 K 0 </td><td>（） 0</td><td>+</td><td></td></tr><tr><td>LR&lt;X≤4LR s&lt;入&lt;σ</td><td>R 0 +LR 2</td><td>4LR</td><td>0</td><td>+ K</td><td>0 R²-ga K La-1</td></tr><tr><td>LR&lt;入≤4LR s&lt;σ&lt;&gt;</td><td>(+LR） 0 （R+ L 0 12</td><td>4LR 4LR-n</td><td>0 0</td><td>K + </td><td>（+1 0 𝑔2α L2α-1R2α-2） (Rn+ LR²η²</td></tr><tr><td>LR&lt;入≤4LR (σ&lt;&lt;λ)</td><td>(RS+ LR2 0 22</td><td>4LR-2g</td><td>0</td><td>K √ +</td><td>(LR-n)²) O(Rg+ LR²o²</td></tr><tr><td>入≤LR （&lt;&lt;）</td><td>（R +</td><td>LR</td><td>0</td><td>K √ K +</td><td>（LR-）2 0 （R²- σ2α La-T + L2a-1R2α-2)</td></tr><tr><td>≤LR (λ&lt;σ&lt;s)</td><td>0 （RS+ 入a +</td><td>LR-n</td><td>0</td><td>K K +</td><td>0 （R(LR+n）α+1 LR²(LR+n）²） (LR-n)α + (LR-n)2a+2</td></tr><tr><td>入≤LR</td><td>0 +</td><td>LR-n</td><td>0</td><td>K K + K</td><td>0 R(LR+η)α+1 × LR²(LR+n)2α (LR-n)α (LR-n)2α+2</td></tr><tr><td>(σ&lt;x&lt;s）</td><td>LR²022a-2) 0 + 12a</td><td>LR</td><td>0 √</td><td>+ K K</td><td>(Ro+）</td></tr></table>",
+        "bbox": [
+            174,
+            157,
+            823,
+            367
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "259 where ",
+        "bbox": [
+            140,
+            411,
+            215,
+            424
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/fe22b79b0e28a01b5bb2d83d08c660b3b78ea58dd53d1c9bd690bc94ee338394.jpg",
+        "text": "$$\n\\begin{array} { r l } & { \\operatorname* { m i n } \\left\\{ \\sqrt { \\frac { H ^ { 2 - \\alpha } L ^ { 2 - \\alpha } \\sigma ^ { \\alpha } \\ln \\left( { \\frac { K } { \\beta } } \\right) } { K } } , \\sqrt { \\frac { R ^ { 4 - \\alpha } \\left( z , L \\right) ^ { 2 - \\alpha } \\ln \\frac { \\alpha + \\beta } { \\alpha + \\beta } } { \\left( d \\ln \\left( { \\frac { K } { \\beta } } \\right) \\ln \\left( { \\frac { L } { \\beta } } \\right) \\right) ^ { \\frac { 2 - \\alpha + \\beta } { \\alpha + \\beta } } } \\left( \\frac { K } { \\beta } \\right) } \\right\\} } \\\\ & { \\operatorname* { m a x } \\left\\{ \\frac { R ^ { 2 - \\alpha } \\sigma ^ { \\alpha } } { L ^ { \\alpha - 1 } } , \\frac { R ^ { 2 - \\alpha } \\sigma ^ { \\alpha } } { \\varepsilon } \\left( d \\ln \\left( { \\frac { K } { \\beta } } \\right) \\ln \\left( { \\frac { 1 } { \\beta } } \\right) \\ln \\left( { \\frac { K } { \\beta } } \\right) \\right) ^ { \\frac { \\beta - 1 } { \\alpha + \\beta } } \\right\\} } \\\\ & { \\operatorname* { m a x } \\left\\{ \\frac { L R ^ { 2 } } { K ^ { 2 } } , \\frac { L R ^ { 2 } } { L ^ { 2 } K ^ { 2 } } \\left( d \\ln \\left( { \\frac { K } { \\beta } } \\right) \\ln \\left( { \\frac { 1 } { \\beta } } \\right) \\ln \\left( { \\frac { K } { \\beta } } \\right) \\right) ^ { \\alpha - 1 / \\alpha } \\right\\} + \\frac { L R ^ { 2 } } { K } } \\\\ & { \\operatorname* { m i n } \\left\\{ \\frac { L R ^ { 2 } } { \\varepsilon } \\sqrt { d \\ln \\left( { \\frac { K } { \\beta } } \\right) } \\ln \\left( { \\frac { K } { \\beta } } \\right) \\ln \\left( { \\frac { K } { \\beta } } \\right) , \\frac { L R ^ { 2 } } { \\left( d \\ln \\left( { \\frac { K } { \\beta } } \\right) \\ln \\left( { \\frac { K } { \\beta } } \\right) \\right) ^ { \\frac { 2 - \\alpha + \\beta } { \\alpha + \\beta } } } \\right\\} } \\\\ & { + \\frac { L R ^ { 2 } d } { \\varepsilon ^ { 2 } } \\ln \\left( { \\frac { K } { \\beta } } \\right) \\ln \\left( { \\frac { K } { \\beta } } \\right) \\ln \\left( { \\frac { 1 } { \\beta } } \\right) \\ln \\left( { \\frac { K } { \\beta } } \\right) . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            238,
+            446,
+            759,
+            698
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "In the finite-sum case, i.e., when 260 $\\begin{array} { r } { f ( x ) = \\frac { 1 } { n } \\sum _ { i = 1 } ^ { n } f _ { i } ( x ) } \\end{array}$ for some finite $n$ , Abadi et al. (2016) show   \n261 that it is sufficient to choose $\\begin{array} { r } { \\sigma _ { \\omega } = \\Theta \\left( \\frac { q \\lambda } { \\varepsilon } \\sqrt { K \\ln \\frac { 1 } { \\delta } } \\right) } \\end{array}$ , where $q = \\%$ , $b$ is the mini-batch size, clipping   \n262 is applied to each stochastic gradient, and $\\varepsilon = \\mathcal { O } ( q ^ { 2 } K )$ , allowing to have smaller $\\varepsilon$ and $\\delta$ for given   \n263 $\\sigma _ { \\omega }$ and $\\lambda$ . We note that our analysis holds for the finite-sum case without changes as long as the   \n264 assumptions of the theorem are satisfied and the mini-batch size equals 1. ",
+        "bbox": [
+            140,
+            723,
+            826,
+            809
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "265 Non-convex problems. In the non-convex case, we derive the following result. ",
+        "bbox": [
+            145,
+            840,
+            704,
+            856
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "266 Theorem 4.4 (Convergence of DP-Clipped-SGD for the non-convex objective). Let the integer 267 $K \\geq 0$ and $\\beta \\in \\mathsf { \\Gamma } ( 0 , 1 ]$ be given. Let the assumptions 2.1, 2.2, 2.4, hold for the set $Q$ defined as 268 $Q = \\left\\{ x \\in \\mathbb { R } \\mid \\exists y \\in \\mathbb { R } ^ { d } : f ( y ) \\leq f ^ { * } + 2 \\Delta \\right.$ and $\\| x - y \\| \\leq \\sqrt { \\Delta } / 2 0 \\sqrt { L } \\}$ , where $\\Delta \\ge f ( x ^ { 0 } ) - f ^ { * }$ , ",
+        "bbox": [
+            140,
+            867,
+            826,
+            914
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "8 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "table",
+        "img_path": "images/93cd7a48f7e6f53b2e0e5d95ebf4b254377ba695224a241edf0679526d664369.jpg",
+        "table_caption": [
+            "Table 2: Rate, neighborhood and optimal $\\lambda$ in different regimes for the non-convex objective function. Here, $\\lambda$ denotes the clipping level, $L$ denotes the smoothness parameter, $\\Delta \\ge \\mathsf { \\bar { f } } ( x ^ { 0 } ) - f ( x ^ { * } )$ represents the initial error, $\\alpha \\in ( 1 , 2 ]$ denotes the moment that is bounded and $\\sigma ^ { \\alpha }$ is that upper bound value. Furthermore, $\\beta$ is the confidence level, $\\zeta _ { \\lambda } : = \\operatorname* { m a x } \\{ 0 , 2 \\sqrt { L \\Delta } - \\frac { \\lambda } { 2 } \\}$ ,and $\\eta$ is a small positive constant. "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Regime</td><td>Neighborhood</td><td>Optimal入</td><td>Convergence rate</td><td></td><td>Optimal Neighborhood</td></tr><tr><td>&gt;4VL （S=0）</td><td>(L+△）</td><td>） a ） 0 g</td><td>（） A</td><td>+ K</td><td></td></tr><tr><td>VL△&lt;入≤4√L△ S&lt;x&lt;σ</td><td>(VLA+L△）</td><td>4√L△</td><td>0</td><td>A </td><td>0 ga g2a （vLa-+ (L△)2-)</td></tr><tr><td>VL△&lt;入≤4VL△ S&lt;x&lt;</td><td>(VL+L△） (vL△a+）</td><td>4VL 4VL△-n</td><td>0 0</td><td>+ K +</td><td>0 （vL）-+²） ga g2a 0(√L△n+） L△²</td></tr><tr><td>VL△&lt;≤4VL△ （σ&lt;s&lt;x）</td><td>（VL△+ 心</td><td>4√L△-2g</td><td>0 √</td><td>√ K K + K K</td><td>0（VLo+ LAg² （√L△-0）2）</td></tr><tr><td>≤VL△ （&lt;&lt;の）</td><td>(VL+ L△） + λ2a+2</td><td>VLA</td><td>0 √</td><td>+ K</td><td>0（ ga 𝑔2α （(√L△）a-2 + (L△)2a-4)</td></tr><tr><td>≤VLA (&lt;δ&lt;）</td><td>（A +</td><td>VL△-n</td><td>0 √</td><td>+ 下 K</td><td>0 （√L△(√L△+n）a+1 + L△(√L△+n）2a (√L△-n)α (√L△-n）2a+2</td></tr><tr><td>入≤:4VL△ （σ&lt;λ&lt;s）</td><td>L△2+) + x2a+2 (</td><td>VL△-n</td><td>0</td><td>K K 同 </td><td>0 （√L△(√L△+n）a+1 L△(√L△+n）2） (√L△-n)a + （√L△-n）2a+2 (VL△σ +σ²)</td></tr></table>",
+        "bbox": [
+            176,
+            171,
+            823,
+            363
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "269 $\\zeta _ { \\lambda } : = \\operatorname* { m a x } \\left\\{ 0 , 2 \\sqrt { L \\Delta } - \\frac { \\lambda } { 2 } \\right\\}$ , and $\\gamma$ is selected according to ",
+        "bbox": [
+            140,
+            387,
+            570,
+            411
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e29ae494f7d3a919e9d7c74cd5ce1d42d3d306dfcaddb3a22bc50e85ca05913d.jpg",
+        "text": "$$\n\\begin{array} { r l } & { \\iota \\leq \\mathcal { O } \\left( \\operatorname* { m i n } \\left\\{ \\frac { 1 } { L } , \\frac { \\sqrt { \\frac { \\Delta } { L } } } { \\lambda ^ { 1 - \\alpha / 2 } \\sqrt { K \\ln \\left( \\frac { K } { \\beta } \\right) \\left( \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } \\right) } } \\ , \\ \\right. \\right. } \\\\ & { \\left. \\left. \\frac { \\sqrt { \\frac { \\Delta } { L } } \\lambda ^ { \\alpha - 1 } } { K \\left( \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } \\right) \\left( \\frac { \\sqrt { L \\Delta } } { \\lambda } + \\frac { \\lambda ^ { \\alpha - 1 } \\zeta _ { \\lambda } } { \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } } + \\left( \\sigma ^ { \\alpha } + \\zeta _ { \\lambda } ^ { \\alpha } \\right) ^ { \\frac { - 1 } { \\alpha } } \\right) } , \\frac { \\sqrt { \\frac { \\Delta } { L } } } { \\sigma _ { \\omega } \\sqrt { d K \\ln \\left( \\frac { K } { \\beta } \\right) } } \\right\\} \\right) . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            181,
+            420,
+            836,
+            554
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "270 Then, after $K$ iterations of DP-Clipped-SGD and with probability at least $1 - \\beta$ , we have ",
+        "bbox": [
+            138,
+            574,
+            767,
+            590
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "equation",
+        "img_path": "images/6b35c64bf32e1f5fcc8b3fd6cae638a5476313810bf79e3ab3cb77c0a96ad6c8.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { t \\in [ 0 , K ] } \\left\\| \\nabla f ( x ^ { t } ) \\right\\| ^ { 2 } \\leq \\frac { 8 \\Delta } { \\gamma ( K + 1 ) } + \\frac { 1 2 8 \\Delta ^ { 2 } } { \\lambda ^ { 2 } \\gamma ^ { 2 } ( K + 1 ) ^ { 2 } }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            313,
+            595,
+            651,
+            631
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "271 Similarly to the convex case, the above result establishes the convergence to a certain neighborhood   \n272 with a faster $\\mathcal { O } ( { } ^ { 1 } / { \\sqrt { K } } )$ rate. We defer the corollaries for the non-convex case to the appendix and   \n273 describe different special cases for the no-DP regime in Table 2.   \n274 Proof sketch. The proof of Theorems 4.1 and 4.4 is heavily inspired by (Sadiev et al., 2023). Yet,   \n275 there is a crucial difference in defining the clipping level parameter. In contrast to (Sadiev et al.,   \n276 2023), we treat $\\lambda$ as given rather than calculating it based on other problem parameters. By doing so,   \n277 the fundamental assumption regarding the magnitude of $\\lambda$ in comparison to the norm of the gradient   \n278 in bias-variance of the clipped vector (Lemma 5.1) of (Sadiev et al., 2023) becomes invalid. Thus, we   \n279 develop a general bias-variance lemma (Lemma B.1) to study the statistical properties of the clipped   \n280 vector. ",
+        "bbox": [
+            140,
+            643,
+            825,
+            685
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            691,
+            826,
+            790
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "281 5 Conclusion ",
+        "text_level": 1,
+        "bbox": [
+            151,
+            809,
+            299,
+            825
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "82 In this paper, we present the first high-probability convergence analysis of DP-Clipped-SGD for   \n83 both convex and non-convex smooth optimization problems under heavy-tailed noise. Our results   \n84 demonstrate that DP-Clipped-SGD converges to a certain neighborhood of the optimal solution   \n85 at a rate of $\\mathcal { O } ( { } ^ { 1 } / { \\sqrt { K } } )$ . In future work, it would be valuable to extend these results to the Federated   \n86 Learning setting and to investigate the tightness and optimality of the derived bounds. ",
+        "bbox": [
+            150,
+            839,
+            825,
+            910
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "discarded",
+        "text": "9 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "287 References ",
+        "text_level": 1,
+        "bbox": [
+            150,
+            89,
+            267,
+            106
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "288 Abadi, M., Chu, A., Goodfellow, I., McMahan, H. B., Mironov, I., Talwar, K., and Zhang, L. (2016). Deep learning with differential privacy. In Proceedings of the 2016 ACM SIGSAC conference on computer and communications security, pages 308–318. (Cited on pages 2, 4, 8, and 35) Allouah, Y., Guerraoui, R., Gupta, N., Pinot, R., and Stephan, J. (2023). On the privacy-robustnessutility trilemma in distributed learning. In International Conference on Machine Learning, pages 569–626. PMLR. (Cited on page 4) Allouah, Y., Koloskova, A., El Firdoussi, A., Jaggi, M., and Guerraoui, R. (2024). The privacy power of correlated noise in decentralized learning. In International Conference on Machine Learning, pages 1115–1143. PMLR. (Cited on page 4) Armacki, A., Sharma, P., Joshi, G., Bajovic, D., Jakovetic, D., and Kar, S. (2023). High-probability convergence bounds for nonlinear stochastic gradient descent under heavy-tailed noise. arXiv preprint arXiv:2310.18784. (Cited on page 5) Armacki, A., Yu, S., Bajovic, D., Jakovetic, D., and Kar, S. (2024). Large deviations and improved mean-squared error rates of nonlinear sgd: Heavy-tailed noise and power of symmetry. arXiv preprint arXiv:2410.15637. (Cited on page 5) Chezhegov, S., Klyukin, Y., Semenov, A., Beznosikov, A., Gasnikov, A., Horvath, S., Tak ´ a´c, M., ˇ and Gorbunov, E. (2024). Clipping improves adam-norm and adagrad-norm when the noise is heavy-tailed. arXiv preprint arXiv:2406.04443. (Cited on pages 1, 3, 4, and 5) Cutkosky, A. and Mehta, H. (2021). High-probability bounds for non-convex stochastic optimization with heavy tails. Advances in Neural Information Processing Systems, 34:4883–4895. (Cited on pages 1, 4, and 5) Davis, D., Drusvyatskiy, D., Xiao, L., and Zhang, J. (2021). From low probability to high confidence in stochastic convex optimization. Journal of machine learning research, 22(49):1–38. (Cited on page 5) Duchi, J., Hazan, E., and Singer, Y. (2011). Adaptive subgradient methods for online learning and stochastic optimization. Journal of machine learning research, 12(7). (Cited on page 1) Dvurechensky, P. and Gasnikov, A. (2016). Stochastic intermediate gradient method for convex problems with stochastic inexact oracle. Journal of Optimization Theory and Applications, 171:121– 145. (Cited on page 4) Dwork, C., Roth, A., et al. (2014). The algorithmic foundations of differential privacy. Foundations and Trends® in Theoretical Computer Science, 9(3–4):211–407. (Cited on pages 2, 3, 4, and 6) Dzhaparidze, K. and Van Zanten, J. (2001). On bernstein-type inequalities for martingales. Stochastic processes and their applications, 93(1):109–117. (Cited on page 22) Freedman, D. A. (1975). On tail probabilities for martingales. the Annals of Probability, pages 100–118. (Cited on page 22) Gasnikov, A. and Nesterov, Y. (2016). Universal fast gradient method for stochastic composit optimization problems. arXiv preprint arXiv:1604.05275. (Cited on page 4) Ghadimi, S. and Lan, G. (2012). Optimal stochastic approximation algorithms for strongly convex stochastic composite optimization i: A generic algorithmic framework. SIAM Journal on Optimization, 22(4):1469–1492. (Cited on page 4) Goodfellow, I. J., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., Courville, A., and Bengio, Y. (2014). Generative adversarial nets. Advances in neural information processing systems, 27. (Cited on page 1) Gorbunov, E., Danilova, M., Dobre, D., Dvurechenskii, P., Gasnikov, A., and Gidel, G. (2022). Clipped stochastic methods for variational inequalities with heavy-tailed noise. Advances in Neural Information Processing Systems, 35:31319–31332. (Cited on pages 1 and 4) Gorbunov, E., Danilova, M., and Gasnikov, A. (2020). Stochastic optimization with heavy-tailed noise via accelerated gradient clipping. Advances in Neural Information Processing Systems, 33:15042–15053. (Cited on pages 1, 4, and 5) Gorbunov, E., Danilova, M., Shibaev, I., Dvurechensky, P., and Gasnikov, A. (2024a). Highprobability complexity bounds for non-smooth stochastic convex optimization with heavy-tailed noise. Journal of Optimization Theory and Applications, pages 1–60. (Cited on page 4) ",
+        "bbox": [
+            150,
+            93,
+            828,
+            916
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "10 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "289 290 291 292 293 294 295 296 297 298 299 300 301 302 303 304 305 306 307 308 309 310 311 312 313 314 315 316 317 318 319 320 321 322 323 324 325 326 327 328 329 330 331 332 333 334 335 336 337 338 339 ",
+        "bbox": [
+            138,
+            95,
+            165,
+            922
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "340 Gorbunov, E., Sadiev, A., Danilova, M., Horvath, S., Gidel, G., Dvurechensky, P., Gasnikov, A., ´   \n341 and Richtarik, P. (2024b). High-probability convergence for composite and distributed stochastic ´   \n342 minimization and variational inequalities with heavy-tailed noise. In Salakhutdinov, R., Kolter, Z.,   \n343 Heller, K., Weller, A., Oliver, N., Scarlett, J., and Berkenkamp, F., editors, Proceedings of the 41st   \n344 International Conference on Machine Learning, volume 235 of Proceedings of Machine Learning   \n345 Research, pages 15951–16070. PMLR. (Cited on pages 1 and 5)   \n346 Harvey, N. J., Liaw, C., and Randhawa, S. (2019). Simple and optimal high-probability bounds for   \n347 strongly-convex stochastic gradient descent. arXiv preprint arXiv:1909.00843. (Cited on page 4)   \n348 Hubler, F., Fatkhullin, I., and He, N. (2024). From gradient clipping to normalization for heavy tailed ¨   \n349 sgd. arXiv preprint arXiv:2410.13849. (Cited on page 5)   \n350 Islamov, R., Horvath, S., Lucchi, A., Richtarik, P., and Gorbunov, E. (2025). Double momentum and   \n351 error feedback for clipping with fast rates and differential privacy. arXiv preprint arXiv:2502.11682.   \n352 (Cited on page 4)   \n353 Juditsky, A. and Nemirovski, A. S. (2008). Large deviations of vector-valued martingales in 2-smooth   \n354 normed spaces. arXiv preprint arXiv:0809.0813. (Cited on page 22)   \n355 Kingma, D. P. and Ba, J. (2014). Adam: A method for stochastic optimization. arXiv preprint   \n356 arXiv:1412.6980. (Cited on page 1)   \n357 Koloskova, A., Hendrikx, H., and Stich, S. U. (2023). Revisiting gradient clipping: Stochastic   \n358 bias and tight convergence guarantees. In International Conference on Machine Learning, pages   \n359 17343–17363. PMLR. (Cited on pages 30 and 43)   \n360 Kornilov, N., Shamir, O., Lobanov, A., Dvinskikh, D., Gasnikov, A., Shibaev, I., Gorbunov, E.,   \n361 and Horvath, S. (2023). Accelerated zeroth-order method for non-smooth stochastic convex ´   \n362 optimization problem with infinite variance. Advances in Neural Information Processing Systems,   \n363 36:64083–64102. (Cited on page 5)   \n364 Kornilov, N., Zmushko, P., Semenov, A., Gasnikov, A., and Beznosikov, A. (2025). Sign operator for   \n365 coping with heavy-tailed noise: High probability convergence bounds with extensions to distributed   \n366 optimization and comparison oracle. arXiv preprint arXiv:2502.07923. (Cited on page 5)   \n367 Laurent, B. and Massart, P. (2000). Adaptive estimation of a quadratic functional by model selection.   \n368 Annals of statistics, pages 1302–1338. (Cited on page 23)   \n369 Li, B. and Chi, Y. (2025). Convergence and privacy of decentralized nonconvex optimization with   \n370 gradient clipping and communication compression. IEEE Journal of Selected Topics in Signal   \n371 Processing. (Cited on page 4)   \n372 Li, S. and Liu, Y. (2023). High probability analysis for non-convex stochastic optimization with   \n373 clipping. In ECAI 2023, pages 1406–1413. IOS Press. (Cited on page 5)   \n374 Li, X. and Orabona, F. (2020). A high probability analysis of adaptive sgd with momentum. arXiv   \n375 preprint arXiv:2007.14294. (Cited on page 4)   \n376 Liu, M., Zhuang, Z., Lei, Y., and Liao, C. (2022). A communication-efficient distributed gradient   \n377 clipping algorithm for training deep neural networks. Advances in Neural Information Processing   \n378 Systems, 35:26204–26217. (Cited on page 4)   \n379 Liu, Z., Nguyen, T. D., Nguyen, T. H., Ene, A., and Nguyen, H. (2023). High probability convergence   \n380 of stochastic gradient methods. In International Conference on Machine Learning, pages 21884–   \n381 21914. PMLR. (Cited on page 4)   \n382 Madden, L., Dall’Anese, E., and Becker, S. (2024). High probability convergence bounds for non  \n383 convex stochastic gradient descent with sub-weibull noise. Journal of Machine Learning Research,   \n384 25(241):1–36. (Cited on page 4)   \n385 Nazin, A. V., Nemirovsky, A. S., Tsybakov, A. B., and Juditsky, A. B. (2019). Algorithms of   \n386 robust stochastic optimization based on mirror descent method. Automation and Remote Control,   \n387 80:1607–1627. (Cited on page 4)   \n388 Nemirovski, A., Juditsky, A., Lan, G., and Shapiro, A. (2009). Robust stochastic approximation   \n389 approach to stochastic programming. SIAM Journal on optimization, 19(4):1574–1609. (Cited on   \n390 page 4)   \n391 Nemirovskij, A. S. and Yudin, D. B. (1983). Problem complexity and method efficiency in optimiza  \n392 tion. (Cited on page 4)   \n393 Nguyen, T. D., Nguyen, T. H., Ene, A., and Nguyen, H. (2023). Improved convergence in high   \n394 probability of clipped gradient methods with heavy tailed noise. (Cited on pages 1 and 5)   \n395 Noble, M., Bellet, A., and Dieuleveut, A. (2022). Differentially private federated learning on   \n396 heterogeneous data. In International conference on artificial intelligence and statistics, pages   \n397 10110–10145. PMLR. (Cited on page 4)   \n398 Parletta, D. A., Paudice, A., Pontil, M., and Salzo, S. (2024). High probability bounds for stochastic   \n399 subgradient schemes with heavy tailed noise. SIAM Journal on Mathematics of Data Science,   \n400 6(4):953–977. (Cited on pages 1 and 4)   \n401 Pascanu, R., Mikolov, T., and Bengio, Y. (2013). On the difficulty of training recurrent neural   \n402 networks. In International conference on machine learning, pages 1310–1318. Pmlr. (Cited on   \n403 page 1)   \n404 Polyak, B. T. (1964). Some methods of speeding up the convergence of iteration methods. Ussr   \n405 computational mathematics and mathematical physics, 4(5):1–17. (Cited on page 4)   \n406 Polyanskiy, Y. and Wu, Y. (2025). Information theory: From coding to learning. Cambridge university   \n407 press. (Cited on page 23)   \n408 Puchkin, N., Gorbunov, E., Kutuzov, N., and Gasnikov, A. (2024). Breaking the heavy-tailed noise   \n409 barrier in stochastic optimization problems. In International Conference on Artificial Intelligence   \n410 and Statistics, pages 856–864. PMLR. (Cited on page 5)   \n411 Richtarik, P., Sokolov, I., and Fatkhullin, I. (2021). EF21: A new, simpler, theoretically better, and ´   \n412 practically faster error feedback. Advances in Neural Information Processing Systems, 34:4384–   \n413 4396. (Cited on page 4)   \n414 Robbins, H. and Monro, S. (1951). A stochastic approximation method. The annals of mathematical   \n415 statistics, pages 400–407. (Cited on page 1)   \n416 Sadiev, A., Danilova, M., Gorbunov, E., Horvath, S., Gidel, G., Dvurechensky, P., Gasnikov, A., ´   \n417 and Richtarik, P. (2023). High-probability bounds for stochastic optimization and variational ´   \n418 inequalities: the case of unbounded variance. In International Conference on Machine Learning,   \n419 pages 29563–29648. PMLR. (Cited on pages 1, 3, 4, 5, 6, 9, 20, and 31)   \n420 Seide, F., Fu, H., Droppo, J., Li, G., and Yu, D. (2014). 1-bit stochastic gradient descent and its   \n421 application to data-parallel distributed training of speech dnns. In Interspeech, volume 2014, pages   \n422 1058–1062. Singapore. (Cited on page 4)   \n423 Shalev-Shwartz, S. and Ben-David, S. (2014). Understanding machine learning: From theory to   \n424 algorithms. Cambridge university press. (Cited on page 2)   \n425 S¸ ims¸ekli, U., Gurb ¨ uzbalaban, M., Nguyen, T. H., Richard, G., and Sagun, L. (2019). On the ¨   \n426 heavy-tailed theory of stochastic gradient descent for deep neural networks. arXiv preprint   \n427 arXiv:1912.00018. (Cited on page 1)   \n428 Streeter, M. and McMahan, H. B. (2010). Less regret via online conditioning. arXiv preprint   \n429 arXiv:1002.4862. (Cited on page 1)   \n430 Su, W. J. (2024). A statistical viewpoint on differential privacy: Hypothesis testing, representation,   \n431 and blackwell’s theorem. Annual Review of Statistics and Its Application, 12. (Cited on page 3)   \n432 Wei, K., Li, J., Ding, M., Ma, C., Yang, H. H., Farokhi, F., Jin, S., Quek, T. Q., and Poor, H. V.   \n433 (2020). Federated learning with differential privacy: Algorithms and performance analysis. IEEE   \n434 transactions on information forensics and security, 15:3454–3469. (Cited on page 4)   \n435 Zhang, J., Karimireddy, S. P., Veit, A., Kim, S., Reddi, S., Kumar, S., and Sra, S. (2020). Why are   \n436 adaptive methods good for attention models? Advances in Neural Information Processing Systems,   \n437 33:15383–15393. (Cited on page 1)   \n438 Zhang, X., Chen, X., Hong, M., Wu, Z. S., and Yi, J. (2022). Understanding clipping for federated   \n439 learning: Convergence and client-level differential privacy. In International Conference on Machine   \n440 Learning, ICML 2022. (Cited on page 4)   \n441 Zhao, P., Wu, J., Liu, Z., Wang, C., Fan, R., and Li, Q. (2025). Differential private stochastic   \n442 optimization with heavy-tailed data: towards optimal rates. In Proceedings of the AAAI Conference   \n443 on Artificial Intelligence, volume 39, pages 22795–22803. (Cited on page 4) ",
+        "bbox": [
+            140,
+            73,
+            828,
+            917
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "discarded",
+        "text": "11 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            948
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            138,
+            89,
+            828,
+            890
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "12 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "1. Claims ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            116,
+            284,
+            130
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: Do the main claims made in the abstract and introduction accurately reflect the paper’s contributions and scope? ",
+        "bbox": [
+            232,
+            133,
+            821,
+            161
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            166,
+            330,
+            180
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: As mentioned in the abstract, this work provides the first high-probability analysis for Clipped SGD with heavy-tailed noise on the gradient and an arbitrary clipping level with added DP noise. This is the main contribution of the paper and it appears in the abstract. ",
+        "bbox": [
+            233,
+            184,
+            825,
+            239
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            243,
+            308,
+            257
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the abstract and introduction do not include the claims made in the paper.   \n• The abstract and/or introduction should clearly state the claims made, including the contributions made in the paper and important assumptions and limitations. A No or NA answer to this question will not be perceived well by the reviewers.   \n• The claims made should match theoretical and experimental results, and reflect how much the results can be expected to generalize to other settings.   \n• It is fine to include aspirational goals as motivation as long as it is clear that these goals are not attained by the paper. ",
+        "bbox": [
+            251,
+            262,
+            825,
+            393
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "2. Limitations ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            397,
+            316,
+            410
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss the limitations of the work performed by the authors? ",
+        "bbox": [
+            232,
+            415,
+            805,
+            429
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            434,
+            330,
+            446
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: We have explained the limitations of our analysis in Section 4. ",
+        "bbox": [
+            235,
+            452,
+            728,
+            465
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            469,
+            308,
+            483
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper.   \n• The authors are encouraged to create a separate ”Limitations” section in their paper.   \n• The paper should point out any strong assumptions and how robust the results are to violations of these assumptions (e.g., independence assumptions, noiseless settings, model well-specification, asymptotic approximations only holding locally). The authors should reflect on how these assumptions might be violated in practice and what the implications would be.   \n• The authors should reflect on the scope of the claims made, e.g., if the approach was only tested on a few datasets or with a few runs. In general, empirical results often depend on implicit assumptions, which should be articulated.   \nThe authors should reflect on the factors that influence the performance of the approach. For example, a facial recognition algorithm may perform poorly when image resolution is low or images are taken in low lighting. Or a speech-to-text system might not be used reliably to provide closed captions for online lectures because it fails to handle technical jargon.   \nThe authors should discuss the computational efficiency of the proposed algorithms and how they scale with dataset size.   \nIf applicable, the authors should discuss possible limitations of their approach to address problems of privacy and fairness.   \nWhile the authors might fear that complete honesty about limitations might be used by reviewers as grounds for rejection, a worse outcome might be that reviewers discover limitations that aren’t acknowledged in the paper. The authors should use their best   \njudgment and recognize that individual actions in favor of transparency play an important role in developing norms that preserve the integrity of the community. Reviewers will be specifically instructed to not penalize honesty concerning limitations. ",
+        "bbox": [
+            250,
+            488,
+            825,
+            859
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "3. Theory assumptions and proofs ",
+        "text_level": 1,
+        "bbox": [
+            215,
+            864,
+            454,
+            878
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof? ",
+        "bbox": [
+            230,
+            883,
+            823,
+            911
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "13 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "445 446 447 448 449 450 451 452 453 454 455 456 457 458 459 460 461 462 463 464 465 466 467 468 469 470 471 472 473 474 475 476 477 478 479 480 481 482 483 484 485 486 487 488 489 490 491 492 493 494 495 496 ",
+        "bbox": [
+            138,
+            103,
+            166,
+            916
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "444 NeurIPS Paper Checklist ",
+        "bbox": [
+            147,
+            89,
+            387,
+            107
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            92,
+            330,
+            106
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: Main assumptions are stated in Section 2. Complete correct proofs are provided in the appendices. A proof sketch is provided in the main text in Section 4. ",
+        "bbox": [
+            233,
+            111,
+            825,
+            138
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            145,
+            308,
+            159
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include theoretical results.   \n• All the theorems, formulas, and proofs in the paper should be numbered and crossreferenced.   \n• All assumptions should be clearly stated or referenced in the statement of any theorems.   \n• The proofs can either appear in the main paper or the supplemental material, but if they appear in the supplemental material, the authors are encouraged to provide a short proof sketch to provide intuition.   \n• Inversely, any informal proof provided in the core of the paper should be complemented by formal proofs provided in appendix or supplemental material.   \n• Theorems and Lemmas that the proof relies upon should be properly referenced. ",
+        "bbox": [
+            251,
+            162,
+            826,
+            316
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "4. Experimental result reproducibility ",
+        "text_level": 1,
+        "bbox": [
+            215,
+            321,
+            482,
+            335
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)? ",
+        "bbox": [
+            233,
+            340,
+            825,
+            382
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            387,
+            328,
+            401
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: Only rigorous mathematical analysis is provided. ",
+        "bbox": [
+            232,
+            407,
+            642,
+            421
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            426,
+            310,
+            440
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• If the paper includes experiments, a No answer to this question will not be perceived well by the reviewers: Making the paper reproducible is important, regardless of whether the code and data are provided or not.   \n• If the contribution is a dataset and/or model, the authors should describe the steps taken to make their results reproducible or verifiable.   \n• Depending on the contribution, reproducibility can be accomplished in various ways. For example, if the contribution is a novel architecture, describing the architecture fully might suffice, or if the contribution is a specific model and empirical evaluation, it may be necessary to either make it possible for others to replicate the model with the same dataset, or provide access to the model. In general. releasing code and data is often one good way to accomplish this, but reproducibility can also be provided via detailed instructions for how to replicate the results, access to a hosted model (e.g., in the case of a large language model), releasing of a model checkpoint, or other means that are appropriate to the research performed. While NeurIPS does not require releasing code, the conference does require all submissions to provide some reasonable avenue for reproducibility, which may depend on the nature of the contribution. For example (a) If the contribution is primarily a new algorithm, the paper should make it clear how to reproduce that algorithm. (b) If the contribution is primarily a new model architecture, the paper should describe the architecture clearly and fully. (c) If the contribution is a new model (e.g., a large language model), then there should either be a way to access this model for reproducing the results or a way to reproduce the model (e.g., with an open-source dataset or instructions for how to construct the dataset). (d) We recognize that reproducibility may be tricky in some cases, in which case authors are welcome to describe the particular way they provide for reproducibility. In the case of closed-source models, it may be that access to the model is limited in some way (e.g., to registered users), but it should be possible for other researchers to have some path to reproducing or verifying the results. ",
+        "bbox": [
+            250,
+            449,
+            825,
+            891
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "5. Open access to data and code ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            897,
+            437,
+            911
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "14 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "497 498 499 500 501 502 503 504 505 506 507 508 509 510 511 512 513 514 515 516 517 518 519 520 521 522 523 524 525 526 527 528 529 530 531 532 533 534 535 536 537 538 539 540 541 542 543 544 545 546 547 548 549 ",
+        "bbox": [
+            137,
+            77,
+            168,
+            920
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material? ",
+        "bbox": [
+            235,
+            92,
+            825,
+            132
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            137,
+            328,
+            151
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: Only rigorous mathematical analysis is provided. ",
+        "bbox": [
+            232,
+            156,
+            642,
+            170
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            175,
+            310,
+            188
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that paper does not include experiments requiring code.   \n• Please see the NeurIPS code and data submission guidelines (https://nips.cc/ public/guides/CodeSubmissionPolicy) for more details.   \n• While we encourage the release of code and data, we understand that this might not be possible, so “No” is an acceptable answer. Papers cannot be rejected simply for not including code, unless this is central to the contribution (e.g., for a new open-source benchmark).   \n• The instructions should contain the exact command and environment needed to run to reproduce the results. See the NeurIPS code and data submission guidelines (https: //nips.cc/public/guides/CodeSubmissionPolicy) for more details.   \n• The authors should provide instructions on data access and preparation, including how to access the raw data, preprocessed data, intermediate data, and generated data, etc.   \n• The authors should provide scripts to reproduce all experimental results for the new proposed method and baselines. If only a subset of experiments are reproducible, they should state which ones are omitted from the script and why.   \n• At submission time, to preserve anonymity, the authors should release anonymized versions (if applicable).   \n• Providing as much information as possible in supplemental material (appended to the paper) is recommended, but including URLs to data and code is permitted. ",
+        "bbox": [
+            250,
+            191,
+            826,
+            470
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "6. Experimental setting/details ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            476,
+            429,
+            489
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results? ",
+        "bbox": [
+            235,
+            494,
+            825,
+            535
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            233,
+            540,
+            328,
+            554
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: Only rigorous mathematical analysis is provided. ",
+        "bbox": [
+            232,
+            559,
+            642,
+            573
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            577,
+            310,
+            590
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments. • The experimental setting should be presented in the core of the paper to a level of detail that is necessary to appreciate the results and make sense of them. • The full details can be provided either with the code, in appendix, or as supplemental material. ",
+        "bbox": [
+            251,
+            595,
+            825,
+            669
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "7. Experiment statistical significance ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            674,
+            472,
+            688
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments? ",
+        "bbox": [
+            232,
+            693,
+            823,
+            720
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            724,
+            328,
+            738
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: Only rigorous mathematical analysis is provided. ",
+        "bbox": [
+            232,
+            743,
+            642,
+            757
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            762,
+            308,
+            775
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The authors should answer ”Yes” if the results are accompanied by error bars, confidence intervals, or statistical significance tests, at least for the experiments that support the main claims of the paper.   \n• The factors of variability that the error bars are capturing should be clearly stated (for example, train/test split, initialization, random drawing of some parameter, or overall run with given experimental conditions).   \n• The method for calculating the error bars should be explained (closed form formula, call to a library function, bootstrap, etc.)   \n• The assumptions made should be given (e.g., Normally distributed errors).   \n• It should be clear whether the error bar is the standard deviation or the standard error of the mean.   \n• It is OK to report 1-sigma error bars, but one should state it. The authors should preferably report a 2-sigma error bar than state that they have a $96 \\%$ CI, if the hypothesis of Normality of errors is not verified.   \n• For asymmetric distributions, the authors should be careful not to show in tables or figures symmetric error bars that would yield results that are out of range (e.g. negative error rates).   \n• If error bars are reported in tables or plots, The authors should explain in the text how they were calculated and reference the corresponding figures or tables in the text. ",
+        "bbox": [
+            251,
+            780,
+            825,
+            911
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "550 551 552 553 554 555 556 557 558 559 560 561 562 563 564 565 566 567 568 569 570 571 572 573 574 575 576 577 578 579 580 581 582 583 584 585 586 587 588 589 590 591 592 593 594 595 596 597 598 599 600 601 ",
+        "bbox": [
+            138,
+            97,
+            166,
+            929
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            251,
+            90,
+            825,
+            253
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "8. Experiments compute resources ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            258,
+            457,
+            272
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments? ",
+        "bbox": [
+            232,
+            276,
+            823,
+            318
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            323,
+            328,
+            337
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: Only rigorous mathematical analysis is provided. ",
+        "bbox": [
+            232,
+            342,
+            643,
+            356
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            361,
+            308,
+            375
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The paper should indicate the type of compute workers CPU or GPU, internal cluster, or cloud provider, including relevant memory and storage.   \n• The paper should provide the amount of compute required for each of the individual experimental runs as well as estimate the total compute.   \n• The paper should disclose whether the full research project required more compute than the experiments reported in the paper (e.g., preliminary or failed experiments that didn’t make it into the paper). ",
+        "bbox": [
+            251,
+            380,
+            825,
+            497
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "9. Code of ethics ",
+        "text_level": 1,
+        "bbox": [
+            212,
+            502,
+            333,
+            515
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines? ",
+        "bbox": [
+            233,
+            521,
+            825,
+            549
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            553,
+            330,
+            568
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: The work completely conforms to the NeurIPS Code of Ethics. ",
+        "bbox": [
+            235,
+            571,
+            732,
+            585
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            592,
+            308,
+            604
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the authors have not reviewed the NeurIPS Code of Ethics.   \n• If the authors answer No, they should explain the special circumstances that require a deviation from the Code of Ethics.   \n• The authors should make sure to preserve anonymity (e.g., if there is a special consideration due to laws or regulations in their jurisdiction). ",
+        "bbox": [
+            251,
+            609,
+            825,
+            684
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "10. Broader impacts ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            688,
+            351,
+            702
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed? ",
+        "bbox": [
+            230,
+            707,
+            823,
+            734
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            739,
+            328,
+            753
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: The work investigates the incorporation of differential privacy guarantees in stochastic optimization. Hence, it offers a positive societal impact. ",
+        "bbox": [
+            233,
+            758,
+            823,
+            786
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            791,
+            308,
+            804
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that there is no societal impact of the work performed.   \n• If the authors answer NA or No, they should explain why their work has no societal impact or why the paper does not address societal impact.   \n• Examples of negative societal impacts include potential malicious or unintended uses (e.g., disinformation, generating fake profiles, surveillance), fairness considerations (e.g., deployment of technologies that could make decisions that unfairly impact specific groups), privacy considerations, and security considerations.   \n• The conference expects that many papers will be foundational research and not tied to particular applications, let alone deployments. However, if there is a direct path to any negative applications, the authors should point it out. For example, it is legitimate to point out that an improvement in the quality of generative models could be used to generate deepfakes for disinformation. On the other hand, it is not needed to point out that a generic algorithm for optimizing neural networks could enable people to train models that generate Deepfakes faster.   \n• The authors should consider possible harms that could arise when the technology is being used as intended and functioning correctly, harms that could arise when the technology is being used as intended but gives incorrect results, and harms following from (intentional or unintentional) misuse of the technology.   \nIf there are negative societal impacts, the authors could also discuss possible mitigation strategies (e.g., gated release of models, providing defenses in addition to attacks, mechanisms for monitoring misuse, mechanisms to monitor how a system learns from feedback over time, improving the efficiency and accessibility of ML). ",
+        "bbox": [
+            251,
+            809,
+            825,
+            911
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "602 603 604 605 606 607 608 609 610 611 612 613 614 615 616 617 618 619 620 621 622 623 624 625 626 627 628 629 630 631 632 633 634 635 636 637 638 639 640 641 642 643 644 645 646 647 648 649 650 651 652 ",
+        "bbox": [
+            137,
+            94,
+            168,
+            931
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            250,
+            90,
+            825,
+            304
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "11. Safeguards ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            310,
+            313,
+            324
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pretrained language models, image generators, or scraped datasets)? ",
+        "bbox": [
+            235,
+            329,
+            825,
+            371
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            377,
+            328,
+            391
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Justification: No component with potential detrimental effects is released. ",
+        "bbox": [
+            233,
+            397,
+            714,
+            411
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            416,
+            308,
+            430
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper poses no such risks.   \n• Released models that have a high risk for misuse or dual-use should be released with necessary safeguards to allow for controlled use of the model, for example by requiring that users adhere to usage guidelines or restrictions to access the model or implementing safety filters.   \n• Datasets that have been scraped from the Internet could pose safety risks. The authors should describe how they avoided releasing unsafe images.   \n• We recognize that providing effective safeguards is challenging, and many papers do not require this, but we encourage authors to take this into account and make a best faith effort. ",
+        "bbox": [
+            251,
+            435,
+            825,
+            582
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "12. Licenses for existing assets ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            588,
+            419,
+            602
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected? ",
+        "bbox": [
+            233,
+            608,
+            823,
+            650
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            655,
+            328,
+            670
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Justification: There is no code, data, or models that require licenses. ",
+        "bbox": [
+            232,
+            675,
+            678,
+            689
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            694,
+            308,
+            708
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not use existing assets.   \n• The authors should cite the original paper that produced the code package or dataset.   \n• The authors should state which version of the asset is used and, if possible, include a URL.   \n• The name of the license (e.g., CC-BY 4.0) should be included for each asset.   \n• For scraped data from a particular source (e.g., website), the copyright and terms of service of that source should be provided.   \n• If assets are released, the license, copyright information, and terms of use in the package should be provided. For popular datasets, paperswithcode.com/datasets has curated licenses for some datasets. Their licensing guide can help determine the license of a dataset.   \n• For existing datasets that are re-packaged, both the original license and the license of the derived asset (if it has changed) should be provided. ",
+        "bbox": [
+            251,
+            712,
+            825,
+            911
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "17 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "653 654 655 656 657 658 659 660 661 662 663 664 665 666 667 668 669 670 671 672 673 674 675 676 677 678 679 680 681 682 683 684 685 686 687 688 689 690 691 692 693 694 695 696 697 698 699 700 701 702 703 704 ",
+        "bbox": [
+            138,
+            97,
+            168,
+            925
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• If this information is not available online, the authors are encouraged to reach out to the asset’s creators. ",
+        "bbox": [
+            250,
+            92,
+            823,
+            118
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "13. New assets ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            125,
+            310,
+            137
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets? ",
+        "bbox": [
+            232,
+            143,
+            823,
+            170
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            176,
+            328,
+            190
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: No new asset is released. ",
+        "bbox": [
+            233,
+            194,
+            485,
+            208
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            213,
+            310,
+            227
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not release new assets.   \n• Researchers should communicate the details of the dataset/code/model as part of their submissions via structured templates. This includes details about training, license, limitations, etc.   \n• The paper should discuss whether and how consent was obtained from people whose asset is used.   \n• At submission time, remember to anonymize your assets (if applicable). You can either create an anonymized URL or include an anonymized zip file. ",
+        "bbox": [
+            250,
+            232,
+            826,
+            349
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "14. Crowdsourcing and research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            356,
+            584,
+            369
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? ",
+        "bbox": [
+            230,
+            375,
+            825,
+            416
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            420,
+            328,
+            434
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: There was no crowd-sourcing experiments or research with human subjects. ",
+        "bbox": [
+            233,
+            439,
+            816,
+            454
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            458,
+            308,
+            472
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   \n• Including this information in the supplemental material is fine, but if the main contribution of the paper involves human subjects, then as much detail as possible should be included in the main paper.   \n• According to the NeurIPS Code of Ethics, workers involved in data collection, curation, or other labor should be paid at least the minimum wage in the country of the data collector. ",
+        "bbox": [
+            251,
+            477,
+            825,
+            592
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "15. Institutional review board (IRB) approvals or equivalent for research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            210,
+            597,
+            821,
+            626
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained? ",
+        "bbox": [
+            232,
+            630,
+            825,
+            685
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            690,
+            328,
+            704
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: There was no crowd-sourcing experiments or research with human subjects. ",
+        "bbox": [
+            233,
+            709,
+            818,
+            723
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            728,
+            308,
+            742
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   \n• Depending on the country in which research is conducted, IRB approval (or equivalent) may be required for any human subjects research. If you obtained IRB approval, you should clearly state this in the paper.   \n• We recognize that the procedures for this may vary significantly between institutions and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the guidelines for their institution.   \n• For initial submissions, do not include any information that would break anonymity (if applicable), such as the institution conducting the review. ",
+        "bbox": [
+            250,
+            746,
+            825,
+            892
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "16. Declaration of LLM usage ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            897,
+            419,
+            911
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "705 706 707 708 709 710 711 712 713 714 715 716 717 718 719 720 721 722 723 724 725 726 727 728 729 730 731 732 733 734 735 736 737 738 739 740 741 742 743 744 745 746 747 748 749 750 751 752 753 754 755 ",
+        "bbox": [
+            138,
+            98,
+            166,
+            925
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe the usage of LLMs if it is an important, original, or non-standard component of the core methods in this research? Note that if the LLM is used only for writing, editing, or formatting purposes and does not impact the core methodology, scientific rigorousness, or originality of the research, declaration is not required. ",
+        "bbox": [
+            191,
+            92,
+            825,
+            147
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            233,
+            152,
+            328,
+            166
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Justification: The paper does not use LLMs as an important, original, or non-standard component of the core methods in this research. ",
+        "bbox": [
+            232,
+            170,
+            823,
+            199
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            204,
+            308,
+            217
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the core method development in this research does not involve LLMs as any important, original, or non-standard components. • Please refer to our LLM policy (https://neurips.cc/Conferences/2025/LLM) for what should or should not be described. ",
+        "bbox": [
+            248,
+            222,
+            825,
+            280
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "discarded",
+        "text": "19 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 18
+    }
+]

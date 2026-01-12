@@ -1,0 +1,2947 @@
+[
+    {
+        "type": "text",
+        "text": "Gradient-Free Approaches is a Key to an Efficient Interaction with Markovian Stochasticity ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            122,
+            787,
+            196
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Anonymous Author(s) Affiliation Address email ",
+        "bbox": [
+            410,
+            251,
+            593,
+            306
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Abstract ",
+        "text_level": 1,
+        "bbox": [
+            457,
+            342,
+            540,
+            358
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "1 This paper deals with stochastic optimization problems involving Markovian   \n2 noise with a zero-order oracle. We present and analyze a novel derivative  \n3 free method for solving such problems in strongly convex smooth and   \n4 non-smooth settings with both one-point and two-point feedback oracles.   \n5 Using a randomized batching scheme, we show that when mixing time $\\tau$ of   \n6 the underlying noise sequence is less than the dimension of the problem $d$ , the   \n7 convergence estimates of our method do not depend on $\\tau$ . This observation   \n8 provides an efficient way to interact with Markovian stochasticity: instead   \n9 of invoking the expensive first-order oracle, one should use the zero-order   \n10 oracle. Finally, we complement our upper bounds with the corresponding   \n11 lower bounds. This confirms the optimality of our results. ",
+        "bbox": [
+            150,
+            376,
+            766,
+            529
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "12 1 Introduction ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            559,
+            328,
+            577
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "13 Stochasticity is a fundamental aspect of many optimization problems, naturally arising   \n14 in the field of machine learning [48, 28]. Stochastic gradient descent (SGD) [45] and its   \n15 accelerated variants [39, 25] have become a de facto optimizers for modern large models   \n16 training. Theoretical properties of SGD have been extensively studied under various statistical   \n17 frameworks [36, 24, 10, 56], often relying on the assumption that noise is independent   \n18 and identically distributed (i.i.d.). However, in many real-world applications — including   \n19 reinforcement learning (RL) [6, 16], distributed optimization [35, 31], and bandit problems   \n20 [3] — noise is not i.i.d., instead exhibiting correlations or Markovian structure.   \n21 For instance, in the mentioned growing field of RL, sequential interactions with the environ  \n22 ment induce state-dependent structure of the noise, creating a need for non-i.i.d. noise aware   \n23 algorithms. Although several gradient-based methods for Markovian stochastic oracles have   \n24 been studied in the past decade [14, 18], policy optimization in RL is based solely on reward   \n25 feedback, making traditional methods inapplicable, since there is no access to first-order   \n26 information [46, 9, 19]. Zero-order optimization (ZOO) methods are specifically developed   \n27 to address such problems, and are used in scenarios where gradients are unavailable or   \n28 prohibitively expensive to compute. Apart from RL, ZOO techniques are widely employed in   \n29 adversarial attack generation [8], hyperparameter tuning [47, 57], continuous bandits [7, 49]   \n30 and other applications [54, 33]. While the literature on ZOO is extensive, this work is, to   \n31 our knowledge, the first study of optimization problem with both zero-order information and   \n32 Markovian noise, aimed at developing an optimal algorithm for a large family of problems   \n33 from the intersection of these two areas.   \n35 $\\diamond$ Zero-order methods is one of the key and oldest areas of optimization. There are various   \n36 zero-order approaches, here we can briefly highlight, e.g., one-dimensional methods [32, 42]   \n37 or their high-dimensional analogues [41], ellipsoid algorithms [58] and searches along random   \n38 directions [4]. Currently, the most popular and most studied mechanism behind ZOO   \n39 methods is the finite-difference approximation of the gradient described in [43, 20, 40]. The   \n40 idea is simple: querying two sufficiently close points is essentially equivalent to finding a   \n41 value of the directional derivative of the function: ",
+        "bbox": [
+            147,
+            593,
+            825,
+            704
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            709,
+            825,
+            890
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "Submitted to 39th Conference on Neural Information Processing Systems (NeurIPS 2025). Do not distribute. ",
+        "bbox": [
+            176,
+            912,
+            823,
+            939
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            112,
+            825,
+            210
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/aff293799c7e1d879e208e569ed700c35753d43b2882711a35ae7a4c1d999b90.jpg",
+        "text": "$$\n\\langle \\nabla f ( x ) , e \\rangle \\approx { \\frac { f ( x + t e ) - f ( x ) } { t } } \\approx { \\frac { f ( x + t e ) - f ( x - t e ) } { 2 t } } ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            299,
+            214,
+            697,
+            244
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "42 where $e$ is a random direction. It can be a random coordinate, a vector from the Euclidean   \n43 sphere or a sample of the Gaussian distribution. The approximation (1) in turn leads back to   \n44 the gradient methods or coordinate algorithms of Nesterov [38]. There are, however, several   \n45 differences:   \n46 • First, to get full gradient information, the algorithm would need $d$ queries instead of one   \n47 gradient oracle call (here $d$ is the dimension of $x$ ).   \n48 • Second, if the ZO oracle is inexact, i.e. only noisy values of function are available, then   \n49 finite difference schemes can fail if noise components do not cancel out.   \n50 The setting of the second point, when function evaluations experience zero-mean additive   \n51 perturbations, is called Stochastic ZOO. The stochasticity, as noted before, is abundant in   \n52 the modern optimization world. To tackle this issue, additional assumptions about the noise   \n53 structure are required. Here we briefly discuss two main ideas adopted in the literature, and   \n54 refer the reader to Section 2 for precise definitions.   \n55 In the case of two-point feedback, we assume that for a fixed value of the noise variable one   \n56 can call the stochastic zero-order oracle at least twice. It means that we can compute the   \n57 finite difference approximation of the following form: ",
+        "bbox": [
+            147,
+            251,
+            825,
+            306
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            150,
+            313,
+            825,
+            376
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            382,
+            825,
+            452
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            457,
+            825,
+            500
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/14944fa410fd9597d52a0ed72f1be0ce07beaca076e2566d631ec231cb96db54.jpg",
+        "text": "$$\np ( x , \\xi , e ) = \\frac { f ( x + t e , \\xi ) - f ( x - t e , \\xi ) } { 2 t } \\approx \\langle \\nabla _ { x } f ( x , \\xi ) , e \\rangle\n$$",
+        "text_format": "latex",
+        "bbox": [
+            305,
+            507,
+            692,
+            536
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "58 Such approximation produces an estimate for the directional derivative of a noisy realization   \n59 $f ( \\cdot , \\xi )$ of the function $f$ . As mentioned before, the approximation (2) can be used instead of   \n60 the (stochastic) gradient in first-order methods. In the case of independent randomness, a   \n61 large number of works are based on this idea. There are results for both non-smooth and   \n62 smooth convex problems built on classical and accelerated gradient methods of Nesterov and   \n63 Spokoiny [40]. In the scope of our paper, we are interested in the results for smooth strongly   \n64 65 convex proin terms of m: amely . Here imates on zero-order oracle calls to achieve  is introduced as the variance of the gradien $\\varepsilon$ -solution, i.e. it is   \n$\\| x - x ^ { * } \\|$ $\\begin{array} { r } { \\mathcal { O } ( \\frac { d \\sigma _ { 2 } ^ { 2 } } { \\mu ^ { 2 } \\varepsilon } ) } \\end{array}$ $\\sigma _ { 2 }$   \n66 assumed that $\\mathbb { E } _ { \\xi } \\nabla f ( x , \\xi ) = \\nabla f ( x )$ and $\\mathbb { E } _ { \\xi } \\| \\nabla f ( x , \\xi ) - \\nabla f ( x ) \\| ^ { 2 } \\le \\sigma _ { 2 } ^ { : }$ . The main limitation   \n67 of two-point approach is that several evaluations with the same noise variable are required,   \n68 which is well suited for problems like empirical risk optimization [34], but can be a major   \n69 barrier for RL or online optimization.   \n70 In the one-point feedback setting, a more general stochasticity is assumed. In this case, each   \n71 call to the zero-order oracle generates a new randomness. Now the approximation (1) looks   \n72 as follows ",
+        "bbox": [
+            145,
+            542,
+            825,
+            718
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            723,
+            825,
+            763
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/3b240a6adbb5d554d37bc031cf55079da2533556cf06ec03756df64a6a450e41.jpg",
+        "text": "$$\np ( x , \\xi ^ { \\pm } , e ) = \\frac { f ( x + t e , \\xi ^ { + } ) - f ( x - t e , \\xi ^ { - } ) } { 2 t }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            348,
+            762,
+            648,
+            792
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "73 Using different $\\xi ^ { + }$ and $\\xi ^ { - }$ in (3) renders any conditions on the properties of $\\nabla f ( \\cdot , \\xi )$ useless.   \n74 Instead, it is assumed that $\\mathbb { E } _ { \\xi } f ( x , \\xi ) = f ( x )$ and $\\mathbb { E } _ { \\xi } | f ( x , \\xi ) - f ( x ) | ^ { 2 } \\le \\sigma _ { 1 } ^ { : 2 }$ . With one-point   \n75 feedback, the major problem is choosing the right shift $t$ for the finite difference scheme.   \n76 Picking it too small results in an amplification of the additive noise, and taking $t$ too big   \n77 leads to a poor gradient estimate. Because of this variance trade-off, the optimal rate for   \n78 methods with one-point approximation is worse than for two-point feedback. In particular,   \n79 for smooth strongly convex problems we have the following estimate on zero-order oracle   \n80 calls [23]: $\\begin{array} { r } { \\mathcal { O } \\big ( \\frac { d ^ { 2 } \\sigma _ { 1 } ^ { 2 } } { \\mu ^ { 3 } \\varepsilon ^ { 2 } } \\big ) } \\end{array}$ .   \n81 Although zero-order gradient approximation schemes suffer from high variance, there is a   \n82 surprising property that makes them superior in non-smooth optimization [22, 44, 49]. The   \n83 idea goes back to the 70s and utilizes the fact that ",
+        "bbox": [
+            147,
+            795,
+            826,
+            915
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "discarded",
+        "text": "34 1.1 Related works ",
+        "bbox": [
+            150,
+            90,
+            336,
+            106
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "discarded",
+        "text": "2 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            90,
+            828,
+            133
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "nction, defined as ",
+        "bbox": [
+            236,
+            145,
+            761,
+            162
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/f05b686734456d11147adf24ac377051a0a4580bde6a02748cf9780d81198e1c.jpg",
+        "text": "$$\n\\begin{array} { r } { \\cdot p ( x , \\xi ^ { ( \\pm ) } , e ) ] = \\frac { 1 } { d } \\nabla f _ { t } ( x ) , \\mathrm { ~ w h e r e ~ } f _ { t } \\mathrm { ~ i s ~ a ~ } s m o o t h e d \\mathrm { ~ f u ~ } } \\\\ { f _ { t } ( x ) = \\mathbb { E } _ { r } \\left[ f ( x + t r ) \\right] \\mathrm { ~ w i t h ~ } r \\sim R B _ { 2 } ^ { d } } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            259,
+            143,
+            632,
+            183
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "84 In fact, it can be shown that ft is dGt - smooth if $f$ is $G$ -Lipschitz. This makes zero-order   \n85 approximation a suitable candidate for a stochastic gradient of $f _ { t }$ . Optimizing this function   \n86 with a first-order method produces some solution, but it may not be the optima of $f$ [22].   \n87 From this point, there is a game – for small $t$ the functions $f$ and $f _ { t }$ are closer and for big $t$   \n88 the function $f _ { t }$ is easier to optimize as it gets smoother.   \n89 In more recent works, there have been many improvements in theoretical understanding of   \n90 ZO methods. The authors consider higher-order smoothness of the underlying function [2],   \n91 tackle non-convex non-smooth problems [44], take arbitrary Bregman geometry to benefit   \n92 in terms of oracle complexity [49, 29], and come up with sharp information-theoretic lower   \n93 bounds to understand computational limits [15, 1]. But none of them consider Markovian   \n94 stochasticity.   \n95 $\\diamond$ Markovian first-order methods. While the literature on stochastic optimization with   \n96 i.i.d. noise is extensive, research addressing the Markovian setting remains relatively sparse.   \n97 In our paper, we focus on the most \"friendly\" type of uniformly geometrically ergodic Markov   \n98 chains (see Section 2 for precise definitions).   \n99 Duchi et al. [14] conducted pioneering work on non-i.i.d. noise, investigating the Ergodic   \n100 Mirror Descent algorithm and establishing optimal convergence rates for non-smooth convex   \n101 problems. For smooth problems there were different attempts to get record-breaking estimates   \n102 on the first-order oracle [12, 11, 59, 18]. Finally, the optimal results were obtained for both   \n103 convex and non-convex problems in the works of Beznosikov et al. [5], Solodkin et al. [52]. In   \n104 particular, for smooth strongly convex objectives under Markovian noise the authors give the   \n105 complexity of the form: $\\begin{array} { r } { \\mathcal { O } \\big ( \\frac { \\tau \\sigma _ { 2 } ^ { 2 } } { \\mu ^ { 2 } \\varepsilon } \\big ) } \\end{array}$ , where $^ { \\prime }$ is defined as the mixing time of the corresponding   \n106 Markov chain (see Section 2). Note that these works utilize Multilevel Monte Carlo (MLMC)   \n107 batching technique, which helps to effectively interact with Markovian noise. We will need   \n108 this approach as well. Note that it was first considered in Markovian gradient optimization   \n109 by Dorfman and Levy [13] for automatic adaptation to unknown $\\tau$ . ",
+        "bbox": [
+            145,
+            193,
+            826,
+            266
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            271,
+            825,
+            356
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            361,
+            825,
+            417
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            422,
+            825,
+            583
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "$\\diamond$ Hypothesis. The complexity estimate for strongly convex first-order stochastic methods is $\\begin{array} { r } { \\mathcal { O } ( \\frac { \\sigma _ { 2 } ^ { 2 } } { \\mu ^ { 2 } \\varepsilon } ) } \\end{array}$ [36, 37]. Lower bounds for the same class of problems and methods show that the result is unimprovable [58]. As mentioned before, the transition from i.i.d. stochasticity to Markovian stochasticity increases the estimate by $\\tau$ times. This result is also optimal as shown by Beznosikov et al. [5]. At the same time, going from gradient oracle to zero-order methods adds a multiplier $d$ in the two-point feedback and $d ^ { 2 } / \\varepsilon$ in the one-point case. And this estimate is unimprovable as well [1, 15]. ",
+        "bbox": [
+            168,
+            588,
+            826,
+            693
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "117 The hypothesis arises that the transition to zero  \n118 order Markov optimization adds two multipliers   \n119 at once: $d \\tau$ and $d ^ { 2 } \\tau / _ { \\varepsilon }$ for two- and one-point. It is   \n120 illustrated in the following diagram for two-point   \n121 feedback: ",
+        "bbox": [
+            142,
+            693,
+            517,
+            761
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "image",
+        "img_path": "images/307742e541d0b0698667e2750b2ebf4d4ef2272daf65c57d1de8ca33acc7becd.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            529,
+            696,
+            818,
+            816
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "1.2 Our contribution ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            781,
+            357,
+            795
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "123 Our main contribution is the answer to the hy  \n124 pothesis above: surprisingly, it is not true. In more detail: ",
+        "bbox": [
+            147,
+            808,
+            591,
+            837
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "$\\diamond$ Accelerated SGD. We present the first analysis of Zero-Order Accelerated SGD under Markovian noise, considering both two-point and one-point feedback. Contrary to the expected multiplicative scaling of convergence rates with both dimensionality and mixing time, our analysis reveals a significant acceleration, as presented in Figure 1. It turns out that if $\\tau$ is smaller than $d$ , our results do not differ at all from the gradient-free methods ",
+        "bbox": [
+            166,
+            840,
+            823,
+            911
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "3 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "130 with independent stochasticity. The key technique behind this acceleration is described in   \n131 Section 2.1. The theory is also numerically validated in Section 3. ",
+        "bbox": [
+            148,
+            90,
+            823,
+            119
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "$\\diamond$ Non-smooth problems. We also consider non-smooth problems with Markovian noise. Using the smoothing technique we come up with a corresponding upper bounds in this case, as shown in Figure 1. The details of these bounds are presented in Appendix A. ",
+        "bbox": [
+            173,
+            126,
+            419,
+            236
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "table",
+        "img_path": "images/04e457d3987255dc72d2ae966ea6a4edb18baa4ee24790d6e415d0ab5b0087da.jpg",
+        "table_caption": [
+            "Figure 1: Summary of upper bounds. For notation, see Table 1 "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td></td><td colspan=\"2\">Smooth</td><td colspan=\"4\">Non-smooth</td></tr><tr><td></td><td>IID</td><td>Markov.</td><td></td><td>IID</td><td>Markov.</td><td></td></tr><tr><td>FO</td><td>2</td><td>[45]</td><td>2 [5]</td><td>Q2</td><td>[50]</td><td>G2 [14]1 T</td></tr><tr><td>ZO 2P</td><td>d</td><td>[30]</td><td>(d+T)</td><td></td><td>[22]</td><td>(d+T) S</td></tr><tr><td>ZO 1P</td><td>2 32</td><td>[2]2</td><td>Lo2 d(d+T) 32</td><td>2 1 μ43</td><td>[23]</td><td>G2 d(d+T) 1 μ43</td></tr></table>",
+        "bbox": [
+            431,
+            132,
+            823,
+            237
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "$\\diamond$ Computational efficiency. First, as noted above, our method gives the same oracle complexity for any $\\tau \\leq d$ . Moreover, if we assume that calling a zero-order oracle is $d$ times cheaper than computing the corresponding gradient, then the gradient method with Markov noise will require resources proportionally to $d \\cdot \\tau$ — the cost of one oracle call is $d$ and the complexity scales as $\\tau$ for the first-order method from Figure 1. At the same time, the resource complexity of our zero-order method is proportional to $d + \\tau$ . ",
+        "bbox": [
+            173,
+            242,
+            825,
+            327
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "$\\diamond$ Lower bounds. In Section 2.3 we establish the first information-theoretic lower bounds for solving Markovian optimization problems with one-point and two-point feedback. Our results match the convergence guarantee of our algorithm up to logarithmic factors, showing that the analysis is accurate and no further improvement is possible. ",
+        "bbox": [
+            174,
+            332,
+            825,
+            388
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "table",
+        "img_path": "images/fd3a3e5e22ecd80269dee6cda02248237858a7a50e9802051dfa0da05687d8cb.jpg",
+        "table_caption": [
+            "Table 1: Notations & Definitions "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Sym.</td><td>Definition</td><td>Sym.</td><td>Definition</td></tr><tr><td>-1, &lt;-,-&gt;</td><td>Norm,dot product,assumed Euclidean by default</td><td>m</td><td>x-x*1|2</td></tr><tr><td>Z,Z</td><td>Complete separable metric space,its Borel o-algebra</td><td>d</td><td>Problem dimension</td></tr><tr><td>Q</td><td>Markov kernel on Z×Z</td><td>L</td><td>Gradient&#x27;s Lipshitz constant</td></tr><tr><td>P，Eg</td><td>Probability,Expectation under initial distribution ε</td><td>μ</td><td>Strong convexity constant</td></tr><tr><td>{Z}</td><td>Canonical process with kernel Q</td><td>G</td><td>Function&#x27;s Lipshitz constant</td></tr><tr><td>RB，RS</td><td>Uniform distribution on unit a lz-ball,-sphere</td><td></td><td>|F(x,Z)-f(x)l²≤σ²</td></tr><tr><td>e</td><td></td><td>品</td><td>vF(x,Z)-∀f(x）l²≤²</td></tr><tr><td>an≤bn</td><td>c ∈ R (problem-independent):an ≤cbn for all n</td><td>T</td><td>Mixing time of Z</td></tr><tr><td>an~bn</td><td>an≤bn and bn≤an</td><td>9,g</td><td>Gradient estimators</td></tr><tr><td>T=O(S)</td><td>T≤ poly(log S)·S as ε→0</td><td>ft(x)</td><td>Er[f(x+tr)],r~ RB</td></tr></table>",
+        "bbox": [
+            171,
+            409,
+            825,
+            558
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "150 2 Main results ",
+        "text_level": 1,
+        "bbox": [
+            143,
+            571,
+            330,
+            588
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "51 We are now ready for a more formal presentation. In this paper, we study the minimization   \n52 problem ",
+        "bbox": [
+            155,
+            603,
+            823,
+            631
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/8b60b95b183ebe2e679ba583588e02458c3766658e5596562b6667aca6a38ef1.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { x \\in \\mathbb { R } ^ { d } } f ( x ) : = \\mathbb { E } _ { Z \\sim \\pi } \\left[ F ( x , Z ) \\right] ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            395,
+            631,
+            601,
+            655
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where $\\pi$ is an unknown distribution and access to the function $f$ (not to its gradient $\\nabla f$ ) is available through a stochastic one-point or two-point oracle $F ( x , Z )$ . ",
+        "bbox": [
+            161,
+            660,
+            826,
+            689
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "155 In our analysis, we will use a set of assumptions on the underlying function $f$ and its oracle,   \n56 starting with smoothness and convexity: ",
+        "bbox": [
+            155,
+            694,
+            825,
+            723
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Assumption 1. The function 57 $f$ is $L$ -smooth on $\\mathbb { R } ^ { d }$ with $L > 0$ , i.e., it is differentiable and there is a constant 158 $L > 0$ such that the following inequality holds for all $x , y \\in \\mathbb { R } ^ { d }$ : ",
+        "bbox": [
+            155,
+            727,
+            825,
+            756
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/40c0fddca0865f31a906bf37e3e8d7a6a3027220a5a06c262f3527ae97b56c96.jpg",
+        "text": "$$\n\\| \\nabla f ( x ) - \\nabla f ( y ) \\| \\leq L \\| x - y \\| .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            390,
+            766,
+            607,
+            780
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "159 In the two-point feedback setting, we require the following generalization: ",
+        "bbox": [
+            150,
+            787,
+            700,
+            803
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Assumption60 $\\mathbf { 1 } ^ { \\prime }$ . For al l $Z \\in Z$ the function $F ( \\cdot , Z )$ is $L$ -smooth on $\\mathbb { R } ^ { d }$ . ",
+        "bbox": [
+            156,
+            806,
+            692,
+            821
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Note that the uniform161 $1 ^ { \\prime }$ implies 1. ",
+        "bbox": [
+            147,
+            833,
+            423,
+            848
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "1The authors consider general convex case. Using standard restart technique, we get the corresponding bound in the strongly convex case. 2The noise is assumed to be point-independent. 3By construction, for any $A \\in { \\mathcal { Z } }$ , we have $\\mathbb { P } _ { \\xi } ( Z _ { k } \\in A \\mid Z _ { k - 1 } ) = \\operatorname { Q } ( Z _ { k - 1 } , A ) , \\quad \\mathbb { P } _ { \\xi ^ { - } }$ a.s. ",
+        "bbox": [
+            173,
+            858,
+            825,
+            912
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "4 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "162 Assumption 2. The function $f$ is $\\mu$ -strongly convex on $\\mathbb { R } ^ { d }$ , i.e., it is continuously dif  \n163 ferentiable and there is a constant $\\mu > 0$ such that the following inequality holds for all   \n164 $x , y \\in \\mathbb { R } ^ { d }$ : ",
+        "bbox": [
+            140,
+            90,
+            828,
+            131
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/c49c8c9fca012fb3727727fa78f80ada6e4cd4939f6e80309c00bdbef0963865.jpg",
+        "text": "$$\n{ \\frac { \\mu } { 2 } } \\| x - y \\| ^ { 2 } \\leq f ( x ) - f ( y ) - \\langle \\nabla f ( y ) , x - y \\rangle .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            344,
+            131,
+            653,
+            157
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "165 We now turn to assumptions on the sequence of noise states $\\{ Z _ { i } \\} _ { i = 0 } ^ { \\infty }$ . Specifically, we   \n166 consider the case where $\\{ Z _ { i } \\} _ { i = 0 } ^ { \\infty }$ forms a time-homogeneous Markov chain. Let Q denote the   \n167 corresponding Markov kernel. We impose the following assumption on Q to characterize its   \n168 mixing properties:   \n169 Assumption 3. $\\{ Z _ { i } \\} _ { i = 0 } ^ { \\infty }$ is a stationary Markov chain on $( \\boldsymbol { \\mathbb { Z } } , \\boldsymbol { \\mathcal { Z } } )$ with Markov kernel Q and   \n170 unique invariant distribution $\\pi$ . Moreover, $\\mathrm { \\Delta Q }$ is uniformly geometrically ergodic with mixing   \n171 time $\\tau \\in \\mathbb { N }$ , i.e., for every $k \\in \\mathbb N$ , ",
+        "bbox": [
+            142,
+            165,
+            826,
+            222
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            224,
+            825,
+            268
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e9976eaa50121309e250570c317aa69877cb3d0e23869d1f4dd7b03269530b50.jpg",
+        "text": "$$\n\\Delta ( \\boldsymbol { \\mathrm { Q } } ^ { k } ) = \\operatorname* { s u p } _ { z , z ^ { \\prime } \\in \\boldsymbol { \\mathrm { Z } } } ( 1 / 2 ) \\| \\boldsymbol { \\mathrm { Q } } ^ { k } ( z , \\cdot ) - \\boldsymbol { \\mathrm { Q } } ^ { k } ( z ^ { \\prime } , \\cdot ) \\| _ { \\mathsf { T V } } \\leq ( 1 / 4 ) ^ { \\lfloor k / \\tau \\rfloor } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            294,
+            272,
+            704,
+            300
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "172 Assumption 3 is common in the literature on Markovian stochasticity [14, 12, 13, 5, 52]. It   \n173 includes, for instance, irreducible aperiodic finite Markov chains [18]. The mixing time $\\tau$   \n174 reflects how quickly the distribution of the chain approaches stationarity, providing a natural   \n175 measure of the temporal dependence in the data.   \n176 Next, we specify our assumptions on the oracle. As discussed in Section 1.1, these assumptions   \n177 differ based on the type of feedback. ",
+        "bbox": [
+            140,
+            301,
+            826,
+            358
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            150,
+            363,
+            823,
+            392
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Assumption 4 (for one-point). For all 178 $x \\in \\mathbb { R } ^ { d }$ it holds that $\\mathbb { E } _ { \\pi } [ F ( x , Z ) ] = f ( x )$ . Moreover, for all 179 $Z \\in Z$ and $x \\in \\mathbb { R } ^ { d }$ it holds that ",
+        "bbox": [
+            147,
+            395,
+            826,
+            425
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a8e37146b993f1ed23aee83e7e78e974345aca4c816a55d9d71341d8224b29b7.jpg",
+        "text": "$$\n| F ( x , Z ) - f ( x ) | ^ { 2 } \\leq \\sigma _ { 1 } ^ { 2 } ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            413,
+            431,
+            583,
+            446
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Assumption180 $\\mathbf { { 4 } ^ { \\prime } }$ (for two-point). For all $x \\in \\mathbb { R } ^ { d }$ it holds that $\\mathbb { E } _ { \\pi } [ \\nabla F ( x , Z ) ] = \\nabla f ( x )$ . Moreover, for all 181 $Z \\in Z$ and $x \\in \\mathbb { R } ^ { d }$ it holds that ",
+        "bbox": [
+            150,
+            452,
+            825,
+            482
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/cec8ee21ecd8126f60154d693e7df79be4e2f326142dbadc8b287d5f206b6f6c.jpg",
+        "text": "$$\n\\begin{array} { r } { \\left\\| \\nabla F ( x , Z ) - \\nabla f ( x ) \\right\\| ^ { 2 } \\leq \\sigma _ { 2 } ^ { 2 } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            397,
+            489,
+            599,
+            506
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "182 Recent works on stochastic ZOO methods have considered milder assumptions, such as   \n183 bounded variance (see Section 1.1). However, the uniform boundedness assumed in Assump  \n184 tions 4 and $4 ^ { \\prime }$ , is standard in analyses under Markovian noise [14, 12, 13, 5, 52]. These   \n185 assumptions can be relaxed under stronger conditions, e.g., uniform convexity and smoothness   \n186 of $F ( \\cdot , Z )$ [18].   \n7 Assumptions 3 and 4 allow us to reduce the variance of the noise via batching, similarly the   \n88 to i.i.d. setting. This is captured in the following technical lemma:   \n189 Lemma 1. Let Assumptions 3 and 4(4′) hold. Then for any $n \\geq 1$ and $x \\in \\mathbb { R } ^ { d }$ and any   \n190 initial distribution $\\xi$ on $( Z , { \\mathcal { Z } } )$ , we have ",
+        "bbox": [
+            142,
+            510,
+            825,
+            580
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            156,
+            585,
+            825,
+            614
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            616,
+            825,
+            646
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/34aa8567944bb55fb5b62056550c20b0478e1918a9ac3264c4576b6c6dc04907.jpg",
+        "text": "$$\n\\mathbb { E } _ { \\xi } \\left[ \\frac { 1 } { n } \\sum _ { i = 1 } ^ { n } F ( x , Z _ { i } ) - f ( x ) \\right] ^ { 2 } \\lesssim \\frac { \\tau } { n } \\sigma _ { 1 } ^ { 2 } , \\ \\mathbb { E } _ { \\xi } \\left. \\frac { 1 } { n } \\sum _ { i = 1 } ^ { n } \\nabla F ( x , Z _ { i } ) - \\nabla f ( x ) \\right. ^ { 2 } \\lesssim \\frac { \\tau } { n } \\sigma _ { 2 } ^ { 2 } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            222,
+            651,
+            774,
+            695
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "191 2.1 Batching technique ",
+        "text_level": 1,
+        "bbox": [
+            143,
+            708,
+            377,
+            724
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "192 In this section, we describe the main tools used to establish the $( d + \\tau )$ -type scaling of the   \n193 error rate. We will focus on reducing the variance and bias of gradient estimators using a   \n194 specialized batching approach.   \n195 We begin by fixing a common building block of our gradient estimators at a point $x$ for both   \n196 one-point and two-point feedback, as introduced in Section 1.1: ",
+        "bbox": [
+            142,
+            733,
+            825,
+            776
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            781,
+            825,
+            811
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4d83e6dc5b02ca1c1533977a5b5d11f9c2d5be4a2dcfc720c9f86f6e4f6b8770.jpg",
+        "text": "$$\n\\hat { g } ( x , Z ^ { ( \\pm ) } , e ) = d \\cdot p ( x , Z ^ { ( \\pm ) } , e ) \\cdot e = e \\cdot \\left\\{ \\begin{array} { l l } { { d \\frac { F ( x + t e , Z ^ { + } ) - F ( x - t e , Z ^ { - } ) } { 2 t } } } & { { \\mathrm { ( o n e - p o i n t ) , } } } \\\\ { { d \\frac { F ( x + t e , Z ) - F ( x - t e , Z ) } { 2 t } } } & { { \\mathrm { ( t w o - p o i n t ) . } } } \\end{array} \\right.\n$$",
+        "text_format": "latex",
+        "bbox": [
+            184,
+            815,
+            805,
+            880
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "197 These estimators exhibit a twofold randomness that affects how rapidly they concentrate   \n198 around the true gradient, as we will discuss below.   \n199 For clarity, we focus our discussion on the one-point case, although our conclusions extend   \n200 to the two-point case as well. ",
+        "bbox": [
+            137,
+            882,
+            825,
+            912
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "5 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            90,
+            823,
+            119
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "201 A widely used variance reduction technique is mini-batching, where one computes $F ( x , Z _ { i } )$ over a batch of noise variables 202 $\\{ Z _ { i } \\} _ { i = 1 } ^ { n }$ . The mini-batch gradient estimator is given by: ",
+        "bbox": [
+            145,
+            125,
+            826,
+            155
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2ced8ad65f22986ba32c1d21189ba873203c4dc1a17aaca37075e846bd5798a2.jpg",
+        "text": "$$\n\\hat { g } _ { m b } ( x ) = \\frac { 1 } { n } \\sum _ { i = 1 } ^ { n } \\hat { g } ( x , Z _ { i } ^ { \\pm } , e ) = e \\cdot d \\widetilde { \\left( \\frac { 1 } { n } \\sum _ { i = 1 } ^ { n } p ( x , Z _ { i } ^ { \\pm } , e ) \\right) } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            302,
+            160,
+            696,
+            215
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "203 Let us estimate the scaling of its variance $\\mathbb { E } _ { e } \\mathbb { E } _ { Z } \\big \\| \\hat { g } _ { m b } - \\nabla f \\big \\| ^ { 2 }$ with the noise level $\\sigma _ { 1 } ^ { 2 }$ . As   \n204 $\\begin{array} { r } { E _ { Z } \\hat { g } _ { m b } \\approx d \\frac { f ( x + t e ) - f ( x - t e ) } { 2 t } \\approx d \\langle \\nabla f , e \\rangle } \\end{array}$ we would like to estimate the following for any fixed   \n205 direction $e$ : ",
+        "bbox": [
+            142,
+            218,
+            821,
+            263
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/313e9d57279de4e48b3ff8d2a5cd6a5d020a2f048744066a7a07e5350c17b00d.jpg",
+        "text": "$$\n\\mathbb { E } _ { Z } \\big [ d \\cdot p _ { m b } ( x ) - d \\langle \\nabla f , e \\rangle \\big ] ^ { 2 } \\approx \\frac { d ^ { 2 } } { t ^ { 2 } } \\mathbb { E } _ { Z } \\Big [ \\frac { 1 } { n } \\sum _ { i = 1 } ^ { n } F ( x + t e , Z _ { i } ^ { + } ) - f ( x + t e ) \\Big ] ^ { 2 } \\overset { ( 1 ) } { \\approx } \\frac { d ^ { 2 } \\tau } { n } \\frac { \\sigma _ { 1 } ^ { 2 } } { t ^ { 2 } } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            207,
+            265,
+            789,
+            305
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "206 With that, we bound the variance: ",
+        "bbox": [
+            143,
+            306,
+            423,
+            320
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a4091d3e1a3facf436c20f23b03cc6b72087b76af884b3033cfc5d5960cb7448.jpg",
+        "text": "$$\n\\mathbb { E } _ { e } \\mathbb { E } _ { Z } \\big \\| \\hat { g } _ { m b } - \\nabla f \\big \\| ^ { 2 } \\gtrsim \\mathbb { E } _ { e } \\mathbb { E } _ { Z } \\big \\| \\hat { g } _ { m b } - \\mathbb { E } _ { Z } \\hat { g } _ { m b } \\big \\| ^ { 2 } \\approx \\mathbb { E } _ { e } \\mathbb { E } _ { Z } \\big \\| \\hat { g } _ { m b } - d \\langle \\nabla f , e \\rangle \\big \\| ^ { 2 } \\overset { ( 7 ) } { \\approx } \\frac { d ^ { 2 } \\tau \\sigma _ { 1 } ^ { 2 } } { n t ^ { 2 } } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            210,
+            323,
+            787,
+            354
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "207 Can the mini-batching scheme be improved? ",
+        "text_level": 1,
+        "bbox": [
+            145,
+            356,
+            542,
+            369
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "208 This subsection explores an unexpected source of improvement that contradicts our initial   \n209 hypothesis. Specifically, we identify an inefficiency in the current use of samples $Z _ { i }$ , which   \n210 becomes evident from two perspectives. Equation (8) shows the variance scales as $\\frac { \\tau } { n }$ . If   \n211 we could reduce $\\tau$ by a factor of $k$ , we would need $k$ -times fewer samples to maintain   \n212 the same variance. This leads us to the idea of sparsified sampling. We partition the   \n213 Markov noise chain $\\{ Z _ { i } \\}$ into $k$ subchains $\\left\\{ Z _ { k \\cdot i + r } \\right\\}$ for $r = 0 \\ldots k - 1$ . This corresponds to a   \n214 mixing time of $\\lceil \\frac { \\tau } { k } \\rceil$ for each subchain (see (3)), effectively reducing temporal correlation - a   \n215 natural consequence of sampling every $k$ -th element of the original chain. Thus, sampling   \n216 from any single subchain could yield a $\\operatorname* { m i n } ( k , \\tau )$ -fold reduction in the number of samples   \n217 needed (although such procedure would still require all intermediate oracle calls, yielding no   \n218 computational speedup).   \n219 For a concrete illustration of that inefficiency, consider a lazy Markov chain that remains   \n220 in the same state for (an average of) $\\tau$ steps before transitioning uniformly at random. In   \n221 such a case, all oracle queries $F ( x , Z )$ for a fixed $x$ return the same value for $\\tau$ consecutive   \n222 steps. Therefore, retaining only every $\\tau$ -th estimate $\\hat { g }$ would yield a mini-batch of equivalent   \n223 quality.   \n224 In summary, we observe that the mini-batching scheme could, in principle, operate just as   \n225 effectively by retaining only every $k$ -th sample and discarding the rest. This might suggest   \n226 that better utilization of the samples is possible. First order methods, nevertheless, are   \n227 unable to exploit this redundancy (as shown by [5]’s lower bound) and are effectively forced   \n228 to wait out the $\\tau$ -step mixing window. In contrast, we can exploit this structure by querying   \n229 finite differences along different directions to estimate the gradient better. Specifically, we   \n230 construct $d$ subchains, and use the sample from the -th subchain $\\operatorname { \\angle } _ { d \\cdot i + r }$ to estimate -th   \n231 partial derivative $\\frac { F ( x + t e _ { r } , Z ) - F ( x - t e _ { r } , Z ) } { 2 t }$ , effectively restoring the full gradient coordinate-wise.   \n232 Let us estimate the resulting variance reduction. First, we achieve a $d$ -fold reduction by   \n233 reconstructing all $d$ gradient coordinates. Second, each coordinate now operates on a chain   \n234 with mixing time $\\textstyle \\left\\lceil { \\frac { \\tau } { d } } \\right\\rceil$ , yielding an additional factor of $\\operatorname* { m i n } ( d , \\tau )$ . However, because batches   \n235 are now split across $d$ coordinates, each batch is $d$ times smaller than before, introducing   \n236 a factor of $d$ loss. The net variance reduction is therefore $\\operatorname* { m i n } ( d , \\tau )$ , and the final scaling   \n237 becomes · dτ min(d,τ ) = d · max(d, τ ) ≃ d(d + τ ). ",
+        "bbox": [
+            140,
+            371,
+            826,
+            522
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            526,
+            825,
+            597
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            603,
+            825,
+            719
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            143,
+            723,
+            825,
+            811
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "238 Random directions ",
+        "text_level": 1,
+        "bbox": [
+            145,
+            818,
+            331,
+            832
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "239 This insight can be extended to a simpler yet equally effective method. Instead of assigning   \n240 directions deterministically, we associate each sample with a random direction $e \\in R S _ { 2 } ^ { d }$ ,   \n241 forming the estimator: ",
+        "bbox": [
+            142,
+            832,
+            826,
+            873
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/3194e23a85436eb28ac17d6171f3936598494f424e063d840145ba9751a276fa.jpg",
+        "text": "$$\n\\hat { g } _ { r d } [ n ] ( x , Z , e ) = \\frac { 1 } { n } \\sum _ { i = 1 } ^ { n } \\hat { g } ( x , Z _ { i } , e _ { i } ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            379,
+            877,
+            619,
+            915
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "discarded",
+        "text": "6 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "242 While the above discussion was intuitive, we now outline a more formal approach (see   \n243 Lemma 5 for details). As lazy Markov chain is effectively equivalent to stochastic i.i.d.   \n244 $\\tau$ -point feedback setting, we follow Corollary 2 of [15], who decompose the total variance   \n245 into two terms: ",
+        "bbox": [
+            140,
+            90,
+            825,
+            147
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/254f95253846630ecc8cd63a3467d4e1074b159fc84eecb3fb330168b8439a9a.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathbb { E } \\big \\| \\widehat { g } _ { r d } - \\nabla f ( x ) \\big \\| ^ { 2 } \\leq 2 \\mathbb { E } \\big \\| \\widehat { g } _ { r d } - \\mathbb { E } _ { e } \\widehat { g } _ { r d } \\big \\| ^ { 2 } + 2 \\mathbb { E } \\big \\| \\mathbb { E } _ { e } \\widehat { g } _ { r d } - \\nabla f ( x ) \\big \\| ^ { 2 } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            277,
+            150,
+            717,
+            166
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Each of the two terms individually eliminates one factor from the 246 $d ^ { 2 } \\tau$ dependence. ",
+        "bbox": [
+            148,
+            170,
+            763,
+            185
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "247 The first term: ",
+        "bbox": [
+            142,
+            190,
+            281,
+            205
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/20593c443d164f0c51f08b8258503583b52d7f4bb0d4b4f28bb497905efe0bcb.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathbb { E } \\big \\| \\hat { g } _ { r d } - \\mathbb { E } _ { e } \\hat { g } _ { r d } \\big \\| ^ { 2 } = \\mathbb { E } _ { Z } \\mathbb { E } _ { e } \\Bigg \\| \\Bigg | \\frac { 1 } { n } \\sum _ { i = 1 } ^ { n } \\underbrace { \\big [ \\hat { g } ( x , Z _ { i } , e _ { i } ) - E _ { e _ { i } } \\hat { g } ( x , Z _ { i } , e _ { i } ) \\big ] } _ { \\mathbb { E } _ { e } [ \\cdot ] = 0 , \\mathrm { ~ i n d e p e n d e n t ~ w . r . t . ~ } e } \\Bigg | \\Bigg | } \\\\ { = \\frac { 1 } { n ^ { 2 } } \\displaystyle \\sum _ { i = 1 } ^ { n } \\mathbb { E } \\big \\| \\hat { g } ( x , Z _ { i } , e _ { i } ) - \\mathbb { E } _ { e _ { i } } \\hat { g } ( x , Z _ { i } , e _ { i } ) \\big \\| ^ { 2 } } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            272,
+            208,
+            717,
+            308
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "248 is independent of $\\tau$ since Assumption 4 bounds each term directly. ",
+        "bbox": [
+            143,
+            309,
+            650,
+            324
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "249 For the second term, we observe that $\\mathbb { E } _ { e } \\hat { g } _ { r d } ~ = ~ \\mathbb { E } _ { e } \\hat { g } _ { m b }$ , and thus the bound involves   \n250 $\\mathbb { E } \\big \\lVert \\mathbb { E } _ { e } \\hat { g } _ { m b } - \\nabla f ( x ) ^ { 2 } \\big \\rVert$ . This is crucially different from the $d ^ { 2 } \\tau$ dependence that appeared in   \n251 the mini-batch case, when we considered ${ \\mathbb E } \\big \\| \\hat { g } _ { m b } - \\nabla f ( x ) ^ { 2 } \\big \\|$ . Intuitively, the expectation   \n252 over directions helps recover the full gradient rather than a directional component, thereby   \n253 reducing variance with respect to $d$ . ",
+        "bbox": [
+            142,
+            329,
+            825,
+            402
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Multilevel Monte Carlo ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            409,
+            369,
+            422
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "255 The estimator $\\hat { g } _ { r d }$ is not our final construction. While it controls variance, the temporal   \n256 correlation in noise may introduce significant bias. A well-established approach to mitigating   \n257 this is MLMC, widely used in the statistical literature [27, 26], and more recently in gradient   \n258 optimization [13, 5]. Here is our interpretation. ",
+        "bbox": [
+            140,
+            422,
+            825,
+            478
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "With parameters 259 $J , l , M , B$ from Table 2, $\\{ Z _ { i } \\} ~ - ~ 2 ^ { J } l$ samples from $Z$ and $\\left\\{ e _ { i } \\right\\}$ - random 260 directions we introduce MLMC estimator: ",
+        "bbox": [
+            143,
+            483,
+            826,
+            512
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/71ef15b92574376518d709e06e41ad1addb62e8ddc7d29ac42e4980c891fb9d0.jpg",
+        "text": "$$\n\\hat { g } _ { m l } ( x ) = \\hat { g } _ { r d } [ l ] ( x ) + \\left\\{ \\begin{array} { l l } { 2 ^ { J } \\left[ \\hat { g } _ { r d } \\left[ 2 ^ { J } l \\right] ( x ) - \\hat { g } _ { r d } \\left[ 2 ^ { J - 1 } l \\right] ( x ) \\right] , } & { \\mathrm { ~ i f ~ } 2 ^ { J } \\leq M } \\\\ { 0 , } & { \\mathrm { ~ o t h e r w i s e } } \\end{array} \\right.\n$$",
+        "text_format": "latex",
+        "bbox": [
+            251,
+            515,
+            745,
+            547
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "261 $\\hat { g } _ { m l }$ is our final gradient estimator, with the following guarantees: ",
+        "bbox": [
+            147,
+            551,
+            643,
+            566
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Lemma 2 (for one-point). Let Assumptions262 $\\mathit { 1 }$ , $\\boldsymbol { \\mathcal { J } }$ and 4 hold. For any initial distribution1 $\\xi$ on 263 $( Z , { \\mathcal { Z } } )$ the gradient estimates $\\hat { g } _ { m l }$ satisfy $\\mathbb { E } [ \\hat { g } _ { m l } ] = \\mathbb { E } \\big [ \\hat { g } _ { r d } \\big [ 2 ^ { \\lfloor \\log _ { 2 } M \\rfloor } l \\big ] \\big ]$ . Moreover, ",
+        "bbox": [
+            140,
+            569,
+            825,
+            602
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/568800e2c0e3e02af7908bc50e143ee6a082f1427b7c0e5de33b10957aab247b.jpg",
+        "text": "$$\n\\begin{array} { r l } & { \\mathbb { E } \\| \\nabla f _ { t } ( x ) - \\hat { g } _ { m l } ( x ) \\| ^ { 2 } \\lesssim \\displaystyle \\frac { d \\| \\nabla f ( x ) \\| ^ { 2 } } { B } + \\frac { d ^ { 2 } L ^ { 2 } t ^ { 2 } } { B } + \\frac { d \\left( d + \\tau \\right) \\sigma _ { 1 } ^ { 2 } } { B t ^ { 2 } } , } \\\\ & { \\| \\nabla f _ { t } ( x ) - \\mathbb { E } [ \\hat { g } _ { m l } ( x ) ] \\| ^ { 2 } \\lesssim \\displaystyle \\frac { d \\tau \\sigma _ { 1 } ^ { 2 } } { t ^ { 2 } B M } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            274,
+            606,
+            722,
+            674
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "264 One can note that although $\\hat { g } _ { m l }$ requires, on average, $\\mathbb { E } \\left[ 2 ^ { J } l B \\right] = \\log _ { 2 } ^ { 2 } M \\cdot B$ oracle calls, the   \n265 variance is only reduced by a factor of $B$ . In contrast, the bias is reduced significantly - by a   \n266 factor of $B M$ . ",
+        "bbox": [
+            145,
+            680,
+            820,
+            724
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "2.2 Algorithm ",
+        "text_level": 1,
+        "bbox": [
+            169,
+            738,
+            303,
+            753
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "We now present the full version of Algorithm 1, which incorporates the gradient estimators discussed in the previous section and uses a slightly modified variant of Nesterov’s Accelerated Gradient Descent at its core. ",
+        "bbox": [
+            163,
+            763,
+            825,
+            806
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "While technically we prove four separate upper bounds covering both one- and two-point feedback under smooth and non-smooth assumptions, they follow the same scheme which we will illustrate in the one-point smooth case. ",
+        "bbox": [
+            171,
+            811,
+            825,
+            854
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "1Note that $\\hat { g } _ { m l }$ (specifically $Z _ { 1 }$ ) indirectly depends on the chain’s initial distribution. As our algorithm is going to repeatedly call $\\hat { g } _ { m l }$ , next iteration’s initial distribution is current iteration’s final distribution. This fact makes the estimates correlated. We sidestep this problem by assuming any initial distribution. ",
+        "bbox": [
+            173,
+            859,
+            823,
+            911
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "7 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "table",
+        "img_path": "images/026c75c8f03165e438992c1bae1963ab05bde96654bbb1e1569d702eced39777.jpg",
+        "table_caption": [
+            "Table 2: Parameters of Algorithm 1 "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>Hyperparameters</td><td></td><td>Momentums</td><td></td><td>Batch hidden parameters</td></tr><tr><td>Y</td><td>Stepsize,∈(0;]</td><td>β</td><td>4p2μY 3</td><td>2&#x27; Batch size.If 2&#x27;l&gt;M,then 0</td></tr><tr><td>t</td><td>Approximation step</td><td>3β n 2pμ</td><td>3 H</td><td>Random, J~ Geom(1/2)</td></tr><tr><td>B</td><td>Batch size multiplier</td><td>pn-1-1 0 βpn-1-1</td><td>M 1</td><td>2</td></tr><tr><td>N</td><td>Number of iterations</td><td>p</td><td>See Appendix</td><td>([log2M」+1) ·B</td></tr></table>",
+        "bbox": [
+            171,
+            102,
+            823,
+            210
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Algorithm 1 Randomized Accelerated ZO GD ",
+        "text_level": 1,
+        "bbox": [
+            465,
+            222,
+            818,
+            237
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "274   \n275   \n276   \n277   \n278   \n279   \n280   \n281   \n282   \n283   \n284   \n285   \n286 ",
+        "bbox": [
+            140,
+            217,
+            163,
+            405
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Lemma 4 establishes key properties of the smoothed objective function. Lemma 5 provides bounds on the bias and variance of the baseline estimator $\\hat { g } _ { r d }$ . Lemma 2 then quantifies how the MLMC scheme amplifies or reduces these statistics. Finally, in Section C.4, we combine the results of these lemmas to prove the first part of Theorem 1, bounding Algorithm 1’s error. By tuning the parameters appropriately, we obtain the following iteration complexity bound: ",
+        "bbox": [
+            153,
+            217,
+            452,
+            396
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "1: Initialization: $x _ { f } ^ { 0 } = x ^ { 0 }$ ; see Table 2.   \n2: for $k = 0 , 1 , 2 , \\ldots , N - 1$ do   \n3: $x _ { g } ^ { k } = \\theta x _ { f } ^ { k } + ( 1 - \\theta ) x ^ { k }$   \n4: Sample $J _ { k } , \\{ e _ { i } \\} , \\left\\{ F ( x _ { g } ^ { k } \\pm t e _ { i } , Z _ { i } ^ { ( \\pm ) } ) \\right\\}$   \n5: Calculate $\\hat { g } ^ { k } = \\hat { g } _ { m l } ( x )$   \n6: $\\boldsymbol { x } _ { f } ^ { k + 1 } = \\boldsymbol { x } _ { g } ^ { k } - p \\gamma \\hat { g } ^ { k }$ = x kg   \n7: $x ^ { k + 1 } = \\eta x _ { f } ^ { k + 1 } + ( p - \\eta ) x _ { f } ^ { k } +$   \n+(1 − p)(1 − β)xk + (1 − p)βxkg   \n8: end for ",
+        "bbox": [
+            470,
+            241,
+            813,
+            387
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            470,
+            378,
+            552,
+            392
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "287 Theorem 1. Let Assumptions 1 to 4 hold, and consider problem (4) solved by Algorithm $\\mathit { 1 }$ .   \n288 Then, for any target accuracy $\\varepsilon$ and batch size multiplier $B$ (see Tables 1 and 2 for notation),   \n289 and for a suitable choice of $\\gamma , t , p$ , the number of oracle calls required to ensure $\\mathbb { E } \\| x ^ { N } - x ^ { * } \\| ^ { 2 } \\leq$   \n290 $\\varepsilon$ is bounded by ",
+        "bbox": [
+            148,
+            400,
+            826,
+            455
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/7a38afe34c14c41403a5ce051351ec7d71dc64e3369375159a2041660a8b3e85.jpg",
+        "text": "$$\nB \\cdot \\tilde { \\mathcal { O } } \\left[ \\operatorname* { m a x } \\left( 1 , \\frac { d } { B } \\right) \\sqrt { \\frac { L } { \\mu } } \\log \\frac { 1 } { \\varepsilon } + \\frac { L d \\left( d + \\tau \\right) \\sigma _ { 1 } ^ { 2 } } { B \\mu ^ { 3 } \\varepsilon ^ { 2 } } \\right] \\quad { \\it o n e - p o i n t \\ o r a c l e \\ c a l } _ { \\rho } ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            245,
+            454,
+            732,
+            496
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "291 Theorem $\\mathbf { 1 } ^ { \\prime }$ . Let Assumptions $1 ^ { \\prime }$ to $\\mathit { 4 ^ { \\prime } }$ hold, and consider problem (4) solved by Algorithm 1.   \n292 Then, for any target accuracy $\\varepsilon$ and batch size multiplier $B$ (see Tables $\\mathit { 1 }$ and 2 for notation),   \n293 and for a suitable choice of $\\gamma , t , p$ , the number of oracle calls required to ensure $\\mathbb { E } \\| x ^ { N } - x ^ { * } \\| ^ { 2 } \\leq$   \n294 $\\varepsilon$ is bounded by ",
+        "bbox": [
+            140,
+            500,
+            826,
+            555
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/38f1817c1aa7d9b59b7c7ccd1aa02b801aed6fc90605cc7b9675d860f895cf9c.jpg",
+        "text": "$$\nB \\cdot \\tilde { \\mathcal { O } } \\left[ \\operatorname* { m a x } \\left( 1 , \\frac { d } { B } \\right) \\sqrt { \\frac { L } { \\mu } } \\log \\frac { 1 } { \\varepsilon } + \\frac { ( d + \\tau ) \\sigma _ { 2 } ^ { 2 } } { B \\mu ^ { 2 } \\varepsilon } \\right] t w o - p o i n t o r a c l e c a l l s .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            259,
+            555,
+            738,
+            597
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "295 Remark. The iteration complexity of the algorithm, i.e., the number of iterates $x ^ { k }$ generated   \n296 (equal to the oracle complexity divided by $B$ ), is bound by $\\tilde { \\mathcal { O } } \\left( \\sqrt { \\frac { L } { \\mu } } \\log \\frac { 1 } { \\varepsilon } \\right)$ as the batch size   \n297 multiplier $B$ goes to infinity. This matches the optimal convergence rates for optimization   \n298 with exact gradients [39]. ",
+        "bbox": [
+            140,
+            604,
+            825,
+            671
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "2.3 Lower bounds ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            685,
+            334,
+            700
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "300 Here we present theorems demonstrating that no algorithm can asymptotically outperform   \n01 Algorithm 1 in the smooth, strongly convex setting with either one- or two-point feedback.   \n302 Theorem 2. (Lower bounds) For any (possibly randomized) algorithm that solves the problem   \n303 (4), there exists a function $f$ that satisfies Assumptions $\\mathit { 1 }$ to 4 ( $1 ^ { \\prime }$ to $\\mathit { 4 ^ { \\prime } }$ ), s.t. in order to   \n304 achieve $\\varepsilon$ -approximate solution in expectation $\\mathbb { E } \\| x ^ { N } - x ^ { * } \\| ^ { 2 } \\leq \\varepsilon$ , the algorithm needs at least ",
+        "bbox": [
+            150,
+            710,
+            826,
+            739
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            742,
+            831,
+            785
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/0e86fa49ca10a5cfa0b6e386e459c7749d4678219079ac0ad43b377f72a0f20b.jpg",
+        "text": "$$\n\\Omega \\left( \\frac { d ( d + \\tau ) \\sigma _ { 1 } ^ { 2 } } { \\mu ^ { 2 } \\varepsilon ^ { 2 } } \\right) \\quad o n e - p o i n t ~ o r \\quad \\Omega \\left( \\frac { ( d + \\tau ) \\sigma _ { 2 } ^ { 2 } } { \\mu ^ { 2 } \\varepsilon } \\right) \\quad t w o - p o i n t ~ o r a c l e ~ c a l l s .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            235,
+            791,
+            763,
+            824
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "305 Remark. These results assume bounded second moments rather than uniform noise bounds.   \n306 We explain how to adapt them to our setting, incurring only logarithmic overheads, in   \n307 Section E.2.   \n308 Discussion. We now compare our results to existing work. Akhavan et al. [2] analyze a   \n309 special case of the one-point setting where the noise is independent of the query points. This   \n310 aligns with our one-point oracle model and allows i.i.d. sampling as a Markov chain with   \n311 fixed mixing time $\\tau = 1$ . The only factor they do not consider is $\\sigma _ { 1 } ^ { 2 }$ , which, however, appears   \n312 in their proof with additional $\\mu ^ { 2 }$ factor if used with scaled Gaussian noise. We discuss this   \n313 further in Appendix E.   \n314 In the work of Beznosikov et al. [5], a first-order Markovian oracle is considered, but the   \n315 hard instance problem is a one-dimensional quadratic function, which makes first-order and   \n316 zero-order information equivalent. Their result therefore corresponds to the $d = 1$ case in the   \n317 two-point regime. Duchi et al. [15] provide tight lower bounds for general convex functions   \n318 under two-point feedback. Their techniques can be extended to the strongly convex case   \n319 by incorporating a shared quadratic component across the hard instances, as detailed in   \n320 Appendix E, Theorem 10, yielding the bound we state for the two-point oracle with $\\tau = 1$ . ",
+        "bbox": [
+            142,
+            834,
+            825,
+            877
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            882,
+            826,
+            912
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "8 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            92,
+            825,
+            147
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            152,
+            825,
+            251
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Our novel contribution lies in establishing a lower bound that scales as $d \\tau$ in the onepoint regime for large $\\tau$ ; see Theorem 9. While our analysis relies on classical tools such as multidimensional hypothesis testing, the Markovian structure requires new bound on distances between joint distributions and the use of clipping. Detailed proofs, discussions, and further remarks on clipping appear in Appendix E. ",
+        "bbox": [
+            163,
+            256,
+            825,
+            327
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "3 Experiments ",
+        "text_level": 1,
+        "bbox": [
+            173,
+            338,
+            330,
+            354
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "This section empirically supports our theoretical convergence rates and lower bounds, with particular focus on the stochastic component where we claim linear scaling in $d + \\tau$ instead of $d \\tau$ . ",
+        "bbox": [
+            174,
+            364,
+            823,
+            406
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Setup. Our setup repeats the problem we used to prove the lower bounds (see Appendix E and [51]). We consider a quadratic objective $\\begin{array} { r } { f ( x ) = \\frac { 1 } { 2 } \\left\\| x \\right\\| ^ { 2 } } \\end{array}$ and a two-point Markovian oracle $F ( x , Z ) = f ( x ) + \\langle x , Z \\rangle$ . The noise sequence $\\{ Z _ { i } \\}$ is a lazily updated standard Gaussian vector with variance $\\sigma _ { 2 } ^ { 2 }$ . Figure 2 illustrates how the optimization error of Algorithm 1 scales with mixing time, problem dimension, and different values of $\\sigma _ { 2 } ^ { 2 }$ . ",
+        "bbox": [
+            173,
+            412,
+            825,
+            484
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "image",
+        "img_path": "images/67b64785f10ec7fe1f10ecff91cc56fb502ec68e4b66f8c9bea2bda7999a35c9.jpg",
+        "image_caption": [
+            "Figure 2: Optimization error $\\varepsilon = \\| x ^ { N } - x ^ { * } \\| ^ { 2 }$ after $N = 1 0 ^ { 3 }$ iterations. Starting point error $\\left\\| x _ { 0 } - x ^ { * } \\right\\| ^ { 2 } = 1 0 ^ { - 2 }$ . Stepsize $\\gamma = 1 0 ^ { - 3 }$ , $t = 1 0 ^ { - 5 }$ . The results are averaged over $1 0 ^ { 4 }$ runs. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            179,
+            487,
+            823,
+            674
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "335 Discussion. The results confirm the linear dependence of the error on both the problem   \n336 dimension $d$ and the mixing time $\\tau$ . The noise parameter $\\sigma ^ { 2 }$ controls the influence of the   \n337 stochastic part. In Fig. (a), where $\\sigma _ { 2 } ^ { 2 } = 1 0 ^ { - 3 }$ , the stochastic component dominates, while   \n338 in Fig. (c), with $\\sigma _ { 2 } ^ { 2 } = 1 0 ^ { - 5 }$ , it is negligible. Fig. (b) shows an intermediate regime that   \n339 smoothly interpolates between the two, yet maintains the linear scaling. The deterministic   \n340 part (c) shows no dependence on mixing time, but grows linearly with $d$ , which aligns with   \n341 our theory (Theorem $1 ^ { \\prime }$ ). The stochastic part (a) scales as $( d + \\tau )$ , also matching the bound   \n342 from the Theorem $1 ^ { \\prime }$ . ",
+        "bbox": [
+            143,
+            717,
+            825,
+            827
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "343 References ",
+        "text_level": 1,
+        "bbox": [
+            145,
+            845,
+            279,
+            862
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "[1] Arya Akhavan, Massimiliano Pontil, and Alexandre Tsybakov. Exploiting higher order smoothness in derivative-free optimization and continuous bandits. Advances in Neural Information Processing Systems, 33:9017–9027, 2020. ",
+        "bbox": [
+            181,
+            869,
+            823,
+            911
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "discarded",
+        "text": "9 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "347 [2] Arya Akhavan, Evgenii Chzhen, Massimiliano Pontil, and Alexandre B Tsybakov.   \n348 Gradient-free optimization of highly smooth functions: improved analysis and a new   \n349 algorithm. Journal of Machine Learning Research, 25(370):1–50, 2024.   \n350 [3] Peter Auer. Finite-time analysis of the multiarmed bandit problem. Machine Learning,   \n351 47:235–256, 2002.   \n352 [4] El Houcine Bergou, Eduard Gorbunov, and Peter Richtárik. Stochastic three points   \n353 method for unconstrained smooth minimization. SIAM Journal on Optimization, 30(4):   \n354 2726–2749, 2020.   \n355 [5] Aleksandr Beznosikov, Sergey Samsonov, Marina Sheshukova, Alexander Gasnikov,   \n356 Alexey Naumov, and Eric Moulines. First order methods with markovian noise: from   \n357 acceleration to variational inequalities. Advances in Neural Information Processing   \n358 Systems, 36, 2024.   \n359 [6] Jalaj Bhandari, Daniel Russo, and Raghav Singal. A finite time analysis of temporal   \n360 difference learning with linear function approximation. In Conference on learning theory,   \n361 pages 1691–1692. PMLR, 2018.   \n362 [7] Sébastien Bubeck, Nicolo Cesa-Bianchi, et al. Regret analysis of stochastic and non  \n363 stochastic multi-armed bandit problems. Foundations and Trends® in Machine Learning,   \n364 5(1):1–122, 2012.   \n365 [8] Pin-Yu Chen, Huan Zhang, Yash Sharma, Jinfeng Yi, and Cho-Jui Hsieh. Zoo: Zeroth   \n366 order optimization based black-box attacks to deep neural networks without training   \n367 substitute models. In Proceedings of the 10th ACM workshop on artificial intelligence   \n368 and security, pages 15–26, 2017.   \n369 [9] Krzysztof Choromanski, Mark Rowland, Vikas Sindhwani, Richard Turner, and Adrian   \n370 Weller. Structured evolution with compact architectures for scalable policy optimization.   \n371 In International Conference on Machine Learning, pages 970–978. PMLR, 2018.   \n372 [10] Aymeric Dieuleveut, Nicolas Flammarion, and Francis Bach. Harder, better, faster,   \n373 stronger convergence rates for least-squares regression. Journal of Machine Learning   \n374 Research, 18(101):1–51, 2017.   \n375 [11] Thinh T Doan. Finite-time analysis of markov gradient descent. IEEE Transactions on   \n376 Automatic Control, 68(4):2140–2153, 2022.   \n377 [12] Thinh T Doan, Lam M Nguyen, Nhan H Pham, and Justin Romberg. Convergence   \n378 rates of accelerated markov gradient descent with applications in reinforcement learning.   \n379 arXiv preprint arXiv:2002.02873, 2020.   \n380 [13] Ron Dorfman and Kfir Yehuda Levy. Adapting to mixing time in stochastic optimization   \n381 with markovian data. In International Conference on Machine Learning, pages 5429–   \n382 5446. PMLR, 2022.   \n383 [14] John C Duchi, Alekh Agarwal, Mikael Johansson, and Michael I Jordan. Ergodic mirror   \n384 descent. SIAM Journal on Optimization, 22(4):1549–1578, 2012.   \n385 [15] John C Duchi, Michael I Jordan, Martin J Wainwright, and Andre Wibisono. Optimal   \n386 rates for zero-order convex optimization: The power of two function evaluations. IEEE   \n387 Transactions on Information Theory, 61(5):2788–2806, 2015.   \n388 [16] Alain Durmus, Eric Moulines, Alexey Naumov, Sergey Samsonov, and Hoi-To Wai. On   \n389 the stability of random matrix product with markovian noise: Application to linear   \n390 stochastic approximation and td learning. In Conference on Learning Theory, pages   \n391 1711–1752. PMLR, 2021.   \n392 [17] Pavel Dvurechensky, Eduard Gorbunov, and Alexander Gasnikov. An accelerated   \n393 directional derivative method for smooth stochastic convex optimization. European   \n394 Journal of Operational Research, 290(2):601–621, 2021.   \n395 [18] Mathieu Even. Stochastic gradient descent under markovian sampling schemes. In   \n396 International Conference on Machine Learning, pages 9412–9439. PMLR, 2023.   \n397 [19] Maryam Fazel, Rong Ge, Sham Kakade, and Mehran Mesbahi. Global convergence of   \n398 policy gradient methods for the linear quadratic regulator. In International conference   \n399 on machine learning, pages 1467–1476. PMLR, 2018.   \n400 [20] Abraham D. Flaxman, Adam Tauman Kalai, and H. Brendan McMahan. Online convex   \n401 optimization in the bandit setting: gradient descent without a gradient. In Proceedings   \n402 of the Sixteenth Annual ACM-SIAM Symposium on Discrete Algorithms, SODA ’05,   \n403 page 385–394, USA, 2005. Society for Industrial and Applied Mathematics. ISBN   \n404 0898715857.   \n405 [21] Alexander Gasnikov, Darina Dvinskikh, Pavel Dvurechensky, Eduard Gorbunov,   \n406 Aleksandr Beznosikov, and Alexander Lobanov. Randomized Gradient-Free Meth  \n407 ods in Convex Optimization, pages 1–15. Springer International Publishing, Cham,   \n408 2020. ISBN 978-3-030-54621-2. doi: 10.1007/978-3-030-54621-2_859-1. URL   \n409 https://doi.org/10.1007/978-3-030-54621-2_859-1.   \n410 [22] Alexander Gasnikov, Anton Novitskii, Vasilii Novitskii, Farshed Abdukhakimov, Dmitry   \n411 Kamzolov, Aleksandr Beznosikov, Martin Takac, Pavel Dvurechensky, and Bin Gu.   \n412 The power of first-order smooth optimization for black-box non-smooth problems. In   \n413 Kamalika Chaudhuri, Stefanie Jegelka, Le Song, Csaba Szepesvari, Gang Niu, and Sivan   \n414 Sabato, editors, Proceedings of the 39th International Conference on Machine Learning,   \n415 volume 162 of Proceedings of Machine Learning Research, pages 7241–7265. PMLR,   \n416 17–23 Jul 2022. URL https://proceedings.mlr.press/v162/gasnikov22a.html.   \n417 [23] Alexander V Gasnikov, Ekaterina A Krymova, Anastasia A Lagunovskaya, Ilnura N   \n418 Usmanova, and Fedor A Fedorenko. Stochastic online optimization. single-point and   \n419 multi-point non-linear multi-armed bandits. convex and strongly-convex case. Automa  \n420 tion and remote control, 78:224–234, 2017.   \n421 [24] Saeed Ghadimi and Guanghui Lan. Stochastic first-and zeroth-order methods for   \n422 nonconvex stochastic programming. SIAM journal on optimization, 23(4):2341–2368,   \n423 2013.   \n424 [25] Saeed Ghadimi and Guanghui Lan. Accelerated gradient methods for nonconvex   \n425 nonlinear and stochastic programming. Mathematical Programming, 156(1):59–99, 2016.   \n426 [26] Michael B. Giles. Multilevel monte carlo path simulation. Operations Research, 56(3):   \n427 607–617, 2008. doi: 10.1287/opre.1070.0496. URL https://doi.org/10.1287/opre.   \n428 1070.0496.   \n429 [27] Peter W. Glynn and Chang-Han Rhee. Exact estimation for markov chain equilibrium   \n430 expectations. Journal of Applied Probability, 51A:377–389, 2014. ISSN 00219002. URL   \n431 http://www.jstor.org/stable/43284129.   \n432 [28] Ian Goodfellow, Yoshua Bengio, and Aaron Courville. Deep Learning. MIT Press, 2016.   \n433 http://www.deeplearningbook.org.   \n434 [29] Eduard Gorbunov, Pavel Dvurechensky, and Alexander Gasnikov. An accelerated   \n435 method for derivative-free smooth stochastic convex optimization. SIAM Journal   \n436 on Optimization, 32(2):1210–1238, 2022. doi: 10.1137/19M1259225. URL https:   \n437 //doi.org/10.1137/19M1259225.   \n438 [30] Elad Hazan and Satyen Kale. Beyond the regret minimization barrier: Optimal algo  \n439 rithms for stochastic strongly-convex optimization. Journal of Machine Learning Re  \n440 search, 15(71):2489–2512, 2014. URL http://jmlr.org/papers/v15/hazan14a.html.   \n441 [31] Bjorn Johansson, Maben Rabi, and Mikael Johansson. A simple peer-to-peer algorithm   \n442 for distributed optimization in sensor networks. In 2007 46th IEEE Conference on   \n443 Decision and Control, pages 4705–4710, 2007. doi: 10.1109/CDC.2007.4434888.   \n444 [32] J. Kiefer. Sequential minimax search for a maximum. Proceedings of the American   \n445 Mathematical Society, 4(3):502–506, 1953. ISSN 00029939, 10886826. URL http:   \n446 //www.jstor.org/stable/2032161.   \n447 [33] Xiangru Lian, Yijun Huang, Yuncheng Li, and Ji Liu. Asynchronous parallel stochastic   \n448 gradient for nonconvex optimization. Advances in neural information processing systems,   \n449 28, 2015.   \n450 [34] Sijia Liu, Bhavya Kailkhura, Pin-Yu Chen, Paishun Ting, Shiyu Chang, and Lisa Amini.   \n451 Zeroth-order stochastic variance reduction for nonconvex optimization. Advances in   \n452 Neural Information Processing Systems, 31, 2018.   \n453 [35] Cassio G. Lopes and Ali H. Sayed. Incremental adaptive strategies over distributed   \n454 networks. IEEE Transactions on Signal Processing, 55(8):4064–4077, 2007. doi: 10.   \n455 1109/TSP.2007.896034.   \n456 [36] Eric Moulines and Francis Bach. Non-asymptotic analysis of stochastic approximation   \n457 algorithms for machine learning. In J. Shawe-Taylor, R. Zemel, P. Bartlett, F. Pereira,   \n458 and K.Q. Weinberger, editors, Advances in Neural Information Processing Systems,   \n459 volume 24. Curran Associates, Inc., 2011. URL https://proceedings.neurips.cc/   \n460 paper_files/paper/2011/file/40008b9a5380fcacce3976bf7c08af5b-Paper.pdf.   \n461 [37] Deanna Needell, Rachel Ward, and Nati Srebro. Stochastic gradient descent, weighted   \n462 sampling, and the randomized kaczmarz algorithm. Advances in neural information   \n463 processing systems, 27, 2014.   \n464 [38] Yu Nesterov. Efficiency of coordinate descent methods on huge-scale optimization   \n465 problems. SIAM Journal on Optimization, 22(2):341–362, 2012.   \n466 [39] Yurii Nesterov. A method for solving the convex programming problem with convergence   \n467 rate o (1/k2). In Doklad nauk Sssr, volume 269, page 543, 1983.   \n468 [40] Yurii Nesterov and Vladimir Spokoiny. Random gradient-free minimization of convex   \n469 functions. Foundations of Computational Mathematics, 17(2):527–566, 2017.   \n470 [41] Donald J Newman. Location of the maximum on unimodal surfaces. Journal of the   \n471 ACM (JACM), 12(3):395–398, 1965.   \n472 [42] J. Nocedal and S. Wright. Numerical Optimization. Springer Series in Operations   \n473 Research and Financial Engineering. Springer New York, 2006. ISBN 9780387227429.   \n474 URL https://books.google.ru/books?id=7wDpBwAAQBAJ.   \n475 [43] Boris Polyak. Introduction to Optimization. Optimization Software - Inc., Publications   \n476 Division, 1987.   \n477 [44] Yuyang Qiu, Uday Shanbhag, and Farzad Yousefian. Zeroth-order methods for non  \n478 differentiable, nonconvex, and hierarchical federated optimization. In A. Oh, T. Nau  \n479 mann, A. Globerson, K. Saenko, M. Hardt, and S. Levine, editors, Advances in   \n480 Neural Information Processing Systems, volume 36, pages 3425–3438. Curran As  \n481 sociates, Inc., 2023. URL https://proceedings.neurips.cc/paper_files/paper/   \n482 2023/file/0a70c9cd8179fe6f8f6135fafa2a8798-Paper-Conference.pdf.   \n483 [45] Herbert Robbins and Sutton Monro. A stochastic approximation method. The annals   \n484 of mathematical statistics, pages 400–407, 1951.   \n485 [46] Tim Salimans, Jonathan Ho, Xi Chen, Szymon Sidor, and Ilya Sutskever. Evolu  \n486 tion strategies as a scalable alternative to reinforcement learning. arXiv preprint   \n487 arXiv:1703.03864, 2017.   \n488 [47] Bobak Shahriari, Kevin Swersky, Ziyu Wang, Ryan P. Adams, and Nando de Freitas.   \n489 Taking the human out of the loop: A review of bayesian optimization. Proceedings of   \n490 the IEEE, 104(1):148–175, 2016. doi: 10.1109/JPROC.2015.2494218.   \n491 [48] Shai Shalev-Shwartz and Shai Ben-David. Understanding machine learning: From   \n492 theory to algorithms. Cambridge university press, 2014.   \n493 [49] Ohad Shamir. An optimal algorithm for bandit and zero-order convex optimization   \n494 with two-point feedback. Journal of Machine Learning Research, 18(52):1–11, 2017.   \n495 [50] Ohad Shamir and Tong Zhang. Stochastic gradient descent for non-smooth optimization:   \n496 Convergence results and optimal averaging schemes. In Sanjoy Dasgupta and David   \n497 McAllester, editors, Proceedings of the 30th International Conference on Machine   \n498 Learning, volume 28 of Proceedings of Machine Learning Research, pages 71–79, Atlanta,   \n499 Georgia, USA, 17–19 Jun 2013. PMLR. URL https://proceedings.mlr.press/v28/   \n500 shamir13.html.   \n501 [51] Alexander Shapiro, Darinka Dentcheva, and Andrzej Ruszczyński. Lectures on   \n502 Stochastic Programming. Society for Industrial and Applied Mathematics, 2009.   \n503 doi: 10.1137/1.9780898718751. URL https://epubs.siam.org/doi/abs/10.1137/   \n504 1.9780898718751.   \n505 [52] Vladimir Solodkin, Andrew Veprikov, and Aleksandr Beznosikov. Methods for optimiza  \n506 tion problems with markovian stochasticity and non-euclidean geometry. arXiv preprint   \n507 arXiv:2408.01848, 2024.   \n508 [53] Sebastian U. Stich. Unified optimal analysis of the (stochastic) gradient method, 2019.   \n509 URL https://arxiv.org/abs/1907.04232.   \n510 [54] Ben Taskar, Vassil Chatalbashev, Daphne Koller, and Carlos Guestrin. Learning   \n511 structured prediction models: A large margin approach. In Proceedings of the 22nd   \n512 international conference on Machine learning, pages 896–903, 2005.   \n513 [55] Alexandre B. Tsybakov. Lower bounds on the minimax risk, pages 77–135. Springer New   \n514 York, New York, NY, 2009. ISBN 978-0-387-79052-7. doi: 10.1007/978-0-387-79052-7_2.   \n515 URL https://doi.org/10.1007/978-0-387-79052-7_2.   \n516 [56] Sharan Vaswani, Francis Bach, and Mark Schmidt. Fast and faster convergence of sgd   \n517 for over-parameterized models and an accelerated perceptron. In The 22nd international   \n518 conference on artificial intelligence and statistics, pages 1195–1204. PMLR, 2019.   \n519 [57] Jian Wu, Saul Toscano-Palmerin, Peter I Frazier, and Andrew Gordon Wilson. Practical   \n520 multi-fidelity bayesian optimization for hyperparameter tuning. In Uncertainty in   \n521 Artificial Intelligence, pages 788–798. PMLR, 2020.   \n522 [58] David B Yudin and Arkadi S Nemirovskii. Informational complexity and efficient   \n523 methods for the solution of convex extremal problems. Matekon, 13(2):22–45, 1976.   \n524 [59] Yawei Zhao. Markov chain mirror descent on data federation. arXiv preprint   \n525 arXiv:2309.14775, 2023. ",
+        "bbox": [
+            150,
+            90,
+            828,
+            921
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "10 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            948
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            138,
+            74,
+            830,
+            920
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "discarded",
+        "text": "11 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            948
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            143,
+            75,
+            828,
+            921
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "12 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            948
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            90,
+            828,
+            694
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "13 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "1. Claims ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            116,
+            290,
+            130
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Do the main claims made in the abstract and introduction accurately reflect the paper’s contributions and scope? ",
+        "bbox": [
+            230,
+            135,
+            823,
+            162
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            166,
+            331,
+            181
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: main contributions of this paper are described accurately in a dedicated subsection (Section 1.2) of the introduction. ",
+        "bbox": [
+            235,
+            186,
+            823,
+            213
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            218,
+            313,
+            232
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the abstract and introduction do not include the claims made in the paper. The abstract and/or introduction should clearly state the claims made, including the contributions made in the paper and important assumptions and limitations. A No or NA answer to this question will not be perceived well by the reviewers.   \n• The claims made should match theoretical and experimental results, and reflect how much the results can be expected to generalize to other settings.   \n• It is fine to include aspirational goals as motivation as long as it is clear that these goals are not attained by the paper. ",
+        "bbox": [
+            246,
+            237,
+            825,
+            369
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "2. Limitations ",
+        "text_level": 1,
+        "bbox": [
+            212,
+            373,
+            328,
+            387
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss the limitations of the work performed by the authors? ",
+        "bbox": [
+            233,
+            392,
+            821,
+            419
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            424,
+            331,
+            439
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: assumptions we use to prove the main results are presented in Section 2. The motivation for these assumptions as well their limitations are also described there. ",
+        "bbox": [
+            235,
+            444,
+            823,
+            484
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            489,
+            313,
+            503
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper.   \n• The authors are encouraged to create a separate \"Limitations\" section in their paper. The paper should point out any strong assumptions and how robust the results are to violations of these assumptions (e.g., independence assumptions, noiseless settings, model well-specification, asymptotic approximations only holding locally). The authors should reflect on how these assumptions might be violated in practice and what the implications would be.   \n• The authors should reflect on the scope of the claims made, e.g., if the approach was only tested on a few datasets or with a few runs. In general, empirical results often depend on implicit assumptions, which should be articulated. The authors should reflect on the factors that influence the performance of the approach. For example, a facial recognition algorithm may perform poorly when image resolution is low or images are taken in low lighting. Or a speech-to-text system might not be used reliably to provide closed captions for online lectures because it fails to handle technical jargon. The authors should discuss the computational efficiency of the proposed algorithms and how they scale with dataset size. If applicable, the authors should discuss possible limitations of their approach to address problems of privacy and fairness.   \n• While the authors might fear that complete honesty about limitations might be used by reviewers as grounds for rejection, a worse outcome might be that reviewers discover limitations that aren’t acknowledged in the paper. The authors should use their best judgment and recognize that individual actions in favor of transparency play an important role in developing norms that preserve the integrity of the community. Reviewers will be specifically instructed to not penalize honesty concerning limitations. ",
+        "bbox": [
+            246,
+            507,
+            825,
+            911
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "927 NeurIPS Paper Checklist ",
+        "bbox": [
+            147,
+            89,
+            419,
+            107
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "928 929 930 931 932 933 934 935 936 937 938 939 940 941 942 943 944 945 946 947 948 949 950 951 952 953 954 955 956 957 958 959 960 961 962 963 964 965 966 967 968 969 970 971 972 973 974 975 976 977 978 979 ",
+        "bbox": [
+            138,
+            98,
+            166,
+            928
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            506,
+            946
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "3. Theory assumptions and proofs ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            92,
+            491,
+            106
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof? ",
+        "bbox": [
+            232,
+            109,
+            823,
+            138
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            142,
+            331,
+            156
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: all assumptions and definitions are carefully stated. The complete proofs appear in the supplemental material and are properly referenced in the main part. ",
+        "bbox": [
+            233,
+            161,
+            823,
+            202
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            207,
+            313,
+            220
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include theoretical results.   \nAll the theorems, formulas, and proofs in the paper should be numbered and cross-referenced.   \n• All assumptions should be clearly stated or referenced in the statement of any theorems. The proofs can either appear in the main paper or the supplemental material, but if they appear in the supplemental material, the authors are encouraged to provide a short proof sketch to provide intuition.   \n• Inversely, any informal proof provided in the core of the paper should be complemented by formal proofs provided in appendix or supplemental material.   \n• Theorems and Lemmas that the proof relies upon should be properly referenced. ",
+        "bbox": [
+            246,
+            226,
+            825,
+            388
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "4. Experimental result reproducibility ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            392,
+            526,
+            406
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)? ",
+        "bbox": [
+            233,
+            411,
+            825,
+            467
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            469,
+            331,
+            484
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: see Section 3. The setup is fully disclosed. ",
+        "bbox": [
+            232,
+            488,
+            633,
+            503
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            507,
+            313,
+            521
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• If the paper includes experiments, a No answer to this question will not be perceived well by the reviewers: Making the paper reproducible is important, regardless of whether the code and data are provided or not. If the contribution is a dataset and/or model, the authors should describe the steps taken to make their results reproducible or verifiable. Depending on the contribution, reproducibility can be accomplished in various ways. For example, if the contribution is a novel architecture, describing the architecture fully might suffice, or if the contribution is a specific model and empirical evaluation, it may be necessary to either make it possible for others to replicate the model with the same dataset, or provide access to the model. In general. releasing code and data is often one good way to accomplish this, but reproducibility can also be provided via detailed instructions for how to replicate the results, access to a hosted model (e.g., in the case of a large language model), releasing of a model checkpoint, or other means that are appropriate to the research performed. While NeurIPS does not require releasing code, the conference does require all submissions to provide some reasonable avenue for reproducibility, which may depend on the nature of the contribution. For example (a) If the contribution is primarily a new algorithm, the paper should make it clear how to reproduce that algorithm. (b) If the contribution is primarily a new model architecture, the paper should describe the architecture clearly and fully. (c) If the contribution is a new model (e.g., a large language model), then there should either be a way to access this model for reproducing the results or a way to reproduce the model (e.g., with an open-source dataset or instructions for how to construct the dataset). ",
+        "bbox": [
+            245,
+            529,
+            825,
+            911
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "981 982 983 984 985 986 987 988 989 990 991 992 993 994 995 996 997 998 999 1000 1001 1002 1003 1004 1005 1006 1007 1008 1009 1010 1011 1012 1013 1014 1015 1016 1017 1018 1019 1020 1021 1022 1023 1024 1025 1026 1027 1028 1029 1030 1031 1032 1033 ",
+        "bbox": [
+            133,
+            103,
+            166,
+            929
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "(d) We recognize that reproducibility may be tricky in some cases, in which case authors are welcome to describe the particular way they provide for reproducibility. In the case of closed-source models, it may be that access to the model is limited in some way (e.g., to registered users), but it should be possible for other researchers to have some path to reproducing or verifying the results. ",
+        "bbox": [
+            261,
+            92,
+            823,
+            174
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "5. Open access to data and code ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            180,
+            478,
+            194
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material? ",
+        "bbox": [
+            233,
+            200,
+            823,
+            241
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [No] ",
+        "bbox": [
+            232,
+            246,
+            328,
+            262
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: our experiments are rather a practical confirmation of theoretical results, and these experiments can be easily reproduced. ",
+        "bbox": [
+            232,
+            267,
+            821,
+            295
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            300,
+            313,
+            314
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that paper does not include experiments requiring code.   \n• Please see the NeurIPS code and data submission guidelines (https://nips. cc/public/guides/CodeSubmissionPolicy) for more details. While we encourage the release of code and data, we understand that this might not be possible, so “No” is an acceptable answer. Papers cannot be rejected simply for not including code, unless this is central to the contribution (e.g., for a new open-source benchmark). The instructions should contain the exact command and environment needed to run to reproduce the results. See the NeurIPS code and data submission guidelines (https://nips.cc/public/guides/CodeSubmissionPolicy) for more details. The authors should provide instructions on data access and preparation, including how to access the raw data, preprocessed data, intermediate data, and generated data, etc. The authors should provide scripts to reproduce all experimental results for the new proposed method and baselines. If only a subset of experiments are reproducible, they should state which ones are omitted from the script and why. At submission time, to preserve anonymity, the authors should release anonymized versions (if applicable). Providing as much information as possible in supplemental material (appended to the paper) is recommended, but including URLs to data and code is permitted. ",
+        "bbox": [
+            246,
+            319,
+            825,
+            631
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "6. Experimental setting/details ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            636,
+            470,
+            651
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results? ",
+        "bbox": [
+            232,
+            656,
+            823,
+            698
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            703,
+            331,
+            718
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: see Section 3, all parameters are described there. ",
+        "bbox": [
+            232,
+            723,
+            681,
+            738
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            742,
+            313,
+            757
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments. • The experimental setting should be presented in the core of the paper to a level of detail that is necessary to appreciate the results and make sense of them. • The full details can be provided either with the code, in appendix, or as supplemental material. ",
+        "bbox": [
+            246,
+            762,
+            825,
+            838
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "7. Experiment statistical significance ",
+        "text_level": 1,
+        "bbox": [
+            214,
+            844,
+            516,
+            858
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments? ",
+        "bbox": [
+            232,
+            863,
+            823,
+            892
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [No] ",
+        "bbox": [
+            232,
+            897,
+            326,
+            912
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "1034 1035 1036 1037 1038 1039 1040 1041 1042 1043 1044 1045 1046 1047 1048 1049 1050 1051 1052 1053 1054 1055 1056 1057 1058 1059 1060 1061 1062 1063 1064 1065 1066 1067 1068 1069 1070 1071 1072 1073 1074 1075 1076 1077 1078 1079 1080 1081 1082 1083 1084 ",
+        "bbox": [
+            133,
+            88,
+            166,
+            924
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "43 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: we use experiments to verify the theoretical rates and have no statistical effects associated with running the experiments. ",
+        "bbox": [
+            232,
+            92,
+            821,
+            119
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            125,
+            313,
+            137
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The authors should answer \"Yes\" if the results are accompanied by error bars, confidence intervals, or statistical significance tests, at least for the experiments that support the main claims of the paper. The factors of variability that the error bars are capturing should be clearly stated (for example, train/test split, initialization, random drawing of some parameter, or overall run with given experimental conditions). The method for calculating the error bars should be explained (closed form formula, call to a library function, bootstrap, etc.) The assumptions made should be given (e.g., Normally distributed errors).   \n• It should be clear whether the error bar is the standard deviation or the standard error of the mean. It is OK to report 1-sigma error bars, but one should state it. The authors should preferably report a 2-sigma error bar than state that they have a $9 6 \\%$ CI, if the hypothesis of Normality of errors is not verified. For asymmetric distributions, the authors should be careful not to show in tables or figures symmetric error bars that would yield results that are out of range (e.g. negative error rates).   \n• If error bars are reported in tables or plots, The authors should explain in the text how they were calculated and reference the corresponding figures or tables in the text. ",
+        "bbox": [
+            246,
+            142,
+            825,
+            452
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "8. Experiments compute resources ",
+        "text_level": 1,
+        "bbox": [
+            215,
+            457,
+            495,
+            472
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments? ",
+        "bbox": [
+            232,
+            477,
+            821,
+            517
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Answer: [No] ",
+        "bbox": [
+            232,
+            522,
+            328,
+            537
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Justification: the experiments performed are not computationally heavy and can be reproduced on an average machine in a fairly reasonable amount of time. ",
+        "bbox": [
+            232,
+            541,
+            821,
+            569
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            574,
+            313,
+            588
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments. The paper should indicate the type of compute workers CPU or GPU, internal cluster, or cloud provider, including relevant memory and storage. The paper should provide the amount of compute required for each of the individual experimental runs as well as estimate the total compute. The paper should disclose whether the full research project required more compute than the experiments reported in the paper (e.g., preliminary or failed experiments that didn’t make it into the paper). ",
+        "bbox": [
+            246,
+            592,
+            825,
+            712
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "9. Code of ethics ",
+        "text_level": 1,
+        "bbox": [
+            210,
+            715,
+            352,
+            729
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines? ",
+        "bbox": [
+            232,
+            734,
+            823,
+            762
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            766,
+            331,
+            781
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Justification: the research follows the NeurIPS Code of Ethics. ",
+        "bbox": [
+            232,
+            785,
+            681,
+            800
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            804,
+            313,
+            818
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the authors have not reviewed the NeurIPS Code of Ethics. If the authors answer No, they should explain the special circumstances that require a deviation from the Code of Ethics. The authors should make sure to preserve anonymity (e.g., if there is a special consideration due to laws or regulations in their jurisdiction). ",
+        "bbox": [
+            246,
+            823,
+            825,
+            912
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "1085 1086 1087 1088 1089 1090 1091 1092 1093 1094 1095 1096 1097 1098 1099 1100 1101 1102 1103 1104 1105 1106 1107 1108 1109 1110 1111 1112 1113 1114 1115 1116 1117 1118 1119 1120 1121 1122 1123 1124 1125 1126 1127 1128 1129 1130 1131 1132 1133 1134 1135 1136 ",
+        "bbox": [
+            133,
+            101,
+            166,
+            930
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "10. Broader impacts ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            92,
+            370,
+            106
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed? ",
+        "bbox": [
+            235,
+            111,
+            821,
+            138
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            142,
+            331,
+            157
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: there is no societal impact of the work performed – we only develop the theoretical understanding of Optimization. ",
+        "bbox": [
+            233,
+            162,
+            821,
+            189
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            194,
+            313,
+            208
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that there is no societal impact of the work performed. If the authors answer NA or No, they should explain why their work has no societal impact or why the paper does not address societal impact.   \n• Examples of negative societal impacts include potential malicious or unintended uses (e.g., disinformation, generating fake profiles, surveillance), fairness considerations (e.g., deployment of technologies that could make decisions that unfairly impact specific groups), privacy considerations, and security considerations.   \n• The conference expects that many papers will be foundational research and not tied to particular applications, let alone deployments. However, if there is a direct path to any negative applications, the authors should point it out. For example, it is legitimate to point out that an improvement in the quality of generative models could be used to generate deepfakes for disinformation. On the other hand, it is not needed to point out that a generic algorithm for optimizing neural networks could enable people to train models that generate Deepfakes faster. The authors should consider possible harms that could arise when the technology is being used as intended and functioning correctly, harms that could arise when the technology is being used as intended but gives incorrect results, and harms following from (intentional or unintentional) misuse of the technology.   \n• If there are negative societal impacts, the authors could also discuss possible mitigation strategies (e.g., gated release of models, providing defenses in addition to attacks, mechanisms for monitoring misuse, mechanisms to monitor how a system learns from feedback over time, improving the efficiency and accessibility of ML). ",
+        "bbox": [
+            246,
+            213,
+            825,
+            556
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "11. Safeguards ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            560,
+            323,
+            575
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pretrained language models, image generators, or scraped datasets)? ",
+        "bbox": [
+            235,
+            579,
+            823,
+            621
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            233,
+            626,
+            331,
+            640
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: the paper poses no such risks. ",
+        "bbox": [
+            235,
+            643,
+            544,
+            659
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            662,
+            313,
+            676
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper poses no such risks. Released models that have a high risk for misuse or dual-use should be released with necessary safeguards to allow for controlled use of the model, for example by requiring that users adhere to usage guidelines or restrictions to access the model or implementing safety filters. Datasets that have been scraped from the Internet could pose safety risks. The authors should describe how they avoided releasing unsafe images. We recognize that providing effective safeguards is challenging, and many papers do not require this, but we encourage authors to take this into account and make a best faith effort. ",
+        "bbox": [
+            246,
+            683,
+            825,
+            827
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "12. Licenses for existing assets ",
+        "text_level": 1,
+        "bbox": [
+            207,
+            832,
+            454,
+            847
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected? ",
+        "bbox": [
+            232,
+            852,
+            821,
+            892
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            897,
+            331,
+            912
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "1137 1138 1139 1140 1141 1142 1143 1144 1145 1146 1147 1148 1149 1150 1151 1152 1153 1154 1155 1156 1157 1158 1159 1160 1161 1162 1163 1164 1165 1166 1167 1168 1169 1170 1171 1172 1173 1174 1175 1176 1177 1178 1179 1180 1181 1182 1183 1184 1185 1186 1187 1188 1189 ",
+        "bbox": [
+            133,
+            101,
+            166,
+            916
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: the paper does not use existing assets. ",
+        "bbox": [
+            233,
+            92,
+            604,
+            106
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            111,
+            313,
+            126
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not use existing assets.   \n• The authors should cite the original paper that produced the code package or dataset.   \n• The authors should state which version of the asset is used and, if possible, include a URL.   \n• The name of the license (e.g., CC-BY 4.0) should be included for each asset. For scraped data from a particular source (e.g., website), the copyright and terms of service of that source should be provided. If assets are released, the license, copyright information, and terms of use in the package should be provided. For popular datasets, paperswithcode.com/ datasets has curated licenses for some datasets. Their licensing guide can help determine the license of a dataset. For existing datasets that are re-packaged, both the original license and the license of the derived asset (if it has changed) should be provided. If this information is not available online, the authors are encouraged to reach out to the asset’s creators. ",
+        "bbox": [
+            246,
+            132,
+            825,
+            375
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "13. New assets ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            380,
+            325,
+            393
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets? ",
+        "bbox": [
+            233,
+            400,
+            823,
+            428
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            233,
+            433,
+            333,
+            448
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Justification: the paper does not propose new assets. ",
+        "bbox": [
+            236,
+            454,
+            609,
+            468
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            473,
+            313,
+            487
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not release new assets.   \n• Researchers should communicate the details of the dataset/code/model as part of their submissions via structured templates. This includes details about training, license, limitations, etc.   \nThe paper should discuss whether and how consent was obtained from people whose asset is used.   \n• At submission time, remember to anonymize your assets (if applicable). You can either create an anonymized URL or include an anonymized zip file. ",
+        "bbox": [
+            246,
+            493,
+            825,
+            614
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "14. Crowdsourcing and research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            619,
+            643,
+            633
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? ",
+        "bbox": [
+            233,
+            640,
+            823,
+            681
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            232,
+            686,
+            331,
+            702
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Justification: the paper does not involve crowdsourcing nor research with human subjects. ",
+        "bbox": [
+            233,
+            708,
+            821,
+            734
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            741,
+            313,
+            755
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects. Including this information in the supplemental material is fine, but if the main contribution of the paper involves human subjects, then as much detail as possible should be included in the main paper. According to the NeurIPS Code of Ethics, workers involved in data collection, curation, or other labor should be paid at least the minimum wage in the country of the data collector. ",
+        "bbox": [
+            246,
+            761,
+            823,
+            877
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "15. Institutional review board (IRB) approvals or equivalent for research with human subjects ",
+        "bbox": [
+            205,
+            882,
+            821,
+            911
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "discarded",
+        "text": "1190 1191 1192 1193 1194 1195 1196 1197 1198 1199 1200 1201 1202 1203 1204 1205 1206 1207 1208 1209 1210 1211 1212 1213 1214 1215 1216 1217 1218 1219 1220 1221 1222 1223 1224 1225 1226 1227 1228 1229 1230 1231 1232 1233 1234 1235 1236 1237 1238 1239 ",
+        "bbox": [
+            132,
+            94,
+            168,
+            920
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "discarded",
+        "text": "46 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained? ",
+        "bbox": [
+            232,
+            92,
+            825,
+            147
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            233,
+            151,
+            331,
+            166
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Justification: the paper does not involve crowdsourcing nor research with human subjects. ",
+        "bbox": [
+            233,
+            171,
+            821,
+            199
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            203,
+            313,
+            217
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   \n• Depending on the country in which research is conducted, IRB approval (or equivalent) may be required for any human subjects research. If you obtained IRB approval, you should clearly state this in the paper. We recognize that the procedures for this may vary significantly between institutions and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the guidelines for their institution.   \n• For initial submissions, do not include any information that would break anonymity (if applicable), such as the institution conducting the review. ",
+        "bbox": [
+            246,
+            222,
+            825,
+            368
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "16. Declaration of LLM usage ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            372,
+            447,
+            386
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe the usage of LLMs if it is an important, original, or non-standard component of the core methods in this research? Note that if the LLM is used only for writing, editing, or formatting purposes and does not impact the core methodology, scientific rigorousness, or originality of the research, declaration is not required. ",
+        "bbox": [
+            232,
+            391,
+            825,
+            460
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            233,
+            464,
+            333,
+            479
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Justification: LLMs were used only for editing. ",
+        "bbox": [
+            232,
+            483,
+            568,
+            498
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            502,
+            313,
+            516
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the core method development in this research does not involve LLMs as any important, original, or non-standard components. • Please refer to our LLM policy (https://neurips.cc/Conferences/2025/LLM) for what should or should not be described. ",
+        "bbox": [
+            240,
+            521,
+            825,
+            580
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "discarded",
+        "text": "47 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "discarded",
+        "text": "1240 1241 1242 1243 1244 1245 1246 1247 1248 1249 1250 1251 1252 1253 1254 1255 1256 1257 1258 1259 1260 1261 1262 1263 1264 1265 1266 1267 1268 1269 1270 ",
+        "bbox": [
+            133,
+            88,
+            165,
+            584
+        ],
+        "page_idx": 19
+    }
+]

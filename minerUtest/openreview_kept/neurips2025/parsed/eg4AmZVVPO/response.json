@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768192533316",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:35:33.327437Z",
+    "started_at": 1768192533.3278296,
+    "completed_at": 1768192597.0289435,
+    "error_message": null,
+    "file_info": {
+      "filename": "eg4AmZVVPO.pdf",
+      "size": 1277117,
+      "md5": "091b8a644beec1a05140ad06f31100b7"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 61.894232988357544,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/091b8a644beec1a05140ad06f31100b7/results.zip"
+  }
+}

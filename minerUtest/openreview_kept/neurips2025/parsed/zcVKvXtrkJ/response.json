@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768191011715",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-12T04:10:11.724608Z",
+    "started_at": 1768191011.7250328,
+    "completed_at": 1768191117.55669,
+    "error_message": null,
+    "file_info": {
+      "filename": "zcVKvXtrkJ.pdf",
+      "size": 770774,
+      "md5": "d3228c8907afdeaf2f96df47f922713c"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 99.42241764068604,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/d3228c8907afdeaf2f96df47f922713c/results.zip"
+  }
+}

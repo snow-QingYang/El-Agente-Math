@@ -1,0 +1,3152 @@
+[
+    {
+        "type": "text",
+        "text": "Kernel Trace Distance: Quantum Statistical Metric between Measures through RKHS Density Operators ",
+        "text_level": 1,
+        "bbox": [
+            178,
+            122,
+            820,
+            172
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Anonymous Author(s)   \nAffiliation   \nAddress   \nemail ",
+        "bbox": [
+            423,
+            226,
+            580,
+            281
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Abstract ",
+        "text_level": 1,
+        "bbox": [
+            462,
+            318,
+            535,
+            334
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Distances between probability distributions are a key component of many statistical machine learning tasks, from two-sample testing to generative modeling, among others. We introduce a novel distance between measures that compares them through a Schatten norm of their kernel covariance operators. We show that this new distance is an integral probability metric that can be framed between a Maximum Mean Discrepancy (MMD) and a Wasserstein distance. In particular, we show that it avoids some pitfalls of MMD, by being more discriminative and robust to the choice of hyperparameters. Moreover, it benefits from some compelling properties of kernel methods, that can avoid the curse of dimensionality for their sample complexity. We provide an algorithm to compute the distance in practice by introducing an extension of kernel matrix for difference of distributions that could be of independent interest. Those advantages are illustrated by robust approximate Bayesian computation under contamination as well as particle flow simulations. ",
+        "bbox": [
+            148,
+            351,
+            766,
+            531
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "14 1 INTRODUCTION ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            563,
+            362,
+            579
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "15 Statistical distances are ubiquitous in the fundamental theory of machine learning and serve as the   \n16 backbone of many of its applications, such as: discriminating between the generative model and real   \n17 data in Generative Adversarial Networks (GAN) [Goodfellow et al., 2014, Arjovsky et al., 2017, Li   \n18 et al., 2017, Genevay et al., 2018, Birrell et al., 2022], testing whether a dataset is close to another   \n19 (two-sample test) [Eric et al., 2007, Gretton et al., 2012, Hagrass et al., 2024] or to a particular   \n20 distribution (goodness-of-fit test), as well as acting as an objective loss function in particle gradient   \n21 flows [Arbel et al., 2019, Feydy et al., 2019, Korba et al., 2021, Hertrich et al., 2023, Neumayer et al.,   \n22 2024, Chen et al., 2024], or in minimum distance estimators [Wolfowitz, 1957, Basu et al., 2011].   \n23 A class of distances between probability distributions, called Integral Probability Metrics   \n24 (IPM) [Muller, 1997], is defined by measuring the supremum of difference of integrals over a ¨   \n25 function space. It comprises many popular metrics such as the Total Variation distance, Wasserstein-1   \n26 distance and the Maximum Mean Discrepancy (MMD) [Gretton et al., 2012] also known as quadratic   \n27 distance [Lindsay et al., $\\boxed { 2 0 0 8 }$ . IPMs’ theoretical properties were largely investigated in the literature,   \n28 such as their statistical convergence rate [Sriperumbudur et al., 2010], concentration for inference   \n29 using ABC [Legramanti et al., $\\overline { { [ 2 0 2 2 ] } }$ , PAC-Bayes bounds [Amit et al., 2022], as well as adversarial   \n30 interpretations [Husain and Knoblauch, 2022]. For instance, the MMD enjoys a fast statistical   \n31 convergence rate of $\\overline { { O ( n ^ { - \\frac { 1 } { 2 } } ) } }$ while the Wasserstein distance suffers from the curse of dimensionality   \n32 with a rate no better than $\\Theta ( n ^ { - \\frac { 1 } { d } } )$ [Kloeckner, 2012]. One could wonder: how large such a function   \n33 space could be before the curse of dimensionality kicks in? In this work, we theoretically investigate   \n34 how to get closer to such frontier by defining an extended family of kernel distances, that write as   \n35 novel IPM whose dual function space is larger than the one of MMD.   \n36 Kernel methods allow to represent a distribution by a vector by associating to a datapoint $x$ a feature   \n37 map image $\\varphi ( x )$ in a Hilbert space, and by doing so, embed in a linear way a distribution $\\mu$ to what   \n38 is called a (kernel) mean embedding $\\begin{array} { r } { \\mathbb { E } _ { X \\sim \\mu } [ \\varphi ( X ) ] = \\int \\varphi ( x ) d \\mu ( x ) } \\end{array}$ . However mean embeddings for   \n39 different distributions may have different “energies”, i.e., squared Hilbert norms, which may lead   \n40 to several pitfalls of MMD. In quantum information theory $\\begin{array}{c} \\scriptstyle | { \\overline { { \\mathbf { W a t r o u s } } } } ,  & { \\scriptstyle 2 0 1 8 } \\end{array} ]$ , a similar idea to mean   \n41 embedding is called superposition. The quantum equivalent of a datapoint or deterministic Dirac   \n42 distribution is called a pure state and is a projector of rank and trace one, that could be denoted $v v ^ { * }$   \n43 (or $| v \\rangle \\langle v | )$ for a unit vector $v$ . Its analog for a general probability distribution is called a mixed state   \n44 and is the superposition $\\begin{array} { r } { \\sum _ { v } p ( v ) | v \\rangle \\langle v | } \\end{array}$ where $p ( v )$ are probabilities. A non-trivial mixed state can   \n45 hardly be confused with a pure state as a linear combination of different projectors is of higher rank   \n46 than 1: using projecting operators instead of the vectors themselves makes the linearity less “trivial”.   \n47 As those positive definite operators can be diagonalised, by using always the same orthogonal basis   \n48 and studying the eigenvalues, we recover classical probabilities, and as such we can see quantum   \n49 probabilities as their extension. Recently, the work of $\\mathbf { \\underline { { B a c h } } } \\mathbf { \\lVert } \\mathbf { \\underline { { 2 0 2 2 } } } \\mathbf { \\ ] }$ introduced a novel divergence   \n50 between probability distributions, by plugging a kernel operator embedding of the distributions   \n51 (which are also positive definite operators) in the Von Neumann relative entropy from quantum   \n52 information theory (i.e., a Kullback-Leibler divergence between positive Hermitian operators), and   \n53 whose statistical and geometrical properties were investigated more in depth in $\\boxed { \\mathrm { C h a z a l ~ e t ~ a l . } } \\boxed { 2 0 2 4 } ]$   \n54 Instead of considering a divergence on such operators, here we propose to draw inspiration from   \n55 quantum statistical metrics, which enjoy nice geometrical properties such as the triangle inequality.   \n56 Two of them are well-known and mutually bounding: the Bures metric, and the trace distance, on   \n57 which we focus here, and which is derived from a (Schatten) norm.   \n58 Related works The kernelised version of Bures metric, i.e., a Bures metric between kernel covari  \n59 ance operators, has been studied for instance in Oh et al. [2020], Zhang et al. [2019]. The closest   \n60 work to ours is the one by Mroueh et al. [2017]. They consider a similar metric to ours, i.e. the   \n61 trace distance, that they refer to as Covariance Matching IPM. It shares the same dual writing as   \n62 the metric we consider, yet, in that work, the dual problem is solved through a numerical program   \n63 involving neural networks that approach kernel features. Hence, they compute an approximate   \n64 version of their target metric. In contrast, we use kernel features directly in the dual formulation,   \n65 and derive a closed-form for the metric leveraging a kernel trick. Moreover, we provide theoretical   \n66 guarantees regarding this metric and investigate different numerical applications than the one of the   \n67 GAN considered in Mroueh et al. [2017]. ",
+        "bbox": [
+            142,
+            594,
+            825,
+            898
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "Submitted to 39th Conference on Neural Information Processing Systems (NeurIPS 2025). Do not distribute. ",
+        "bbox": [
+            169,
+            922,
+            815,
+            936
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "1 2 3 4 5 6 7 8 9 10 11 12 13 ",
+        "bbox": [
+            148,
+            352,
+            163,
+            534
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            143,
+            90,
+            825,
+            395
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            411,
+            825,
+            551
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "68 Contributions Our main contributions can be summarized as follows: ",
+        "bbox": [
+            148,
+            565,
+            647,
+            580
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "(i) Inspired by quantum statistics, we introduce a novel distance between probability distributions called kernel trace distance $( d _ { K T } )$ .   \n(ii) We show that $d _ { K T }$ is an IPM and illustrate several of its theoretical properties, mainly: a direct comparison to MMD, robustness to contamination, and statistical convergence rates that do not depend on the dimension.   \n(iii) We showcase how to compute $d _ { K T }$ and illustrate its practical performance on particle gradient flows and Approximate Bayesian Computation (ABC). ",
+        "bbox": [
+            200,
+            592,
+            825,
+            703
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "76 Organisation of the paper In section $^ { 2 , }$ we provide some background on quantum statistical   \n77 distances and introduce $d _ { K T }$ . In section $\\mathbb { B } ,$ we explain further the motivation to introduce $d _ { K T }$ ,   \n78 notably by comparing it with the other distances, MMD in particular. We show in section $\\mathbb { E }$ under   \n79 some eigenvalue decay rate assumptions, convergence rates that do not depend on the dimension, as   \n80 well as robustness. In section $\\boxed { 2 . 3 } ,$ we explain how to compute $d _ { K T }$ . Finally, we illustrate our findings   \n81 by experiments in section 5. ",
+        "bbox": [
+            147,
+            718,
+            825,
+            804
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "82 2 Kernel Trace Distance ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            823,
+            392,
+            840
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "83 For a positive semi-definite kernel $k : \\mathcal { X } \\times \\mathcal { X } \\to \\mathbb { R }$ , its RKHS $\\mathcal { H }$ is a Hilbert space of real-valued   \n84 functions with inner product $\\langle \\cdot , \\cdot \\rangle _ { \\mathscr { H } }$ and norm $\\| \\cdot \\| _ { \\mathcal { H } }$ . It is associated with a feature map $\\varphi : \\mathcal X \\to \\mathscr { H }$   \n85 such that $k ( x , y ) = \\langle \\varphi ( x ) , \\varphi ( y ) \\rangle _ { \\mathcal { H } }$ . We denote $\\mathcal { L } ( \\mathcal { H } )$ the space of bounded linear operators from   \n86 $\\mathcal { H }$ to itself. For a vector $v \\in \\mathcal { H }$ , $v ^ { * }$ denotes its dual linear form defined by $v ^ { * } ( w ) = \\bar { \\langle } v , w \\rangle$ for any   \n87 $w \\in \\mathcal { H }$ . For an operator $T \\in { \\mathcal { L } } ( { \\mathcal { H } } )$ , $T ^ { * }$ is its adjoint. $| | \\cdot | | _ { p }$ denotes the $p$ -Schatten norm explicited   \n88 below. ",
+        "bbox": [
+            147,
+            854,
+            825,
+            911
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "discarded",
+        "text": "2 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            155,
+            90,
+            825,
+            119
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "9 Assumption 0. In the whole paper, we restrict ourselves to the setting of a completely separable set 0 $\\mathcal { X }$ , endowed with a Borel $\\sigma$ -algebra, and a separable RKHS $\\mathcal { H }$ of real-valued functions on $\\mathcal { X }$ , with a bounded continuous strictly positive kernel. ",
+        "bbox": [
+            156,
+            122,
+            825,
+            165
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "2.1 Background ",
+        "text_level": 1,
+        "bbox": [
+            163,
+            179,
+            299,
+            195
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "3 RKHS density operators [Bach, 2022]. Let $\\mu$ a measure on $\\mathcal { X }$ . Define $\\Phi$ the kernel covariance   \n4 operator embedding as: ",
+        "bbox": [
+            156,
+            203,
+            825,
+            233
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/ebe8e2d8d00c6de1839432f9be3473bc72a2bc1db1d19e7982e7c3a02eaae213.jpg",
+        "text": "$$\n\\Phi : \\mu \\mapsto \\Sigma _ { \\mu } = \\int _ { \\mathcal { X } } \\varphi ( x ) \\varphi ( x ) ^ { \\ast } d \\mu ( x ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            375,
+            234,
+            622,
+            267
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "95 We will call $\\Sigma _ { \\mu }$ the RKHS density operator of $\\mu$ , in reference to the wording of density operator   \n96 in quantum information theory: this is to insist that $\\Sigma _ { \\mu }$ is an embedding in itself (with feature map   \n97 $\\varphi ( \\cdot ) \\varphi ( \\cdot ) ^ { * } )$ , rather than just the covariance of a mean embedding with feature map $\\varphi$ . The operator $\\Sigma _ { \\mu }$   \n98 is self-adjoint, and positive semidefinite when $\\mu$ is a probability measure. To keep the analogy with   \n99 quantum density operators, similarly to $\\overline { { | \\mathbf { B } \\mathbf { a c h } | } } \\dot { \\lVert } \\overline { { 2 0 2 2 } } \\rVert$ , we consider kernels respecting the property: ",
+        "bbox": [
+            143,
+            267,
+            825,
+            338
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Assumption 1. $\\forall x \\in \\mathcal { X } , \\ k ( x , x ) = 1 .$ ",
+        "bbox": [
+            160,
+            339,
+            428,
+            354
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "101 to ensure $\\mathrm { T r } \\Sigma _ { \\mu } = 1$ (as in the sum of all probabilities equals one). If $\\forall x \\in \\mathcal { X } , \\ k ( x , x ) = M$ for a   \n102 non-zero constant $M \\ne 1$ , it is will be easy to generalize many of our results later by dividing by   \n103 $M$ , so this assumption is not too restrictive. If the kernel does not verify Assumption $^ { 1 }$ but is strictly   \n104 positive, it is could also be normalised using $\\begin{array} { r } { \\tilde { k } ( x , y ) = \\frac { k ( x , y ) } { \\sqrt { k ( x , x ) k ( y , y ) } } } \\end{array}$ instead.   \n105 Schatten norms. We now provide some background on Schatten norms $\\| \\mathrm { S i m o n } \\| 2 0 0 5 \\|$ . For an   \n106 operator $T \\in { \\mathcal { L } } ( { \\mathcal { H } } )$ and $p \\in [ 1 , \\infty )$ , the $p$ -Schatten norm is defined as $| | T | | _ { p } = ( \\mathrm { T r } ( | T | ^ { p } ) ) ^ { 1 / p }$ where   \n107 $| T | = { \\sqrt { T ^ { * } T } }$ . If $T$ is compact, this can be rewritten as the $p$ -vectorial norm of the singular values of   \n108 $T$ . It also admits a dual definition, denoting $q$ such that $1 / p + 1 / q = 1$ : ",
+        "bbox": [
+            140,
+            363,
+            825,
+            431
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            143,
+            443,
+            825,
+            505
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/3266e7471b91eb322731bb8bdc483bc347e43fab7ab764d283d06e48223978e9.jpg",
+        "text": "$$\n| | T | | _ { p } = \\operatorname* { s u p } _ { U \\in \\mathcal { L } ( \\mathcal { H } ) , | | U | | _ { q } = 1 } \\langle U , T \\rangle\n$$",
+        "text_format": "latex",
+        "bbox": [
+            393,
+            505,
+            604,
+            532
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "where the inner product is 109 $\\langle U , T \\rangle = \\operatorname { T r } ( U ^ { * } T )$ . ",
+        "bbox": [
+            142,
+            534,
+            480,
+            549
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "110 The Schatten 2-norm is the Hilbert-Schmidt norm with respect to this inner product: $| | T | | _ { 2 } =$   \n111 \\$Tr(T ↓T ). Then, the Schatten ⇓-norm is the operator norm : ||T ||↗ = supx↔H\\0 ||x|| ||T x||H i.e., the   \n112 maximum of the singular values of the operator in absolute value. We have the following inequalities: ",
+        "bbox": [
+            142,
+            554,
+            823,
+            603
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "$\\begin{array} { r l } & { \\bullet \\mathrm { ~ F o r ~ } 1 \\leq p \\leq q \\leq \\infty \\colon \\forall T \\in \\mathcal { L } ( \\mathcal { H } ) , | | T | | _ { 1 } \\geq | | T | | _ { p } \\geq | | T | | _ { q } \\geq | | T | | _ { \\infty } . } \\\\ & { \\bullet \\mathrm { ~ } \\forall T , S \\in \\mathcal { L } ( \\mathcal { H } ) , | | T S | | _ { 1 } \\leq | | T | | _ { 2 } | | S | | _ { 2 } . } \\end{array}$ • From this, it can be deduced taking $T$ as the identity operator, for $\\mathcal { H }$ ",
+        "bbox": [
+            215,
+            611,
+            714,
+            662
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "of finite dimension: ",
+        "bbox": [
+            210,
+            648,
+            808,
+            664
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a54b98f09fcc39269d86b951ecc340861ebb56a7a736e786f0c5988162856c7c.jpg",
+        "text": "$$\n\\forall S \\in \\mathcal { L } ( \\mathcal { H } ) , | | S | | _ { 1 } \\leq \\sqrt { \\mathrm { d i m } ( \\mathcal { H } ) } | | S | | _ { 2 } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            398,
+            665,
+            656,
+            685
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "16 2.2 Definition ",
+        "text_level": 1,
+        "bbox": [
+            156,
+            698,
+            282,
+            713
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "In quantum information theory, the trace distance is a mathematical tool that can be used to compare density operators by measuring the Schatten 1-norm of their difference. Inspired by this, we define: ",
+        "bbox": [
+            173,
+            723,
+            825,
+            752
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "Definition 2.1. The kernel trace distance between two probability measures $\\mu , \\nu$ on $\\mathcal { X }$ is defined as: ",
+        "bbox": [
+            163,
+            755,
+            825,
+            770
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/015094d2ddb92575da9d508f5a3d283bc3581a769795b118c3ae61f97dc3d20c.jpg",
+        "text": "$$\nd _ { K T } ( \\mu , \\nu ) = | | \\Sigma _ { \\mu } - \\Sigma _ { \\nu } | | _ { 1 } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            406,
+            770,
+            588,
+            787
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "120 We will also relate it to other distances such as: ",
+        "bbox": [
+            143,
+            795,
+            485,
+            810
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "121 ",
+        "bbox": [
+            142,
+            823,
+            160,
+            833
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "• Wasserstein distances [Villani, 2009]: ",
+        "bbox": [
+            218,
+            819,
+            485,
+            834
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/b3fd1b1ac462e08edf3c9b85de3794016d2060cc46cb30febeaaaae479d8f38b.jpg",
+        "text": "$$\nW _ { d } ( \\mu , \\nu ) = \\operatorname* { i n f } _ { \\pi \\in \\Pi ( \\mu , \\nu ) } \\iint d ( x , y ) \\mathrm { d } \\pi ( x , y )\n$$",
+        "text_format": "latex",
+        "bbox": [
+            388,
+            834,
+            666,
+            867
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "where $d : \\mathcal { X } \\times \\mathcal { X } \\to \\mathbb { R } ^ { + }$ is a cost and $\\Pi ( \\mu , \\nu )$ denotes all the possible couplings between $\\mu$ and $\\nu$ . The Wasserstein- $p$ distance is obtained by replacing $d$ by its power $d ^ { p }$ in the integral and taking the $p$ -root of the whole expression. ",
+        "bbox": [
+            230,
+            868,
+            825,
+            912
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "3 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "• The Bures distance [Bhatia et al., $\\boxed { 2 0 1 9 }$ on positive definite matrices $A$ : ",
+        "bbox": [
+            217,
+            90,
+            702,
+            107
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where $F ( A , B ) \\ = \\ \\mathrm { T r } ( A ^ { 1 / 2 } B A ^ { 1 / 2 } ) ^ { 1 / 2 }$ is called the fidelity. It coincides with the Wasserstein-2 distance between two normal distributions (also called Bures-Wassertein distance) with identical mean, and different covariances $A$ and $B$ . The formula can be extended to operators with finite traces. ",
+        "bbox": [
+            228,
+            127,
+            825,
+            185
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "• The Kernel Bures distance [Zhang et al., 2019] is defined as: ",
+        "bbox": [
+            217,
+            188,
+            632,
+            204
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a76025d82d22d61ef12e65f98e0095ae2b5c096a6d490ccf257e8e4f9e696ed7.jpg",
+        "text": "$$\nd _ { K B W } ( \\mu , \\nu ) = d _ { B W } ( \\Sigma _ { \\mu } , \\Sigma _ { \\nu } ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            424,
+            204,
+            629,
+            222
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "• The Total Variation is a special case of the Wasserstein distance where the cost is $d :$ $( x , y ) \\mapsto 1 _ { x = y }$ and can be expressed as: ",
+        "bbox": [
+            218,
+            224,
+            826,
+            252
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/c55f0d5bfd4578bb3a36da45975b334e4e0beaebbcdcd0f8e59ba17ab5b24bab.jpg",
+        "text": "$$\n| | \\mu - \\nu | | _ { T V } = \\frac 1 2 \\int _ { \\mathcal { X } } | \\mu ( x ) - \\nu ( x ) | d x\n$$",
+        "text_format": "latex",
+        "bbox": [
+            401,
+            253,
+            653,
+            286
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "• The Maximum Mean Discrepancy [Gretton et al., 2012]: ",
+        "bbox": [
+            217,
+            287,
+            606,
+            304
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/af221dfd8fb5b5fe12cae3c27501c8f71a12afdf6612108a49a9e8ec44ed585e.jpg",
+        "text": "$$\n\\mathrm { M M D } ( \\mu , \\nu ) = \\left| \\left| \\int _ { \\mathcal { X } } k ( x , \\cdot ) \\mu ( x ) d x - \\int _ { \\mathcal { X } } k ( x , \\cdot ) \\nu ( x ) d x \\right| \\right| _ { \\mathcal { H } }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            346,
+            304,
+            707,
+            337
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "• Integral Probability Metrics (IPM) [Muller, 1997] defined as: ¨ ",
+        "bbox": [
+            217,
+            339,
+            635,
+            354
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/932c8bfbce55edbbb8583fcf92a3ae9224c84ced19c5e62086770742eddb1cf8.jpg",
+        "text": "$$\nd ( \\mu , \\nu ) = \\operatorname* { s u p } _ { f \\in { \\mathcal { F } } } \\{ | \\mathbb { E } _ { X \\sim \\mu } [ f ( X ) ] - \\mathbb { E } _ { X \\sim \\nu } [ f ( X ) ] | \\}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            367,
+            356,
+            687,
+            382
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "where the function space $\\mathcal { F }$ is rich enough to make this expression a metric. The Wasserstein1 distance, the TV and MMD are IPMs (with $\\mathcal { F }$ being 1-Lipschitz functions w.r.t. $\\| \\cdot \\|$ , functions with values in [-1,1], and a RKHS unit ball respectively). ",
+        "bbox": [
+            230,
+            383,
+            828,
+            425
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Proposition 2.2. If 38 $k ^ { 2 }$ is characteristic i.e $\\Phi$ is injective, $d _ { K T }$ and $d _ { K B W }$ are metrics. ",
+        "bbox": [
+            156,
+            428,
+            740,
+            443
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "139 PROOF. Symmetry, non-negativity, triangle inequality and $d _ { K T } ( \\mu , \\mu ) = 0$ (resp. $d _ { K B W } ( \\mu , \\mu ) = 0 )$   \n140 are naturally inherited from the Schatten norm on operators for $d _ { K T }$ and from the standard Bures  \n141 Wasserstein distance for $d _ { K B W }$ . Then, as $d _ { K T } ( \\mu , \\nu ) = 0$ (resp. $d _ { K B W } ( \\mu , \\nu ) = 0 ;$ ) implies $\\Sigma _ { \\mu } = \\Sigma _ { \\nu }$ ,   \n142 injectivity of $\\Phi$ enforces $\\mu = \\nu$ .   \n143 Examples of characteristic kernels are the family of Gaussian kernels, whose squared kernel also   \n144 belong to, modulo a change of parameter. On compact set, a sufficient condition for characteristicity   \n145 is universality [Steinwart, $\\mathbf { \\widehat { | 2 0 0 1 | } }$ , see for instance $\\mathbf { \\Delta B a c h | | } 2 0 2 2 ]$ ",
+        "bbox": [
+            142,
+            453,
+            826,
+            511
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            516,
+            826,
+            560
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "46 2.3 Computation for discrete measures ",
+        "text_level": 1,
+        "bbox": [
+            155,
+            574,
+            457,
+            589
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "147 As interesting, i.e. expressive RKHS are often of infinite dimension, computations with kernel   \n148 methods relies on the so-called “kernel trick”, reducing computation on the empirical kernel matrix   \n149 (Gram matrix of two sets of samples using the kernel inner product) which is of finite dimension. It is   \n150 well-known that the spectrum of the covariance operator $\\Sigma _ { \\mu _ { n } }$ are the ones of the kernel Gram matrix   \n151 $( k ( x _ { i } , x _ { j } ) ) _ { i , j = 1 } ^ { n }$ n divided by the number of samples [Bach, 2022, Proposition 6]. Here, we generalise   \n152 the concept for differences of distributions.   \n153 First, notice that $\\Sigma _ { \\mu _ { n } } - \\Sigma _ { \\nu _ { m } } = \\Sigma _ { \\mu _ { n } - \\nu _ { m } }$ , which incites us to consider the samples from each   \n154 distribution altogether. We denote without duplicates $( z _ { k } ) _ { k = 1 , \\dots , r }$ the samples in the union of   \n155 the sample sets $X , Y$ (corresponding respectively to distributions $\\mu _ { n } , \\nu _ { m } )$ , where $r$ is the number   \n156 of distinct elements in $X , Y$ . We note $\\dot { Z } = [ \\tilde { \\varphi } ( z _ { k } ) ] _ { k = 1 \\dots r }$ the column of vectors in $\\mathcal { H }$ where   \n157 $\\tilde { \\varphi } ( z _ { k } ) = \\sqrt { ( \\mu _ { n } - \\nu _ { m } ) ( \\{ z _ { k } \\} ) } \\varphi ( z _ { k } )$ if $( \\mu _ { n } - \\nu _ { m } ) ( \\{ z _ { k } \\} ) \\geq 0$ , $\\tilde { \\varphi } ( z _ { k } ) = i \\sqrt { | ( \\mu _ { n } - \\nu _ { m } ) ( \\{ z _ { k } \\} ) | } \\varphi ( z _ { k } )$   \n158 else.   \n159 We can see $Z$ by a slight abuse of notation as the linear map $Z ~ : ~ { \\mathcal { H } } ~ \\to ~ \\mathbb { C } ^ { r } , v ~ \\mapsto ~$   \n160 $[ \\langle \\tilde { \\varphi } ( z _ { 1 } ) , v \\rangle , . . . , \\langle \\tilde { \\varphi } ( \\dot { z } _ { r } ) , v \\rangle ]$ and by duality $Z ^ { \\ast }$ (real not Hermitian adjoint) would be the linear map   \n161 $\\begin{array} { r } { Z ^ { * } : \\mathbb { C } ^ { r }  \\mathcal { H } , u \\mapsto \\sum _ { i = 1 , \\dots , r } u _ { i } \\tilde { \\varphi } ( z _ { i } ) } \\end{array}$ .   \n162 Then we define the difference kernel matrix as $K = Z ^ { * } Z$ . Typically, in case where all samples are   \n163 distinct, $X \\cap Y = \\emptyset$ and $( \\mu _ { n } - \\nu _ { m } ) ( \\{ z _ { k } \\} ) = \\mu _ { n } ( \\{ z _ { k } \\} ) = 1 / n$ for samples $z _ { k } \\in X$ from $\\mu _ { n }$ and   \n164 $( \\mu _ { n } - \\nu _ { m } ) ( \\{ z _ { k } \\} ) = - \\nu _ { m } ( \\{ z _ { k } \\} ) = 1 / m$ for samples $z _ { k } \\in Y$ from $\\nu _ { m }$ , then ",
+        "bbox": [
+            140,
+            598,
+            825,
+            683
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            688,
+            825,
+            775
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            780,
+            825,
+            825
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            829,
+            825,
+            875
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/39d259673a83aedb5cec58d6d788d1d888db93eb59ddbf9a4e76f2a2c895e53e.jpg",
+        "text": "$$\nK = \\left[ \\frac { \\frac { 1 } { n } K _ { X X } } { \\frac { i } { \\sqrt { m n } } K _ { Y X } } \\left| \\frac { \\frac { i } { \\sqrt { m n } } K _ { X Y } } { - \\frac { 1 } { m } K _ { Y Y } } \\right. \\right]\n$$",
+        "text_format": "latex",
+        "bbox": [
+            382,
+            875,
+            614,
+            916
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "4 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "125 ",
+        "bbox": [
+            142,
+            94,
+            161,
+            104
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "165 where $K _ { X X } , K _ { Y Y } , K _ { Y X } , K _ { X Y }$ are the usual kernel Gram matrices. Other cases are similar, adjust  \n166 ing the probability weights on rows and columns. ",
+        "bbox": [
+            148,
+            90,
+            826,
+            119
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Proposition 2.3. Assume the kernel is such that for any family $( x )$ of distinct elements of $\\mathcal { X }$ , $( \\varphi ( x ) )$ is linearly independent. The difference kernel matrix $K$ as defined just above and $\\Sigma _ { \\mu _ { n } - \\nu _ { m } }$ have the 69 same eigenvalues, whose Schatten 1-norm is $d _ { K T } ( \\mu _ { n } , \\nu _ { m } )$ . ",
+        "bbox": [
+            150,
+            122,
+            826,
+            166
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "The proof of Proposition $2 . 3$ is deferred to Appendix $\\underline { { \\boxed { \\mathbf { A . 4 } } } }$ The condition is verified by the Gaussian kernel and more generally it is equivalent to the kernel being strictly positive. It is sufficient to get the eigenvalues by either Autonne-Takagi factorisation $\\rVert \\mathbf { \\bar { A u t o n n e } } , \\mathbf { \\bar { | 1 9 1 5 | } } , \\mathbf { \\bar { | T a k a g i | } } , \\mathbf { \\bar { | 9 2 4 | } }$ , Schur or Singular Value decomposition, and compute their 1-norm. This SVD is of complexity $\\overline { { O ( r ^ { 3 } ) } }$ in general. ",
+        "bbox": [
+            142,
+            175,
+            825,
+            233
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "3 Discriminative properties ",
+        "text_level": 1,
+        "bbox": [
+            163,
+            251,
+            419,
+            268
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "In this section, we study the discriminative properties of the $d _ { K T }$ distance and how it relates to alternative distances between distributions introduced previously. ",
+        "bbox": [
+            176,
+            281,
+            825,
+            310
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "3.1 Comparison with other distances ",
+        "text_level": 1,
+        "bbox": [
+            169,
+            325,
+            442,
+            340
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "We first show that our novel distance $d _ { K T }$ belongs to the family of Integral Probability Metrics (IPM). ",
+        "bbox": [
+            174,
+            351,
+            825,
+            367
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Proposition 3.1. ",
+        "text_level": 1,
+        "bbox": [
+            174,
+            369,
+            284,
+            383
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "(i) $d _ { K T }$ is an IPM with respect to the function space ${ \\mathcal { F } } _ { 1 } = \\{ f : ~ x ~ \\mapsto ~ \\varphi ( x ) ^ { * } U \\varphi ( x ) | U ~ \\in ~$ $\\mathcal { L } ( \\mathcal { H } ) , | | U | | _ { \\infty } = 1 \\}$ . Moreover if Assumption 1 is verified:   \n(ii) functions in $\\mathcal { F } _ { 1 }$ have values in $[ - 1 , 1 ]$ , and   \n(iii) verify the following “Lipschitz” property: $\\forall x , y \\in \\mathcal { X } , | f ( x ) - f ( y ) | \\leq 2 | | \\varphi ( x ) - \\varphi ( y ) | | _ { \\mathcal { H } } .$ . ",
+        "bbox": [
+            187,
+            385,
+            825,
+            486
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "The proof of Proposition $3 . 1$ is deferred to Appendix $\\boxed { \\mathbf { A . 2 } }$ Since the TV distance is an IPM with respect to functions bounded by 1, we have the following corollary: ",
+        "bbox": [
+            169,
+            506,
+            821,
+            536
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Corollary 3.2. $d _ { K T } ( \\mu , \\nu ) \\leq | | \\mu - \\nu | | _ { T V }$ . ",
+        "bbox": [
+            168,
+            537,
+            452,
+            555
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "We also have a direct comparison between $d _ { K T }$ and a MMD. ",
+        "bbox": [
+            163,
+            564,
+            575,
+            579
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Lemma 3.3. The Schatten 2-norm of the difference of the RKHS density operators of two probability distributions $\\mu , \\nu$ on $\\mathcal { X }$ can be identified to their Maximum Mean Discrepancy using the kernel $k ^ { 2 }$ : ",
+        "bbox": [
+            169,
+            582,
+            825,
+            611
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/f892a21f0795b9d349dcc9b2b50be6b4e723f192772b919ad1cf82716958dfcd.jpg",
+        "text": "$$\n| | \\Sigma _ { \\mu } - \\Sigma _ { \\nu } | | _ { 2 } = \\mathrm { M M D } _ { k ^ { 2 } } ( \\mu , \\nu )\n$$",
+        "text_format": "latex",
+        "bbox": [
+            395,
+            612,
+            602,
+            628
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "92 Consequently, since $d _ { K T }$ is a Schatten $^ { l }$ -norm of this difference, $\\mathrm { M M D } _ { k ^ { 2 } } ( \\mu , \\nu ) \\leq d _ { K T } ( \\mu , \\nu ) .$ . ",
+        "bbox": [
+            155,
+            630,
+            790,
+            645
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "This follows mainly from the fact that $\\begin{array} { r } { \\langle \\Sigma _ { \\mu } , \\Sigma _ { \\nu } \\rangle = \\int _ { \\mathcal { X } } \\int _ { \\mathcal { Y } } k ( x , y ) k ( x , y ) \\mu ( x ) \\nu ( y ) d x d y } \\end{array}$ (see Appendix $\\mathbf { A . l . l } )$ . Finally, we can relate $d _ { K T }$ to some Wasserstein distance. Denoting $c _ { k } ( x , y ) =$ $| | \\varphi ( x ) \\overline { { - \\varphi ( y ) } } | | _ { \\mathcal { H } } = \\sqrt { 2 ( 1 - k ( x , y ) ) }$ a cost defined from the kernel $k$ , and applying the Lipschitz property of Theorem ${ \\dot { 3 } } . 1 ,$ we get the following: ",
+        "bbox": [
+            173,
+            654,
+            826,
+            717
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Corollary 3.4. If Assumption97 $\\boldsymbol { { \\mathit { 1 } } }$ is verified, $d _ { K T } ( \\mu , \\nu ) \\leq 2 W _ { c _ { k } } ( \\mu , \\nu )$ . Furthermore, using the 98 Gaussian kernel with parameter $\\sigma$ , ",
+        "bbox": [
+            156,
+            718,
+            821,
+            748
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/f8951d24247c84e7af2a19801dbc8388191d297f4d39d6293f66e8ff4acb0335.jpg",
+        "text": "$$\nd _ { K T } ( \\mu , \\nu ) \\leq 2 W _ { c _ { k } } ( \\mu , \\nu ) \\leq \\frac { 2 } { \\sigma } W _ { | | . | | } ( \\mu , \\nu ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            356,
+            748,
+            640,
+            779
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "The last remark is due to the fact that the Wasserstein-1 distance is an IPM defined by the functions 200 which are 1-Lipschitz w.r.t. $\\| \\cdot \\|$ , and for the Gaussian kernel $k ( x , y ) = e ^ { - \\frac { | | x - y | | ^ { 2 } } { 2 \\sigma ^ { 2 } } }$ , we have 201 $\\begin{array} { r } { c _ { k } ( x , y ) \\leq \\frac { | | x - y | | } { \\sigma } } \\end{array}$ . See Appendix A.1.1 for full proof. ",
+        "bbox": [
+            143,
+            786,
+            826,
+            842
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Finally our novel distance can be related to other kernelized quantum divergences. Some well-known 03 inequality in quantum information theory relating the trace distance and the fidelity is the following 04 Fuchs and Van De Graaf [1999] inequality : ",
+        "bbox": [
+            153,
+            845,
+            825,
+            888
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/3b41ff9a2ee3ac736bcbecbe7f27163af85904981bf26358f7fc23f10a2f79ac.jpg",
+        "text": "$$\n2 ( 1 - F ( A , B ) ) \\leq | | A - B | | _ { 1 } \\leq 2 { \\sqrt { 1 - F ( A , B ) ^ { 2 } } }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            326,
+            888,
+            671,
+            909
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "5 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "167 168 1 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 1 193 194 195 196 1 1 199 ",
+        "bbox": [
+            140,
+            93,
+            165,
+            815
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "205 which translates as upper and lower bounds on $d _ { K T }$ with respect to $d _ { K B W }$ (see proof in Ap  \n06 pendix A.1.1 using Assumption 1) ",
+        "bbox": [
+            150,
+            90,
+            825,
+            121
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/0b2279675dbb7354d1b6e31bb703d72d81894e1949a7c377c1938e57f721cf57.jpg",
+        "text": "$$\nd _ { K B W } ( \\mu , \\nu ) ^ { 2 } \\leq d _ { K T } ( \\mu , \\nu ) \\leq 2 d _ { K B W } ( \\mu , \\nu )\n$$",
+        "text_format": "latex",
+        "bbox": [
+            348,
+            119,
+            650,
+            138
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "207 Let $D _ { \\mathrm { K L } } ( A | B ) = \\mathrm { T r } ( A ( \\log A - \\log B ) )$ the quantum relative entropy. The Kernel-Kullback-Leibler   \n208 (KKL) divergence introduced in $\\overline { { | \\mathbf { B } \\mathrm { a c h } | } } \\overline { { | 2 0 2 2 } } ]$ is defined as the latter applied to the density operators   \n209 of two distributions $\\mu , \\nu$ on $\\mathcal { X }$ (in particular, it is infinite if $\\mu$ is not absolutely continuous w.r.t.   \n210 $\\nu )$ ). Thanks to the (quantum) Pinsker’s inequality, we have then: ${ \\scriptstyle \\frac 1 2 } d _ { K T } ( \\mu , \\nu ) ^ { 2 } \\dot { \\leq } D _ { K L } ( \\Sigma _ { \\mu } | \\Sigma _ { \\nu } ) : =$   \n211 $\\operatorname { K K L } ( \\mu | \\nu )$ . Hence, our distance can be framed within several well-known alternative discrepancies. ",
+        "bbox": [
+            140,
+            140,
+            826,
+            210
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "3.2 Normalized energy ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            224,
+            344,
+            241
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "From our Assumption $^ 1$ on the kernel, we have ensured that for any measure $\\mu$ , $\\vert \\vert \\Sigma _ { \\mu } \\vert \\vert _ { 1 } = 1$ which means that all measures representations considered are somehow “normalised”. On the contrary, for MMD with $k ^ { 2 }$ (or the Schatten 2-norm), $| | \\Sigma _ { \\mu } | | _ { 2 }$ the “internal energy” depends on the measure (and on the kernel parameters such as bandwidth) and it can be smaller for distributions which are very flat, with high variance, as in general $k ( x , y ) \\leq k ( { \\\\overset { \\cdot } { x } } , x )$ for $x \\neq y$ . This has consequences as intrinsically $| | \\Sigma _ { \\mu } - \\Sigma _ { \\nu } | | _ { 2 } \\leq \\sqrt { | | \\Sigma _ { \\mu } | | _ { 2 } ^ { 2 } + | | \\Sigma _ { \\nu } | | _ { 2 } ^ { 2 } }$ , the maximum value can be already small independently of the differences between $\\mu$ and $\\nu$ . When minimizing an objective such as $\\mu \\mapsto | | \\Sigma _ { \\mu } - \\Sigma _ { \\nu } | | _ { 2 }$ (e.g., with gradient descent on the atoms in the support of $\\mu$ if it is a discrete measure, as in $\\boxed { \\mathrm { A r b e l ~ e t ~ a l . } } \\textcircled { 1 2 0 1 9 } \\}$ , this has an impact on the shape of the slope. Moreover, the energy depends on the hyperparameters of the kernel, which are hard to tune for both the distributions’ variances and the distance between their means at the same time. ",
+        "bbox": [
+            173,
+            250,
+            550,
+            473
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            166,
+            474,
+            825,
+            502
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "image",
+        "img_path": "images/d696ae84cd5a7e61a06f330db4c0d563ecf4ca73174c5ddb0cac43bcb94b7862.jpg",
+        "image_caption": [
+            "Figure 1: Kernel distances between $\\mu =$ $\\mathcal { \\bar { N } } ( 0 , 1 )$ and $\\nu = \\mathcal { N } ( 5 , 1 )$ , as a function of the Gaussian kernel bandwidth $\\sigma$ . "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            570,
+            281,
+            764,
+            397
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "231 Figure $^ 1$ illustrates this by displaying the two distances between sets of $n = 1 0 0 0$ samples from   \n232 $\\mathcal { N } ( 0 , 1 )$ and $\\mathcal { N } ( 5 , 1 )$ . We would expect sample sets to look closer as the Gaussian kernel bandwidth   \n233 $\\sigma$ grows, but for MMD that is not always the case. Other such phenomena are displayed by varying   \n234 the variance or the mean of the distributions in the Appendix B.1.   \n235 Now let us consider two measures $\\mu , \\nu$ on $\\mathcal { X }$ such that $\\mathbb { E } _ { X \\sim \\mu , Y \\sim \\nu } [ k ( X , Y ) ] \\le \\epsilon$ for some small   \n236 parameter $\\epsilon > 0$ . Then, $\\begin{array} { r } { \\langle \\Sigma _ { \\mu } , \\Sigma _ { \\nu } \\rangle \\leq \\epsilon } \\end{array}$ by Cauchy-Schwartz. Consider the density operator of the   \n237 mixture $\\Sigma _ { \\frac { 1 } { 2 } \\mu + \\frac { 1 } { 2 } \\nu } = \\textstyle { \\frac { 1 } { 2 } } \\Sigma _ { \\mu } + \\frac { 1 } { 2 } \\Sigma _ { \\nu }$ , we have: ",
+        "bbox": [
+            145,
+            507,
+            825,
+            564
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            569,
+            825,
+            617
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/a586fcab4d4833309a58646b9a66620b1cb393971e07284175876928b2f74e26.jpg",
+        "text": "$$\n| | \\Sigma _ { \\frac 1 2 \\mu + \\frac 1 2 \\nu } | | _ { 1 } = 1 = \\frac 1 2 | | \\Sigma _ { \\mu } | | _ { 1 } + \\frac 1 2 | | \\Sigma _ { \\nu } | | _ { 1 } , \\qquad | | \\Sigma _ { \\frac 1 2 \\mu + \\frac 1 2 \\nu } | | _ { 2 } ^ { 2 } \\leq \\frac 1 2 \\left( \\frac 1 2 | | \\Sigma _ { \\mu } | | _ { 2 } ^ { 2 } + \\frac 1 2 | | \\Sigma _ { \\nu } | | _ { 2 } ^ { 2 } + \\epsilon \\right) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            186,
+            618,
+            808,
+            652
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "238 We see that in contrast to the 1-Schatten norm, the 2-Schatten norm energy bound is roughly divided   \n239 by 2 (as $\\epsilon  0$ , e.g. for almost orthogonals $\\Sigma _ { \\mu } , \\Sigma _ { \\nu } )$ . Then, we reason with distance rather than norm: ",
+        "bbox": [
+            147,
+            654,
+            823,
+            683
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "240 Proposition 3.5. Let us consider distances between two mixtures $\\begin{array} { r } { P = \\frac { 1 } { 2 } \\mu _ { 1 } + \\frac { 1 } { 2 } \\mu _ { 2 } } \\end{array}$ and $\\begin{array} { r } { Q = \\frac { 1 } { 2 } \\nu _ { 1 } + \\frac { 1 } { 2 } \\nu _ { 2 } } \\end{array}$ such that 241 $\\Sigma _ { \\mu _ { 1 } } , \\Sigma _ { \\nu _ { 1 } }$ are orthogonal to $\\Sigma _ { \\mu _ { 2 } } , \\Sigma _ { \\nu _ { 2 } }$ . Then: ",
+        "bbox": [
+            142,
+            686,
+            825,
+            717
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "equation",
+        "img_path": "images/cb92a3c1a90f666bc3909396e43b3f850727d0a7eba44291f08fb5bb6d92fe3a.jpg",
+        "text": "$$\n\\begin{array} { l } { { \\displaystyle d _ { K T } ( P , Q ) = \\frac { 1 } { 2 } d _ { K T } ( \\mu _ { 1 } , \\nu _ { 1 } ) + \\frac { 1 } { 2 } d _ { K T } ( \\mu _ { 2 } , \\nu _ { 2 } ) } } \\\\ { { \\displaystyle \\mathrm { \\cal { M } M D } _ { k ^ { 2 } } ^ { 2 } ( P , Q ) = \\frac { 1 } { 4 } \\mathrm { M M D } _ { k ^ { 2 } } ^ { 2 } ( \\mu _ { 1 } , \\nu _ { 1 } ) + \\frac { 1 } { 4 } \\mathrm { M M D } _ { k ^ { 2 } } ^ { 2 } ( \\mu _ { 2 } , \\nu _ { 2 } ) } . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            299,
+            718,
+            699,
+            780
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "242 See proof in the Appendix $\\mathbf { A } . 2 . 1 .$ If the distance between $\\mu _ { 2 }$ and $\\nu _ { 2 }$ are the same as between $\\mu _ { 1 }$ and $\\nu _ { 1 }$   \n243 (for instance, if the former are respective translation of the latter and the kernel is translation-invariant),   \n244 we can see that the squared MMD distance loses a factor 2 while $d _ { K T }$ behaves similarly to the Total   \n245 Variation of the mixtures when $\\mu _ { 1 } , \\nu _ { 1 }$ have different supports than $\\mu _ { 2 } , \\nu _ { 2 }$ . This is the case when taking   \n246 for instance in $\\mathcal { X } = \\mathbb { R } ^ { 2 } \\ \\mu _ { 1 } = \\mathcal { N } ( [ 0 , 0 ] , I _ { 2 } )$ and $\\nu _ { 1 } = \\mathcal { N } ( [ 0 . 3 , 0 . 3 ] , I _ { 2 } )$ while $\\mu _ { 2 } = \\mathcal { N } ( \\Delta , I _ { 2 } )$ and   \n247 $\\nu _ { 2 } = \\mathcal { N } ( \\Delta { + } [ 0 . 3 , 0 . 3 ] , I _ { 2 } )$ for $\\Delta = [ 1 0 , 1 0 ]$ . In practice, the RKHS density operators are not perfectly   \n248 orthogonal unless $| | \\Delta | |  + \\infty$ (in that case $\\langle \\Sigma _ { \\mu } , \\Sigma _ { \\nu } \\rangle \\to 0$ for a fixed bandwidth), but typically they   \n249 can look so up to numerical precision, when using exponentially decreasing kernels (e.g., Gaussian).   \n250 Taking $n = 1 0 0$ samples each from each $\\mu _ { 1 }$ and $\\nu _ { 1 }$ , and translating them by $\\Delta$ , the results above from ",
+        "bbox": [
+            138,
+            785,
+            826,
+            912
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "discarded",
+        "text": "6 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Proposition $\\boxed { 3 . 5 }$ are confirmed numerically: we find empirically $\\widehat { d _ { K T } } ( P , Q ) = \\widehat { d _ { K T } } ( \\mu _ { 1 } , \\nu _ { 1 } ) = 0 . 5 9 9 2$ while $\\widehat { \\mathrm { M M D } _ { k ^ { 2 } } ^ { 2 } } ( \\mu _ { 1 } , \\nu _ { 1 } ) = 0 . 0 2 5 3$ but $\\widehat { \\mathrm { M M D } _ { k ^ { 2 } } ^ { 2 } } ( P , Q ) = 0 . 0 1 2 7$ , half of it (for a Gaussian kernel with bandwidth $\\sigma = 0 . 5$ ). ",
+        "bbox": [
+            166,
+            85,
+            825,
+            141
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "3.3 Robustness ",
+        "text_level": 1,
+        "bbox": [
+            174,
+            156,
+            292,
+            171
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "We now turn to investigating the robustness of the kernel trace distance. In particular, we consider the $\\epsilon$ -contamination model, where the training dataset is supposedly contaminated by a fraction $\\epsilon \\in ( 0 , 1 )$ of outliers $\\mathbb { H } \\mathrm { u b e r } \\lVert \\underline { { \\mathrm { 9 6 4 } } } \\rVert$ . The following proposition quantifies the robustness of this distance. ",
+        "bbox": [
+            174,
+            181,
+            826,
+            224
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Proposition 3.6. Denote $P _ { \\varepsilon } = ( 1 - \\varepsilon ) P + \\varepsilon C$ where $C$ is some contamination distribution. We have when Assumption 1 is verified: $| d _ { K T } ( P _ { \\varepsilon } , Q ) - d _ { K T } ( P , Q ) | \\leq 2 \\varepsilon$ . ",
+        "bbox": [
+            165,
+            228,
+            823,
+            258
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "The proof relies on the triangular inequality (see Appendix $\\underline  { \\vert \\mathbf { A } . 3 . 2 \\} }$ . Hence, we see that $d _ { K T }$ is robust while for the Wasserstein distance, a contamination $C$ arbitrarily “far away from the distribution $Q ^ { , , }$ will incur an arbitrarily high distance. The proof of robustness also works for MMD. ",
+        "bbox": [
+            174,
+            267,
+            826,
+            310
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "4 Statistical Properties ",
+        "text_level": 1,
+        "bbox": [
+            163,
+            329,
+            379,
+            347
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "4.1 Convergence rate ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            361,
+            334,
+            376
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "In this section, we consider a measure $\\mu$ and its empirical counterpart $\\mu _ { n }$ for $n$ independent samples and study the rate of convergence of $d _ { K T } ( \\mu , \\mu _ { n } )$ . We note $A \\lesssim _ { \\mu ^ { \\otimes n } } b$ where $A$ is r.v., when for any $\\delta > 0$ , there exists $c _ { \\delta } < \\infty$ such that $\\mu ^ { \\otimes n } ( A \\leq c _ { \\delta } b ) \\geq \\delta$ . With the Schatten 1-norm, it is not enough to study only the concentration of one (the maximal) eigenvalue as for the operator norm $\\begin{array} { r } { p = \\infty , } \\end{array}$ ), we need to handle an infinity of eigenvalues (when the RKHS is of infinite dimension), neither can we use the Cauchy-Schwarz trick as for the Hilbert norm $( p = 2 )$ ). However, since the trace of our kernel density operators are bounded by 1, only a few of the eigenvalues will have a significant contribution. Therefore, assuming some decay rate on those eigenvalues, we can focus on the convergence of operators on a subspace of the top eigenvectors, using results from the Kernel PCA literature. We introduce the population and empirical square loss associated with some projector $P$ : ",
+        "bbox": [
+            148,
+            386,
+            826,
+            527
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/fa9d5c3e44fafd85d9fee8ea4f334f642b7054b27f4898e79136eabe17e706e4.jpg",
+        "text": "$$\nR ( P ) = \\mathbb { E } _ { X \\sim \\mu } | | \\phi ( X ) - P \\phi ( X ) | | _ { \\mathcal { H } } ^ { 2 } , \\qquad R _ { n } ( P ) = \\sum _ { i = 1 } ^ { n } \\frac { 1 } { n } | | \\phi ( x _ { i } ) - P \\phi ( x _ { i } ) | | _ { \\mathcal { H } } ^ { 2 }\n$$",
+        "text_format": "latex",
+        "bbox": [
+            235,
+            529,
+            761,
+            569
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "275 where the $( x _ { i } ) _ { i = 1 \\ldots n }$ are each drawn independently from $\\mu$ . We first make the following assumption,   \n276 as in Sterge et al. [2020]. ",
+        "bbox": [
+            147,
+            570,
+            826,
+            602
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Assumption 2. The eigenvalues $( \\lambda _ { i } ) _ { i \\in I }$ of $\\Sigma _ { \\mu }$ (resp. $( { \\hat { \\lambda } } _ { j } ) _ { j \\in J }$ of $\\Sigma _ { \\mu _ { n } }$ ) are positive, simple and w.l.o.g. arranged in decreasing order $\\lambda _ { 1 } \\geq \\lambda _ { 2 } \\geq . . . )$ . ",
+        "bbox": [
+            160,
+            604,
+            823,
+            636
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "This allows us to denote $P ^ { l } ( \\Sigma _ { \\mu } )$ the projector on the subspace of the $l$ eigenvectors associated with the $l$ highest eigenvalues $\\lambda _ { 1 } , . . . , \\lambda _ { l }$ . Note that $\\begin{array} { r } { \\| \\underline { { P ^ { l } ( \\Sigma _ { \\mu } ) \\Sigma _ { \\mu } } } - \\Sigma _ { \\mu } \\| _ { 1 } = \\sum _ { i > l } \\lambda _ { l } = R ( P ^ { l } ( \\Sigma _ { \\mu } ) ) } \\end{array}$ (see for instance Blanchard et al. $\\lVert \\underline { 2 0 0 7 } \\rVert$ , Rudi et al. $\\| 2 0 1 3 \\| ,$ ). Similarly we consider $P ^ { l } ( \\Sigma _ { \\mu _ { n } } )$ for $\\Sigma _ { \\mu _ { n } }$ . ",
+        "bbox": [
+            161,
+            645,
+            823,
+            695
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "We now consider different kinds of assumptions on the decay rate of eigenvalues of $\\Sigma _ { \\mu }$ to get different corresponding convergence rates, as in Sterge et al. [2020], Sterge and Sriperumbudur $\\underline { { \\overline { { [ 2 0 2 2 ] } } } }$ ",
+        "bbox": [
+            161,
+            699,
+            823,
+            728
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "284 Assumption P (Polynomial). For some $\\alpha > 1$ and $0 < \\underline { { A } } < \\bar { A } < \\infty .$ , ",
+        "bbox": [
+            150,
+            731,
+            635,
+            747
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/0451e0347a11ee70618678d55b2eb5cef33341405dfa39b4d86fadfafe6731e1.jpg",
+        "text": "$$\n\\underline { { A } } i ^ { - \\alpha } \\leq \\lambda _ { i } \\leq \\bar { A } i ^ { - \\alpha } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            428,
+            747,
+            566,
+            763
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Assumption E (Exponential). For 285 $\\tau > 0$ and $\\underline { { B } } , \\bar { B } \\in ( 0 , \\infty ) ,$ ",
+        "bbox": [
+            148,
+            767,
+            584,
+            782
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/57990037cecdecf2ae41d2f446f228507e2603dac7d45be96e57a81269fbeb5f.jpg",
+        "text": "$$\n\\underline { { B } } e ^ { - \\tau i } \\leq \\lambda _ { i } \\leq \\bar { B } e ^ { - \\tau i } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            421,
+            785,
+            573,
+            803
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "286 Lemma 4.1. Suppose Assumption 1 and 2 are verified. With a polynomial decay rate of order $\\alpha > 1$ (Assumption287 $\\boxed { P }$ , for $l = n ^ { \\frac { \\theta } { \\alpha } } , { \\overset { \\cdot } { 0 } } < \\theta \\leq \\alpha$ : ",
+        "bbox": [
+            147,
+            805,
+            828,
+            837
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/685f63cc345763e533082cf3c162f0fc1beb8a37b60a4fdcda88e1e871836728.jpg",
+        "text": "$$\n| P ^ { l } ( \\Sigma _ { \\mu } ) \\Sigma _ { \\mu } - \\Sigma _ { \\mu } | | _ { 1 } = R ( P ^ { l } ( \\Sigma _ { \\mu } ) ) = \\Theta \\left( n ^ { - \\theta ( 1 - \\frac { 1 } { \\alpha } ) } \\right) , \\quad | | P ^ { l } ( \\Sigma _ { \\mu } ) \\Sigma _ { \\mu } - \\Sigma _ { \\mu } | | _ { 2 } = \\Theta \\left( n ^ { - \\theta ( 1 - \\frac { 1 } { 2 \\alpha } ) } \\right) ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            181,
+            838,
+            825,
+            866
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "288 and there exists $N \\in \\mathbb N$ such that for $n > N$ : ",
+        "bbox": [
+            138,
+            876,
+            470,
+            891
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "equation",
+        "img_path": "images/53f3a525687bbfe265990b0fe4b231653e51facdb804ad49a5d907213dd22f18.jpg",
+        "text": "$$\n\\begin{array} { r } { | | P ^ { l } ( \\Sigma _ { \\mu _ { n } } ) \\Sigma _ { \\mu } - \\Sigma _ { \\mu } | | _ { 2 } \\lesssim _ { \\mu ^ { \\otimes n } } m a x \\big ( n ^ { - \\frac { 1 } { 2 } + \\frac { 1 } { 4 \\alpha } } , n ^ { - \\theta + \\frac { 1 } { 4 \\alpha } } \\big ) . } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            312,
+            893,
+            676,
+            912
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "7 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "251 252 253 254 255 256 257 258 259 260 261 262 263 264 265 266 267 268 269 270 271 272 273 274 ",
+        "bbox": [
+            137,
+            79,
+            163,
+            535
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "With an exponential decay rate (Assumption289 $\\boxed { E }$ ), for $\\begin{array} { r } { l = \\frac { 1 } { \\tau } \\log n ^ { \\theta } , \\theta > 0 } \\end{array}$ : ",
+        "bbox": [
+            140,
+            88,
+            647,
+            108
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2f8bb9e347e8fb09627f08c155348e3b3e6d7bb21abc7922ec5cb4c5fe62f2e6.jpg",
+        "text": "$$\n| | P ^ { l } ( \\Sigma _ { \\mu } ) \\Sigma _ { \\mu } - \\Sigma _ { \\mu } | | _ { 1 } = R ( P ^ { l } ( \\Sigma _ { \\mu } ) ) = \\Theta ( n ^ { - \\theta } ) , \\qquad | | P ^ { l } ( \\Sigma _ { \\mu } ) \\Sigma _ { \\mu } - \\Sigma _ { \\mu } | | _ { 2 } = \\Theta \\left( n ^ { - \\theta } \\right)\n$$",
+        "text_format": "latex",
+        "bbox": [
+            214,
+            109,
+            784,
+            128
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "290 and there exists $N \\in \\mathbb N$ such that for $n > N$ : ",
+        "bbox": [
+            140,
+            135,
+            472,
+            150
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/5247de8ab7b2944ca234875312fcd3d01d051e6eae2b8c13b043de597b4109ea.jpg",
+        "text": "$$\n\\begin{array} { r } { | | P ^ { l } ( \\Sigma _ { \\mu _ { n } } ) \\Sigma _ { \\mu } - \\Sigma _ { \\mu } | | _ { 2 } \\lesssim _ { \\mu ^ { \\otimes n } } \\left\\{ \\begin{array} { l l } { \\sqrt { \\frac { \\log n } { n ^ { \\theta } } } } & { i f \\theta < 1 } \\\\ { \\frac { ( \\log n ) } { \\sqrt { n } } } & { i f \\theta \\geq 1 . } \\end{array} \\right. } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            325,
+            151,
+            663,
+            202
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "The previous lemma (see proof in Appendix $\\underline { { \\sqrt { \\mathbf { A } . 3 . 1 } ) } }$ is crucial to prove our main theorem below, that provides dimension-independent statistical rates. ",
+        "bbox": [
+            158,
+            208,
+            821,
+            237
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "293 Theorem 4.2. Suppose Assumption 1 and 2 are verified. ",
+        "bbox": [
+            143,
+            239,
+            545,
+            257
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "• If the eigenvalues of $\\Sigma _ { \\mu }$ follow a polynomial decay rate of order $\\alpha > 1$ (Assumption then: ",
+        "bbox": [
+            215,
+            265,
+            823,
+            292
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/0c8a7b308cfed788216eb6944cb7704b919139013e60ac3c401b5c7ace58c988.jpg",
+        "text": "$$\nd _ { K T } ( \\mu , \\mu _ { n } ) \\lesssim _ { \\mu ^ { \\otimes n } } n ^ { - \\frac { 1 } { 2 } + \\frac { 1 } { 2 \\alpha } } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            431,
+            292,
+            622,
+            314
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "296 ",
+        "bbox": [
+            140,
+            324,
+            161,
+            335
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "• If the eigenvalues of $\\Sigma _ { \\mu }$ follow an exponential decay rate (Assumption $E )$ , then: ",
+        "bbox": [
+            215,
+            320,
+            753,
+            337
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4040955f3244930cd19eeba80293af64bdc1405d1254ccb3edc6e5a587317aa3.jpg",
+        "text": "$$\nd _ { K T } ( \\mu , \\mu _ { n } ) \\lesssim _ { \\mu ^ { \\otimes n } } \\frac { ( \\log n ) ^ { \\frac { 3 } { 2 } } } { \\sqrt { n } } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            431,
+            338,
+            625,
+            373
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "297 SKETCH OF PROOF. For clarity of notation, we abbreviate $\\Sigma _ { \\mu }$ and $\\Sigma _ { \\mu _ { n } }$ as $\\Sigma$ and $\\Sigma _ { n }$ . By the   \n298 triangular inequality: ",
+        "bbox": [
+            140,
+            375,
+            828,
+            404
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "equation",
+        "img_path": "images/0ceea490614e9f7c953c35d70b95a0d16e04404e4bc1cdf595fa385afefaac95.jpg",
+        "text": "$$\n\\begin{array} { r } { | | \\Sigma - \\Sigma _ { n } | | _ { 1 } \\leq | | \\Sigma - P ^ { l } ( \\Sigma ) \\Sigma | | _ { 1 } + | | ( P ^ { l } ( \\Sigma ) - P ^ { l } ( \\Sigma _ { n } ) ) \\Sigma | | _ { 1 } + | | P ^ { l } ( \\Sigma _ { n } ) ( \\Sigma - \\Sigma _ { n } ) | | _ { 1 } } \\\\ { + | | P ^ { l } ( \\Sigma _ { n } ) \\Sigma _ { n } - \\Sigma _ { n } | | _ { 1 } : = ( A ) + ( B ) + ( C ) + ( D ) } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            205,
+            404,
+            764,
+            444
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "299 We bound each term of eq. 11. Term (A) is bounded using Lemma $4 . 1 .$ Similarly, (D) relates to (A)   \n300 by a result due to Blanchard et al. $\\mathbb { \\underline { { \\sf { P o o 0 7 } } } } \\mathbb { I }$ (eq. (30)), see Lemma $\\mathbf { A } . 3$ in Appendix $\\mathbf { A . } 3 . 1 .$ For (B) and   \n301 (C), the projections allow to work in a subspace of dimension at most $2 l$ and by eq. (3) (Holder’s ¨   \n302 inequality) to relate to the Schatten 2-norm which has rates like MMD. Finally, we pick $\\textstyle { \\dot { \\theta } } = { \\frac { 1 } { 2 } }$ for   \n303 polynomial decay and $\\theta = 1$ for the exponential decay (see Lemma 4.1) to minimise the maximum   \n304 of the four terms. See Appendix $\\boxed { \\mathbf { A } . 3 . 1 }$ for the full proof. ",
+        "bbox": [
+            140,
+            444,
+            825,
+            529
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "By the Fuchs-van de Graaf inequality (Eq. $( 5 )$ and $\\textcircled{6}$ ), it directly implies (also dimensionallyindependent) convergence rates for the Kernel Bures Wasserstein distance, that are novel to the best of our knowledge. ",
+        "bbox": [
+            165,
+            534,
+            825,
+            577
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Corollary 4.3. Suppose Assumption $\\boxed { I }$ and $2$ verified. If Assumption $P$ is verified: $d _ { K B W } ( \\mu , \\mu _ { n } ) \\lesssim _ { \\mu ^ { \\otimes n } } n ^ { - \\frac { 1 } { 4 } + \\frac { 1 } { 4 \\alpha } }$ . If Assumption $E$ is verified: $d _ { K B W } ( \\mu , \\mu _ { n } ) \\lesssim _ { \\mu ^ { \\otimes n } }$ $( \\log n ) ^ { { \\frac { 3 } { 4 } } } n ^ { - { \\frac { 1 } { 4 } } }$ . ",
+        "bbox": [
+            169,
+            579,
+            818,
+            613
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "5 Experiments ",
+        "text_level": 1,
+        "bbox": [
+            169,
+            628,
+            313,
+            646
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "In this section, we illustrate the interest of our novel kernel trace distance on different experiments. ",
+        "bbox": [
+            161,
+            660,
+            818,
+            675
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Approximate Bayesian Computation (ABC) The purpose of Approximate Bayesian Computation $[ \\overbrace { \\mathrm { I a v a r e ~ e t ~ a l . } } ] \\underbrace { \\vphantom { \\mathrm { I g } \\mathrm { s } } } _ { \\mathrm { \\normalfont ~ \\left[ \\mathrm { I g } \\mathrm { s } \\mathrm { e } \\mathrm { ~ c } \\mathrm { ~ e } \\mathrm { ~ t ~ a } \\mathrm { ~ l . } \\mathrm { ~  ~ } } } ]\\right]$ is to compute an approximation of the posterior when doing Bayesian inference in a likelihood-free fashion. The idea of using a distance $d$ between distributions to build a synthetic likelihood has recently flourished [Frazier, 2020, Bernton et al., 2019, Jiang, 2018]. ABC methods based on IPM enjoy theoretical guarantees [Legramanti et al., 2022]. The ABC posterior distribution is defined by $\\begin{array} { r } { \\pi ( \\theta | X ^ { n } ) \\propto \\int \\pi ( \\bar { \\theta } ) \\mathbb { 1 } _ { \\{ d ( X ^ { n } , Y ^ { m } ) < \\epsilon \\} } p _ { \\theta } ( Y ^ { m } ) \\mathrm { d } Y ^ { \\bar { m } } } \\end{array}$ , where $\\pi ( \\theta )$ is a prior over the parameter space $\\Theta$ , $\\epsilon > 0$ is a tolerance threshold, and $Y ^ { m }$ are synthetic data generated according to $\\begin{array} { r } { \\bar { p _ { \\theta } } ( Y ^ { m } ) = \\bar { \\prod } _ { j = 1 } ^ { m } p _ { \\theta } ( Y _ { j } ) } \\end{array}$ . It is approximately computed by drawing $\\theta _ { i } \\sim \\pi$ for $i = 1 , . . . , T$ and simulating synthetic data $Y ^ { m } \\sim p _ { \\theta _ { i } }$ and keeping or rejecting $\\theta _ { i }$ according to whether the synthetic data is close to the real data. The result is a list $L _ { \\theta }$ of all accepted $\\theta _ { i }$ (see Algo. 1 in the Appendix B.2) ",
+        "bbox": [
+            173,
+            681,
+            825,
+            823
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "322 Here, as we are interested in robustness, we will consider a contamination case using Normal   \n323 distributions but where nonetheless the usual likelihood fails to recover the correct mean as the data is   \n324 corrupted. We will take as prior $\\pi = \\mathcal { N } ( 0 , \\sigma _ { 0 } ^ { 2 } )$ and the real data consist of $n = 1 0 0$ samples coming   \n325 following $\\mu ^ { * } = \\mathcal { N } ( \\theta ^ { * } = \\mathbf { \\bar { \\mu } } _ { 1 , 1 ) }$ where $1 0 \\%$ of the samples are replaced by contaminations from   \n326 $\\mathcal { N } ( 2 0 , 1 )$ . We fit the model $p _ { \\theta } = \\mathcal { N } ( \\theta , 1 )$ by picking the best $\\theta$ possible. We carry out $T = 1 0 0 0 0$   \n327 iterations, generating each times $m = n$ synthetic data.   \n328 We consider ABC with the threshold value $\\epsilon = 0 . 0 5 , 0 . 2 5 , 0 . 5 , 1$ . For the proposed distance $d _ { K T }$ ,   \n329 Bayes’ rule gives posterior $\\begin{array} { r } { p ( \\theta | x ) = \\mathcal { N } ( \\frac { \\sum _ { i = 1 } ^ { n } x _ { i } } { n + \\frac { 1 } { \\sigma _ { 0 } ^ { 2 } } } , \\frac { 1 } { n + \\frac { 1 } { \\sigma _ { 0 } ^ { 2 } } } ) } \\end{array}$ . Since ${ \\mathbb E } [ X _ { i } ] = 0 . 9 \\times 1 + 0 . 1 \\times 2 0 = 2 . 9$   \n330 0the location is therefore in expectation E[ !ni=1 xi $\\begin{array} { r } { \\mathbb { E } [ \\frac { \\sum _ { i = 1 } ^ { n } x _ { i } } { n + \\frac { 1 } { \\sigma _ { 0 } ^ { 2 } } } ] = \\frac { n } { n + \\frac { 1 } { \\sigma _ { 0 } ^ { 2 } } } 2 . 9 \\approx 2 . 9 } \\end{array}$ , the contamination significantly   \n331 impacted the posterior. Similarly, for any model $p _ { \\theta }$ , the Wasserstein distance with the contaminated   \n332 mixture $0 . 9 \\bar { \\mathcal { N } } ( 1 , 1 ) + 0 . 1 \\mathcal { N } ( 2 0 , 1 )$ will be high, and empirically all of the $T$ iterations are rejected   \n333 for all the values of $\\epsilon$ considered. Thus, we disregard the Wasserstein distance from the experiment   \n334 and compare the performance of MMD to that of $d _ { K T }$ . We also consider concurrent methods out of   \n335 our scope such as MMD with the unbounded energy kernel: $\\underline { { k } } ( x , y ) = \\frac { 1 } { 2 } ( | | x | | + | | y | | - | | x - y | | )$   \n336 Sejdinovic et al. [2013], and others displayed in Appendix B.2. ",
+        "bbox": [
+            140,
+            827,
+            825,
+            912
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "8 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "$P )$ , ",
+        "bbox": [
+            802,
+            265,
+            825,
+            282
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            90,
+            826,
+            243
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "We measure the average Mean Square Error between the target parameter $\\theta ^ { * } = 1$ and the accepted $\\theta _ { i } \\in L _ { \\theta }$ : $\\begin{array} { r } { \\widehat { M S E } = \\frac { 1 } { | L _ { \\theta } | } \\sum _ { \\theta _ { i } \\in L _ { \\theta } } | | \\theta _ { i } - \\theta ^ { * } | | ^ { 2 } } \\end{array}$ which also corresponds to the average of squared Wasserstein 2-distance as $W _ { 2 } ^ { 2 } ( \\mu ^ { * } , p _ { \\theta _ { i } } ) = | | \\theta _ { i } - \\theta ^ { * } | | ^ { 2 }$ since we consider only Gaussians with same variance. We picked $\\sigma _ { 0 } = 5$ for the prior. We repeat 10 times the experiment with fresh samples, the averaged results are shown in Table $1 .$ As expected – and discussed in subsection $3 . 2 \\mathrm { - }$ MMD (gaussian) is too lenient to accept. For $\\epsilon = 0 . 0 5$ inferior to the contamination level $( 1 0 \\% )$ , it still accept $1 1 \\%$ of the times, while $d _ { K T }$ reject all the times, which can be understood as $d _ { K T }$ detecting the contamination, that prevents to match with the Gaussian model. The energy kernel can not help enough to beat $d _ { K T }$ . The densities of the obtained posteriors are shown alongside the target in Fig. (4) and $\\textcircled{5}$ in the Appendix $\\mathbf { B } . 2 .$ ",
+        "bbox": [
+            165,
+            247,
+            826,
+            396
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "The Gaussian kernel is used with $\\sigma = 1$ (as the variance of $p _ { \\theta }$ and $\\mu ^ { * }$ ). As expected, MMD is too lenient to accept most sampled $\\theta _ { i }$ leading to a high average MSE unless $\\varepsilon$ is carefully chosen. Whereas the proposed $d _ { K T }$ discriminates between the correct and the wrong $\\theta _ { i }$ for $\\varepsilon$ larger than the contamination threshold 0.1. MMD is assumed to use the Gaussian kernel while $\\mathrm { M M D _ { E } }$ denotes the MMD with the energy kernel. ",
+        "bbox": [
+            173,
+            425,
+            826,
+            493
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "table",
+        "img_path": "images/998176b3199cc7c7701abc8027d0adde23f6607b1835b85718a749003ba7a771.jpg",
+        "table_caption": [
+            "Table 1: Average MSE of ABC Results. "
+        ],
+        "table_footnote": [],
+        "table_body": "<table><tr><td>m</td><td colspan=\"3\">0.05</td><td colspan=\"3\">0.25</td><td colspan=\"3\">0.5</td></tr><tr><td>distance</td><td>MMD</td><td>MMDE</td><td>dKT</td><td>MMD</td><td>MMDE</td><td>dKT</td><td>MMD</td><td>MMDE</td><td>dKT</td></tr><tr><td>#accept. MSE</td><td>1092 0.19</td><td>0 N/A</td><td>0 N/A</td><td>2964 1.29</td><td>0 N/A</td><td>58 0.03</td><td>6168 7.47</td><td>846 0.17</td><td>828 0.12</td></tr></table>",
+        "bbox": [
+            184,
+            502,
+            813,
+            579
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "347 Particle Flow We consider the performance of gradient descent when optimizing $\\mu \\mapsto d _ { K T } ( \\mu , \\nu )$   \n348 for discrete measures $\\mu , \\nu$ on $\\mathbb { R } ^ { 2 }$ , given an initial point cloud (in red) and a target cloud of points   \n349 (in blue) both of $n = 1 0 0$ points. We run the scheme with a learning rate of 0.005 for 1000 steps,   \n350 using $d _ { K T }$ (Schatten 1-norm) and MMD (Schatten 2-norm), see Appendix B.3 (Figs. 6 and $^ { 7 ) }$ . We   \n351 use the Laplacian kernel: $k ( x , y ) = e ^ { - \\frac { | | x - y | | _ { 1 } } { \\sigma } }$ where here $| | \\cdot | | _ { 1 }$ means the $l _ { 1 }$ norm for vectors.   \n352 We choose a bandwidth $\\sigma = 1$ (as the image size is a unit square) for $d _ { K T }$ and for MMD we use   \n353 $k ^ { 2 }$ as kernel to match the Schatten 2-norm (i.e. we use $\\sigma = 0 . 5$ instead of $\\sigma = 1$ , and it gives a   \n354 better convergence). The inherent internal energy of MMD incites the point cloud to spread out and   \n355 therefore some particles are still left out far away from the target, which does not happen with $d _ { K T }$ . ",
+        "bbox": [
+            142,
+            611,
+            826,
+            741
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "6 Conclusion ",
+        "text_level": 1,
+        "bbox": [
+            160,
+            763,
+            297,
+            781
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "357 We introduced a robust distance between probability measures, based on RKHS density (or covariance)   \n358 operators and their Schatten-1 norm. It is the greatest in a family of kernel-based IPM including   \n359 MMD, and so is more discriminative as shown in experiments. We show how to compute it between   \n360 discrete measures via a new kernel trick. Assuming some decay rate of the eigenvalues of the RKHS   \n361 density operator leads to a statistical convergence rate that can be close to $O ( n ^ { - \\frac { 1 } { 2 } } )$ . This implies the   \n362 first (dimension-independent) rates for the Kernel Bures Wasserstein distance. Future work includes   \n363 reducing computational complexity via Nystrom method, improving the dependence on the order of ¨   \n364 decay $\\alpha$ , as well as minimax lower bounds. ",
+        "bbox": [
+            140,
+            797,
+            825,
+            911
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "discarded",
+        "text": "9 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "References   \n366 Ron Amit, Baruch Epstein, Shay Moran, and Ron Meir. Integral probability metrics PAC-bayes bounds. Advances in Neural Information Processing Systems, 35:3123–3136, 2022. Michael Arbel, Anna Korba, Adil Salim, and Arthur Gretton. Maximum Mean Discrepancy Gradient Flow. Advances in Neural Information Processing Systems, 32, 2019.   \n370 Martin Arjovsky, Soumith Chintala, and Leon Bottou. Wasserstein generative adversarial networks. ´ In International Conference on Machine Learning, pages 214–223. PMLR, 2017.   \n372 Leon Autonne. ´ Sur les matrices hypohermitiennes et sur les matrices unitaires. A. Rey, 1915.   \n373 Francis Bach. Information theory with kernel methods. IEEE Transactions on Information Theory, 69(2):752–775, 2022.   \n375 Ayanendranath Basu, Hiroyuki Shioya, and Chanseok Park. Statistical Inference: the Minimum Distance Approach. CRC press, 2011. Espen Bernton, Pierre E Jacob, Mathieu Gerber, and Christian P Robert. Approximate Bayesian computation with the Wasserstein distance. Journal of the Royal Statistical Society Series B: Statistical Methodology, 81(2):235–269, 2019. Rajendra Bhatia, Tanvi Jain, and Yongdo Lim. On the Bures-Wasserstein distance between positive definite matrices. Expositiones Mathematicae, 37(2):165–191, 2019.   \n382 Jeremiah Birrell, Paul Dupuis, Markos A Katsoulakis, Yannis Pantazis, and Luc Rey-Bellet. (f, Gamma)-Divergences: Interpolating between f-Divergences and Integral Probability Metrics. Journal of Machine Learning Research, 23(39):1–70, 2022. Gilles Blanchard, Olivier Bousquet, and Laurent Zwald. Statistical properties of kernel principal component analysis. Machine Learning, 66:259–294, 2007. Clementine Chazal, Anna Korba, and Francis Bach. Statistical and Geometrical properties of ´ regularized Kernel Kullback-Leibler divergence. Advances in Neural Information Processing Systems, 2024.   \nZonghao Chen, Aratrika Mustafi, Pierre Glaser, Anna Korba, Arthur Gretton, and Bharath K Sriperumbudur. (De)-regularized Maximum Mean Discrepancy Gradient Flow. arXiv preprint arXiv:2409.14980, 2024. Moulines Eric, Francis Bach, and Za¨ıd Harchaoui. Testing for homogeneity with kernel Fisher discriminant analysis. Advances in Neural Information Processing Systems, 20, 2007.   \n395 Jean Feydy, Thibault Sejourn ´ e, Fran ´ c¸ois-Xavier Vialard, Shun-ichi Amari, Alain Trouve, and Gabriel Peyre. Interpolating between Optimal Transport and MMD using Sinkhorn Divergences. In ´ The 22nd International Conference on Artificial Intelligence and Statistics, pages 2681–2690, 2019.   \n398 David T Frazier. Robust and efficient approximate Bayesian computation: A minimum distance approach. arXiv preprint arXiv:2006.14126, 2020. Christopher A Fuchs and Jeroen Van De Graaf. Cryptographic distinguishability measures for quantum-mechanical states. IEEE Transactions on Information Theory, 45(4):1216–1227, 1999.   \n402 Aude Genevay, Gabriel Peyre, and Marco Cuturi. Learning Generative Models with Sinkhorn ´ Divergences. In International Conference on Artificial Intelligence and Statistics, pages 1608– 1617. PMLR, 2018.   \n405 Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. Generative Adversarial Nets. Advances in neural information processing systems, 27, 2014.   \n408 Arthur Gretton, Karsten M Borgwardt, Malte J Rasch, Bernhard Scholkopf, and Alexander Smola. A ¨ Kernel Two-Sample Test. The Journal of Machine Learning Research, 13(1):723–773, 2012.   \n410 Omar Hagrass, Bharath K Sriperumbudur, and Bing Li. Spectral Regularized Kernel Goodness-of-Fit Tests. Journal of Machine Learning Research, 25(309):1–52, 2024.   \n412 Johannes Hertrich, Christian Wald, Fabian Altekruger, and Paul Hagemann. Generative sliced MMD ¨ flows with Riesz kernels. arXiv preprint arXiv:2305.11463, 2023.   \n414 Peter J Huber. Robust Estimation of a Location Parameter. The Annals of Mathematical Statistics, 35 (1):73–101, 1964.   \n416 Hisham Husain and Jeremias Knoblauch. Adversarial interpretation of Bayesian inference. In International Conference on Algorithmic Learning Theory, pages 553–572. PMLR, 2022. Bai Jiang. Approximate Bayesian computation with Kullback-Leibler divergence as data discrepancy. In International Conference on Artificial Intelligence and Statistics, pages 1711–1721. PMLR, 2018. Benoit Kloeckner. Approximation by finitely supported measures. ESAIM: Control, Optimisation and Calculus of Variations, 18(2):343–359, 2012.   \nAnna Korba, Pierre-Cyril Aubin-Frankowski, Szymon Majewski, and Pierre Ablin. Kernel stein discrepancy descent. In International Conference on Machine Learning, pages 5719–5730. PMLR, 2021.   \n426 Sirio Legramanti, Daniele Durante, and Pierre Alquier. Concentration of discrepancy-based ABC via Rademacher complexity. arXiv preprint arXiv:2206.06991, 2022.   \n428 Chun-Liang Li, Wei-Cheng Chang, Yu Cheng, Yiming Yang, and Barnabas P ´ oczos. Mmd gan: ´ Towards deeper understanding of moment matching network. Advances in Neural Information Processing Systems, 30, 2017. Bruce G. Lindsay, Marianthi Markatou, Surajit Ray, Ke Yang, and Shu-Chuan Chen. Quadratic distances on probabilities: A unified foundation. The Annals of Statistics, 36(2):983 – 1006, 2008. Youssef Mroueh, Tom Sercu, and Vaibhava Goel. Mcgan: Mean and covariance feature matching gan. In International Conference on Machine Learning, pages 2527–2535. PMLR, 2017.   \n435 Alfred Muller. Integral Probability Metrics and Their Generating Classes of Functions. ¨ Advances in applied probability, 29(2):429–443, 1997.   \n437 Sebastian Neumayer, Viktor Stein, Gabriele Steidl, and Nicolaj Rux. Wasserstein gradient flows for Moreau envelopes of f-divergences in reproducing kernel Hilbert spaces. arXiv preprint arXiv:2402.04613, 2024.   \n440 Jung Hun Oh, Maryam Pouryahya, Aditi Iyer, Aditya P Apte, Joseph O Deasy, and Allen Tannenbaum. A novel kernel Wasserstein distance on Gaussian measures: an application of identifying dental artifacts in head and neck computed tomography. Computers in biology and medicine, 120:103731, 2020. Alessandro Rudi, Guillermo D Canas, and Lorenzo Rosasco. On the Sample Complexity of Subspace Learning. Advances in Neural Information Processing Systems, 26, 2013. Dino Sejdinovic, Bharath Sriperumbudur, Arthur Gretton, and Kenji Fukumizu. Equivalence of distance-based and rkhs-based statistics in hypothesis testing. The Annals of Statistics, pages 2263–2291, 2013. Barry Simon. Trace ideals and their applications. Number 120. American Mathematical Society, 2005. Bharath K Sriperumbudur and Nicholas Sterge. Approximate kernel PCA: Computational versus statistical trade-off. The Annals of Statistics, 50(5):2713–2736, 2022. Bharath K Sriperumbudur, Kenji Fukumizu, Arthur Gretton, Bernhard Scholkopf, and Gert RG ¨ Lanckriet. Non-parametric Estimation of Integral Probability Metrics. In 2010 IEEE International Symposium on Information Theory, pages 1428–1432. IEEE, 2010.   \nIngo Steinwart. On the Influence of the Kernel on the Consistency of Support Vector Machines. Journal of Machine Learning Research, 2(Nov):67–93, 2001.   \nNicholas Sterge and Bharath K Sriperumbudur. Statistical Optimality and Computational Efficiency of Nystrom Kernel PCA. Journal of Machine Learning Research, 23(337):1–32, 2022.   \nNicholas Sterge, Bharath Sriperumbudur, Lorenzo Rosasco, and Alessandro Rudi. Gain with no Pain: Efficiency of Kernel-PCA by Nystrom Sampling. In ¨ International Conference on Artificial Intelligence and Statistics, pages 3642–3652. PMLR, 2020.   \nTeiji Takagi. On an Algebraic Problem reluted to an Analytic Theorem of Caratheodory and Fej ´ er´ and on an Allied Theorem of Landau. In Japanese Journal of Mathematics: transactions and abstracts, volume 1, pages 83–93. The Mathematical Society of Japan, 1924.   \nSimon Tavare, David J Balding, Robert C Griffiths, and Peter Donnelly. Inferring coalescence times ´ from DNA sequence data. Genetics, 145(2):505–518, 1997.   \nJoel A Tropp et al. An Introduction to Matrix Concentration Inequalities. Foundations and Trends® in Machine Learning, 8(1-2):1–230, 2015.   \nCedric Villani. ´ Optimal transport: Old and New, volume 338. Springer, 2009.   \nJohn Watrous. The Theory of Quantum Information. Cambridge university press, 2018.   \nJacob Wolfowitz. The Minimum Distance Method. The Annals of Mathematical Statistics, pages 75–88, 1957.   \nZhen Zhang, Mianzhi Wang, and Arye Nehorai. Optimal transport in reproducing kernel hilbert spaces: Theory and applications. IEEE transactions on pattern analysis and machine intelligence, 42(7):1741–1754, 2019. ",
+        "bbox": [
+            147,
+            79,
+            828,
+            916
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "10 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "365 367 368 369 371 374 376 377 378 379 380 381 383 384 385 386 387 388 389 390 391 392 393 394 396 397 399 400 401 403 404 406 407 409 ",
+        "bbox": [
+            138,
+            94,
+            165,
+            925
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            148,
+            58,
+            828,
+            915
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "discarded",
+        "text": "11 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            948
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "discarded",
+        "text": "411 413 415 417 418 419 420 421 422 423 424 425 427 429 430 431 432 433 434 436 438 439 441 442 443 444 445 446 447 448 449 450 451 452 453 454 455 ",
+        "bbox": [
+            138,
+            93,
+            165,
+            924
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            89,
+            828,
+            473
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "12 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "456 457 458 459 460 461 462 463 464 465 466 467 468 469 470 471 472 473 474 475 476 ",
+        "bbox": [
+            140,
+            63,
+            161,
+            493
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "(i) Claims ",
+        "text_level": 1,
+        "bbox": [
+            209,
+            116,
+            284,
+            130
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: Do the main claims made in the abstract and introduction accurately reflect the paper’s contributions and scope? ",
+        "bbox": [
+            230,
+            133,
+            823,
+            161
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            166,
+            330,
+            180
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: Yet the abstract reflect our claims, supported by theorems and simulations in the paper. ",
+        "bbox": [
+            233,
+            184,
+            823,
+            213
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            217,
+            310,
+            229
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the abstract and introduction do not include the claims made in the paper.   \n• The abstract and/or introduction should clearly state the claims made, including the contributions made in the paper and important assumptions and limitations. A No or NA answer to this question will not be perceived well by the reviewers.   \n• The claims made should match theoretical and experimental results, and reflect how much the results can be expected to generalize to other settings.   \n• It is fine to include aspirational goals as motivation as long as it is clear that these goals are not attained by the paper. ",
+        "bbox": [
+            251,
+            234,
+            825,
+            366
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "(ii) Limitations ",
+        "text_level": 1,
+        "bbox": [
+            205,
+            369,
+            316,
+            383
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss the limitations of the work performed by the authors? ",
+        "bbox": [
+            223,
+            387,
+            805,
+            402
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            406,
+            330,
+            420
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Justification: We mention the cubic complexity of the algorithm computing our novel distance, and we stated with Assumptions to which scope of kernels we can apply our results. ",
+        "bbox": [
+            232,
+            424,
+            825,
+            465
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            469,
+            310,
+            483
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper.   \n• The authors are encouraged to create a separate ”Limitations” section in their paper.   \n• The paper should point out any strong assumptions and how robust the results are to violations of these assumptions (e.g., independence assumptions, noiseless settings, model well-specification, asymptotic approximations only holding locally). The authors should reflect on how these assumptions might be violated in practice and what the implications would be.   \nThe authors should reflect on the scope of the claims made, e.g., if the approach was only tested on a few datasets or with a few runs. In general, empirical results often depend on implicit assumptions, which should be articulated. The authors should reflect on the factors that influence the performance of the approach. For example, a facial recognition algorithm may perform poorly when image resolution is low or images are taken in low lighting. Or a speech-to-text system might not be used reliably to provide closed captions for online lectures because it fails to handle technical jargon.   \n• The authors should discuss the computational efficiency of the proposed algorithms and how they scale with dataset size.   \n• If applicable, the authors should discuss possible limitations of their approach to address problems of privacy and fairness.   \n• While the authors might fear that complete honesty about limitations might be used by reviewers as grounds for rejection, a worse outcome might be that reviewers discover limitations that aren’t acknowledged in the paper. The authors should use their best judgment and recognize that individual actions in favor of transparency play an important role in developing norms that preserve the integrity of the community. Reviewers will be specifically instructed to not penalize honesty concerning limitations. ",
+        "bbox": [
+            250,
+            488,
+            825,
+            859
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "(iii) Theory assumptions and proofs ",
+        "text_level": 1,
+        "bbox": [
+            202,
+            864,
+            454,
+            880
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof? ",
+        "bbox": [
+            228,
+            883,
+            823,
+            911
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "13 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "478 479 480 481 482 483 484 485 486 487 488 489 490 491 492 493 494 495 496 497 498 499 500 501 502 503 504 505 506 507 508 509 510 511 512 513 514 515 516 517 518 519 520 521 522 523 524 525 526 527 528 529 ",
+        "bbox": [
+            137,
+            94,
+            166,
+            922
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "477 NeurIPS Paper Checklist ",
+        "bbox": [
+            145,
+            89,
+            387,
+            107
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            232,
+            92,
+            330,
+            106
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: We clearly numbered our assumptions and reference them and we have complete proofs in the appendix. ",
+        "bbox": [
+            233,
+            111,
+            825,
+            138
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            142,
+            310,
+            156
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include theoretical results.   \n• All the theorems, formulas, and proofs in the paper should be numbered and crossreferenced.   \n• All assumptions should be clearly stated or referenced in the statement of any theorems.   \n• The proofs can either appear in the main paper or the supplemental material, but if they appear in the supplemental material, the authors are encouraged to provide a short proof sketch to provide intuition.   \n• Inversely, any informal proof provided in the core of the paper should be complemented by formal proofs provided in appendix or supplemental material.   \n• Theorems and Lemmas that the proof relies upon should be properly referenced. ",
+        "bbox": [
+            251,
+            161,
+            826,
+            311
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "(iv) Experimental result reproducibility ",
+        "text_level": 1,
+        "bbox": [
+            204,
+            315,
+            482,
+            330
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)? ",
+        "bbox": [
+            232,
+            334,
+            825,
+            376
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            381,
+            330,
+            393
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Justification: We explicitly state our parameters in the Experiments section and we also provide supplementary code. ",
+        "bbox": [
+            233,
+            398,
+            823,
+            426
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            431,
+            310,
+            445
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• If the paper includes experiments, a No answer to this question will not be perceived well by the reviewers: Making the paper reproducible is important, regardless of whether the code and data are provided or not.   \nIf the contribution is a dataset and/or model, the authors should describe the steps taken to make their results reproducible or verifiable.   \n• Depending on the contribution, reproducibility can be accomplished in various ways. For example, if the contribution is a novel architecture, describing the architecture fully might suffice, or if the contribution is a specific model and empirical evaluation, it may be necessary to either make it possible for others to replicate the model with the same dataset, or provide access to the model. In general. releasing code and data is often one good way to accomplish this, but reproducibility can also be provided via detailed instructions for how to replicate the results, access to a hosted model (e.g., in the case of a large language model), releasing of a model checkpoint, or other means that are appropriate to the research performed.   \n• While NeurIPS does not require releasing code, the conference does require all submissions to provide some reasonable avenue for reproducibility, which may depend on the nature of the contribution. For example (a) If the contribution is primarily a new algorithm, the paper should make it clear how to reproduce that algorithm. (b) If the contribution is primarily a new model architecture, the paper should describe the architecture clearly and fully. (c) If the contribution is a new model (e.g., a large language model), then there should either be a way to access this model for reproducing the results or a way to reproduce the model (e.g., with an open-source dataset or instructions for how to construct the dataset). (d) We recognize that reproducibility may be tricky in some cases, in which case authors are welcome to describe the particular way they provide for reproducibility. In the case of closed-source models, it may be that access to the model is limited in some way (e.g., to registered users), but it should be possible for other researchers to have some path to reproducing or verifying the results. ",
+        "bbox": [
+            250,
+            453,
+            825,
+            892
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "(v) Open access to data and code ",
+        "bbox": [
+            207,
+            897,
+            439,
+            911
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "14 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "530 531 532 533 534 535 536 537 538 539 540 541 542 543 544 545 546 547 548 549 550 551 552 553 554 555 556 557 558 559 560 561 562 563 564 565 566 567 568 569 570 571 572 573 574 575 576 577 578 579 580 581 582 583 ",
+        "bbox": [
+            137,
+            92,
+            166,
+            916
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material? ",
+        "bbox": [
+            233,
+            92,
+            825,
+            132
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            138,
+            330,
+            152
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: The data are simulated and their simulation process are provided in the code. ",
+        "bbox": [
+            235,
+            157,
+            821,
+            171
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            176,
+            308,
+            190
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that paper does not include experiments requiring code.   \n• Please see the NeurIPS code and data submission guidelines (https://nips.cc/ public/guides/CodeSubmissionPolicy) for more details.   \nWhile we encourage the release of code and data, we understand that this might not be possible, so “No” is an acceptable answer. Papers cannot be rejected simply for not including code, unless this is central to the contribution (e.g., for a new open-source benchmark).   \n• The instructions should contain the exact command and environment needed to run to reproduce the results. See the NeurIPS code and data submission guidelines (https: //nips.cc/public/guides/CodeSubmissionPolicy) for more details.   \n• The authors should provide instructions on data access and preparation, including how to access the raw data, preprocessed data, intermediate data, and generated data, etc.   \n• The authors should provide scripts to reproduce all experimental results for the new proposed method and baselines. If only a subset of experiments are reproducible, they should state which ones are omitted from the script and why.   \n• At submission time, to preserve anonymity, the authors should release anonymized versions (if applicable).   \n• Providing as much information as possible in supplemental material (appended to the paper) is recommended, but including URLs to data and code is permitted. ",
+        "bbox": [
+            250,
+            194,
+            826,
+            477
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "(vi) Experimental setting/details ",
+        "text_level": 1,
+        "bbox": [
+            200,
+            482,
+            429,
+            496
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results? ",
+        "bbox": [
+            232,
+            501,
+            825,
+            542
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            547,
+            330,
+            563
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: We include hyperparameters such as kernel bandwidth in our code. ",
+        "bbox": [
+            233,
+            568,
+            758,
+            582
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            587,
+            310,
+            601
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments. • The experimental setting should be presented in the core of the paper to a level of detail that is necessary to appreciate the results and make sense of them. • The full details can be provided either with the code, in appendix, or as supplemental material. ",
+        "bbox": [
+            251,
+            606,
+            825,
+            680
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "(vii) Experiment statistical significance ",
+        "text_level": 1,
+        "bbox": [
+            199,
+            685,
+            472,
+            699
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments? ",
+        "bbox": [
+            223,
+            705,
+            821,
+            733
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            738,
+            330,
+            751
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Justification: The standard deviations over the 10 runs of 10000 iterations are included in the appendix. ",
+        "bbox": [
+            233,
+            757,
+            823,
+            785
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            790,
+            308,
+            804
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The authors should answer ”Yes” if the results are accompanied by error bars, confidence intervals, or statistical significance tests, at least for the experiments that support the main claims of the paper.   \n• The factors of variability that the error bars are capturing should be clearly stated (for example, train/test split, initialization, random drawing of some parameter, or overall run with given experimental conditions).   \n• The method for calculating the error bars should be explained (closed form formula, call to a library function, bootstrap, etc.)   \n• The assumptions made should be given (e.g., Normally distributed errors).   \n• It should be clear whether the error bar is the standard deviation or the standard error of the mean.   \n• It is OK to report 1-sigma error bars, but one should state it. The authors should preferably report a 2-sigma error bar than state that they have a $96 \\%$ CI, if the hypothesis of Normality of errors is not verified.   \n• For asymmetric distributions, the authors should be careful not to show in tables or figures symmetric error bars that would yield results that are out of range (e.g. negative error rates).   \n• If error bars are reported in tables or plots, The authors should explain in the text how they were calculated and reference the corresponding figures or tables in the text. ",
+        "bbox": [
+            251,
+            809,
+            825,
+            911
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "584 585 586 587 588 589 590 591 592 593 594 595 596 597 598 599 600 601 602 603 604 605 606 607 608 609 610 611 612 613 614 615 616 617 618 619 620 621 622 623 624 625 626 627 628 629 630 631 632 633 634 ",
+        "bbox": [
+            137,
+            95,
+            166,
+            939
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "15 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            251,
+            90,
+            825,
+            286
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "(viii) Experiments compute resources ",
+        "text_level": 1,
+        "bbox": [
+            192,
+            292,
+            457,
+            306
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments? ",
+        "bbox": [
+            232,
+            313,
+            825,
+            353
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            359,
+            330,
+            373
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: We stated the complexity of our algorithm at the end of the section $\\boxed { 2 . 3 }$ and we specify our computer setting in Appendix B. ",
+        "bbox": [
+            233,
+            380,
+            823,
+            410
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            412,
+            310,
+            426
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The paper should indicate the type of compute workers CPU or GPU, internal cluster, or cloud provider, including relevant memory and storage.   \n• The paper should provide the amount of compute required for each of the individual experimental runs as well as estimate the total compute.   \n• The paper should disclose whether the full research project required more compute than the experiments reported in the paper (e.g., preliminary or failed experiments that didn’t make it into the paper). ",
+        "bbox": [
+            251,
+            433,
+            825,
+            553
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "(ix) Code of ethics ",
+        "text_level": 1,
+        "bbox": [
+            200,
+            558,
+            333,
+            571
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines? ",
+        "bbox": [
+            230,
+            579,
+            821,
+            607
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            612,
+            330,
+            626
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: This is a theoretical work. ",
+        "bbox": [
+            235,
+            632,
+            491,
+            646
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            652,
+            310,
+            666
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the authors have not reviewed the NeurIPS Code of Ethics.   \n• If the authors answer No, they should explain the special circumstances that require a deviation from the Code of Ethics.   \n• The authors should make sure to preserve anonymity (e.g., if there is a special consideration due to laws or regulations in their jurisdiction). ",
+        "bbox": [
+            251,
+            671,
+            826,
+            747
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "(x) Broader impacts ",
+        "text_level": 1,
+        "bbox": [
+            207,
+            753,
+            351,
+            767
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed? ",
+        "bbox": [
+            232,
+            773,
+            823,
+            801
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            233,
+            806,
+            328,
+            820
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: This is a theoretical work. ",
+        "bbox": [
+            235,
+            827,
+            491,
+            842
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            847,
+            308,
+            861
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that there is no societal impact of the work performed. • If the authors answer NA or No, they should explain why their work has no societal impact or why the paper does not address societal impact. ",
+        "bbox": [
+            251,
+            866,
+            825,
+            911
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "635 636 637 638 639 640 641 642 643 644 645 646 647 648 649 650 652 653 654 655 656 657 658 659 660 661 662 663 664 665 666 667 668 669 670 671 672 673 674 675 676 677 678 679 680 681 682 683 ",
+        "bbox": [
+            138,
+            90,
+            166,
+            933
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• Examples of negative societal impacts include potential malicious or unintended uses (e.g., disinformation, generating fake profiles, surveillance), fairness considerations (e.g., deployment of technologies that could make decisions that unfairly impact specific groups), privacy considerations, and security considerations.   \n• The conference expects that many papers will be foundational research and not tied to particular applications, let alone deployments. However, if there is a direct path to any negative applications, the authors should point it out. For example, it is legitimate to point out that an improvement in the quality of generative models could be used to generate deepfakes for disinformation. On the other hand, it is not needed to point out that a generic algorithm for optimizing neural networks could enable people to train models that generate Deepfakes faster.   \n• The authors should consider possible harms that could arise when the technology is being used as intended and functioning correctly, harms that could arise when the technology is being used as intended but gives incorrect results, and harms following from (intentional or unintentional) misuse of the technology.   \n• If there are negative societal impacts, the authors could also discuss possible mitigation strategies (e.g., gated release of models, providing defenses in addition to attacks, mechanisms for monitoring misuse, mechanisms to monitor how a system learns from feedback over time, improving the efficiency and accessibility of ML). ",
+        "bbox": [
+            245,
+            90,
+            825,
+            364
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "(xi) Safeguards ",
+        "text_level": 1,
+        "bbox": [
+            200,
+            369,
+            313,
+            385
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pretrained language models, image generators, or scraped datasets)? ",
+        "bbox": [
+            235,
+            391,
+            825,
+            433
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            233,
+            439,
+            328,
+            454
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Justification: This is a theoretical work with simulated data. ",
+        "bbox": [
+            232,
+            459,
+            624,
+            474
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            481,
+            308,
+            494
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper poses no such risks.   \n• Released models that have a high risk for misuse or dual-use should be released with necessary safeguards to allow for controlled use of the model, for example by requiring that users adhere to usage guidelines or restrictions to access the model or implementing safety filters.   \n• Datasets that have been scraped from the Internet could pose safety risks. The authors should describe how they avoided releasing unsafe images.   \n• We recognize that providing effective safeguards is challenging, and many papers do not require this, but we encourage authors to take this into account and make a best faith effort. ",
+        "bbox": [
+            248,
+            500,
+            825,
+            648
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "(xii) Licenses for existing assets ",
+        "text_level": 1,
+        "bbox": [
+            197,
+            656,
+            419,
+            670
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected? ",
+        "bbox": [
+            232,
+            676,
+            823,
+            718
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            724,
+            330,
+            738
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Justification: The code is mostly original, external code is mostly packages used which can be seen as import. ",
+        "bbox": [
+            232,
+            746,
+            823,
+            773
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            780,
+            308,
+            794
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not use existing assets.   \n• The authors should cite the original paper that produced the code package or dataset.   \n• The authors should state which version of the asset is used and, if possible, include a URL.   \n• The name of the license (e.g., CC-BY 4.0) should be included for each asset.   \n• For scraped data from a particular source (e.g., website), the copyright and terms of service of that source should be provided.   \n• If assets are released, the license, copyright information, and terms of use in the package should be provided. For popular datasets, paperswithcode.com/datasets has curated licenses for some datasets. Their licensing guide can help determine the license of a dataset.   \n• For existing datasets that are re-packaged, both the original license and the license of the derived asset (if it has changed) should be provided.   \n• If this information is not available online, the authors are encouraged to reach out to the asset’s creators. ",
+        "bbox": [
+            251,
+            800,
+            825,
+            912
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "17 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "684 685 686 687 688 689 690 691 692 693 694 695 696 697 698 699 700 701 702 703 704 705 706 707 708 709 710 711 712 713 714 715 716 717 718 719 720 721 722 723 724 725 726 727 728 729 730 731 732 733 734 ",
+        "bbox": [
+            138,
+            88,
+            168,
+            936
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            251,
+            92,
+            825,
+            207
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "(xiii) New assets ",
+        "text_level": 1,
+        "bbox": [
+            192,
+            210,
+            310,
+            224
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets? ",
+        "bbox": [
+            217,
+            229,
+            821,
+            257
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            233,
+            262,
+            330,
+            276
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: Code are separated between mathematical distances functions and simulation experiments. A README is also provided. ",
+        "bbox": [
+            233,
+            281,
+            823,
+            308
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            313,
+            310,
+            327
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not release new assets.   \n• Researchers should communicate the details of the dataset/code/model as part of their submissions via structured templates. This includes details about training, license, limitations, etc.   \n• The paper should discuss whether and how consent was obtained from people whose asset is used.   \n• At submission time, remember to anonymize your assets (if applicable). You can either create an anonymized URL or include an anonymized zip file. ",
+        "bbox": [
+            251,
+            332,
+            825,
+            448
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "(xiv) Crowdsourcing and research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            194,
+            453,
+            584,
+            467
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? ",
+        "bbox": [
+            232,
+            472,
+            825,
+            512
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            233,
+            517,
+            328,
+            531
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: This is a theoretical work. ",
+        "bbox": [
+            233,
+            535,
+            493,
+            549
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            554,
+            308,
+            568
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   \n• Including this information in the supplemental material is fine, but if the main contribution of the paper involves human subjects, then as much detail as possible should be included in the main paper.   \n• According to the NeurIPS Code of Ethics, workers involved in data collection, curation, or other labor should be paid at least the minimum wage in the country of the data collector. ",
+        "bbox": [
+            251,
+            573,
+            825,
+            688
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "(xv) Institutional review board (IRB) approvals or equivalent for research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            191,
+            691,
+            821,
+            720
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained? ",
+        "bbox": [
+            232,
+            724,
+            825,
+            780
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            233,
+            785,
+            328,
+            797
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: This is a theoretical work. ",
+        "bbox": [
+            235,
+            803,
+            493,
+            816
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            821,
+            308,
+            835
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   \n• Depending on the country in which research is conducted, IRB approval (or equivalent) may be required for any human subjects research. If you obtained IRB approval, you should clearly state this in the paper.   \n• We recognize that the procedures for this may vary significantly between institutions and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the guidelines for their institution.   \n• For initial submissions, do not include any information that would break anonymity (if applicable), such as the institution conducting the review. ",
+        "bbox": [
+            250,
+            840,
+            825,
+            911
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "735 736 737 738 739 740 741 742 743 744 745 746 747 748 749 750 751 752 753 754 755 756 757 758 759 760 761 762 763 764 765 766 767 768 769 770 771 772 773 774 775 776 777 778 779 780 781 782 783 784 785 786 ",
+        "bbox": [
+            138,
+            90,
+            165,
+            940
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            250,
+            92,
+            825,
+            164
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "(xvi) Declaration of LLM usage ",
+        "text_level": 1,
+        "bbox": [
+            194,
+            167,
+            418,
+            183
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe the usage of LLMs if it is an important, original, or non-standard component of the core methods in this research? Note that if the LLM is used only for writing, editing, or formatting purposes and does not impact the core methodology, scientific rigorousness, or originality of the research, declaration is not required. ",
+        "bbox": [
+            232,
+            186,
+            825,
+            242
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Answer: [No] ",
+        "bbox": [
+            233,
+            247,
+            325,
+            261
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Justification: This work only concerns kernel methods and not NLP. ",
+        "bbox": [
+            232,
+            265,
+            678,
+            280
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            232,
+            285,
+            308,
+            297
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the core method development in this research does not involve LLMs as any important, original, or non-standard components. • Please refer to our LLM policy (https://neurips.cc/Conferences/2025/LLM) for what should or should not be described. ",
+        "bbox": [
+            248,
+            303,
+            825,
+            362
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "discarded",
+        "text": "19 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "discarded",
+        "text": "787 788 789 790 791 792 793 794 795 796 797 798 799 800 801 802 803 ",
+        "bbox": [
+            137,
+            60,
+            165,
+            398
+        ],
+        "page_idx": 18
+    }
+]

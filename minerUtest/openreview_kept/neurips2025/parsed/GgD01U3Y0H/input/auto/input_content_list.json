@@ -1,0 +1,2915 @@
+[
+    {
+        "type": "text",
+        "text": " COPA: Comparing the incomparable in multi-objective model evaluation ",
+        "text_level": 1,
+        "bbox": [
+            253,
+            125,
+            746,
+            176
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Anonymous Author(s)   \nAffiliation   \nAddress   \nemail ",
+        "bbox": [
+            423,
+            229,
+            578,
+            285
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Abstract ",
+        "text_level": 1,
+        "bbox": [
+            462,
+            321,
+            535,
+            338
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "1 As machine learning (ML) practitioners, we often have hundreds of (trained) ML   \n2 models at hand from which we need to choose one, based on various objectives   \n3 such as accuracy, robustness, fairness, scalability, etc. However, how to compare,   \n4 aggregate and, ultimately, trade-off these objectives is usually a time-consuming   \n5 task that requires expert knowledge, as they may be measured in different units or   \n6 scales. In this work, we investigate how objectives can be automatically normalized   \n7 and aggregated to systematically navigate their Pareto front. To do so, we make   \n8 incomparable objectives comparable using their CDFs, approximated by their   \n9 relative rankings. As a result, we can aggregate them while matching user-specific   \n10 preferences, allowing practitioners to meaningfully navigate and search for models   \n11 in the Pareto front. We demonstrate the potential impact of our approach, named   \n12 COPA, in both model selection and benchmarking tasks across diverse ML areas   \n13 such as fair ML, domain generalization, AutoML and foundation models, where   \n14 classical ways to normalize and aggregate objectives fall short. ",
+        "bbox": [
+            148,
+            349,
+            766,
+            542
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "15 1 Introduction ",
+        "text_level": 1,
+        "bbox": [
+            148,
+            564,
+            312,
+            582
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "16 In many phases of machine learning (ML), from model development to deployment, we often need   \n17 to compare and select among a population of trained models according to multiple objectives.   \n18 For example, even in the simple scenario of a single classification task, model selection involves   \n19 comparing and selecting among a population of trained classifiers with different hyperparemeters   \n20 to find a specific compromise among objectives such as accuracy, sensitivity, or specificity [24]. A   \n21 common and more complex scenario these days involves benchmarking a large number of large deep   \n22 learning models in terms of how they perform with respect to many and diverse objectives that go   \n23 beyond accuracy, such as robustness [61], fairness [21], and $\\mathrm { C O } _ { 2 }$ footprint [9, 35]. In both examples,   \n24 we encounter the following challenge: how do we systematically compare and select among a large   \n25 number of ML models in terms of multiple objectives?   \n26 Moreover, different users and applications often have different needs and preferences. For example, a   \n27 user may want to download a subset of trained large language models (LLMs) from the Open LLM   \n28 Leaderboard [12] to compare different prompt engineering approaches for a new task. The user   \n29 requires LLMs that perform relatively well without leaving unnecessarily large $\\mathrm { C O } _ { 2 }$ footprints. To this   \n30 end, they need to compare the 2148 submitted LLMs in terms of 7 objectives, i.e., their performance   \n31 across 6 benchmarks and inference $\\mathrm { C O } _ { 2 }$ cost. Among these models, 487 present non-trivial trade-offs,   \n32 i.e., for every pair, one is better in an objective but worse in another (see Fig. 1). How should they   \n33 compare the hundreds of models to decide what are acceptable performance-emission trade-offs?   \n34 Should they manually inspect all 487 LLMs? And what if another user required the most robust   \n35 model, rather than the most performant? Should they start from scratch?   \n36 Similar challenges can be easily found in the literature related to, e.g., multitask learning or domain   \n37 generalization [43, 48], where the selected model is expected to work ‘well’ on several tasks/domains;   \n38 fair classification [62], where it is often unclear what is an acceptable fairness-accuracy trade-off for   \n39 deployment; or AutoML [15], where tens of frameworks are compared on hundreds of objectives.   \n40 Crucially, all these works highlight two important limitations in multi-objective ML evaluation: ",
+        "bbox": [
+            147,
+            590,
+            825,
+            729
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            145,
+            732,
+            826,
+            872
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            148,
+            875,
+            825,
+            902
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "Submitted to 39th Conference on Neural Information Processing Systems (NeurIPS 2025). Do not distribute. ",
+        "bbox": [
+            166,
+            922,
+            816,
+            936
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            147,
+            90,
+            826,
+            133
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "L1. Objectives with different semantics and domains, such as average performance score and $\\mathrm { C O } _ { 2 }$ cost in Fig. 1, are not directly comparable, and thus cannot be properly aggregated nor traded-off. In physics, this would be akin to comparing meters and grams.   \nL2. When dealing with many objectives (7 in our LLM example), it is challenging for humans to translate their preferences into a concrete decision, as the number of plausible trade-offs quickly becomes overwhelming (487 in our example). ",
+        "bbox": [
+            161,
+            136,
+            825,
+            224
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "These challenges reinforce the idea that we need automatic tools to navigate the Pareto front (i.e., the set of optimal trade-offs) in high dimensions, tuning their parameters according to the user preferences. The most common approach would be to perform a weighted combination of either the raw (Naive) or normalized objectives (Norm. and Delta, see $\\ S 2$ for their definitions). However, as we show in Fig. 1, both fail to address L1 and, thus, to evenly explore the Pareto front. In other words, they map most $\\mathrm { C O } _ { 2 }$ importance values, $\\alpha$ , to a small region of the front. To overcome these issues, prior works had to devise heuristic approaches tailored to their specific cases [5, 44]. For example, the authors of DecodingTrust [57] had to provide 8 ad hoc rules to normalize their objectives, one per objective. To date, we lack grounded approaches to compare, aggregate and, ultimately, trade-off objectives according to user preferences, that can be used out-of-the-box in multi-objective ML evaluation. ",
+        "bbox": [
+            171,
+            228,
+            485,
+            516
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "68 Contributions. We first motivate and estab  \n69 lish the incomparability problem in multi  \n70 objective ML evaluation, shedding light on why   \n71 previous approaches fail (§2). Next, we intro  \n72 duce COPA $\\ntrianglelefteq$ , a novel approach to allow prac",
+        "bbox": [
+            147,
+            523,
+            485,
+            594
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "image",
+        "img_path": "images/0d54cc596384e77f81c74556aeadd9f94f719a56c6197ce271705af01eba2adf.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            500,
+            231,
+            823,
+            444
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "Figure 1: COPA meaningfully navigates the performance-emissions trade-off of the Open LLM Leaderboard [12], evenly mapping the importance of $\\mathrm { C O } _ { 2 }$ cost to the Pareto front. In contrast, existing approaches are biased toward one of the objectives. This is reflected in the retrieved LLMs where, e.g., COPA maps $\\alpha = 1 / 2$ to a top$1 8 \\%$ model for both objectives, and all other approaches select either a high-performing but $\\mathrm { C O } _ { 2 }$ - demanding model, or vice versa. ",
+        "bbox": [
+            498,
+            450,
+            825,
+            590
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "73 titioners to meaningfully navigate the Pareto front, and thus compare and select models that reflect   \n74 their preferences (§3). COPA accomplishes this goal with two components: i) a normalization   \n75 function that universally makes all objectives comparable via their cumulative distribution functions,   \n76 which we approximate using relative rankings; and ii) a criterion function with two easily interpretable   \n77 parameters controlling the aggregation and importance of each objective. We then place COPA in the   \n78 context of related work $( \\ S 4 )$ , and finally demonstrate its potential impact (§5) in diverse and timely   \n79 applications such as domain generalization, multitask learning, fair ML, AutoML benchmarking, and   \n80 LLM selection. As we illustrate in Fig. 1, COPA enables thoroughly exploring the Pareto front as a   \n81 function of the user preferences, here controlled by $\\alpha$ . For instance, a deployer equally interested in   \n82 the performance and $\\mathrm { C O } _ { 2 }$ emissions of the LLM, could use COPA with $\\alpha = 1 / 2$ to pick the model in   \n83 the middle of the Pareto front (last row in Fig. 1), ranked top- $1 8 \\%$ for both objectives. ",
+        "bbox": [
+            145,
+            594,
+            825,
+            747
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "2 Problem statement ",
+        "text_level": 1,
+        "bbox": [
+            165,
+            762,
+            362,
+            779
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "85 We are given a population of already-trained models $\\mathcal { H }$ , typically obtained by changing hyperparamet  \n86 ers, where each model $h \\in \\mathcal H$ is associated to a vector of $K$ metrics assessing its performance with   \n87 respect to different evaluation objectives. In addition, we assume each objective to be a continuous   \n88 random variable for which we have sampled observations in $\\mathcal { H }$ .   \n89 Without loss of generality, we assume that each individual objective has to be minimized, and we can   \n90 thus frame the problem as a multi-objective optimization (MOO) problem of the following form: ",
+        "bbox": [
+            147,
+            789,
+            825,
+            844
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            148,
+            848,
+            830,
+            877
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "equation",
+        "img_path": "images/7a2e00fcdd80bd998f7ecf156495d7b6045130460bdfa5ac3d8412c783cf3a4b.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { h \\in \\mathcal { H } } \\mathbf { y } ( h ) : = \\left[ \\mathbf { y } _ { 1 } ( h ) , \\mathbf { y } _ { 2 } ( h ) , \\ldots , \\mathbf { y } _ { K } ( h ) \\right] ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            361,
+            891,
+            635,
+            916
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "discarded",
+        "text": "2 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "where 91 ${ \\bf y } ( h )$ is the objective vector of model $h$ , and ${ \\tt y } _ { k } ( h )$ its performance on the $k$ -th objective. When it is clear from the context, we will omit the argument and write 92 $\\mathbf { y }$ and ${ \\tt y } _ { k }$ directly. ",
+        "bbox": [
+            151,
+            90,
+            825,
+            119
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "93 How can we minimize a vector? A fundamental problem of Eq. 1 is that minimizing the vector y is   \n94 not well-defined, as there is no canonical total order in high dimensions. Therefore, two models could   \n95 yield objective vectors where one is not always better than the other for all objectives. In the MOO   \n96 literature, the set of optimal trade-off solutions is known as the Pareto front and, more formally, an   \n97 objective vector $\\mathbf { y } ^ { * }$ is in the Pareto front (and called Pareto-optimal) if there exists no other feasible   \n98 vector y such that $\\mathsf { y } _ { k } \\le \\mathsf { y } _ { k } ^ { \\ast }$ for all $k \\in \\{ 1 , 2 , \\ldots , K \\}$ , and $\\mathsf { y } _ { k } < \\mathsf { y } _ { k } ^ { * }$ for at least one of the objectives.   \n99 While the Pareto front is theoretically appealing, in practice, the decision maker (DM) needs to   \n100 navigate the Pareto front and, eventually, select one single model.1 In other words, the DM needs   \n101 to specify a total order in Eq. 1 which implies: i) taking a total order directly in $\\mathbb { R } ^ { K }$ , e.g., the   \n102 lexicographic order where $\\mathbf { y } < \\mathbf { y } ^ { * }$ iff $\\mathsf { y } _ { k } < \\mathsf { y } _ { k } ^ { * }$ and $\\mathbf { y } _ { i } = \\mathbf { y } _ { i } ^ { * } \\forall i < k$ ; or ii) defining a criterion   \n103 function C : $\\mathbb { R } ^ { K }  \\mathbb { R }$ to rewrite Eq. 1 as a scalar-valued problem: ",
+        "bbox": [
+            145,
+            127,
+            825,
+            213
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            214,
+            825,
+            286
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/fef9e27c9609cba3de87f60cc130b248cf73e4bb70e8bec28ba5d6110434f9ac.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { h \\in \\mathcal { H } } \\quad \\mathrm { C } ( \\mathbf { y } ( h ) ) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            441,
+            291,
+            557,
+            315
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "104 One remarkable example of the latter is the global-criterion method [63] which maps DM preferences   \n105 to the problem geometry by interpreting Eq. 2 as selecting the model closest to the ideal one, i.e., ",
+        "bbox": [
+            140,
+            323,
+            831,
+            352
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/2482dcd4c75797f8d9b9b31b97feb0c43fd9798c1c35dc2f8322c6ee421ccd7a.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { h \\in \\mathcal { H } } \\quad \\| \\mathbf { y } ( h ) - \\mathbf { y } ^ { \\mathrm { i d e a l } } \\| _ { * } ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            415,
+            357,
+            580,
+            382
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "106 where $\\mathbf { y } ^ { \\mathrm { i d e a l } }$ is the ideal solution, $\\begin{array} { r } { \\mathbf { y } ^ { \\mathrm { i d e a l } } : = [ \\operatorname* { m i n } _ { h } \\mathbf { y } _ { 1 } , \\operatorname* { m i n } _ { h } \\mathbf { y } _ { 2 } , \\dots , \\operatorname* { m i n } _ { h } \\mathbf { y } _ { K } ] } \\end{array}$ , and $\\left\\| \\cdot \\right\\| _ { * }$ is typically a   \n107 $p$ -norm. However, naively solving Eq. 3 (and, more generally, Eq. 2) is well-known in the MOO   \n108 literature to be sensitive to the scaling of the objectives [4] (recall L1 in $\\ S 1$ ), and thus prevents us   \n109 from properly accounting for any DM preferences (L2). In this work, we argue that the criterion   \n110 function $C$ should fulfill the following desiderata: ",
+        "bbox": [
+            142,
+            390,
+            825,
+            462
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "D1. Reflect the DM preferences, translating their model expectations into an optimization problem.   \nD2. Provide a simple way to tune its parameters to meaningfully explore the Pareto front. ",
+        "bbox": [
+            165,
+            464,
+            820,
+            497
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "13 When are objectives incomparable? Similar to dimen  \n14 sional analysis in physics [2]—which argues that we can  \n115 not combine incommensurable quantities, e.g., kilograms   \n116 and meters—we argue that a second fundamental issue   \n17 that we face in Eq. 2 is semantic incomparability, i.e.,   \n18 whether it is sensible to compare (and thus aggregate) the   \n19 values of two different objectives.   \n120 For example, if objectives differ in their semantics they are   \n121 hardly comparable in general, e.g.: despite both accuracy   \n122 and ROC AUC lying in the unit interval, it does not make   \n123 immediate sense to compare their values. There are, how  \n124 ever, other aspects that are more subtle. To illustrate these,   \n125 Fig. 2 presents a synthetic Pareto front from $\\ S 5 . 1$ where   \n126 both objectives quantify prediction error in significantly   \n127 different domains, namely, within the intervals $[ 0 , 0 . 2 ]$ and ",
+        "bbox": [
+            147,
+            505,
+            552,
+            602
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            143,
+            604,
+            550,
+            729
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "image",
+        "img_path": "images/ee9c6c20e32ad08f88bf2ece65919f06df22476f079b1bb2a6f93cedf1a46584.jpg",
+        "image_caption": [
+            "Figure 2: As we explore a synthetic Pareto front with different normalization functions to solve Eq. 3, only COPA meaningfully navigates it as we change $\\alpha$ , and its min-max solution agrees with our expectations of a robust solution. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            562,
+            506,
+            820,
+            617
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "128 [0.5, 3.0]. We navigate the Pareto front solving a weighted Tchebycheff problem [3] of the form ",
+        "bbox": [
+            140,
+            715,
+            807,
+            731
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "equation",
+        "img_path": "images/774edbbab3e57fb7e8088e67cc27abfcff5985645d24a18a8803a969e5912cff.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { h \\in \\mathcal { H } } \\operatorname* { m a x } \\{ \\alpha | \\mathbf { y } _ { 1 } | , ( 1 - \\alpha ) | \\mathbf { y } _ { 2 } | \\} ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            385,
+            736,
+            609,
+            761
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "129 which solves Eq. 3 with $C$ as the $\\infty$ -norm weighted by $\\alpha \\in [ 0 , 1 ]$ . Intuitively, Eq. 4 looks for robust   \n130 solutions that account for the importance of solving one objective over the other, seemingly satisfying   \n131 our desiderata, D1-2. However, its naive application over the original objectives clearly shows how we   \n132 can bias model selection in favor of Objective 2, as it can be seen in Fig. $2 :$ for any given preference   \n133 $\\alpha$ smaller than 0.75, Eq. 4 yields a solution which completely ignores Objective 1 performance.   \n4 How can we make objectives comparable? As we just discussed, even if we use a well-designed   \n5 criterion function, semantic incomparability can hinder our goal to meaningfully explore the Pareto   \n136 front. Historically, this has been addressed in the MOO literature by applying component-wise   \n137 transformations to the objectives to normalize them [40], turning Eq. 2 into ",
+        "bbox": [
+            142,
+            767,
+            825,
+            838
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            158,
+            844,
+            825,
+            875
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "1Note that, when we plot the Pareto front in 2D, e.g., in Fig. 1, the linear interpolation between models (dots) only serves visualization purposes, i.e., we cannot interpolate between models. ",
+        "bbox": [
+            171,
+            885,
+            825,
+            911
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "3 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            143,
+            90,
+            825,
+            121
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/9078e768236f8175ace3d9ab33a641ce0976e24bd7fe2ad9b21c35778f04da33.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { h \\in \\mathcal { H } } \\quad \\mathrm { C } ( \\phi ( \\mathbf { y } ) ) : = \\mathrm { C } \\left( [ \\phi _ { 1 } ( \\mathbf { y } _ { 1 } ) , \\dots , \\phi _ { K } ( \\mathbf { y } _ { K } ) ] \\right) .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            338,
+            126,
+            658,
+            150
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "138 Two classic examples of these transformations are ",
+        "bbox": [
+            142,
+            156,
+            503,
+            171
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/98b8cb841b4f758ad4541db71e2c80ee6e026f98e7a423b45d13843e5df947b8.jpg",
+        "text": "$$\n\\Delta _ { k } ( { \\mathbf y } _ { k } ) : = \\frac { { \\mathbf y } _ { k } - { \\mathbf y } _ { k } ^ { \\mathrm { i d e a l } } } { { \\mathbf y } _ { k } ^ { \\mathrm { i d e a l } } } \\quad \\mathrm { a n d } \\quad \\mathrm { n o r m } _ { k } ( { \\mathbf y } _ { k } ) : = \\frac { { \\mathbf y } _ { k } - { \\mathbf y } _ { k } ^ { \\mathrm { i d e a l } } } { { \\mathbf y } _ { k } ^ { \\mathrm { n a d i r } } - { \\mathbf y } _ { k } ^ { \\mathrm { i d e a l } } } ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            299,
+            176,
+            696,
+            214
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "139 where $\\mathbf { y } _ { k } ^ { \\mathrm { n a d i r } } : = [ \\operatorname* { m a x } _ { h } \\mathbf { y } _ { 1 } , \\operatorname* { m a x } _ { h } \\mathbf { y } _ { 2 } , \\dots , \\operatorname* { m a x } _ { h } \\mathbf { y } _ { K } ]$ is the worst possible solution. Intuitively, $\\Delta _ { k }$   \n140 represents the difference relative to the ideal solution, and $\\scriptstyle \\mathrm { n o r m } _ { k }$ reweighs the objective to lie in the   \n141 unit interval. Prior works have extensively used $\\Delta _ { k }$ , often replacing $\\mathrm { y } _ { k } ^ { \\mathrm { i d e a l } }$ with a reference vector, as   \n142 computing it can be challenging [33, 38, 40]. Back to our synthetic case, we now want to solve ",
+        "bbox": [
+            140,
+            220,
+            825,
+            279
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/823388fcc2157a327a07030611ef3ca6044b303d9cef35d32e95641a09c4b156.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { h \\in \\mathcal { H } } \\operatorname* { m a x } \\left\\{ \\alpha | \\phi _ { 1 } ( \\mathbf { y } _ { 1 } ) | , ( 1 - \\alpha ) | \\phi _ { 2 } ( \\mathbf { y } _ { 2 } ) | \\right\\} .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            354,
+            284,
+            640,
+            308
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "143 By testing different $\\phi _ { k }$ , we can understand why classic approaches fail to make objectives comparable.   \n144 More specifically: i) using $\\Delta _ { k }$ now biases the problem toward the first objective, since $\\mathrm { m i n } _ { h } { \\bf y } _ { 1 } \\approx 0$ ;   \n145 and ii) using $\\scriptstyle \\mathrm { n o r m } _ { k }$ alleviates these problems, as the denominator is now bigger than the numerator,   \n146 yet the differences between distributions (that of ${ \\tt y } _ { 2 }$ being heavy-tailed) still bias the optimization   \n147 towards the first objective. Instead, we seek to explore the Pareto front making a more meaningful   \n148 use of $\\alpha$ , spreading it uniformly along the curve. ",
+        "bbox": [
+            140,
+            314,
+            825,
+            398
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "The main goal of the functions $\\phi _ { k } \\colon { \\mathbb { R } }  { \\mathbb { R } }$ is thus to make the objectives semantically comparable, so that we can seamlessly aggregate them with the criterion function C. To this end, we argue that the functions $\\phi _ { k }$ should be: ",
+        "bbox": [
+            158,
+            402,
+            825,
+            445
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "D3. Objective-agnostic, so that we can normalize any objective irrespectively of its specific nature.   \nD4. Order-preserving (i.e., strictly increasing), so that it preserves Pareto-optimality. ",
+        "bbox": [
+            163,
+            450,
+            825,
+            484
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "54 In summary, to meaningfully explore the Pareto front, it is important to design a criterion function   \n55 $C$ that translates well DM preferences into an optimization problem (D1-2), and a normalization   \n56 function $\\phi$ that makes objectives semantically comparable (D3-4). These desiderata will blend in   \n57 COPA, discussed in the next section. In the synthetic experiment above, COPA maps the value   \n58 $\\alpha = 1 / 2$ , which turns Eq. 7 into a robust min-max problem [56], to the flat region of the curve in   \n59 Fig. 2, matching the intuition of what a robust solution should represent. ",
+        "bbox": [
+            150,
+            488,
+            825,
+            571
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "3 Methodology ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            590,
+            313,
+            608
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Next, we introduce the proposed normalization and criterion functions fulfilling the desiderata D1-4 described in $\\ S 2$ . We refer to the problem resulting of solving Eq. 5 with the proposed functions as cumulative-based optimization of the Pareto front or, in short, COPA $\\nleq$ . ",
+        "bbox": [
+            174,
+            619,
+            825,
+            664
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "3.1 Designing a universal normalization function ",
+        "text_level": 1,
+        "bbox": [
+            174,
+            674,
+            526,
+            689
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "165 We argued in $\\ S 2$ that the function $\\phi$ should fulfill desiderata D3-4, i.e., it should make any objectives   \n166 semantically comparable while preserving their Pareto-optimality. Taking advantage of our prob  \n167 abilistic perspective (recall that ${ \\tt y } _ { k }$ is a continuous random variable), we propose to design $\\phi$ such   \n168 that the resulting variables are all equally distributed and, w.l.o.g., uniformly distributed in the unit   \n169 interval. That is, we propose to use $\\mathbf { u } : = [ \\mathbf { u } _ { 1 } , \\mathbf { u } _ { 2 } , \\ldots , \\mathbf { u } _ { K } ]$ instead of $\\mathbf { y }$ , where ",
+        "bbox": [
+            142,
+            694,
+            825,
+            765
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "equation",
+        "img_path": "images/e2633868efc71ef34cdcc81a6cf6c4bc5fbe06ded47bb583b183955179a92285.jpg",
+        "text": "$$\n\\begin{array} { r } { \\mathbf { u } _ { k } : = F _ { k } ( \\mathbf { y } _ { k } ) \\sim \\mathcal { U } ( 0 , 1 ) \\quad \\forall k \\in \\{ 1 , 2 , \\dots , K \\} , } \\end{array}\n$$",
+        "text_format": "latex",
+        "bbox": [
+            339,
+            770,
+            655,
+            787
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "170 and $\\phi _ { k } = F _ { k }$ is the marginal cumulative distribution function (CDF) of the $k$ -th objective. Indeed,   \n171 this transformation is known in statistics as the probability integral transform [6, Example 5.6.3], and   \n172 ${ \\bf u } _ { k }$ is guaranteed to follow a standard uniform distribution if ${ \\tt y } _ { k }$ is continuous.   \n173 Remarkably, Eq. 8 makes all criterion functions marginal-distribution-free in the sense of Kendall   \n174 and Sundrum [29], i.e., it strips away all individual properties of the marginal distributions (e.g., the   \n175 domain) of any given objective (D3). We note that normalizing random variables this way is one   \n176 of the fundamental building stones of copulae in statistics [14, 51], ensuring that copula functions   \n177 exclusively learn the relationship across random variables.   \n178 How can we interpret the values of u? One important advantage of using $\\mathbf { u }$ in place of y in Eq. 5   \n179 is that it provides a common framework to think about all objectives, since all their values all are now   \n180 framed as elements within a population. In practice, this means that the DM has a common language   \n181 to express their expectations on the model. For example, $\\mathbf { u } = \\boldsymbol { \\mathrm { 1 } } / 2$ corresponds for all objectives to the   \n182 the median value, which divides $\\mathcal { H }$ into two halves comprising the best and worst performing models. ",
+        "bbox": [
+            142,
+            794,
+            826,
+            837
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            842,
+            825,
+            911
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "4 ",
+        "bbox": [
+            493,
+            935,
+            503,
+            946
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            92,
+            825,
+            161
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "However, there is still one caveat we need yet to address: we have no access to the marginal CDF of each objective, but only to samples of the joint distribution in $\\mathcal { H }$ . ",
+        "bbox": [
+            161,
+            164,
+            825,
+            193
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "3.2 Rankings as finite-sample approximations ",
+        "text_level": 1,
+        "bbox": [
+            174,
+            202,
+            504,
+            217
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "86 As mentioned above, while we have no access to the CDFs themselves, we have samples from the   \n87 joint distribution over the objectives, i.e., over, $p ( [ \\mathsf { y } _ { 1 } , \\mathsf { y } _ { 2 } , \\ldots , \\mathsf { y } _ { K } ] )$ . Namely, we can consider each   \n88 model $h \\in \\mathcal H$ as a sample from the joint distribution and, by looking at each objective individually,   \n89 as a sample from the marginal distributions.   \n190 Let us now focus on the $k$ -th objective, ${ \\tt y } _ { k }$ , and drop the subindex in the following to ease notation. Say   \n191 that we have $| \\mathcal { H } | = N$ i.i.d. realizations of the objective, i.e., $\\left\\{ \\mathbf { y } _ { 1 } , \\mathbf { y } _ { 2 } , \\ldots , \\mathbf { y } _ { N } \\right\\} \\overset { \\forall \\mathrm { i . i . d . } } { \\sim } P _ { k }$ . Then, we can   \n192 approximate Eq. 8 for the $i$ -th sample, $\\mathbf { u } _ { i } = F ( \\mathbf { y } _ { i } )$ , by computing its order statistic, i.e., the random   \n193 variable representing its relative ranking within the population, $\\begin{array} { r } { R ( i ) : = \\sum _ { j = 1 } ^ { N } [ \\mathbf { y } _ { j } < \\mathbf { y } _ { i } ] } \\end{array}$ , where   \n194 Iverson brackets denote the indicator function, such that $\\begin{array} { r } { \\mathbf { y } _ { R ( 1 ) } \\leq \\mathbf { y } _ { R ( 2 ) } \\leq \\ldots \\leq \\mathbf { y } _ { R ( N ) } . } \\end{array}$ . Specifically,   \n195 since the empirical $C D F$ is the fraction of samples smaller than the input, it is direct to show that ",
+        "bbox": [
+            151,
+            219,
+            826,
+            275
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            140,
+            279,
+            825,
+            369
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/0d6fa0930d80f4c9614565dd4030654a78f0c032472799d73504c36953312425.jpg",
+        "text": "$$\n{ \\hat { \\mathbf { u } } } _ { i } = { \\hat { F } } ( i ) : = { \\frac { 1 } { N } } \\sum _ { j = 1 } ^ { N } [ \\mathbf { y } _ { j } < \\mathbf { y } _ { i } ] = { \\frac { 1 } { N } } R ( i )\n$$",
+        "text_format": "latex",
+        "bbox": [
+            370,
+            373,
+            627,
+            414
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "enjoys the following properties [6]: ",
+        "bbox": [
+            160,
+            419,
+            406,
+            434
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Proposition 3.1. $\\hat { \\mathbf { u } } _ { i }$ is an unbiased estimator of the CDF at ${ \\bf y } _ { i } , \\ { \\bf u } _ { i }$ , with variance $\\mathbf { u } _ { i } ( 1 - \\mathbf { u } _ { i } ) / N$ . The variance of $\\hat { \\mathbf { u } } _ { i }$ decreases linearly with $N$ , and has a maximum value of $0 . 2 5 / N$ at the median. ",
+        "bbox": [
+            161,
+            440,
+            825,
+            469
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Proof. First, note that $[ \\mathbf { y } _ { j } < \\mathbf { y } _ { i } ] \\sim \\mathrm { B e r n } ( \\mathbf { u } _ { i } )$ . Then, we have $R ( i ) \\sim \\mathrm { B i n } ( N , { \\bf u } _ { i } )$ with mean $N { \\mathbf { u } } _ { i }$ and variance $N \\mathbf { u } _ { i } ( 1 - \\mathbf { u } _ { i } )$ . Hence, $\\hat { \\mathbf { u } } _ { i }$ has mean $\\begin{array} { r } { \\frac { 1 } { N } \\mathbb { E } [ R ( i ) ] = \\mathbf { u } _ { i } } \\end{array}$ , and variance $\\begin{array} { r l r } { \\frac { 1 } { N ^ { 2 } } \\mathbb { V } [ R ( i ) ] } & { { } = } & { } \\end{array}$ $\\mathbf { u } _ { i } ( 1 - \\mathbf { u } _ { i } ) / N$ which, by taking derivatives w.r.t. $\\mathbf { u } _ { i }$ , ${ \\hat { \\partial } } _ { \\mathbf { u } _ { i } } ^ { \\cdot } \\mathbb { V } [ { \\hat { \\mathbf { u } } } _ { i } ] = 1 - 2 \\mathbf { u } _ { i } = 0 \\Rightarrow \\mathbf { u } _ { i } = \\mathrm { \\bar { i } } / 2$ , which is a maximum since $\\partial _ { \\mathbf { u } _ { i } } ^ { 2 } \\bar { \\Psi } [ \\bar { 1 } / 2 ] < \\bar { 0 }$ . □ ",
+        "bbox": [
+            169,
+            481,
+            825,
+            542
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "203 In other words, we can use the relative rankings of each objective to build   \n204 an unbiased2 estimator of the CDF, $\\hat { \\mathbf { u } } _ { i }$ , whose variance rapidly decreases as   \n205 we increase the size of $\\mathcal { H }$ , i.e., $\\mathbb { V } [ \\hat { \\mathbf { u } } _ { i } ]  0$ as $N  \\infty$ . Indeed, the inset   \n206 figure shows the variance of $\\hat { \\mathbf { u } } _ { i }$ as a function of the sample size for three   \n207 different values of $\\mathrm { u } _ { i }$ . Note that the relative ranking is strictly increasing:   \n208 if $\\mathsf { y } _ { i } < \\mathsf { y } _ { j }$ , then ${ \\hat { F } } ( \\mathbf { y } _ { i } ) \\leq { \\hat { F } } ( \\mathbf { y } _ { j } )$ for any $\\mathcal { H }$ containing both samples (D4).   \n209 While this is an approximation of the true CDF, which would retain instead ",
+        "bbox": [
+            145,
+            553,
+            666,
+            652
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "image",
+        "img_path": "images/8bbd558dc797510a80bc3e20652891bc6c4220ac6aee0ebf607d911ecff7af82.jpg",
+        "image_caption": [],
+        "image_footnote": [],
+        "bbox": [
+            681,
+            547,
+            823,
+            648
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "all the information about the joint distribution, it works egregiously well in our experiments (§5). Furthermore, note that this transformation is meant to ease inter-objective computations, we can (and should) use the original values of ${ \\tt y } _ { k }$ to perform intra-objective comparisons or decisions. ",
+        "bbox": [
+            166,
+            654,
+            825,
+            695
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "3.3 Incorporating preferences into the optimization ",
+        "text_level": 1,
+        "bbox": [
+            173,
+            703,
+            545,
+            718
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "Now that we can effectively approximate our normalization function, we introduce a criterion function to translate DM preferences into an optimization problem (D1). To do so, we start by looking back at global criterion methods, since plugging in our transformation $\\mathbf { u } = \\phi ( \\mathbf { y } )$ simplifies the problem in Eq. 3 to $\\operatorname* { m i n } _ { h } \\left\\| \\mathbf { u } \\right\\| _ { * }$ as the ideal point becomes the origin, i.e., $\\mathbf { u } ^ { \\mathrm { i d e a l } } = \\mathbf { 0 }$ . Then, by using the approximation described in $\\ S 3 . 2$ , the problem becomes a simple finite search of the form ",
+        "bbox": [
+            171,
+            720,
+            825,
+            791
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/661eecee553b8c0458fbb48dae77c0c46660b43fa3ed3aa110d1eaebe80cf806.jpg",
+        "text": "$$\n\\operatorname* { m i n } _ { i \\in \\{ 1 , 2 , \\dots , N \\} } \\quad \\| \\hat { \\mathbf { u } } _ { i } \\| _ { * } .\n$$",
+        "text_format": "latex",
+        "bbox": [
+            428,
+            797,
+            570,
+            823
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "219 That is, we have reduced our problem to finding the model whose ranking vector has the smallest   \n220 norm. Using this new marginal-free global-criterion method, mapping the DM preferences now boils   \n221 down to selecting an appropriate norm for the problem in Eq. 10. To this end, we propose to use as   \n222 criterion function $C$ a norm with parameters $p \\geq 1$ and $\\omega \\in \\mathbb { R } _ { + } ^ { K }$ defined as ",
+        "bbox": [
+            140,
+            829,
+            825,
+            886
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "2In fact, it is known to be a consistent estimator [55]. ",
+        "bbox": [
+            194,
+            897,
+            506,
+            911
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "5 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "equation",
+        "img_path": "images/4c6219336e4188352127740fcbba0218a8a8cad5a582ba9d8aa320767203e50f.jpg",
+        "text": "$$\n\\Vert \\mathbf { u } \\Vert _ { p , \\omega } : = \\left( \\sum _ { k = 1 } ^ { K } \\lvert \\omega _ { k } \\mathbf { u } _ { k } \\rvert ^ { p } \\right) ^ { 1 / p } ,\n$$",
+        "text_format": "latex",
+        "bbox": [
+            392,
+            101,
+            604,
+            148
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "223 where $\\textstyle \\sum _ { k } \\omega _ { k } = 1$ . This norm can be interpreted as a regular $p$ -norm on a space with coordinates   \n224 scaled by $\\omega$ . More remarkably, note that this differs from the usual weighted $p$ -norm, as the weights   \n225 are inside the absolute value. We justify this choice given that the values of ${ \\bf u } _ { k }$ lie in the unit interval,   \n226 and the power would often make them vanish too quickly, as we demonstrate in Fig. 10. ",
+        "bbox": [
+            145,
+            150,
+            825,
+            207
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "How can we interpret the parameters? Fortunately, the parameters of the proposed criterion function, $p$ and $\\omega$ , provide an easy and interpretable way for the DM to navigate the Pareto front (D2). Regarding $\\omega$ , as we apply them in Eq. 11 before taking the power, we can provide a clear interpretation of $\\omega$ in terms of ratio trade-offs. For example, if we had two objectives with $\\omega = [ 0 . 7 5 , 0 . 2 5 ]$ , then we can see by equating the weighted objectives that minimizing the first objective to a value of $\\mathbf { u } _ { 1 }$ is worth the same as minimizing the second objective to a value of $\\mathbf { u } _ { 2 } = \\bar { \\omega _ { 1 } } / \\omega _ { 2 } \\mathbf { u } _ { 1 } = 3 \\mathbf { u } _ { 1 }$ , i.e., $\\mathbf { u } _ { 1 }$ is three times more important than $\\mathbf { u } _ { 2 }$ . If we combine this interpretation with that of $\\mathbf { u }$ given in $\\ S 3 . 1$ , we could say, e.g., that we value being in the top- $2 5 \\%$ of the models for the first objective the same as being in the top- $7 5 \\%$ for the second objective. ",
+        "bbox": [
+            171,
+            213,
+            825,
+            338
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "We can interpret $p$ using the same intuition as in ML regularization [16]: the models selected in Eq. 10 are those first intersecting an ever-expanding $p$ -ball centered at the origin, whose shape depends on $p$ . Higher values of $p$ lead to denser objective vectors, while smaller values lead instead to sparser ones. Additionally, some values of $p$ have clear interpretations: $p = 1$ is the average rank; $p = 2$ is the Euclidean distance; and $p = \\infty$ turns Eq. 10 into a min-max problem, typically used to formulate robust optimization problems [56]. ",
+        "bbox": [
+            171,
+            342,
+            825,
+            425
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Does Eq. 11 enjoy theoretical guarantees? Given the similarity with commonly-used norms, it is natural to ask whether we can leverage existing results from the MOO literature and adapt them to the proposed norm. This is indeed the case, and we can easily guarantee, e.g., that the solutions found using Eq. 11 with $1 \\leq p < \\infty$ are always Pareto-optimal [40, Thm. 3.4.1]. However, it might not reach all optima. Similarly, note that $p = \\infty$ reduces Eq. 10 to a weighted Tchebycheff problem which reaches any Pareto-optimal solution [40, Thrm. 3.4.5], but also weakly optimal ones. ",
+        "bbox": [
+            173,
+            433,
+            825,
+            515
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "In practice, using a weighted Tchebycheff problem $( p = \\infty )$ ) is a good practice when we have few objectives and a large budget for the weights $\\omega$ to test. Instead, when interested in finding a particular model (i.e., solving Eq. 5 once), we suggest setting $p$ based on the level of robustness desired (as lower values of $p$ lead to higher tolerance to bad performance on individual objectives), and $\\omega$ based on the importance of solving each objective given by the DM. ",
+        "bbox": [
+            174,
+            518,
+            825,
+            588
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "4 Related work ",
+        "text_level": 1,
+        "bbox": [
+            161,
+            604,
+            316,
+            621
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Our work draws connections with other scientific domains, e.g., the notion of semantically incomparability is akin to that of incommensurability in dimensional analysis [2]. Similarly, using relative rankings to make better comparisons has been previously explored in microeconomics [47], MOO [23, 31], and statistics, designing methods that avoid the normality assumption, e.g., the Friedman test [13], Wilcoxon signed-rank test [60], or Kendall’s $\\tau$ coefficient [28]. Finally, as mentioned in $\\ S 2$ , copulas exploit the probability integral transform to become marginal-distribution-free [14], and the proposed criterion functions share similarities with weighted $L _ { p }$ -problems in MOO [40]. ",
+        "bbox": [
+            173,
+            631,
+            825,
+            729
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "261 In ML, the closest work to ours is Park et al. [46], which learns the joint CDF, approximated with a   \n262 copula, to recover a partial order for multi-objective Bayesian optimization. In contrast, we employ   \n263 marginal CDFs and provide a principled way to translate DM preferences to an optimization problem.   \n264 Another line of related works are those that attempt to learn the Pareto front either for model merging   \n265 [7, 32] or a posteriori MOO methods [64]. Unfortunately, these methods fail to address semantic   \n266 incomparability as they use the raw objectives. ROC curves [11] provide an interesting connection,   \n267 since their axes can be understood as the CDFs of the target classes [18]. In practice, many prior   \n268 works proposed ad hoc approaches to normalize and aggregate objectives using, e.g., normalized   \n269 RMSEs [44, 57]—we refer to $\\ S 8 . 3$ of Japkowicz and Shah [24] for other references. Notoriously,   \n270 some works in multitask learning [33, 43] and domain generalization [48] use rank averages to   \n271 aggregate objectives, yet the standard is to use the average of $\\Delta _ { k }$ -normalized objectives (see Eq. 6).   \n272 COPA can benefit these two areas, along any others accounting for several objectives such as fair   \n273 ML [39], federated learning [27], probabilistic ML [26], and multimodal learning [1]. ",
+        "bbox": [
+            140,
+            731,
+            826,
+            911
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "discarded",
+        "text": "6 ",
+        "bbox": [
+            493,
+            936,
+            504,
+            946
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "In this section, we motivate the use of COPA by showing a range of practical scenarios which would benefit from adopting the proposed methodology. We defer additional details and results to $\\ S \\mathrm { A }$ . ",
+        "bbox": [
+            169,
+            117,
+            826,
+            146
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "5.1 Synthetic evaluation ",
+        "text_level": 1,
+        "bbox": [
+            174,
+            155,
+            354,
+            170
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "To qualitative assess COPA, we consider a synthetic Pareto front of the form $\\mathbf { y } _ { 2 } = 0 . 2 5 \\cos ( 3 9 \\mathbf { y } _ { 1 } ^ { 0 . 8 5 } ) -$ $\\log ( \\mathrm { y } _ { 1 } ) - 0 . 4 6$ where $\\mathbf { y } _ { 1 } \\sim \\mathcal { U } ( 0 . 0 2 , 0 . 2 )$ . We obtain as a result a non-convex Pareto front with a flat area around ${ \\bf y } _ { 1 } = 0 . 1$ , and two objectives with significantly different distributions. ",
+        "bbox": [
+            173,
+            176,
+            826,
+            218
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Does the parameter $p$ match our intuitions? ",
+        "text_level": 1,
+        "bbox": [
+            173,
+            228,
+            491,
+            241
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "We corroborate the insights from $\\ S 3 . 3$ by showing in Fig. 3 the distribution of solutions found taking different values of $p$ . First, note that since the front is strictly increasing except in [0.083, 0.091], we have that $\\mathbf { u } _ { 1 } \\approx 1 - \\mathbf { u } _ { 2 }$ . As a result, we see that $p = 1$ almost exclusively finds solutions on the extrema. When we increase $p$ , the distribution of solutions better spreads along the front and, as the $p$ -balls become more square-like, we gain finer control on the solution found by tuning $\\alpha$ It is important to stress, however, that the finer control of $p = \\infty$ comes at cost: as we increase $K$ , finding a proper $\\omega$ could prove challenging. ",
+        "bbox": [
+            174,
+            231,
+            495,
+            421
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "5.2 Case 1: Model selection ",
+        "text_level": 1,
+        "bbox": [
+            174,
+            430,
+            377,
+            445
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "image",
+        "img_path": "images/6d67999c5b16716da22a29d89b6feaeffdd32c108e08dd6c5444cc7c08e6f21a.jpg",
+        "image_caption": [
+            "Figure 3: Distribution of solutions (circles) found for different values of $p$ as we sweep over values of $\\alpha$ . The darkness of the circles represents the number of times they were selected. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            509,
+            231,
+            820,
+            367
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "First, we explore how the norm proposed in $\\ S 3 . 3$ can help us explore the Pareto front more meaningfully, i.e., how sensibly it maps the DM preferences to Eq. 5. ",
+        "bbox": [
+            171,
+            449,
+            825,
+            478
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "1. The performance-emissions trade-off. Despite LLMs recently showing outstanding performance [42], their $\\mathbf { C O } _ { 2 }$ footprint can be concerning and needs to be taken into account [9]. Next, we show how practitioners can leverage COPA to better navigate this crucial trade-off in the LLM space. ",
+        "bbox": [
+            173,
+            486,
+            826,
+            529
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "We gather the results of 2148 LLMs submitted to the Open LLM Leaderboard [12] and take as objectives their inference $\\mathrm { C O } _ { 2 }$ cost and performance on 6 different datasets: IFEval [65], BBH [54], MATH [20], GPQA [49], $\\mathbf { M u S R }$ [52], and MMLU-Pro [58]. Then, we use COPA with $p = \\infty$ to select an LLM, changing $\\omega$ as we vary the importance given to their $\\mathrm { C O } _ { 2 }$ footprint, denoted by $\\alpha$ , as $\\omega : = [ \\alpha , ( 1 - \\alpha ) / 6 , \\dots , ( 1 - \\alpha ) / 6 ]$ . ",
+        "bbox": [
+            174,
+            532,
+            485,
+            659
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "We highlight the selected LLMs in Fig. 4, which groups all benchmarks into one dimension as their $\\infty$ -norm for visualization purposes. We observe that the proposed norm enables the meaningful exploration of the Pareto front, with the values of $\\alpha$ being uniformly spread-out across ",
+        "bbox": [
+            165,
+            661,
+            486,
+            744
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "image",
+        "img_path": "images/47a3ca7d7c0bc53075396700b051ba32c55686df1cb43ad1fa1a16955e3fffbc.jpg",
+        "image_caption": [
+            "Figure 4: We can meaningfully explore the Pareto-optimal models of the Open LLM Leaderboard [12] with COPA. We use $p = \\infty$ on the 7 objectives and highlight some of the selected models as we change the value of $\\alpha$ . "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            513,
+            537,
+            808,
+            660
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "the front. Furthermore, not only can we sensibly explore the LLM space, but COPA enables interpreting these models in terms of the original objectives and the population they live in. For example, we can say that GPT-2 is Pareto-optimal as it consumes the least, but it only achieves a $6 \\%$ average performance score, or that Phi-3.5-mini is a top- $1 0 \\%$ model in both aspects, consuming $0 . 5 3 \\mathrm { k g }$ of $\\mathrm { C O } _ { 2 }$ vs. the $1 3 \\mathrm { k g }$ consumed by the best-performing model. ",
+        "bbox": [
+            173,
+            744,
+            825,
+            814
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "2. The fairness-accuracy trade-off. Moving to a more classic example, we consider how a DM could use COPA to choose a trade-off between accuracy and fairness in a classification problem, two objectives which are defined in completely different ways [62]. ",
+        "bbox": [
+            174,
+            823,
+            825,
+            864
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "We reproduce the CelebA [34] experiment from Maheshwari and Perrot [37] using FairGrad—an algorithm whose hyperparameter $\\epsilon$ upper-bounds the unfairness of the classifier—and create a population of models by sweeping through values of $\\epsilon$ and five random initializations. ",
+        "bbox": [
+            169,
+            869,
+            825,
+            911
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "5 COPA in action ",
+        "bbox": [
+            160,
+            89,
+            336,
+            106
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "275 276 277 278 279 280 281 282 283 284 285 286 287 288 289 290 291 292 293 294 295 296 297 298 299 300 301 302 303 304 305 306 307 308 309 310 311 312 313 314 315 316 317 318 319 320 321 322 323 324 325 326 ",
+        "bbox": [
+            138,
+            109,
+            165,
+            922
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "7 ",
+        "bbox": [
+            493,
+            935,
+            504,
+            946
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "image",
+        "img_path": "images/5c9d53004c6d09e0dcfde6de8a63ddaeba704ddaaffb97c78585fee1f1c2ffad.jpg",
+        "image_caption": [
+            "Fig. 5 (left) shows the Pareto front in the accuracy-fairness space, as we navigate it by changing $\\alpha$ , clearly showing the difference between both objectives. Note that directly solving Eq. 3 leads to the solution with maximum accuracy, as in $\\ S 5 . 1$ . Instead, using COPA we can uniformly navigate the Pareto front where, e.g., the robust min-max solution $( \\alpha = 1 / 2$ ) lies precisely in the middle of the front. As a result, COPA offers a more reliable interpretation of its parameters than the upper-bound given by ϵ, which is clear by observing that, e.g., a value of $\\epsilon = 1$ or 0.25 yields relatively similar solutions in Fig. 5. ",
+            "Figure 5: COPA can be used to meaningfully explore the Pareto front between accuracy and fairness (equal opportunity) in the CelebA experiment from Maheshwari and Perrot [37] in unconstrained (left) as well as user-constrained scenarios (right). "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            465,
+            92,
+            823,
+            215
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "In addition, we consider a more realistic scenario where DMs bargain on acceptable values for the objectives, e.g., a regulatory body could demand equal opportunity to never exceed 0.02 [36]. Despite constraining the Pareto front to consider only valid solutions (we still use invalid ones to approximate the CDF), COPA stills provides a sensible way to navigate the space of valid models, proving that we can easily combine rules on the original and CDF-transformed objective spaces. ",
+        "bbox": [
+            174,
+            303,
+            825,
+            372
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "5.3 Case 2: Comparative model analysis ",
+        "text_level": 1,
+        "bbox": [
+            176,
+            381,
+            465,
+            395
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Previously, we have explored how DMs can meaningfully explore the Pareto front. Now, we focus on a related but different question: How much could semantic incomparability alter the conclusions we draw from comparative analyses in ML research? ",
+        "bbox": [
+            174,
+            398,
+            825,
+            440
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "1. Incomparable objectives. First, we consider a multitask learning (MTL) setting, where the heterogeneity of the tasks to solve makes it prone to face incomparable objectives. In fact, it is common to aggregate objectives with the average relative performance, $\\Delta$ , as discussed in $\\ S 4$ . To clearly showcase the issue, we look at the multi-SVHN experiment from Javaloy and Valera [25], which uses a modified version of SVHN [45] with a digit on each side of the image, and where we solve three classification tasks: i) left digit; ii) right digit; and iii) parity of their product; and two regression tasks: iv) sum of digits; and v) number of active pixels in the image. ",
+        "bbox": [
+            173,
+            448,
+            825,
+            546
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Fig. 6 shows the ranking of the $1 4 \\ : \\mathrm { M T L }$ methods considered by Javaloy and Valera [25], if we were to use different criterion functions, namely: COPA with different values of $p$ and equal weights, the average relative performance, $\\Delta$ , and the regression error over the density task. The first two columns of the plot make extremely clear how much the density task dominates the average relative performance, perfectly matching its ranking. Again, this is a result of the reference method having nearly zero regression error on this task, greatly magnifying its relative performance, $\\Delta _ { k }$ ",
+        "bbox": [
+            174,
+            549,
+            485,
+            700
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "image",
+        "img_path": "images/3100137a06ef8d72207d5d86d9164f1cca9783519739b4395bbd45f92a93c350.jpg",
+        "image_caption": [
+            "Figure 6: Ranking of MTL methods using different criteria to evaluate them. Methods whose rankings drastically change with $\\Delta$ are colored. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            500,
+            551,
+            821,
+            648
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            166,
+            702,
+            611,
+            715
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "As expected, the outlined issue has a tremendous impact on the conclusions drawn, e.g.: i) the worst method for all COPA instances, MGDA-UB [50], becomes the 3rd best method w.r.t. $\\Delta$ ; or ii) the best one for every COPA, GradDrop [8], becomes the 6th best. Fig. 6 also shows that the reference method (Single) is among the least robust models $\\begin{array} { r } { \\dot { \\boldsymbol { p } } = \\infty , } \\end{array}$ ), and slowly improves as we look less at individual performances $( p = 1 )$ ). It is worth-noting that the authors were aware of the issue and left the density task out when aggregating objectives, reporting both $\\Delta$ and density MSE as a pair. ",
+        "bbox": [
+            171,
+            719,
+            825,
+            803
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "2. Seemingly comparable objectives. Sometimes, semantic incomparability can arise in unexpected scenarios. We take domain generalization as an example and, in particular, the DomainBed [17] experiment from Hemati et al. [19]. Here, the authors compare different methods by training them on some domains, and testing them on 4 unseen ones, reporting the average domain accuracy as commonly done in the literature. ",
+        "bbox": [
+            174,
+            810,
+            825,
+            880
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "Fig. 7 shows the ranking of the considered methods as we use different criterion functions, with the average accuracy in the first column. For two of the highlighted methods, RSC [22] and SagNet [41], we observe their performance deteriorate and improve, respectively, as we consider less robust criteria, in accordance with the average accuracy. However, we see a different story with HGP [19] and Mixup [59], whose rankings are consistent for all COPA instances, but drastically change when we average accuracies. This leads to significantly different analyses concluding, e.g., that Mixup is worse than SagNet and HGP, in disagreement with every other criterion function. ",
+        "bbox": [
+            158,
+            883,
+            825,
+            911
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            493,
+            936,
+            503,
+            946
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "discarded",
+        "text": "328 329 330 331 332 333 334 335 336 337 338 339 340 341 342 343 344 345 346 347 348 349 350 351 352 353 354 355 356 357 358 359 360 361 362 363 364 365 366 367 368 369 370 371 372 373 374 375 376 377 378 379 380 381 382 ",
+        "bbox": [
+            138,
+            108,
+            165,
+            931
+        ],
+        "page_idx": 7
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            166,
+            92,
+            825,
+            161
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "In fact, accuracies present significantly different ranges across domains (see Tab 2) and differences in domains with less variance are less important in the average computation. If we normalize the results using $\\scriptstyle \\mathrm { n o r m } _ { k }$ (Eq. 6), we see that Mixup significantly outperforms HGP in these domains, swapping their rankings. This can also be observed in Fig. 7, where norm aligns much better with COPA. ",
+        "bbox": [
+            174,
+            169,
+            485,
+            292
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "image",
+        "img_path": "images/7927ee06d870dfaed4e17480d695e965fecaaf21023723348f4aa0452b55f3e4.jpg",
+        "image_caption": [
+            "Figure 7: Ranking of domain generalization methods as we change the criterion function. Average accuracy is inconsistent with every COPA instance. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            498,
+            167,
+            821,
+            238
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "5.4 Case 3: Benchmarking ",
+        "text_level": 1,
+        "bbox": [
+            176,
+            306,
+            372,
+            321
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Finally, we motivate the use of COPA and CDF-normalized objectives in general benchmarking where, in contrast with the previous use cases, objectives are not necessarily aggregated into a scalar value, but plotted together. Additional plots can be found in $\\ S _ { \\mathrm { A } . 5 }$ . ",
+        "bbox": [
+            169,
+            328,
+            823,
+            371
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "We take the AutoML Benchmark (AMLB) [15] for the use-case as it “follows best practices and avoids common mistakes when comparing frameworks.” We reproduce all figures from the original work, comparing 15 AutoML methods evaluated on 104 different objectives. Since objectives are incomparable, the authors scale them using $\\mathrm { n o r m } _ { k }$ (Eq. 6) with a random forest as reference model, providing a number of analyses from these objectives. Remarkably, the authors also encourage the use of CD diagrams and Friedman tests, two methods that based on relative rankings. ",
+        "bbox": [
+            173,
+            378,
+            495,
+            544
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "A natural step is therefore to use CDF-normalized objectives. Fig. 8 shows the same AMLB boxplot using scaled and CCDF performance, i.e., $\\bar { 1 } - F _ { k } ( \\bar { \\mathbf y _ { k } } )$ . We find that using CCDFs comes with several benefits: i) there are no outliers to report, unlike in the original plot (all values lie in $[ 0 , 1 ] )$ ; ii) there is no need for an arbitrary reference model; and iii) we can provide clear population-based interpretations, e.g., “on average, AutoGluon(B) [10] yields over top- $1 0 \\%$ performance on the considered objectives.” These benefits extend to all AMBL plots, demonstrating that the proposed CDF transformation is a sensible way of normalizing objectives in general. ",
+        "bbox": [
+            165,
+            551,
+            495,
+            661
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "image",
+        "img_path": "images/c1e33b103fa2eec0ec9e9faee71887101840e516be37d5cf7dffe44e8725624c.jpg",
+        "image_caption": [
+            "Figure 8: Comparison of AutoML methods on AMLB [15] using scaled performance, norm, with a random forest as reference method (red line); and using a CCDF-transformation (bottom). Brackets indicate the number of off-view outliers. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            506,
+            381,
+            823,
+            571
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            174,
+            662,
+            826,
+            704
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "24 6 Concluding remarks ",
+        "text_level": 1,
+        "bbox": [
+            156,
+            724,
+            377,
+            742
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "In this work, we have shown the importance of meaningfully navigating the Pareto front in multiobjective ML evaluation, allowing users to perform better-informed decisions. To this end, we have highlighted how crucial is to properly normalize all objectives and to have a criterion function that sensibly reflects DM preferences into an optimization problem. Finally, we have implemented these insights in COPA, and extensively demonstrated the impact that it can have in areas as fundamental and timely as model selection and benchmarking. ",
+        "bbox": [
+            165,
+            756,
+            825,
+            839
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "431 Our work opens many intriguing venues for future research. For example, we would be excited to see   \n432 COPA adapted to active settings with humans-in-the-loop, criterion functions that parametrize other   \n433 preference types, a formal systematization of model selection enabled by COPA, or its adoption in   \n434 public portals such as the Open LLM Leadearboard [12] or the DecodingTrust benchmark [57]. ",
+        "bbox": [
+            142,
+            847,
+            823,
+            902
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "discarded",
+        "text": "9 ",
+        "bbox": [
+            493,
+            935,
+            503,
+            946
+        ],
+        "page_idx": 8
+    },
+    {
+        "type": "text",
+        "text": "Bibliography   \n[1] Tadas Baltrusaitis, Chaitanya Ahuja, and Louis-Philippe Morency. Multimodal machine learn- ˇ ing: A survey and taxonomy. IEEE transactions on pattern analysis and machine intelligence, 41(2):423–443, 2018. (Cited in page 6.)   \n[2] Grigory Isaakovich Barenblatt. Dimensional analysis. CRC Press, 1987. (Cited in pages 3 and 6.)   \n[3] V. Joseph Bowman. On the Relationship of the Tchebycheff Norm and the Efficient Frontier of Multiple-Criteria Objectives. In Herve Thiriez and Stanley Zionts, editors, ´ Multiple Criteria Decision Making, pages 76–86, Berlin, Heidelberg, 1976. Springer Berlin Heidelberg. ISBN 978-3-642-87563-2. (Cited in page 3.)   \n[4] Juergen Branke, Kalyan Deb, Kaisa Miettinen, and Slowinski Roman. Multiobjective Optimization, Interactive and Evolutionary Approaches [outcome of Dagstuhl seminars]. 2008. (Cited in page 3.)   \n[5] Rich Caruana and Alexandru Niculescu-Mizil. Data mining in metric space: an empirical analysis of supervised learning performance criteria. In Proceedings of the tenth ACM SIGKDD international conference on Knowledge discovery and data mining, pages 69–78, 2004. (Cited in page 2.)   \n[6] George Casella and Roger L Berger. Statistical inference. Cengage Learning, 2021. (Cited in pages 4 and 5.)   \n[7] Weiyu Chen and James T. Kwok. Pareto Merging: Multi-Objective Optimization for PreferenceAware Model Merging. 2024. URL https://api.semanticscholar.org/CorpusID: 271924011. (Cited in page 6.)   \n[8] Zhao Chen, Jiquan Ngiam, Yanping Huang, Thang Luong, Henrik Kretzschmar, Yuning Chai, and Dragomir Anguelov. Just Pick a Sign: Optimizing Deep Multitask Models with Gradient Sign Dropout. In Hugo Larochelle, Marc’Aurelio Ranzato, Raia Hadsell, Maria-Florina Balcan, and Hsuan-Tien Lin, editors, Advances in Neural Information Processing Systems 33: Annual Conference on Neural Information Processing Systems 2020, NeurIPS 2020, December 6-12, 2020, virtual, 2020. URL https://proceedings.neurips.cc/paper/2020/hash/16002 f7a455a94aa4e91cc34ebdb9f2d-Abstract.html. (Cited in page 8.)   \n[9] Tristan Coignion, Clement Quinton, and Romain Rouvoy. Green My LLM: Studying the key ´ factors affecting the energy consumption of code assistants. ArXiv preprint, abs/2411.11892, 2024. URL https://arxiv.org/abs/2411.11892. (Cited in pages 1 and 7.)   \n[10] Nick Erickson, Jonas Mueller, Alexander Shirkov, Hang Zhang, Pedro Larroy, Mu Li, and Alexander Smola. Autogluon-tabular: Robust and accurate automl for structured data. ArXiv preprint, abs/2003.06505, 2020. URL https://arxiv.org/abs/2003.06505. (Cited in page 9.)   \n[11] Peter A. Flach. ROC Analysis, pages 869–875. Springer US, Boston, MA, 2010. ISBN 978-0-387-30164-8. doi: 10.1007/978-0-387-30164-8 733. URL https://doi.org/10.1 007/978-0-387-30164-8_733. (Cited in page 6.)   \n[12] Clementine Fourrier, Nathan Habib, Alina Lozovskaya, Konrad Szafer, and Thomas Wolf. Open ´ LLM Leaderboard v2, 2024. URL https://huggingface.co/spaces/open-llm-leade rboard/open_llm_leaderboard. (Cited in pages 1, 2, 7, 9, 16, and 17.)   \n[13] Milton Friedman. The Use of Ranks to Avoid the Assumption of Normality Implicit in the Analysis of Variance. Journal of the American Statistical Association, 32(200):675–701, 1937. ISSN 01621459, 1537274X. URL http://www.jstor.org/stable/2279372. (Cited in page 6.)   \n[14] Gery Geenens. (Re-)Reading Sklar (1959)–A Personal View on Sklar’s Theorem. Mathematics, 12(3):380, 2024. (Cited in pages 4 and 6.)   \n[15] Pieter Gijsbers, Marcos L. P. Bueno, Stefan Coors, Erin LeDell, Sebastien Poirier, Janek ´ Thomas, Bernd Bischl, and Joaquin Vanschoren. AMLB: an AutoML Benchmark. Journal of Machine Learning Research, 25(101):1–65, 2024. URL http://jmlr.org/papers/v25/22 -0493.html. (Cited in pages 2, 9, 20, 21, and 22.) ",
+        "bbox": [
+            150,
+            64,
+            828,
+            920
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "10 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "discarded",
+        "text": "435 435 436 437 438 439 440 441 442 443 444 445 446 447 448 449 450 451 452 453 454 455 456 457 458 459 460 461 462 463 464 465 466 467 468 469 470 471 472 473 474 475 476 477 478 479 480 481 482 483 484 485 486 ",
+        "bbox": [
+            140,
+            90,
+            165,
+            930
+        ],
+        "page_idx": 9
+    },
+    {
+        "type": "text",
+        "text": "487 [16] Ian J. Goodfellow, Yoshua Bengio, and Aaron C. Courville. Deep Learning. Adaptive   \n488 computation and machine learning. MIT Press, 2016. ISBN 978-0-262-03561-3. URL   \n489 http://www.deeplearningbook.org/. (Cited in page 6.)   \n490 [17] Ishaan Gulrajani and David Lopez-Paz. In Search of Lost Domain Generalization. In 9th   \n491 International Conference on Learning Representations, ICLR 2021, Virtual Event, Austria, May   \n492 3-7, 2021. OpenReview.net, 2021. URL https://openreview.net/forum?id $\\equiv$ lQdXeXDo   \n493 WtI. (Cited in page 8.)   \n494 [18] David J Hand. Measuring classifier performance: a coherent alternative to the area under the   \n495 ROC curve. Machine learning, 77(1):103–123, 2009. (Cited in page 6.)   \n496 [19] Sobhan Hemati, Guojun Zhang, Amir Hossein Estiri, and Xi Chen. Understanding Hessian   \n497 Alignment for Domain Generalization. In IEEE/CVF International Conference on Computer   \n498 Vision, ICCV 2023, Paris, France, October 1-6, 2023, pages 18958–18968. IEEE, 2023. doi:   \n499 10.1109/ICCV51070.2023.01742. URL https://doi.org/10.1109/ICCV51070.2023.0   \n500 1742. (Cited in pages 8, 9, 18, 19, and 20.)   \n501 [20] Dan Hendrycks, Collin Burns, Saurav Kadavath, Akul Arora, Steven Basart, Eric Tang, Dawn   \n502 Song, and Jacob Steinhardt. Measuring Mathematical Problem Solving With the MATH Dataset,   \n503 2021. URL https://arxiv.org/abs/2103.03874. (Cited in pages 7 and 17.)   \n504 [21] Dong Huang, Qingwen Bu, Jie Zhang, Xiaofei Xie, Junjie Chen, and Heming Cui. Bias   \n505 assessment and mitigation in llm-based code generation. ArXiv preprint, abs/2309.14345, 2023.   \n506 URL https://arxiv.org/abs/2309.14345. (Cited in page 1.)   \n507 [22] Zeyi Huang, Haohan Wang, Eric P Xing, and Dong Huang. Self-challenging improves cross  \n508 domain generalization. In Computer vision–ECCV 2020: 16th European conference, Glasgow,   \n509 UK, August 23–28, 2020, proceedings, part II 16, pages 124–140. Springer, 2020. (Cited in   \n510 page 8.)   \n511 [23] Amin Ibrahim, Azam Asilian Bidgoli, Shahryar Rahnamayan, and Kalyanmoy Deb. A Novel   \n512 Pareto-optimal Ranking Method for Comparing Multi-objective Optimization Algorithms. ArXiv   \n513 preprint, abs/2411.17999, 2024. URL https://arxiv.org/abs/2411.17999. (Cited in   \n514 page 6.)   \n515 [24] Nathalie Japkowicz and Mohak Shah. Evaluating learning algorithms: a classification per  \n516 spective. Cambridge University Press, 2011. (Cited in pages 1 and 6.)   \n517 [25] Adrian Javaloy and Isabel Valera. RotoGrad: Gradient Homogenization in Multitask Learning. ´   \n518 In The Tenth International Conference on Learning Representations, ICLR 2022, Virtual Event,   \n519 April 25-29, 2022. OpenReview.net, 2022. URL https://openreview.net/forum?id=T8   \n520 wHz4rnuGL. (Cited in pages 8 and 18.)   \n521 [26] Adrian Javaloy, Maryam Meghdadi, and Isabel Valera. Mitigating Modality Collapse in ´   \n522 Multimodal VAEs via Impartial Optimization. In Kamalika Chaudhuri, Stefanie Jegelka,   \n523 Le Song, Csaba Szepesvari, Gang Niu, and Sivan Sabato, editors, ´ International Conference   \n524 on Machine Learning, ICML 2022, 17-23 July 2022, Baltimore, Maryland, USA, volume   \n525 162 of Proceedings of Machine Learning Research, pages 9938–9964. PMLR, 2022. URL   \n526 https://proceedings.mlr.press/v162/javaloy22a.html. (Cited in page 6.)   \n527 [27] Peter Kairouz, H. Brendan McMahan, Brendan Avent, Aurelien Bellet, Mehdi Bennis, Ar- ´   \n528 jun Nitin Bhagoji, Kallista Bonawitz, Zachary Charles, Graham Cormode, Rachel Cummings,   \n529 Rafael G. L. D’Oliveira, Hubert Eichner, Salim El Rouayheb, David Evans, Josh Gardner,   \n530 Zachary Garrett, Adria Gasc \\` on, Badih Ghazi, Phillip B. Gibbons, Marco Gruteser, Zaid ´   \n531 Harchaoui, Chaoyang He, Lie He, Zhouyuan Huo, Ben Hutchinson, Justin Hsu, Martin Jaggi,   \n532 Tara Javidi, Gauri Joshi, Mikhail Khodak, Jakub Konecny, Aleksandra Korolova, Farinaz ´   \n533 Koushanfar, Sanmi Koyejo, Tancrede Lepoint, Yang Liu, Prateek Mittal, Mehryar Mohri, \\`   \n534 Richard Nock, Ayfer Ozg ¨ ur, Rasmus Pagh, Hang Qi, Daniel Ramage, Ramesh Raskar, Mari- ¨   \n535 ana Raykova, Dawn Song, Weikang Song, Sebastian U. Stich, Ziteng Sun, Ananda Theertha   \n536 Suresh, Florian Tramer, Praneeth Vepakomma, Jianyu Wang, Li Xiong, Zheng Xu, Qiang Yang, \\`   \n537 Felix X. Yu, Han Yu, and Sen Zhao. Advances and Open Problems in Federated Learning.   \n538 Foundations and Trends® in Machine Learning, 14(1–2):1–210, 2021. ISSN 1935-8237. doi:   \n539 10.1561/2200000083. URL http://dx.doi.org/10.1561/2200000083. (Cited in page 6.)   \n540 [28] M. G. Kendall. A new measure of rank correlation. Biometrika, 30(1-2):81–93, 1938. ISSN   \n541 0006-3444. doi: 10.1093/biomet/30.1-2.81. URL https://doi.org/10.1093/biomet/30.   \n542 1-2.81. (Cited in page 6.)   \n543 [29] M. G. Kendall and R. M. Sundrum. Distribution-Free Methods and Order Properties. Revue de   \n544 l’Institut International de Statistique / Review of the International Statistical Institute, 21(3):   \n545 124–134, 1953. ISSN 03731138. URL http://www.jstor.org/stable/1401424. (Cited   \n546 in page 4.)   \n547 [30] David Krueger, Ethan Caballero, Jorn-Henrik Jacobsen, Amy Zhang, Jonathan Binas, Dinghuai ¨   \n548 Zhang, Remi Le Priol, and Aaron C. Courville. Out-of-Distribution Generalization via Risk ´   \n549 Extrapolation (REx). In Marina Meila and Tong Zhang, editors, Proceedings of the 38th   \n550 International Conference on Machine Learning, ICML 2021, 18-24 July 2021, Virtual Event,   \n551 volume 139 of Proceedings of Machine Learning Research, pages 5815–5826. PMLR, 2021.   \n552 URL http://proceedings.mlr.press/v139/krueger21a.html. (Cited in page 19.)   \n553 [31] Saku Kukkonen and Jouni Lampinen. Ranking-dominance and many-objective optimization. In   \n554 2007 IEEE Congress on Evolutionary Computation, pages 3983–3990. IEEE, 2007. (Cited in   \n555 page 6.)   \n556 [32] Lu Li, Tianyu Zhang, Zhiqi Bu, Suyuchen Wang, Huan He, Jie Fu, Yonghui Wu, Jiang Bian,   \n557 Yong Chen, and Yoshua Bengio. MAP: Low-compute model merging with amortized Pareto   \n558 fronts via quadratic approximation. ArXiv preprint, abs/2406.07529, 2024. URL https:   \n559 //arxiv.org/abs/2406.07529. (Cited in page 6.)   \n560 [33] Bo Liu, Yihao Feng, Peter Stone, and Qiang Liu. FAMO: Fast Adaptive Multitask Optimization.   \n561 In Alice Oh, Tristan Naumann, Amir Globerson, Kate Saenko, Moritz Hardt, and Sergey Levine,   \n562 editors, Advances in Neural Information Processing Systems 36: Annual Conference on Neural   \n563 Information Processing Systems 2023, NeurIPS 2023, New Orleans, LA, USA, December 10 -   \n564 16, 2023, 2023. URL http://papers.nips.cc/paper_files/paper/2023/hash/b2fe1   \n565 ee8d936ac08dd26f2ff58986c8f-Abstract-Conference.html. (Cited in pages 4 and 6.)   \n566 [34] Ziwei Liu, Ping Luo, Xiaogang Wang, and Xiaoou Tang. Deep Learning Face Attributes in the   \n567 Wild. In 2015 IEEE International Conference on Computer Vision, ICCV 2015, Santiago, Chile,   \n568 December 7-13, 2015, pages 3730–3738. IEEE Computer Society, 2015. doi: 10.1109/ICCV.2   \n569 015.425. URL https://doi.org/10.1109/ICCV.2015.425. (Cited in pages 7 and 17.)   \n570 [35] Alexandra Sasha Luccioni, Sylvain Viguier, and Anne-Laure Ligozat. Estimating the carbon   \n571 footprint of bloom, a 176b parameter language model. Journal of Machine Learning Research,   \n572 24(253):1–15, 2023. (Cited in page 1.)   \n573 [36] Mark MacCarthy. Standards of fairness for disparate impact assessment of big data algorithms.   \n574 Cumb. L. Rev., 48:67, 2017. (Cited in page 8.)   \n575 [37] Gaurav Maheshwari and Michael Perrot. FairGrad: Fairness Aware Gradient Descent. ¨ ArXiv   \n576 preprint, abs/2206.10923, 2022. URL https://arxiv.org/abs/2206.10923. (Cited in   \n577 pages 7, 8, and 17.)   \n578 [38] Kevis-Kokitsi Maninis, Ilija Radosavovic, and Iasonas Kokkinos. Attentive Single-Tasking of   \n579 Multiple Tasks. In IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2019,   \n580 Long Beach, CA, USA, June 16-20, 2019, pages 1851–1860. Computer Vision Foundation /   \n581 IEEE, 2019. doi: 10.1109/CVPR.2019.00195. URL http://openaccess.thecvf.com/co   \n582 ntent_CVPR_2019/html/Maninis_Attentive_Single-Tasking_of_Multiple_Tasks   \n583 _CVPR_2019_paper.html. (Cited in page 4.)   \n584 [39] Natalia Mart´ınez, Mart´ın Bertran, and Guillermo Sapiro. Minimax Pareto Fairness: A Multi ´   \n585 Objective Perspective. In Proceedings of the 37th International Conference on Machine   \n586 Learning, ICML 2020, 13-18 July 2020, Virtual Event, volume 119 of Proceedings of Machine   \n587 Learning Research, pages 6755–6764. PMLR, 2020. URL http://proceedings.mlr.pres   \n588 s/v119/martinez20a.html. (Cited in page 6.)   \n589 [40] Kaisa Miettinen. Nonlinear multiobjective optimization, volume 12. Springer Science &   \n590 Business Media, 1999. (Cited in pages 4 and 6.)   \n591 [41] Jun Hyun Nam, Hyuntak Cha, Sungsoo Ahn, Jaeho Lee, and Jinwoo Shin. Learning from Failure:   \n592 De-biasing Classifier from Biased Classifier. In Hugo Larochelle, Marc’Aurelio Ranzato, Raia   \n593 Hadsell, Maria-Florina Balcan, and Hsuan-Tien Lin, editors, Advances in Neural Information   \n594 Processing Systems 33: Annual Conference on Neural Information Processing Systems 2020,   \n595 NeurIPS 2020, December 6-12, 2020, virtual, 2020. URL https://proceedings.neurips.   \n596 cc/paper/2020/hash/eddc3427c5d77843c2253f1e799fe933-Abstract.html. (Cited   \n597 in page 9.)   \n598 [42] Humza Naveed, Asad Ullah Khan, Shi Qiu, Muhammad Saqib, Saeed Anwar, Muhammad   \n599 Usman, Naveed Akhtar, Nick Barnes, and Ajmal Mian. A comprehensive overview of large   \n600 language models. ArXiv preprint, abs/2307.06435, 2023. URL https://arxiv.org/abs/23   \n601 07.06435. (Cited in page 7.)   \n602 [43] Aviv Navon, Aviv Shamsian, Idan Achituve, Haggai Maron, Kenji Kawaguchi, Gal Chechik, and   \n603 Ethan Fetaya. Multi-Task Learning as a Bargaining Game. In Kamalika Chaudhuri, Stefanie   \n604 Jegelka, Le Song, Csaba Szepesvari, Gang Niu, and Sivan Sabato, editors, ´ International   \n605 Conference on Machine Learning, ICML 2022, 17-23 July 2022, Baltimore, Maryland, USA,   \n606 volume 162 of Proceedings of Machine Learning Research, pages 16428–16446. PMLR, 2022.   \n607 URL https://proceedings.mlr.press/v162/navon22a.html. (Cited in pages 1 and 6.)   \n608 [44] Alfredo Nazabal, Pablo M Olmos, Zoubin Ghahramani, and Isabel Valera. Handling incomplete   \n609 heterogeneous data using VAEs. Pattern Recognition, 107:107501, 2020. (Cited in pages 2 and   \n610 6.)   \n611 [45] Yuval Netzer, Tao Wang, Adam Coates, Alessandro Bissacco, Bo Wu, and Andrew Y Ng.   \n612 Reading digits in natural images with unsupervised feature learning. NeurIPS Workshop on   \n613 Deep Learning and Unsupervised Feature Learning, 2011. (Cited in page 8.)   \n614 [46] Ji Won Park, Natasa Tagasovska, Michael Maser, Stephen Ra, and Kyunghyun Cho. BOtied:   \n615 Multi-objective Bayesian optimization with tied multivariate ranks. In Forty-first International   \n616 Conference on Machine Learning, ICML 2024, Vienna, Austria, July 21-27, 2024. OpenRe  \n617 view.net, 2024. URL https://openreview.net/forum?id $= c$ cj5HbaX14p. (Cited in   \n618 page 6.)   \n619 [47] Ashley Piggins. Collective Choice and Social Welfare–Expanded Edition, 2019. (Cited in   \n620 page 6.)   \n621 [48] Alexandre Rame, Corentin Dancette, and Matthieu Cord. Fishr: Invariant Gradient Variances ´   \n622 for Out-of-Distribution Generalization. In Kamalika Chaudhuri, Stefanie Jegelka, Le Song,   \n623 Csaba Szepesvari, Gang Niu, and Sivan Sabato, editors, ´ International Conference on Machine   \n624 Learning, ICML 2022, 17-23 July 2022, Baltimore, Maryland, USA, volume 162 of Proceedings   \n625 of Machine Learning Research, pages 18347–18377. PMLR, 2022. URL https://proceedi   \n626 ngs.mlr.press/v162/rame22a.html. (Cited in pages 1 and 6.)   \n627 [49] David Rein, Betty Li Hou, Asa Cooper Stickland, Jackson Petty, Richard Yuanzhe Pang, Julien   \n628 Dirani, Julian Michael, and Samuel R. Bowman. GPQA: A Graduate-Level Google-Proof Q&A   \n629 Benchmark, 2023. URL https://arxiv.org/abs/2311.12022. (Cited in pages 7 and 17.)   \n630 [50] Ozan Sener and Vladlen Koltun. Multi-Task Learning as Multi-Objective Optimization. In   \n631 Samy Bengio, Hanna M. Wallach, Hugo Larochelle, Kristen Grauman, Nicolo Cesa-Bianchi, \\`   \n632 and Roman Garnett, editors, Advances in Neural Information Processing Systems 31: Annual   \n633 Conference on Neural Information Processing Systems 2018, NeurIPS 2018, December 3-8,   \n634 2018, Montreal, Canada ´ , pages 525–536, 2018. URL https://proceedings.neurips.cc   \n635 /paper/2018/hash/432aca3a1e345e339f35a30c8f65edce-Abstract.html. (Cited in   \n636 page 8.)   \n637 [51] M Sklar. Fonctions de repartition ´ a n dimensions et leurs marges. In \\` Annales de l’ISUP,   \n638 volume 8, pages 229–231, 1959. (Cited in page 4.)   \n639 [52] Zayne Sprague, Xi Ye, Kaj Bostrom, Swarat Chaudhuri, and Greg Durrett. MuSR: Testing   \n640 the Limits of Chain-of-thought with Multistep Soft Reasoning. In The Twelfth International   \n641 Conference on Learning Representations, ICLR 2024, Vienna, Austria, May 7-11, 2024. Open  \n642 Review.net, 2024. URL https://openreview.net/forum?id=jenyYQzue1. (Cited in   \n643 pages 7 and 17.)   \n644 [53] Baochen Sun and Kate Saenko. Deep coral: Correlation alignment for deep domain adaptation.   \n645 In Computer Vision–ECCV 2016 Workshops: Amsterdam, The Netherlands, October 8-10 and   \n646 15-16, 2016, Proceedings, Part III 14, pages 443–450. Springer, 2016. (Cited in page 19.)   \n647 [54] Mirac Suzgun, Nathan Scales, Nathanael Scharli, Sebastian Gehrmann, Yi Tay, Hyung Won ¨   \n648 Chung, Aakanksha Chowdhery, Quoc Le, Ed Chi, Denny Zhou, and Jason Wei. Challen  \n649 ging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them. In Anna Ro  \n650 gers, Jordan Boyd-Graber, and Naoaki Okazaki, editors, Findings of the Association for   \n651 Computational Linguistics: ACL 2023, pages 13003–13051, Toronto, Canada, 2023. As  \n652 sociation for Computational Linguistics. doi: 10.18653/v1/2023.findings-acl.824. URL   \n653 https://aclanthology.org/2023.findings-acl.824. (Cited in pages 7 and 17.)   \n654 [55] Howard G Tucker. A generalization of the Glivenko-Cantelli theorem. The Annals of Mathem  \n655 atical Statistics, 30(3):828–830, 1959. (Cited in page 5.)   \n656 [56] Sergio Verdu and H Poor. On minimax robustness: A general approach and applications. IEEE   \n657 transactions on Information Theory, 30(2):328–340, 1984. (Cited in pages 4 and 6.)   \n658 [57] Boxin Wang, Weixin Chen, Hengzhi Pei, Chulin Xie, Mintong Kang, Chenhui Zhang, Chejian   \n659 Xu, Zidi Xiong, Ritik Dutta, Rylan Schaeffer, Sang T. Truong, Simran Arora, Mantas Mazeika,   \n660 Dan Hendrycks, Zinan Lin, Yu Cheng, Sanmi Koyejo, Dawn Song, and Bo Li. DecodingTrust: A   \n661 Comprehensive Assessment of Trustworthiness in GPT Models. In Alice Oh, Tristan Naumann,   \n662 Amir Globerson, Kate Saenko, Moritz Hardt, and Sergey Levine, editors, Advances in Neural   \n663 Information Processing Systems 36: Annual Conference on Neural Information Processing   \n664 Systems 2023, NeurIPS 2023, New Orleans, LA, USA, December 10 - 16, 2023, 2023. URL   \n665 http://papers.nips.cc/paper_files/paper/2023/hash/63cb9921eecf51bfad27a   \n666 99b2c53dd6d-Abstract-Datasets_and_Benchmarks.html. (Cited in pages 2, 6, and 9.)   \n667 [58] Yubo Wang, Xueguang Ma, Ge Zhang, Yuansheng Ni, Abhranil Chandra, Shiguang Guo, Weim  \n668 ing Ren, Aaran Arulraj, Xuan He, Ziyan Jiang, Tianle Li, Max Ku, Kai Wang, Alex Zhuang,   \n669 Rongqi Fan, Xiang Yue, and Wenhu Chen. MMLU-Pro: A More Robust and Challenging   \n670 Multi-Task Language Understanding Benchmark. In Amir Globersons, Lester Mackey, Danielle   \n671 Belgrave, Angela Fan, Ulrich Paquet, Jakub M. Tomczak, and Cheng Zhang, editors, Advances   \n672 in Neural Information Processing Systems 38: Annual Conference on Neural Information   \n673 Processing Systems 2024, NeurIPS 2024, Vancouver, BC, Canada, December 10 - 15, 2024,   \n674 2024. URL http://papers.nips.cc/paper_files/paper/2024/hash/ad236edc564   \n675 f3e3156e1b2feafb99a24-Abstract-Datasets_and_Benchmarks_Track.html. (Cited   \n676 in pages 7 and 17.)   \n677 [59] Yufei Wang, Haoliang Li, and Alex C. Kot. Heterogeneous Domain Generalization Via   \n678 Domain Mixup. In 2020 IEEE International Conference on Acoustics, Speech and Signal   \n679 Processing, ICASSP 2020, Barcelona, Spain, May 4-8, 2020, pages 3622–3626. IEEE, 2020.   \n680 doi: 10.1109/ICASSP40776.2020.9053273. URL https://doi.org/10.1109/ICASSP4077   \n681 6.2020.9053273. (Cited in page 9.)   \n682 [60] Frank Wilcoxon. Individual Comparisons by Ranking Methods. Biometrics Bulletin, 1(6):   \n683 80–83, 1945. ISSN 00994987. URL http://www.jstor.org/stable/3001968. (Cited in   \n684 page 6.)   \n685 [61] Lifan Yuan, Yangyi Chen, Ganqu Cui, Hongcheng Gao, Fangyuan Zou, Xingyi Cheng, Heng Ji,   \n686 Zhiyuan Liu, and Maosong Sun. Revisiting Out-of-distribution Robustness in NLP: Benchmarks,   \n687 Analysis, and LLMs Evaluations. In Alice Oh, Tristan Naumann, Amir Globerson, Kate Saenko,   \n688 Moritz Hardt, and Sergey Levine, editors, Advances in Neural Information Processing Systems   \n689 36: Annual Conference on Neural Information Processing Systems 2023, NeurIPS 2023, New   \n690 Orleans, LA, USA, December 10 - 16, 2023, 2023. URL http://papers.nips.cc/paper_f   \n691 iles/paper/2023/hash/b6b5f50a2001ad1cbccca96e693c4ab4-Abstract-Dataset   \n692 s_and_Benchmarks.html. (Cited in page 1.)   \n693 [62] Muhammad Bilal Zafar, Isabel Valera, Manuel Gomez-Rodriguez, and Krishna P. Gummadi.   \n694 Fairness Constraints: Mechanisms for Fair Classification. In Aarti Singh and Xiaojin (Jerry) Zhu,   \n695 editors, Proceedings of the 20th International Conference on Artificial Intelligence and Statistics,   \n696 AISTATS 2017, 20-22 April 2017, Fort Lauderdale, FL, USA, volume 54 of Proceedings of   \n697 Machine Learning Research, pages 962–970. PMLR, 2017. URL http://proceedings.mlr.   \n698 press/v54/zafar17a.html. (Cited in pages 2 and 7.)   \n699 [63] Milan Zeleny. Compromise programming. Multiple criteria decision making, 1973. (Cited in   \n700 page 3.)   \n701 [64] Yifan Zhong, Chengdong Ma, Xiaoyuan Zhang, Ziran Yang, Haojun Chen, Qingfu Zhang,   \n702 Siyuan Qi, and Yaodong Yang. Panacea: Pareto Alignment via Preference Adaptation for LLMs.   \n703 In Amir Globersons, Lester Mackey, Danielle Belgrave, Angela Fan, Ulrich Paquet, Jakub M.   \n704 Tomczak, and Cheng Zhang, editors, Advances in Neural Information Processing Systems 38:   \n705 Annual Conference on Neural Information Processing Systems 2024, NeurIPS 2024, Vancouver,   \n706 BC, Canada, December 10 - 15, 2024, 2024. URL http://papers.nips.cc/paper_fil   \n707 es/paper/2024/hash/89f39d0b3d49a47606a165eefba2778c-Abstract-Conference.   \n708 html. (Cited in page 6.) ",
+        "bbox": [
+            138,
+            63,
+            828,
+            914
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "discarded",
+        "text": "11 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            948
+        ],
+        "page_idx": 10
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            142,
+            60,
+            828,
+            922
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "discarded",
+        "text": "12 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 11
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            138,
+            63,
+            828,
+            920
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "discarded",
+        "text": "13 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 12
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            125,
+            87,
+            828,
+            920
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "14 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 13
+    },
+    {
+        "type": "discarded",
+        "text": "709 [65] Jeffrey Zhou, Tianjian Lu, Swaroop Mishra, Siddhartha Brahma, Sujoy Basu, Yi Luan, Denny 710 Zhou, and Le Hou. Instruction-Following Evaluation for Large Language Models, 2023. URL 711 https://arxiv.org/abs/2311.07911. (Cited in pages 7 and 17.) ",
+        "bbox": [
+            140,
+            92,
+            828,
+            133
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "discarded",
+        "text": "15 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 14
+    },
+    {
+        "type": "text",
+        "text": "864 NeurIPS Paper Checklist ",
+        "text_level": 1,
+        "bbox": [
+            145,
+            89,
+            387,
+            107
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "1. Claims ",
+        "text_level": 1,
+        "bbox": [
+            179,
+            118,
+            250,
+            132
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Do the main claims made in the abstract and introduction accurately reflect the paper’s contributions and scope? ",
+        "bbox": [
+            196,
+            136,
+            823,
+            164
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            199,
+            167,
+            295,
+            181
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: The claims made in the abstract and introduction (the need of normalizing our objectives and of having a meaningful criterion function to map the user preferences) are appropriately reflected and demonstrated through all experiments and discussions in the main manuscript. ",
+        "bbox": [
+            199,
+            185,
+            825,
+            227
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            231,
+            276,
+            244
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the abstract and introduction do not include the claims made in the paper.   \n• The abstract and/or introduction should clearly state the claims made, including the contributions made in the paper and important assumptions and limitations. A No or NA answer to this question will not be perceived well by the reviewers.   \n• The claims made should match theoretical and experimental results, and reflect how much the results can be expected to generalize to other settings.   \n• It is fine to include aspirational goals as motivation as long as it is clear that these goals are not attained by the paper. ",
+        "bbox": [
+            209,
+            250,
+            825,
+            386
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "2. Limitations ",
+        "text_level": 1,
+        "bbox": [
+            178,
+            390,
+            282,
+            404
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss the limitations of the work performed by the authors? ",
+        "bbox": [
+            194,
+            406,
+            769,
+            421
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            199,
+            425,
+            295,
+            439
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Justification: We do not dedicate a specific section for limitations due to COPA simplicity and space constraints. However, we make really clear throughout the paper what are our main assumptions and thus limitations. Mainly, we assume the existence of a population of models $\\mathcal { H }$ with continuous random variables. If these do not hold, COPA cannot be directly applied. ",
+        "bbox": [
+            199,
+            443,
+            825,
+            498
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            502,
+            276,
+            515
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper.   \n• The authors are encouraged to create a separate ”Limitations” section in their paper.   \n• The paper should point out any strong assumptions and how robust the results are to violations of these assumptions (e.g., independence assumptions, noiseless settings, model well-specification, asymptotic approximations only holding locally). The authors should reflect on how these assumptions might be violated in practice and what the implications would be.   \n• The authors should reflect on the scope of the claims made, e.g., if the approach was only tested on a few datasets or with a few runs. In general, empirical results often depend on implicit assumptions, which should be articulated.   \n• The authors should reflect on the factors that influence the performance of the approach. For example, a facial recognition algorithm may perform poorly when image resolution is low or images are taken in low lighting. Or a speech-to-text system might not be used reliably to provide closed captions for online lectures because it fails to handle technical jargon.   \n• The authors should discuss the computational efficiency of the proposed algorithms and how they scale with dataset size.   \n• If applicable, the authors should discuss possible limitations of their approach to address problems of privacy and fairness.   \nWhile the authors might fear that complete honesty about limitations might be used by reviewers as grounds for rejection, a worse outcome might be that reviewers discover limitations that aren’t acknowledged in the paper. The authors should use their best judgment and recognize that individual actions in favor of transparency play an important role in developing norms that preserve the integrity of the community. Reviewers will be specifically instructed to not penalize honesty concerning limitations. ",
+        "bbox": [
+            207,
+            522,
+            825,
+            893
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "3. Theory assumptions and proofs ",
+        "bbox": [
+            160,
+            897,
+            421,
+            911
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "discarded",
+        "text": "865 866 867 868 869 870 871 872 873 874 875 876 877 878 879 880 881 882 883 884 885 886 887 888 889 890 891 892 893 894 895 896 897 898 899 900 901 902 903 904 905 906 907 908 909 910 911 912 913 914 915 ",
+        "bbox": [
+            137,
+            98,
+            166,
+            922
+        ],
+        "page_idx": 15
+    },
+    {
+        "type": "text",
+        "text": "Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof? ",
+        "bbox": [
+            192,
+            92,
+            823,
+            119
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            199,
+            123,
+            295,
+            137
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Justification: The main theoretical claims have to do with the properties of the rank estimator, which we fully proof in Prop. 3.1. While we point to other results without writing down their proofs, e.g. the properties of the proposed norm Eq. 11, the demonstration require minimal changes from those proofs we point to in the main paper. ",
+        "bbox": [
+            199,
+            141,
+            825,
+            196
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            200,
+            276,
+            213
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include theoretical results.   \n• All the theorems, formulas, and proofs in the paper should be numbered and cross-referenced.   \n• All assumptions should be clearly stated or referenced in the statement of any theorems.   \n• The proofs can either appear in the main paper or the supplemental material, but if they appear in the supplemental material, the authors are encouraged to provide a short proof sketch to provide intuition.   \n• Inversely, any informal proof provided in the core of the paper should be complemented by formal proofs provided in appendix or supplemental material.   \n• Theorems and Lemmas that the proof relies upon should be properly referenced. ",
+        "bbox": [
+            207,
+            219,
+            825,
+            364
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "4. Experimental result reproducibility ",
+        "text_level": 1,
+        "bbox": [
+            179,
+            367,
+            447,
+            381
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)? ",
+        "bbox": [
+            199,
+            385,
+            823,
+            426
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            199,
+            430,
+            295,
+            444
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Justification: Yes, all details are fully specified in the main paper and in $\\ S \\mathrm { A }$ ",
+        "bbox": [
+            200,
+            448,
+            692,
+            462
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            465,
+            276,
+            479
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• If the paper includes experiments, a No answer to this question will not be perceived well by the reviewers: Making the paper reproducible is important, regardless of whether the code and data are provided or not.   \n• If the contribution is a dataset and/or model, the authors should describe the steps taken to make their results reproducible or verifiable.   \n• Depending on the contribution, reproducibility can be accomplished in various ways. For example, if the contribution is a novel architecture, describing the architecture fully might suffice, or if the contribution is a specific model and empirical evaluation, it may be necessary to either make it possible for others to replicate the model with the same dataset, or provide access to the model. In general. releasing code and data is often one good way to accomplish this, but reproducibility can also be provided via detailed instructions for how to replicate the results, access to a hosted model (e.g., in the case of a large language model), releasing of a model checkpoint, or other means that are appropriate to the research performed. While NeurIPS does not require releasing code, the conference does require all submissions to provide some reasonable avenue for reproducibility, which may depend on the nature of the contribution. For example (a) If the contribution is primarily a new algorithm, the paper should make it clear how to reproduce that algorithm. (b) If the contribution is primarily a new model architecture, the paper should describe the architecture clearly and fully. (c) If the contribution is a new model (e.g., a large language model), then there should either be a way to access this model for reproducing the results or a way to reproduce the model (e.g., with an open-source dataset or instructions for how to construct the dataset). (d) We recognize that reproducibility may be tricky in some cases, in which case authors are welcome to describe the particular way they provide for reproducibility. In the case of closed-source models, it may be that access to the model is limited in some way (e.g., ",
+        "bbox": [
+            205,
+            488,
+            826,
+            891
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "discarded",
+        "text": "917 918 919 920 921 922 923 924 925 926 927 928 929 930 931 932 933 934 935 936 937 938 939 940 941 942 943 944 945 946 947 948 949 950 951 952 953 954 955 956 957 958 959 960 961 962 963 964 965 966 ",
+        "bbox": [
+            137,
+            103,
+            166,
+            911
+        ],
+        "page_idx": 16
+    },
+    {
+        "type": "text",
+        "text": "to registered users), but it should be possible for other researchers to have some path to reproducing or verifying the results. ",
+        "bbox": [
+            243,
+            92,
+            823,
+            119
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "5. Open access to data and code ",
+        "text_level": 1,
+        "bbox": [
+            179,
+            123,
+            405,
+            137
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material? ",
+        "bbox": [
+            192,
+            141,
+            823,
+            169
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            199,
+            172,
+            294,
+            185
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: All experiments use publicly-available data (except for the fairness use-case data, which is attached), and the code to reproduce the experiments are attached too. ",
+        "bbox": [
+            196,
+            190,
+            825,
+            218
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            222,
+            274,
+            236
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that paper does not include experiments requiring code.   \n• Please see the NeurIPS code and data submission guidelines (https://nips.cc/public /guides/CodeSubmissionPolicy) for more details.   \n• While we encourage the release of code and data, we understand that this might not be possible, so “No” is an acceptable answer. Papers cannot be rejected simply for not including code, unless this is central to the contribution (e.g., for a new open-source benchmark).   \n• The instructions should contain the exact command and environment needed to run to reproduce the results. See the NeurIPS code and data submission guidelines (https: //nips.cc/public/guides/CodeSubmissionPolicy) for more details.   \n• The authors should provide instructions on data access and preparation, including how to access the raw data, preprocessed data, intermediate data, and generated data, etc.   \n• The authors should provide scripts to reproduce all experimental results for the new proposed method and baselines. If only a subset of experiments are reproducible, they should state which ones are omitted from the script and why.   \n• At submission time, to preserve anonymity, the authors should release anonymized versions (if applicable).   \n• Providing as much information as possible in supplemental material (appended to the paper) is recommended, but including URLs to data and code is permitted. ",
+        "bbox": [
+            207,
+            239,
+            826,
+            518
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "6. Experimental setting/details ",
+        "text_level": 1,
+        "bbox": [
+            178,
+            521,
+            397,
+            535
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results? ",
+        "bbox": [
+            196,
+            539,
+            825,
+            566
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            199,
+            570,
+            295,
+            583
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: Yes, all details are provided in $\\ S \\mathrm { A }$ . ",
+        "bbox": [
+            200,
+            588,
+            513,
+            602
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            606,
+            276,
+            619
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The experimental setting should be presented in the core of the paper to a level of detail that is necessary to appreciate the results and make sense of them.   \n• The full details can be provided either with the code, in appendix, or as supplemental material. ",
+        "bbox": [
+            209,
+            625,
+            825,
+            689
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "7. Experiment statistical significance ",
+        "text_level": 1,
+        "bbox": [
+            179,
+            693,
+            437,
+            705
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments? ",
+        "bbox": [
+            199,
+            710,
+            821,
+            738
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            199,
+            741,
+            294,
+            755
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Justification: While we assume no stochasticity in the classical ML sense (i.e., via the datasets), we do so through $\\mathcal { H }$ and clearly describe the properties of the ranking estimator in Prop. 3.1. ",
+        "bbox": [
+            199,
+            758,
+            826,
+            787
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            791,
+            274,
+            804
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The authors should answer ”Yes” if the results are accompanied by error bars, confidence intervals, or statistical significance tests, at least for the experiments that support the main claims of the paper.   \n• The factors of variability that the error bars are capturing should be clearly stated (for example, train/test split, initialization, random drawing of some parameter, or overall run with given experimental conditions).   \n• The method for calculating the error bars should be explained (closed form formula, call to a library function, bootstrap, etc.)   \n• The assumptions made should be given (e.g., Normally distributed errors).   \n• It should be clear whether the error bar is the standard deviation or the standard error of the mean.   \n• It is OK to report 1-sigma error bars, but one should state it. The authors should preferably report a 2-sigma error bar than state that they have a $96 \\%$ CI, if the hypothesis of Normality of errors is not verified.   \n• For asymmetric distributions, the authors should be careful not to show in tables or figures symmetric error bars that would yield results that are out of range (e.g. negative error rates).   \n• If error bars are reported in tables or plots, The authors should explain in the text how they were calculated and reference the corresponding figures or tables in the text. ",
+        "bbox": [
+            209,
+            809,
+            825,
+            869
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "discarded",
+        "text": "969 970 971 972 973 974 975 976 977 978 979 980 981 982 983 984 985 986 987 988 989 990 991 992 993 994 995 996 997 998 999 1000 1001 1002 1003 1004 1005 1006 1007 1008 1009 1010 1011 1012 1013 1014 ",
+        "bbox": [
+            137,
+            122,
+            166,
+            882
+        ],
+        "page_idx": 17
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            207,
+            90,
+            825,
+            323
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "8. Experiments compute resources ",
+        "text_level": 1,
+        "bbox": [
+            179,
+            327,
+            423,
+            340
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments? ",
+        "bbox": [
+            197,
+            344,
+            826,
+            385
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Answer: [No] ",
+        "bbox": [
+            199,
+            388,
+            290,
+            404
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Justification: Experiments are extremely lightweight and can be run in any modern device. ",
+        "bbox": [
+            196,
+            407,
+            789,
+            421
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            424,
+            276,
+            438
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not include experiments.   \n• The paper should indicate the type of compute workers CPU or GPU, internal cluster, or cloud provider, including relevant memory and storage.   \n• The paper should provide the amount of compute required for each of the individual experimental runs as well as estimate the total compute.   \n• The paper should disclose whether the full research project required more compute than the experiments reported in the paper (e.g., preliminary or failed experiments that didn’t make it into the paper). ",
+        "bbox": [
+            207,
+            444,
+            825,
+            566
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "9. Code of ethics ",
+        "text_level": 1,
+        "bbox": [
+            178,
+            570,
+            299,
+            583
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines? ",
+        "bbox": [
+            199,
+            588,
+            823,
+            616
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            199,
+            619,
+            295,
+            632
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Justification: Data does not involve human participants and is publicly-available. ",
+        "bbox": [
+            199,
+            637,
+            725,
+            651
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            655,
+            276,
+            667
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the authors have not reviewed the NeurIPS Code of Ethics.   \n• If the authors answer No, they should explain the special circumstances that require a deviation from the Code of Ethics.   \n• The authors should make sure to preserve anonymity (e.g., if there is a special consideration due to laws or regulations in their jurisdiction). ",
+        "bbox": [
+            209,
+            674,
+            825,
+            751
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "10. Broader impacts ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            756,
+            318,
+            768
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed? ",
+        "bbox": [
+            199,
+            772,
+            821,
+            800
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            199,
+            804,
+            295,
+            818
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Justification: While we do dedicate a specific paragraph, the entire discussion within the manuscript concerns the need of properly mapping the preferences of users into the Pareto front and their possible misuses (e.g., by not normalizing objectives), and we thus believe that the impacts of our work are clear. ",
+        "bbox": [
+            199,
+            821,
+            825,
+            877
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            881,
+            276,
+            895
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "discarded",
+        "text": "26 ",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "discarded",
+        "text": "1016 1017 1018 1019 1020 1021 1022 1023 1024 1025 1026 1027 1028 1029 1030 1031 1032 1033 1034 1035 1036 1037 1038 1039 1040 1041 1042 1043 1044 1045 1046 1047 1048 1049 1050 1051 1052 1053 1054 1055 1056 1057 1058 1059 1060 1061 1062 1063 1064 ",
+        "bbox": [
+            133,
+            108,
+            166,
+            900
+        ],
+        "page_idx": 18
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that there is no societal impact of the work performed.   \n• If the authors answer NA or No, they should explain why their work has no societal impact or why the paper does not address societal impact. Examples of negative societal impacts include potential malicious or unintended uses (e.g., disinformation, generating fake profiles, surveillance), fairness considerations (e.g., deployment of technologies that could make decisions that unfairly impact specific groups), privacy considerations, and security considerations.   \n• The conference expects that many papers will be foundational research and not tied to particular applications, let alone deployments. However, if there is a direct path to any negative applications, the authors should point it out. For example, it is legitimate to point out that an improvement in the quality of generative models could be used to generate deepfakes for disinformation. On the other hand, it is not needed to point out that a generic algorithm for optimizing neural networks could enable people to train models that generate Deepfakes faster. The authors should consider possible harms that could arise when the technology is being used as intended and functioning correctly, harms that could arise when the technology is being used as intended but gives incorrect results, and harms following from (intentional or unintentional) misuse of the technology.   \n• If there are negative societal impacts, the authors could also discuss possible mitigation strategies (e.g., gated release of models, providing defenses in addition to attacks, mechanisms for monitoring misuse, mechanisms to monitor how a system learns from feedback over time, improving the efficiency and accessibility of ML). ",
+        "bbox": [
+            205,
+            89,
+            825,
+            415
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "11. Safeguards ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            419,
+            279,
+            433
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pretrained language models, image generators, or scraped datasets)? ",
+        "bbox": [
+            199,
+            436,
+            825,
+            478
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            199,
+            482,
+            294,
+            494
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Justification: We do not provide any of the above. ",
+        "bbox": [
+            197,
+            500,
+            524,
+            513
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            517,
+            276,
+            530
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper poses no such risks.   \n• Released models that have a high risk for misuse or dual-use should be released with necessary safeguards to allow for controlled use of the model, for example by requiring that users adhere to usage guidelines or restrictions to access the model or implementing safety filters.   \n• Datasets that have been scraped from the Internet could pose safety risks. The authors should describe how they avoided releasing unsafe images.   \n• We recognize that providing effective safeguards is challenging, and many papers do not require this, but we encourage authors to take this into account and make a best faith effort. ",
+        "bbox": [
+            207,
+            536,
+            825,
+            659
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "12. Licenses for existing assets ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            662,
+            385,
+            676
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected? ",
+        "bbox": [
+            199,
+            680,
+            823,
+            722
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Answer: [Yes] ",
+        "bbox": [
+            199,
+            726,
+            295,
+            739
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Justification: We properly cite and point to every method and data we use. ",
+        "bbox": [
+            197,
+            743,
+            683,
+            757
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            761,
+            276,
+            775
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not use existing assets.   \n• The authors should cite the original paper that produced the code package or dataset.   \n• The authors should state which version of the asset is used and, if possible, include a URL.   \n• The name of the license (e.g., CC-BY 4.0) should be included for each asset.   \n• For scraped data from a particular source (e.g., website), the copyright and terms of service of that source should be provided.   \n• If assets are released, the license, copyright information, and terms of use in the package should be provided. For popular datasets, paperswithcode.com/datasets has curated licenses for some datasets. Their licensing guide can help determine the license of a dataset.   \n• For existing datasets that are re-packaged, both the original license and the license of the derived asset (if it has changed) should be provided.   \n• If this information is not available online, the authors are encouraged to reach out to the asset’s creators. ",
+        "bbox": [
+            207,
+            780,
+            825,
+            880
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "discarded",
+        "text": "1065 1066 1067 1068 1069 1070 1071 1072 1073 1074 1075 1076 1077 1078 1079 1080 1081 1082 1083 1084 1085 1086 1087 1088 1089 1090 1091 1092 1093 1094 1095 1096 1097 1098 1099 1100 1101 1102 1103 1104 1105 1106 1107 1108 1109 1110 1111 1112 1113 1114 ",
+        "bbox": [
+            133,
+            98,
+            165,
+            898
+        ],
+        "page_idx": 19
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            197,
+            90,
+            825,
+            196
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "13. New assets ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            200,
+            276,
+            213
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets? ",
+        "bbox": [
+            189,
+            218,
+            823,
+            246
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            199,
+            250,
+            295,
+            263
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Justification: No new assets. ",
+        "bbox": [
+            199,
+            267,
+            385,
+            280
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            285,
+            276,
+            297
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not release new assets.   \n• Researchers should communicate the details of the dataset/code/model as part of their submissions via structured templates. This includes details about training, license, limitations, etc.   \n• The paper should discuss whether and how consent was obtained from people whose asset is used.   \n• At submission time, remember to anonymize your assets (if applicable). You can either create an anonymized URL or include an anonymized zip file. ",
+        "bbox": [
+            200,
+            301,
+            826,
+            426
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "14. Crowdsourcing and research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            430,
+            549,
+            444
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? ",
+        "bbox": [
+            196,
+            448,
+            825,
+            489
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            199,
+            493,
+            294,
+            507
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Justification: Not applicable. ",
+        "bbox": [
+            199,
+            511,
+            387,
+            525
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            529,
+            276,
+            542
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   \n• Including this information in the supplemental material is fine, but if the main contribution of the paper involves human subjects, then as much detail as possible should be included in the main paper.   \n• According to the NeurIPS Code of Ethics, workers involved in data collection, curation, or other labor should be paid at least the minimum wage in the country of the data collector. ",
+        "bbox": [
+            204,
+            547,
+            825,
+            652
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "15. Institutional review board (IRB) approvals or equivalent for research with human subjects ",
+        "text_level": 1,
+        "bbox": [
+            160,
+            656,
+            823,
+            670
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained? ",
+        "bbox": [
+            197,
+            674,
+            825,
+            729
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            199,
+            733,
+            294,
+            747
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Justification: Not applicable. ",
+        "bbox": [
+            199,
+            751,
+            387,
+            765
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            768,
+            276,
+            782
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.   \n• Depending on the country in which research is conducted, IRB approval (or equivalent) may be required for any human subjects research. If you obtained IRB approval, you should clearly state this in the paper.   \n• We recognize that the procedures for this may vary significantly between institutions and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the guidelines for their institution. ",
+        "bbox": [
+            204,
+            787,
+            825,
+            906
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            936,
+            508,
+            946
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "discarded",
+        "text": "1115 1116 1117 1118 1119 1120 1121 1122 1123 1124 1125 1126 1127 1128 1129 1130 1131 1132 1133 1134 1135 1136 1137 1138 1139 1140 1141 1142 1143 1144 1145 1146 1147 1148 1149 1150 1151 1152 1153 1154 1155 1156 1157 1158 1159 1160 1161 1162 1163 1164 1165 ",
+        "bbox": [
+            133,
+            94,
+            165,
+            926
+        ],
+        "page_idx": 20
+    },
+    {
+        "type": "text",
+        "text": "• For initial submissions, do not include any information that would break anonymity (if applicable), such as the institution conducting the review. ",
+        "bbox": [
+            202,
+            92,
+            823,
+            119
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "16. Declaration of LLM usage ",
+        "text_level": 1,
+        "bbox": [
+            171,
+            123,
+            385,
+            137
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "Question: Does the paper describe the usage of LLMs if it is an important, original, or nonstandard component of the core methods in this research? Note that if the LLM is used only for writing, editing, or formatting purposes and does not impact the core methodology, scientific rigorousness, or originality of the research, declaration is not required. ",
+        "bbox": [
+            197,
+            141,
+            825,
+            196
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "Answer: [NA] ",
+        "bbox": [
+            199,
+            200,
+            294,
+            213
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "Justification: We do not use any LLM. ",
+        "bbox": [
+            199,
+            217,
+            450,
+            232
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "Guidelines: ",
+        "bbox": [
+            199,
+            236,
+            276,
+            250
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "• The answer NA means that the core method development in this research does not involve LLMs as any important, original, or non-standard components. ",
+        "bbox": [
+            194,
+            255,
+            823,
+            282
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "text",
+        "text": "• Please refer to our LLM policy (https://neurips.cc/Conferences/2025/LLM) for what should or should not be described. ",
+        "bbox": [
+            189,
+            286,
+            825,
+            314
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            490,
+            935,
+            508,
+            946
+        ],
+        "page_idx": 21
+    },
+    {
+        "type": "discarded",
+        "text": "1166 1167 1168 1169 1170 1171 1172 1173 1174 1175 1176 1177 1178 1179 ",
+        "bbox": [
+            133,
+            93,
+            163,
+            319
+        ],
+        "page_idx": 21
+    }
+]
