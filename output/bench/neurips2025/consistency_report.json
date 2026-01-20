@@ -1,0 +1,736 @@
+{
+  "metadata": {
+    "conference": "neurips2025",
+    "model": "openai:gpt-5-mini",
+    "timestamp": "2026-01-19T18:31:19.154960",
+    "total_reports": 80,
+    "valid_comparisons": 80,
+    "matches": 33,
+    "mismatches": 47,
+    "match_rate": 41.25,
+    "errors": 0,
+    "skipped": 0
+  },
+  "details": [
+    {
+      "status": "success",
+      "paper_id": "AxaWle44P5",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The Agent explicitly states 'No formula issue detected' and treats the reviewer comment as a wording/organization remark rather than confirming the reported placement error of the '\\sim' symbol above '15'. Therefore the Agent does not confirm the reviewer's issue.",
+      "evidence": "l288 - the \\sim symbol is placed incorrectly above 15.",
+      "analysis_snippet": "No formula issue detected.\n\nReasoning and citations:\n- The snippet appears in Section 5.4 (Attack Effectiveness) where the paper states: \"We select the edited/generated images from both Image Editing ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "xFDKphWWnD",
+      "issue_index": 0,
+      "matched": true,
+      "reason": "The Agent explicitly agrees that the second bound can be negative and thus vacuous, matching the reviewer's point that the RHS of Eq.(2) can be invalid due to the nonnegativity of the Frobenius norm; the Agent explains the same cause (1 − sqrt{2(1 − α/m)}) can be < 0 and suggests using max(0, ...) or adding assumptions on α.",
+      "evidence": "Because the Frobenius norm must be non‑negative, the right‑hand side of Eq. (2) would then be invalid.",
+      "analysis_snippet": "Yes — there is a (mathematical/interpretation) issue in the paper as quoted.\n\nWhat the paper states\n- Theorem 1 (lines ~153–156) gives the pair of bounds (displayed as (2)):\n  ||M_{n+1} - M_n||_F ≤ sq..."
+    },
+    {
+      "status": "success",
+      "paper_id": "fwJ1rRHT91",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The reviewer asked whether the symbol should be o_T rather than o_t (an index/notation correction). The agent's analysis highlights a missing explicit formula for pooling+softmax and notation ambiguity but does not confirm or address the specific o_t vs o_T index question. Therefore the agent does not confirm the reviewer’s stated issue.",
+      "evidence": "Could the authors confirm whether \\(o_t\\) should indeed be \\(o_T\\) in the definition provided in Lines 197–198?",
+      "analysis_snippet": "Yes — this indicates a formula (or at least a notation / definition) omission/ambiguity in the paper.\n\nWhat the reviewer snippet shows (paper text around LINE 197–198) is:\n\n- The paper extracts output..."
+    },
+    {
+      "status": "success",
+      "paper_id": "zmlhP8myaT",
+      "issue_index": 0,
+      "matched": true,
+      "reason": "The Agent agrees with the reviewer: the antiderivative of cos(2 f x) should include a factor 1/(2f), so the paper omitted the 1/f in the denominator. The Agent notes the algebraic error and confirms the final numeric value is unaffected for the chosen f, but the displayed antiderivative is incorrect and should be corrected.",
+      "evidence": "In the derivation in Appendix B.2, is there a missing $f$ in the denominator (after integrating $cos(2fx)$)?",
+      "analysis_snippet": "Yes — there is a mathematical formula mistake in the paper's derivation (an incorrect antiderivative).\n\nWhat the paper writes (excerpt around the displayed integral):\n- They set ||sin(f x)||^2 = ∫_0^m..."
+    },
+    {
+      "status": "success",
+      "paper_id": "vWaMUMrBpF",
+      "issue_index": 2,
+      "matched": true,
+      "reason": "The Agent Analysis explicitly confirms the reviewer's reported typo: it identifies the repeated/wrong label 'L_{IAM-S}(θ) and L_{IAM-S}(θ)' and states the second should likely be 'L_{IAM-D}(θ)', matching the reviewer's issue at the cited location (around line 248).",
+      "evidence": "- Typo: Line 248, $L_{ISAM-D}(\theta)$.",
+      "analysis_snippet": "Yes — this snippet indicates formula / notation problems.\n\nRelevant location (around LINE 248 / Sec. 5.1): (quoted from the paper)\n- \"Optimizing $L _ { \\\\mathrm { I A M - S } } ( \\\\theta )$ and $L _ {..."
+    },
+    {
+      "status": "success",
+      "paper_id": "0iJskiCgKp",
+      "issue_index": 1,
+      "matched": true,
+      "reason": "The Agent explicitly agrees with the Reviewer: it identifies the same garbled sentence at lines 115–117, notes the missing arrow in \"ε → 0\" and the mis-rendered equation reference \"solving 1\" (should be \"solving (1)\"), and recommends the same fixes. This confirms the reviewer's issue.",
+      "evidence": "On lines 115-117, it is stated that \"as $\\varepsilon \\to 0$, the solution $\\mathbf P^\\varepsilon$ converges to the optimal transport matrix solving (1)\"",
+      "analysis_snippet": "Yes — this is a formula/typographical issue.\n\nWhat is wrong\n- The phrase \"as $\\varepsilon \\  \\ 0$\" in the paper is mis-rendered; it should read \"as $\\varepsilon \\to 0$\" (or \"$\\varepsilon \\downarrow 0$..."
+    },
+    {
+      "status": "success",
+      "paper_id": "0wW6Ml0qku",
+      "issue_index": 0,
+      "matched": true,
+      "reason": "The Agent explicitly agrees the reviewer’s point: it identifies the same flawed phrase ('positive semi-definite and non-singular' is contradictory and should be positive definite), and additionally flags related issues (Cholesky vs symmetric square root conflation and a ̅W/W notation slip). Thus the Agent Analysis confirms the Reviewer Issue.",
+      "evidence": "\"which exists since Q is positive semi-definite and non-singular assuming ∃(s, a) such that μπref (s, a) > 0\"",
+      "analysis_snippet": "Yes — this snippet indicates a mathematical/formula issue.\n\nProblems found (with location)\n\n- Source passage (paper, around LINE 234–237):\n  \"Specifically, we perform a whitening transformation using ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "c7qZNpguY0",
+      "issue_index": 1,
+      "matched": false,
+      "reason": "The Agent concluded 'No formula issue detected' and only pointed out unrelated typographical/formatting errors, while the reviewer flagged a specific notation/formula issue (φ should be ϕ). The Agent did not confirm that notation error, so the analyses do not match.",
+      "evidence": "After line 274, $\\phi$ should be $\\varphi$, which is the feature map of the considered RKHS?",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation and citations:\n- The paper defines d_{KT}(μ, ν) = ||Σ_μ − Σ_ν||_1 (see definition around \"d _ { K T } ( μ , ν ) = || Σ _ { μ } − Σ _ { ν } || _ { 1 }\", position..."
+    },
+    {
+      "status": "success",
+      "paper_id": "c7qZNpguY0",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The reviewer asked about a possible typo in the phrase 'For the proposed distance $d_{KT}$' (line 328), but the agent's analysis addresses a different issue: mislabeling σ as a variance in the Gaussian kernel description. The agent does not confirm or discuss the proposed-distance typo, so the issues do not match.",
+      "evidence": "In line 328, is `For the proposed distance $d_{KT}$` a typo?",
+      "analysis_snippet": "Yes — this indicates a formula/notation issue (an ambiguity/misstatement about σ).\n\nExplanation and citations\n- The paper defines the Gaussian kernel as\n  k(x,y) = exp(− ||x−y||^2 / (2 σ^2) )\n  (appea..."
+    },
+    {
+      "status": "success",
+      "paper_id": "Qo5N2wXrY7",
+      "issue_index": 0,
+      "matched": true,
+      "reason": "The agent explicitly agrees there's a conceptual wording issue: it states that limited samples for fine-tuning a very large model typically risk overfitting rather than underfitting, which confirms the reviewer's point. The agent only noted this is not a formula error but agrees with the reviewer's substantive issue.",
+      "evidence": "line 211-213, using limited samples to fine tune large models, it leads to overfitting instead of \"underfitting\"?",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation and citations:\n- The snippet (lines 211–213) is purely descriptive text about model capacity and training data (\"small number of graph prompt parameters; ... wo..."
+    },
+    {
+      "status": "success",
+      "paper_id": "oINSSze5gI",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The agent identifies a different notation error (a mismatch between q* and q_Ψ in the ELBO) rather than the reviewer's reported typo (q_ψ(𝒢 | ˜𝒢) vs q_ψ(Z | ˜𝒢)). The agent confirms an inconsistency but not the specific G vs Z typographical error in Equation (8), so the issues do not match.",
+      "evidence": "in Equation (8), the term $q_{\\psi}(\\mathcal{G} \\mid \\tilde{\\mathcal{G}})$ may be a typographical error and should likely be $q_{\\psi}(Z \\mid \\tilde{\\mathcal{G}})$.",
+      "analysis_snippet": "Yes — this is a formula issue (a notation/inconsistency bug) in the paper.\n\nWhat is wrong\n- In the ELBO displayed the paper writes\n  L(Ψ, θ; G) = E_{q*(Z | G)} [ log p_θ(Z, G) / q_Ψ(Z | G) ]\n    = E_{..."
+    },
+    {
+      "status": "success",
+      "paper_id": "nNurcq8RD4",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The agent identifies a typesetting/notation typo (s^{\flat} vs s^{0}) in the Introduction, but the reviewer asked about a different formula: whether an update equation on line 81 should use s_{≤t} instead of s_t. The agent's analysis does not address or confirm the reviewer's reported issue.",
+      "evidence": "Shouldn't the update equation on line 81 use $s_{\\leq t}$ rather than $s_t$?",
+      "analysis_snippet": "Yes — this is a formula/notation issue (a typo/inconsistency).\n\nExplanation and citations:\n- Erroneous occurrence (LINE 81 / early Introduction): the paper writes\n  \"finite-length satisficing path $(s..."
+    },
+    {
+      "status": "success",
+      "paper_id": "eg4AmZVVPO",
+      "issue_index": 1,
+      "matched": true,
+      "reason": "The agent explicitly agrees with the reviewer: it identifies the comma inside the norm in the consistency-loss (Eq.7 and Algorithm 1) as a typographical/formula error and recommends replacing it with a minus (or squared-norm) to express the intended difference. This directly confirms the reviewer's issue.",
+      "evidence": "Eq 7, should be a minus sign in between functions?",
+      "analysis_snippet": "Yes — this reviewer snippet points to a math/formula typo in the paper.\n\nIssue summary\n- The paper's consistency-loss formula is written with a comma between the two terms inside the norm, which is in..."
+    },
+    {
+      "status": "success",
+      "paper_id": "eg4AmZVVPO",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The reviewer flagged a notation error in Eq. 6 (the symbol u should be u_θ). The Agent's analysis instead discusses an inconsistency about KL normalization and the +log Z term (unnormalized vs normalized target density). These are different issues, so the Agent does not confirm the reviewer's specific point.",
+      "evidence": "Eq 6: $u$ should be $u_\\theta$?",
+      "analysis_snippet": "Yes — this indicates a formula/notation issue.\n\nWhat is wrong (concise):\n- The KL line is inconsistent/ambiguous. The paper writes\n  D_{KL}(P | Q)(X) = E[ log (dP / dQ)(X) ] + log Z.\n  If Q is a prope..."
+    },
+    {
+      "status": "success",
+      "paper_id": "kOmJnJpfRW",
+      "issue_index": 0,
+      "matched": true,
+      "reason": "The agent explicitly identifies the same error as the reviewer: the definition of L_N(p,q) uses S ~ D_p^N despite stating training with D_train = D_q, and recommends changing the expectation to S ~ D_q^N. Thus the agent confirms the reviewer's issue.",
+      "evidence": "Line 72. In the definition of $L_N({p},q)$, from my understanding the expectation should be taken with respect to $S\\sim\\mathcal{D}^N_q$ not $S\\sim\\mathcal{D}^N_p$",
+      "analysis_snippet": "Yes — this snippet indicates multiple mathematical/formula issues.\n\nKey problems (with citations to the text shown):\n\n1. Wrong sampling distribution in the definition of L_N(p,q)\n   - Quoted formula: ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "kOmJnJpfRW",
+      "issue_index": 1,
+      "matched": false,
+      "reason": "The reviewer asked whether line 107 should end with \\bar{e}_N(q). The agent instead identifies a different notation error (an incorrect nabla symbol \\mathbf{\\nabla}_{\\pmb{n}} that should be the count vector \\pmb{n}). The agent does not confirm or address the reviewer’s suggested \\bar{e}_N(q) change, so the issues do not match.",
+      "evidence": "Lin 107, at the end of this line, I think it should be $\\bar{e}_N(q)$, is this correct?",
+      "analysis_snippet": "Yes — a formula/notation issue is present.\n\nWhat’s wrong\n- In the paragraph starting \"Data Sets and Training Sequences\" the paper writes:\n  \"We can think of $N$ and $\\mathbf { \\nabla } _ { \\mathbf { \\..."
+    },
+    {
+      "status": "success",
+      "paper_id": "GgD01U3Y0H",
+      "issue_index": 1,
+      "matched": false,
+      "reason": "The agent identifies a different mathematical error (the estimator hat{u}_i is biased because the sum includes j=i, so expectations/variance should use N−1 not N). The reviewer complained about a logical contradiction involving R(N)=1 and y1 being largest; the agent did not address or confirm that specific issue. Therefore they do not match.",
+      "evidence": "In which case $R(N)) = 1,$ imply $y_1$ is not the largest, which is a contradiction.",
+      "analysis_snippet": "Yes — this snippet indicates a mathematical/formula error.\n\nWhat the paper states (location ~ lines 21350–21950)\n- Equation given:\n  hat{u}_i = hat{F}(i) := (1/N) sum_{j=1}^N [ y_j < y_i ] = (1/N) R(i..."
+    },
+    {
+      "status": "success",
+      "paper_id": "SP1zrF3Znk",
+      "issue_index": 1,
+      "matched": true,
+      "reason": "The Agent Analysis explicitly identifies the same inconsistency noted by the reviewer: the sample-size symbol is used as n in the bound but m in the definition of Ψ, and recommends using a single symbol consistently. (The agent also points out an additional missing expectation over S, but that does not contradict the reviewer's reported issue.)",
+      "evidence": "equation (3), $n$ should be $m$;",
+      "analysis_snippet": "Yes — this snippet reveals a formula/notation issue.\n\nProblems found (paper location: the PAC-Bayesian bound and the definition of Ψ, immediately after “Formally, for any λ>0 … the following inequalit..."
+    },
+    {
+      "status": "success",
+      "paper_id": "SP1zrF3Znk",
+      "issue_index": 2,
+      "matched": true,
+      "reason": "The Agent Analysis explicitly confirms the reviewer's point: the displayed definition uses an expectation over \\mathcal{M}^{(T)} instead of the single-trajectory distribution \\mathcal{M} (i.e., the erroneous '=' in the definition). The Agent agrees this is incorrect and proposes the same fix. The Agent also notes an additional, separate issue in Lemma 3.1, but that does not contradict the reviewer’s reported error.",
+      "evidence": "equation (5), $=$ in the definition;",
+      "analysis_snippet": "Yes — the reviewer snippet points to mathematical/formulation errors.\n\nTwo problems in the quoted formulas:\n\n1) Wrong distribution in the definition of the true loss\n- Problem: In the displayed defini..."
+    },
+    {
+      "status": "success",
+      "paper_id": "SP1zrF3Znk",
+      "issue_index": 4,
+      "matched": false,
+      "reason": "The Agent explicitly concludes 'No formula issue detected' and explains the formula H > R^4/(1−γ)^4 is an intentional statement about prior work's sample-size requirement, not a typo. Therefore the Agent does not confirm the reviewer's claim that 'H should be T'.",
+      "evidence": "Line 278, $H> R^4/(1-\\gamma)^4$, H should be T?",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation and citation:\n- The reviewer snippet is complaining about a restrictive sample-size requirement in Fard et al.’s bound, not pointing to a mistaken or malformed ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "SP1zrF3Znk",
+      "issue_index": 3,
+      "matched": false,
+      "reason": "The reviewer flagged an indicator-event typo (the event should be '!=' in equation (6)). The agent instead identifies a different notation/formula typo (the expectation should be over \\mathcal{M}, not \\mathcal{M}^{(T)}). The agent does not confirm the reviewer’s specific indicator issue.",
+      "evidence": "equation (6), I guess the event in the indicator should be $\\neq$",
+      "analysis_snippet": "Yes — this is a formula typo.\n\nWhat the reviewer flagged:\n- In the snippet the expected (true) loss is written with the expectation over \\mathcal{M}^{(T)}:\n  \\mathcal{L}(\\theta) = - E_{\\xi \\sim \\mathc..."
+    },
+    {
+      "status": "success",
+      "paper_id": "Gsj3oN2Ipy",
+      "issue_index": 0,
+      "matched": true,
+      "reason": "The Agent explicitly agrees a formula issue exists: it states p(y|v,p_ada) is being used as a probability vector (a predictive distribution) and that adding it elementwise to another probability vector (Softmax(...)) is mathematically inconsistent without normalization/weighting or combining logits. This confirms the reviewer's concern about the quantity's type (value vs. distribution) and the resulting incorrect addition; the Agent also notes related notation ambiguity.",
+      "evidence": "In Eq.8, p(y|v,p_{ada}) represents the probability of belonging to y, which should be a value rather than a distribution.",
+      "analysis_snippet": "Yes — a formula issue is present.\n\nWhat the reviewer snippet shows\n- The paper defines the final prediction as\n  P_final = P_pt + P_memo = p(y | v, p_ada) + Softmax( M′^{ada^T} v ).\n  (displayed in th..."
+    },
+    {
+      "status": "success",
+      "paper_id": "XWbIHOW6u1",
+      "issue_index": 0,
+      "matched": true,
+      "reason": "The Agent Analysis explicitly confirms the reviewer's concern: it identifies the same typos in the definitions of β_T and γ_T (wrong dummy variable in the set-builder and inconsistent English), explains the intended definitions, and provides corrected formulas and wording.",
+      "evidence": "Equations (14) and (17): Is there a typo in the definitions of $\\beta_{\\mathcal{T}}$ and $\\gamma_{\\mathcal{T}}$?",
+      "analysis_snippet": "Yes — there is a formula/notation issue in the paper.\n\nWhat is wrong\n- The definitions of the indexing maps β_T(t) and γ_T(t) use the wrong dummy variable / set membership in the set-builder, and the ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "8WP2NgiRUV",
+      "issue_index": 4,
+      "matched": false,
+      "reason": "The reviewer flagged a problem with theorem numbering at l.211 (Theorem 27 vs Proposition 28). The agent instead diagnoses a notation/formatting issue (broken multi-letter identifiers, spacing in subscripts, inconsistent X vs x) and explicitly states this is not a theorem error. Therefore the agent does not confirm the reviewer's reported theorem-numbering issue.",
+      "evidence": "l.211: Theorem 27 (28 is a proposition)",
+      "analysis_snippet": "Yes — this snippet indicates a formula/notation issue (formatting and inconsistent subscript notation), not a mathematical theorem error.\n\nProblems and evidence from the paper snippet\n- Broken multi-l..."
+    },
+    {
+      "status": "success",
+      "paper_id": "8WP2NgiRUV",
+      "issue_index": 3,
+      "matched": false,
+      "reason": "The reviewer flagged a problem with Eq. 6 ('\\mathrm{Pa}'), but the agent explicitly states 'No formula issue detected' and discusses a different displayed relation (the DAGs/HDAGs/SEMs ordering). The agent therefore does not confirm the specific issue the reviewer raised (it either refutes it or addresses a different equation/formatting artifact), so this is not a match.",
+      "evidence": "Eq. 6: \\mathrm{Pa}",
+      "analysis_snippet": "No formula issue detected.\n\nReasoning:\n- The only displayed formula in the reviewer snippet is the ordering\n  \\mathrm{DAGs} \\precsim \\mathrm{HDAGs} \\prec \\mathrm{SEMs},\n  which is a high-level stateme..."
+    },
+    {
+      "status": "success",
+      "paper_id": "8WP2NgiRUV",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The agent identifies a notation/definitional-symbol ambiguity (the use of '=:') and suggests clarifying the definition, but does not confirm the reviewer's specific claim that Eq. (4) is mathematically incorrect if ξ_S(x_s) is the log probability of p(x_s). The agent addresses a different issue (notation ambiguity), so it does not confirm the reviewer's reported error.",
+      "evidence": "Eq. (4) is not clear. If \\xi_S(x_s) is the log probability of p(x_s), then (4) is not correct.",
+      "analysis_snippet": "Yes — this indicates a formula/notation issue.\n\nWhat is wrong\n- The two displayed equations in the snippet (the clique expansion and the hypergraph generalization, around Lines 83–91 / Definition 2) u..."
+    },
+    {
+      "status": "success",
+      "paper_id": "8WP2NgiRUV",
+      "issue_index": 1,
+      "matched": false,
+      "reason": "The Agent Analysis states 'No formula issue detected' and addresses an unrelated snippet about X \\in R^d, failing to confirm the reviewer's specific concern about unordered edges being written as ordered pairs (i,j) vs sets {i,j}. Therefore the agent did not agree with or confirm the reviewer's issue.",
+      "evidence": "Line 76: now unordered edges are ordered pairs $(i, j)$. Should they instead be sets $\\lbrace i, j \\rbrace$?",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation:\n- The reviewer snippet points to a conceptual remark about \"finite observations rather than the population limit\" (just above Section 2.1) and then the start o..."
+    },
+    {
+      "status": "success",
+      "paper_id": "wh3p37VYm2",
+      "issue_index": 0,
+      "matched": true,
+      "reason": "The agent explicitly confirms a problem in the smoothness-based inequality: it identifies the same issue the reviewer pointed to (the smoothness bound was miswritten with ∇ℒ^T(θ_{t+1}+θ_t) instead of the correct ∇ℒ^T(θ_{t+1}−θ_t)), i.e. a sign/typo in the β-smoothness-related step and recommends the same fix.",
+      "evidence": "The analysis in (5) and (6) assumes that the loss is $\\beta$-smooth",
+      "analysis_snippet": "Yes — this indicates a formula (typo/sign) issue.\n\nWhat the reviewer likely noticed\n- In the displayed \"following expected update\" (around \"following expected update:\"; see document near line 218–222)..."
+    },
+    {
+      "status": "success",
+      "paper_id": "tNvvSzS829",
+      "issue_index": 1,
+      "matched": true,
+      "reason": "The Agent agrees with the Reviewer: it identifies a typo where both sides read u_i(σ_i′,s_{-i}) (with a stray dot on the left) and confirms the correct expression is u_i(σ_i′,s_{-i}) > u_i(σ_i,s_{-i}).",
+      "evidence": "In Lines 18 and 24, I believe the correct notation should be $u_i(\\sigma_i',s_{-i}) > u_i(\\sigma_i,s_{-i})$.",
+      "analysis_snippet": "Yes — this is a formula/typo issue.\n\nWhat the paper currently shows (Introduction, p.15, line ~18) is:\nu_i ˙(σ_i′, s_{-i}) > u_i(σ_i′, s_{-i})\n— i.e. the left side has a stray dot and both sides compa..."
+    },
+    {
+      "status": "success",
+      "paper_id": "tNvvSzS829",
+      "issue_index": 2,
+      "matched": true,
+      "reason": "The Agent explicitly agrees this is a typographical/formula error and gives the same corrected inequality u_i(σ_i', s_{-i}) > u_i(σ_i, s_{-i}), noting the printed version incorrectly repeats σ_i' and is vacuous.",
+      "evidence": "In Lines 18 and 24, I believe the correct notation should be $u_i(\\sigma_i',s_{-i}) > u_i(\\sigma_i,s_{-i})$.",
+      "analysis_snippet": "Yes — this is a formula (typographical) error.\n\nWhat the paper currently shows (Introduction, Section 1, around the sentence \"In a strategic-form game...\") is:\nu_{i} \\dot{( \\sigma_{i}^{\\prime}, s_{-i}..."
+    },
+    {
+      "status": "success",
+      "paper_id": "hEA2n6OUUK",
+      "issue_index": 3,
+      "matched": false,
+      "reason": "The Agent explicitly states 'No formula issue detected' and provides algebraic checks of the displayed inequalities, rejecting the reviewer's claim that two O(δ) terms were subtracted to yield 0. Thus the Agent does not confirm the reviewer's reported error.",
+      "evidence": "In the proof of Lemma 3.1, on line 254 of the formula, the subtraction of two $O(\\delta)$ terms results in $0$, which is incorrect",
+      "analysis_snippet": "No formula issue detected.\n\nReasoning (with citations):\n- The displayed inequality chain\n  \"3 - O(δ) ≤ x^T Y_{ȷw} x = Σ_{i=1}^d λ_i α_i^2 ≤ λ_1 α_1^2 + λ_2 (1 - α_1^2) ≤ (3 + O(δ)) α_1^2 + (1 + O(δ)) ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "hEA2n6OUUK",
+      "issue_index": 0,
+      "matched": true,
+      "reason": "The Agent identifies the same mathematical/formula error noted by the reviewer: Lemma 2.3 contains the term sqrt(d/(n τ)), which implies the error increases as τ decreases (i.e., for higher success probability), so the lemma cannot hold with high probability. The Agent explains this is likely a typo and recommends replacing τ with a logarithmic dependence (e.g., log(1/τ)), which directly addresses the reviewer's concern about the lemma failing when ε is very small / when high probability is required.",
+      "evidence": "the statement of Lemma 2.3 does not hold with high probability when $\\epsilon$ is very small",
+      "analysis_snippet": "Yes — this snippet indicates a mathematical/formula issue.\n\nWhat’s wrong\n- In Lemma 2.3 the stated error bound contains the term sqrt( d / (n τ) ):\n  ||\\widehat{\\mu} - \\mu||_2 = O( sqrt{ε} + sqrt{ d /..."
+    },
+    {
+      "status": "success",
+      "paper_id": "W8TB5rmbk1",
+      "issue_index": 0,
+      "matched": true,
+      "reason": "The Agent explicitly identifies the same typographical issue cited by the reviewer: it notes 'm = 2 0' should be 'm = 20' and recommends correcting LaTeX/spacing—thus confirming the reviewer's reported typo.",
+      "evidence": "Line 263, a typo for $m=20$?",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation and citation:\n- The reviewer snippet (document positions 35380–36500) contains spacing/typographical errors in LaTeX and numeric text, not a mathematical deriva..."
+    },
+    {
+      "status": "success",
+      "paper_id": "WXAjAelIpJ",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The Agent identifies LaTeX/rendering corruptions (the garbled 'j^{\\bar{\\mathbf{\\alpha}}}' fragment and '\\bar{1}') in Section 2.1 but does not mention or confirm the reviewer's specific claim about 'z_i = y_i' vs 'z_i = y_{i-n}'. The agent addresses different formula issues, so it does not confirm the reviewer's issue.",
+      "evidence": "Line 64: $z_i = y_i$ should probably be $z_i = y_{i-n}$",
+      "analysis_snippet": "Yes — a formula / LaTeX rendering issue is present.\n\nWhat is wrong\n- In Section 2.1 (Binary Vectors), the text that defines y = (x_{-i}, b) contains a corrupted token:\n  - The paper reads: \"y_i = b an..."
+    },
+    {
+      "status": "success",
+      "paper_id": "DP7kUjUltX",
+      "issue_index": 0,
+      "matched": true,
+      "reason": "The Agent Analysis explicitly agrees with the reviewer: it identifies the same incorrect codomain (comb : K^{3m} -> K^{n} should be -> K^{m}) and explains why that is inconsistent with agg/agg_g and the later comb formula. The agent therefore confirms the reviewer issue.",
+      "evidence": "\"Should this be K^3m->K^m (as opposed to n?) (line 97)\"",
+      "analysis_snippet": "Yes — this snippet reveals formula/notation issues in the paper.\n\nEvidence and explanation:\n\n1) Wrong codomain for comb\n- Paper text (Background): \"An ACR-GNN layer is defined by a triple (comb, agg, ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "OtOcVbOT7r",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The agent points out typographical/formatting errors (stray '9', '6 4' instead of '64', missing base in an exponent, broken LaTeX rendering) but does not confirm the reviewer's algebraic claim that all K terms should cancel in eq. (9). The agent addresses different issues (formatting), not the specific cancellation-of-K concern, so the reviewer's issue is not confirmed.",
+      "evidence": "Regarding the convergence rate in (9)... Would seem to me... you would cancel all the $K$ from eq. (9).",
+      "analysis_snippet": "Yes — the snippet indicates formatting/typographical errors in the paper's displayed formulas (which make the math unclear). Relevant problems and locations:\n\n- Strange stray character before \"satisfy..."
+    },
+    {
+      "status": "success",
+      "paper_id": "YqzAsStE6n",
+      "issue_index": 2,
+      "matched": true,
+      "reason": "The Agent explicitly agrees that Proposition 1 contains formula/typographical errors matching the Reviewer’s concern (incorrect index usage in the sum/estimator and V_t; garbled set name). The Agent identifies the same issues and proposes the same corrections, so the analysis confirms the reviewer issue.",
+      "evidence": "In Proposition 1. (line 134), $\\sum_{s=1}^{t} ( < \\theta, X_s> - Y_s)^2",
+      "analysis_snippet": "Yes — this reviewer snippet flags a formula/typing issue in the paper.\n\nWhat is wrong\n- The displayed formulas in Proposition 1 contain clear index / symbol typos and a garbled set name:\n  - V_t is wr..."
+    },
+    {
+      "status": "success",
+      "paper_id": "YqzAsStE6n",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The agent identifies a garbled UCB formula (missing inner-product notation) in the displayed equation, whereas the reviewer flagged a problem with the Reg(T) = sum_{t=1}^T sup ... formula. Although both cite around line 106, the agent's confirmed issue is different in content, so they do not match.",
+      "evidence": "In line 106, Reg(T) = \\sum_{t=1}^{T} \\sup ...",
+      "analysis_snippet": "Yes — this is a formula issue.\n\nProblem: the displayed definition of the UCB is garbled: it shows\n  \\operatorname { U C B } _ { \\mathcal { C } _ { t - 1 } } ( x ) = \\operatorname* { m a x } _ { \\theta..."
+    },
+    {
+      "status": "success",
+      "paper_id": "YqzAsStE6n",
+      "issue_index": 1,
+      "matched": false,
+      "reason": "The Agent explicitly states 'No formula issue detected' and interprets the reviewer comment as a request for an explicit derivation rather than reporting an incorrect formula. The Agent only recommends adding derivation and fixing minor typographical errors; it does not confirm the reviewer’s issue as an actual formula error. Therefore the Agent does not confirm the reviewer issue.",
+      "evidence": "In Proposition 1. (line 134), $ V_t = \\sum_{s=1}^{t} X_s X_s^\\top + \\lambda I_d$",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation and location:\n- The reviewer comment is a request for an explicit derivation (pointing to Section 4 / Corollary 1), not an assertion that a displayed formula is..."
+    },
+    {
+      "status": "success",
+      "paper_id": "mZuFaBAVs6",
+      "issue_index": 4,
+      "matched": false,
+      "reason": "The Agent identifies typographic/notation problems (β formatting and inconsistent bolding) and explicitly states the energy score formula is the standard form; it does not confirm the reviewer’s claim that Eq.11 wrongly uses an equality instead of indicating a sample-based approximation. Thus the Agent does not agree with the reviewer issue.",
+      "evidence": "Eq 11: that is not an equality: the right-hand side is the sample-based approximation of the energy score",
+      "analysis_snippet": "Yes — there are formula/notation issues in the paper.\n\nProblems found (with locations in the document):\n\n1) Typo in the value of β.  \n- The text says \"In this paper, we set β = \\bar{1}\" which is clear..."
+    },
+    {
+      "status": "success",
+      "paper_id": "dCWSVAbWXM",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The reviewer alleges a mathematical error (eq. 2 is maximized rather than minimized). The agent explicitly states 'No formula issue detected' and instead identifies only LaTeX/spacing formatting problems. The agent therefore does not confirm the reviewer's claimed optimization-direction error.",
+      "evidence": "As can be seen in eq(2) it is not minimized but maximized.",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation and citation:\n- The reviewer snippet shows odd spacing inside LaTeX math expressions (e.g. \"B ( \\\\cdot ; \\\\phi )\", \"\\\\mathcal { D } _ { S } ( \\\\cdot ; \\\\psi )\",..."
+    },
+    {
+      "status": "success",
+      "paper_id": "kXdW2KySK5",
+      "issue_index": 1,
+      "matched": false,
+      "reason": "The Agent Analysis explicitly refutes the Reviewer Issue, stating \"No formula issue detected\" and explaining that σ(i) is a standard-deviation threshold so σ^2(i) is the correct variance upper bound. Therefore the agent does not confirm the reviewer's claim that σ^2(i) was given as a lower bound.",
+      "evidence": "At line 224, isn't the value $\\sigma^2(i)$ provided a lower bound ... instead of an upper-bound as stated?",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation and citations:\n- In Section 4.2 (Proof of Theorem 4.1) the paper defines the groups by the (per-round) standard-deviation sequence {σ_k}:\n  - K0 = {k : σ_k ≤ 1/..."
+    },
+    {
+      "status": "success",
+      "paper_id": "MZg06yaIW9",
+      "issue_index": 0,
+      "matched": true,
+      "reason": "The agent explicitly confirms the reviewer's claim: it identifies the same formula typo (the second sampling equation conditions on \\tilde{Y}_1 instead of \\tilde{Y}_t), explains why this is an indexing error, and suggests replacing \\tilde{Y}_1 with \\tilde{Y}_t.",
+      "evidence": "In Equation (6), the second equation should use $\\tilde{Y}_t$ instead of $\\tilde{Y}_1$.",
+      "analysis_snippet": "Yes — there is a mathematical/formula typo in the paper.\n\nExplanation and citation\n- The paper defines an aligned sampler q_{aligned} and then gives the autoregressive sampling recipe. In the paragrap..."
+    },
+    {
+      "status": "success",
+      "paper_id": "ccuvCkEhMJ",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The Agent explicitly states 'No formula issue detected' and refutes the reviewer's concern about using ||β||_2 rather than ||β||_2^2. Therefore the Agent does not confirm the reviewer's reported issue.",
+      "evidence": "Why do you use $||\\beta||_2$ rather than $||\\beta||_2^2$, as in Ridge regression, the penalty term is L2 norm square？",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation and citations:\n- The reviewer snippet (around LINE 249) matches the paper's text introducing incremental data valuation and defining \\hat{\\mathcal D}, N, N', an..."
+    },
+    {
+      "status": "success",
+      "paper_id": "InyYuWLWHD",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The Agent Analysis did not confirm the specific reviewer issue (the missing braces in 'i, j ∈ 1, . . . , N' → should be '{1, . . . , N}'). The agent discussed other notational/edge-case ambiguities (zero-norm handling, self-inclusion in N_i, tensor flattening, m constraints) but did not acknowledge or agree with the exact brace/notation correction raised by the reviewer.",
+      "evidence": "on page 4, \"i, j ∈ 1, . . . , N\" is missing parentheses and should be corrected to \"i, j ∈ {1, . . . , N}\"",
+      "analysis_snippet": "Yes — the snippet exposes mathematical/definition issues (notational edge cases and ambiguities) in the formulas as written.\n\nRelevant locations:\n- Cosine similarity definition: S^l_{i,j} (see positio..."
+    },
+    {
+      "status": "success",
+      "paper_id": "hdwccZL6L3",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The reviewer claims a typo in eq(2) ('b' seems wrong), but the agent explicitly states 'No formula issue detected.' The agent does not agree that there is an error, so the analysis does not confirm the reviewer's issue.",
+      "evidence": "In eq(2), $b$ seems to be a typo.",
+      "analysis_snippet": "No formula issue detected...."
+    },
+    {
+      "status": "success",
+      "paper_id": "hdwccZL6L3",
+      "issue_index": 1,
+      "matched": true,
+      "reason": "The Agent Analysis agrees with the Reviewer Issue: it identifies the same formula/typesetting error in eq(5) (missing norm delimiters and malformed LaTeX) and provides the corrected form showing \\widehat{D}=\\mathcal{D}(\\widehat{X}) with \\widehat{X}=\\arg\\min_{X'} \\|\\mathcal{P}_{\\Omega}(\\mathcal{D}(X'))-D_{\\Omega}\\|_{F}^{2}.",
+      "evidence": "In eq(5), it should be $\\hat{D}=\\mathcal{D}(\\hat{X})$, where $\\hat{X}=\\arg\\min...$.",
+      "analysis_snippet": "Yes — this is a formula/typesetting issue.\n\nProblem found\n- The displayed equation (around LINE 125–126 of the manuscript; document positions ~14629–14667) is malformed:\n  $$\\widehat { \\bf D } = \\math..."
+    },
+    {
+      "status": "success",
+      "paper_id": "Fndac67aQH",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The reviewer raised a question about the correctness of a complexity formula (Omega((d/ε)^2) vs Omega(1/ε^2)). The Agent dismissed a formula issue and instead discussed a non-standard learning rate and experimental comparison, without addressing or confirming the claimed complexity mismatch. This is a different issue, so it does not confirm the reviewer's concern.",
+      "evidence": "(Line 95) ... requires a smaller batch size (Omega(1/epsilon^2) vs Omega((d/epsilon)^2))... Is the latter complexity Omega((d/epsilon)^2) correct?",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation and citations:\n- The reviewer is complaining that the learning rate from [29] is \"non-standard\" and \"does not go to 0 over time\" — this is a methodological/expe..."
+    },
+    {
+      "status": "success",
+      "paper_id": "M2JU5WQ1Gw",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The agent analysis discusses formatting/LaTeX conversion errors (missing arrow, stray line numbers, 'non = zero', spacing artifacts) but does not mention or confirm the specific reviewer claim that '1 \\le i < j \\le m' should be '... \\le n' on line 325. The agent identifies different issues, so it does not confirm the reviewer's reported m→n error.",
+      "evidence": "line 325: 1 \\leq i < j \\leq n (should be n instead of m)",
+      "analysis_snippet": "Yes — the reviewer snippet points to formatting/typos in mathematical expressions in the paper. It appears the PDF/LaTeX→text conversion introduced corruptions that alter the displayed formulas/notati..."
+    },
+    {
+      "status": "success",
+      "paper_id": "6JlzhISecd",
+      "issue_index": 2,
+      "matched": false,
+      "reason": "The reviewer reported incorrect ± vs. ∓ signs in equations (10c)/(10d). The agent analysis instead identifies a different LaTeX formatting error (an extraneous '\\rangle' and mismatched parentheses in a convergence-rate sentence) and does not confirm or address the ±/∓ issue. Therefore the agent does not confirm the reviewer's issue.",
+      "evidence": "In (10c) and (10d), I think three $\\pm$ signs should be $\\mp$ here too.",
+      "analysis_snippet": "Yes — this indicates a formula/formatting error (typographical LaTeX artifact), not a substantive mathematical claim error.\n\nExplanation and citation:\n- The problematic sentence reads (quotation from ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "6JlzhISecd",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The reviewer claims a sign/variable-permutation error (x_j vs x_i) in equations (6) and (8b). The agent instead identifies a different issue: an inconsistency between the random incidence matrix A(ξ) and a deterministic A in the gradient (A^T λ used instead of A(ξ)^T λ, and A^T A(ξ) vs A(ξ)^T A(ξ)). The agent does not confirm the sign or permutation error the reviewer reported, so the issues do not match.",
+      "evidence": "In (6), (8b), I believe there is a sign issue and the variables $\\mathbf{x} _j$ and $\\mathbf{x} _i$ should be permutated.",
+      "analysis_snippet": "Yes — this snippet exposes a mathematical inconsistency in the paper.\n\nWhat is wrong (short): the paper defines the augmented Lagrangian using the random incidence matrix A(ξ) (both the linear and qua..."
+    },
+    {
+      "status": "success",
+      "paper_id": "6JlzhISecd",
+      "issue_index": 1,
+      "matched": true,
+      "reason": "The Agent Analysis explicitly identifies a mathematical/notation inconsistency that includes the sign error in the neighbor-coupling term and the incorrect multiplicative factors, and it recommends the corrected per-agent recursion (with the coupling term having the opposite sign as the reviewer claimed). This confirms the reviewer's reported sign issue (and the implied correction to the coupling term ordering/sign).",
+      "evidence": "In (6), (8b), I believe there is a sign issue and the variables $\\mathbf{x} _j$ and $\\mathbf{x} _i$ should be permutated.",
+      "analysis_snippet": "Yes — this snippet indicates a mathematical/formula inconsistency in the paper.\n\nWhat the paper states\n- The stochastic gradients are defined (Sec. around positions 14880–15580) as\n  ∇_x L(x,λ;ξ) = ∇ ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "vhnDpzcaO2",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The reviewer reports a formula error (using A_t instead of a_t in Example 1), but the agent explicitly states 'No formula issue detected.' The agent does not agree with the reviewer's reported issue, so the analysis does not confirm the reviewer's claim.",
+      "evidence": "\"$A_t$ instead of $a_t$ in Examples 1.\"",
+      "analysis_snippet": "No formula issue detected...."
+    },
+    {
+      "status": "success",
+      "paper_id": "vhnDpzcaO2",
+      "issue_index": 1,
+      "matched": false,
+      "reason": "The reviewer claims a substantive issue (that the use of the minimum support probability in Def. 5 is sub-optimal). The agent's analysis, however, identifies a typesetting/variable-typo (\\mathfrak{s}' vs s') and minor rendering artifacts, not the reviewer's substantive concern. These are different issues, so they do not match.",
+      "evidence": "The involvement of the minimum support probability (Def. 5) for $f_k$-divergence uncertainty set is sub-optimal",
+      "analysis_snippet": "Yes — this is a formula/typo issue (typesetting of the variable in the displayed definition).\n\nWhat the reviewer quoted appears in the paper as Definition 5 (found around document position ~27543). Th..."
+    },
+    {
+      "status": "success",
+      "paper_id": "pRysdfwXiA",
+      "issue_index": 0,
+      "matched": true,
+      "reason": "The Agent explicitly identifies the naming/consistency issue noted by the reviewer: the text says 'h is differentiable' in one place and 'h_z ... differentiable' elsewhere and recommends making the naming consistent (h → h_z). This confirms the reviewer's point.",
+      "evidence": "Line 139: “where $h$ is differentiable.” should read “where $h_z$ is differentiable.”",
+      "analysis_snippet": "Yes — this snippet contains mathematical/formula issues (mostly typographical/notation mistakes) in the paper. Relevant excerpt (found in the paper around the A4/Differentiability assumption; document..."
+    },
+    {
+      "status": "success",
+      "paper_id": "u2c6YVg5rQ",
+      "issue_index": 3,
+      "matched": false,
+      "reason": "The agent identified a formula inconsistency/typo at the cited location and suggested a missing/misplaced factor, but did not confirm the reviewer’s specific correction. The reviewer claims the line should read α ≤ sin(2√K R)/(2√K R) (equivalently α ≤ sin(√K D)/(√K D)), whereas the agent reports the paper shows α ≥ sin(2√K R)/(2 R) (equivalently α ≥ sin(√K D)/D) and only generally suspects a missing 1/√K or 1/D factor. Because the agent did not endorse the exact formula or inequality the reviewer proposed, this is not a match.",
+      "evidence": "Line 596 should be $\\alpha \\leq \\sin(2\\sqrt{K}R)/2\\sqrt{K}R$.",
+      "analysis_snippet": "Yes — this snippet points to a formula inconsistency/typo in the paper.\n\nWhat the paper says (location): around the paragraph beginning at the sentence \"A fully explicit formula for α(K,D) can be extr..."
+    },
+    {
+      "status": "success",
+      "paper_id": "u2c6YVg5rQ",
+      "issue_index": 8,
+      "matched": true,
+      "reason": "The Agent explicitly detects the same formula error noted by the reviewer: the displayed equation uses E[f(x) | X = x] instead of the intended E[f(Y) | X = x], and the Agent recommends replacing f(x) with f(Y).",
+      "evidence": "In eq.(6), $f(x)$ should be $f(Y)$.",
+      "analysis_snippet": "Yes — formula issue detected.\n\nExplanation and citation:\n- Location: Assumption 1 (Kernel LLN condition), displayed equation in the paper (reviewer snippet lines 155–157 / the paper's \"Assumption 1 (K..."
+    },
+    {
+      "status": "success",
+      "paper_id": "u2c6YVg5rQ",
+      "issue_index": 5,
+      "matched": false,
+      "reason": "The reviewer claimed Definition 7 improperly requires M to be a Riemannian manifold rather than a geodesic metric space. The agent instead identified a separate notation/formula error (an incorrect overdot on exp_z) and did not confirm or address the reviewer's manifold-vs-metric-space concern.",
+      "evidence": "Section 2 : definition 7 requires M to be a Riemannian manifold and not just a geodesic metric space",
+      "analysis_snippet": "Yes — this indicates a formula/notation issue.\n\nExplanation and citation\n- In Definition 7 (Riemannian exponential map) the paper states the construction and then gives the formula\n  (around the text ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "u2c6YVg5rQ",
+      "issue_index": 2,
+      "matched": false,
+      "reason": "The agent's analysis addresses an inconsistency in constants/algebra in the concentration bound (mismatched powers of α and numeric factors) rather than the reviewer's question about the undefined symbol 'z' (whether it should be μ). The agent does not confirm or resolve the 'z' vs μ notation issue, so the issues do not match.",
+      "evidence": "In Theorem 1, Line 144: what is $z$? Does it mean $\\mu$ instead of $z$?",
+      "analysis_snippet": "Yes — this indicates a formula/constant inconsistency in the paper.\n\nWhat I found (citations refer to the paper text I read):\n\n- The statement shown in the reviewer snippet (and present earlier in the..."
+    },
+    {
+      "status": "success",
+      "paper_id": "u2c6YVg5rQ",
+      "issue_index": 9,
+      "matched": true,
+      "reason": "The Agent explicitly agrees with the reviewer: it identifies the same notation/domain error (integrals written from −∞ to +∞ though the measures are supported on the manifold 𝓜), recommends integrating over 𝓜 (or omitting limits), and notes the related missing 'on 𝓜' phrase.",
+      "evidence": "In the second equality of equation line 631, the integral should be taken over $\\mathcal{M}$",
+      "analysis_snippet": "Yes — this snippet reveals a formula (notation/domain) issue.\n\nWhat is wrong\n- The displayed equalities use integrals with limits “−∞ to +∞” even though ν_{n,x} and ν_x are probability measures suppor..."
+    },
+    {
+      "status": "success",
+      "paper_id": "u2c6YVg5rQ",
+      "issue_index": 4,
+      "matched": true,
+      "reason": "The Agent explicitly agrees this is a formula issue: it notes ν_{n,x} is a measure on the manifold M and that writing ∫_{-∞}^{+∞} dν_{n,x}(y) is inappropriate. The Agent recommends replacing the real-line bounds with an integral over M (or omitting limits), directly confirming the reviewer's concern.",
+      "evidence": "In Line 631, why is the integral taken over the real line instead of $M$?",
+      "analysis_snippet": "Yes — this indicates a formula issue.\n\nExplanation and citation:\n- The paper defines the weighted empirical measure ν_{n,x} on the manifold M (see the definition: \"ν_{n,x} := ∑_{i=1}^n w_{n,i}(x) δ_{Y..."
+    },
+    {
+      "status": "success",
+      "paper_id": "u2c6YVg5rQ",
+      "issue_index": 1,
+      "matched": false,
+      "reason": "The agent agrees Definition 3 is not the standard strong-convexity definition, but it identifies a different problem (the given inequality is a global quadratic-growth condition) rather than confirming the reviewer's specific claim that it is the 'Variance Inequality'. Because the agent does not endorse the reviewer's characterization, this is a mismatch.",
+      "evidence": "Definition 3 is not the definition of strong convexity, but rather the definition of the so-called Variance Inequality",
+      "analysis_snippet": "Yes — this snippet indicates formula/definition problems.\n\nWhat I found in the paper\n- Definition 2 (document positions ~6740–6900) reads: \"A function f : \\mathcal{M}  \\mathbb{R} is geodesically conve..."
+    },
+    {
+      "status": "success",
+      "paper_id": "u2c6YVg5rQ",
+      "issue_index": 11,
+      "matched": true,
+      "reason": "The Agent explicitly agrees there is a formula/consistency error and confirms the reviewer's claim. It shows the paper's formulas u = R x/(R + z), v = R y/(R + z) are incorrect for projection from the north pole onto the plane z = -R, derives the correct expressions u = 2R x/(R - z), v = 2R y/(R - z), and states the text or formulas must be corrected.",
+      "evidence": "Typo in eq. line 450.",
+      "analysis_snippet": "Yes — this is a formula/consistency error.\n\nWhat the paper says (excerpt, position ~51000–51300):\n- “the plane tangent to the sphere at the south pole (0,0,-R) and defined by z = -R. The north pole N ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "u2c6YVg5rQ",
+      "issue_index": 7,
+      "matched": true,
+      "reason": "The Agent explicitly confirms the reviewer’s report of formula typos. It identifies the same kinds of errors: (1) the expression ∫_{x∈M} F(x) is wrong and should be inf_{x∈M} F(x) (or F(0)=F(1)); and (2) the convexity inequality mistakenly repeats m_1 on the RHS and should use m_2. Thus the Agent agrees there are typographical formula mistakes and provides the corrective fixes.",
+      "evidence": "Typo in the equation of line 536.",
+      "analysis_snippet": "Yes — this indicates formula errors.\n\nWhat’s wrong (two places, same paragraph)\n1) Incorrect integral instead of infimum:\n- Erroneous line in the paper (around the paragraph beginning \"But since m_1 a..."
+    },
+    {
+      "status": "success",
+      "paper_id": "u2c6YVg5rQ",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The reviewer asked whether the parameter λ in Definition 3 should depend on f. The Agent's analysis notes formatting/typographic errors and raises a separate convention issue about a missing 1/2 factor (or first-order term) in the strong-convexity inequality, but it does not confirm or address the reviewer's point that λ should depend on f. Thus the Agent does not agree with the specific reviewer issue.",
+      "evidence": "In Definition 3, shouldn't the parameter $\\lambda$ depend also on $f$?",
+      "analysis_snippet": "Yes — the reviewer snippet points to mathematical/formula errors (mostly formatting and a possible convention error) in the paper. Relevant locations and problems:\n\n1. Formatting / typographic errors ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "u2c6YVg5rQ",
+      "issue_index": 10,
+      "matched": true,
+      "reason": "The Agent Analysis explicitly agrees with the Reviewer: it identifies the same formula/notation problem (the integral is written with real-line limits −∞ to +∞ though ν_{n,x} is a measure on M), and it also notes the same typographical issues ('as n + ∞' vs 'n → ∞' and stray line numbers). The Agent proposes the same fixes, so the issues are confirmed.",
+      "evidence": "and again line 633.",
+      "analysis_snippet": "Yes — this snippet points to a formula / notation problem.\n\nWhat’s wrong\n- The displayed equality uses an integral with real-line limits even though the measure is on the manifold M:\n  - The paper wri..."
+    },
+    {
+      "status": "success",
+      "paper_id": "u2c6YVg5rQ",
+      "issue_index": 6,
+      "matched": true,
+      "reason": "The Agent Analysis agrees there is a (minor) formula/justification error corresponding to the reviewer's note: the step that squares d(y,m_n) ≥ d(p,m_n) − d(y,p) lacks the absolute-value term (or justification) needed to square safely. The agent recommends replacing with d(y,m_n) ≥ |d(p,m_n) − d(y,p)| or adding the justification, which matches the reviewer's report of a missing term on the inequality line.",
+      "evidence": "In the inequalities line 514, a term is missing on the third line.",
+      "analysis_snippet": "Yes — this indicates a (minor) formula/justification issue.\n\nWhat the paper writes (location approx. positions 60500–61950) is:\n\n- From the triangle inequality they state\n  d(y, m_n) ≥ d(p, m_n) − d(y..."
+    },
+    {
+      "status": "success",
+      "paper_id": "zcVKvXtrkJ",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The reviewer reports a specific typo — that \\tilde{R}_i should be R_i in the equation below line 402. The Agent instead identifies a missing mathematical clause after \"such that\" and a notational inconsistency between per-index \\tilde{R}_i and a vector \\tilde{R}∈𝒮; it does not confirm the reviewer’s specific substitution. Therefore the Agent’s findings do not match the reviewer’s stated issue.",
+      "evidence": "Typo: In the equation below line 402, I believe $\\tilde{R}_i$ should be $R_i$",
+      "analysis_snippet": "Yes — a formula/statement issue is present.\n\nWhat I found\n- The sentence ends with \"there exists \\widetilde{R}_i \\in S_i such that\" but no mathematical expression follows — the condition is missing. (..."
+    },
+    {
+      "status": "success",
+      "paper_id": "zcVKvXtrkJ",
+      "issue_index": 1,
+      "matched": false,
+      "reason": "The agent explicitly states 'No formula issue detected' and attributes the reviewer's concern to line-numbering and punctuation artifacts rather than a missing constraint on Λ1. Therefore the agent does not confirm the reviewer's issue.",
+      "evidence": "Is there any constraint on $\\Lambda_1$ in Theorem 1? It seems to me that ... $\\Lambda_1=I$ doesn't.",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation and citation:\n- The odd numbers in the reviewer snippet (\"114\", \"115\", \"16\") are line-number artifacts inserted into the running text (e.g., \"Assume 114 P_x = N..."
+    },
+    {
+      "status": "success",
+      "paper_id": "o03aOm4Vci",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The reviewer’s issue says Equation 2 wrongly includes x_0 as an argument of s_t (i.e. s_t should not depend on x_0). The Agent Analysis instead identifies a different problem: a missing/incorrect factor a_t = L_t L_t^T in the variational characterization (so the argmin returns a_t ∇ log q^*, not ∇ log q^*). The agent does not confirm the reviewer’s claim about x_0 in s_t and focuses on the a_t scaling—thus the issues do not match.",
+      "evidence": "Equation 2: There should be no $x_0$ in $s_t$",
+      "analysis_snippet": "Yes — this snippet contains a mathematical/formula inconsistency.\n\nWhat the paper states\n- Proposition 1 (displayed SDE drift):\n  d x_t = ( b_t(x_t) + L_t L_t^T E_{p(x_1 | x_0, x_t)}[ ∇ log p(x_1 | x_..."
+    },
+    {
+      "status": "success",
+      "paper_id": "SjAHFGoUb6",
+      "issue_index": 2,
+      "matched": true,
+      "reason": "The Agent explicitly agrees this is a notation/typesetting error: the simplified upper bound uses \\mathbb{R} where the expectation operator \\mathbb{E} (e.g., \\underset{p(c)}{\\mathbb{E}}) is required. That confirms the reviewer's report that the expectation over p(c) (and p(z)) is missing/incorrectly typeset in Eq. 3.",
+      "evidence": "Eq 3: missing $E_{p(c)}$ for the third term",
+      "analysis_snippet": "Yes — this indicates a (typesetting/notation) formula issue.\n\nExplanation and citation:\n- In Section 3.1 \"Bounded CIB\" (around lines 152–166) the paper first shows bounds using expectation operators w..."
+    },
+    {
+      "status": "success",
+      "paper_id": "AlcMfjenRb",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The Agent concluded 'No formula issue detected' and treated the displayed strong-convexity inequality with ∇f(y) as correct, whereas the Reviewer specifically pointed out that strong convexity alone does not imply differentiability (so using ∇f(y) requires an additional differentiability assumption). The Agent did not acknowledge this missing differentiability assumption, so it did not confirm the Reviewer's issue.",
+      "evidence": "In Assumption 2, strong convexity does not imply differentiability.",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation and citations:\n- Assumption 1 (L-smoothness) states the standard Lipschitz-gradient condition\n  ||∇f(x) − ∇f(y)|| ≤ L ||x − y|| (see document around positions 1..."
+    },
+    {
+      "status": "success",
+      "paper_id": "AlcMfjenRb",
+      "issue_index": 2,
+      "matched": true,
+      "reason": "The Agent explicitly agrees with the reviewer: it identifies the same typographical/formula inconsistency (the missing unit vector e in expressions like ||\\hat g_mb - d⟨∇f,e⟩||^2 which should be ||\\hat g_mb - d⟨∇f,e⟩ e||^2), notes the scalar/vector mismatch, and states the numerical conclusion remains valid but the notation should be fixed.",
+      "evidence": "In (8), there is a factor $e$ missing in the last expression",
+      "analysis_snippet": "Yes — this points to a mathematical/formula inconsistency (a typographical but meaningful math error).\n\nWhat the reviewer snippet shows (from the paper, “A widely used variance reduction technique …” ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "AlcMfjenRb",
+      "issue_index": 3,
+      "matched": true,
+      "reason": "The Agent explicitly agrees this is a formula/notation error: the superscript 2 is incorrectly attached to ∇f(x) instead of to the norm of the difference. The Agent reproduces the problematic expression, explains the ambiguity, and proposes replacing it with the squared-norm form (e.g. ||E_e ĝ_mb - ∇f(x)||^2), matching the reviewer's issue and suggested correction.",
+      "evidence": "On Lines 250 and 251, $|| \\dots^2 ||$ -> $|| \\dots ||^2$",
+      "analysis_snippet": "Yes — this is a formula/notation error in the paper.\n\nWhat’s wrong\n- The reviewer quote (lines 250–251) reproduces the paper text that reads (paper excerpt around positions 28640–28960):\n  \"…the bound..."
+    },
+    {
+      "status": "success",
+      "paper_id": "MYfyMjaoQh",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The Agent explicitly states 'No formula issue detected' and discusses the IS loss matrix/Frobenius forms and normalization, but does not agree with the reviewer's specific concern about the SS loss values (0 for identical subspaces vs. 1 for orthogonal). The agent addresses a different formula (IS loss) and therefore does not confirm the reviewer's issue.",
+      "evidence": "In line 168, why would the opposite not be true, that the SS loss is 0 for identical subspaces and 1 for mutually orthogonalising subspaces?",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation and citations:\n- The IS loss shown in the snippet is consistent with the matrix form given later:  \n  IS Loss = (1/K^2) sum_{k,l} (x_k^T W x_l)^2 − (1/K^2) sum_..."
+    },
+    {
+      "status": "success",
+      "paper_id": "k5ekIwvmYA",
+      "issue_index": 1,
+      "matched": false,
+      "reason": "LLM/Parse Error: Invalid \\escape: line 1 column 112 (char 111)",
+      "evidence": "In Eq. (2) and Eq. (7), shouldn't the sign in front of $\\gamma$ be negative?",
+      "analysis_snippet": "Yes — there is a mathematical formula issue.\n\nExplanation and citation\n- The paper defines the target (just above the critic loss) as\n  y(s,a) = r + γ \\hat V_A(s′).\n  (reviewer: LINE 163–164; paper te..."
+    },
+    {
+      "status": "success",
+      "paper_id": "k5ekIwvmYA",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The agent identifies a sign/parentheses error in the critic loss (TD target) — i.e. it agrees the paper wrote Q_θ(s,a) - r + γ V instead of Q_θ(s,a) - (r + γ V) — but it does not confirm the reviewer's claim for both Eq. (2) and Eq. (7. The agent treats multiple, different formulation/notation problems (inconsistent R vs r, malformed Bellman definition, soft-update typo, missing arrows) and does not state that Eq. (2) needs the sign in front of γ changed to negative. Because the reviewer referred to two specific equations and the agent only confirms a sign/parenthesis issue for the critic loss (one equation) and not the other, this is a partial/location mismatch and therefore not matched.",
+      "evidence": "In Eq. (2) and Eq. (7), shouldn't the sign in front of $\\gamma$ be negative?",
+      "analysis_snippet": "Yes — the reviewer snippet points to multiple mathematical/formulation issues in the paper. Relevant excerpts (from the paper's Q‑learning / critic-update paragraph) and the problems:\n\n1) Incorrect/am..."
+    },
+    {
+      "status": "success",
+      "paper_id": "2rgYVFiWPL",
+      "issue_index": 1,
+      "matched": false,
+      "reason": "The agent explicitly states 'No formula issue detected' and therefore does not confirm the reviewer's reported typo (O(log n / n) vs. log^2(n)/n). The reviewer claims a specific formula discrepancy; the agent refutes it, so the analysis does not confirm the reviewer issue.",
+      "evidence": "There appears to be a typo in the abstract: line 12 states $O(log n/n)$ although in Thm. 1 the dominating term should be $\\log^2(n) / n$.",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation: the reviewer snippet contains only the paper title, abstract and the start of the introduction. The only math in the snippet are well-formed inline references ..."
+    },
+    {
+      "status": "success",
+      "paper_id": "2rgYVFiWPL",
+      "issue_index": 0,
+      "matched": false,
+      "reason": "The Agent did not confirm the reviewer's claim. It reported 'No formula issue detected,' treated the reviewer's comment as a conceptual critique rather than verifying an error, and offered to verify or provide the standard Sinkhorn formulation. Therefore the Agent analysis does not agree that the reviewer-identified error is present.",
+      "evidence": "in lines 140-142 the authors claim that the Sinkhorn algorithm requires quadratic costs. This is not true to my knowledge",
+      "analysis_snippet": "No formula issue detected.\n\nExplanation and citations:\n- The reviewer snippet is a conceptual critique (claiming Sinkhorn is “limited by its assumption of quadratic costs” and “does not directly handl..."
+    },
+    {
+      "status": "success",
+      "paper_id": "OCxhcqUtDf",
+      "issue_index": 1,
+      "matched": false,
+      "reason": "The agent analysis identifies two specific formulation errors (the infimum is taken over x_t instead of the control v, and an unjustified removal of the terminal-distribution constraint). It does not confirm the reviewer's stated issue about \"two parameters called t\" in equation (6). Because the agent addresses different problems and does not verify the reviewer’s naming/clash concern, this is not a match.",
+      "evidence": "In equation (6), therer are 2 parameters call $t$.",
+      "analysis_snippet": "Yes — this snippet indicates a mathematical/formulation issue.\n\nWhat is wrong (two related problems)\n1. Wrong minimization variable in the value function. In the displayed definition of the value func..."
+    }
+  ]
+}
