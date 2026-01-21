@@ -1,0 +1,38 @@
+{
+  "task_info": {
+    "task_id": "task_1768946880857",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T22:08:00.897527Z",
+    "started_at": null,
+    "completed_at": null,
+    "error_message": null,
+    "file_info": {
+      "filename": "lClK4uBxSG.pdf",
+      "size": 4122452,
+      "md5": "2df00a82c8f5766db3fa479594ff0f80"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 99.54811882972717,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed",
+      "cached_from_md5": "2df00a82c8f5766db3fa479594ff0f80",
+      "md5": "2df00a82c8f5766db3fa479594ff0f80",
+      "task_id": "task_1768946465929",
+      "page_count": 0,
+      "processing_time": 99.54811882972717,
+      "processed_at": 1768946574.4925797,
+      "file_size": 4122452
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/2df00a82c8f5766db3fa479594ff0f80/results.zip"
+  }
+}

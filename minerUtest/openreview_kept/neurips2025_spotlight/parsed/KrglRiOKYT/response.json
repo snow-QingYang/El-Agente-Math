@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768949431107",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T22:50:31.145729Z",
+    "started_at": 1768949431.1463182,
+    "completed_at": 1768949525.295562,
+    "error_message": null,
+    "file_info": {
+      "filename": "KrglRiOKYT.pdf",
+      "size": 8124740,
+      "md5": "28de3733f13961363e0bfe4d6c03be29"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 87.89967656135559,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/28de3733f13961363e0bfe4d6c03be29/results.zip"
+  }
+}

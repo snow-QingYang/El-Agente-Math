@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768949341789",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T22:49:01.826676Z",
+    "started_at": 1768949341.8273733,
+    "completed_at": 1768949428.6380632,
+    "error_message": null,
+    "file_info": {
+      "filename": "kQWyOYUAC4.pdf",
+      "size": 6286082,
+      "md5": "40ad60e9eec96d4c7232123319cd1d59"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 84.13383054733276,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/40ad60e9eec96d4c7232123319cd1d59/results.zip"
+  }
+}

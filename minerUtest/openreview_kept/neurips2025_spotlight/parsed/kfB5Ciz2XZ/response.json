@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768948165558",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T22:29:25.571874Z",
+    "started_at": 1768948165.5723054,
+    "completed_at": 1768948230.3551142,
+    "error_message": null,
+    "file_info": {
+      "filename": "kfB5Ciz2XZ.pdf",
+      "size": 939605,
+      "md5": "5f68333130c73fec517b0b50b5cb0e49"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 63.86607241630554,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/5f68333130c73fec517b0b50b5cb0e49/results.zip"
+  }
+}

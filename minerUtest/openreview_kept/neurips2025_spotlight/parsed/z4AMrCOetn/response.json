@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768950110887",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T23:01:50.900164Z",
+    "started_at": 1768950110.9006834,
+    "completed_at": 1768950220.6702747,
+    "error_message": null,
+    "file_info": {
+      "filename": "z4AMrCOetn.pdf",
+      "size": 1571012,
+      "md5": "8a4e72dc8c94b468d51d03b70b0b03ec"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 80.41756916046143,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/8a4e72dc8c94b468d51d03b70b0b03ec/results.zip"
+  }
+}

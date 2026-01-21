@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768950662632",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T23:11:02.649731Z",
+    "started_at": 1768950662.6502244,
+    "completed_at": 1768950779.2188675,
+    "error_message": null,
+    "file_info": {
+      "filename": "P2yIMJP5b1.pdf",
+      "size": 1717112,
+      "md5": "e25966c9c0d8cb5662661d311da0ed5d"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 115.23796200752258,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/e25966c9c0d8cb5662661d311da0ed5d/results.zip"
+  }
+}

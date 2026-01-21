@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768950337792",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T23:05:37.851539Z",
+    "started_at": 1768950337.8524146,
+    "completed_at": 1768950422.0007405,
+    "error_message": null,
+    "file_info": {
+      "filename": "RSVdHXZN6D.pdf",
+      "size": 7316834,
+      "md5": "e295739fa3b1c1d62ca2327abfaf7004"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 81.54327368736267,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/e295739fa3b1c1d62ca2327abfaf7004/results.zip"
+  }
+}

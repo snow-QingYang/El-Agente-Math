@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768951411420",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T23:23:31.442411Z",
+    "started_at": 1768951411.4435885,
+    "completed_at": 1768951490.1756313,
+    "error_message": null,
+    "file_info": {
+      "filename": "yQoHUijSHx.pdf",
+      "size": 1701172,
+      "md5": "96a1cb62018a0b23f3ef7594c82f7ad6"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 77.40898609161377,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/96a1cb62018a0b23f3ef7594c82f7ad6/results.zip"
+  }
+}

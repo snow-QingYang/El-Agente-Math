@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768950782305",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T23:13:02.317379Z",
+    "started_at": 1768950782.317853,
+    "completed_at": 1768950881.4522853,
+    "error_message": null,
+    "file_info": {
+      "filename": "crczm2smVo.pdf",
+      "size": 585018,
+      "md5": "fe49dcc2ee4b772dbbef8eef88052312"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 98.2550573348999,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/fe49dcc2ee4b772dbbef8eef88052312/results.zip"
+  }
+}
