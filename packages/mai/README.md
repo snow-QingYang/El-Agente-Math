@@ -1,6 +1,6 @@
 # mai
 
-Extract and analyze mathematical formulas from arXiv papers.
+Agentic reader benchmarking utilities.
 
 ## Installation
 
@@ -11,10 +11,14 @@ uv sync
 ## Usage
 
 ```bash
-uv run mai process https://arxiv.org/abs/1706.03762
+uv run mai run-bench <conference>
+uv run mai check-bench <conference>
 ```
 
-Find formula issues in openreview crawler results:
+MinerU integration:
+
 ```bash
-uv run mai openreview-verify packages/openreview-crawler/output/iclr2024/formula_issues_detailed_normalized.json --cutoff-date 2024-02-10 --output output/full --limit-papers 50
+uv run mai mineru-openreview <conference>
+uv run mai mineru-list-missing <conference>
+uv run mai mineru-spotlight --year 2025
 ```

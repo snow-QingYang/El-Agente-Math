@@ -12,11 +12,17 @@ After you finish your part of work, push the ```packages/openreview-crawler/outp
 ```bash
 uv run openreview_crawler  
 uv run openreview_crawler filter_reviews packages/openreview-crawler/output/neurips2025
-uv run python packages/openreview-crawler/examples/debug_nips_detect.py   
+uv run python packages/openreview-crawler/examples/debug_nips_detect.py 
 uv run python packages/openreview-crawler/examples/filter_nips_formula_errors.py 
 uv run python packages/openreview-crawler/examples/convert_nips_formula_issues_to_result.py \
     --input packages/openreview-crawler/output/neurips2025/formula_issues_nips_typo_math.json
 uv run streamlit run paper_review_interface.py
+
+```
+
+```aiignore
+uv run mai run-bench neurips2025 --model gpt-5.2 --concurrency 20
+uv run mai check-bench neurips2025 --concurrency 20   
 
 ```
 
@@ -47,6 +53,66 @@ cp .env.example .env
 Get your API key from: https://platform.openai.com/api-keys
 
 ## Usage
+
+### OpenReview Pipeline
+
+```bash
+uv run openreview-crawler
+uv run openreview_crawler filter_reviews packages/openreview-crawler/output/<conference>
+```
+
+### MinerU Integration (mai)
+
+Download kept papers, parse with MinerU, and build issue context files:
+
+```bash
+uv run mai mineru-openreview <conference>
+```
+
+Outputs are written to:
+
+```
+output/mineru/openreview_kept/<conference>/
+```
+
+List kept issues missing context markdown files:
+
+```bash
+uv run mai mineru-list-missing <conference>
+```
+
+Run the spotlight pipeline:
+
+```bash
+uv run mai mineru-spotlight --year 2025
+```
+
+Parse a single PDF with MinerU:
+
+```bash
+uv run mai mineru-parse /path/to/paper.pdf --out-dir output/mineru/parsed
+```
+
+Locate a line range inside a parsed paper:
+
+```bash
+uv run mai mineru-locate output/mineru/openreview_kept/<conference>/parsed/<paper_id> --line "LINE (12-15)"
+```
+
+### Agentic Reader Bench
+
+```bash
+uv run mai run-bench <conference> --concurrency 20 --model openai:gpt-5-mini
+uv run mai check-bench <conference> --concurrency 20
+```
+
+Note: `run-bench` expects parsed MinerU outputs under
+`output/mineru/openreview_kept/<conference>/parsed/`.
+
+### Deprecated (arXiv process)
+
+The previous `mai process` arXiv pipeline is removed. The sections below are
+kept for historical reference and should not be used.
 
 ### Process arXiv Papers
 
@@ -590,15 +656,15 @@ mai --help
 Get help for a specific command:
 
 ```bash
-mai process --help
+mai mineru-openreview --help
 ```
 
 ## Development
 
-Run tests:
+There is no default test runner configured. Run single scripts directly, for example:
 
 ```bash
-uv run python test_explainer.py
+uv run python packages/openreview-crawler/examples/test_connection.py
 ```
 
 ## License

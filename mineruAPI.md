@@ -1,4 +1,5 @@
 ## API Endpoints
+baseURL=http://minerudeployment-production.up.railway.app/
 ### 1. Parse PDF (Async) - `/parse/`
 
 **Method**: `POST`

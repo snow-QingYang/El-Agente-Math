@@ -141,9 +141,10 @@ def test_multiple_venues():
     print("="*60 + "\n")
 
     venues = [
+        ("ICLR.cc/2025/Conference", "ICLR 2025 ⭐"),
+        ("ICLR.cc/2024/Conference", "ICLR 2024 ⭐"),
+        ("ICLR.cc/2022/Conference", "ICLR 2022 ⭐"),
         ("ICML.cc/2025/Conference", "ICML 2025"),
-        ("ICLR.cc/2024/Conference", "ICLR 2024"),
-        ("ICLR.cc/2023/Conference", "ICLR 2023"),
         ("NeurIPS.cc/2023/Conference", "NeurIPS 2023"),
     ]
 
