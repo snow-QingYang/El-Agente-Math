@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768947269907",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T22:14:29.920634Z",
+    "started_at": 1768947269.9213207,
+    "completed_at": 1768947380.9951046,
+    "error_message": null,
+    "file_info": {
+      "filename": "C1LVIInfZO.pdf",
+      "size": 930772,
+      "md5": "6c4bf78808e9250c9fb96e13c0f979b7"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 109.12797594070435,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/6c4bf78808e9250c9fb96e13c0f979b7/results.zip"
+  }
+}

@@ -134,6 +134,32 @@ class OpenReviewCrawler:
 
         return rejected_papers
 
+    def get_accepted_submissions(self, venue_id: str) -> List[openreview.api.Note]:
+        """
+        Get all accepted submissions from a venue.
+
+        Args:
+            venue_id: The venue ID
+
+        Returns:
+            List of accepted submission notes
+        """
+        try:
+            venue_group = self.client.get_group(venue_id)
+            submission_id = venue_group.content['submission_id']['value']
+            venue = [
+                k for k, v in venue_group.content["decision_heading_map"]["value"].items()
+                if v == "Accept (spotlight)"
+            ][0]
+            submissions = self.client.get_all_notes(
+                invitation=submission_id,
+                content={"venue": venue}
+            )
+            return submissions
+        except Exception as e:
+            print(f"Error fetching accepted submissions: {e}")
+            return []
+
     def get_reviews_for_submission(self, submission: openreview.api.Note) -> List[openreview.api.Note]:
         """
         Get all reviews for a specific submission.
@@ -336,3 +362,8 @@ class OpenReviewCrawler:
                     ])
 
         print(f"\nCSV data saved to: {output_path}")
+
+
+if __name__ == "__main__":
+    crawler = OpenReviewCrawler()
+    crawler.get_accepted_submissions("NeurIPS.cc/2024/Conference")

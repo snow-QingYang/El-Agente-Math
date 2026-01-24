@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768949148182",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T22:45:48.204694Z",
+    "started_at": 1768949148.2051978,
+    "completed_at": 1768949241.9811656,
+    "error_message": null,
+    "file_info": {
+      "filename": "MpJkAzwUtl.pdf",
+      "size": 4435022,
+      "md5": "24f227f7d1cb4c4a7529377bdc4060c5"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 86.1834557056427,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/24f227f7d1cb4c4a7529377bdc4060c5/results.zip"
+  }
+}

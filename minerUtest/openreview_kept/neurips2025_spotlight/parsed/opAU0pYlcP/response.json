@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768947607855",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T22:20:07.868817Z",
+    "started_at": 1768947607.8692577,
+    "completed_at": 1768947666.7422903,
+    "error_message": null,
+    "file_info": {
+      "filename": "opAU0pYlcP.pdf",
+      "size": 800443,
+      "md5": "e213d2f622d72f41acfdf23bac3a43a9"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 58.232510566711426,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/e213d2f622d72f41acfdf23bac3a43a9/results.zip"
+  }
+}

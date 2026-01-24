@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768948353598",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T22:32:33.623760Z",
+    "started_at": 1768948353.6243129,
+    "completed_at": 1768948432.482531,
+    "error_message": null,
+    "file_info": {
+      "filename": "T9qNDtvAJX.pdf",
+      "size": 2209385,
+      "md5": "7423f04d2d2a033b26f1869b8240fffb"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 77.6047728061676,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/7423f04d2d2a033b26f1869b8240fffb/results.zip"
+  }
+}

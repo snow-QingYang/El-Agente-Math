@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768948537944",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T22:35:37.961843Z",
+    "started_at": 1768948537.9623454,
+    "completed_at": 1768948608.7545645,
+    "error_message": null,
+    "file_info": {
+      "filename": "19ygs48nOa.pdf",
+      "size": 1917956,
+      "md5": "7fa8e8e7e560cd16be7692bb78385add"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 69.45002317428589,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/7fa8e8e7e560cd16be7692bb78385add/results.zip"
+  }
+}

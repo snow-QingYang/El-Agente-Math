@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768948438240",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T22:33:58.292737Z",
+    "started_at": 1768948438.2932448,
+    "completed_at": 1768948533.8571315,
+    "error_message": null,
+    "file_info": {
+      "filename": "G2kMroO9UV.pdf",
+      "size": 13368180,
+      "md5": "e309db82d09475225a7a582ed5917080"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 91.65556955337524,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/e309db82d09475225a7a582ed5917080/results.zip"
+  }
+}

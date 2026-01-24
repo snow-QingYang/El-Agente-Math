@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768951325253",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T23:22:05.308585Z",
+    "started_at": 1768951325.3096807,
+    "completed_at": 1768951406.971829,
+    "error_message": null,
+    "file_info": {
+      "filename": "RespmwOoCH.pdf",
+      "size": 2197595,
+      "md5": "9f53bc08362eb0711d92d89e7950ebe2"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 73.57494020462036,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/9f53bc08362eb0711d92d89e7950ebe2/results.zip"
+  }
+}

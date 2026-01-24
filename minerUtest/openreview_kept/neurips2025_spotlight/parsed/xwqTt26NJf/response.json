@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768949748949",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T22:55:48.976753Z",
+    "started_at": 1768949748.977373,
+    "completed_at": 1768949822.5741942,
+    "error_message": null,
+    "file_info": {
+      "filename": "xwqTt26NJf.pdf",
+      "size": 3367612,
+      "md5": "bf7ae64452fb94747a74b80f5b07f19b"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 71.88548851013184,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/bf7ae64452fb94747a74b80f5b07f19b/results.zip"
+  }
+}

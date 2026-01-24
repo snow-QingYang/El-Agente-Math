@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768946884688",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T22:08:04.701649Z",
+    "started_at": 1768946884.7022727,
+    "completed_at": 1768946955.465299,
+    "error_message": null,
+    "file_info": {
+      "filename": "gOG9Zoyn4R.pdf",
+      "size": 640960,
+      "md5": "7f902deed97bded67da227a071648b0e"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 65.54074835777283,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/7f902deed97bded67da227a071648b0e/results.zip"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768950429562",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T23:07:09.622667Z",
+    "started_at": 1768950429.6231885,
+    "completed_at": 1768950506.9155238,
+    "error_message": null,
+    "file_info": {
+      "filename": "ugBmWX3H1R.pdf",
+      "size": 18203136,
+      "md5": "49d4b51b092610440cc16e7ab1e466f9"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 68.97297930717468,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/49d4b51b092610440cc16e7ab1e466f9/results.zip"
+  }
+}

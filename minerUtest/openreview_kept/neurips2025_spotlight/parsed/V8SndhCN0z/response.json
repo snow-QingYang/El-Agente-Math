@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768950980092",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T23:16:20.108666Z",
+    "started_at": 1768950980.109132,
+    "completed_at": 1768951061.1305823,
+    "error_message": null,
+    "file_info": {
+      "filename": "V8SndhCN0z.pdf",
+      "size": 466055,
+      "md5": "6bf0ed38f939a2285b0f9c0a1cd08368"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 80.05325317382812,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/6bf0ed38f939a2285b0f9c0a1cd08368/results.zip"
+  }
+}

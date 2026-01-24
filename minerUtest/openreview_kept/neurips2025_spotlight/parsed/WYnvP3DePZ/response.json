@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768948969542",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T22:42:49.560087Z",
+    "started_at": 1768948969.560541,
+    "completed_at": 1768949054.3523502,
+    "error_message": null,
+    "file_info": {
+      "filename": "WYnvP3DePZ.pdf",
+      "size": 572810,
+      "md5": "b8ac93ef0d222e29cf7ea153c75a10dc"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 83.89588499069214,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/b8ac93ef0d222e29cf7ea153c75a10dc/results.zip"
+  }
+}

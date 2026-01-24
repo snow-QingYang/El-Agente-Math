@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768950584086",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T23:09:44.113888Z",
+    "started_at": 1768950584.1145887,
+    "completed_at": 1768950658.635549,
+    "error_message": null,
+    "file_info": {
+      "filename": "4f6mEr1DQs.pdf",
+      "size": 5698337,
+      "md5": "caba836a4cbbde7f518c709af79edf49"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 64.47134494781494,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/caba836a4cbbde7f518c709af79edf49/results.zip"
+  }
+}

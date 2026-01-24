@@ -1,0 +1,31 @@
+{
+  "task_info": {
+    "task_id": "task_1768950509971",
+    "status": "completed",
+    "backend": "modal_gpu",
+    "created_at": "2026-01-20T23:08:30.007253Z",
+    "started_at": 1768950510.0077646,
+    "completed_at": 1768950577.159728,
+    "error_message": null,
+    "file_info": {
+      "filename": "cb0xbZ3APM.pdf",
+      "size": 7327599,
+      "md5": "741578098e1677ee4fefd162368d4fed"
+    }
+  },
+  "content": {
+    "markdown_content": null,
+    "json_content": null,
+    "images": [],
+    "extracted_text": null,
+    "page_count": 0,
+    "processing_time": 64.63715314865112,
+    "metadata": {
+      "backend": "modal_gpu",
+      "status": "completed"
+    }
+  },
+  "download_urls": {
+    "zip": "https://storage.treer.ai/pdf/741578098e1677ee4fefd162368d4fed/results.zip"
+  }
+}
