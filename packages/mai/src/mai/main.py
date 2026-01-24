@@ -555,6 +555,344 @@ def benchmark(
         raise typer.Exit(1)
 
 
+@app.command()
+def run_bench(
+    conference: str = typer.Argument(
+        ...,
+        help="Conference name (e.g., neurips2025, iclr2024)"
+    ),
+    concurrency: int = typer.Option(
+        10,
+        "--concurrency",
+        "-c",
+        help="Maximum number of concurrent agent calls (default: 10)"
+    ),
+    model: str = typer.Option(
+        "openai:gpt-5-mini",
+        "--model",
+        "-m",
+        help="LLM model to use for agentic reader (e.g., openai:gpt-5-mini, openai:gpt-4o)"
+    ),
+    max_iterations: int = typer.Option(
+        10,
+        "--max-iterations",
+        help="Maximum iterations for agentic reader (default: 10)"
+    ),
+    output_dir: Optional[Path] = typer.Option(
+        None,
+        "--output-dir",
+        "-o",
+        help="Output directory for results (default: output/bench/<conference>)"
+    ),
+    force: bool = typer.Option(
+        False,
+        "--force",
+        "-f",
+        help="Overwrite existing result files"
+    ),
+):
+    """
+    Run agentic reader benchmark on parsed OpenReview papers.
+    
+    For each paper directory under minerUtest/openreview_kept/<conference>/parsed/:
+    - Issue files (*.md) in the paper folder (excluding input/ subtree and non-issue files)
+    - Each issue is analyzed using agentic_reader with full paper context (input/auto/input.md)
+    - Results are written to output/bench/<conference>/<paper_id>/<issue>.result.md
+    
+    Examples:
+        mai run_bench neurips2025
+        mai run_bench neurips2025 --concurrency 20 --model openai:gpt-4o --max-iterations 15
+        mai run_bench neurips2025 --output-dir ./my_results --force
+    """
+    import asyncio
+    import re
+    from datetime import datetime
+    from .agent.agentic_reader import agentic_reader, AgenticReaderOptions
+    from dotenv import load_dotenv, find_dotenv
+
+    load_dotenv(find_dotenv(usecwd=True))
+
+    # Set default output directory
+    if output_dir is None:
+        sanitized_model = model.replace(":", "_").replace("/", "_")
+        output_dir = Path("output/bench") / f"{conference}-{sanitized_model}"
+    else:
+        output_dir = Path(output_dir)
+
+    # Base directory for parsed papers
+    base_parsed_dir = Path("minerUtest/openreview_kept") / conference / "parsed"
+    
+    if not base_parsed_dir.exists():
+        typer.echo(f"Error: Directory not found: {base_parsed_dir}", err=True)
+        raise typer.Exit(1)
+
+    typer.echo("=" * 70)
+    typer.echo("El Agente Math - Run Agentic Reader Benchmark")
+    typer.echo("=" * 70)
+    typer.echo(f"Conference: {conference}")
+    typer.echo(f"Base directory: {base_parsed_dir}")
+    typer.echo(f"Output directory: {output_dir}")
+    typer.echo(f"Concurrency: {concurrency}")
+    typer.echo(f"Model: {model}")
+    typer.echo(f"Max iterations: {max_iterations}")
+    if force:
+        typer.echo(f"Force: enabled (overwrite existing results)")
+    typer.echo(f"\n{'=' * 70}")
+
+    # Collect all paper directories
+    paper_dirs = sorted([d for d in base_parsed_dir.iterdir() if d.is_dir()])
+    typer.echo(f"Found {len(paper_dirs)} paper directories to process")
+
+    # Patterns to exclude (non-issue files)
+    exclude_patterns = [
+        r'^input/',
+        r'^matched\.md$',
+        r'^debug_\d+.*\.md$',
+        r'^.+\.result\.md$',
+    ]
+
+    # Collect all tasks (paper_id, issue_file, input_md_path)
+    tasks = []
+    for paper_dir in paper_dirs:
+        paper_id = paper_dir.name
+        
+        # Find issue files (excluding input/ subtree and non-issue patterns)
+        issue_files = []
+        input_md_path = paper_dir / "input" / "auto" / "input.md"
+        
+        for file in sorted(paper_dir.glob("*.md")):
+            file_rel_path = file.relative_to(paper_dir)
+            file_str = file_rel_path.as_posix()
+            
+            # Skip files matching exclude patterns
+            if any(re.search(pattern, file_str) for pattern in exclude_patterns):
+                continue
+            
+            if file_str == "input/auto/input.md":
+                # input_md_path is already set above
+                continue
+            
+            if file_str.startswith("input/"):
+                continue
+            
+            # This is an issue file
+            issue_files.append(file)
+
+        if not issue_files:
+            typer.echo(f"  No issue files found in: {paper_id}")
+            continue
+
+        if input_md_path is None or not input_md_path.exists():
+            typer.echo(f"  Warning: No input/auto/input.md found in: {paper_id}")
+            continue
+
+        # Add tasks for each issue file
+        for issue_file in issue_files:
+            tasks.append((paper_id, issue_file, input_md_path))
+
+    total_tasks = len(tasks)
+    typer.echo(f"Total tasks (paper, issue): {total_tasks}\n")
+
+    if total_tasks == 0:
+        typer.echo("No tasks to process. Exiting.")
+        raise typer.Exit(0)
+
+    # Process tasks asynchronously with concurrency limit
+    async def process_single_task(paper_id: str, issue_file: Path, input_md_path: Path):
+        """Process a single issue file with agentic reader."""
+        output_path = output_dir / paper_id / f"{issue_file.stem}.result.md"
+        
+        # Check if result already exists
+        if not force and output_path.exists():
+            return {
+                "paper_id": paper_id,
+                "issue_file": issue_file.name,
+                "status": "skipped",
+                "output_path": str(output_path),
+                "reason": "Result file already exists (use --force to overwrite)"
+            }
+
+        # Read issue content
+        try:
+            issue_content = issue_file.read_text(encoding='utf-8')
+        except Exception as e:
+            return {
+                "paper_id": paper_id,
+                "issue_file": issue_file.name,
+                "status": "error",
+                "output_path": str(output_path),
+                "error": f"Failed to read issue file: {e}"
+            }
+
+        # Read full paper content
+        try:
+            full_content = input_md_path.read_text(encoding='utf-8')
+        except Exception as e:
+            return {
+                "paper_id": paper_id,
+                "issue_file": issue_file.name,
+                "status": "error",
+                "output_path": str(output_path),
+                "error": f"Failed to read input.md: {e}"
+            }
+
+        # Build agentic reader prompt
+        question = f"""The following is a reviewer issue snippet from a paper review. Determine whether it indicates a mathematical formula issue in the paper. If yes, explain the issue and cite the relevant formula or location from the paper. If no formula issue, say "No formula issue detected."
+
+Issue snippet:
+{issue_content}
+"""
+        try:
+            result = await agentic_reader(
+                question=question,
+                text_content=full_content,
+                options=AgenticReaderOptions(
+                    max_iterations=max_iterations,
+                    model=model,
+                    include_metadata=False
+                )
+            )
+            
+            return {
+                "paper_id": paper_id,
+                "issue_file": issue_file.name,
+                "status": "success",
+                "output_path": str(output_path),
+                "answer": result.answer,
+                "issue_content": issue_content
+            }
+        except Exception as e:
+            return {
+                "paper_id": paper_id,
+                "issue_file": issue_file.name,
+                "status": "error",
+                "output_path": str(output_path),
+                "error": f"Agentic reader failed: {e}"
+            }
+
+    async def process_all_tasks():
+        """Process all tasks with concurrency limit."""
+        semaphore = asyncio.Semaphore(concurrency)
+        
+        results = {
+            "success": 0,
+            "skipped": 0,
+            "errors": 0,
+            "papers": {}
+        }
+
+        async def wrapped_process(task):
+            async with semaphore:
+                result = await process_single_task(*task)
+                
+                # Print progress
+                if result["status"] == "success":
+                    typer.echo(f"  ✓ [{result['paper_id']}/{result['issue_file']}")
+                elif result["status"] == "skipped":
+                    typer.echo(f"  - [{result['paper_id']}/{result['issue_file']}] (skipped)")
+                else:
+                    typer.echo(f"  ✗ [{result['paper_id']}/{result['issue_file']}] - {result.get('error', 'Unknown error')}")
+                
+                # Update counters
+                if result["status"] == "success":
+                    results["success"] += 1
+                elif result["status"] == "skipped":
+                    results["skipped"] += 1
+                else:
+                    results["errors"] += 1
+                
+                # Store result per paper
+                if result["paper_id"] not in results["papers"]:
+                    results["papers"][result["paper_id"]] = []
+                results["papers"][result["paper_id"]].append(result)
+                
+                # Write result to file
+                output_file = Path(result["output_path"])
+                output_file.parent.mkdir(parents=True, exist_ok=True)
+                
+                with open(output_file, 'w', encoding='utf-8') as f:
+                    f.write(f"# Agentic Reader Result\n")
+                    f.write(f"**Paper ID:** {result['paper_id']}\n")
+                    f.write(f"**Issue File:** {result['issue_file']}\n")
+                    f.write(f"**Status:** {result['status']}\n")
+                    f.write(f"**Timestamp:** {datetime.utcnow().isoformat()}\n")
+                    f.write(f"**Model:** {model}\n")
+                    f.write(f"**Max Iterations:** {max_iterations}\n\n")
+                    
+                    if result["status"] == "success":
+                        f.write(f"**Issue Content:**\n{result['issue_content']}\n\n")
+                        f.write("## Agentic Reader Analysis\n\n")
+                        f.write(result["answer"])
+                    elif result["status"] == "skipped":
+                        f.write(f"## Reason\n\n{result['reason']}\n")
+                    else:
+                        f.write(f"## Error\n\n{result.get('error', 'Unknown error')}\n")
+
+        # Process all tasks concurrently
+        await asyncio.gather(*(wrapped_process(task) for task in tasks))
+
+        return results
+
+    try:
+        results = asyncio.run(process_all_tasks())
+    except KeyboardInterrupt:
+        typer.echo("\n\nInterrupted by user. Exiting...")
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.echo(f"\n✗ Run bench failed: {e}", err=True)
+        import traceback
+        traceback.print_exc()
+        raise typer.Exit(1)
+
+    # Print final summary
+    typer.echo(f"\n{'=' * 70}")
+    typer.echo("Processing Complete")
+    typer.echo(f"{'=' * 70}")
+    typer.echo(f"Total tasks: {total_tasks}")
+    typer.echo(f"Successfully processed: {results['success']}")
+    typer.echo(f"Skipped: {results['skipped']}")
+    typer.echo(f"Errors: {results['errors']}")
+    typer.echo(f"\nResults written to: {output_dir}")
+
+    if results["errors"] > 0:
+        raise typer.Exit(1)
+
+
+
+@app.command()
+def check_bench(
+    conference: str = typer.Argument(
+        ...,
+        help="Conference name (e.g., neurips2025)"
+    ),
+    model: str = typer.Option(
+        "openai:gpt-5-mini",
+        "--model", "-m",
+        help="LLM model to use for consistency checking"
+    ),
+    concurrency: int = typer.Option(
+        10,
+        "--concurrency", "-c",
+        help="Number of concurrent LLM calls"
+    ),
+    bench_dir: Optional[Path] = typer.Option(
+        None,
+        "--dir",
+        help="Benchmark directory to read reports from (default: output/bench/<conference>)"
+    )
+):
+    """Check consistency between benchmark reports and original issues."""
+    from .benchmark_checker import check_benchmark_consistency
+    import asyncio
+    
+    asyncio.run(check_benchmark_consistency(
+        conference=conference,
+        model=model,
+        output_dir=bench_dir,
+        concurrency=concurrency
+    ))
+
+
 def main():
     app()
 
