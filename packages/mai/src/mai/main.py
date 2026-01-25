@@ -1,6 +1,11 @@
 from pathlib import Path
 from typing import Optional
 
+from .arxiv_downloader import parse_arxiv_url, download_paper
+from .tex_consolidator import extract_tex_source, consolidate_tex_project
+from .formula_extractor import extract_and_label_formulas
+from .formula_explainer import explain_formulas_from_labeled_files
+from .pdf_benchmarker import run_batch as run_pdf_benchmark_batch
 import typer
 
 app = typer.Typer(
@@ -431,6 +436,100 @@ def mineru_locate(
 
 
 def main() -> None:
+    max_workers: int = typer.Option(
+        10,
+        "--max-workers", "-w",
+        help="Number of concurrent API calls for error detection"
+    )
+):
+    """
+    Benchmark LLM's ability to detect mathematical errors in formulas.
+
+    This command evaluates how well an LLM can identify errors in mathematical
+    formulas by checking all formulas in the explained.json file. If an error_log.json
+    exists (from --add-error flag), it compares detections against ground truth and
+    calculates metrics.
+
+    Single paper mode:
+        1. Loads all formulas from explained.json
+        2. For each formula, extracts context from consolidated_labeled.tex
+        3. Asks LLM to detect if the formula contains an error
+        4. Saves detection results to benchmarks/{model_name}/
+        5. If error_log.json exists, calculates metrics and saves benchmark_report.json
+
+    Batch mode (--all):
+        1. Finds all paper directories in output_dir
+        2. Runs benchmark on each paper
+        3. Generates aggregated report across all papers
+        4. Saves aggregate report to output_dir/aggregate_benchmarks/{model_name}/
+
+    Examples:
+        # Single paper
+        mai benchmark output/1706.03762
+        mai benchmark output/1706.03762 --model openai/gpt-4o
+
+        # All papers
+        mai benchmark --all
+        mai benchmark --all --model openai/gpt-4o --max-workers 20
+    """
+    from .benchmarker import run_benchmark, run_batch_benchmark
+
+    # Validate arguments
+    if all_papers and paper_dir is not None:
+        typer.echo("Error: Cannot specify both paper_dir and --all", err=True)
+        raise typer.Exit(1)
+
+@app.command()
+def pdf_benchmark(
+    conference: str = typer.Option(
+        "neurips2025",
+        "--conference",
+        help="Conference name for input/output paths"
+    ),
+    input_root: Path = typer.Option(
+        Path("minerUtest/openreview_kept"),
+        "--input-root",
+        help="Root directory containing <conference>/parsed"
+    ),
+    output_root: Path = typer.Option(
+        Path("output/pdfbench"),
+        "--output-root",
+        help="Root directory to write result markdown files"
+    ),
+    model: str = typer.Option(
+        "gpt-5",
+        "--model",
+        help="Model name for PDF review (default: gpt-5)"
+    ),
+    limit_papers: Optional[int] = typer.Option(
+        None,
+        "--limit-papers",
+        help="Only process the first N papers"
+    ),
+    limit_issues: Optional[int] = typer.Option(
+        None,
+        "--limit-issues",
+        help="Only process the first N issues per paper"
+    ),
+    skip_existing: bool = typer.Option(
+        True,
+        "--skip-existing/--no-skip-existing",
+        help="Skip result files that already exist"
+    ),
+):
+    """Batch-run PDF benchmark for an entire conference."""
+    run_pdf_benchmark_batch(
+        conference=conference,
+        input_root=input_root,
+        output_root=output_root,
+        model=model,
+        limit_papers=limit_papers,
+        limit_issues=limit_issues,
+        skip_existing=skip_existing,
+    )
+
+
+def main():
     app()
 
 

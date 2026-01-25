@@ -1,9 +1,9 @@
 import json
 import asyncio
+import re
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 from pydantic import BaseModel, Field
-from pydantic_ai import Agent
 from datetime import datetime
 import typer
 from dotenv import load_dotenv, find_dotenv
@@ -20,43 +20,20 @@ async def verify_consistency(
     model_name: str
 ) -> ConsistencyResult:
     """
-    Use an LLM to verify if the agent's analysis matches the reviewer's issue.
+    Determine whether the analysis reports a math error based on its text.
     """
-    agent = Agent(
-        model=model_name,
-        output_type=str,
-        system_prompt=(
-            "You are an impartial judge evaluating the consistency between a reviewer's issue and an automated agent's analysis.\n"
-            "Task: Determine if the Agent Analysis confirms the Reviewer Issue.\n"
-            "- If the Agent agrees there is an error/issue as described by the reviewer, answer 'matched=True'.\n"
-            "- If the Agent says 'No formula issue detected', identifies a DIFFERENT issue, or refutes the reviewer, answer 'matched=False'.\n"
-            "Be strict. Partial matches on the *location* but different *content* should be mismatched.\n\n"
-            "IMPORTANT: Output your response as a valid JSON object with keys 'matched' (boolean) and 'reason' (string). Do not output markdown blocks."
-        )
+    match = re.search(
+        r"^\s*(?:line\s*\d+\s*:\s*)?math\s+error\s*:\s*(yes|no)\s*$",
+        agent_analysis,
+        re.IGNORECASE | re.MULTILINE,
     )
-
-    user_prompt = f"""
-Reviewer Issue (Evidence):
-"{issue_evidence}"
-
-Agent Analysis:
-"{agent_analysis}"
-"""
-    try:
-        result = await agent.run(user_prompt)
-        output_text = result.output
-
-        # Clean markdown if present
-        if "```json" in output_text:
-            output_text = output_text.split("```json")[1].split("```")[0].strip()
-        elif "```" in output_text:
-            output_text = output_text.split("```")[1].split("```")[0].strip()
-
-        data = json.loads(output_text)
-        return ConsistencyResult(**data)
-    except Exception as e:
-        # Fallback for errors
-        return ConsistencyResult(matched=False, reason=f"LLM/Parse Error: {str(e)}")
+    if not match:
+        return ConsistencyResult(matched=False, reason="Missing 'Math error: YES/NO' line in analysis.")
+    is_error = match.group(1).upper() == "YES"
+    return ConsistencyResult(
+        matched=is_error,
+        reason=f"Parsed math error flag: {match.group(1).upper()}",
+    )
 
 async def check_benchmark_consistency(
     conference: str,
@@ -168,13 +145,11 @@ async def check_benchmark_consistency(
                 # Read report content
                 content = report_path.read_text(encoding="utf-8")
                 
-                # Extract Agent Analysis
-                # Look for "## Agentic Reader Analysis"
-                analysis_marker = "## Agentic Reader Analysis"
+                # Extract Analysis
+                analysis_marker = "## Analysis"
                 if analysis_marker in content:
                     agent_analysis = content.split(analysis_marker)[1].strip()
                 else:
-                    # Fallback: use whole content or look for other markers
                     agent_analysis = content
                 
                 # Verify Consistency
