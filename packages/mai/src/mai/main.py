@@ -1,10 +1,6 @@
 from pathlib import Path
 from typing import Optional
 
-from .arxiv_downloader import parse_arxiv_url, download_paper
-from .tex_consolidator import extract_tex_source, consolidate_tex_project
-from .formula_extractor import extract_and_label_formulas
-from .formula_explainer import explain_formulas_from_labeled_files
 from .pdf_benchmarker import run_batch as run_pdf_benchmark_batch
 import typer
 
@@ -78,11 +74,77 @@ def run_bench(
     else:
         output_dir = Path(output_dir)
 
+    def print_verdict_stats(result_dir: Path) -> None:
+        """Scan result markdown files and print FORMULA_ISSUE/NO_FORMULA_ISSUE ratios."""
+        result_files = sorted(result_dir.glob("**/*.result.md"))
+        verdict_re = re.compile(
+            r"^Verdict:\s*(NO_FORMULA_ISSUE|FORMULA_ISSUE)\s*$",
+            re.MULTILINE,
+        )
+        no_formula_issue = 0
+        formula_issue = 0
+        unknown = 0
+
+        for result_file in result_files:
+            try:
+                content = result_file.read_text(encoding="utf-8")
+            except Exception:
+                unknown += 1
+                continue
+
+            match = verdict_re.search(content)
+            if not match:
+                unknown += 1
+                continue
+
+            verdict = match.group(1)
+            if verdict == "NO_FORMULA_ISSUE":
+                no_formula_issue += 1
+            elif verdict == "FORMULA_ISSUE":
+                formula_issue += 1
+
+        total = len(result_files)
+        valid_total = no_formula_issue + formula_issue
+
+        typer.echo(f"\n{'=' * 70}")
+        typer.echo("Verdict Stats")
+        typer.echo(f"{'=' * 70}")
+        typer.echo(f"Result directory: {result_dir}")
+        typer.echo(f"Result files scanned: {total}")
+        typer.echo(f"Valid verdict files: {valid_total}")
+        typer.echo(f"Unknown verdict files: {unknown}")
+
+        if valid_total == 0:
+            typer.echo("No valid verdict lines found.")
+            return
+
+        no_rate = no_formula_issue / valid_total * 100
+        formula_rate = formula_issue / valid_total * 100
+
+        typer.echo(
+            f"NO_FORMULA_ISSUE (error count): {no_formula_issue} ({no_rate:.2f}%)"
+        )
+        typer.echo(
+            f"FORMULA_ISSUE (error count): {formula_issue} ({formula_rate:.2f}%)"
+        )
+
     base_parsed_dir = Path("output/mineru/openreview_kept") / conference / "parsed"
 
     if not base_parsed_dir.exists():
         typer.echo(f"Error: Directory not found: {base_parsed_dir}", err=True)
         raise typer.Exit(1)
+
+    if output_dir.exists():
+        typer.echo("=" * 70)
+        typer.echo("El Agente Math - Run Agentic Reader Benchmark")
+        typer.echo("=" * 70)
+        typer.echo(f"Conference: {conference}")
+        typer.echo(f"Output directory: {output_dir}")
+        typer.echo(
+            "Output directory already exists. Skipping model calls and scanning existing results."
+        )
+        print_verdict_stats(output_dir)
+        raise typer.Exit(0)
 
     typer.echo("=" * 70)
     typer.echo("El Agente Math - Run Agentic Reader Benchmark")
@@ -182,11 +244,12 @@ def run_bench(
             }
 
         question = (
-            "The following is a reviewer issue snippet from a paper review. "
-            "Determine whether it indicates a mathematical formula issue in the paper. "
-            "If yes, explain the issue and cite the relevant formula or location from the paper. "
-            "If no formula issue, say \"No formula issue detected.\"\n\n"
-            f"Issue snippet:\n{issue_content}\n"
+            "Reviewer snippet (may be noisy or incomplete):\n"
+            f"{issue_content}\n\n"
+            "As an academic reviewer, determine whether this snippet indicates a genuine "
+            "mathematical formula error in the paper. Use equation-level evidence from the "
+            "paper context. If evidence is insufficient or ambiguous, output: "
+            "\"No formula issue detected.\""
         )
 
         try:
@@ -297,6 +360,7 @@ def run_bench(
     typer.echo(f"Skipped: {results['skipped']}")
     typer.echo(f"Errors: {results['errors']}")
     typer.echo(f"\nResults written to: {output_dir}")
+    print_verdict_stats(output_dir)
 
     if results["errors"] > 0:
         raise typer.Exit(1)
@@ -331,6 +395,15 @@ def check_bench(
 
     import asyncio
 
+    if bench_dir is None:
+        sanitized_model = model.replace(":", "_").replace("/", "_")
+        default_dir = Path("output/bench") / f"{conference}-{sanitized_model}"
+        legacy_dir = Path("output/bench") / conference
+        if default_dir.exists():
+            bench_dir = default_dir
+        elif legacy_dir.exists():
+            bench_dir = legacy_dir
+
     asyncio.run(
         check_benchmark_consistency(
             conference=conference,
@@ -347,16 +420,24 @@ def mineru_openreview(
         ...,
         help="Conference name, e.g. neurips2025",
     ),
+    spotlight: bool = typer.Option(
+        False,
+        "--spotlight",
+        help="Use spotlight.json from packages/openreview-crawler/output/<conference>_spotlight.",
+    ),
     workdir: Optional[Path] = typer.Option(
         None,
         "--workdir",
-        help="Work directory root (default: output/mineru/openreview_kept/<conference>).",
+        help=(
+            "Work directory root (default: output/mineru/openreview_kept/<conference>, "
+            "or <conference>_spotlight with --spotlight)."
+        ),
     ),
 ):
     """Download kept papers and parse them with MinerU."""
     from .mineru import run_openreview_pipeline
 
-    run_openreview_pipeline(conference, str(workdir) if workdir else None)
+    run_openreview_pipeline(conference, str(workdir) if workdir else None, spotlight)
 
 
 @app.command()
@@ -435,50 +516,48 @@ def mineru_locate(
     locate_block_from_pdf(output_dir, line_spec, output_path)
 
 
-def main() -> None:
-    max_workers: int = typer.Option(
-        10,
-        "--max-workers", "-w",
-        help="Number of concurrent API calls for error detection"
-    )
+@app.command()
+def mineru_long_formulas(
+    parsed_dir: Optional[Path] = typer.Option(
+        None,
+        "--parsed-dir",
+        help="Parsed directory containing paper subdirectories.",
+    ),
+    conference: Optional[str] = typer.Option(
+        None,
+        "--conference",
+        help="Conference name (e.g., neurips2025).",
+    ),
+    workdir: Optional[Path] = typer.Option(
+        None,
+        "--workdir",
+        help="Work directory root (default: output/mineru/openreview_kept/<conference>).",
+    ),
+    max_count: int = typer.Option(
+        3,
+        "--max-count",
+        "-n",
+        help="Maximum number of long formulas to keep per paper.",
+    ),
+    overwrite: bool = typer.Option(
+        False,
+        "--overwrite",
+        help="Overwrite existing <paper_id>_*.md files.",
+    ),
 ):
-    """
-    Benchmark LLM's ability to detect mathematical errors in formulas.
+    """Generate long-formula context files from existing MinerU outputs."""
+    from .mineru import generate_long_formula_files
+    from .mineru.paths import resolve_workdir
 
-    This command evaluates how well an LLM can identify errors in mathematical
-    formulas by checking all formulas in the explained.json file. If an error_log.json
-    exists (from --add-error flag), it compares detections against ground truth and
-    calculates metrics.
+    if parsed_dir is None:
+        if not conference:
+            raise typer.BadParameter(
+                "Provide --parsed-dir or --conference to locate parsed outputs."
+            )
+        workdir_path = resolve_workdir(conference, str(workdir) if workdir else None)
+        parsed_dir = workdir_path / "parsed"
 
-    Single paper mode:
-        1. Loads all formulas from explained.json
-        2. For each formula, extracts context from consolidated_labeled.tex
-        3. Asks LLM to detect if the formula contains an error
-        4. Saves detection results to benchmarks/{model_name}/
-        5. If error_log.json exists, calculates metrics and saves benchmark_report.json
-
-    Batch mode (--all):
-        1. Finds all paper directories in output_dir
-        2. Runs benchmark on each paper
-        3. Generates aggregated report across all papers
-        4. Saves aggregate report to output_dir/aggregate_benchmarks/{model_name}/
-
-    Examples:
-        # Single paper
-        mai benchmark output/1706.03762
-        mai benchmark output/1706.03762 --model openai/gpt-4o
-
-        # All papers
-        mai benchmark --all
-        mai benchmark --all --model openai/gpt-4o --max-workers 20
-    """
-    from .benchmarker import run_benchmark, run_batch_benchmark
-
-    # Validate arguments
-    if all_papers and paper_dir is not None:
-        typer.echo("Error: Cannot specify both paper_dir and --all", err=True)
-        raise typer.Exit(1)
-
+    generate_long_formula_files(parsed_dir, max_count=max_count, overwrite=overwrite)
 @app.command()
 def pdf_benchmark(
     conference: str = typer.Option(

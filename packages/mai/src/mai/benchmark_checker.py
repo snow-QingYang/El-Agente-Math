@@ -49,7 +49,13 @@ async def check_benchmark_consistency(
     result_json_path = base_path / "result.json"
     
     if output_dir is None:
-        bench_dir = Path("output/bench") / conference
+        sanitized_model = model.replace(":", "_").replace("/", "_")
+        default_dir = Path("output/bench") / f"{conference}-{sanitized_model}"
+        legacy_dir = Path("output/bench") / conference
+        if default_dir.exists():
+            bench_dir = default_dir
+        else:
+            bench_dir = legacy_dir
     else:
         bench_dir = Path(output_dir)
     

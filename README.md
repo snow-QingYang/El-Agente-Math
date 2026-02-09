@@ -9,6 +9,15 @@ uv run streamlit run paper_review_interface.py #after launch, back to cli to ent
 ```
 After you finish your part of work, push the ```packages/openreview-crawler/output/neurips{year}/paper_reviews.json```
 
+
+### Parse spotlight paper
+```bash
+uv run mai mineru-openreview neurips2025 --spotlight --workdir /tmp/mineru_spotlight_test
+
+## filter out long formulas
+uv run mai mineru-long-formulas --conference neurips2025 --workdir /tmp/mineru_spotlight_test
+```
+
 ```bash
 uv run openreview_crawler  
 uv run openreview_crawler filter_reviews packages/openreview-crawler/output/neurips2025
@@ -22,7 +31,7 @@ uv run streamlit run paper_review_interface.py
 
 ```aiignore
 uv run mai run-bench neurips2025 --model gpt-5.2 --concurrency 20
-uv run mai check-bench neurips2025 --concurrency 20   
+uv run mai check-bench neurips2025 --concurrency 20 --model gpt-5.2
 
 ```
 
@@ -67,6 +76,13 @@ Download kept papers, parse with MinerU, and build issue context files:
 
 ```bash
 uv run mai mineru-openreview <conference>
+```
+
+Example (NeurIPS 2023):
+
+```bash
+uv run mai mineru-openreview neurips2023
+uv run mai mineru-list-missing neurips2023
 ```
 
 Outputs are written to:
