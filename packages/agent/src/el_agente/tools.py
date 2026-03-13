@@ -10,14 +10,12 @@ Provides tools for reading and analyzing document content:
 from __future__ import annotations
 
 import re
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 from pydantic_ai import Agent, RunContext
 
+from .models import AgenticReaderDependencies  # noqa: TCH001 - needed at runtime by pydantic-ai
 from .prompts import render
-
-if TYPE_CHECKING:
-    from .models import AgenticReaderDependencies
 
 LARGE_RANGE_THRESHOLD = 10000
 

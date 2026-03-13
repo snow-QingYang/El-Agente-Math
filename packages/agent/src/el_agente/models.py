@@ -2,12 +2,10 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from collections.abc import Callable  # noqa: TCH003 - needed at runtime by Pydantic
+from typing import Any
 
 from pydantic import BaseModel, Field
-
-if TYPE_CHECKING:
-    from collections.abc import Callable
 
 
 class AgenticReaderOptions(BaseModel):
