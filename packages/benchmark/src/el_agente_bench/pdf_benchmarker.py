@@ -9,13 +9,16 @@ import os
 import re
 from datetime import datetime
 from pathlib import Path
-from typing import Iterable
+from typing import TYPE_CHECKING
 
 import typer
 from dotenv import find_dotenv, load_dotenv
 from openai import OpenAI
 
 from .prompts import render
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 
 def _parse_line_range(header_line: str) -> tuple[int | None, int | None]:
@@ -83,7 +86,7 @@ def _run_pdf_review(pdf_path: Path, issue_path: Path, model: str) -> str:
 
 def _extract_text_from_response(response: object) -> str:
     if hasattr(response, "output_text") and response.output_text:
-        return response.output_text
+        return str(response.output_text)
     output = getattr(response, "output", None)
     if not output:
         return ""

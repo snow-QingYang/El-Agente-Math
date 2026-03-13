@@ -49,17 +49,13 @@ def latex_to_preview(latex: str, context_chars: int = 100) -> str:
     figure_regex = re.compile(r"\\begin\{figure\}[\s\S]*?\\end\{figure\}", re.MULTILINE)
     for match in figure_regex.finditer(latex):
         key_positions.append(
-            KeyPosition(
-                type="figure", start=match.start(), end=match.end(), content=match.group(0)
-            )
+            KeyPosition(type="figure", start=match.start(), end=match.end(), content=match.group(0))
         )
 
     table_regex = re.compile(r"\\begin\{table\}[\s\S]*?\\end\{table\}", re.MULTILINE)
     for match in table_regex.finditer(latex):
         key_positions.append(
-            KeyPosition(
-                type="table", start=match.start(), end=match.end(), content=match.group(0)
-            )
+            KeyPosition(type="table", start=match.start(), end=match.end(), content=match.group(0))
         )
 
     equation_regex = re.compile(
@@ -84,7 +80,9 @@ def latex_to_preview(latex: str, context_chars: int = 100) -> str:
 
         if not merged_positions:
             merged_positions.append(
-                KeyPosition(type=pos.type, start=context_start, end=context_end, content=pos.content)
+                KeyPosition(
+                    type=pos.type, start=context_start, end=context_end, content=pos.content
+                )
             )
         else:
             last = merged_positions[-1]

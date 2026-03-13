@@ -10,12 +10,14 @@ Provides tools for reading and analyzing document content:
 from __future__ import annotations
 
 import re
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from pydantic_ai import Agent, RunContext
 
-from .models import AgenticReaderDependencies
 from .prompts import render
+
+if TYPE_CHECKING:
+    from .models import AgenticReaderDependencies
 
 LARGE_RANGE_THRESHOLD = 10000
 
@@ -119,9 +121,7 @@ async def read_figure(
     deps.stats["figure_analyses"] = deps.stats.get("figure_analyses", 0) + 1
 
     if deps.emit_event:
-        deps.emit_event(
-            "tool_call", {"tool": "readFigure", "image_url": image_url, "query": query}
-        )
+        deps.emit_event("tool_call", {"tool": "readFigure", "image_url": image_url, "query": query})
 
     try:
         system_prompt = render("read_figure_system.jinja2", query=query)
@@ -170,7 +170,12 @@ async def search_content(
     if deps.emit_event:
         deps.emit_event(
             "tool_call",
-            {"tool": "searchContent", "search_pattern": search_pattern, "max_results": max_results, "flags": flags},
+            {
+                "tool": "searchContent",
+                "search_pattern": search_pattern,
+                "max_results": max_results,
+                "flags": flags,
+            },
         )
 
     try:
@@ -243,4 +248,8 @@ async def update_memo(
             "memo_updated", {"memo_length": len(memo_content), "memo_content": memo_content}
         )
 
-    return {"success": True, "message": "Memo updated successfully", "memo_length": len(memo_content)}
+    return {
+        "success": True,
+        "message": "Memo updated successfully",
+        "memo_length": len(memo_content),
+    }

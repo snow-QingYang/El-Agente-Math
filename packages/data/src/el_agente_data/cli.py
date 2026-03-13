@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 import typer
 
@@ -33,7 +32,7 @@ def pipeline(
         "-c",
         help="Maximum concurrent API calls.",
     ),
-    limit: Optional[int] = typer.Option(
+    limit: int | None = typer.Option(
         None,
         "--limit",
         help="Limit number of papers to process (0 or None = all).",
@@ -60,7 +59,7 @@ def mineru_openreview(
         "--spotlight",
         help="Use spotlight.json from packages/openreview-crawler/output/<conference>_spotlight.",
     ),
-    workdir: Optional[Path] = typer.Option(
+    workdir: Path | None = typer.Option(
         None,
         "--workdir",
         help="Work directory root.",
@@ -90,7 +89,7 @@ def mineru_spotlight(
 @app.command()
 def mineru_list_missing(
     conference: str = typer.Argument(..., help="Conference name, e.g. neurips2025"),
-    workdir: Optional[Path] = typer.Option(
+    workdir: Path | None = typer.Option(
         None,
         "--workdir",
         help="Work directory root.",
@@ -105,7 +104,7 @@ def mineru_list_missing(
 @app.command()
 def mineru_parse(
     pdf: Path = typer.Argument(..., help="Path to the PDF to parse."),
-    out_dir: Optional[Path] = typer.Option(
+    out_dir: Path | None = typer.Option(
         None,
         "--out-dir",
         help="Directory to store MinerU outputs.",
@@ -120,15 +119,11 @@ def mineru_parse(
 
 @app.command()
 def mineru_locate(
-    output_dir: Path = typer.Argument(
-        ..., help="Parsed MinerU output directory for a paper."
-    ),
+    output_dir: Path = typer.Argument(..., help="Parsed MinerU output directory for a paper."),
     line_spec: str = typer.Option(
         ..., "--line", help="Line spec to locate (e.g., 'LINE (12-15)' or '12-15')."
     ),
-    out: Optional[Path] = typer.Option(
-        None, "--out", help="Output markdown path."
-    ),
+    out: Path | None = typer.Option(None, "--out", help="Output markdown path."),
 ) -> None:
     """Locate a PDF text block and map it to MinerU outputs."""
     from .mineru import locate_block_from_pdf

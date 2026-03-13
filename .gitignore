@@ -210,4 +210,4 @@ __marimo__/
 temp/*
 output/*
 !output/bench/
-openreview_backup/*
+openreview_backup/*.DS_Store

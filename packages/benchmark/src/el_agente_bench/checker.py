@@ -145,14 +145,10 @@ async def check_benchmark_consistency(
                     analysis_snippet=agent_analysis,
                 )
             except Exception as e:
-                return ConsistencyEntry(
-                    status="error", path=str(report_path), reason=str(e)
-                )
+                return ConsistencyEntry(status="error", path=str(report_path), reason=str(e))
 
     tasks = [process_report(rf) for rf in report_files]
-    results: list[ConsistencyEntry] = await tqdm_asyncio.gather(
-        *tasks, desc="Checking consistency"
-    )
+    results: list[ConsistencyEntry] = await tqdm_asyncio.gather(*tasks, desc="Checking consistency")
 
     total_checked = 0
     matches = 0

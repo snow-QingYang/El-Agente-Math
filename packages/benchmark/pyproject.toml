@@ -18,6 +18,10 @@ dependencies = [
 [project.scripts]
 el-agente-bench = "el_agente_bench.cli:main"
 
+[tool.uv.sources]
+el-agente = { workspace = true }
+el-agente-data = { workspace = true }
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

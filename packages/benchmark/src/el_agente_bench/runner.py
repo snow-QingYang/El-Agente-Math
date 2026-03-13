@@ -69,8 +69,7 @@ def print_verdict_stats(stats: VerdictStats) -> None:
         f"{stats.no_formula_issue} ({stats.no_formula_issue_rate:.2f}%)"
     )
     typer.echo(
-        f"FORMULA_ISSUE (error count): "
-        f"{stats.formula_issue} ({stats.formula_issue_rate:.2f}%)"
+        f"FORMULA_ISSUE (error count): {stats.formula_issue} ({stats.formula_issue_rate:.2f}%)"
     )
 
 
@@ -161,7 +160,9 @@ async def run_bench(
 
     tasks = collect_tasks(base_parsed_dir)
     total_tasks = len(tasks)
-    typer.echo(f"Found {len(sorted(d for d in base_parsed_dir.iterdir() if d.is_dir()))} paper directories")
+    typer.echo(
+        f"Found {len(sorted(d for d in base_parsed_dir.iterdir() if d.is_dir()))} paper directories"
+    )
     typer.echo(f"Total tasks (paper, issue): {total_tasks}\n")
 
     if total_tasks == 0:

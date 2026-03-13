@@ -12,15 +12,19 @@ from __future__ import annotations
 
 import asyncio
 import time
-from typing import Any, AsyncIterator, Callable
+from typing import TYPE_CHECKING, Any
 
 from pydantic_ai import Agent
-from pydantic_ai.messages import ModelMessage
 
 from .latex_preview import latex_to_preview
 from .models import AgenticReaderDependencies, AgenticReaderOptions, AgenticReaderResult
 from .prompts import render
 from .tools import read_content, read_figure, search_content, update_memo
+
+if TYPE_CHECKING:
+    from collections.abc import AsyncIterator, Callable
+
+    from pydantic_ai.messages import ModelMessage
 
 
 async def agentic_reader_with_events(
@@ -199,7 +203,7 @@ async def agentic_reader_stream(
         await agentic_reader_with_events(
             question=question,
             text_content=text_content,
-            emit_event=lambda e, d: asyncio.create_task(emit_to_queue(e, d)),
+            emit_event=lambda e, d: asyncio.create_task(emit_to_queue(e, d)),  # type: ignore[arg-type]
             options=options,
         )
         await queue.put(("_done", None))

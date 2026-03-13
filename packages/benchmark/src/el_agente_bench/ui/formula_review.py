@@ -4,10 +4,8 @@ from __future__ import annotations
 
 import json
 import os
-from pathlib import Path
 
 import streamlit as st
-
 
 PAPERS_PER_FILE = 500
 

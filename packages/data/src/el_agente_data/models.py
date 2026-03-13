@@ -3,13 +3,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime
-from enum import Enum
-from pathlib import Path
-from typing import Any
+from enum import StrEnum
+from typing import TYPE_CHECKING, Any
 
 from pydantic import BaseModel, Field
 
+if TYPE_CHECKING:
+    from pathlib import Path
 
 # --- Venue Configuration ---
 
@@ -67,7 +67,7 @@ class OpenReviewData(BaseModel):
 # --- Formula Issue Detection ---
 
 
-class FormulaCategory(str, Enum):
+class FormulaCategory(StrEnum):
     """Categories for formula errors."""
 
     TYPO = "Typo / Symbol misuse"
@@ -78,7 +78,7 @@ class FormulaCategory(str, Enum):
     MISSING_PROOF = "Missing justification/proof"
 
 
-class ConfidenceLevel(str, Enum):
+class ConfidenceLevel(StrEnum):
     """Confidence levels for detected issues."""
 
     VERY_CERTAIN = "Very certain"
@@ -198,8 +198,8 @@ class ReviewLookupEntry(BaseModel):
 class PipelineConfig:
     """Configuration for the data processing pipeline."""
 
-    conference: str
     output_dir: Path
+    conference: str = ""
     model: str = "gpt-5-nano"
     limit: int | None = None
     concurrency: int = 10

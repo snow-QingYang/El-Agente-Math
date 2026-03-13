@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 import typer
 
@@ -25,12 +24,10 @@ def run_bench(
     max_iterations: int = typer.Option(
         10, "--max-iterations", help="Maximum iterations for agentic reader."
     ),
-    output_dir: Optional[Path] = typer.Option(
+    output_dir: Path | None = typer.Option(
         None, "--output-dir", "-o", help="Output directory for results."
     ),
-    force: bool = typer.Option(
-        False, "--force", "-f", help="Overwrite existing result files."
-    ),
+    force: bool = typer.Option(False, "--force", "-f", help="Overwrite existing result files."),
 ) -> None:
     """Run agentic reader benchmark on parsed OpenReview papers."""
     import asyncio
@@ -58,7 +55,7 @@ def check_bench(
     concurrency: int = typer.Option(
         10, "--concurrency", "-c", help="Number of concurrent LLM calls."
     ),
-    bench_dir: Optional[Path] = typer.Option(
+    bench_dir: Path | None = typer.Option(
         None, "--dir", help="Benchmark directory to read reports from."
     ),
 ) -> None:
@@ -79,9 +76,7 @@ def check_bench(
 
 @app.command()
 def pdf_benchmark(
-    conference: str = typer.Option(
-        "neurips2025", "--conference", help="Conference name."
-    ),
+    conference: str = typer.Option("neurips2025", "--conference", help="Conference name."),
     input_root: Path = typer.Option(
         Path("minerUtest/openreview_kept"),
         "--input-root",
@@ -93,10 +88,10 @@ def pdf_benchmark(
         help="Root directory to write result markdown files.",
     ),
     model: str = typer.Option("gpt-5", "--model", help="Model for PDF review."),
-    limit_papers: Optional[int] = typer.Option(
+    limit_papers: int | None = typer.Option(
         None, "--limit-papers", help="Only process the first N papers."
     ),
-    limit_issues: Optional[int] = typer.Option(
+    limit_issues: int | None = typer.Option(
         None, "--limit-issues", help="Only process the first N issues per paper."
     ),
     skip_existing: bool = typer.Option(

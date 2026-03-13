@@ -12,7 +12,6 @@ from datetime import datetime
 
 import streamlit as st
 
-
 DEFAULT_BENCH_DIR = os.path.join("output", "bench", "neurips2025-gpt-5.2")
 
 

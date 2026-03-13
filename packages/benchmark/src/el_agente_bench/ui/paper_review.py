@@ -12,7 +12,6 @@ from datetime import datetime
 
 import streamlit as st
 
-
 DEFAULT_CONFERENCE = "neurips2025"
 BASE_OUTPUT_DIR = os.path.join("packages", "openreview-crawler", "output")
 
@@ -205,9 +204,7 @@ def main() -> None:
     st.sidebar.divider()
     st.sidebar.header("Navigation")
 
-    filter_option = st.sidebar.radio(
-        "Show:", ["All Papers", "Unreviewed Only", "Reviewed Only"]
-    )
+    filter_option = st.sidebar.radio("Show:", ["All Papers", "Unreviewed Only", "Reviewed Only"])
 
     if filter_option == "Unreviewed Only":
         filtered_papers = [
@@ -265,7 +262,11 @@ def main() -> None:
             existing_review = get_issue_review(reviews, paper_id, idx) or {}
             existing_keep = existing_review.get("keep")
             if existing_keep is None:
-                existing_keep = existing_review.get("decision") == "accept" if "decision" in existing_review else True
+                existing_keep = (
+                    existing_review.get("decision") == "accept"
+                    if "decision" in existing_review
+                    else True
+                )
             existing_comment = existing_review.get("comment") or ""
             existing_correct = existing_review.get("correct_formula_location") or issue.get(
                 "formula_location"
@@ -347,7 +348,9 @@ def main() -> None:
     st.divider()
     col1, _, col3 = st.columns([1, 2, 1])
     with col1:
-        if st.button("Previous", disabled=(paper_idx == 0), use_container_width=True, key="nav_prev"):
+        if st.button(
+            "Previous", disabled=(paper_idx == 0), use_container_width=True, key="nav_prev"
+        ):
             st.session_state.current_paper_idx = paper_idx - 1
             st.rerun()
     with col3:
