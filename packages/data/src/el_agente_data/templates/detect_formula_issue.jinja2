@@ -1,0 +1,16 @@
+Decide if this review explicitly raises formula/equation/notation issues (wrong equations, missing terms, sign/typo, unclear notation, missing derivation/proof). Be strict: only mark true if formula/notation/math expressions are discussed.
+
+Review content:
+[Summary] {{ summary }}
+[Strengths] {{ strengths }}
+[Weaknesses] {{ weaknesses }}
+[Questions] {{ questions }}
+[Comment] {{ comment }}
+
+Return JSON only:
+{
+  "has_formula_issue": true/false,
+  "confidence": "high/medium/low",
+  "relevant_quotes": ["quote1", "quote2"],
+  "summary": "one-line summary if true"
+}
