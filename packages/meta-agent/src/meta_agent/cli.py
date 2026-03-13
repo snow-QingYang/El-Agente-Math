@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import asyncio
 from pathlib import Path
 
 import typer
@@ -47,7 +46,7 @@ def run(
         workspace_dir=workspace_dir,
     )
 
-    asyncio.run(run_meta_agent(config))
+    run_meta_agent(config)
 
 
 def main() -> None:
