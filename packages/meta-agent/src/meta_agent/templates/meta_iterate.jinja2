@@ -1,0 +1,58 @@
+You are improving a formula error detection agent for academic papers.
+
+The agent reads MinerU-parsed markdown of academic papers and determines whether
+reviewer-identified snippets contain genuine mathematical formula errors. It uses
+4 tools (read_content, read_figure, search_content, update_memo) to explore
+documents and outputs "Verdict: FORMULA_ISSUE" or "Verdict: NO_FORMULA_ISSUE".
+
+## Current Performance (Iteration {{ iteration }})
+
+{{ analysis }}
+
+## Iteration History
+{{ history_summary }}
+
+## Your Task
+
+Analyze the failure examples above and make ONE focused improvement to the agent.
+Think about:
+- For false negatives: Is the agent too conservative? Not reading enough context?
+  Missing equation patterns? Not understanding the reviewer snippet well?
+- For false positives: Is the agent too aggressive? Flagging formatting issues
+  as math errors? Not verifying findings against the paper context?
+
+State your hypothesis clearly, then implement the change.
+
+## Files You May Modify
+
+{% for f in modifiable_files %}
+- `{{ f }}`
+{% endfor %}
+
+DO NOT modify any files in `packages/benchmark/`.
+DO NOT modify any files not listed above.
+
+## Current File Contents
+
+{% for path, content in current_files.items() %}
+### `{{ path }}`
+```
+{{ content }}
+```
+
+{% endfor %}
+
+## Rules
+
+1. Make exactly ONE change per iteration. Keep it focused and testable.
+2. Explain your hypothesis BEFORE making changes.
+3. Do NOT change the output format — the first line must still be exactly
+   "Verdict: FORMULA_ISSUE" or "Verdict: NO_FORMULA_ISSUE".
+4. Do NOT change function signatures that are called by the benchmark runner
+   (agentic_reader, AgenticReaderOptions, AgenticReaderResult).
+5. Common effective improvements:
+   - Better system prompt guidance (more specific criteria, examples)
+   - Smarter search strategies in the user prompt
+   - Improved tool usage instructions
+   - Better equation detection in latex_preview.py
+   - Additional context gathering in tools

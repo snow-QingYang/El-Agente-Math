@@ -3,6 +3,7 @@ members = [
     "packages/agent",
     "packages/data",
     "packages/benchmark",
+    "packages/meta-agent",
 ]
 
 [project]
@@ -42,7 +43,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["el_agente", "el_agente_data", "el_agente_bench"]
+known-first-party = ["el_agente", "el_agente_data", "el_agente_bench", "meta_agent"]
 
 [tool.mypy]
 python_version = "3.12"
@@ -72,6 +73,7 @@ module = [
     "el_agente_data.cli",
     "el_agente_bench.ui.*",
     "el_agente_bench.cli",
+    "meta_agent.*",
 ]
 strict = false
 disallow_untyped_defs = false

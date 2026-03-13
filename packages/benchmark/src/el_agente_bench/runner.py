@@ -75,6 +75,7 @@ def print_verdict_stats(stats: VerdictStats) -> None:
 
 def collect_tasks(
     base_parsed_dir: Path,
+    paper_ids: set[str] | None = None,
 ) -> list[tuple[str, Path, Path]]:
     """Collect benchmark tasks from parsed paper directories."""
     exclude_patterns = [
@@ -86,6 +87,8 @@ def collect_tasks(
 
     tasks: list[tuple[str, Path, Path]] = []
     paper_dirs = sorted(d for d in base_parsed_dir.iterdir() if d.is_dir())
+    if paper_ids is not None:
+        paper_dirs = [d for d in paper_dirs if d.name in paper_ids]
 
     for paper_dir in paper_dirs:
         paper_id = paper_dir.name
@@ -120,6 +123,8 @@ async def run_bench(
     max_iterations: int = 10,
     output_dir: Path | None = None,
     force: bool = False,
+    base_parsed_dir: Path | None = None,
+    paper_ids: set[str] | None = None,
 ) -> None:
     """Run agentic reader benchmark on parsed OpenReview papers."""
     load_dotenv(find_dotenv(usecwd=True))
@@ -128,7 +133,8 @@ async def run_bench(
         sanitized_model = model.replace(":", "_").replace("/", "_")
         output_dir = Path("output/bench") / f"{conference}-{sanitized_model}"
 
-    base_parsed_dir = Path("output/mineru/openreview_kept") / conference / "parsed"
+    if base_parsed_dir is None:
+        base_parsed_dir = Path("output/mineru/openreview_kept") / conference / "parsed"
 
     if not base_parsed_dir.exists():
         typer.echo(f"Error: Directory not found: {base_parsed_dir}", err=True)
@@ -158,7 +164,7 @@ async def run_bench(
         typer.echo("Force: enabled (overwrite existing results)")
     typer.echo(f"\n{'=' * 70}")
 
-    tasks = collect_tasks(base_parsed_dir)
+    tasks = collect_tasks(base_parsed_dir, paper_ids=paper_ids)
     total_tasks = len(tasks)
     typer.echo(
         f"Found {len(sorted(d for d in base_parsed_dir.iterdir() if d.is_dir()))} paper directories"

@@ -89,3 +89,44 @@ class BenchmarkResult(BaseModel):
     issue_content: str = ""
     error: str | None = None
     reason: str | None = None
+
+
+class ConfusionMatrix(BaseModel):
+    """Confusion matrix for binary classification."""
+
+    tp: int = 0
+    fp: int = 0
+    tn: int = 0
+    fn: int = 0
+    unknown_positive: int = 0
+    unknown_negative: int = 0
+
+    @property
+    def precision(self) -> float:
+        denom = self.tp + self.fp
+        return self.tp / denom if denom > 0 else 0.0
+
+    @property
+    def recall(self) -> float:
+        denom = self.tp + self.fn
+        return self.tp / denom if denom > 0 else 0.0
+
+    @property
+    def f1(self) -> float:
+        p, r = self.precision, self.recall
+        return 2 * p * r / (p + r) if (p + r) > 0 else 0.0
+
+    @property
+    def accuracy(self) -> float:
+        total = self.tp + self.fp + self.tn + self.fn
+        return (self.tp + self.tn) / total if total > 0 else 0.0
+
+
+class SplitManifest(BaseModel):
+    """Train/test split manifest."""
+
+    seed: int = 42
+    train_positive: list[str] = Field(default_factory=list)
+    train_negative: list[str] = Field(default_factory=list)
+    test_positive: list[str] = Field(default_factory=list)
+    test_negative: list[str] = Field(default_factory=list)

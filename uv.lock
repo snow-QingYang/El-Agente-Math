@@ -8,6 +8,7 @@ members = [
     "el-agente-bench",
     "el-agente-data",
     "el-agente-math",
+    "el-agente-meta",
 ]
 
 [[package]]
@@ -668,6 +669,27 @@ requires-dist = [
 dev = [
     { name = "mypy", specifier = ">=1.19.1" },
     { name = "ruff", specifier = ">=0.15.6" },
+]
+
+[[package]]
+name = "el-agente-meta"
+version = "0.1.0"
+source = { editable = "packages/meta-agent" }
+dependencies = [
+    { name = "el-agente" },
+    { name = "el-agente-bench" },
+    { name = "jinja2" },
+    { name = "pydantic" },
+    { name = "typer" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "el-agente", editable = "packages/agent" },
+    { name = "el-agente-bench", editable = "packages/benchmark" },
+    { name = "jinja2", specifier = ">=3.0" },
+    { name = "pydantic", specifier = ">=2.0" },
+    { name = "typer", specifier = ">=0.15" },
 ]
 
 [[package]]

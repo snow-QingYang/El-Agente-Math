@@ -28,11 +28,26 @@ def run_bench(
         None, "--output-dir", "-o", help="Output directory for results."
     ),
     force: bool = typer.Option(False, "--force", "-f", help="Overwrite existing result files."),
+    parsed_dir: Path | None = typer.Option(
+        None, "--parsed-dir", help="Override base parsed directory."
+    ),
+    split_file: Path | None = typer.Option(
+        None, "--split-file", help="Split manifest JSON for subset evaluation."
+    ),
+    partition: str | None = typer.Option(
+        None, "--partition", help="Partition to use from split file (train, test)."
+    ),
 ) -> None:
     """Run agentic reader benchmark on parsed OpenReview papers."""
     import asyncio
 
     from .runner import run_bench as _run_bench
+
+    paper_ids: set[str] | None = None
+    if split_file and partition:
+        from .split_dataset import load_split_paper_ids
+
+        paper_ids = load_split_paper_ids(split_file, partition, parsed_dir or Path("."))
 
     asyncio.run(
         _run_bench(
@@ -42,6 +57,8 @@ def run_bench(
             max_iterations=max_iterations,
             output_dir=output_dir,
             force=force,
+            base_parsed_dir=parsed_dir,
+            paper_ids=paper_ids,
         )
     )
 
@@ -109,6 +126,69 @@ def pdf_benchmark(
         limit_papers=limit_papers,
         limit_issues=limit_issues,
         skip_existing=skip_existing,
+    )
+
+
+@app.command()
+def generate_negatives(
+    conference: str = typer.Argument(..., help="Conference name (e.g., neurips2025)"),
+    count: int = typer.Option(78, "--count", "-n", help="Number of negative samples."),
+    seed: int = typer.Option(42, "--seed", help="Random seed for sampling."),
+    parsed_dir: Path | None = typer.Option(
+        None, "--parsed-dir", help="Override parsed spotlight directory."
+    ),
+) -> None:
+    """Generate negative test samples from spotlight papers."""
+    from .generate_negatives import generate_negatives as _generate_negatives
+
+    _generate_negatives(
+        conference=conference,
+        count=count,
+        seed=seed,
+        parsed_dir=parsed_dir,
+    )
+
+
+@app.command()
+def confusion_matrix(
+    positive_dir: Path = typer.Option(
+        ..., "--positive-dir", help="Directory with positive (real issue) benchmark results."
+    ),
+    negative_dir: Path = typer.Option(
+        ..., "--negative-dir", help="Directory with negative (spotlight) benchmark results."
+    ),
+) -> None:
+    """Compute confusion matrix from positive and negative benchmark results."""
+    from .confusion_matrix import compute_confusion_matrix, print_confusion_matrix
+
+    cm = compute_confusion_matrix(positive_dir, negative_dir)
+    print_confusion_matrix(cm)
+
+
+@app.command()
+def split_dataset(
+    positive_dir: Path = typer.Option(
+        ..., "--positive-dir", help="Directory with positive benchmark results."
+    ),
+    negative_dir: Path = typer.Option(
+        ..., "--negative-dir", help="Directory with negative benchmark results."
+    ),
+    output_file: Path = typer.Option(
+        Path("output/meta_agent/split_manifest.json"),
+        "--output",
+        "-o",
+        help="Output path for split manifest.",
+    ),
+    seed: int = typer.Option(42, "--seed", help="Random seed for splitting."),
+) -> None:
+    """Create train/test split from benchmark results."""
+    from .split_dataset import create_split
+
+    create_split(
+        positive_dir=positive_dir,
+        negative_dir=negative_dir,
+        output_file=output_file,
+        seed=seed,
     )
 
 
