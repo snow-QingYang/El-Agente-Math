@@ -252,21 +252,24 @@ def run_openreview_pipeline(
                 print(f"Stripped {count} line numbers in {md_path}")
             continue
         pdf_path = pdf_dir / f"{paper_id}.pdf"
-        if pdf_path.exists():
-            if pdf_looks_complete(pdf_path):
-                print(f"PDF exists for {paper_id}, skipping download.")
+        try:
+            if pdf_path.exists():
+                if pdf_looks_complete(pdf_path):
+                    print(f"PDF exists for {paper_id}, skipping download.")
+                else:
+                    print(f"PDF incomplete for {paper_id}, resuming download...")
+                    download_pdf(pdf_url, pdf_path)
             else:
-                print(f"PDF incomplete for {paper_id}, resuming download...")
+                print(f"Downloading {paper_id}...")
                 download_pdf(pdf_url, pdf_path)
-        else:
-            print(f"Downloading {paper_id}...")
-            download_pdf(pdf_url, pdf_path)
-        print(f"Parsing {paper_id}...")
-        parse_pdf(pdf_path, parsed_dir)
-        md_path = output_dir / "input" / "auto" / "input.md"
-        changed, count = strip_line_numbers(md_path)
-        if changed:
-            print(f"Stripped {count} line numbers in {md_path}")
+            print(f"Parsing {paper_id}...")
+            parse_pdf(pdf_path, parsed_dir)
+            md_path = output_dir / "input" / "auto" / "input.md"
+            changed, count = strip_line_numbers(md_path)
+            if changed:
+                print(f"Stripped {count} line numbers in {md_path}")
+        except Exception as exc:
+            print(f"ERROR processing {paper_id}: {exc}. Skipping.")
 
     if spotlight:
         return
