@@ -26,8 +26,6 @@ packages/
 - **工具**：`read_content`、`read_figure`、`search_content`、`update_memo`
 - **模板**：Jinja2 系统/用户提示词（`templates/` 目录）
 
-> **注意**：此包由 Fangshi 维护，主分支上冻结，不可直接修改。
-
 ### 2. Benchmark (`packages/benchmark/`)
 
 评估 Agent 检测准确率的完整工具链。

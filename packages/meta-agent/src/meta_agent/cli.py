@@ -35,6 +35,9 @@ def run(
     workspace_dir: Path = typer.Option(
         Path("output/meta_agent"), "--workspace", help="Workspace directory."
     ),
+    bench_sample: float = typer.Option(
+        1.0, "--bench-sample", help="Fraction of training set to benchmark per iteration (e.g. 0.25)."
+    ),
 ) -> None:
     """Run the meta-agent optimization loop."""
     config = MetaAgentConfig(
@@ -44,6 +47,7 @@ def run(
         bench_model=bench_model,
         bench_concurrency=bench_concurrency,
         workspace_dir=workspace_dir,
+        bench_sample_fraction=bench_sample,
     )
 
     run_meta_agent(config)

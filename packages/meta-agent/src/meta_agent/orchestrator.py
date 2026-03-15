@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import os
+import random
 import shutil
 import subprocess
 import time
@@ -52,11 +53,25 @@ def _copy_agent_to_workspace(config: MetaAgentConfig) -> Path:
 
 
 def _ruff_check(workspace: Path) -> bool:
+    # Auto-fix trivial issues first
+    subprocess.run(
+        ["uv", "run", "ruff", "check", "--fix", str(workspace / "el_agente")],
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["uv", "run", "ruff", "format", str(workspace / "el_agente")],
+        capture_output=True,
+        text=True,
+    )
+    # Check for remaining errors
     result = subprocess.run(
         ["uv", "run", "ruff", "check", str(workspace / "el_agente")],
         capture_output=True,
         text=True,
     )
+    if result.returncode != 0:
+        print(f"  Ruff errors:\n{result.stdout[:500]}")
     return result.returncode == 0
 
 
@@ -134,10 +149,20 @@ def _run_train_benchmark(
     workspace: Path,
     split: SplitManifest,
     iteration: int,
+    sample_fraction: float = 1.0,
 ) -> ConfusionMatrix:
     """Run benchmark on training set and return confusion matrix."""
     pos_output = config.workspace_dir / f"iter_{iteration}" / "positive"
     neg_output = config.workspace_dir / f"iter_{iteration}" / "negative"
+
+    pos_ids = split.train_positive
+    neg_ids = split.train_negative
+
+    # Subsample for faster iteration
+    if sample_fraction < 1.0:
+        rng = random.Random(42 + iteration)
+        pos_ids = rng.sample(pos_ids, max(1, int(len(pos_ids) * sample_fraction)))
+        neg_ids = rng.sample(neg_ids, max(1, int(len(neg_ids) * sample_fraction)))
 
     # Run positive benchmark
     _run_benchmark_subprocess(
@@ -145,7 +170,7 @@ def _run_train_benchmark(
         workspace=workspace,
         output_dir=pos_output,
         parsed_dir=config.positive_parsed_dir,
-        paper_ids=set(split.train_positive),
+        paper_ids=set(pos_ids),
         conference=config.conference,
     )
 
@@ -155,7 +180,38 @@ def _run_train_benchmark(
         workspace=workspace,
         output_dir=neg_output,
         parsed_dir=config.negative_parsed_dir,
-        paper_ids=set(split.train_negative),
+        paper_ids=set(neg_ids),
+        conference=f"{config.conference}_spotlight",
+    )
+
+    return compute_confusion_matrix(pos_output, neg_output)
+
+
+def _run_test_benchmark(
+    config: MetaAgentConfig,
+    workspace: Path,
+    split: SplitManifest,
+    iteration: int,
+) -> ConfusionMatrix:
+    """Run benchmark on test set (hidden from coding agent)."""
+    pos_output = config.workspace_dir / f"iter_{iteration}" / "test_positive"
+    neg_output = config.workspace_dir / f"iter_{iteration}" / "test_negative"
+
+    _run_benchmark_subprocess(
+        config=config,
+        workspace=workspace,
+        output_dir=pos_output,
+        parsed_dir=config.positive_parsed_dir,
+        paper_ids=set(split.test_positive),
+        conference=config.conference,
+    )
+
+    _run_benchmark_subprocess(
+        config=config,
+        workspace=workspace,
+        output_dir=neg_output,
+        parsed_dir=config.negative_parsed_dir,
+        paper_ids=set(split.test_negative),
         conference=f"{config.conference}_spotlight",
     )
 
@@ -180,19 +236,33 @@ def _invoke_coding_agent(
         current_files=current_files,
     )
 
+    # Resolve claude binary: prefer ~/.claude/local/claude (newer) over PATH
+    claude_bin = Path.home() / ".claude" / "local" / "claude"
+    if not claude_bin.exists():
+        claude_bin = Path("claude")  # fall back to PATH
+
+    # Unset CLAUDECODE to allow nested invocation
+    env = os.environ.copy()
+    env.pop("CLAUDECODE", None)
+
+    agent_dir = workspace / "el_agente"
     result = subprocess.run(
         [
-            "claude",
+            str(claude_bin),
             "--print",
             "--model", "sonnet",
-            "--cwd", str(workspace / "el_agente"),
             "--allowedTools", "Edit,Read,Write",
             "-p", prompt,
         ],
+        cwd=str(agent_dir),
         capture_output=True,
         text=True,
         timeout=300,
+        env=env,
     )
+
+    if result.returncode != 0 and result.stderr:
+        print(f"  Claude CLI stderr: {result.stderr[:500]}")
 
     return result.stdout
 
@@ -201,12 +271,19 @@ def _save_stats(config: MetaAgentConfig, history: MetaHistory) -> None:
     """Save stats CSV and generate trend graph."""
     stats_path = config.workspace_dir / "stats.csv"
     with open(stats_path, "w", encoding="utf-8") as f:
-        f.write("iteration,tp,fp,tn,fn,precision,recall,f1,accuracy,hypothesis,reverted\n")
+        f.write("iteration,tp,fp,tn,fn,precision,recall,f1,accuracy,"
+                "test_tp,test_fp,test_tn,test_fn,test_precision,test_recall,test_f1,test_accuracy,"
+                "hypothesis,reverted\n")
         for r in history.iterations:
             m = r.train_metrics
+            t = r.test_metrics
+            test_cols = (
+                f"{t.tp},{t.fp},{t.tn},{t.fn},"
+                f"{t.precision:.4f},{t.recall:.4f},{t.f1:.4f},{t.accuracy:.4f},"
+                if t else ",,,,,,,,")
             f.write(
                 f"{r.iteration},{m.tp},{m.fp},{m.tn},{m.fn},"
-                f"{m.precision:.4f},{m.recall:.4f},{m.f1:.4f},{m.accuracy:.4f},"
+                f"{m.precision:.4f},{m.recall:.4f},{m.f1:.4f},{m.accuracy:.4f},{test_cols}"
                 f'"{r.hypothesis[:80]}",{r.reverted}\n'
             )
 
@@ -251,6 +328,22 @@ def _generate_trend_graph(config: MetaAgentConfig, history: MetaHistory) -> None
             f"  {r.iteration:4d}  {m.tp:4d}  {m.fp:4d}  {m.tn:4d}  {m.fn:4d}  "
             f"{m.precision:6.4f}  {m.recall:6.4f}  {m.f1:6.4f}  {m.accuracy:6.4f}{marker}"
         )
+
+    # Test set metrics (hidden from coding agent)
+    has_test = any(r.test_metrics for r in iterations)
+    if has_test:
+        lines.append("")
+        lines.append("Test Set (hidden from coding agent)")
+        lines.append("-" * 60)
+        lines.append(f"  {'iter':>4s}  {'TP':>4s}  {'FP':>4s}  {'TN':>4s}  {'FN':>4s}  "
+                     f"{'Prec':>6s}  {'Rec':>6s}  {'F1':>6s}  {'Acc':>6s}")
+        for r in iterations:
+            t = r.test_metrics
+            if t:
+                lines.append(
+                    f"  {r.iteration:4d}  {t.tp:4d}  {t.fp:4d}  {t.tn:4d}  {t.fn:4d}  "
+                    f"{t.precision:6.4f}  {t.recall:6.4f}  {t.f1:6.4f}  {t.accuracy:6.4f}"
+                )
 
     graph_text = "\n".join(lines)
     graph_path.write_text(graph_text + "\n", encoding="utf-8")
@@ -327,16 +420,19 @@ def run_meta_agent(config: MetaAgentConfig) -> MetaHistory:
 
     # Iteration 0: Baseline
     print("--- Iteration 0: Baseline ---")
-    baseline_cm = _run_train_benchmark(config, workspace, split, iteration=0)
+    baseline_cm = _run_train_benchmark(config, workspace, split, iteration=0, sample_fraction=config.bench_sample_fraction)
+    print(f"  Train F1: {baseline_cm.f1:.4f} | TP={baseline_cm.tp} FP={baseline_cm.fp} TN={baseline_cm.tn} FN={baseline_cm.fn}")
+    print("  Running test set (hidden from coding agent)...")
+    test_cm = _run_test_benchmark(config, workspace, split, iteration=0)
+    print(f"  Test  F1: {test_cm.f1:.4f} | TP={test_cm.tp} FP={test_cm.fp} TN={test_cm.tn} FN={test_cm.fn}")
     baseline_record = IterationRecord(
         iteration=0,
         hypothesis="baseline (no changes)",
         train_metrics=baseline_cm,
+        test_metrics=test_cm,
         timestamp=datetime.now().isoformat(),
     )
     history.add(baseline_record)
-    print(f"  Baseline F1: {baseline_cm.f1:.4f}")
-    print(f"  TP={baseline_cm.tp} FP={baseline_cm.fp} TN={baseline_cm.tn} FN={baseline_cm.fn}")
     _save_stats(config, history)
     print()
 
@@ -420,7 +516,7 @@ def run_meta_agent(config: MetaAgentConfig) -> MetaHistory:
         print("  Running benchmark on training set...")
         bench_start = time.time()
         try:
-            cm = _run_train_benchmark(config, workspace, split, iteration=i)
+            cm = _run_train_benchmark(config, workspace, split, iteration=i, sample_fraction=config.bench_sample_fraction)
         except Exception as e:
             print(f"  Benchmark failed: {e}. Restoring workspace.")
             workspace = _restore_workspace(config)
@@ -436,13 +532,23 @@ def run_meta_agent(config: MetaAgentConfig) -> MetaHistory:
             _save_stats(config, history)
             continue
 
-        bench_elapsed = time.time() - bench_start
-        iter_elapsed = time.time() - iter_start
+        # 7. Run test set (hidden from coding agent)
+        print("  Running test set...")
+        try:
+            test_cm = _run_test_benchmark(config, workspace, split, iteration=i)
+        except Exception:
+            test_cm = None
 
-        # 7. Evaluate
+        bench_elapsed = time.time() - bench_start
+
+        # 8. Evaluate
         improved = cm.f1 > history.best_f1
-        print(f"  F1: {cm.f1:.4f} (best: {history.best_f1:.4f})")
-        print(f"  TP={cm.tp} FP={cm.fp} TN={cm.tn} FN={cm.fn}")
+        print(f"  Train F1: {cm.f1:.4f} (best: {history.best_f1:.4f})")
+        print(f"    TP={cm.tp} FP={cm.fp} TN={cm.tn} FN={cm.fn}")
+        if test_cm:
+            print(f"  Test  F1: {test_cm.f1:.4f}")
+            print(f"    TP={test_cm.tp} FP={test_cm.fp} TN={test_cm.tn} FN={test_cm.fn}")
+        iter_elapsed = time.time() - iter_start
         print(f"  Timing: agent={agent_elapsed:.0f}s bench={bench_elapsed:.0f}s total={iter_elapsed:.0f}s")
 
         record = IterationRecord(
@@ -451,11 +557,18 @@ def run_meta_agent(config: MetaAgentConfig) -> MetaHistory:
             changes_summary=f"{len(diff.splitlines())} lines changed",
             diff=diff,
             train_metrics=cm,
+            test_metrics=test_cm,
             timestamp=datetime.now().isoformat(),
         )
 
         if improved:
             print(f"  IMPROVED! F1: {history.best_f1:.4f} -> {cm.f1:.4f}")
+            # Save best agent immediately before potential future reverts
+            best_dir = config.workspace_dir / "best_agent"
+            if best_dir.exists():
+                shutil.rmtree(best_dir)
+            shutil.copytree(workspace / "el_agente", best_dir)
+            print(f"  Best agent saved to: {best_dir}")
             # Keep workspace as-is (it has the improved version)
             history.add(record)
         else:
@@ -482,13 +595,5 @@ def run_meta_agent(config: MetaAgentConfig) -> MetaHistory:
     history_path = config.workspace_dir / "history.json"
     history_path.write_text(history.model_dump_json(indent=2), encoding="utf-8")
     print(f"History saved to: {history_path}")
-
-    # Save best agent code if improved
-    if history.best_iteration > 0:
-        best_dir = config.workspace_dir / "best_agent"
-        if best_dir.exists():
-            shutil.rmtree(best_dir)
-        shutil.copytree(workspace / "el_agente", best_dir)
-        print(f"Best agent code saved to: {best_dir}")
 
     return history

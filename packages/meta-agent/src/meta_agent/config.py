@@ -21,6 +21,7 @@ class MetaAgentConfig(BaseModel):
     positive_parsed_dir: Path = Path("output/mineru/openreview_kept/neurips2025/parsed")
     negative_parsed_dir: Path = Path("output/mineru/openreview_kept/neurips2025_spotlight/parsed")
     conference: str = "neurips2025"
+    bench_sample_fraction: float = 1.0
 
     # Files the coding agent is allowed to modify
     modifiable_files: list[str] = Field(

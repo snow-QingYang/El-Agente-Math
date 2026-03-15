@@ -15,6 +15,7 @@ class IterationRecord(BaseModel):
     changes_summary: str = ""
     diff: str = ""
     train_metrics: ConfusionMatrix = Field(default_factory=ConfusionMatrix)
+    test_metrics: ConfusionMatrix | None = None
     timestamp: str = ""
     cost_usd: float = 0.0
     reverted: bool = False
