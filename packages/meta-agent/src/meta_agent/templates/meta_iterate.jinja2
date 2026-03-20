@@ -1,27 +1,45 @@
 You are improving a formula error detection agent for academic papers.
 
 The agent reads MinerU-parsed markdown of academic papers and determines whether
-reviewer-identified snippets contain genuine mathematical formula errors. It uses
-4 tools (read_content, read_figure, search_content, update_memo) to explore
-documents and outputs "Verdict: FORMULA_ISSUE" or "Verdict: NO_FORMULA_ISSUE".
+reviewer-identified snippets contain genuine mathematical formula errors.
+It outputs "Verdict: FORMULA_ISSUE" or "Verdict: NO_FORMULA_ISSUE".
 
 ## Current Performance (Iteration {{ iteration }})
 
-{{ analysis }}
+TP={{ train_cm.tp }} FP={{ train_cm.fp }} TN={{ train_cm.tn }} FN={{ train_cm.fn }}
+Precision={{ "%.4f"|format(train_cm.precision) }} Recall={{ "%.4f"|format(train_cm.recall) }} F1={{ "%.4f"|format(train_cm.f1) }}
+
+Full benchmark results from the previous iteration are in `results/iter_{{ iteration - 1 }}/`:
+- `positive/` — papers with known formula issues (expect FORMULA_ISSUE)
+- `negative/` — spotlight papers with no known issues (expect NO_FORMULA_ISSUE)
+Each `*.result.md` file contains the issue content and the agent's full reasoning.
+Browse them to understand what the agent is getting right and wrong.
 
 ## Iteration History
 {{ history_summary }}
 
+{% if git_log %}
+## Git History
+```
+{{ git_log }}
+```
+{% endif %}
+
+{% if diff_from_baseline %}
+## Current Changes from Baseline
+```diff
+{{ diff_from_baseline }}
+```
+{% endif %}
+
 ## Your Task
 
-Analyze the failure examples above and make ONE focused improvement to the agent.
-Think about:
-- For false negatives: Is the agent too conservative? Not reading enough context?
-  Missing equation patterns? Not understanding the reviewer snippet well?
-- For false positives: Is the agent too aggressive? Flagging formatting issues
-  as math errors? Not verifying findings against the paper context?
+Improve the agent's F1 score on the benchmark. Browse the results to understand
+failure patterns, then make targeted changes to the agent code.
 
-State your hypothesis clearly, then implement the change.
+- If the last iteration's changes hurt performance, revert them and try something different.
+- If they helped, build on them.
+- Check git history to avoid repeating failed approaches.
 
 ## Files You May Modify
 
@@ -29,8 +47,7 @@ State your hypothesis clearly, then implement the change.
 - `{{ f }}`
 {% endfor %}
 
-DO NOT modify any files in `packages/benchmark/`.
-DO NOT modify any files not listed above.
+DO NOT modify any files outside those listed above.
 
 ## Current File Contents
 
@@ -44,15 +61,11 @@ DO NOT modify any files not listed above.
 
 ## Rules
 
-1. Make exactly ONE change per iteration. Keep it focused and testable.
-2. Explain your hypothesis BEFORE making changes.
-3. Do NOT change the output format — the first line must still be exactly
+1. Do NOT change the output format — the first line must still be exactly
    "Verdict: FORMULA_ISSUE" or "Verdict: NO_FORMULA_ISSUE".
-4. Do NOT change function signatures that are called by the benchmark runner
+2. Do NOT change function signatures that are called by the benchmark runner
    (agentic_reader, AgenticReaderOptions, AgenticReaderResult).
-5. Common effective improvements:
-   - Better system prompt guidance (more specific criteria, examples)
-   - Smarter search strategies in the user prompt
-   - Improved tool usage instructions
-   - Better equation detection in latex_preview.py
-   - Additional context gathering in tools
+3. You have Bash access. Only run commands within the current working directory.
+   Do NOT access files or directories outside it.
+4. When you are done making changes, commit them with `git add -A && git commit -m "<message>"`
+   with a detailed commit message explaining what you changed and why.
