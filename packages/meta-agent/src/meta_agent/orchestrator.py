@@ -110,10 +110,15 @@ def _git_diff_from_baseline(workspace: Path) -> str:
     return result.stdout.strip()
 
 
-def _git_has_changes(workspace: Path) -> bool:
-    """Check if workspace has uncommitted changes."""
-    result = _git(workspace, "diff", "--stat", check=False)
-    return bool(result.stdout.strip())
+def _git_has_changes(workspace: Path, since_tag: str = "best") -> bool:
+    """Check if workspace has changed since the given tag (committed or not)."""
+    # Check uncommitted changes
+    uncommitted = _git(workspace, "diff", "--stat", check=False)
+    if uncommitted.stdout.strip():
+        return True
+    # Check committed changes since tag
+    committed = _git(workspace, "diff", "--stat", since_tag, "HEAD", check=False)
+    return bool(committed.stdout.strip())
 
 
 # ---------------------------------------------------------------------------
@@ -535,12 +540,15 @@ def run_meta_agent(config: MetaAgentConfig) -> MetaHistory:
         agent_elapsed = time.time() - agent_start
         print(f"  Coding agent finished in {agent_elapsed:.0f}s")
 
-        # 3. Check if anything changed
+        # 3. Commit any uncommitted leftovers, then check if anything changed
+        _git(workspace, "add", "-A", check=False)
+        _git(workspace, "commit", "-m", f"iteration {i}", "--allow-empty", check=False)
+
         if not _git_has_changes(workspace):
             print("  No changes made. Skipping iteration.")
             record = IterationRecord(
                 iteration=i,
-                hypothesis="(no changes made by coding agent)",
+                hypothesis=f"iteration {i}",
                 train_metrics=history.iterations[-1].train_metrics,
                 timestamp=datetime.now().isoformat(),
                 reverted=True,
@@ -549,11 +557,8 @@ def run_meta_agent(config: MetaAgentConfig) -> MetaHistory:
             _save_stats(config, history)
             continue
 
-        # 4. Record diff (agent should have committed already)
+        # 4. Record diff
         diff = _git_diff_from_best(workspace)
-        # Commit any uncommitted leftovers
-        _git(workspace, "add", "-A", check=False)
-        _git(workspace, "commit", "-m", f"iteration {i}", "--allow-empty", check=False)
 
         # 7. Run benchmark with modified workspace agent
         print("  Running benchmark on training set...")
